@@ -112,4 +112,11 @@ class VltData extends Model
         }
         return $query->get();
     }
+
+    public function vltDataImeiUpdation($imei,$imei_incremented)
+    {
+        return self::select('id','imei')->where('imei',$imei)->update([
+                        'imei' =>  $imei_incremented,
+                    ]);
+    }
 }

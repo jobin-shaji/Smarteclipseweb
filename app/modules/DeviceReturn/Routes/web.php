@@ -17,6 +17,10 @@ Route::group(['middleware' => ['web','auth','role:root'] , 'namespace' => 'App\M
     Route::get('/device-return-history-list','DeviceReturnController@deviceReturnRootHistoryList')->name('device.return.history.list');
     Route::post('/device-return-root-history-list','DeviceReturnController@getdeviceReturnRootHistoryList')->name('device.return.root.history.list');
     Route::post('/device-return/accept','DeviceReturnController@acceptDeviceReturn')->name('device.return.accept');
+    Route::post('/device-return/post-activity','DeviceReturnController@addNewActivity')->name('device.return.post.activity');
+    Route::get('/device-return/{id}/add-to-stock','DeviceReturnController@addToStockInDeviceReturn')->name('device.return.add.to.stock');
+    Route::post('/device-return/proceed-to-stock','DeviceReturnController@proceedReturnedDeviceToStock')->name('device.return.proceed.to.stock.p');
+
 });
 
 

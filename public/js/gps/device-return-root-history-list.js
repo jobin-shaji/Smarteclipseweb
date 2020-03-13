@@ -64,6 +64,42 @@ function callBackDataTable(){
 
 }
 
+function addNewActivity() {
+    if(document.getElementById('activity').value == ''){
+        alert('Please enter your note');
+    }
+    else{
+        var activity = document.getElementById('activity').value;
+        var device_return_id = document.getElementById('device_return_id').value;
+        var data = {'device_return_id':device_return_id, 'activity':activity};
+    }
+    var url = '/device-return/post-activity';
+    $.ajax({
+        type: 'POST',
+        url: url,
+        data: data,
+        async: true,
+        headers: {
+            'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function(res) {
+            if(res.status==1){
+                $('#activity').val('');
+                toastr.success(res.message);
+                setTimeout(function() {
+                    location.reload();
+                }, 2000);
+            }else{
+                toastr.error(res.message);
+                toastr.success(res.message);
+                setTimeout(function() {
+                    location.reload();
+                }, 3000);
+            }
+        }
+    });
+}
+
 
 
 

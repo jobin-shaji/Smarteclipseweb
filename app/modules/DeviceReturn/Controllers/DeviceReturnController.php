@@ -55,7 +55,7 @@ class DeviceReturnController extends Controller
     public function save(Request $request)
     {
         $servicer_id                =   \Auth::user()->servicer->id;
-        $rules                      =   $this->device_return_create_rules();
+        $rules                      =   $this->deviceReturnCreateRules();
         $this->validate($request, $rules);
 
         $existing_gps_return_count  =   (new DeviceReturn())->gpsReturnedCount($request->gps_id);
@@ -242,20 +242,11 @@ class DeviceReturnController extends Controller
         $gps_in_vehicle             =   (new Vehicle())->getSingleVehicleDetailsBasedOnGps($device_return->gps_id)->first();
 
         //old data stored in a variable for creating new row
-        $imei                       =   $gps_data->imei;
-        $serial_no                  =   $gps_data->serial_no;
-        $manufacturing_date         =   $gps_data->manufacturing_date;
-        $icc_id                     =   $gps_data->icc_id;
-        $imsi                       =   $gps_data->imsi;
-        $e_sim_number               =   $gps_data->e_sim_number;
-        $batch_number               =   $gps_data->batch_number;
-        $employee_code              =   $gps_data->employee_code;
-        $model_name                 =   $gps_data->model_name;
-        $version                    =   $gps_data->version;
-    
-        $imei_RET                   =   $gps_data->imei."-RET-" ;
-        $serial_no_RET              =   $gps_data->serial_no."-RET-" ;
-        $gps_find_imei_and_slno     =   Gps::where('imei', 'like','%'.$imei_RET.'%')
+        $imei                       =    $gps_data->imei;
+        $serial_no                  =    $gps_data->serial_no;
+        $imei_RET                   =    $gps_data->imei."-RET-" ;
+        $serial_no_RET              =    $gps_data->serial_no."-RET-" ;
+        $gps_find_imei_and_slno     =    Gps::where('imei', 'like','%'.$imei_RET.'%')
                                         ->where('serial_no', 'like', '%'.$serial_no_RET.'%')
                                         ->count();        
         $increment_value            =    $gps_find_imei_and_slno +1;
@@ -274,50 +265,22 @@ class DeviceReturnController extends Controller
 
         //To update returned status in vehicle table
         $gps_in_vehicle->is_returned         =    1;
-        $gps_in_vehicle->save();
-
-        //To update imei in gps data table
-        // $gps_data                   =   GpsData::where('imei',$imei)->update([
-        //                                     'imei' =>  $imei_incremented,
-        //                                 ]);
+        $gps_in_vehicle->save();         
                 
         //To update imei in vlt data table
-        $vlt_Data                   =   VltData::where('imei',$imei)->update([
-                                            'imei' =>  $imei_incremented,
-                                        ]);
+        $vlt_Data                            =    (new VltData())->vltDataImeiUpdation($imei,$imei_incremented);     
+        
         //To update imei in vlt data archived table
         DB::table('vlt_data_archived')->where('imei',$imei)->update([
                 'imei' =>  $imei_incremented,
             ]);
 
         //To update returned status in gps transfer items table
-        $gps_in_transfer_items      =   GpsTransferItems::where('gps_id',$device_return->gps_id)->update([
-                                            'is_returned' =>  1,
-                                        ]);
+        $gps_in_transfer_items      =   (new GpsTransferItems())->updateReturnStatusInTrasferItem($device_return->gps_id);
         $manufacturer_details       =   (new Root())->getManufacturerDetails(\Auth::user()->root->id);
         $activity                   =   'Manufacturer ('.$manufacturer_details->name.') accepted the device return '.$device_return->return_code;
         (new DeviceReturnHistory())->addHistory($device_return->id, $activity);
 
-        //to create new row with returned gps
-        // $gps    =   Gps::create([
-        //                 'serial_no'         =>  $serial_no,
-        //                 'icc_id'            =>  $icc_id,
-        //                 'imsi'              =>  $imsi,
-        //                 'imei'              =>  $imei,
-        //                 'manufacturing_date'=>  $manufacturing_date,
-        //                 'e_sim_number'      =>  $e_sim_number,
-        //                 'batch_number'      =>  $batch_number,
-        //                 'model_name'        =>  $model_name,
-        //                 'version'           =>  $version,
-        //                 'employee_code'     =>  $employee_code,
-        //                 'status'            =>  1
-        //             ]); 
-        //to get user id of manufacture
-        // $root_id    =   \Auth::user()->id;
-        // $gps_stock  =   GpsStock::create([
-        //                     'gps_id'=> $gps->id,
-        //                     'inserted_by' => $root_id
-        //                 ]); 
         return response()->json([
             'status' => 1,
             'title' => 'Success',
@@ -405,17 +368,91 @@ class DeviceReturnController extends Controller
         {
             return view('DeviceReturn::404');
         }
+        $returned_imei                  =   $device_return_details->gps->imei;
+        $original_imei                  =   substr($returned_imei, 0, strpos($returned_imei, '-'));
+        $to_check_imei_exists           =   (new Gps())->getGpsId($original_imei);
         $device_return_history_details  =   (new DeviceReturnHistory())->getTransferHistory($decrypted_device_return_id); 
-        return view('DeviceReturn::device-return-view',['device_return_details' => $device_return_details, 'device_return_history_details' => $device_return_history_details]);
+        return view('DeviceReturn::device-return-view',['device_return_details' => $device_return_details, 'device_return_history_details' => $device_return_history_details , 'to_check_imei_exists' => $to_check_imei_exists]);
     }
 
-    public function device_return_create_rules()
+    public function addNewActivity(Request $request)
+    {
+        $device_return_id               =   $request->device_return_id;
+        $activity                       =   $request->activity;
+        $add_activity                   =   (new DeviceReturnHistory())->addHistory($device_return_id, $activity);
+        if($add_activity)
+        {
+            $response    =  array(
+                'status'        =>  1,
+                'message'       =>  'Added note successfully'
+            );
+        }
+        else
+        {
+            $response    =  array(
+                'status'    =>  0,
+                'message'   =>  'Something went wrong!'
+            );
+        }
+        return response()->json($response);
+    }
+
+    public function addToStockInDeviceReturn(Request $request)
+    {
+        $device_return_id       =   Crypt::decrypt($request->id);
+        $device_return_details  =   (new DeviceReturn())->getSingleDeviceReturnDetails($device_return_id);
+        return view('DeviceReturn::add-returned-device-to-stock',['device_return_details' => $device_return_details]);
+    }
+
+    public function proceedReturnedDeviceToStock(Request $request)
+    {
+        $rules                      =   $this->gpsCreateRules();
+        $this->validate($request, $rules); 
+        $device_return_id           =   $request->device_return_id;
+        $return_code                =   $request->return_code;
+        $imei                       =   $request->imei;
+        $serial_no                  =   $request->serial_no;
+        $manufacturing_date         =   date('Y-m-d', strtotime($request->manufacturing_date));
+        $icc_id                     =   $request->icc_id;
+        $imsi                       =   $request->imsi;
+        $e_sim_number               =   $request->e_sim_number;
+        $batch_number               =   $request->batch_number;
+        $employee_code              =   $request->employee_code;
+        $model_name                 =   $request->model_name;
+        $version                    =   $request->version;
+        $activity                   =   $request->activity;
+        $custom_activity            =   'Refurbished device added to stock by '.$employee_code.' and '.$return_code.' is closed';
+
+        $device_to_gps_table        =   (new Gps())->createNewGps($imei,$serial_no,$manufacturing_date,$icc_id,$imsi,$e_sim_number,$batch_number,$employee_code,$model_name,$version);
+        $root_id                    =   \Auth::user()->root->id;
+        if($device_to_gps_table)
+        {
+            (new GpsStock())->createNewGpsInStock($device_to_gps_table->id,$root_id);
+            (new DeviceReturnHistory())->addHistory($device_return_id, $activity);
+            (new DeviceReturnHistory())->addHistory($device_return_id, $custom_activity);
+        }
+        $request->session()->flash('message', 'GPS added to stock successfully!'); 
+        $request->session()->flash('alert-class', 'alert-success'); 
+        return redirect(route('device.return.detail.view',Crypt::encrypt($device_return_id)));
+    }
+
+    public function deviceReturnCreateRules()
     {
         $rules = 
         [
             'gps_id'            => 'required',       
             'type_of_issues'    =>  'required',
             'comments'          => 'required|max:500'
+        ];
+        return  $rules;
+    }
+
+    //validation for gps creation
+    public function gpsCreateRules()
+    {
+        $rules = [
+            'employee_code'     => 'required', 
+            'activity'          => 'required'         
         ];
         return  $rules;
     }

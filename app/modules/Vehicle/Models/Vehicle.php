@@ -179,6 +179,7 @@ class Vehicle extends Model
     {
         return self::select(
                     'id',
+                    'gps_id',
                     'is_returned'
                     )
                     ->where('gps_id',$gps_id)

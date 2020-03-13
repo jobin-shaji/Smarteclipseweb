@@ -18,12 +18,102 @@
           </div>
         </div>
       @endif  
-    </nav> 
+    </nav> <br>
+
     <!-- /breadcrumbs -->
     <div class="container-fluid">
-    <button class="btn btn-sm btn-info" style ="margin-left: 1000px;margin-top: 6px;" onclick='' data-toggle="modal" data-target="#addToStockModal">Add To Stock </button>
-    <button class="btn btn-sm btn-info" style = 'margin-top: -65px;margin-left: 870px;' onclick='' data-toggle="modal" data-target="#addNoteModal">Add Note</button>
-    <!-- activity section -->
+      <!-- table section -->
+      <table class="table" style='width:700px;'>
+        <tbody>
+          <tr class="success">
+            <td><b>Code </b></td>
+            <td>{{ $device_return_details->return_code}}</td>
+          </tr>
+          <tr class="success">
+            <td><b>Returned Servicer </b></td>
+            <td>{{ $device_return_details->servicer->name}}</td>
+          </tr>
+          <tr class="success">
+            <td><b>IMEI </b></td>
+            <td>{{ $device_return_details->gps->imei}}</td>
+          </tr>
+          <tr class="success">
+            <td><b>Serial Number </td>
+            <td>{{ $device_return_details->gps->serial_no}}</td>
+          </tr>
+          <tr class="success">
+            <td><b>Type of Issues </b></td>
+            @if($device_return_details->type_of_issues==0) 
+              <td>{{'Hardware'}}</td>
+            @endif
+            @if($device_return_details->type_of_issues==1) 
+              <td>{{'Software'}}</td>
+            @endif
+          </tr>
+          <tr class="success">
+            <td><b>Comments </b></td>
+            <td>{{ $device_return_details->comments}}</td>
+          </tr>
+          <tr class="success">
+            <td><b>Returned Date </b></td>
+            <td>{{ $device_return_details->created_at}}</td>
+          </tr>
+          <tr class="success">
+            <td><b>Status </b></td>
+            @if($device_return_details->status==0)
+              <td>{{'Submitted'}} </td>              
+            @elseif($device_return_details->status==1)
+              <td>{{'Cancelled'}} </td>               
+            @elseif($device_return_details->status==2)
+              <td>{{'Accepted'}} </td> 
+            @endif
+          </tr>
+          <tr class="success">
+            <td><b>Client </b></td>
+            <td>{{ $device_return_details->client->name}}</td>
+          </tr>
+          <tr class="success">
+            <td><b>Sub Dealer </b></td>
+            @if ($device_return_details->servicer->sub_dealer_id == NULL && $device_return_details->servicer->trader_id != NULL)
+              <td>{{ $device_return_details->servicer->Trader->name}}</td>
+            @else
+              <td>{{'-----'}}</td>
+            @endif
+          </tr>
+          <tr class="success">
+            <td><b>Dealer </b></td>
+            @if ($device_return_details->servicer->sub_dealer_id != NULL && $device_return_details->servicer->trader_id == NULL)
+              <td>{{ $device_return_details->servicer->subDealer->name}}</td>
+            @elseif($device_return_details->servicer->sub_dealer_id == NULL && $device_return_details->servicer->trader_id != NULL)
+              <td>{{ $device_return_details->servicer->Trader->subDealer->name}}</td>
+            @else
+              <td>{{'-----'}}</td>
+            @endif
+          </tr>
+          <tr class="success">
+            <td><b>Distributor </b></td>
+            @if ($device_return_details->servicer->sub_dealer_id != NULL && $device_return_details->servicer->trader_id == NULL)
+              <td>{{ $device_return_details->servicer->subDealer->dealer->name}}</td>
+            @elseif($device_return_details->servicer->sub_dealer_id == NULL && $device_return_details->servicer->trader_id != NULL)
+              <td>{{ $device_return_details->servicer->Trader->subDealer->dealer->name}}</td>
+            @else
+              <td>{{'-----'}}</td>
+            @endif
+          </tr>
+        </tbody>
+      </table>
+      <div class="col-md-6 ">
+        @if($device_return_details->status==0)
+          <button  onclick=acceptDeviceReturn({{$device_return_details->id}}) class="btn btn-md"><i class='glyphicon glyphicon-remove'></i> Accept Returned Device
+          </button>
+        @endif       
+      </div><br>
+      <!-- /table section -->
+      @if($device_return_details->status==2 && $to_check_imei_exists == NULL)
+        <a href="/device-return/{{Crypt::encrypt($device_return_details->id)}}/add-to-stock" class="btn btn-sm btn-info" style ="margin-left: 1000px;margin-top: 6px;background-color:#048e20;">Add To Stock </a>
+        <button class="btn btn-sm btn-info" style = 'margin-top: -65px;margin-left: 870px;background-color:#e65555;' data-toggle="modal" data-target="#addNoteModal">Add Note</button>
+      @endif
+      <!-- activity section -->
       <div class="card">
         <div class="card-body wizard-content">
           <div class="box-body">
@@ -38,128 +128,10 @@
           </div>
         </div>
       </div>
-    <!-- /activity section -->
-      
-      <!-- table section -->
-      <table class="table" style='width:700px;'>
-        <tbody>
-          <tr class="success">
-            <td><b>Code :</b></td>
-            <td>{{ $device_return_details->return_code}}</td>
-          </tr>
-          <tr class="success">
-            <td><b>Returned Servicer :</b></td>
-            <td>{{ $device_return_details->servicer->name}}</td>
-          </tr>
-          <tr class="success">
-            <td><b>IMEI :</b></td>
-            <td>{{ $device_return_details->gps->imei}}</td>
-          </tr>
-          <tr class="success">
-            <td><b>Serial Number :</td>
-            <td>{{ $device_return_details->gps->serial_no}}</td>
-          </tr>
-          <tr class="success">
-            <td><b>Type of Issues :</b></td>
-            @if($device_return_details->type_of_issues==0) 
-              <td>{{'Hardware'}}</td>
-            @endif
-            @if($device_return_details->type_of_issues==1) 
-              <td>{{'Software'}}</td>
-            @endif
-          </tr>
-          <tr class="success">
-            <td><b>Comments :</b></td>
-            <td>{{ $device_return_details->comments}}</td>
-          </tr>
-          <tr class="success">
-            <td><b>Returned Date :</b></td>
-            <td>{{ $device_return_details->created_at}}</td>
-          </tr>
-          <tr class="success">
-            <td><b>Status :</b></td>
-            @if($device_return_details->status==0)
-              <td>{{'Submitted'}} </td>              
-            @elseif($device_return_details->status==1)
-              <td>{{'Cancelled'}} </td>               
-            @elseif($device_return_details->status==2)
-              <td>{{'Accepted'}} </td> 
-            @endif
-          </tr>
-          <tr class="success">
-            <td><b>Client :</b></td>
-            <td>{{ $device_return_details->client->name}}</td>
-          </tr>
-          <tr class="success">
-            <td><b>Sub Dealer :</b></td>
-            @if ($device_return_details->servicer->sub_dealer_id == NULL && $device_return_details->servicer->trader_id != NULL)
-              <td>{{ $device_return_details->servicer->Trader->name}}</td>
-            @else
-              <td>{{'-----'}}</td>
-            @endif
-          </tr>
-          <tr class="success">
-            <td><b>Dealer :</b></td>
-            @if ($device_return_details->servicer->sub_dealer_id != NULL && $device_return_details->servicer->trader_id == NULL)
-              <td>{{ $device_return_details->servicer->subDealer->name}}</td>
-            @elseif($device_return_details->servicer->sub_dealer_id == NULL && $device_return_details->servicer->trader_id != NULL)
-              <td>{{ $device_return_details->servicer->Trader->subDealer->name}}</td>
-            @else
-              <td>{{'-----'}}</td>
-            @endif
-          </tr>
-          <tr class="success">
-            <td><b>Distributor :</b></td>
-            @if ($device_return_details->servicer->sub_dealer_id != NULL && $device_return_details->servicer->trader_id == NULL)
-              <td>{{ $device_return_details->servicer->subDealer->dealer->name}}</td>
-            @elseif($device_return_details->servicer->sub_dealer_id == NULL && $device_return_details->servicer->trader_id != NULL)
-              <td>{{ $device_return_details->servicer->Trader->subDealer->dealer->name}}</td>
-            @else
-              <td>{{'-----'}}</td>
-            @endif
-          </tr>
-        </tbody>
-      </table>
-      <!-- /table section -->
+      <!-- /activity section -->
     </div>
   </div>
 </section>
-
-<!-- add to stock modal section -->
-<div class="modal fade" id="addToStockModal" tabindex="-1" role="dialog" aria-labelledby="addToStockModalLabel" style="display: none;">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content" style="padding: 25px">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span></button>
-            </div>
-            <form method="POST" id="form1">
-                {{csrf_field()}}
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <input type="hidden" name="set_ota_gps_id" id="set_ota_gps_id" value="">
-                            <div class="form-group row" style="float:none!important">
-                                <label for"fname" class="col-sm-3 text-right control-label col-form-label">Command:</label>
-                                <div class="form-group has-feedback">
-                                    <textarea class="form-control" name="command" id="command" rows=7></textarea>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <span class="pull-center">
-                        <button type="button" class="btn btn-success btn-md btn-block" onclick="setOta(document.getElementById('set_ota_gps_id').value)">
-                            POST
-                        </button>
-                    </span>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-<!-- /add to stock modal section -->
 
 <!-- add note modal section -->
 <div class="modal fade" id="addNoteModal" tabindex="-1" role="dialog" aria-labelledby="addNoteModalLabel" style="display: none;">
@@ -174,11 +146,11 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-12">
-                            <input type="hidden" name="set_ota_gps_id" id="set_ota_gps_id" value="">
+                            <input type="hidden" name="device_return_id" id="device_return_id" value="{{ $device_return_details->id}}">
                             <div class="form-group row" style="float:none!important">
-                                <label for"fname" class="col-sm-3 text-right control-label col-form-label">Command:</label>
+                                <label for"fname" class="col-sm-3 text-right control-label col-form-label">Note:</label>
                                 <div class="form-group has-feedback">
-                                    <textarea class="form-control" name="command" id="command" rows=7></textarea>
+                                    <textarea class="form-control" name="activity" id="activity" rows=7></textarea>
                                 </div>
                             </div>
                         </div>
@@ -186,8 +158,8 @@
                 </div>
                 <div class="modal-footer">
                     <span class="pull-center">
-                        <button type="button" class="btn btn-success btn-md btn-block" onclick="setOta(document.getElementById('set_ota_gps_id').value)">
-                            POST
+                        <button type="button" class="btn btn-success btn-md btn-block" onclick="addNewActivity()">
+                            Submit
                         </button>
                     </span>
                 </div>

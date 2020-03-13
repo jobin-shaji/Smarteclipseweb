@@ -69,5 +69,13 @@ class GpsStock extends Model
                     ->where('gps_id',$gps_id)
                     ->first();
     }
+    
+    public function createNewGpsInStock($gps_id,$root_id)
+    {
+        return  self::create([
+                        'gps_id'=> $gps_id,
+                        'inserted_by' => $root_id
+                    ]); 
+    }
 
 }

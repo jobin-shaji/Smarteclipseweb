@@ -134,4 +134,26 @@ class Gps extends Model
                     ->where('id',$gps_id)
                     ->first();
     }
+    /**
+     *
+     *to create new row with gps
+     *
+     */
+    public function createNewGps($imei,$serial_no,$manufacturing_date,$icc_id,$imsi,$e_sim_number,$batch_number,$employee_code,$model_name,$version)
+    {
+        
+        return  self::create([
+                        'serial_no'         =>  $serial_no,
+                        'icc_id'            =>  $icc_id,
+                        'imsi'              =>  $imsi,
+                        'imei'              =>  $imei,
+                        'manufacturing_date'=>  $manufacturing_date,
+                        'e_sim_number'      =>  $e_sim_number,
+                        'batch_number'      =>  $batch_number,
+                        'model_name'        =>  $model_name,
+                        'version'           =>  $version,
+                        'employee_code'     =>  $employee_code,
+                        'status'            =>  1
+                    ]); 
+    }
 }
