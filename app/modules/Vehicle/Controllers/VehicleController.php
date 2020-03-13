@@ -148,7 +148,7 @@ class VehicleController extends Controller
         $client_user_id=\Auth::user()->id;
         $vehicleTypes=VehicleType::select(
                 'id','name')->get();
-        $vehicle_device = Vehicle::select(
+        $vehicle_device = Vehicle::select('id',
                 'gps_id'
                 )
                 ->where('client_id',$client_id)
@@ -215,13 +215,17 @@ class VehicleController extends Controller
         $this->validate($request, $rules);
         $vehicle->driver_id = $request->driver_id;
         $vehicle_update=$vehicle->save();
-        if($vehicle_update && $new_driver_id && $old_driver){
-                $vehicle_driver_log = VehicleDriverLog::create([
-                'vehicle_id' => $vehicle->id,
-                'from_driver_id' => $old_driver,
-                'to_driver_id' => $new_driver_id,
-                'client_id' =>$vehicle->client_id
-            ]);
+        // if same driver updated no insertion
+        if($old_driver != $new_driver_id)
+        {
+            if($vehicle_update && $new_driver_id && $old_driver){
+                    $vehicle_driver_log = VehicleDriverLog::create([
+                    'vehicle_id' => $vehicle->id,
+                    'from_driver_id' => $old_driver,
+                    'to_driver_id' => $new_driver_id,
+                    'client_id' =>$vehicle->client_id
+                ]);
+            }
         }
         $encrypted_vehicle_id = encrypt($vehicle->id);
         $request->session()->flash('message', 'Driver updated successfully!');
@@ -603,10 +607,15 @@ class VehicleController extends Controller
     // restore vehicle
     public function activateVehicle(Request $request)
     {
-        $vehicles = Vehicle::where('gps_id', $request->gps_id)->first();
+        $vehicles = Vehicle::select('gps_id','id')->where('gps_id',$request->gps_id)->first();
+       
         if($vehicles== null)
         {
-            $vehicle = Vehicle::withTrashed()->find($request->id);
+            
+            $vehicle=Vehicle::select('id','gps_id')
+                                     ->where('id',$request->id)
+                                     ->withTrashed()
+                                     ->first();
             if($vehicle==null){
                 return response()->json([
                     'status' => 0,
@@ -678,7 +687,7 @@ class VehicleController extends Controller
         $decrypted_vehicle_id   = Crypt::decrypt($request->id);
         $alert_id               = $request->alert_id;
         $vehicle                = Vehicle::find($decrypted_vehicle_id);
-        $alerts                 = Alert::where('alert_type_id',$alert_id)
+        $alerts                 = Alert::select('id','alert_type_id','status','gps_id')->where('alert_type_id',$alert_id)
             ->where('status',0)
             ->where('gps_id',$vehicle->gps_id)
             ->count();
@@ -721,6 +730,7 @@ class VehicleController extends Controller
         ->with('vehicle:id,name,register_number')
         ->orderBy('id','desc')
         ->get();
+        
 // dd($vehicle_driver_log);
         return DataTables::of($vehicle_driver_log)
             ->addIndexColumn()
@@ -1482,7 +1492,11 @@ class VehicleController extends Controller
         $vehicle = $request->vehicle;
         if($vehicle!=0)
         {
-            $vehicle_details =Vehicle::withTrashed()->find($vehicle);
+            
+            $vehicle_details=Vehicle::select('id','gps_id')
+                                ->where('id',$vehicle)
+                                ->withTrashed()
+                                ->first();
             $single_vehicle_ids = $vehicle_details->gps_id;
         }
          $query =GpsData::select(
@@ -2416,7 +2430,7 @@ class VehicleController extends Controller
 
           $from_date_time   = $track_data->first()->dateTime;
           $last_date_time   = $track_data[$track_data->count()-1]->dateTime;
-          $alerts_list      = Alert::where('device_time', '>=' ,$from_date_time)
+          $alerts_list      = Alert::select('device_time','gps_id','alert_type_id')->where('device_time', '>=' ,$from_date_time)
                                     ->where('device_time', '<=' ,$last_date_time)
                                     ->where('gps_id',$gps_id)
                                     ->whereNotIn('alert_type_id',[17,18,23,24])

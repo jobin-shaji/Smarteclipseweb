@@ -131,6 +131,7 @@ Vehicle Details
                             <select class="form-control {{ $errors->has('driver_id') ? ' has-error' : '' }}" name="driver_id" value="{{ old('driver_id') }}" required>
                               <option value="" disabled="disabled" selected="selected">Select Driver</option>
                               @foreach($drivers as $driver)
+                             
                               <option value="{{$driver->id}}" @if($driver->id==$vehicle->driver_id){{"selected"}} @endif >{{$driver->name}}</option>
                               @endforeach
                             </select>
@@ -354,12 +355,10 @@ Vehicle Details
               </div>
             </div>
           </div>
-@endsection
-        </div>
+         </div>
       </div>
     </div>
-
-  </div>
+</div>
 </div>
 
 <link rel="stylesheet" href="{{asset('css/loader-1.css')}}">

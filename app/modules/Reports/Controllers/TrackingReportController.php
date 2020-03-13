@@ -28,13 +28,13 @@ class TrackingReportController extends Controller
     }  
     public function trackReportList(Request $request)
     {
-        $vehicle_id =$request->vehicle;
-        $report_type =$request->type;
-        $client_id=\Auth::user()->client->id;  
-        $custom_from_date = $request->from_date;
-        $custom_to_date = $request->to_date;
-        $date_and_time = $this->getDateFromType($report_type, $custom_from_date, $custom_to_date);
-        $vehicle_profile = $this->vehicleProfile($vehicle_id,$date_and_time,$client_id);
+        $vehicle_id         = $request->vehicle;
+        $report_type        = $request->type;
+        $client_id          = \Auth::user()->client->id;  
+        $custom_from_date   = $request->from_date;
+        $custom_to_date     = $request->to_date;
+        $date_and_time      = $this->getDateFromType($report_type, $custom_from_date, $custom_to_date);
+        $vehicle_profile    = $this->vehicleProfile($vehicle_id,$date_and_time,$client_id);
         return response()->json([           
             'sleep' => $vehicle_profile['sleep'],  
             'motion' => $vehicle_profile['motion'],   

@@ -60,7 +60,11 @@ class SuddenAccelerationReportController extends Controller
         }
         else
         {
-            $vehicle=Vehicle::withTrashed()->find($vehicle);
+           
+            $vehicle=Vehicle::select('id','gps_id','name','register_number')
+            ->where('id',$vehicle)
+            ->withTrashed()
+            ->first();
             $query = $query->where('alert_type_id',2)->where('gps_id',$vehicle->gps_id);
             // ->where('status',1);
             if($from){
