@@ -30,7 +30,7 @@
                           <div class="form-group"> 
                           <label>Vehicle</label>                           
                             <select class="form-control selectpicker" data-live-search="true" title="Select Vehicle" id="vehicle" name="vehicle">
-                              <option value="" disabled="disabled" selected="selected">select</option>
+                              <option value=""  selected="selected">Select</option>
                               @foreach ($vehicles as $vehicles)
                               <option value="{{$vehicles->id}}">{{$vehicles->name}} || {{$vehicles->register_number}}</option>
                               @endforeach  
@@ -42,7 +42,7 @@
                            <div class="form-group">
                             <label>Report type</label>                           
                             <select class="form-control selectpicker" data-live-search="true" title="Select report type" id="report" name="report">
-                              <option value="" selected="selected" disabled="disabled">Select</option>
+                              <option value="" selected="selected" >Select</option>
                               <option value="1">Today</option>
                               <option value="2">Yesterday</option>
                               <option value="3">Last 7 days</option>

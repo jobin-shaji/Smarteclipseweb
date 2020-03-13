@@ -46,7 +46,7 @@ class KMReportExport implements FromView
         else
         {
             
-                $vehicle_details = Vehicle::select('id','gps_id','client_id') ->where('client_id',$client)->withTrashed()->get();
+                $vehicle_details = Vehicle::select('id','gps_id','client_id')->where('client_id',$client)->withTrashed()->get();
                 foreach($vehicle_details as $vehicle_detail){
                 $single_vehicle_id[] = $vehicle_detail->gps_id; 
                 }

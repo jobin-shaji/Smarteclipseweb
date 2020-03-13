@@ -34,8 +34,8 @@ Fuel Report
                 <div class="col-lg-3 col-md-3">
                 <div class="form-group">
                   <label>Report Type</label>
-                  <select class="form-control select2" data-live-search="true" title="Select Report" id="report_type" name="report_type" onchange="reportType(this.value)">
-                  <option selected="selected" disabled="disabled">Select</option>
+                  <select class="form-control" data-live-search="true" title="Select Report" id="report_type" name="report_type" onchange="reportType(this.value)">
+                  <option selected="selected" value= '' >Select</option>
                     <option value='1'>Date</option>
                     <option value='2'>Month</option>
                   </select>
