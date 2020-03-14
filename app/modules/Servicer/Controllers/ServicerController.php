@@ -232,7 +232,7 @@ class ServicerController extends Controller {
 
         // if($placeLatLng==null){
         //       $request->session()->flash('message', 'Enter correct location');
-        //       $request->session()->flash('alert-class', 'alert-danger');
+        //       $request->session()->flash('alert-class', 'alert-danger');details
         //       return redirect(route('sub-dealer.assign.servicer'));
         // }
         // $location_lat=$placeLatLng['latitude'];
@@ -492,10 +492,16 @@ class ServicerController extends Controller {
 if($servicer_job->status==0){
     return "<font color='red'>Cancelled</font>";
 
-            }else
+            }
+            elseif($servicer_job->status==1)
             {
                 return "
-                <a href=".$b_url."/job/".Crypt::encrypt($servicer_job->id)."/details class='btn btn-xs btn-info'><i class='fas fa-eye' data-toggle='tooltip' title='Job completion'></i>View</a>";
+                <a href=".$b_url."/job/".Crypt::encrypt($servicer_job->id)."/details class='btn btn-xs btn-info'><i class='fas fa-eye' data-toggle='tooltip' title='Job completion'></i>Job Completion</a>";
+            }
+            else
+            {
+                return "
+                <a href=".$b_url."/job/".Crypt::encrypt($servicer_job->id)."/details class='btn btn-xs btn-info'><i class='fas fa-eye' data-toggle='tooltip' title='Job completion'></i>Job Completion</a>";
             }
 
         })
@@ -565,10 +571,10 @@ if($servicer_job->status==0){
 
             }else
             {
-                if($servicer_job->status==2)
+                if($servicer_job->status==1)
             {
                return "
-                <a href=".$b_url."/servicejob/".Crypt::encrypt($servicer_job->id)."/serviceedit class='btn btn-xs btn-info'><i class='fas fa-eye' data-toggle='tooltip' title='Job completion'></i>View</a>";
+                <a href=".$b_url."/servicejob/".Crypt::encrypt($servicer_job->id)."/servicedetails class='btn btn-xs btn-info'><i class='fas fa-eye' data-toggle='tooltip' title='Job completion'></i>Job Completion</a>";
             }
             else{
 
@@ -1564,14 +1570,30 @@ public function serviceJobDetails(Request $request)
             {
                 if($servicer_job->status==1)
                 {
-                    return "
-                     <a href=".$b_url."/job/".Crypt::encrypt($servicer_job->id)."/details class='btn btn-xs btn-info'><i class='fas fa-eye' data-toggle='tooltip' title='Job completion'></i>View</a>";
+                    if($servicer_job->job_type==1)
+                    {
+                        return "
+                     <a href=".$b_url."/job/".Crypt::encrypt($servicer_job->id)."/details class='btn btn-xs btn-info'><i class='fas fa-eye' data-toggle='tooltip' title='Job completion'></i>Job Completion</a>";
+                    }
+                    else
+                    {
+                        return "
+                        <a href=".$b_url."/servicejob/".Crypt::encrypt($servicer_job->id)."/servicedetails class='btn btn-xs btn-info'><i class='fas fa-eye' data-toggle='tooltip' title='Job completion'></i>Job Completion</a>";
+                    }
                 }
 
                 else if($servicer_job->status==2)
                 {
-                   return "
-                    <a href=".$b_url."/servicejob/".Crypt::encrypt($servicer_job->id)."/serviceedit class='btn btn-xs btn-info'><i class='fas fa-eye' data-toggle='tooltip' title='Job completion'></i>View</a>";
+                    if($servicer_job->job_type==1)
+                    {
+                        return "
+                     <a href=".$b_url."/job/".Crypt::encrypt($servicer_job->id)."/details class='btn btn-xs btn-info'><i class='fas fa-eye' data-toggle='tooltip' title='Job completion'></i>Job Completion</a>";
+                    }
+                    else
+                    {
+                        return "
+                        <a href=".$b_url."/servicejob/".Crypt::encrypt($servicer_job->id)."/servicedetails class='btn btn-xs btn-info'><i class='fas fa-eye' data-toggle='tooltip' title='Job completion'></i>Job Completion</a>";
+                    }
                 }
                 else
                 {
