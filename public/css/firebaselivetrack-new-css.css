@@ -379,8 +379,8 @@ font-weight: 600;
  padding-top: 7px;
  background: #FFC107;
  color: #fff;
- border-top-right-radius: 10px;
- border-top-left-radius: 10px;
+ border-top-right-radius: 0px;
+ border-top-left-radius: 0px;
 }
 .dash-board-2-head-sub{
  width: 100%;
@@ -464,6 +464,11 @@ width: 74px;
 .dash2-vechile-detials-img {
  width: 15px;
  float: left;
+}
+
+
+.dash2-vechile-detials-img .fa-battery-full{
+    font-size: 12px;
 }
 .dash2-vechile-detials-img img{
  width: 100%;
@@ -566,6 +571,11 @@ margin-left: 139px;
 }
 
 
+.dashboard-2-details .fuel-outer.fuel-out{
+    margin-left: 6px;
+}
+
+
  @media only screen and (max-width: 1500px) {
  .dash-boad1-rt-move {
  font-size: 0.8em;
@@ -602,6 +612,7 @@ margin-left: 139px;
   }
  .dashboard-2-details p {
     width: 70px;
+    line-height: 25px;
     font-size: 0.7em;
 }
    .dash-vechile-main-2-inner {
@@ -609,7 +620,9 @@ margin-left: 139px;
     padding-left: 3%;
 }
      .dashboard-2-details {
-    width: 84%;
+        width: 150px;
+        margin-left: 8px;
+
 }
      .dash-baord-rt-new-box2 {
         width: 400px;
@@ -645,7 +658,7 @@ margin-left: 139px;
  width: 100%;
  }
  .dash-baord-rt-new-box {
- width: 27%;
+    width: 300px;
 }
  .dashboard-serch-km-section {
  width: 60%;
@@ -660,6 +673,9 @@ margin-left: 139px;
  width: 100%;
  margin-left: 0;
 }
+.dash-vechile-detials-1-inner-lf {
+    width: 170px;
+}
 }
 
 @media only screen and (max-width: 980px) {
@@ -668,10 +684,10 @@ margin-left: 139px;
  width: 500px;
 }
 .dash-board-bt-inner form input {
- width: 160px;
+    width: 125px;
 }
  .dash-board-bt-inner form select {
- width: 160px;
+    width: 135px;
  margin-left: 15px;
  }
  .dash-board-bt-inner form button {
@@ -685,21 +701,91 @@ margin-left: 139px;
 }
 
 .dash-vechile-detials-1-inner-lf {
- width: 100%;
- float: left;
- border-bottom: 1px solid #f5f5f5;
- padding: 10px 0;
-}
+    width: 134px;
+    float: left;
 
- .dash-vechile-detail-text {
- width: 80%;
- margin-left: 5%;
+    padding: 1px 0;
+}
+.dash-vechile-detail-text {
+    width: 100px;
+    margin-left: 5%;
 }
  .dash-vechile-detials-1-inner {
  width: 95%;
  margin-bottom: 0;
  padding-left: 5%;
- border-bottom: 0px solid #f1f1f1;
+ border-bottom: 1px solid #f1f1f1;
  padding-bottom: 0;
 }
+.dash-board-bt-inner {
+    width: 368px;
+
 }
+}
+
+#connection_lost_last_seen{
+    width: 100%;
+    float: left;
+}
+
+.fuel-outer {
+    width: 67px;
+    float: right;
+    display: block;
+    margin-top: 6px;
+  }
+
+  .fuel-outer ul {
+    width: 100%;
+    float: left;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  #f100 {
+    width: 4%;
+    padding: 8% 8% 7% 3%;
+    margin-right: 3%;
+    float: left;
+    background: #74ce12;
+  }
+
+  #f75 {
+    width: 4%;
+    padding: 8% 8% 7% 3%;
+    margin-right: 3%;
+    float: left;
+    background: #c78307;
+  }
+
+  #f50 {
+    width: 4%;
+    padding: 8% 8% 7% 3%;
+    margin-right: 3%;
+    float: left;
+    background: #f79f1c;
+  }
+
+  #f25 {
+    width: 4%;
+    padding: 8% 8% 7% 3%;
+    margin-right: 3%;
+    float: left;
+    background: #f51902;
+  }
+
+  #f0 {
+    width: 4%;
+    padding: 8% 8% 7% 3%;
+    margin-right: 3%;
+    float: left;
+    background: #cecece;
+  }
+
+  .fuel-outer ul li:last-child {
+    margin-right: 0;
+  }
+  .container-fluid {
+    padding-left: 0px !important
+  }

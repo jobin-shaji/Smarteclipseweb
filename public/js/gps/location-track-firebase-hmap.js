@@ -10,8 +10,10 @@ var vehicle_data    = {
                       longitude :''
                     };
  var vehicle_lat,vehicle_lng;
+
 $('document').ready(function(){
   getFirebaseData();
+  $('#fuel_100, #fuel_75, #fuel_50, #fuel_25, #fuel_0, #upgrade').hide();
 
 });
 
@@ -112,7 +114,7 @@ function getFirebaseData()
         vehicle_lng = live_data_for_tracking.lon;
 
         vehicle_data.longitude = parseFloat(live_data_for_tracking.lon);
-        console.log(" longitude"+live_data_for_tracking.lat);
+        // console.log(" longitude"+live_data_for_tracking.lat);
         if(posLng == '')
         {
           posLng = parseFloat(live_data_for_tracking.lon);
@@ -149,7 +151,35 @@ function getFirebaseData()
       document.getElementById("vehicle_name").innerHTML = vehicle_reg;
       document.getElementById("car_battery").innerHTML  = battery_status;
       document.getElementById("ac").innerHTML           = ac;
-      document.getElementById("fuel").innerHTML         = fuel;
+      // document.getElementById("fuel").innerHTML         = fuel;
+      $('#fuel_100, #fuel_75, #fuel_50, #fuel_25, #fuel_0, #upgrade').hide();
+
+      if(fuel < 1)
+  {
+    $('#fuel_0').show();
+
+  }
+  else if((fuel > 0) && (fuel <= 25))
+  {
+    $('#fuel_25').show();
+  }
+  else if((fuel > 25) && (fuel <= 50))
+  {
+    $('#fuel_50').show();
+  }
+  else if((fuel > 50) && (fuel <= 75))
+  {
+    $('#fuel_75').show();
+  }
+  else if(fuel > 75)
+  {
+    $('#fuel_100').show();
+  }
+  else
+  {
+    $('#upgrade').show();
+    document.getElementById("upgradefuel").innerHTML = "Upgrade Version";
+  }
       document.getElementById("odometer").innerHTML     = odometer;
       getPlace(vehicle_data.latitude,vehicle_data.longitude);
 
@@ -413,7 +443,7 @@ function getFirebaseData()
     var maptypes                  = platform.createDefaultLayers(hidpi ? 512 : 256, hidpi ? 320 : null);
     var map                       = new H.Map(mapContainer, maptypes.normal.map);
     map.setCenter({ lat: 10.192656, lng: 76.386666 });
-    map.setZoom(14);
+    map.setZoom(12);
     var zoomToResult              = true;
     var mapTileService              = platform.getMapTileService({
         type: 'base'
@@ -494,6 +524,7 @@ function getFirebaseData()
     };
 
     async function createNewCoods(lat,lng,angle,mode,distance,previous_data){
+
       var bearing   = angle;
       var start       = [previous_data['lat'],previous_data['lng']];
       var end       = [lat, lng];
@@ -504,17 +535,16 @@ function getFirebaseData()
         new_coord = gis.createCoord(start, bearing, i);
         if (i > 0) {
           if (pCoordinates != new_coord[0]) {
-             await sleep(5);
+             await sleep(1);
               plotLocationOnMap(new_coord[0],new_coord[1],angle,mode)
               // moveMarker(angle,new_coord[0],new_coord[1],mode);
           }
         }
         pCoordinates = new_coord;
       }
+      // moveMarker(angle,new_coord[0],new_coord[1],mode);
       // plotLocationOnMap(lat,lng,angle,mode);
-
     }
-
 function moveMarker(RotateDegree,lat,lng,vehicle_mode){
 
   if ((bearsMarkeronStartPoint != null) && (blPlaceCaronMap == true)) {
@@ -543,8 +573,8 @@ function moveMarker(RotateDegree,lat,lng,vehicle_mode){
   }
 
   outerElement.appendChild(el);
-  outerElement.style.top = "-20px";
-  outerElement.style.width = "150px";
+  outerElement.style.top = "0px";
+  outerElement.style.width = "0px";
   var domIcon = new H.map.DomIcon(outerElement);
   bearsMarkeronStartPoint = new H.map.DomMarker({ lat:lat, lng:lng }, {
       icon: domIcon
@@ -556,7 +586,6 @@ function moveMarker(RotateDegree,lat,lng,vehicle_mode){
 
 function vehicleMoving(angle,lat,lng,speed,mode)
 {
-
   if(first_set_data == true)
   {
 
@@ -590,7 +619,6 @@ function vehicleMoving(angle,lat,lng,speed,mode)
 
 function plotLocationOnMap(lat,lng,angle,mode)
  {
-   console.log(lat+''+lng);
         moveMap(lat,lng);
         first_point=false;
         if( (startPointLatitude != null) && (startPointLongitude!=null) )

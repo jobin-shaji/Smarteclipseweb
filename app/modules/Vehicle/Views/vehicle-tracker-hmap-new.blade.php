@@ -123,7 +123,50 @@
               <img src="../../assets/images/fuel.png" class="fapad">
             </div>
             <div class=" dashboard-2-details"><p>FUEL</p>
-              <span id="fuel"></span>
+              <!-- <span id="fuel"></span> -->
+              <div id="fuel_100" class="fuel-outer fuel-out">
+                  <ul>
+                    <li id="f100"></li>
+                    <li id="f100"></li>
+                    <li id="f100"></li>
+                    <li id="f100"></li>
+                  </ul>
+                </div>
+                <div id="fuel_75" class="fuel-outer fuel-out">
+                  <ul>
+                    <li id="f75"></li>
+                    <li id="f75"></li>
+                    <li id="f75"></li>
+                    <li id="f0"></li>
+                  </ul>
+                </div>
+                <div id="fuel_50" class="fuel-outer fuel-out">
+                  <ul>
+                    <li id="f50"></li>
+                    <li id="f50"></li>
+                    <li id="f0"></li>
+                    <li id="f0"></li>
+                  </ul>
+                </div>
+                <div id="fuel_25" class="fuel-outer fuel-out">
+                  <ul>
+                    <li id="f25"></li>
+                    <li id="f0"></li>
+                    <li id="f0"></li>
+                    <li id="f0"></li>
+                  </ul>
+                </div>
+                <div id="fuel_0" class="fuel-outer fuel-out">
+                  <ul>
+                    <li id="f0"></li>
+                    <li id="f0"></li>
+                    <li id="f0"></li>
+                    <li id="f0"></li>
+                  </ul>
+                </div>
+                <div id="upgrade" class="fuel-outer fuel-out">
+                  <medium id="upgradefuel" class="font-light">
+                </div>
             </div>
           </div>
         </div>
@@ -180,12 +223,12 @@
   </div>
 @endsection
 @section('script')
+<link rel="stylesheet" href="{{asset('css/firebaselivetrack-new-css.css')}}" type="text/css">
   <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-core.js"></script>
   <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-service.js"></script>
   <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-ui.js"></script>
   <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-mapevents.js"></script>
   <link rel="stylesheet" type="text/css"
       href="https://js.hereapi.cn/v3/3.0/mapsjs-ui.css" />
-  <link rel="stylesheet" href="{{asset('css/firebaselivetrack-new-css.css')}}" type="text/css">
   <script src="{{asset('js/gps/location-track-firebase-hmap.js')}}"></script>
 @endsection

@@ -1646,68 +1646,7 @@
   <script src="{{asset('js/gps/GoogleRadar.js')}}"></script>
   <script src="{{asset('dist/js/st.action-panel.js')}}"></script>
   <style type="text/css">
-    .container-fluid {
-      padding-left: 0px !important
-    }
 
-    .fuel-outer {
-      width: 67px;
-      float: right;
-      display: block;
-      margin-top: 6px;
-    }
-
-    .fuel-outer ul {
-      width: 100%;
-      float: left;
-      margin: 0;
-      padding: 0;
-      list-style: none;
-    }
-
-    #f100 {
-      width: 4%;
-      padding: 8% 8% 7% 3%;
-      margin-right: 3%;
-      float: left;
-      background: #74ce12;
-    }
-
-    #f75 {
-      width: 4%;
-      padding: 8% 8% 7% 3%;
-      margin-right: 3%;
-      float: left;
-      background: #c78307;
-    }
-
-    #f50 {
-      width: 4%;
-      padding: 8% 8% 7% 3%;
-      margin-right: 3%;
-      float: left;
-      background: #f79f1c;
-    }
-
-    #f25 {
-      width: 4%;
-      padding: 8% 8% 7% 3%;
-      margin-right: 3%;
-      float: left;
-      background: #f51902;
-    }
-
-    #f0 {
-      width: 4%;
-      padding: 8% 8% 7% 3%;
-      margin-right: 3%;
-      float: left;
-      background: #cecece;
-    }
-
-    .fuel-outer ul li:last-child {
-      margin-right: 0;
-    }
   </style>
   @endrole
 
