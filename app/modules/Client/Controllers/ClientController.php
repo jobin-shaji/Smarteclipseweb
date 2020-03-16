@@ -160,7 +160,11 @@ class ClientController extends Controller {
                 'mobile' => $request->mobile_number,
                 'status' => 1,
                 'password' => bcrypt($request->password),
-                'role' => $trader_id,
+                'role' => 0,
+            ]);
+            $client = Client::create([
+                'user_id' => $user->id,
+                'trader_id' => $trader_id,
                 'name' => strtoupper($request->name),
                 'address' => $request->address,
                 'latitude'=>$location_lat,
