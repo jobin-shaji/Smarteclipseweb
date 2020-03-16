@@ -52,13 +52,8 @@
         <li><a href="#service">Authorized Service Center</a></li>
           <li><a href="#appscreen">App Screens</a></li>
         <li><a href="#contact">Contact</a></li>
-<<<<<<< HEAD
           
                <li><a href="/login" class="login-button button-color">Login</a></li>
-=======
-
-               <li><a href="/login" class="login-button button-color">login</a></li>
->>>>>>> 75226d540a08e23c7795edd603ce7e780fdaf4e5
       </ul>
     </div>
      </div>
@@ -125,15 +120,9 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-body">
-<<<<<<< HEAD
         
           <iframe id="iframeYoutube"   src="https://www.youtube.com/embed/k2dYxN3e-KI" frameborder="0" allowfullscreen></iframe> 
           
-=======
-
-          <iframe id="iframeYoutube"   src="https://www.youtube.com/embed/DcAcm5ONX28" frameborder="0" allowfullscreen></iframe>
-
->>>>>>> 75226d540a08e23c7795edd603ce7e780fdaf4e5
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i></button>
@@ -239,15 +228,9 @@
               <i class="fas fa-circle fa-stack-2x"></i>
               <i class="fas fa-plus fa-stack-1x fa-inverse"></i>
             </span>
-<<<<<<< HEAD
                 <p c>Smart Features</p>
             
           
-=======
-                <p c>Smart features</p>
-
-
->>>>>>> 75226d540a08e23c7795edd603ce7e780fdaf4e5
           </button>
 
       </div>
@@ -390,15 +373,9 @@
                   <div class="service-center-content-box-rt">
                   <div class="sevice-cent-sub-head">Ernakulam</div>
                       <div class="sevice-cent-sub-text">
-<<<<<<< HEAD
                       
                       <span>Central I Track</span>
                           <p>Central I Track, St.Ritas Road, Near <br> Gold Souk, Vyttila, Kochi - 682019</p>
-=======
-
-                      <span>Central i track</span>
-                          <p>Central Itrack ,St.Ritas Road,Near <br> Gold Souck, Vytilla,Kochi - 682019</p>
->>>>>>> 75226d540a08e23c7795edd603ce7e780fdaf4e5
                           <p>Mob: 9188521721</p>
                       </div>
 
@@ -485,13 +462,8 @@
                       <div class="sevice-cent-sub-text">
 
                       <span>Tectiv</span>
-<<<<<<< HEAD
                           <p>Networking And Security Systems<br> Door N0:15/486n Center Point Building <br>Near RTO Office Vellarikundu P.O - 671533 </p>
                      
-=======
-                          <p>Networking And Security Systems<br> Door N0:15/486n Center Point Building <br>Near Rto Office Vellarikundu (Po)<br> Pin :671533 </p>
-
->>>>>>> 75226d540a08e23c7795edd603ce7e780fdaf4e5
                      <p></p> </div>
 
                   </div>
