@@ -316,8 +316,7 @@ class ClientController extends Controller {
     //update dealers details
     public function update(Request $request)
     {
-        $client = Client::select('user_id','name','latitude','longitude','location','address','latest_user_updates')
-                  ->where('user_id', $request->id)->first();
+        $client = Client::where('user_id', $request->id)->first();
         if($client == null){
            return view('Client::404');
         }
@@ -377,7 +376,7 @@ class ClientController extends Controller {
 
         $client=\Auth::user()->sub_dealer;
         $user=User::find($request->id);
-        $client=Client::select('user_id','latest_user_updates')->where('user_id',$user->id)->first();
+        $client=Client::where('user_id',$user->id)->first();
         $current_date=date('Y-m-d H:i:s');
         $client->latest_user_updates = $current_date;
         $client->save();
@@ -932,7 +931,7 @@ class ClientController extends Controller {
      //update dealers details
     public function profileUpdate(Request $request)
     {
-        $client = Client::select('user_id','latest_user_updates','name','address')->where('user_id', $request->id)->first();
+        $client = Client::where('user_id', $request->id)->first();
         if($client == null){
            return view('Client::404');
         }
