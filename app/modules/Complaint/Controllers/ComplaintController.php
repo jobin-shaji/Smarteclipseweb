@@ -8,6 +8,7 @@ use App\Modules\Complaint\Models\Comment;
 use App\Modules\Ticket\Models\Ticket;
 use App\Modules\SubDealer\Models\SubDealer;
 use App\Modules\Servicer\Models\Servicer;
+use App\Modules\Servicer\Models\ServicerJob;
 use App\Modules\Client\Models\Client;
 use App\Modules\Gps\Models\Gps;
 use App\Modules\Vehicle\Models\Vehicle;
@@ -361,6 +362,11 @@ class ComplaintController extends Controller {
         if(\Auth::user()->hasRole('sub_dealer'))
         {
             $sub_dealer_id=\Auth::user()->SubDealer->id;
+            $clients= Client::select('id', 'name','sub_dealer_id')->where('sub_dealer_id',$sub_dealer_id)->get();
+            $client_id = [];
+            foreach($clients as $client){
+                $client_id[] = $client->id;
+            }
             $servicer =$servicer->where('sub_dealer_id',$sub_dealer_id)
             ->where('type',2);
         }
@@ -369,23 +375,28 @@ class ComplaintController extends Controller {
             $servicer =$servicer->where('type',1);
         }else
         {
-             $trader_id=\Auth::user()->trader->id;
+            $trader_id=\Auth::user()->trader->id;
+            $clients= Client::select('id', 'name','trader_id')->where('trader_id',$trader_id)->get();
+            $client_id = [];
+            foreach($clients as $client){
+                $client_id[] = $client->id;
+            }
              $servicer =$servicer->where('trader_id',$trader_id)
              ->where('type',3); 
         }
+
         $servicer =$servicer->get();
         if($complaint == null){
            return view('Complaint::404');
         }
 
-        return view('Complaint::assign-complaint-to-servicer',['complaint' => $complaint,'complaint_comments' => $complaint_comments,'servicers'=>$servicer]);
+        return view('Complaint::assign-complaint-to-servicer',['complaint' => $complaint,'complaint_comments' => $complaint_comments,'servicers'=>$servicer,'client'=>$clients]);
     }
 
     public function assignComplaintToServicer(Request $request)
     {
         $user_id=\Auth::user()->id;
      
-
         $complaint = Complaint::where('id', $request->id)->first();
         if($complaint == null){
            return view('Complaint::404');
@@ -395,7 +406,33 @@ class ComplaintController extends Controller {
         $complaint->servicer_id=$request->servicer;
         $complaint->assigned_by=$user_id;
         $complaint->status=1;
-        $complaint->save();       
+        $complaint->save();  
+
+        $gps = Gps::select('id')->where('imei', $request->imei)->first();
+        $client = Client::select('id','user_id')->where('id', $complaint->client_id)->first();
+        $role  = User::select('role')->where('id', $client->user_id)->first();
+        if($role == null)
+        {
+            $role = 1;
+        }
+        $job_date=date("Y-m-d H:i:s", strtotime($request->job_date));
+        $servicer = ServicerJob::create([
+            'servicer_id' => $request->servicer,
+            'client_id' => $client->id,
+            'job_id' => str_pad(mt_rand(0, 999999), 5, '0', STR_PAD_LEFT),
+            'job_type' => 2,
+            'start_code' => str_pad(mt_rand(100000, 999999), 6, '0', STR_PAD_LEFT),
+            'user_id' => $user_id,
+            'description' => $request->description,
+            'role' => $role->role,
+            'job_date' => $job_date,
+            'gps_id' => $gps->id,
+            'status' => 1, //ASSIGN STATUS
+            'location'=>$request->search_place,
+            'job_status'=>0
+        ]);
+        $servicer->save(); 
+
         $did = encrypt($complaint->id);
          $request->session()->flash('message', 'New Complaint successfully Assigned!'); 
         $request->session()->flash('alert-class', 'alert-success'); 
