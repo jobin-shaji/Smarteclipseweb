@@ -45,7 +45,7 @@ class TotalKMReportController extends Controller
         // $search_to_date=date("Y-m-d", strtotime($to));
         if($vehicle!=0)
         {
-           
+          
             $vehicle_details=Vehicle::select('id','gps_id')
                                         ->where('id',$vehicle)
                                         ->withTrashed()
@@ -54,8 +54,8 @@ class TotalKMReportController extends Controller
         }
         else
         {
-            
-            $vehicle_details =  Vehicle::select('id','gps_id','client_id')->where('client_id',$client)->withTrashed()->get();
+           
+            $vehicle_details =  Vehicle::select('id','gps_id','client_id')->where('client_id',$client_id)->withTrashed()->get();
 
             foreach($vehicle_details as $vehicle_detail){
                 $single_vehicle_id[] = $vehicle_detail->gps_id; 
