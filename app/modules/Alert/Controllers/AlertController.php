@@ -33,7 +33,7 @@ class AlertController extends Controller {
         ->get();
         $single_vehicle_gps = [];
         foreach($VehicleGpss as $VehicleGps){
-            $confirm_alerts =Alert::select('gps_id','status')->where('gps_id', $VehicleGps->gps_id)->update(['status'=> 1]);
+            $confirm_alerts =Alert::select('id','gps_id','status')->where('gps_id', $VehicleGps->gps_id)->update(['status'=> 1]);
              $single_vehicle_gps[] = $VehicleGps->gps_id;
         }
         $userAlerts = UserAlerts::select(
@@ -92,7 +92,7 @@ class AlertController extends Controller {
             $single_vehicle_gps[] = $VehicleGps->gps_id;
         }
      
-        $confirm_alerts = Alert::select('gps_id','status')->whereIn('gps_id', $single_vehicle_gps)->get();
+        $confirm_alerts = Alert::whereIn('gps_id', $single_vehicle_gps)->get();
        
         foreach($confirm_alerts as $confirm_alert){
             $confirm_alert->status=1;
@@ -472,7 +472,7 @@ class AlertController extends Controller {
         $client_id=\Auth::user()->client->id;
         $single_vehicle_gps =  $this->singleGps($client_id);
         
-        $confirm_alerts =Alert::select('gps_id','status')->whereIn('gps_id', $single_vehicle_gps)->where('status', 0)->update(['status'=> 1]);
+        $confirm_alerts =Alert::select('id','gps_id','status')->whereIn('gps_id', $single_vehicle_gps)->where('status', 0)->update(['status'=> 1]);
         return response()->json([]);
     }
     function singleGps($client_id){
@@ -536,7 +536,7 @@ class AlertController extends Controller {
     public function alertLocation(Request $request)
     {
         $decrypted_id   =   $request->id;
-        $alert_details  =   Alert::select('id','latitude','longitude')->where('id',$decrypted_id)->first();
+        $alert_details  =   Alert::where('id',$decrypted_id)->first();
         if($alert_details)
         {
             $alert_details->status  =   1;
@@ -615,7 +615,7 @@ class AlertController extends Controller {
     }
     public function alertUpdation(Request $request){
         $decrypted_id = $request->id;
-        $get_alerts=Alert::select('id','status','latitude','longitude','alert_type_id','device_time')->where('id',$decrypted_id)->first();
+        $get_alerts=Alert::where('id',$decrypted_id)->first();
         $get_alerts->status=1;
         $get_alerts->save();
         $placeName=$this->getPlacenameFromLatLng($get_alerts->latitude,$get_alerts->longitude);

@@ -771,7 +771,7 @@
               <h3 id="pending_jobs">
                 <div class="loader"></div>
               </h3>
-              <p>Installation Job</p>
+              <p> New Installations </p>
             </div>
             <div class="icon">
               <i class="fa fa-tablet"></i>
@@ -828,7 +828,7 @@
               <h3 id="all_pending_jobs">
                 <div class="loader"></div>
               </h3>
-              <p>PENDING JOBS</p>
+              <p>On Progress Installations</p>
             </div>
             <div class="icon">
               <i class="fa fa-tablet"></i>
