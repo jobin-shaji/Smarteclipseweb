@@ -183,6 +183,7 @@ class Vehicle extends Model
                     'is_returned'
                     )
                     ->where('gps_id',$gps_id)
+                    ->withTrashed()
                     ->first();
     }
 }

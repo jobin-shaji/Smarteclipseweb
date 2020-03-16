@@ -25,6 +25,6 @@ class DeviceReturnHistory extends Model
      */
     public function getTransferHistory($device_return_id)
     {
-        return self::select('activity', 'created_at')->where('device_return_id',$device_return_id)->orderBy('created_at','desc')->get();
+        return self::select('activity', 'created_at')->where('device_return_id',$device_return_id)->orderBy('id','desc')->get();
     }
 }

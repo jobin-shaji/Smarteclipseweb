@@ -9,7 +9,6 @@ function acceptDeviceReturn(device_return_id){
             id : device_return_id
         };
         backgroundPostData(url,data,'callBackDataTables',{alert:true}); 
-      
     } 
     setTimeout(function() {
         document.location.reload()

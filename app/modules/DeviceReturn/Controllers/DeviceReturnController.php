@@ -239,7 +239,7 @@ class DeviceReturnController extends Controller
         $device_return->save();
         $gps_data                   =   (new Gps())->getGpsDetails($device_return->gps_id);
         $gps_data_in_stock          =   (new GpsStock())->getSingleGpsStockDetails($device_return->gps_id);
-        $gps_in_vehicle             =   (new Vehicle())->getSingleVehicleDetailsBasedOnGps($device_return->gps_id)->first();
+        $gps_in_vehicle             =   (new Vehicle())->getSingleVehicleDetailsBasedOnGps($device_return->gps_id);
 
         //old data stored in a variable for creating new row
         $imei                       =    $gps_data->imei;
@@ -428,8 +428,11 @@ class DeviceReturnController extends Controller
         if($device_to_gps_table)
         {
             (new GpsStock())->createNewGpsInStock($device_to_gps_table->id,$root_id);
-            (new DeviceReturnHistory())->addHistory($device_return_id, $activity);
-            (new DeviceReturnHistory())->addHistory($device_return_id, $custom_activity);
+            $stock_summary          =   (new DeviceReturnHistory())->addHistory($device_return_id, $activity);
+            if($stock_summary)
+            {
+                (new DeviceReturnHistory())->addHistory($device_return_id, $custom_activity);
+            }
         }
         $request->session()->flash('message', 'GPS added to stock successfully!'); 
         $request->session()->flash('alert-class', 'alert-success'); 

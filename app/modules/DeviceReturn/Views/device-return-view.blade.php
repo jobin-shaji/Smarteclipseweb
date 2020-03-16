@@ -117,14 +117,14 @@
       <div class="card">
         <div class="card-body wizard-content">
           <div class="box-body">
-            <ul class="list-group">
-              @foreach ($device_return_history_details as $each_activity)
-                <span class="device-return-history-timestamp">{{ $each_activity->created_at }}</span>
-                <li class="list-group-item device-return-history-item">
-                  <b>{{ $each_activity->activity}}</b>
-                </li> 
-              @endforeach
-            </ul>
+          <ul class="timeline">
+            @foreach ($device_return_history_details as $each_activity)
+              <li>
+                <span style='color: #0395ce;'>{{ $each_activity->created_at }}</span>
+                <p>{{ $each_activity->activity}}</p>
+              </li>
+            @endforeach
+          </ul>
           </div>
         </div>
       </div>
@@ -170,21 +170,45 @@
 <!-- /add note modal section -->
 
 <style>
-.device-return-history-item{
-  margin-bottom:10px;
-}
-.device-return-history-timestamp{
-  font-size:10px;
-}
 table, th, td {
   border: 1px solid black;
 }
 tr:hover {background-color: #D5D4D5;}
+ul.timeline {
+    list-style-type: none;
+    position: relative;
+}
+ul.timeline:before {
+    content: ' ';
+    background: #d4d9df;
+    display: inline-block;
+    position: absolute;
+    left: 29px;
+    width: 2px;
+    height: 100%;
+    z-index: 400;
+}
+ul.timeline > li {
+    margin: 20px 0;
+    padding-left: 20px;
+}
+ul.timeline > li:before {
+    content: ' ';
+    background: white;
+    display: inline-block;
+    position: absolute;
+    border-radius: 50%;
+    border: 3px solid #22c0e8;
+    left: 20px;
+    width: 20px;
+    height: 20px;
+    z-index: 400;
+}
 </style>
 @section('script')
- @role('root')
+  @role('root')
     <script src="{{asset('js/gps/device-return-root-history-list.js')}}"></script>
   @endrole
   
 @endsection
- @endsection
+@endsection
