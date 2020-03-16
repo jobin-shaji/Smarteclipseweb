@@ -63,7 +63,7 @@ class DriverController extends Controller {
     {
 
         $client_id=\Auth::user()->client->id;
-        $driver_available = Driver::where('mobile','=',$request->mobile)->where('client_id', $client_id)->count();
+        $driver_available = Driver::where('mobile','=',$request->mobile)->where('client_id', $client_id)->withTrashed()->count();
         if ($driver_available >= 1)
         {
             $data       = [
