@@ -49,7 +49,7 @@
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="{{url('/unprocessed-data-list')}}">UNPROCESSED DATA</a>
+                <a class="dropdown-item" href="{{url('/unprocessed-data-list')}}">VLT DATA (PROCESSED & UNPROCESSED)</a>
                 <a class="dropdown-item" href="{{url('/operation-gps-data')}}">PROCESSED DATA </a>
                 <a class="dropdown-item" href="{{url('/packet-split-data')}}">
                 NRM PACKET DATA </a>
