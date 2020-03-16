@@ -121,7 +121,7 @@ function validate_driver_mobileno()
                 {
 
                     toastr.error( 'Driver with this mobile number already exists', 'Error');
-                    reloadPageWithAdelay(2000);
+                    // reloadPageWithAdelay(2000);
                 }
                 else
                 {

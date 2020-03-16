@@ -19,9 +19,7 @@ Vehicle Details
     </div>
     @endif
   </nav>
-
-
-  <div class="container-fluid">
+<div class="container-fluid">
     <div class="card-body">
       <div class="table-responsive">
         <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
