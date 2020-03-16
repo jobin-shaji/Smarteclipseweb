@@ -18,9 +18,9 @@ class VltData extends Model
     public function getUnprocessedVltData($imei, $header, $search_key)
     {
         $query  =   DB::table('vlt_data')
-            ->where('is_processed', '0')
-            ->select('vltdata','created_at')
-            ->orderBy('created_at','DESC');
+                        // ->where('is_processed', '0')
+                        ->select('vltdata','created_at')
+                        ->orderBy('created_at','DESC');
         if( $imei != '0' )
         {
             $query = $query->where('imei', $imei);
