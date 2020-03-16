@@ -423,8 +423,33 @@ class ServicerController extends Controller {
     }
     public function jobList()
     {
-
-        return view('Servicer::job-list');
+        $user_id=\Auth::user()->servicer->id;
+        $servicer_jobs = ServicerJob::select(
+            'id',
+            'servicer_id',
+            'client_id',
+            'job_id',
+            'job_type',
+            'user_id',
+            'description',
+            'gps_id',
+            'job_complete_date',
+            'job_date',
+            'created_at',
+            'location',
+            'status','completion_code'
+        )
+        ->where('servicer_id',$user_id)
+        ->where('job_type',1)
+        ->whereNull('job_complete_date')
+        ->with('gps:id,imei,serial_no')
+        ->with('user:id,username')
+        ->with('clients.user')
+        ->with('servicer:id,name')
+        ->get();
+       
+        return view('Servicer::job-list',['servicer_jobs' => $servicer_jobs]);
+       
     }
      // for service
      public function serviceJobList()

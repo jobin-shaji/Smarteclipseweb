@@ -19,44 +19,73 @@
         @endif
     </nav>
 
- <div class="container-fluid">
-    <div class="card-body">
-      <div class="table-responsive scrollmenu">
-        <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
-          <div class="row">
-            <div class="col-sm-12">
-              <div class="panel-heading">
+ 
+        <table class="table table-hover table-bordered  table-striped datatable"  style="width:100%;text-align: center" >
+        <thead class="indigo white-text">
+        <tr>
+        <!-- <th><b>SL.No</b></th> -->
+            <th><b>Job Code</b></th>
+            <th><b>User Details</b></th>
+            <th><b>Assignee<b></th>
+            <th><b>GPS Serial No<b></th>
+            <th><b>Description<b></th>
+            <th><b>Location<b></th>
+            <th><b>Job Date<b></th>
+            <th><b>Status<b></th>  
+            <th><b>Action</b></th>  
 
-              <table class="table table-hover table-bordered  table-striped datatable" style="width:100%;text-align: center;" id="dataTable">
-                <thead>
-                  <tr>
-                    <th>SL.No</th>
-                    <th>Job Code</th>
-                    <th>End User</th>
-                    <th>Mobile</th>
-                    <th>Email</th>
-                    <th>Address</th>
-                    <th>Job Type</th>
-                    <th>Assignee</th>
-                    <th>GPS Serial No</th>
-                    <th>Description</th>
-                    <th> Job Location</th>
-                    <th>Job Date</th>
-                    <th>Status</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
- </div>
+        </tr>
+    </thead>
+    <tbody>
+    @if($servicer_jobs->count() == 0)
+                            <tr>
+                              <td></td>
+                              <td></td>
+                              <td><b style="float: right;margin-right: -13px">No data</b></td>
+                              <td><b style="float: left;margin-left: -15px">Available</b></td>
+                              <td></td>
+                              <td></td>
+                            </tr>
+                            @endif
+                         
+        @foreach($servicer_jobs as $servicer_job)
+                      
+        <tr>
+       
+            <td>{{$servicer_job->job_id}}</td>
+          
+            <td>{{$servicer_job->clients->name}} , {{$servicer_job->clients->user->mobile}}
+            <br>{{$servicer_job->clients->user->email}}<br>{{$servicer_job->clients->address}}
+              </td>
+            <td>{{$servicer_job->user->username}}</td>
+            <td>{{$servicer_job->gps->serial_no}}</td>
+            <td>{{$servicer_job->description}}</td>
+            <td>{{$servicer_job->location}}</td>
+
+            <td>{{$servicer_job->job_date}}</td>
+            @if($servicer_job->status == 0)
+            <td>Cancel</td>
+            @elseif ($servicer_job->status == 1)
+            <td>Assigned</td>
+            @elseif ($servicer_job->status == 2)
+            <td>Pending</td>
+            @else
+            <td>Completed</td>
+            @endif
+        </tr>
+        @endforeach
+    </tbody>
+</table>
+
 </div>
+<style>
+  th {
+    background-color:#778899 ;
+    color: white;
+} 
+  </style>
 @endsection
 
   @section('script')
-    <script src="{{asset('js/gps/job-list.js')}}"></script>
+    
   @endsection

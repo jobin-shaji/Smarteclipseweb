@@ -253,14 +253,17 @@ class DashboardController extends Controller
     function servicerDashboardView($user)
     {
         $servicer_id=$user->servicer->id;
+      
         return response()->json([
 
             'pending_jobs' => ServicerJob::select('job_complete_date')->whereNull('job_complete_date')
-             ->where('servicer_id',$servicer_id)->where('job_type',1)->count(),
-             'pending_service_jobs' => ServicerJob::select('job_complete_date','servicer_id','job_type')->whereNull('job_complete_date')->where('servicer_id',$servicer_id) ->where('job_type',2)->count(),
+             ->where('servicer_id',$servicer_id)->where('job_type',1)->where('status',1)->count(),
+             'on_progress_installation_jobs' => ServicerJob::select('id','status','job_complete_date')->whereNull('job_complete_date')
+              ->where('servicer_id',$servicer_id)->where('status',2)->where('job_type',1)->count(),
+             'pending_service_jobs' => ServicerJob::select('id','job_complete_date','servicer_id','job_type')->whereNull('job_complete_date')->where('servicer_id',$servicer_id) ->where('job_type',2)->count(),
             'completed_jobs' => ServicerJob::select('job_complete_date','servicer_id','job_type','status')->whereNotNull('job_complete_date')->where('servicer_id',$servicer_id)->where('job_type',1)->where('status',3)->count(),
             'service_completed_jobs' => ServicerJob::select('job_complete_date','servicer_id','job_type','status')->whereNotNull('job_complete_date')->where('servicer_id',$servicer_id)->where('job_type',2)->where('status',3)->count(),
-            'all_pending_jobs' => ServicerJob::select('job_date','job_complete_date','servicer_id')->where('job_date','<',date('Y-m-d H:i:s'))->whereNull('job_complete_date')->where('servicer_id',$servicer_id)->count(),
+            'servicer_all_pending_jobs' => ServicerJob::select('id','job_date','job_complete_date','servicer_id')->whereNull('job_complete_date')->where('servicer_id',$servicer_id)->where('status',2)->where('job_type',2)->count(),
 
             'status' => 'dbcount'
         ]);
