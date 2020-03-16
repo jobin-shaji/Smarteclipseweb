@@ -143,17 +143,18 @@ class Gps extends Model
     {
         
         return  self::create([
-                        'serial_no'         =>  $serial_no,
-                        'icc_id'            =>  $icc_id,
-                        'imsi'              =>  $imsi,
-                        'imei'              =>  $imei,
-                        'manufacturing_date'=>  $manufacturing_date,
-                        'e_sim_number'      =>  $e_sim_number,
-                        'batch_number'      =>  $batch_number,
-                        'model_name'        =>  $model_name,
-                        'version'           =>  $version,
-                        'employee_code'     =>  $employee_code,
-                        'status'            =>  1
+                        'serial_no'             =>  $serial_no,
+                        'icc_id'                =>  $icc_id,
+                        'imsi'                  =>  $imsi,
+                        'imei'                  =>  $imei,
+                        'manufacturing_date'    =>  $manufacturing_date,
+                        'e_sim_number'          =>  $e_sim_number,
+                        'batch_number'          =>  $batch_number,
+                        'model_name'            =>  $model_name,
+                        'version'               =>  $version,
+                        'employee_code'         =>  $employee_code,
+                        'status'                =>  1,
+                        'refurbished_status'    =>  1
                     ]); 
     }
 }

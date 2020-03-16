@@ -5,9 +5,26 @@ $(document).ready(function () {
 
 
 function callBackDataTable(){
-    var  data = {
-    
-    }; 
+    var new_device          =   document.getElementById('new_device');
+    var refurbished_device  =   document.getElementById('refurbished_device');
+    if(new_device.checked == true && refurbished_device.checked == true)
+    {
+        new_device          =   1; 
+        refurbished_device  =   1;
+    }
+    else if(new_device.checked == true && refurbished_device.checked == false){
+        new_device          =   1; 
+        refurbished_device  =   0;
+    }
+    else if(new_device.checked == false && refurbished_device.checked == true){
+        new_device          =   0; 
+        refurbished_device  =   1;
+    }
+    else if(new_device.checked == false && refurbished_device.checked == false){
+        new_device          =   0; 
+        refurbished_device  =   0;
+    }
+    var  data = {'new_device':new_device,'refurbished_device':refurbished_device}
 
     $("#dataTable").DataTable({
         bStateSave: true,
@@ -19,9 +36,7 @@ function callBackDataTable(){
         ajax: {
             url: 'gps-list',
             type: 'POST',
-            data: {
-                'data': data
-            },
+            data: data,
             headers: {
                 'X-CSRF-Token': $('meta[name = "csrf-token"]').attr('content')
             }

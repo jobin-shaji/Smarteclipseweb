@@ -73,8 +73,9 @@ class GpsStock extends Model
     public function createNewGpsInStock($gps_id,$root_id)
     {
         return  self::create([
-                        'gps_id'=> $gps_id,
-                        'inserted_by' => $root_id
+                        'gps_id'                =>  $gps_id,
+                        'inserted_by'           =>  $root_id,
+                        'refurbished_status'    =>  1
                     ]); 
     }
 

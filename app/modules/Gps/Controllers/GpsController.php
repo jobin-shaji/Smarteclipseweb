@@ -39,20 +39,38 @@ class GpsController extends Controller {
         return view('Gps::gps-list');
 	}
 	//returns gps as json
-    public function getGps()
+    public function getGps(Request $request)
     {
-        $user_id=\Auth::user()->id;
-        $gps_stocks = GpsStock::select(
-            'id',
-        	'gps_id',
-            'dealer_id',
-            'deleted_at'
-        )
-        ->orderBy('id','desc')
-        ->withTrashed()
-        ->with('gps:id,imei,serial_no,manufacturing_date,e_sim_number,batch_number,employee_code,model_name,version,deleted_at')
-        ->where('dealer_id',null)
-        ->get();
+        $new_device             =   $request->new_device;
+        $refurbished_device     =   $request->refurbished_device;
+        $user_id                =   \Auth::user()->id;
+        $gps_stocks             =   GpsStock::select(
+                                        'id',
+                                        'gps_id',
+                                        'dealer_id',
+                                        'deleted_at'
+                                )
+                                ->orderBy('id','desc')
+                                ->withTrashed()
+                                ->with('gps:id,imei,serial_no,manufacturing_date,e_sim_number,batch_number,employee_code,model_name,version,deleted_at')
+                                ->where('dealer_id',null);
+        // if($new_device == '1' && $refurbished_device == '1')
+        // {
+        //     new_device          =   1; 
+        //     refurbished_device  =   1;
+        // }
+        // else if(new_device.checked == true && refurbished_device.checked == false){
+        //     new_device          =   1; 
+        //     refurbished_device  =   0;
+        // }
+        // else if(new_device.checked == false && refurbished_device.checked == true){
+        //     new_device          =   0; 
+        //     refurbished_device  =   1;
+        // }
+        // else if(new_device.checked == false && refurbished_device.checked == false){
+        //     new_device          =   0; 
+        //     refurbished_device  =   0;
+        // }
         return DataTables::of($gps_stocks)
         ->addIndexColumn()
         ->addColumn('action', function ($gps_stocks) {
@@ -177,7 +195,7 @@ class GpsController extends Controller {
             ]);
 
         if($gps){
-           $gps_stock = GpsStock::create([
+            $gps_stock = GpsStock::create([
                 'gps_id'=> $gps->id,
                 'inserted_by' => $root_id
             ]);
@@ -191,14 +209,14 @@ class GpsController extends Controller {
     public function details(Request $request)
     {
 
-         \QrCode::size(500)
-          ->format('png')
-          ->generate(public_path('images/qrcode.png'));
+        \QrCode::size(500)
+            ->format('png')
+            ->generate(public_path('images/qrcode.png'));
         $eid=$request->id;
         $decrypted_id = Crypt::decrypt($request->id);
         $gps = Gps::find($decrypted_id);
         if($gps == null){
-           return view('Gps::404');
+            return view('Gps::404');
         }
 
         return view('Gps::gps-details',['gps' => $gps,'eid' => $eid]);
