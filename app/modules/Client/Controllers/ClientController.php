@@ -176,9 +176,9 @@ class ClientController extends Controller {
                 'latest_user_updates'=>$current_date
             ]);
             if($request->client_category=="school"){
-                User::select('username')->where('username', $request->username)->first()->assignRole('school');
+                User::select('id','username')->where('username', $request->username)->first()->assignRole('school');
             }else{
-                User::select('username')->where('username', $request->username)->first()->assignRole('client');
+                User::select('id','username')->where('username', $request->username)->first()->assignRole('client');
             }
            
             $alert_types = AlertType::select(
