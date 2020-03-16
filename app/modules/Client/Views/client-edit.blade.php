@@ -26,7 +26,8 @@
         <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">  
           <div class="row">
             <div class="col-sm-12">
-              <form  method="POST" action="{{route('client.update.p',$user->id)}}">
+            
+              <form  method="POST" action="{{route('client.update.p',$client->user->id)}}">
               {{csrf_field()}}
                 <div class="row">
                   <div class="col-md-6">
@@ -56,7 +57,7 @@
                       if (strpos($url, $rayfleet_key) == true) {  ?>
                         <div class="form-group has-feedback">
                           <label class="srequired">Mobile Number</label>
-                          <input type="text" required pattern="[0-9]{11}" class="form-control {{ $errors->has('mobile_number') ? ' has-error' : '' }}" placeholder="Mobile Number" name="mobile_number" value="{{$user->mobile}}" maxlength="11" title="Mobile number should be exactly 11 digits" />
+                          <input type="text" required pattern="[0-9]{11}" class="form-control {{ $errors->has('mobile_number') ? ' has-error' : '' }}" placeholder="Mobile Number" name="mobile_number" value="{{$client->user->mobile}}" maxlength="11" title="Mobile number should be exactly 11 digits" />
                         </div>
                         @if ($errors->has('mobile_number'))
                           <span class="help-block">
@@ -68,7 +69,7 @@
                       else if (strpos($url, $eclipse_key) == true) { ?>
                         <div class="form-group has-feedback">
                           <label class="srequired">Mobile Number</label>
-                          <input type="text" required pattern="[0-9]{10}" class="form-control {{ $errors->has('mobile_number') ? ' has-error' : '' }}" placeholder="Mobile Number" name="mobile_number" value="{{$user->mobile}}" maxlength="10" title="Mobile number should be exactly 10 digits" />
+                          <input type="text" required pattern="[0-9]{10}" class="form-control {{ $errors->has('mobile_number') ? ' has-error' : '' }}" placeholder="Mobile Number" name="mobile_number" value="{{$client->user->mobile}}" maxlength="10" title="Mobile number should be exactly 10 digits" />
                         </div>
                         @if ($errors->has('mobile_number'))
                           <span class="help-block">
@@ -80,7 +81,7 @@
                       else { ?>
                         <div class="form-group has-feedback">
                           <label class="srequired">Mobile Number</label>
-                          <input type="text" required pattern="[0-9]{10}" class="form-control {{ $errors->has('mobile_number') ? ' has-error' : '' }}" placeholder="Mobile Number" name="mobile_number" value="{{$user->mobile}}" maxlength="10" title="Mobile number should be exactly 10 digits" />
+                          <input type="text" required pattern="[0-9]{10}" class="form-control {{ $errors->has('mobile_number') ? ' has-error' : '' }}" placeholder="Mobile Number" name="mobile_number" value="{{$client->user->mobile}}" maxlength="10" title="Mobile number should be exactly 10 digits" />
                         </div>
                         @if ($errors->has('mobile_number'))
                           <span class="help-block">
@@ -89,16 +90,54 @@
                         @endif
                       </div>
                       <?php } ?>
-                    
-                        <div class="form-group has-feedback">
-                          <label class="srequired">Location</label>
-                          <input type="text" class="form-control {{ $errors->has('address') ? ' has-error' : '' }}" placeholder="Location" name="search_place" id="search_place" value="{{$location}}" maxlength="150" required>
-                        </div> 
-                        @if ($errors->has('search_place'))
-                        <span class="help-block">
-                          <strong class="error-text">{{ $errors->first('search_place') }}</strong>
-                        </span>
+
+
+                      <div class="form-group row" style="float:none!important">
+                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">Country</label>
+                        <div class="form-group ">
+                          <select class="form-control  select2 {{ $errors->has('country_id') ? ' has-error' : '' }}" id="country_id" name="country_id" required>
+                          <option  value="" selected disabled>Select Country</option>
+                            @foreach($countries as $country)
+                            <option value="{{$country->id}}" @if($client->city->state->country->id==$country->id){{"selected"}} @endif>{{$country->name}}</option>
+                            @endforeach               
+                          </select>
+                        </div>
+                        @if ($errors->has('country_id'))
+                          <span class="help-block">
+                            <strong class="error-text">{{ $errors->first('country_id') }}</strong>
+                          </span>
                         @endif
+                      </div>
+                      <div class="form-group row" style="float:none!important">
+                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">State</label>
+                        <div class="form-group ">
+                          <select class="form-control select2 {{ $errors->has('state_id') ? ' has-error' : '' }}" id="state_id" name="state_id"  required>
+                          @foreach($states as $state)
+                            <option value="{{$state->id}}" @if($client->city->state->id==$state->id){{"selected"}} @endif>{{$state->name}}</option>
+                            @endforeach                         
+                          </select>
+                        </div>
+                        @if ($errors->has('state_id'))
+                          <span class="help-block">
+                              <strong class="error-text">{{ $errors->first('state_id') }}</strong>
+                          </span>
+                        @endif
+                      </div> 
+                      <div class="form-group row">
+                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">City</label>
+                        <div class="form-group ">
+                          <select class="form-control select2 {{ $errors->has('city_id') ? ' has-error' : '' }}" id="city_id" name="city_id"  required>
+                          @foreach($cities as $city)
+                            <option value="{{$city->id}}" @if($client->city->id==$city->id){{"selected"}} @endif>{{$city->name}}</option>
+                            @endforeach                           
+                        </select>
+                        </div>
+                        @if ($errors->has('city_id'))
+                          <span class="help-block">
+                              <strong class="error-text">{{ $errors->first('city_id') }}</strong>
+                          </span>
+                        @endif
+                      </div> 
                     </div>  
                   </div>
                 </div>
@@ -120,15 +159,8 @@
 
 @section('script')
 
-   <script>
-     function initMap()
-     {
-        var input1 = document.getElementById('search_place');
-        autocomplete1 = new google.maps.places.Autocomplete(input1);
-        var searchBox1 = new google.maps.places.SearchBox(autocomplete1);
-     }
-   </script>
-   <script async defer
-   src="https://maps.googleapis.com/maps/api/js?key={{Config::get('eclipse.keys.googleMap')}}&libraries=places&callback=initMap"></script>
+<script src="{{asset('js/gps/client-edit.js')}}"></script>
+  
+   
 @endsection
 @endsection

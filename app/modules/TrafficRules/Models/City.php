@@ -25,4 +25,18 @@ class City extends Model
     {
         return self::select('latitude','longitude')->where('id',$city_id)->first();
     }
+    /**
+     * 
+     * getClientAddress
+     */
+    public function getClientAddress($city_id){
+        return self::select('state_id')->with('state.country')->where('id',$city_id)->first();
+    }
+    /**
+     * 
+     * getClientAddress
+     */
+    public function getCityDetails($state_id){
+        return self::select('id','name','state_id')->where('state_id',$state_id)->get();
+    }
 }

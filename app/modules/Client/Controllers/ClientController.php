@@ -68,7 +68,7 @@ class ClientController extends Controller {
         $placeLatLng = (new City())->getCityGeoCodes($request->city_id);
         $location_lat=$placeLatLng['latitude'];
         $location_lng=$placeLatLng['longitude'];
-        $location=$request->search_place;
+        // $location=$request->search_place;
         $current_date=date('Y-m-d H:i:s');
         if($request->user()->hasRole('sub_dealer'))
         {
@@ -105,18 +105,21 @@ class ClientController extends Controller {
                 'address' => $request->address,
                 'latitude'=>$location_lat,
                 'longitude'=>$location_lng,
-                'location'=>$location,
+                // 'location'=>$location,
                 'country_id'=>$request->country_id,
                 'state_id'=>$request->state_id,
                 'city_id'=>$request->city_id,
                 'latest_user_updates'=>$current_date
             ]);
             if($request->client_category=="school"){
-                User::where('username', $request->username)->first()->assignRole('school');
+                User::select('username')->where('username', $request->username)->first()->assignRole('school');
+
             }else{
-                User::where('username', $request->username)->first()->assignRole('client');
+                User::select('username')->where('username', $request->username)->first()->assignRole('client');
+
             }
-            $alert_types = AlertType::all();
+            $alert_types = AlertType::select('id','driver_point')->get();
+            
             if($client){
                 foreach ($alert_types as $alert_type) {
                     $user_alerts = UserAlerts::create([
@@ -169,11 +172,17 @@ class ClientController extends Controller {
                 'latest_user_updates'=>$current_date
             ]);
             if($request->client_category=="school"){
-                User::where('username', $request->username)->first()->assignRole('school');
+                User::select('username')->where('username', $request->username)->first()->assignRole('school');
             }else{
-                User::where('username', $request->username)->first()->assignRole('client');
+                User::select('username')->where('username', $request->username)->first()->assignRole('client');
             }
-            $alert_types = AlertType::all();
+           
+            $alert_types = AlertType::select(
+                            'id',
+                            'driver_point'
+                            )
+                            ->get();
+                        
             if($client){
                 foreach ($alert_types as $alert_type) {
                     $user_alerts = UserAlerts::create([
@@ -256,71 +265,53 @@ class ClientController extends Controller {
         ->make();
     }
     public function edit(Request $request)
-    {
-
+    {     
         $decrypted = Crypt::decrypt($request->id);
-        $client = Client::withTrashed()->where('user_id', $decrypted)->first();
-        $latitude= $client->latitude;
-        $longitude=$client->longitude;
-        if(!empty($latitude) && !empty($longitude))
-        {
-            $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key='.Config::get("eclipse.keys.googleMap").'&libraries=drawing&callback=initMap');
-            
-           
-            $output = json_decode($geocodeFromLatLong, true);
-            $location = $client->location;
-         }
-        else
-        {
-              $location="";
-        }
-
-        $user=User::find($decrypted);
-
+        $client = (new Client())->getClientDetails($decrypted); 
+        $countries = (new Country())->getCountryDetails();
+        $states = (new State())->getStateDetails($client->city->state->country->id);
+        $cities = (new City())->getCityDetails($client->city->state->id);         
         if($client == null)
         {
-           return view('Client::404');
+            return view('Client::404');
         }
-        return view('Client::client-edit',['client' => $client,'user' => $user,'location' => $location]);
+        return view('Client::client-edit',['client' => $client,'countries'=>$countries,'states'=>$states,'cities'=>$cities]);
     }
 
     //update dealers details
     public function update(Request $request)
     {
-        $client = Client::where('user_id', $request->id)->first();
+        $client = Client::where('user_id',$request->id)->first();
         if($client == null){
-           return view('Client::404');
+            return view('Client::404');
         }
-
         $url=url()->current();
         $rayfleet_key="rayfleet";
         $eclipse_key="eclipse";
         if (strpos($url, $rayfleet_key) == true) {
-             $rules = $this->rayfleetClientUpdateRules($client);
+            $rules = $this->rayfleetClientUpdateRules($client);
         }
         else
         {
-           $rules = $this->clientUpdateRules($client);
+            $rules = $this->clientUpdateRules($client);
         }
         $this->validate($request, $rules);
         $user = User::find($request->id);
         $did = encrypt($user->id);
-        $placeLatLng=$this->getPlaceLatLng($request->search_place);
-        if($placeLatLng==null){
-            $request->session()->flash('message', 'Enter correct location');
-            $request->session()->flash('alert-class', 'alert-danger');
-            return redirect(route('client.edit',$did));
-        }
+        $client->city_id=$request->city_id;
+        $client->state_id=$request->state_id;
+        $client->country_id=$request->country_id;
+        $placeLatLng = (new City())->getCityGeoCodes($request->city_id);
         $location_lat=$placeLatLng['latitude'];
         $location_lng=$placeLatLng['longitude'];
         $client->name = $request->name;
         $client->latitude= $location_lat;
         $client->longitude=$location_lng;
-        $client->location=$request->search_place;
         $client->address=$request->address;
         $current_date=date('Y-m-d H:i:s');
         $client->latest_user_updates = $current_date;
         $client->save();
+        // dd($client);
         $user->mobile = $request->mobile_number;
         $user->save();
 
@@ -332,14 +323,12 @@ class ClientController extends Controller {
     //for edit page of subdealer password
     public function changePassword(Request $request)
     {
-
-
         $decrypted = Crypt::decrypt($request->id);
-        $client = Client::where('user_id', $decrypted)->first();
+        $client = Client::select('user_id')->where('user_id', $decrypted)->first();
         if($client == null){
            return view('Client::404');
         }
-    return view('Client::client-change-password',['client' => $client,
+        return view('Client::client-change-password',['client' => $client,
         'decrypted'=>$decrypted]);
     }
 
@@ -349,7 +338,7 @@ class ClientController extends Controller {
 
         $client=\Auth::user()->sub_dealer;
         $user=User::find($request->id);
-        $client=Client::where('user_id',$user->id)->first();
+        $client=Client::select('user_id','latest_user_updates')->where('user_id',$user->id)->first();
         $current_date=date('Y-m-d H:i:s');
         $client->latest_user_updates = $current_date;
         $client->save();
@@ -358,7 +347,7 @@ class ClientController extends Controller {
         }
         $did=encrypt($user->id);
 
-        $rules=$this->updateUserPassword($user);
+        $rules=$this->updateUserPassword();
         $this->validate($request,$rules);
         $user->password=bcrypt($request->password);
         $user->save();
@@ -370,7 +359,7 @@ class ClientController extends Controller {
     public function changeClientPassword(Request $request)
     {
         $decrypted = Crypt::decrypt($request->id);
-        $client = Client::where('user_id', $decrypted)->first();
+        $client = Client::select('user_id')->where('user_id', $decrypted)->first();
         if($client == null){
            return view('Client::404');
         }
@@ -386,7 +375,7 @@ class ClientController extends Controller {
         }
         $did=encrypt($client->id);
         // dd($request->password);
-        $rules=$this->updateUserPassword($client);
+        $rules=$this->updateUserPasswordBySubdealer();
         $this->validate($request,$rules);
         $client->password=bcrypt($request->password);
         $client->save();
@@ -402,9 +391,11 @@ class ClientController extends Controller {
         $url=url()->current();
         $rayfleet_key="rayfleet";
         if (strpos($url, $rayfleet_key) == true) {
-            $subscription=Subscription::where('plan_id',$plan_id)->where('country_id',178)->first();
+            $subscription=Subscription::select('plan_id','country_id','amount')->where('plan_id',$plan_id)->where('country_id',178)->first();
+
         }else{
-            $subscription=Subscription::where('plan_id',$plan_id)->where('country_id',101)->first();
+            $subscription=Subscription::select('plan_id','country_id','amount')->where('plan_id',$plan_id)->where('country_id',101)->first();
+
         }
         $amount = $subscription->amount;
         $voucher = Voucher::create([
@@ -450,11 +441,17 @@ class ClientController extends Controller {
     {
         $rules=[
             'password' => 'required|string|min:8|confirmed|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*)(=+\/\\~`-]).{8,20}$/',
-             'oldpassword'=>'required',
+            'oldpassword'=>'required',
         ];
         return $rules;
     }
-
+    public function updateUserPasswordBySubdealer()
+    {
+        $rules=[
+            'password' => 'required|string|min:8|confirmed|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*)(=+\/\\~`-]).{8,20}$/'
+        ];
+        return $rules;
+    }
     public function activatesubscription()
     {
         $rules=[
@@ -463,33 +460,19 @@ class ClientController extends Controller {
         return $rules;
     }
 
-
-    //employee details view
+    /**
+     * Client Details view
+     * 
+     */
     public function details(Request $request)
     {
         $decrypted = Crypt::decrypt($request->id);
-        $client = Client::withTrashed()->where('user_id', $decrypted)->first();
-        $user=User::find($decrypted);
-        $latitude= $client->latitude;
-        $longitude=$client->longitude;
-        if(!empty($latitude) && !empty($longitude))
-        {
-            //Send request and receive json data by address
-            $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key='.Config::get("eclipse.keys.googleMap").'&libraries=drawing&callback=initMap');
-            $output = json_decode($geocodeFromLatLong, true);
-           // $status = $output->status;
-            $location = $client->location;
-
-        }
-        else
-        {
-            $location="";
-        }
+        $client = (new Client())->getClientDetails($decrypted);
         if($client == null)
         {
-           return view('Client::404');
+            return view('Client::404');
         }
-        return view('Client::client-details',['client' => $client,'user' => $user,'location' => $location]);
+        return view('Client::client-details',['client' => $client]);
     }
 
 
@@ -567,7 +550,10 @@ class ClientController extends Controller {
     public function disableClient(Request $request)
     {
         $client_user = User::find($request->id);
-        $client = Client::where('user_id',$request->id)->first();
+        $client = Client::select('user_id')
+                         ->where('user_id',$request->id)
+                         ->first();
+
         if($client_user == null){
             return response()->json([
                 'status' => 0,
@@ -588,7 +574,9 @@ class ClientController extends Controller {
     public function enableClient(Request $request)
     {
         $client_user = User::withTrashed()->find($request->id);
-        $client = Client::withTrashed()->where('user_id',$request->id)->first();
+        $client = Client::select('user_id')
+                             ->where('user_id',$request->id)
+                             ->first();
         if($client_user==null){
             return response()->json([
                 'status' => 0,
@@ -686,9 +674,9 @@ class ClientController extends Controller {
         $rules=$this->activatesubscription();
         $this->validate($request,$rules);
         $client_user_id=Crypt::decrypt($request->id);
-        $geofences= Geofence::where('user_id',$client_user_id)->withTrashed()->get();
+        $geofences= Geofence::select('user_id','id')->where('user_id',$client_user_id)->withTrashed()->get();
         foreach ($geofences as $geofence) {
-            $vehicle_geofences=VehicleGeofence::where('geofence_id',$geofence->id)->withTrashed()->get();
+            $vehicle_geofences=VehicleGeofence::select('geofence_id')->where('geofence_id',$geofence->id)->withTrashed()->get();
             foreach ($vehicle_geofences as $vehicle_geofence) {
                 $vehicle_geofence->forceDelete();
             }
@@ -696,7 +684,7 @@ class ClientController extends Controller {
         }
         $user = User::find($client_user_id);
 
-        $vehicles= Vehicle::where('client_id',$user->client->id)->withTrashed()->get();
+        $vehicles= Vehicle::select('id','client_id','gps_id')->where('client_id',$user->client->id)->withTrashed()->get();
         foreach ($vehicles as $vehicle) {
             $response_string="CLR VGF";
             $geofence_response= OtaResponse::create([
@@ -726,7 +714,7 @@ class ClientController extends Controller {
         }
 
         $current_date=date('Y-m-d H:i:s');
-        $client = Client::withTrashed()->where('user_id',$client_user_id)->first();
+        $client = Client::select('user_id','latest_user_updates')->withTrashed()->where('user_id',$client_user_id)->first();
         $client->latest_user_updates = $current_date;
         $client->save();
         $user->assignRole($request->client_role);
@@ -743,16 +731,16 @@ class ClientController extends Controller {
         $decrypted_user_id = Crypt::decrypt($request->user_id);
         $decrypted_role_id = Crypt::decrypt($request->role_id);
         $user = User::find($decrypted_user_id);
-        $geofences= Geofence::where('user_id',$decrypted_user_id)->withTrashed()->get();
+        $geofences= Geofence::select('user_id','id')->where('user_id',$decrypted_user_id)->withTrashed()->get();
         foreach ($geofences as $geofence) {
-            $vehicle_geofences=VehicleGeofence::where('geofence_id',$geofence->id)->withTrashed()->get();
+            $vehicle_geofences=VehicleGeofence::select('geofence_id')->where('geofence_id',$geofence->id)->withTrashed()->get();
             foreach ($vehicle_geofences as $vehicle_geofence) {
                 $vehicle_geofence->forceDelete();
             }
             $geofence_cleared = $geofence->forceDelete();
         }
 
-        $vehicles= Vehicle::where('client_id',$user->client->id)->withTrashed()->get();
+        $vehicles= Vehicle::select('id','client_id','gps_id')->where('client_id',$user->client->id)->withTrashed()->get();
         foreach ($vehicles as $vehicle) {
             $response_string="CLR VGF";
             $geofence_response= OtaResponse::create([
@@ -764,7 +752,7 @@ class ClientController extends Controller {
         $user->role = 0;
         $user->save();
         $current_date=date('Y-m-d H:i:s');
-        $client = Client::withTrashed()->where('user_id',$decrypted_user_id)->first();
+        $client = Client::select('user_id','latest_user_updates')->withTrashed()->where('user_id',$decrypted_user_id)->first();
         $client->latest_user_updates = $current_date;
         $client->save();
         $user->removeRole($decrypted_role_id);
@@ -823,7 +811,7 @@ class ClientController extends Controller {
     {
         $client_id = \Auth::user()->client->id;
         $client_user_id = \Auth::user()->id;
-        $client = Client::withTrashed()->where('id', $client_id)->first();
+        $client = Client::select('id','name','address','logo')->withTrashed()->where('id', $client_id)->first();
         $user=User::find($client_user_id);
         if($client == null)
         {
@@ -873,7 +861,7 @@ class ClientController extends Controller {
     {
         $client_id = \Auth::user()->client->id;
         $client_user_id = \Auth::user()->id;
-        $client = Client::withTrashed()->where('id', $client_id)->first();
+        $client = Client::select('id','latitude','longitude','name','address')->withTrashed()->where('id', $client_id)->first();
         $user=User::find($client_user_id);
 
         // $client=\Auth::user()->client;
@@ -891,7 +879,7 @@ class ClientController extends Controller {
      //update dealers details
     public function profileUpdate(Request $request)
     {
-        $client = Client::where('user_id', $request->id)->first();
+        $client = Client::select('user_id','latest_user_updates','name','address')->where('user_id', $request->id)->first();
         if($client == null){
            return view('Client::404');
         }
@@ -939,7 +927,7 @@ class ClientController extends Controller {
         {
            return view('Client::404');
         }
-        return view('Client::-chang',['client' => $client,'user' => $user]);
+        return view('Client::client-change-password',['client' => $client,'user' => $user]);
     }
 
     // update change password
@@ -1105,7 +1093,8 @@ public function selectTrader(Request $request)
             }else{
                 User::where('username', $request->username)->first()->assignRole('client');
             }
-            $alert_types = AlertType::all();
+            
+            $alert_types = AlertType::select('id','driver_point')->get();
             if($client){
                 foreach ($alert_types as $alert_type) {
                     $user_alerts = UserAlerts::create([
@@ -1319,7 +1308,10 @@ public function selectTrader(Request $request)
         $rules = [
             'name' => 'required',
             'address' => 'required',
-            'search_place'=>'required',
+            // 'city_id' => 'required',
+            // 'state_id' => 'required',
+            // 'country_id' => 'required',
+            
             'mobile_number' => 'required|digits:10|unique:users,mobile,'.$client->user_id
               ];
         return  $rules;
@@ -1330,7 +1322,11 @@ public function selectTrader(Request $request)
         $rules = [
             'name' => 'required',
             'address' => 'required',
-            'search_place'=>'required',
+            // 'city_id' => 'required',
+            // 'state_id' => 'required',
+            // 'country_id' => 'required',
+
+           
             'mobile_number' => 'required|digits:11|unique:users,mobile,'.$client->user_id
               ];
         return  $rules;
@@ -1343,7 +1339,8 @@ public function selectTrader(Request $request)
     {
         $data = urlencode($address);
         // dd($data);
-        $url = "https://maps.googleapis.com/maps/api/geocode/json?address=" . $data . "&sensor=false&key=".Config::get('eclipse.keys.googleMap');
+        // $url = "https://maps.googleapis.com/maps/api/geocode/json?address=" . $data . "&sensor=false&key=".Config::get('eclipse.keys.googleMap');
+        $url = "https://maps.googleapis.com/maps/api/geocode/json?address=" . $data . "&sensor=false&key=".config('eclipse.keys.googleMap');
         $geocode_stats = file_get_contents($url);
         // dd($geocode_stats);
         $output_deals = json_decode($geocode_stats);

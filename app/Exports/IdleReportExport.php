@@ -15,12 +15,20 @@ class IdleReportExport implements FromView
         $single_vehicle_id = [];
         if($vehicle!=0)
         {
-            $vehicle_details =Vehicle::withTrashed()->find($vehicle);
+            
+            $vehicle_details=Vehicle::select('id','gps_id','client_id')
+                            ->where('id',$vehicle)
+                            ->withTrashed()
+                            ->first();
             $single_vehicle_ids = $vehicle_details->gps_id;
         }
         else
         {
-            $vehicle_details =Vehicle::withTrashed()->where('client_id',$client)->get(); 
+            $vehicle_details=Vehicle::select('id','gps_id','client_id')
+                            ->where('client_id',$client)
+                            ->withTrashed()
+                            ->get();
+            
             
             foreach($vehicle_details as $vehicle_detail){
                 $single_vehicle_id[] = $vehicle_detail->gps_id; 
@@ -80,15 +88,15 @@ class IdleReportExport implements FromView
         )
         ->with('gps.vehicle');     
         if($vehicle==0 || $vehicle==null )
-       {         
-            $query = $query->whereIn('gps_id',$single_vehicle_id)
-            ->groupBy('date');
-       }
-       else
-       {
-        $query = $query->where('gps_id',$single_vehicle_ids)
-           ->groupBy('date'); 
-       }
+        {         
+            $query  =    $query->whereIn('gps_id',$single_vehicle_id)
+                        ->groupBy('date');
+        }
+        else
+        {
+            $query  =   $query->where('gps_id',$single_vehicle_ids)
+                        ->groupBy('date'); 
+        }
         if($from){
             $query = $query->whereDate('device_time', '>=', $from)->whereDate('device_time', '<=', $to);
         }
@@ -96,7 +104,7 @@ class IdleReportExport implements FromView
     }
     public function view(): View
 	{
-       return view('Exports::idle-report', [
+        return view('Exports::idle-report', [
             'idleReportExport' => $this->idleReportExport
         ]);
 	}

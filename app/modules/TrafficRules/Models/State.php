@@ -14,4 +14,11 @@ class State extends Model
     {
         return $this->hasOne('App\Modules\TrafficRules\Models\Country','id','country_id');
     }
+    /**
+     * 
+     * get state
+     */
+    public function getStateDetails($country_id){
+        return self::select('id','name','country_id')->where('country_id',$country_id)->get();
+    }
 }

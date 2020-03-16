@@ -33,7 +33,7 @@ class AlertController extends Controller {
         ->get();
         $single_vehicle_gps = [];
         foreach($VehicleGpss as $VehicleGps){
-            $confirm_alerts =Alert::where('gps_id', $VehicleGps->gps_id)->update(['status'=> 1]);
+            $confirm_alerts =Alert::select('gps_id','status')->where('gps_id', $VehicleGps->gps_id)->update(['status'=> 1]);
              $single_vehicle_gps[] = $VehicleGps->gps_id;
         }
         $userAlerts = UserAlerts::select(
@@ -91,7 +91,9 @@ class AlertController extends Controller {
         foreach($VehicleGpss as $VehicleGps){
             $single_vehicle_gps[] = $VehicleGps->gps_id;
         }
-        $confirm_alerts = Alert::whereIn('gps_id', $single_vehicle_gps)->get();
+     
+        $confirm_alerts = Alert::select('gps_id','status')->whereIn('gps_id', $single_vehicle_gps)->get();
+       
         foreach($confirm_alerts as $confirm_alert){
             $confirm_alert->status=1;
             $confirm_alert->save();
@@ -311,8 +313,8 @@ class AlertController extends Controller {
     {
         $flag=$request->flag;
         $user = $request->user();
-        $client=Client::where('user_id',$user->id)->first();
-        $client_id=$client->id;
+        $client     =   Client::select('id','user_id')->where('user_id',$user->id)->first();
+        $client_id  =   $client->id;
         $VehicleGpss=Vehicle::select(
             'id',
             'gps_id',
@@ -458,8 +460,10 @@ class AlertController extends Controller {
 
     public function gpsAlerts()
     {
-        $client_id=\Auth::user()->client->id;
-        $client=Client::find($client_id);
+        $client_id      =   \Auth::user()->client->id;
+            $client     =    Client::select('id','latitude','longitude')
+                            ->where('id',$client_id)
+                            ->first();
         return view('Alert::gps-alert-list',['client'=>$client]);
     }
     public function gpsAlertList(Request $request)
@@ -467,7 +471,8 @@ class AlertController extends Controller {
         $user = $request->user();
         $client_id=\Auth::user()->client->id;
         $single_vehicle_gps =  $this->singleGps($client_id);
-        $confirm_alerts =Alert::whereIn('gps_id', $single_vehicle_gps)->where('status', 0)->update(['status'=> 1]);
+        
+        $confirm_alerts =Alert::select('gps_id','status')->whereIn('gps_id', $single_vehicle_gps)->where('status', 0)->update(['status'=> 1]);
         return response()->json([]);
     }
     function singleGps($client_id){
@@ -519,7 +524,8 @@ class AlertController extends Controller {
     }
     public function location(Request $request){
         $decrypted_id = Crypt::decrypt($request->id);
-        $get_alerts=Alert::where('id',$decrypted_id)->with('gps.vehicle')->first();
+        $get_alerts=Alert::select('id','latitude','longitude','alert_type_id')->where('id',$decrypted_id)->with('gps.vehicle')->first();
+        
         $alert_icon  =  AlertType:: select(['description',
             'path'])->where('id',$get_alerts->alert_type_id)->first();
         $get_vehicle=Vehicle::select(['id','register_number',
@@ -530,7 +536,7 @@ class AlertController extends Controller {
     public function alertLocation(Request $request)
     {
         $decrypted_id   =   $request->id;
-        $alert_details  =   Alert::where('id',$decrypted_id)->first();
+        $alert_details  =   Alert::select('id','latitude','longitude')->where('id',$decrypted_id)->first();
         if($alert_details)
         {
             $alert_details->status  =   1;
@@ -609,7 +615,7 @@ class AlertController extends Controller {
     }
     public function alertUpdation(Request $request){
         $decrypted_id = $request->id;
-        $get_alerts=Alert::where('id',$decrypted_id)->first();
+        $get_alerts=Alert::select('id','status','latitude','longitude','alert_type_id','device_time')->where('id',$decrypted_id)->first();
         $get_alerts->status=1;
         $get_alerts->save();
         $placeName=$this->getPlacenameFromLatLng($get_alerts->latitude,$get_alerts->longitude);
@@ -628,7 +634,8 @@ class AlertController extends Controller {
     function getPlacenameFromLatLng($latitude,$longitude){
         if(!empty($latitude) && !empty($longitude)){
             //Send request and receive json data by address
-            $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key='.Config::get('eclipse.keys.googleMap'));
+            
+            $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key='.config('eclipse.keys.googleMap'));
             $output = json_decode($geocodeFromLatLong);
             $status = $output->status;
             $address = ($status=="OK")?$output->results[0]->formatted_address:'';

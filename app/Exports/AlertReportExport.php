@@ -50,14 +50,16 @@ class AlertReportExport implements FromView
        }
        else if($alert_id==0 && $vehicle_id!=0)
        {
-            $vehicle=Vehicle::withTrashed()->find($vehicle_id);
+           
+            $vehicle=Vehicle::select('id','gps_id')->where('id',$vehicle_id)->withTrashed()->first();
             $query = $query->whereIn('gps_id',$single_vehicle_gps)
             ->where('gps_id',$vehicle->gps_id);
             // ->where('status',1);
        }
        else
        {
-            $vehicle=Vehicle::withTrashed()->find($vehicle_id);
+            
+            $vehicle=Vehicle::select('id','gps_id')->where('id',$vehicle_id)->withTrashed()->first();
             $query = $query->whereIn('gps_id',$single_vehicle_gps)
             ->where('alert_type_id',$alert_id)
             ->where('gps_id',$vehicle->gps_id);

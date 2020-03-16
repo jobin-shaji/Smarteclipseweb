@@ -7,7 +7,7 @@ use App\Modules\VltData\Models\VltData;
 use App\Modules\Gps\Models\GpsData;
 use App\Modules\Ota\Models\OtaResponse;
 
-class VltDataController extends Controller 
+class VltDataController extends Controller
 {
     CONST VLT_DTA_HEADER_NORMAL                 =   'NRM';
     CONST VLT_DTA_HEADER_FULL                   =   'FUL';
@@ -21,25 +21,25 @@ class VltDataController extends Controller
     CONST VLT_DTA_HEADER_ALERT                  =   'ALT';
 
     /**
-     * 
+     *
      */
     public $imei;
 
     /**
-     * 
-     * 
+     *
+     *
      */
     public $header;
 
     /**
-     * 
-     * 
+     *
+     *
      */
     public $search_key;
 
     /**
-     * 
-     * 
+     *
+     *
      */
     public function unprocessedDataView(Request $request)
     {
@@ -62,13 +62,13 @@ class VltDataController extends Controller
         {
             $data           = (new VltData())->getUnprocessedVltData($this->imei, $this->header, $this->search_key);
         }
-        
+
         return view('VltData::unprocessed-list', [ 'imei_list' => $imei_list, 'headers' => $gps_header_list, 'data' => $data, 'filters' => $filters ]);
     }
 
     /**
-     * 
-     * 
+     *
+     *
      */
     public function getGpsIdFromImei(Request $request)
     {
@@ -93,8 +93,8 @@ class VltDataController extends Controller
     }
 
     /**
-     * 
-     * 
+     *
+     *
      */
     public function consoleDataView(Request $request)
     {
@@ -112,32 +112,32 @@ class VltDataController extends Controller
         {
             $data   = (new VltData())->getProcessedVltData($this->imei);
         }
-        
+
         return view('VltData::console-list', [ 'imei_serial_no_list' => $imei_serial_no_list, 'data' => $data, 'filters' => $filters ]);
     }
 
     /**
-     * 
-     * 
+     *
+     *
      */
     public static function getVltDataHeaders()
     {
         return [
             self::VLT_DTA_HEADER_NORMAL,
-            self::VLT_DTA_HEADER_FULL,  
-            self::VLT_DTA_HEADER_EMERGENCY,    
-            self::VLT_DTA_HEADER_CRITICAL,  
-            self::VLT_DTA_HEADER_BATCH,        
-            self::VLT_DTA_HEADER__OTA_ACKNOWLEDGMENT,   
-            self::VLT_DTA_HEADER_ACKNOWLEDGMENT,   
+            self::VLT_DTA_HEADER_FULL,
+            self::VLT_DTA_HEADER_EMERGENCY,
+            self::VLT_DTA_HEADER_CRITICAL,
+            self::VLT_DTA_HEADER_BATCH,
+            self::VLT_DTA_HEADER__OTA_ACKNOWLEDGMENT,
+            self::VLT_DTA_HEADER_ACKNOWLEDGMENT,
             self::VLT_DTA_HEADER_HEALTH,
-            self::VLT_DTA_HEADER_LOGIN,     
-            self::VLT_DTA_HEADER_ALERT  
+            self::VLT_DTA_HEADER_LOGIN,
+            self::VLT_DTA_HEADER_ALERT
         ];
     }
     /**
-     * 
-     * 
+     *
+     *
      */
     public function consoleDataPacketView(Request $request)
     {
@@ -146,43 +146,43 @@ class VltDataController extends Controller
         $vlt_data       =   $request->vlt_data;
         $gps_data       =   (new Gps())->getGpsId($imei);
         $header=substr($vlt_data,0,3);
-    
+
         if($header == "ACK"  || $header == "AVK" )
         {
         $data=$this->processAckData($vlt_data);
-        
+
         }elseif($header == "ALT")
         {
-        
+
         $data = $this->processAltData($vlt_data);
         }
         elseif($header == "CRT")
         {
-        
+
         $data = $this->processCrtData($vlt_data);
         } elseif($header == "EPB")
         {
-        
+
         $data = $this->processEpbData($vlt_data);
         }
         elseif($header == "FUL")
         {
-        
+
         $data = $this->processFULData($vlt_data);
         }
         elseif($header == "HLM")
         {
-        
+
         $data = $this->processHlmData($vlt_data);
         }
         elseif($header == "LGN")
         {
-        
+
         $data = $this->processLgnData($vlt_data);
         }
         elseif($header == "NRM")
         {
-        
+
         $data = $this->processNrmData($vlt_data);
         }
         elseif($header == "BTH")
@@ -200,10 +200,10 @@ class VltDataController extends Controller
         while (!empty($balance_packet));
         $packets['header']="BTH";
         $data           =   $packets;
-        
+
         }
         else{
-        $data = null; 
+        $data = null;
         }
         if($data == null)
         {
@@ -225,8 +225,8 @@ class VltDataController extends Controller
         return response()->json($response);
     }
     /**
-     * 
-     * 
+     *
+     *
     */
 
     public function processAckData($vlt_data)
@@ -238,7 +238,7 @@ class VltDataController extends Controller
         $end_char  = '*';
         $end_pos = strpos($vlt_data, $end_char);
         $bad_response = substr($vlt_data,96,$end_pos);
-    
+
         $response = str_replace('*','',$bad_response);
 
         $code = substr($vlt_data,18,2);
@@ -291,7 +291,7 @@ class VltDataController extends Controller
     }
     public function processAltData($vlt_data){
         $imei = substr($vlt_data,3,15);
-       
+
         $code = substr($vlt_data,18,2);
         $date = substr($vlt_data,22,6);
         $time = substr($vlt_data,28,6);
@@ -310,7 +310,7 @@ class VltDataController extends Controller
 
         $array=[];
         $array=array(
-        
+
                 'header' => substr($vlt_data,0,3),
                 'imei' => $imei,
                 'alert_id' => $code,
@@ -337,7 +337,7 @@ class VltDataController extends Controller
                 // 'response' => $response,
                 'vlt_data' => $vlt_data,
                 'device_time' => $device_time
-              
+
               );
              return $array;
 
@@ -345,7 +345,7 @@ class VltDataController extends Controller
     public function processCrtData($vlt_data)
     {
         $imei = substr($vlt_data,3,15);
-      
+
         $code = substr($vlt_data,18,2);
         $date = substr($vlt_data,22,6);
         $time = substr($vlt_data,28,6);
@@ -463,7 +463,7 @@ class VltDataController extends Controller
         $no_of_satelites = substr($vlt_data,87,2);
         $array=[];
         $array=array(
-        	
+
                 'header' => substr($vlt_data,0,3),
                 'imei' => $imei,
                 'alert_id' =>$code,
@@ -530,7 +530,7 @@ class VltDataController extends Controller
                 'date' => $date,
                 'time' => $time,
                 'device_time' =>$device_time
-                
+
               );
              return $array;
 
@@ -540,7 +540,7 @@ class VltDataController extends Controller
         $date = substr($vlt_data,56,6);
         $time = substr($vlt_data,62,6);
         $imei = substr($vlt_data,3,15);
-      
+
         $lat = substr($vlt_data,34,10);
         $lat_dir = substr($vlt_data,44,1);
         $lng = substr($vlt_data,45,10);
@@ -716,12 +716,12 @@ class VltDataController extends Controller
     }
     public function setOtaInConsole(Request $request)
     {
-        $gps_id     =   $request->gps_id;  
-        $command    =   $request->command;        
+        $gps_id     =   $request->gps_id;
+        $command    =   $request->command;
         $response   =   OtaResponse::create([
                             'gps_id'=>$gps_id,
-                            'response'=>$command
-        ]); 
+                            'response'=>trim($command)
+        ]);
         if($response){
             return response()->json([
                 'status' => 1,
@@ -733,7 +733,7 @@ class VltDataController extends Controller
                 'status' => 0,
                 'title' => 'Error',
                 'message' => 'Try again!!'
-            ]); 
+            ]);
         }
     }
 }

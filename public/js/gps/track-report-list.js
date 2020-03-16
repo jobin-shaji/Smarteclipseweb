@@ -1,34 +1,53 @@
 $(document).ready(function () { 
-     $("#loader-1").hide();
+   
+        $("#load6").css("display","none");
+        $("#load-6").css("display","none");
 });
 
 function trackMode()
 {  
-     if(document.getElementById('vehicle').value == ''){
-        alert('Please enter vehicle');
-    }
-     if(document.getElementById('report').value == ''){
-        alert('Please enter report type');
-    }
-    else{       
-        var vehicle_id=$('#vehicle').val(); 
-        var report_type=$('#report').val(); 
+
+    var vehicle_id      = $("#vehicle").val();
+    var report_type     = $("#report").val();
+    var hasError        = false;
+    if(vehicle_id.length == 0){
+        $("#vehicle").siblings('.error').remove();
+        $("#vehicle").after("<span class='error text-danger'>Please Select Vehicle</span>")
+        hasError = true;
+    }else{
+        $("#vehicle").siblings('.error').remove();
+    } 
+    if(report_type.length == 0){
+        $("#report").siblings('.error').remove();
+        $("#report").after("<span class='error text-danger'>Please Select  Report Type </span>")
+        hasError = true;
+    }else{
+        $("#report").siblings('.error').remove();
+    } 
+    if(hasError == false)
+    {  
         var client=$('meta[name = "client"]').attr('content');
         var url = '/track-report-list';
-       
         var data = {
             'vehicle':vehicle_id,
             'client':client, 
             'type':report_type 
         };
-       $("#loader-1").show();
+   
+        $("#load6").css("display","show");
+        $("#load-6").css("display","show");
        backgroundPostData(url,data,'vehicleTrackReport',{alert:true});           
     }
+    else
+    {
+        return false;
+    }
 
-   
 }
 function vehicleTrackReport(res){
-  $("#loader-1").hide();
+
+  $("#load6").css("display","none");
+  $("#load-6").css("display","none");
   $('#sl').text("1");
   $('#sleep').text(res.sleep);
   $('#motion').text(res.motion);

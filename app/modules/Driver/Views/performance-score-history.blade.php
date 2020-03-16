@@ -31,8 +31,8 @@ Performance Score History
                                   <div class="form-group">
                                     <label>Driver</label>
                                     <select class="form-control" data-live-search="true" title="Select Driver" id="driver" name="driver" required>
-                    									<option value = "" selected disabled>Select Driver</option>
-                    									<option value = "0">All</option>
+                                      <option value = "" >Select Driver</option>
+                                      <option value = "all" @if(isset($performance_score) && $driver_id == 'all'){{"selected"}} @endif>All</option>
                     									@foreach ($drivers as $driver)
                     										<option value="{{$driver->id}}" @if(isset($performance_score) && $driver->id==$driver_id){{"selected"}} @endif>{{$driver->name}}</option>
                     									@endforeach
@@ -44,13 +44,13 @@ Performance Score History
                                 <div class="col-lg-3 col-md-3">
                                 	<div class="form-group">
                                     <label> From Date</label>
-                                    <input type="text" class="dph-datepicker @if(\Auth::user()->hasRole('fundamental'))performancedatepickerFundamental @elseif(\Auth::user()->hasRole('superior')) performancedatepickerSuperior @elseif(\Auth::user()->hasRole('pro')) performancedatepickerPro @else performancedatepickerFreebies @endif form-control" id="fromDate" name="fromDate" onkeydown="return false" value="@if(isset($performance_score)){{$from}}@endif" required autocomplete="off" />
+                                    <input type="text" class="dph-datepicker @if(\Auth::user()->hasRole('fundamental'))performancedatepickerFundamental @elseif(\Auth::user()->hasRole('superior')) performancedatepickerSuperior @elseif(\Auth::user()->hasRole('pro')) performancedatepickerPro @else performancedatepickerFreebies @endif form-control" id="fromDate" name="fromDate" onkeydown="return false" value="@if(isset($performance_score)){{$from}} @else {{date('Y-m-d')}} @endif" required autocomplete="off" />
                                 	</div>
                                 </div>
                                 <div class="col-lg-3 col-md-3">
                                 	<div class="form-group">
                                     <label> To Date</label>
-                                    <input type="text" class="dph-datepicker @if(\Auth::user()->hasRole('fundamental'))performancedatepickerFundamental @elseif(\Auth::user()->hasRole('superior')) performancedatepickerSuperior @elseif(\Auth::user()->hasRole('pro')) performancedatepickerPro @else performancedatepickerFreebies @endif form-control" id="toDate" name="toDate" onkeydown="return false" autocomplete="off"  value="@if(isset($performance_score)){{$to}}@endif" required />
+                                    <input type="text" class="dph-datepicker @if(\Auth::user()->hasRole('fundamental'))performancedatepickerFundamental @elseif(\Auth::user()->hasRole('superior')) performancedatepickerSuperior @elseif(\Auth::user()->hasRole('pro')) performancedatepickerPro @else performancedatepickerFreebies @endif form-control" id="toDate" name="toDate" onkeydown="return false" autocomplete="off"  value="@if(isset($performance_score)){{$to}} @else {{date('Y-m-d')}} @endif" required />
                                 	  <!-- @if(isset($performance_score))<input type ="hidden" id="to_date"  value ={{$to}}> @endif -->
                                   </div>
                                 </div>

@@ -17,7 +17,7 @@ class DataUsageController extends Controller
 
 	public function usage(){
 
-		$vehicle_device = Vehicle::select(
+		$vehicle_device = Vehicle::select('id',
                 'gps_id'
                 )                
                 ->get();

@@ -38,12 +38,12 @@ class AlertReportController extends Controller
     public function alertReportList(Request $request)
     {
         
-        $client= \Auth::user()->client->id;
-        $alert_id= $request->alert;
-        $vehicle_id= $request->vehicle;       
-        $from = $request->fromDate;
-        $to = $request->toDate;
-         // dd($from);
+        $client         = \Auth::user()->client->id;
+        $alert_id       = $request->alert;
+        $vehicle_id     = $request->vehicle;       
+        $from           = $request->fromDate;
+        $to             = $request->toDate;
+        //  dd($from);
         $user=\Auth::user();  
         $VehicleGpss=Vehicle::select(
             'id',
@@ -82,12 +82,20 @@ class AlertReportController extends Controller
        }
        else if($alert_id==0 && $vehicle_id!=0)
        {
-            $vehicle=Vehicle::withTrashed()->find($vehicle_id);
+            // $vehicle=Vehicle::withTrashed()->find($vehicle_id);
+            $vehicle=Vehicle::select('id','gps_id','name','register_number')
+                    ->where('id',$vehicle_id)
+                    ->withTrashed()
+                    ->first();
             $query = $query->where('gps_id',$vehicle->gps_id);            
        }
        else
        {
-            $vehicle=Vehicle::withTrashed()->find($vehicle_id);
+           
+            $vehicle=Vehicle::select('id','gps_id','name','register_number')
+                    ->where('id',$vehicle_id)
+                    ->withTrashed()
+                    ->first();
             $query = $query->where('alert_type_id',$alert_id)
             ->where('gps_id',$vehicle->gps_id);
        }       
@@ -120,7 +128,7 @@ class AlertReportController extends Controller
     }
     public function location(Request $request){
         $decrypted_id = Crypt::decrypt($request->id);
-        $get_alerts=Alert::where('id',$decrypted_id)->with('gps.vehicle')->first();
+        $get_alerts=Alert::select('id','latitude','alert_type_id','latitude')->where('id',$decrypted_id)->with('gps.vehicle')->first();
         $alert_icon  =  AlertType:: select(['description',
             'path'])->where('id',$get_alerts->alert_type_id)->first(); 
         $get_vehicle=Vehicle::select(['id','register_number',

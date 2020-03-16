@@ -29,12 +29,17 @@ class AccidentImpactAlertReportController extends Controller
         $to = $request->data['to_date']; 
         if($vehicle!=0)
         {
-            $vehicle_details =Vehicle::withTrashed()->find($vehicle);
+           
+            $vehicle_details    =   Vehicle::select('id','gps_id')
+                                    ->where('id',$vehicle)
+                                    ->withTrashed()
+                                    ->first();
+
             $single_vehicle_ids = $vehicle_details->gps_id;
         }
         else
         {
-            $vehicle_details =Vehicle::withTrashed()->where('client_id',$client)->get();             
+            $vehicle_details =Vehicle::select('id','client_id','gps_id')->withTrashed()->where('client_id',$client)->get();             
             foreach($vehicle_details as $vehicle_detail){
                 $single_vehicle_id[] = $vehicle_detail->gps_id; 
 
@@ -82,7 +87,7 @@ class AccidentImpactAlertReportController extends Controller
             $longitude=$accidentimpactalert->longitude;          
             if(!empty($latitude) && !empty($longitude)){
                 //Send request and receive json data by address
-                $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key='.Config::get("eclipse.keys.googleMap").'&libraries=drawing&callback=initMap'); 
+                $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key='.config("eclipse.keys.googleMap").'&libraries=drawing&callback=initMap'); 
                 $output = json_decode($geocodeFromLatLong);         
                 $status = $output->status;
                 //Get address from json data

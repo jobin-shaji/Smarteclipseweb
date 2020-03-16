@@ -1086,7 +1086,7 @@ public function serviceJobDetails(Request $request)
          //    $longitude=$servicer_job->longitude;
          //    if(!empty($latitude) && !empty($longitude)){
          //        //Send request and receive json data by address
-         //        $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key='.Config::get("eclipse.keys.googleMap").'&libraries=drawing&callback=initMap');
+         //        $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key='.config("eclipse.keys.googleMap").'&libraries=drawing&callback=initMap');
          //        $output = json_decode($geocodeFromLatLong);
          //        $status = $output->status;
          //        //Get address from json data
@@ -1201,7 +1201,7 @@ public function serviceJobDetails(Request $request)
     function getPlaceLatLng($address){
 
         $data = urlencode($address);
-        $url = "https://maps.googleapis.com/maps/api/geocode/json?address=" . $data . "&sensor=false&key=".Config::get('eclipse.keys.googleMap');
+        $url = "https://maps.googleapis.com/maps/api/geocode/json?address=" . $data . "&sensor=false&key=".config('eclipse.keys.googleMap');
         $geocode_stats = file_get_contents($url);
         $output_deals = json_decode($geocode_stats);
         if ($output_deals->status != "OK") {
@@ -1242,7 +1242,7 @@ public function serviceJobDetails(Request $request)
                 $location= "No Address";
             }
 
-            $gps_stocks = GpsStock::select(
+            $gps_stocks = GpsStock::select('id',
                 'gps_id',
                 'client_id'
             )
