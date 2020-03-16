@@ -64,7 +64,6 @@ class ClientController extends Controller {
     //upload employee details to database table
     public function save(Request $request)
     {
-       // $placeLatLng=$this->getPlaceLatLng($request->search_place);
         $placeLatLng = (new City())->getCityGeoCodes($request->city_id);
         $location_lat=$placeLatLng['latitude'];
         $location_lng=$placeLatLng['longitude'];
@@ -1057,9 +1056,7 @@ public function selectTrader(Request $request)
             $this->validate($request, $rules);
             $subdealer_id = $request->sub_dealer;
             $trader_id = $request->trader;
-            // $location=$request->search_place;
             $placeLatLng = (new City())->getCityGeoCodes($request->city_id);
-            // $placeLatLng=$this->getPlaceLatLng($request->search_place);
             $location_lat=$placeLatLng['latitude'];
             $location_lng=$placeLatLng['longitude'];
             $current_date=date('Y-m-d H:i:s');
@@ -1335,38 +1332,6 @@ public function selectTrader(Request $request)
               ];
         return  $rules;
     }
-
-
-
-#####################################################################################
-    function getPlaceLatLng($address)
-    {
-        $data = urlencode($address);
-        // dd($data);
-        // $url = "https://maps.googleapis.com/maps/api/geocode/json?address=" . $data . "&sensor=false&key=".Config::get('eclipse.keys.googleMap');
-        $url = "https://maps.googleapis.com/maps/api/geocode/json?address=" . $data . "&sensor=false&key=".config('eclipse.keys.googleMap');
-        $geocode_stats = file_get_contents($url);
-        // dd($geocode_stats);
-        $output_deals = json_decode($geocode_stats);
-      //  dd($output_deals);
-        if ($output_deals->status != "OK") {
-            return null;
-        }
-        if ($output_deals) {
-            $latLng = $output_deals->results[0]->geometry->location;
-
-            $lat = $latLng->lat;
-            $lng = $latLng->lng;
-            $locationData = ["latitude" => $lat, "longitude" => $lng];
-            return $locationData;
-        } else {
-            return null;
-        }
-    }
-
-  
-    
-
 
 
     public function clientProfileUpdateRules($client)
