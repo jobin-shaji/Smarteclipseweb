@@ -209,7 +209,7 @@ class DeviceReturnController extends Controller {
     
         $imei_RET                   =   $gps_data->imei."-RET-" ;
         $serial_no_RET              =   $gps_data->serial_no."-RET-" ;
-        $gps_find_imei_and_slno     =   Gps::select('imei','serial_no')->where('imei', 'like','%'.$imei_RET.'%')
+        $gps_find_imei_and_slno     =   Gps::select('id','imei','serial_no')->where('imei', 'like','%'.$imei_RET.'%')
                                         ->where('serial_no', 'like', '%'.$serial_no_RET.'%')
                                         ->count();        
         $increment_value            =    $gps_find_imei_and_slno +1;
