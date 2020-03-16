@@ -71,9 +71,6 @@
                 </div>
               </div>
             </div>
-            <div class="icon">
-              <i class="fa fa-tablet"></i>
-            </div>
             <a href="/gps" class="small-box-footer view-last">View <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>

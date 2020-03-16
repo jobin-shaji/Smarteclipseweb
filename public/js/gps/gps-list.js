@@ -21,8 +21,8 @@ function callBackDataTable(){
         refurbished_device  =   1;
     }
     else if(new_device.checked == false && refurbished_device.checked == false){
-        new_device          =   0; 
-        refurbished_device  =   0;
+        alert('Please select at least one checkbox');
+        location.reload();
     }
     var  data = {'new_device':new_device,'refurbished_device':refurbished_device}
 

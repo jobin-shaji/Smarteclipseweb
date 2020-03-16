@@ -54,23 +54,16 @@ class GpsController extends Controller {
                                 ->withTrashed()
                                 ->with('gps:id,imei,serial_no,manufacturing_date,e_sim_number,batch_number,employee_code,model_name,version,deleted_at')
                                 ->where('dealer_id',null);
-        // if($new_device == '1' && $refurbished_device == '1')
-        // {
-        //     new_device          =   1; 
-        //     refurbished_device  =   1;
-        // }
-        // else if(new_device.checked == true && refurbished_device.checked == false){
-        //     new_device          =   1; 
-        //     refurbished_device  =   0;
-        // }
-        // else if(new_device.checked == false && refurbished_device.checked == true){
-        //     new_device          =   0; 
-        //     refurbished_device  =   1;
-        // }
-        // else if(new_device.checked == false && refurbished_device.checked == false){
-        //     new_device          =   0; 
-        //     refurbished_device  =   0;
-        // }
+        if($new_device == '1' && $refurbished_device == '1')
+        {
+            $gps_stocks->get();
+        }
+        else if($new_device == '1' && $refurbished_device == '0'){
+            $gps_stocks->where('refurbished_status',0)->get();
+        }
+        else if($new_device == '0' && $refurbished_device == '1'){
+            $gps_stocks->where('refurbished_status',1)->get();
+        }
         return DataTables::of($gps_stocks)
         ->addIndexColumn()
         ->addColumn('action', function ($gps_stocks) {
