@@ -68,7 +68,7 @@ class TrackReportExport implements FromView
         ->with('gps.vehicle');     
         if($vehicle==0)
         {         
-            $gps_stocks=GpsStock::where('client_id',$client)->get();
+            $gps_stocks=GpsStock::select('id','client_id','gps_id')->where('client_id',$client)->get();
             $gps_list=[];
             foreach ($gps_stocks as $gps) {
                 $gps_list[]=$gps->gps_id;
@@ -76,7 +76,8 @@ class TrackReportExport implements FromView
             $query = $query->whereIn('gps_id',$gps_list)->groupBy('date');        }
        else
         {
-            $vehicle=Vehicle::withTrashed()->find($vehicle); 
+            
+            $vehicle=Vehicle::select('id','gps_id')->where('id',$vehicle)->withTrashed()->first();
             $query = $query->where('gps_id',$vehicle->gps_id)->groupBy('date'); 
         }      
         if($from){

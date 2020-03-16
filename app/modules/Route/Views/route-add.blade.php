@@ -67,7 +67,7 @@
 
 @section('script')
   <script src="{{asset('js/gps/route-map.js')}}"></script>
-  <script src="https://maps.googleapis.com/maps/api/js?key={{Config::get('eclipse.keys.googleMap')}}&libraries=drawing,places&callback=initMap"
+  <script src="https://maps.googleapis.com/maps/api/js?key={{config('eclipse.keys.googleMap')}}&libraries=drawing,places&callback=initMap"
        async defer></script>
 @endsection
  @endsection

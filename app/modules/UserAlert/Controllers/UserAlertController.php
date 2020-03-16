@@ -42,10 +42,10 @@ class UserAlertController extends Controller {
     public function savealertManager(Request $request) 
     {       
         $user_id = \Auth::user()->id;
-        $client = Client::where('user_id', $user_id)->first();
-        $alert = AlertType::all(); 
+        $client = Client::select('user_id','id')->where('user_id', $user_id)->first();
+         $alert = AlertType::select('id')->get();
         foreach ($alert as $alert) { 
-            $user_item = UserAlerts::where('alert_id', $alert->id)->where('client_id', $client->id)->first();             
+            $user_item = UserAlerts::select('alert_id','client_id','status')->where('alert_id', $alert->id)->where('client_id', $client->id)->first();             
             if($user_item)
             { 
                 $user_item->status =0;
@@ -57,7 +57,7 @@ class UserAlertController extends Controller {
         $alert_array = $request->alert_id; 
         if($alert_array){
             foreach ($alert_array as $alert_id) {                           
-                $user_alert = UserAlerts::where('alert_id', $alert_id)->where('client_id', $client->id)->first();                
+                $user_alert = UserAlerts::select('alert_id','client_id','status')->where('alert_id', $alert_id)->where('client_id', $client->id)->first();                
                 if($user_alert)
                 {
                     $user_alert->status =1;

@@ -2,10 +2,10 @@
 
 
 return array(
-   'offlinetime' => "-360 minutes",
-   'connectionlosttimemotion' => "-3 minutes",
-   'connectionlosttimehalt' => "-11 minutes",
-   'connectionlosttimesleep' => "-11 minutes",
+   'offline_time' => "-360 minutes",
+   'connection_lost_time_motion' => "-3 minutes",
+   'connection_lost_time_halt' => "-11 minutes",
+   'connection_lost_time_sleep' => "-11 minutes",
    'keys' => array(
       'googleMap' => env("GOOGLE_MAP_API_KEY"),
    ),

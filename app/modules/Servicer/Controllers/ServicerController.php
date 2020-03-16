@@ -232,7 +232,7 @@ class ServicerController extends Controller {
 
         // if($placeLatLng==null){
         //       $request->session()->flash('message', 'Enter correct location');
-        //       $request->session()->flash('alert-class', 'alert-danger');
+        //       $request->session()->flash('alert-class', 'alert-danger');details
         //       return redirect(route('sub-dealer.assign.servicer'));
         // }
         // $location_lat=$placeLatLng['latitude'];
@@ -492,10 +492,16 @@ class ServicerController extends Controller {
 if($servicer_job->status==0){
     return "<font color='red'>Cancelled</font>";
 
-            }else
+            }
+            elseif($servicer_job->status==1)
             {
                 return "
-                <a href=".$b_url."/job/".Crypt::encrypt($servicer_job->id)."/details class='btn btn-xs btn-info'><i class='fas fa-eye' data-toggle='tooltip' title='Job completion'></i>View</a>";
+                <a href=".$b_url."/job/".Crypt::encrypt($servicer_job->id)."/details class='btn btn-xs btn-info'><i class='fas fa-eye' data-toggle='tooltip' title='Job completion'></i>Job Completion</a>";
+            }
+            else
+            {
+                return "
+                <a href=".$b_url."/job/".Crypt::encrypt($servicer_job->id)."/details class='btn btn-xs btn-info'><i class='fas fa-eye' data-toggle='tooltip' title='Job completion'></i>Job Completion</a>";
             }
 
         })
@@ -565,10 +571,10 @@ if($servicer_job->status==0){
 
             }else
             {
-                if($servicer_job->status==2)
+                if($servicer_job->status==1)
             {
                return "
-                <a href=".$b_url."/servicejob/".Crypt::encrypt($servicer_job->id)."/serviceedit class='btn btn-xs btn-info'><i class='fas fa-eye' data-toggle='tooltip' title='Job completion'></i>View</a>";
+                <a href=".$b_url."/servicejob/".Crypt::encrypt($servicer_job->id)."/servicedetails class='btn btn-xs btn-info'><i class='fas fa-eye' data-toggle='tooltip' title='Job completion'></i>Job Completion</a>";
             }
             else{
 
@@ -1086,7 +1092,7 @@ public function serviceJobDetails(Request $request)
          //    $longitude=$servicer_job->longitude;
          //    if(!empty($latitude) && !empty($longitude)){
          //        //Send request and receive json data by address
-         //        $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key='.Config::get("eclipse.keys.googleMap").'&libraries=drawing&callback=initMap');
+         //        $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key='.config("eclipse.keys.googleMap").'&libraries=drawing&callback=initMap');
          //        $output = json_decode($geocodeFromLatLong);
          //        $status = $output->status;
          //        //Get address from json data
@@ -1201,7 +1207,7 @@ public function serviceJobDetails(Request $request)
     function getPlaceLatLng($address){
 
         $data = urlencode($address);
-        $url = "https://maps.googleapis.com/maps/api/geocode/json?address=" . $data . "&sensor=false&key=".Config::get('eclipse.keys.googleMap');
+        $url = "https://maps.googleapis.com/maps/api/geocode/json?address=" . $data . "&sensor=false&key=".config('eclipse.keys.googleMap');
         $geocode_stats = file_get_contents($url);
         $output_deals = json_decode($geocode_stats);
         if ($output_deals->status != "OK") {
@@ -1242,7 +1248,7 @@ public function serviceJobDetails(Request $request)
                 $location= "No Address";
             }
 
-            $gps_stocks = GpsStock::select(
+            $gps_stocks = GpsStock::select('id',
                 'gps_id',
                 'client_id'
             )
@@ -1564,14 +1570,30 @@ public function serviceJobDetails(Request $request)
             {
                 if($servicer_job->status==1)
                 {
-                    return "
-                     <a href=".$b_url."/job/".Crypt::encrypt($servicer_job->id)."/details class='btn btn-xs btn-info'><i class='fas fa-eye' data-toggle='tooltip' title='Job completion'></i>View</a>";
+                    if($servicer_job->job_type==1)
+                    {
+                        return "
+                     <a href=".$b_url."/job/".Crypt::encrypt($servicer_job->id)."/details class='btn btn-xs btn-info'><i class='fas fa-eye' data-toggle='tooltip' title='Job completion'></i>Job Completion</a>";
+                    }
+                    else
+                    {
+                        return "
+                        <a href=".$b_url."/servicejob/".Crypt::encrypt($servicer_job->id)."/servicedetails class='btn btn-xs btn-info'><i class='fas fa-eye' data-toggle='tooltip' title='Job completion'></i>Job Completion</a>";
+                    }
                 }
 
                 else if($servicer_job->status==2)
                 {
-                   return "
-                    <a href=".$b_url."/servicejob/".Crypt::encrypt($servicer_job->id)."/serviceedit class='btn btn-xs btn-info'><i class='fas fa-eye' data-toggle='tooltip' title='Job completion'></i>View</a>";
+                    if($servicer_job->job_type==1)
+                    {
+                        return "
+                     <a href=".$b_url."/job/".Crypt::encrypt($servicer_job->id)."/details class='btn btn-xs btn-info'><i class='fas fa-eye' data-toggle='tooltip' title='Job completion'></i>Job Completion</a>";
+                    }
+                    else
+                    {
+                        return "
+                        <a href=".$b_url."/servicejob/".Crypt::encrypt($servicer_job->id)."/servicedetails class='btn btn-xs btn-info'><i class='fas fa-eye' data-toggle='tooltip' title='Job completion'></i>Job Completion</a>";
+                    }
                 }
                 else
                 {

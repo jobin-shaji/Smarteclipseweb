@@ -44,7 +44,7 @@ class SuddenAccelerationReportController extends Controller
         ->limit(1000);        
         if($vehicle==0 || $vehicle==null)
         {
-            $gps_stocks=GpsStock::where('client_id',$client)->get();
+            $gps_stocks=GpsStock::select('client_id','gps_id')->where('client_id',$client)->get();
             $gps_list=[];
             foreach ($gps_stocks as $gps) {
                 $gps_list[]=$gps->gps_id;
@@ -60,7 +60,11 @@ class SuddenAccelerationReportController extends Controller
         }
         else
         {
-            $vehicle=Vehicle::withTrashed()->find($vehicle);
+           
+            $vehicle=Vehicle::select('id','gps_id','name','register_number')
+            ->where('id',$vehicle)
+            ->withTrashed()
+            ->first();
             $query = $query->where('alert_type_id',2)->where('gps_id',$vehicle->gps_id);
             // ->where('status',1);
             if($from){

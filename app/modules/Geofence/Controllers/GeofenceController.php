@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 
 namespace App\Modules\Geofence\Controllers;
@@ -26,12 +26,12 @@ class GeofenceController extends Controller {
         $lat=(float)$client->latitude;
         $lng=(float)$client->longitude;
         $geofence = Geofence::select(
-            'id', 
-            'user_id'                                  
-        )  
-        ->withTrashed()     
-        ->where('user_id',$request->user()->id)        
-        ->count(); 
+            'id',
+            'user_id'
+        )
+        ->withTrashed()
+        ->where('user_id',$request->user()->id)
+        ->count();
         if($geofence<2){
             return view('Geofence::fence-create',['lat' => $lat,'lng' => $lng]);
         }else if($request->user()->hasRole('fundamental')&& $geofence<4) {
@@ -44,12 +44,12 @@ class GeofenceController extends Controller {
             return view('Geofence::fence-create',['lat' => $lat,'lng' => $lng]);
         }
         else if($request->user()->hasRole('pro')&& $geofence==10) {
-            $request->session()->flash('message', 'Maximum Limit has been Reached'); 
-            $request->session()->flash('alert-class', 'alert-success'); 
+            $request->session()->flash('message', 'Maximum Limit has been Reached');
+            $request->session()->flash('alert-class', 'alert-success');
             return view('Geofence::geofence-list');
         }else{
-            $request->session()->flash('message', 'Please upgrade your current plan for adding more Geofence'); 
-            $request->session()->flash('alert-class', 'alert-success'); 
+            $request->session()->flash('message', 'Please upgrade your current plan for adding more Geofence');
+            $request->session()->flash('alert-class', 'alert-success');
             return view('Geofence::geofence-list');
         }
     }
@@ -73,12 +73,12 @@ class GeofenceController extends Controller {
                 }
                 $response="";
                 foreach ($polygon as $single_coordinate) {
-                    $lat_integer = intval($single_coordinate[0]);  
+                    $lat_integer = intval($single_coordinate[0]);
                     $lat_integer = str_pad($lat_integer,3,'0',STR_PAD_LEFT);
                     $lat_decimal=explode('.', number_format($single_coordinate[0], 6))[1];
                     $latitude=$lat_integer.'.'.$lat_decimal;
 
-                    $lng_integer = intval($single_coordinate[1]);  
+                    $lng_integer = intval($single_coordinate[1]);
                     $lng_integer = str_pad($lng_integer,3,'0',STR_PAD_LEFT);
                     $lng_decimal=explode('.', number_format($single_coordinate[1], 6))[1];
                     $longitude=$lng_integer.'.'.$lng_decimal;
@@ -126,30 +126,30 @@ class GeofenceController extends Controller {
     {
         $client_user_id=\Auth::user()->id;
         $geofence = Geofence::select(
-            'id', 
-            'user_id',                      
-            'name',                   
-            'cordinates',                                     
+            'id',
+            'user_id',
+            'name',
+            'cordinates',
             'deleted_at'
         )
         ->withTrashed()
         ->where('user_id',$client_user_id)
         ->with('user:id,email,mobile')
         ->with('clients:id,user_id,name')
-        ->get();  
+        ->get();
         return DataTables::of($geofence)
         ->addIndexColumn()
         ->addColumn('action', function ($geofence) {
             $b_url = \URL::to('/');
-            if($geofence->deleted_at == null){  
-            return " 
-             <a href=".$b_url."/geofence/".Crypt::encrypt($geofence->id)."/details class='btn btn-xs btn-info' data-toggle='tooltip' title='View'><i class='fas fa-eye'> View</i> </a>  
-             <a href=".$b_url."/geofence/".Crypt::encrypt($geofence->id)."/edit class='btn btn-xs btn-info' data-toggle='tooltip' title='View'><i class='fas fa-edit'> Redraw</i> </a>         
-                           
+            if($geofence->deleted_at == null){
+            return "
+             <a href=".$b_url."/geofence/".Crypt::encrypt($geofence->id)."/details class='btn btn-xs btn-info' data-toggle='tooltip' title='View'><i class='fas fa-eye'> View</i> </a>
+             <a href=".$b_url."/geofence/".Crypt::encrypt($geofence->id)."/edit class='btn btn-xs btn-info' data-toggle='tooltip' title='View'><i class='fas fa-edit'> Redraw</i> </a>
+
                 <button onclick=delGeofence(".$geofence->id.") class='btn btn-xs btn-danger' data-toggle='tooltip' title='Deactivate'><i class='fas fa-trash'></i> Deactivate </button>";
-                }else{ 
+                }else{
                 return "
-                
+
                 <button onclick=activateGeofence(".$geofence->id.") class='btn btn-xs btn-success' data-toggle='tooltip' title='Activate'><i class='fas fa-check'></i> Activate</button>";
             }
         })
@@ -159,7 +159,7 @@ class GeofenceController extends Controller {
     public function details(Request $request)
     {
         $decrypted = Crypt::decrypt($request->id);
-        $geofence=Geofence::find($decrypted);         
+        $geofence=Geofence::find($decrypted);
         if($geofence == null)
         {
            return view('Geofence::404');
@@ -184,9 +184,9 @@ class GeofenceController extends Controller {
             $delete_single_true=$single_vehicle_geofence->delete();
             if($delete_single_true){
                 $success=$this->geofenceResponse($single_vehicle_geofence->vehicle_id);
-            } 
-        } 
-        $geofence->delete();   
+            }
+        }
+        $geofence->delete();
 
         return response()->json([
             'status' => 1,
@@ -214,14 +214,14 @@ class GeofenceController extends Controller {
     }
 
 
-     public function geofenceShow(Request $request){  
-            
+     public function geofenceShow(Request $request){
+
             $coordinates  =  Geofence:: select(['id','cordinates','name','user_id',
                  \DB::raw('DATE(created_at) as date')])
             ->with('user:id,username')
-            ->where('id',$request->id)->first();  
-            
-            $cordinates=$coordinates->cordinates; 
+            ->where('id',$request->id)->first();
+
+            $cordinates=$coordinates->cordinates;
 
                $polygons = array();
                 foreach ($cordinates as $cord) {
@@ -233,7 +233,7 @@ class GeofenceController extends Controller {
 
             return response()->json([
                 'cordinates' => $polygons,
-                'geofence' => $coordinates,                
+                'geofence' => $coordinates,
                 'status' => 'cordinate'
             ]);
 
@@ -250,16 +250,16 @@ class GeofenceController extends Controller {
         ->where('user_id',$user_id)
         ->orderBy('created_at','DESC')
         ->get();
-        
-         return view('Geofence::assign-geofence-vehicle-list',['vehicles'=>$vehicles,'geofences'=>$geofence]); 
+
+         return view('Geofence::assign-geofence-vehicle-list',['vehicles'=>$vehicles,'geofences'=>$geofence]);
     }
 
     public function getAssignGeofenceVehicleList(Request $request)
     {
 
         $client_id=\Auth::user()->client->id;
-       // $client_id= $request->client;         
-        $vehicle_id= $request->vehicle_id;         
+       // $client_id= $request->client;
+        $vehicle_id= $request->vehicle_id;
         $geofence = $request->geofence_id;
         $alert_type = $request->alert_type;
         // $from_date = $request->from_date;
@@ -288,9 +288,9 @@ class GeofenceController extends Controller {
                     ]);
                 if($route_area)  {
                     $this->geofenceResponse($route_area->vehicle_id);
-                } 
-            }  
-        }   
+                }
+            }
+        }
         $geofence = VehicleGeofence::select(
                     'id',
                     'vehicle_id',
@@ -302,21 +302,21 @@ class GeofenceController extends Controller {
                 ->where('client_id',$client_id)
                 ->get();
         return DataTables::of($geofence)
-            ->addIndexColumn() 
-            ->addColumn('alert', function ($geofence) {  
+            ->addIndexColumn()
+            ->addColumn('alert', function ($geofence) {
                 if($geofence->alert_type==1){
                     return "Entry";
                 }else{
                     return "Exit";
-                }         
+                }
             })
-            ->addColumn('action', function ($geofence) {  
-            $b_url = \URL::to('/');              
+            ->addColumn('action', function ($geofence) {
+            $b_url = \URL::to('/');
             return "
                 <button onclick=deleteAssignedGeofence(".$geofence->id.") class='btn btn-xs btn-danger'><i class='fas fa-trash'></i> Delete </button>
-                <a href=".$b_url."/geofence/".Crypt::encrypt($geofence->geofence_id)."/details class='btn btn-xs btn-info' data-toggle='tooltip' title='View'><i class='fas fa-eye'></i> View Geofence</a> ";               
+                <a href=".$b_url."/geofence/".Crypt::encrypt($geofence->geofence_id)."/details class='btn btn-xs btn-info' data-toggle='tooltip' title='View'><i class='fas fa-eye'></i> View Geofence</a> ";
             })
-            ->rawColumns(['link', 'action'])         
+            ->rawColumns(['link', 'action'])
             ->make();
     }
 
@@ -334,7 +334,7 @@ class GeofenceController extends Controller {
         $delete_true=$assigned_geofence->delete();
         if($delete_true){
             $this->geofenceResponse($assigned_geofence->vehicle_id);
-        } 
+        }
         return response()->json([
             'status' => 1,
             'title' => 'Success',
@@ -358,7 +358,7 @@ class GeofenceController extends Controller {
         if($response_string==""){
             $response_string="CLR VGF";
         }else{
-            $response_string="SET VGF:".$response_string;
+            $response_string="SET VGF:".trim($response_string);
         }
         $geofence_response= OtaResponse::create([
                     'gps_id' => $vehicle->gps_id,
@@ -371,7 +371,7 @@ class GeofenceController extends Controller {
     public function alredyassigngeofenceCount(Request $request)
     {
         $client_id=\Auth::user()->client->id;
-        $vehicle_id= $request->vehicle_id;           
+        $vehicle_id= $request->vehicle_id;
         $geofence = $request->geofence_id;
         $alert_type = $request->alert_type;
 
@@ -383,8 +383,8 @@ class GeofenceController extends Controller {
         ->get()
         ->count();
         return response()->json([
-            'assign_geofence_count' => $geofences            
-        ]);       
+            'assign_geofence_count' => $geofences
+        ]);
     }
 
     public function schoolFenceCreate(Request $request)
@@ -392,7 +392,7 @@ class GeofenceController extends Controller {
         $user_id=\Auth::user()->id;
         $client=\Auth::user()->client;
         $lat=(float)$client->latitude;
-        $lng=(float)$client->longitude;       
+        $lng=(float)$client->longitude;
         return view('Geofence::school-fence-create',['lat' => $lat,'lng' => $lng]);
     }
     public function saveSchoolFence(Request $request){
@@ -405,7 +405,7 @@ class GeofenceController extends Controller {
                 'title' => 'Error',
                 'message' => 'Please draw the Geofence'
             ]);
-        }else{ 
+        }else{
         foreach ($request->polygons as $polygon) {
                 $response="";
                 foreach ($polygon as $single_coordinate) {
@@ -416,9 +416,9 @@ class GeofenceController extends Controller {
                 $code_last_id=$last_id+1;
                 $code=str_pad($code_last_id, 5, '0', STR_PAD_LEFT);
                 if(\Auth::user()->geofence)
-                { 
-                    $geofence  =  Geofence::where('user_id',$user_id)->first(); 
-                    // dd($request->name);             
+                {
+                    $geofence  =  Geofence::where('user_id',$user_id)->first();
+                    // dd($request->name);
                     $geofence->name=$request->name;
                     $geofence->cordinates=$polygon;
                     $geofence->response=$response;
@@ -427,7 +427,7 @@ class GeofenceController extends Controller {
                 }
                 else
                 {
-                  
+
                     Geofence::create([
                     'user_id' => $request->user()->id,
                     'name' => $request->name,
@@ -436,8 +436,8 @@ class GeofenceController extends Controller {
                     'code' => $code
                 ]);
                 }
-                
-            }                             
+
+            }
             return response()->json([
                 'status' => 'school geofence',
                 'title' => 'Success',
@@ -447,25 +447,25 @@ class GeofenceController extends Controller {
         }
     }
 
-      public function schoolGeofenceShow(Request $request){  
+      public function schoolGeofenceShow(Request $request){
             $user_id=\Auth::user()->id;
             $coordinates  =  Geofence:: select(['id','cordinates','name','user_id',
                 \DB::raw('DATE(created_at) as date')])
             ->with('user:id,username')
             ->where('user_id',$user_id)->first();
-            if($coordinates)           
-            {           
-                 $cordinates=$coordinates->cordinates; 
+            if($coordinates)
+            {
+                 $cordinates=$coordinates->cordinates;
                  $polygons = array();
-                 foreach ($cordinates as $cord) {                    
+                 foreach ($cordinates as $cord) {
                      $p = new Geofence;
-                     $p->lat = (float)$cord[0]; 
+                     $p->lat = (float)$cord[0];
                      $p->lng = (float)$cord[1];
                       array_push($polygons,$p);
-                 }           
+                 }
                  return response()->json([
                      'cordinates' => $polygons,
-                     'geofence' => $coordinates,                
+                     'geofence' => $coordinates,
                      'status' => 'cordinate'
                  ]);
              }
@@ -481,7 +481,7 @@ class GeofenceController extends Controller {
                 'title' => 'Error',
                 'message' => 'Please draw the Geofence'
             ]);
-        }else{ 
+        }else{
         foreach ($request->polygons as $polygon) {
                 $response="";
                 foreach ($polygon as $single_coordinate) {
@@ -491,12 +491,12 @@ class GeofenceController extends Controller {
                 $last_id=Geofence::max('id');
                 $code_last_id=$last_id+1;
                 // $code=str_pad($code_last_id, 5, '0', STR_PAD_LEFT);
-                $geofence  =  Geofence::where('user_id',$user_id)->first(); 
+                $geofence  =  Geofence::where('user_id',$user_id)->first();
                 $geofence->cordinates=$polygon;
                 $geofence->response=$response;
                 // $geofence->code=$code;
-                $geofence->save();                              
-            }                             
+                $geofence->save();
+            }
             return response()->json([
                 'status' => 'school geofence',
                 'title' => 'Success',
@@ -508,18 +508,18 @@ class GeofenceController extends Controller {
 
     public function fenceEdit(Request $request)
     {
-        
+
         $decrypted = Crypt::decrypt($request->id);
         $user_id=\Auth::user()->id;
         $client=\Auth::user()->client;
         $lat=(float)$client->latitude;
-        $lng=(float)$client->longitude; 
-        $geofence = Geofence::find(decrypt($request->id));  
+        $lng=(float)$client->longitude;
+        $geofence = Geofence::find(decrypt($request->id));
         if($geofence == null)
         {
            return view('Geofence::404');
         }
-        return view('Geofence::fence-edit',['lat' => $lat,'lng' => $lng,'geofence_id'=>$decrypted,'geofence'=>$geofence]);        
+        return view('Geofence::fence-edit',['lat' => $lat,'lng' => $lng,'geofence_id'=>$decrypted,'geofence'=>$geofence]);
     }
 
 
@@ -528,7 +528,7 @@ class GeofenceController extends Controller {
         $client_id=\Auth::user()->client->id;
         $name=$request->name;
         $geofence_id=$request->geofence_id;
-        $geofence  =  Geofence::where('id',$geofence_id)->first(); 
+        $geofence  =  Geofence::where('id',$geofence_id)->first();
         $old_geofence_response=$geofence->response;
         $geofence->name=$name;
         $geofence->updated_at=date('Y-m-d H:i:s');
@@ -537,12 +537,12 @@ class GeofenceController extends Controller {
         foreach ($request->polygons as $polygon) {
                 $response="";
                 foreach ($polygon as $single_coordinate) {
-                    $lat_integer = intval($single_coordinate[0]);  
+                    $lat_integer = intval($single_coordinate[0]);
                     $lat_integer = str_pad($lat_integer,3,'0',STR_PAD_LEFT);
                     $lat_decimal=explode('.', number_format($single_coordinate[0], 6))[1];
                     $latitude=$lat_integer.'.'.$lat_decimal;
 
-                    $lng_integer = intval($single_coordinate[1]);  
+                    $lng_integer = intval($single_coordinate[1]);
                     $lng_integer = str_pad($lng_integer,3,'0',STR_PAD_LEFT);
                     $lng_decimal=explode('.', number_format($single_coordinate[1], 6))[1];
                     $longitude=$lng_integer.'.'.$lng_decimal;
@@ -551,8 +551,8 @@ class GeofenceController extends Controller {
                 $response=rtrim($response,"#");
                 $geofence->cordinates=$polygon;
                 $geofence->response=$response;
-            } 
-        } 
+            }
+        }
         $geofence_name_count=Geofence::where('name',$request->name)->where('user_id',$request->user()->id)->where('id', '!=',  $geofence_id )->withTrashed()->count();
         if($geofence_name_count >=1)
         {
@@ -561,9 +561,9 @@ class GeofenceController extends Controller {
             ];
             return response()->json($response);
         }
-        $geofence->save(); 
-        $new_geofence_response=$geofence->response;      
-        if($new_geofence_response != $old_geofence_response)  
+        $geofence->save();
+        $new_geofence_response=$geofence->response;
+        if($new_geofence_response != $old_geofence_response)
         {
             $vehicle_geofences=VehicleGeofence::select('vehicle_id')->where('geofence_id',$geofence_id)->get();
             $vehicle_list=[];
@@ -574,11 +574,11 @@ class GeofenceController extends Controller {
             foreach($vehicle_list as $single_vehicle_geofence){
                 $this->geofenceResponse($single_vehicle_geofence);
             }
-        }                 
+        }
         $response = [
                     'status' => 'success'
                 ];
         return response()->json($response);
-        
+
     }
 }

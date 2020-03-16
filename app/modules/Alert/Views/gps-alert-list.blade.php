@@ -64,8 +64,9 @@ All Alerts
   </div>            
 </div>
 @section('script')
+
 <script async defer
-   src="https://maps.googleapis.com/maps/api/js?key={{Config::get('eclipse.keys.googleMap')}}&callback=initMap"></script>
+   src="https://maps.googleapis.com/maps/api/js?key={{config('eclipse.keys.googleMap')}}&callback=initMap"></script>
 <script src="{{asset('js/gps/all-alert.js')}}"></script>
 
  @endsection

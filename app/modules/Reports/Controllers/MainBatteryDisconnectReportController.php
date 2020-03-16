@@ -41,7 +41,7 @@ class MainBatteryDisconnectReportController extends Controller
         ->orderBy('device_time', 'DESC');
         if($vehicle==0 || $vehicle==null)
         {
-            $gps_stocks=GpsStock::where('client_id',$client)->get();
+            $gps_stocks=GpsStock::select('id','client_id','gps_id')->where('client_id',$client)->get();
             $gps_list=[];
             foreach ($gps_stocks as $gps) {
                 $gps_list[]=$gps->gps_id;
@@ -56,7 +56,12 @@ class MainBatteryDisconnectReportController extends Controller
         }
         else
         {
-            $vehicle=Vehicle::withTrashed()->find($vehicle); 
+            
+            
+            $vehicle    =         Vehicle::select('id','gps_id')
+                                           ->where('id',$vehicle)
+                                           ->withTrashed()
+                                           ->first(); 
             $query = $query->where('alert_type_id',11)->where('gps_id',$vehicle->gps_id);
             if($from){
                 $search_from_date=date("Y-m-d", strtotime($from));
@@ -72,7 +77,7 @@ class MainBatteryDisconnectReportController extends Controller
             $longitude=$mainbatterydisconnect->longitude;          
             if(!empty($latitude) && !empty($longitude)){
                 //Send request and receive json data by address
-                $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key='.Config::get("eclipse.keys.googleMap").'&libraries=drawing&callback=initMap'); 
+                $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key='.config("eclipse.keys.googleMap").'&libraries=drawing&callback=initMap'); 
                 $output = json_decode($geocodeFromLatLong);         
                 $status = $output->status;
                 //Get address from json data
