@@ -1312,9 +1312,9 @@ public function selectTrader(Request $request)
         $rules = [
             'name' => 'required',
             'address' => 'required',
-            // 'city_id' => 'required',
-            // 'state_id' => 'required',
-            // 'country_id' => 'required',
+            'city_id' => 'required',
+            'state_id' => 'required',
+            'country_id' => 'required',
             
             'mobile_number' => 'required|digits:10|unique:users,mobile,'.$client->user_id
               ];
@@ -1326,9 +1326,9 @@ public function selectTrader(Request $request)
         $rules = [
             'name' => 'required',
             'address' => 'required',
-            // 'city_id' => 'required',
-            // 'state_id' => 'required',
-            // 'country_id' => 'required',
+            'city_id' => 'required',
+            'state_id' => 'required',
+            'country_id' => 'required',
 
            
             'mobile_number' => 'required|digits:11|unique:users,mobile,'.$client->user_id
