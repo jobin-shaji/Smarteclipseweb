@@ -1,44 +1,18 @@
-var svg_icon        =   $("#svg_icon").val();
-var vehicle_scale   =   $("#vehicle_scale").val();
-var stroke_weight   =   $("#stroke_weight").val();
-var opacity         =   $("#opacity").val();
-var marker, map, icon, snap_route;
-var numDeltas       = 100;
-var delay           = 100; //milliseconds
 var i               = 0;
 var posLat          = '';
 var posLng          = '';
-var deltaLat, deltaLng;
-var vehicleColor    = "#0C2161";
 var vehicle_data    = {
                       latitude  : '',
                       longitude :''
                     };
-
+ var vehicle_lat,vehicle_lng;
 
 $('document').ready(function(){
   getFirebaseData();
-  initMap();
+  $('#fuel_100, #fuel_75, #fuel_50, #fuel_25, #fuel_0, #upgrade').hide();
+
 });
 
-function initMap(){
-  map = new google.maps.Map(document.getElementById('map'), {
-      center: {
-          lat: vehicle_data.latitude,
-          lng: vehicle_data.longitude
-      },
-      zoom: 17,
-      fullscreenControl: false,
-      mapTypeId: 'roadmap'
-  });
-  marker = new SlidingMarker({});
-  map.setOptions({maxZoom:19,minZoom:9});
-}
-/**
- *
- *
- *
- */
 function getFirebaseData()
 {
   var vehicle_id = $("#vehicle_id").val();
@@ -65,7 +39,6 @@ function getFirebaseData()
       var speed                         = '';
       var vehicle_name                  = '';
       var vehicle_reg                   = '';
-      var place                         = '';
       var last_seen                     = '';
       var connection_lost_time_minutes  = '';
       var last_update_time              =  live_data_for_tracking.config_offline_time;
@@ -78,10 +51,10 @@ function getFirebaseData()
         ac    =   live_data_for_tracking.ac_status;
         if(ac == 1)
         {
-            ac     =   "ON";
+          ac     =   "ON";
         }else if(ac ==  0)
         {
-            ac     =   "OFF";
+          ac     =   "OFF";
         }
       }
       if(live_data_for_tracking.fuel_status != undefined)
@@ -118,6 +91,8 @@ function getFirebaseData()
       }
       if(live_data_for_tracking.lat != undefined)
       {
+        vehicle_lat = live_data_for_tracking.lat;
+
         vehicle_data.latitude = parseFloat(live_data_for_tracking.lat);
         if(posLat == '')
         {
@@ -126,7 +101,10 @@ function getFirebaseData()
       }
       if(live_data_for_tracking.lon != undefined)
       {
+        vehicle_lng = live_data_for_tracking.lon;
+
         vehicle_data.longitude = parseFloat(live_data_for_tracking.lon);
+        // console.log(" longitude"+live_data_for_tracking.lat);
         if(posLng == '')
         {
           posLng = parseFloat(live_data_for_tracking.lon);
@@ -152,37 +130,69 @@ function getFirebaseData()
       {
         vehicle_reg = live_data_for_tracking.vehicle_register_number;
       }
-
       if( device_time <  last_update_time )
       {
         vehicleStatus           =   "Offline";
         signalStrength          =   "Connection Lost";
       }
-
-      var clickedPointCurrent   =   vehicle_data.latitude + ',' + vehicle_data.longitude;
-
-      // for snap routing
-      $.ajax({
-        url: 'https://roads.googleapis.com/v1/snapToRoads?path='+clickedPointCurrent+'&key=AIzaSyCXmg0OWU4PM-pEIJPr_GpJAG9dKUHgim4&interpolate=true', //true',
-        crossDomain: true,
-        dataType: 'jsonp'
-      }).done(function(response) {
-        if(response.snappedPoints == undefined){
-          track(vehicle_data.latitude,vehicle_data.longitude,angle);
-        }
-        else
-        {
-          $.each(response.snappedPoints, function (i, snap_data) {
-            var local_data=snap_data.location;
-            vehicle_data.latitude   = local_data.latitude;
-            vehicle_data.longitude  = local_data.longitude;
-            track(vehicle_data.latitude,vehicle_data.longitude,angle);
-          });
-        }
-      });
-
       document.getElementById("user").innerHTML         = vehicle_name;
       document.getElementById("vehicle_name").innerHTML = vehicle_reg;
+      document.getElementById("car_battery").innerHTML  = battery_status;
+      document.getElementById("ac").innerHTML           = ac;
+      $('#fuel_100, #fuel_75, #fuel_50, #fuel_25, #fuel_0, #upgrade').hide();
+      if(fuel < 1)
+      {
+        $('#fuel_0').show();
+      }
+      else if((fuel > 0) && (fuel <= 25))
+      {
+        $('#fuel_25').show();
+      }
+      else if((fuel > 25) && (fuel <= 50))
+      {
+        $('#fuel_50').show();
+      }
+      else if((fuel > 50) && (fuel <= 75))
+      {
+        $('#fuel_75').show();
+      }
+      else if(fuel > 75)
+      {
+        $('#fuel_100').show();
+      }
+      else
+      {
+        $('#upgrade').show();
+        document.getElementById("upgradefuel").innerHTML = "Upgrade Version";
+      }
+      document.getElementById("odometer").innerHTML     = odometer;
+      getPlace(vehicle_data.latitude,vehicle_data.longitude);
+
+       async function getPlace(lat,lng){
+        var location_name = await getPlaceName(lat,lng).then(function(data){
+          var location_data = JSON.stringify(data.Response.View);
+          document.getElementById("car_location").innerHTML = location_name_list=JSON.parse(location_data)[0].Result[0].Location.Address.Label;
+          return "";
+        });
+      }
+
+      function getPlaceName(lat,lng){
+        var location_name = "";
+        return $.ajax({
+          url: 'https://reverse.geocoder.api.here.com/6.2/reversegeocode.json',
+          type: 'GET',
+          dataType: 'jsonp',
+          jsonp: 'jsoncallback',
+          data: {
+            prox: lat+','+lng,
+            mode: 'retrieveAddresses',
+            maxresults: '1',
+            gen: '9',
+            app_id: "RN9UIyGura2lyToc9aPg",
+            app_code: "4YMdYfSTVVe1MOD_bDp_ZA"
+          }
+        });
+        }
 
       if (vehicleStatus == 'M' && Math.floor(speed) != 0 && device_time >= connection_lost_time_motion)
       {
@@ -192,7 +202,6 @@ function getFirebaseData()
         $("#offline").hide();
         $("#sleep").hide();
         $("#connection_lost").hide();
-        vehicleColor="#84b752";
       }
       else if (vehicleStatus == 'M' && Math.floor(speed) != 0 && device_time <= connection_lost_time_motion)
       {
@@ -205,7 +214,6 @@ function getFirebaseData()
         $("#offline").hide();
         $("#sleep").hide();
         $("#connection_lost").show();
-        vehicleColor="#84b752";
       }
       else if (vehicleStatus == 'M' && Math.floor(speed) == 0 && device_time >= connection_lost_time_motion)
       {
@@ -215,7 +223,6 @@ function getFirebaseData()
         $("#offline").hide();
         $("#sleep").hide();
         $("#connection_lost").hide();
-        vehicleColor="#84b752";
 
       }
       else if (vehicleStatus == 'M' && Math.floor(speed) == 0 && device_time <= connection_lost_time_motion)
@@ -229,7 +236,6 @@ function getFirebaseData()
         $("#offline").hide();
         $("#sleep").hide();
         $("#connection_lost").show();
-        vehicleColor="#84b752";
       }
       else if (vehicleStatus == 'H' && device_time >= connection_lost_time_halt)
       {
@@ -239,8 +245,6 @@ function getFirebaseData()
         $("#offline").hide();
         $("#sleep").hide();
         $("#connection_lost").hide();
-        vehicleColor="#69b4b9";
-
       }
       else if (vehicleStatus == 'H' && device_time <= connection_lost_time_halt)
       {
@@ -253,7 +257,6 @@ function getFirebaseData()
         $("#offline").hide();
         $("#sleep").hide();
         $("#connection_lost").show();
-        vehicleColor="#69b4b9";
       }
       else if (vehicleStatus == 'S' && device_time >= connection_lost_time_sleep)
       {
@@ -263,7 +266,6 @@ function getFirebaseData()
         $("#online").hide();
         $("#offline").hide();
         $("#connection_lost").hide();
-        vehicleColor=" #858585";
       }
       else if (vehicleStatus == 'S' && device_time <= connection_lost_time_sleep)
       {
@@ -276,7 +278,6 @@ function getFirebaseData()
         $("#offline").hide();
         $("#sleep").hide();
         $("#connection_lost").show();
-        vehicleColor="#858585";
       }
       else
       {
@@ -289,7 +290,6 @@ function getFirebaseData()
         $("#online").hide();
         $("#zero_speed_online").hide();
         $("#connection_lost").hide();
-        vehicleColor="#c41900";
       }
       if(ign == 1) {
         document.getElementById("ignition").innerHTML = "ON";
@@ -318,26 +318,18 @@ function getFirebaseData()
       {
         if (signalStrength >= 19 && device_time >= connection_lost_time_motion) {
           document.getElementById("network_status").innerHTML = "GOOD";
-          var element = document.getElementById("lost_blink_id");
-          element.classList.remove("lost_blink");
           $('#network_status').removeClass('lost1');
         }
         else if (signalStrength < 19 && signalStrength >= 13 && device_time >= connection_lost_time_motion) {
           document.getElementById("network_status").innerHTML = "AVERAGE";
-          var element = document.getElementById("lost_blink_id");
-          element.classList.remove("lost_blink");
           $('#network_status').removeClass('lost1');
         }
         else if (signalStrength <= 12 && device_time >= connection_lost_time_motion) {
           document.getElementById("network_status").innerHTML = "POOR";
-          var element = document.getElementById("lost_blink_id");
-          element.classList.remove("lost_blink");
           $('#lost_blink_id1').removeClass('lost1');
         }
         else{
           document.getElementById("network_status").innerHTML = "LOST";
-          var element = document.getElementById("lost_blink_id");
-          element.classList.add("lost_blink");
           $('#network_status').addClass('lost1');
         }
       }
@@ -345,26 +337,18 @@ function getFirebaseData()
       {
         if (signalStrength >= 19 && device_time >= connection_lost_time_halt) {
           document.getElementById("network_status").innerHTML = "GOOD";
-          var element = document.getElementById("lost_blink_id");
-          element.classList.remove("lost_blink");
           $('#network_status').removeClass('lost1');
         }
         else if (signalStrength < 19 && signalStrength >= 13 && device_time >= connection_lost_time_halt) {
           document.getElementById("network_status").innerHTML = "AVERAGE";
-          var element = document.getElementById("lost_blink_id");
-          element.classList.remove("lost_blink");
           $('#network_status').removeClass('lost1');
         }
         else if (signalStrength <= 12 && device_time >= connection_lost_time_halt) {
           document.getElementById("network_status").innerHTML = "POOR";
-          var element = document.getElementById("lost_blink_id");
-          element.classList.remove("lost_blink");
           $('#lost_blink_id1').removeClass('lost1');
         }
         else{
           document.getElementById("network_status").innerHTML = "LOST";
-          var element = document.getElementById("lost_blink_id");
-          element.classList.add("lost_blink");
           $('#network_status').addClass('lost1');
         }
       }
@@ -372,139 +356,221 @@ function getFirebaseData()
       {
         if (signalStrength >= 19 && device_time >= connection_lost_time_sleep) {
           document.getElementById("network_status").innerHTML = "GOOD";
-          var element = document.getElementById("lost_blink_id");
-          element.classList.remove("lost_blink");
           $('#network_status').removeClass('lost1');
         }
         else if (signalStrength < 19 && signalStrength >= 13 && device_time >= connection_lost_time_sleep) {
           document.getElementById("network_status").innerHTML = "AVERAGE";
-          var element = document.getElementById("lost_blink_id");
-          element.classList.remove("lost_blink");
           $('#network_status').removeClass('lost1');
         }
         else if (signalStrength <= 12 && device_time >= connection_lost_time_sleep) {
           document.getElementById("network_status").innerHTML = "POOR";
-          var element = document.getElementById("lost_blink_id");
-          element.classList.remove("lost_blink");
           $('#lost_blink_id1').removeClass('lost1');
         }
         else{
           document.getElementById("network_status").innerHTML = "LOST";
-          var element = document.getElementById("lost_blink_id");
-          element.classList.add("lost_blink");
           $('#network_status').addClass('lost1');
         }
       }
       else
       {
         document.getElementById("network_status").innerHTML = "LOST";
-        var element = document.getElementById("lost_blink_id");
-        element.classList.add("lost_blink");
         $('#network_status').addClass('lost1');
       }
-
-      document.getElementById("car_battery").innerHTML = battery_status;
-      //for getting place name
-      $.ajax({
-        url: 'https://maps.googleapis.com/maps/api/geocode/json?latlng='+clickedPointCurrent+'&key=AIzaSyCXmg0OWU4PM-pEIJPr_GpJAG9dKUHgim4',
-      }).done(function(response) {
-        place = (response.status=="OK")?response.results[1].formatted_address:'';
-        document.getElementById("car_location").innerHTML = place;
-      });
-      document.getElementById("ac").innerHTML = ac;
-      document.getElementById("fuel").innerHTML = fuel;
-      document.getElementById("odometer").innerHTML = odometer;
+      vehicleMoving(angle,vehicle_lat,vehicle_lng,speed,vehicleStatus);
     }
-
-
   });
 }
+var bearsMarkeronStartPoint;
+var bearsMarker;
+var startPointLatitude        = null;
+var startPointLongitude       = null;
+var endPointLatitude          = null;
+var endPointLongitude         = null;
+var blPlaceCaronMap           = false;
+var first_point               = true;
+var vehicle_halt,vehicle_sleep,vehicle_offline,vehicle_online;
+    vehicle_halt                  =   '/documents/'+$('#ideal_icon').val();
+    vehicle_sleep                 =   '/documents/'+$('#sleep_icon').val();
+    vehicle_offline               =   '/documents/'+$('#offline_icon').val();
+    vehicle_online                =   '/documents/'+$('#online_icon').val();
+var objImg                    = document.createElement('img');
+var outerElement              = document.createElement('div')
+var domIcon                   = new H.map.DomIcon(outerElement);
+var hidpi                     = ('devicePixelRatio' in window && devicePixelRatio > 1);
+var secure                    = (location.protocol === 'https:') ? true : false; // check if the site was loaded via secure connection
+var app_id                    = "RN9UIyGura2lyToc9aPg",
+    app_code                      = "4YMdYfSTVVe1MOD_bDp_ZA";
+var mapContainer              = document.getElementById('markers');
+var platform                  = new H.service.Platform({ app_code: app_code, app_id: app_id, useHTTPS: secure });
+var maptypes                  = platform.createDefaultLayers(hidpi ? 512 : 256, hidpi ? 320 : null);
+var map                       = new H.Map(mapContainer, maptypes.normal.map);
+    map.setCenter({ lat: 10.192656, lng: 76.386666 });
+    map.setZoom(12);
+var mapTileService              = platform.getMapTileService({
+    type: 'base'
+});
+new H.mapevents.Behavior(new H.mapevents.MapEvents(map)); // add behavior control
+var ui = H.ui.UI.createDefault(map, maptypes); // add UI
+var vehicle_mode;
+var previous_data       = [];
+var first_set_data      = true;
+var gis = {
+  calculateDistance: function (start, end) {
+    var lat1 = parseFloat(start[1]),
+      lon1 = parseFloat(start[0]),
+      lat2 = parseFloat(end[1]),
+      lon2 = parseFloat(end[0]);
+    return gis.sphericalCosinus(lat1, lon1, lat2, lon2);
+  },
+  sphericalCosinus: function (lat1, lon1, lat2, lon2) {
+    var radius = 6371e3; // meters
+    var dLon = gis.toRad(lon2 - lon1),
+      lat1 = gis.toRad(lat1),
+      lat2 = gis.toRad(lat2),
+      distance = Math.acos(Math.sin(lat1) * Math.sin(lat2) +
+        Math.cos(lat1) * Math.cos(lat2) * Math.cos(dLon)) * radius;
+    return distance;
+  },
+  createCoord: function (coord, bearing, distance) {
+    var
+      radius = 6371e3, // meters
+      δ = Number(distance) / radius, // angular distance in radians
+      θ = gis.toRad(Number(bearing));
+      φ1 = gis.toRad(coord[1]),
+      λ1 = gis.toRad(coord[0]);
+    var φ2 = Math.asin(Math.sin(φ1) * Math.cos(δ) +
+      Math.cos(φ1) * Math.sin(δ) * Math.cos(θ));
+    var λ2 = λ1 + Math.atan2(Math.sin(θ) * Math.sin(δ) * Math.cos(φ1),
+      Math.cos(δ) - Math.sin(φ1) * Math.sin(φ2));
+    λ2 = (λ2 + 3 * Math.PI) % (2 * Math.PI) - Math.PI;
+    return [gis.toDeg(λ2), gis.toDeg(φ2)];
+  },
+  getBearing: function (start, end) {
+    var
+      startLat = gis.toRad(start[1]),
+      startLong = gis.toRad(start[0]),
+      endLat = gis.toRad(end[1]),
+      endLong = gis.toRad(end[0]),
+      dLong = endLong - startLong;
+    var dPhi = Math.log(Math.tan(endLat / 2.0 + Math.PI / 4.0) /
+      Math.tan(startLat / 2.0 + Math.PI / 4.0));
+    if (Math.abs(dLong) > Math.PI) {
+        dLong = (dLong > 0.0) ? -(2.0 * Math.PI - dLong) : (2.0 * Math.PI + dLong);
+    }
+    return (gis.toDeg(Math.atan2(dLong, dPhi)) + 360.0) % 360.0;
+  },
+  toDeg: function (n) { return n * 180 / Math.PI; },
+  toRad: function (n) { return n * Math.PI / 180; }
+};
 
-// function liveSnapRoot(clickedPointCurrent)
-// {
-//   $.ajax({
-//     url: 'https://roads.googleapis.com/v1/snapToRoads?path=-35.27801,149.12958&key=AIzaSyCXmg0OWU4PM-pEIJPr_GpJAG9dKUHgim4&interpolate=true', //true',
-//     crossDomain: true,
-//     dataType: 'jsonp'
-//   }).done(function(response) {
-//     $.each(response.snappedPoints, function (i, snap_data) {
-//       var local_data=snap_data.location;
-//       vehicle_data.latitude   = local_data.latitude;
-//       vehicle_data.longitude  = local_data.longitude;
-//       console.log(vehicle_data.latitude);
-//     });
-//   });
-// }
-
-function track(latitude,longitude,angle)
-{
-
-  var lat = latitude;
-  var lng = longitude;
-  // posLat  = latitude;
-  // posLng  = longitude;
-  angle   = parseInt(angle);
-  var markerLatLng = new google.maps.LatLng(lat,lng);
-  i = 0;
-  deltaLat = (lat - posLat) / numDeltas;
-  deltaLng = (lng - posLng) / numDeltas;
-  moveMarker();
-  var icon = {
-              path        : svg_icon,// car icon
-              scale       : parseFloat(vehicle_scale),
-              fillColor   : vehicleColor, //<-- Car Color, you can change it
-              fillOpacity : parseFloat(opacity),
-              strokeWeight: parseFloat(stroke_weight),
-              anchor      : new google.maps.Point(0, 5),
-              rotation    :angle  //<-- Car angle
-  };
-  marker.setIcon(icon);
-  marker.setMap(map);
-
-}
-
-function moveMarker()
-{
-  // console.log(i+'start moving - increment lat '+deltaLat+' long '+deltaLng+' numdeltas '+numDeltas);
-  // console.log('postlat '+posLat+' long '+posLng);
-  posLat += deltaLat;
-  posLng += deltaLng;
-  var latlng = new google.maps.LatLng(posLat, posLng);
-  marker.setPosition(offsetCenter(latlng));
-  marker.setDuration(10);
-  map.panTo(latlng);
-
-  if (i != numDeltas)
-  {
-    i++;
-    setTimeout(moveMarker, delay);
+async function createNewCoods(lat,lng,angle,mode,distance,previous_data){
+  var bearing   = angle;
+  var start       = [previous_data['lat'],previous_data['lng']];
+  var end       = [lat, lng];
+  var new_coord = gis.createCoord(start, angle, distance);
+  var pCoordinates;
+  for (var i = 0; i < distance; i++) {
+    bearing = gis.getBearing(start, end);
+    new_coord = gis.createCoord(start, bearing, i);
+    if (i > 0) {
+      if (pCoordinates != new_coord[0]) {
+        await sleep(1);
+        plotLocationOnMap(new_coord[0],new_coord[1],angle,mode)
+      }
+    }
+    pCoordinates = new_coord;
   }
-  else
-  {
-    // console.log('movement completed');
+}
+
+function moveMarker(RotateDegree,lat,lng,vehicle_mode){
+
+  if ((bearsMarkeronStartPoint != null) && (blPlaceCaronMap == true)) {
+    map.removeObject(bearsMarkeronStartPoint);
+    blPlaceCaronMap = false;
   }
 
+  if(vehicle_mode=="M")
+  {
+    objImg.src = vehicle_online;
+  }else if(vehicle_mode=="H")
+  {
+    objImg.src = vehicle_halt;
+  }else if(vehicle_mode=="S")
+  {
+    objImg.src = vehicle_sleep;
+  }else{
+    objImg.src = vehicle_offline;
+  }
+  el = objImg;
+  var carDirection = RotateDegree;
+  if (el.style.transform.includes("rotate")) {
+    el.style.transform = el.style.transform.replace(/rotate(.*)/, "rotate(" + carDirection + "deg)");
+  } else {
+    el.style.transform = el.style.transform + "rotate(" + carDirection + "deg)";
+  }
+
+  outerElement.appendChild(el);
+  outerElement.style.top = "0px";
+  outerElement.style.width = "0px";
+  var domIcon = new H.map.DomIcon(outerElement);
+  bearsMarkeronStartPoint = new H.map.DomMarker({ lat:lat, lng:lng }, {
+      icon: domIcon
+  });
+  map.addObject(bearsMarkeronStartPoint);
+  blPlaceCaronMap = true;
 }
 
- // ---------------------center on  a marker--------------------------
-function offsetCenter(latlng)
+function vehicleMoving(angle,lat,lng,speed,mode)
 {
-  var offsetx=0;
-  var offsety=0;
-  // offsetx is the distance you want that point to move to the right, in pixels
-  // offsety is the distance you want that point to move upwards, in pixels
-  var scale = Math.pow(2, map.getZoom());
-  var worldCoordinateCenter = map.getProjection().fromLatLngToPoint(latlng);
-  var pixelOffset = new google.maps.Point((offsetx/scale) || 0,(offsety/scale) ||0);
-  var worldCoordinateNewCenter = new google.maps.Point(
-      worldCoordinateCenter.x - pixelOffset.x,
-      worldCoordinateCenter.y + pixelOffset.y
-  );
-  var newCenter = map.getProjection().fromPointToLatLng(worldCoordinateNewCenter);
-  return newCenter;
+  if(first_set_data == true)
+  {
+    moveMarker(angle,lat,lng,mode);
+    moveMap(lat,lng);
+    previous_data={
+      "lat"   : lat,
+      "lng"   : lng,
+      "angle" : angle,
+      "mode"  : mode
+    };
+    first_set_data = false;
+  }else
+  {
+    var start   = [previous_data['lat'], previous_data['lng']];
+    var end     = [lat,lng];
+    var total_distance = gis.calculateDistance(start, end);
+    createNewCoods(lat,lng,angle,mode,total_distance,previous_data);
+    previous_data = {
+      "lat"   : lat,
+      "lng"   : lng,
+      "angle" : angle,
+      "mode"  : mode
+    };
+    previous_vehicle_mode = null;
+  }
 }
 
+function plotLocationOnMap(lat,lng,angle,mode)
+{
+  moveMap(lat,lng);
+  first_point=false;
+  if( (startPointLatitude != null) && (startPointLongitude!=null) )
+  {
+    endPointLatitude    = lat;
+    endPointLongitude   = lng;
+    vehicle_mode        = mode;
+    var direction       =  angle;
+    moveMarker(direction,endPointLatitude,endPointLongitude,vehicle_mode);
+  }
+  startPointLatitude  = lat;
+  startPointLongitude = lng;
+}
 
+function moveMap(lat,lng)
+{
+  map.setCenter({lat:lat, lng:lng});
+}
 
-
-
+function sleep(ms)
+{
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
