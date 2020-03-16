@@ -52,21 +52,21 @@
                       <div class="form-group row" style="float:none!important">          
                         <label  for="fname" class="col-sm-3 text-right control-label col-form-label">Mobile No.</label>
                         <div class="form-group has-feedback">
-                          <input type="text" class="form-control {{ $errors->has('phone_number') ? ' has-error' : '' }}" placeholder="Mobile" name="phone_number" value="{{ $user->mobile}}" disabled>
+                          <input type="text" class="form-control {{ $errors->has('phone_number') ? ' has-error' : '' }}" placeholder="Mobile" name="phone_number" value="{{ $client->user->mobile}}" disabled>
                         </div>
                       </div>
 
                       <div class="form-group row" style="float:none!important">  
                         <label for="fname" class="col-sm-3 text-right control-label col-form-label">Email</label>
                         <div class="form-group has-feedback">
-                          <input type="text" class="form-control {{ $errors->has('email') ? ' has-error' : '' }}" placeholder="Email" name="email" value="{{ $user->email}}" disabled>
+                          <input type="text" class="form-control {{ $errors->has('email') ? ' has-error' : '' }}" placeholder="Email" name="email" value="{{ $client->user->email}}" disabled>
                         </div>     
                       </div>
 
                       <div class="form-group row" style="float:none!important">            
                         <label for="fname" class="col-sm-3 text-right control-label col-form-label">Location</label>
                         <div class="form-group has-feedback">
-                          <input type="text" class="form-control {{ $errors->has('email') ? ' has-error' : '' }}" placeholder="Location" name="location" value="{{ $location}}" disabled>
+                          <input type="text" class="form-control {{ $errors->has('email') ? ' has-error' : '' }}" placeholder="Location" name="location" value="{{ $client->city->name}},{{ $client->city->state->name}},{{ $client->city->state->country->name}}" disabled>
                           <span class="glyphicon glyphicon-phone form-control-feedback"></span>
                         </div>     
                       </div>       

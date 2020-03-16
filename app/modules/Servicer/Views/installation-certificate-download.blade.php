@@ -33,7 +33,7 @@
             .clear{clear:both;
             }
             .same-width{width:100%;
-            float:left;      
+            float:left;
             padding-bottom:10px;
             }
             .top-bg-left{
@@ -179,7 +179,7 @@
             </div>
 
             <p style="margin-top: 30%;margin-left: 70px"><b>Details of AIS 140 Device</b></p>
-            <table border="1" cellspacing="0" cellpadding="5px" style="margin-left: 53px;width:100%;">
+            <table border="1" cellspacing="0" cellpadding="5px" style="margin-left: 53px;width:100%;margin-top:-10%;">
                  <tr>
                     <td class="cls_002 yellow">Device IMEI</td>
                     <td>{{$vehicle->gps->imei}}</td>
@@ -191,7 +191,7 @@
                 <tr>
                     <td class="cls_002 yellow">Manufacturer</td>
                     <td>
-                       VST Mobility Solutions Private Limited,<br> B2,Kerala Technology Innovation Zone <br>Kinfra Hi Tech Park, Kalamassery <br>Ernakulam 
+                       VST Mobility Solutions Private Limited,<br> B2,Kerala Technology Innovation Zone <br>Kinfra Hi Tech Park, Kalamassery <br>Ernakulam
                     </td>
                 </tr>
                 <tr>
@@ -225,7 +225,7 @@
                     <td class="cls_002 grey">Date of Installation</td>
                     <td>{{$date}}</td>
                 </tr>
-            </table>           
+            </table>
             <div style="position:absolute;left:70px;top:830px;line-height: 21px" class="cls_002">
                 <span class="cls_002">This letter has been issued on <b>{{$date}}</b> upon the specific request from the customer as a proof of installation</span>
             </div>
@@ -238,6 +238,6 @@
             <div style="position:absolute;left:70px;top:1000px" class="cls_002">
                 <span class="cls_002">Authorised Signatory</span>
             </div>
-        </div>        
+        </div>
     </body>
 </html>
