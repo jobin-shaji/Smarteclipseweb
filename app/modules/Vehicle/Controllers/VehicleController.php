@@ -1418,14 +1418,6 @@ class VehicleController extends Controller
         return view('Vehicle::vehicle-tracker-firebase',['vehicle_details' => $vehicle_details,'vehicle_type_details' => $vehicle_type_details]);
     }
 
-    public function locationFirebaseHmap(Request $request)
-    {
-        $decrypted_vehicle_id   =   Crypt::decrypt($request->id);
-        $vehicle_details        =   Vehicle::find($decrypted_vehicle_id);
-        $vehicle_type_details   =   VehicleType::find($vehicle_details->vehicle_type_id);
-        return view('Vehicle::vehicle-tracker-firebase-hmap',['vehicle_details' => $vehicle_details,'vehicle_type_details' => $vehicle_type_details]);
-    }
-
     public function locationFirebaseHmapNew(Request $request)
     {
         $decrypted_vehicle_id   =   Crypt::decrypt($request->id);

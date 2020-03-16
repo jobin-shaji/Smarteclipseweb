@@ -4,7 +4,6 @@
   <div class="lds-dual-ring" id="status"></div>
 </div>
   <input type="hidden" name="vehicle_id" id="vehicle_id" value="{{$vehicle_details->id}}">
-  <input type="hidden" name="svg_icon" id="svg_icon" value="{{$vehicle_type_details->svg_icon}}">
   <input type="hidden" name="online_icon" id="online_icon" value="{{$vehicle_type_details->web_online_icon}}">
   <input type="hidden" name="offline_icon" id="offline_icon" value="{{$vehicle_type_details->web_offline_icon}}">
   <input type="hidden" name="ideal_icon" id="ideal_icon" value="{{$vehicle_type_details->web_idle_icon}}">
