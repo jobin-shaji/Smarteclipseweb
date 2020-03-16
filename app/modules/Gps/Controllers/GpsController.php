@@ -256,7 +256,7 @@ class GpsController extends Controller {
     //delete gps details
     public function deleteGps(Request $request){
         $gps = Gps::find($request->uid);
-        $gps_stock = GpsStock::select('id','gps_id','deleted_by')->where('gps_id',$request->uid)->first();
+        $gps_stock = GpsStock::where('gps_id',$request->uid)->first();
         if($gps == null){
             return response()->json([
                 'status' => 0,
@@ -281,7 +281,7 @@ class GpsController extends Controller {
     public function activateGps(Request $request)
     {
         $gps = Gps::withTrashed()->find($request->id);
-        $gps_stock = GpsStock::select('id','gps_id','deleted_by')->withTrashed()->where('gps_id',$request->id)->first();
+        $gps_stock = GpsStock::withTrashed()->where('gps_id',$request->id)->first();
         if($gps==null){
              return response()->json([
                 'status' => 0,
