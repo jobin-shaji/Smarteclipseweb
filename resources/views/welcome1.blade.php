@@ -52,8 +52,8 @@
         <li><a href="#service">Authorized Service Center</a></li>
           <li><a href="#appscreen">App Screens</a></li>
         <li><a href="#contact">Contact</a></li>
-
-               <li><a href="/login" class="login-button button-color">login</a></li>
+          
+               <li><a href="/login" class="login-button button-color">Login</a></li>
       </ul>
     </div>
      </div>
@@ -93,7 +93,7 @@
         <div class="banner-bottom-bg">
         <div class="banner-bottom-text animatable fadeInUp">
             <h2 class="common-head">Real Time Vehicle Tracking</h2>
-            <p>Vehicle Tracking Unit (VTU) is an advanced GPS & GP  RS terminal with embedded eSIM & IRNSS(NavIC) module for effective fleet management. It helps in real-time tracking & MIS Reports by using artificial intelligence(AI) technology</p>
+            <p>Vehicle Tracking Unit (VTU) is an advanced GPS & GPRS terminal with embedded eSIM & IRNSS (NavIC) module for effective fleet management. It helps in real-time tracking & MIS Reports by using artificial intelligence (AI) technology</p>
             </div>
        </div>
 
@@ -105,8 +105,8 @@
       <a onclick="changeVideo('k2dYxN3e-KI')" class="video-btn video-play-button">  <span></span></a>
       </div>
      <div class="about-right-content animatable moveUp">
-     <h3 class="about-right-content-head common-head ">About smart eclipse</h3>
-         <p>Vehicle Tracking Unit (VTU) is an advanced GPS & GP  RS terminal with embedded eSIM & IRNSS(NavIC) module for effective fleet management. It helps in real-time tracking & MIS Reports by using artificial intelligence(AI) technology</p>
+     <h3 class="about-right-content-head common-head ">About Smart Eclipse</h3>
+         <p>Vehicle Tracking Unit (VTU) is an advanced GPS & GPRS terminal with embedded eSIM & IRNSS (NavIC) module for effective fleet management. It helps in real-time tracking & MIS Reports by using artificial intelligence (AI) technology</p>
      <div class="about-bt-outer">
                  <a href="smart/pdf/gps-brochure.pdf" class="about-button button-color" download target="_blank">Downloads GPS-Brochure</a>
     </div>
@@ -120,9 +120,9 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-body">
-
-          <iframe id="iframeYoutube"   src="https://www.youtube.com/embed/DcAcm5ONX28" frameborder="0" allowfullscreen></iframe>
-
+        
+          <iframe id="iframeYoutube"   src="https://www.youtube.com/embed/k2dYxN3e-KI" frameborder="0" allowfullscreen></iframe> 
+          
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i></button>
@@ -228,9 +228,9 @@
               <i class="fas fa-circle fa-stack-2x"></i>
               <i class="fas fa-plus fa-stack-1x fa-inverse"></i>
             </span>
-                <p c>Smart features</p>
-
-
+                <p c>Smart Features</p>
+            
+          
           </button>
 
       </div>
@@ -343,7 +343,7 @@
                       <div class="sevice-cent-sub-text">
 
                       <span>Central I Track</span>
-                          <p>Zion Puram,Mallapally West P.O,<br> Mallapally,Pathanamthitta - 689585</p>
+                          <p>Zion Puram, Mallapally West P.O,<br> Mallapally, Pathanamthitta - 689585</p>
                           <p>Mob: 9746990803</p>
                       </div>
 
@@ -359,7 +359,7 @@
                       <div class="sevice-cent-sub-text">
 
                       <span>I Track Solution</span>
-                          <p>Tmk Building Near Eram Motors 22<br> Mile Manjeri Malappuram-676121</p>
+                          <p>TMK Building Near Eram Motors 22<br> Mile Manjeri Malappuram - 676121</p>
                           <p>Mob: 9995964385</p>
                       </div>
 
@@ -373,9 +373,9 @@
                   <div class="service-center-content-box-rt">
                   <div class="sevice-cent-sub-head">Ernakulam</div>
                       <div class="sevice-cent-sub-text">
-
-                      <span>Central i track</span>
-                          <p>Central Itrack ,St.Ritas Road,Near <br> Gold Souck, Vytilla,Kochi - 682019</p>
+                      
+                      <span>Central I Track</span>
+                          <p>Central I Track, St.Ritas Road, Near <br> Gold Souk, Vyttila, Kochi - 682019</p>
                           <p>Mob: 9188521721</p>
                       </div>
 
@@ -394,7 +394,7 @@
                       <div class="sevice-cent-sub-text">
 
                       <span>Vijayajyothi Enterprises</span>
-                          <p>1st Floor,Madhava Arcade,Yakkara<br> Road,Near Palat Hospital,Palakkad-678001</p>
+                          <p>1st Floor, Madhava Arcade, Yakkara<br> Road, Near Palat Hospital, Palakkad - 678001</p>
                           <p>Mob: 9556098932</p>
                       </div>
 
@@ -410,7 +410,7 @@
                       <div class="sevice-cent-sub-text">
 
                       <span>Jain Devices</span>
-                          <p>Jayakumari Estate, Madakkimala,<br> Kalpetta,Wayanad - 673122</p>
+                          <p>Jayakumari Estate, Madakkimala,<br> Kalpetta, Wayanad - 673122</p>
                           <p>Mob: 8606330755</p>
                       </div>
 
@@ -426,7 +426,7 @@
                       <div class="sevice-cent-sub-text">
 
                       <span>Malayil Vehicle Tracking Solution</span>
-                          <p>Gulf Tower M.C Road Mattoor P.O<br> Kalady Ernakulam-683574</p>
+                          <p>Gulf Tower, M.C Road, Mattoor P.O<br> Kalady Ernakulam - 683574</p>
                           <p>Mob: 9744335604</p>
                       </div>
 
@@ -446,7 +446,7 @@
                       <div class="sevice-cent-sub-text">
 
                       <span>Colour Land</span>
-                          <p>Ground Floor,Kp.18-507d, Vellayikott <br> Complex, Karanthur-Wayanad Road,<br> Karanthur, Kozhikode, Kerala - 673571</p>
+                          <p>Ground Floor, KP.18-507D, Vellayikott <br> Complex, Karanthur-Wayanad Road,<br> Karanthur, Kozhikode, Kerala - 673571</p>
                           <p>Mob: 9946489687</p>
                       </div>
 
@@ -462,8 +462,8 @@
                       <div class="sevice-cent-sub-text">
 
                       <span>Tectiv</span>
-                          <p>Networking And Security Systems<br> Door N0:15/486n Center Point Building <br>Near Rto Office Vellarikundu (Po)<br> Pin :671533 </p>
-
+                          <p>Networking And Security Systems<br> Door N0:15/486n Center Point Building <br>Near RTO Office Vellarikundu P.O - 671533 </p>
+                     
                      <p></p> </div>
 
                   </div>
@@ -481,7 +481,7 @@
                       <div class="sevice-cent-sub-text">
 
                       <span>Maaz Cars Private Limited</span>
-                          <p>Zion Tower Mc Road Kallissery P.o<br> Chengannur Alappuzha</p>
+                          <p>Zion Tower, MC Road, Kallissery P.O<br> Chengannur Alappuzha</p>
                           <p>Mob: 9496333264</p>
                       </div>
 
@@ -530,7 +530,7 @@
       <div class="container-home">
       <div class="app-head common-head animatable moveUp">App Screens</div>
           <div class="app-sceen-content animatable moveUp">
-          <p>Allows Authorized Users To Access The App Based On The Package They Have Purchased, Also Provides Forgot Password Authentication And Security Features There By Making The App More Secure.</p>
+          <p>Allows authorized users to access the app based on the package they have purchased, also provides forgot password authentication and security features there by making the app more secure.</p>
           </div>
 
           <div class="app-content-box ">
@@ -643,7 +643,7 @@
       <div class="footer-top">
             <div class="container-home">
       <div class="footer-top-bg animatable moveUp">
-                <div class="gps-tacker-hd common-head">GPS+IRNSS TRACKER</div>
+                <div class="gps-tacker-hd common-head">GPS + IRNSS TRACKER</div>
           <div class="gps-tacker-text"><p>1500mAh battery<span>|</span>1.2 GB Data<span>|</span>1+4 yrs extended warranty</p></div>
       </div>
           </div>
@@ -699,7 +699,7 @@
             </div>
 
            <div class="footer-social-box">
-            <div class="footer-sub-head animatable fadeInUp">Social media</div>
+            <div class="footer-sub-head animatable fadeInUp">Social Media</div>
           <div class="footer-social-icon-bg">
                                       <div class="footer-social-icon animatable bounceIn">
                                           <a href="https://www.facebook.com/vstmobilitysol" target="_blank" rel="nofollow">
@@ -723,7 +723,7 @@
          </div>
       </div>
      </div>
-  <div  class="footer-bottm-bg">Copyright © 2020 <a href="">VST Mobility Solutions Pvt Ltd.</a> All Right Reserved.</div>
+  <div  class="footer-bottm-bg">Copyright © 2020 <a href="http://www.vstmobility.com/" target="_blank rel="nofollow">VST Mobility Solutions Pvt Ltd.</a> All Right Reserved.</div>
   </footer>
   <script src='https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js'></script>
   <script src="js/slick.js" type="text/javascript" charset="utf-8"></script>
