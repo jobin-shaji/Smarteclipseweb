@@ -69,27 +69,3 @@
     });
     });
 
-
-    $('#name').keypress(function (e) {
-            $("#message").hide();
-            $("#user_message").hide();
-            var keyCode = e.which;
-        if (keyCode >= 48 && keyCode <= 57) 
-        {
-            $("#message").show();
-            e.preventDefault();
-        }
-        
-        });
-    // CODE FOR USERNAME SPACE NOT ALLOWED
-    $('#trader_username').keypress(function (e) {
-            $("#user_message").hide();
-        
-        if(e.which === 32) 
-        {
-            $("#user_message").show();
-            e.preventDefault();
-        }
-        
-        });
-
