@@ -58,8 +58,8 @@ Route::group(['middleware' => ['web','auth','role:client|school'] , 'namespace' 
 	Route::post('/client/profile/{id}/edit','ClientController@profileUpdate')->name('client.profile.update.p');
 	Route::post('/client/get-password-message/','ClientController@getOldPasswordMessage')->name('client-create.get-password-message');
 	
-	Route::get('/create-city','ClientController@createCityLatLng')->name('create.city');
-	Route::post('/city-lat-lng','ClientController@saveCityLatLng')->name('city.lat.lng.p');
+	// Route::get('/create-city','ClientController@createCityLatLng')->name('create.city');
+	// Route::post('/city-lat-lng','ClientController@saveCityLatLng')->name('city.lat.lng.p');
 
 });
 
