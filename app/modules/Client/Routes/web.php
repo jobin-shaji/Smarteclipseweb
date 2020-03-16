@@ -10,9 +10,7 @@ Route::group(['middleware' => ['web','auth','role:root'] , 'namespace' => 'App\M
 
 	Route::get('/root/client/create','ClientController@clientCreate')->name('root.client.create');
 	Route::post('/select/subdealer','ClientController@selectSubdealer')->name('client.role.delete');
-
 	Route::post('/root/client/create','ClientController@clientSave')->name('root.client.create.p');
-
 	// for trader
 	
 	Route::post('/select/trader','ClientController@selectTrader')->name('root.client.trader.list');
@@ -60,7 +58,9 @@ Route::group(['middleware' => ['web','auth','role:client|school'] , 'namespace' 
 	Route::post('/client/profile/{id}/edit','ClientController@profileUpdate')->name('client.profile.update.p');
 	Route::post('/client/get-password-message/','ClientController@getOldPasswordMessage')->name('client-create.get-password-message');
 	
-	
+	// Route::get('/create-city','ClientController@createCityLatLng')->name('create.city');
+	// Route::post('/city-lat-lng','ClientController@saveCityLatLng')->name('city.lat.lng.p');
+
 });
 
 Route::group(['middleware' => ['web','auth','role:sub_dealer|root|trader'] , 'namespace' => 'App\Modules\Client\Controllers' ] , function() {
