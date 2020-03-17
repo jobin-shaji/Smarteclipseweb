@@ -58,16 +58,20 @@
         <div class="col-lg-3 col-xs-6 gps_dashboard_grid dash_grid">
           <!-- small box -->
           <div class="small-box bg-green bxs">
-            <div class="inner">
-              <h3 id="gps">
-                <div class="loader"></div>
-              </h3>
-              <p>GPS Devices In Stock</p>
+
+            <div class="inner inner-left">
+              <div class="box-2">
+                <div style="float:left; width:50%">
+                  <h3 id="gps"></h3>
+                  <p class="mrg-bt-0">GPS Devices In Stock</p>
+                </div>
+                <div style="float:left; width:50%">
+                  <h3 id="refurbished_gps"></h3>
+                  <p class="mrg-bt-0">Refurbished GPS Devices In Stock</p>
+                </div>
+              </div>
             </div>
-            <div class="icon">
-              <i class="fa fa-tablet"></i>
-            </div>
-            <a href="/gps" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="/gps" class="small-box-footer view-last">View <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <div class="col-lg-3 col-xs-6 transferred_gps_dashboard_grid dash_grid">
@@ -181,51 +185,6 @@
 
 <!-- DEALER ROLE-START -->
 @role('dealer')
-<style>
-  .inner-left {
-    float: left;
-    display: block;
-  }
-
-  .box-2 {
-    width: 100%;
-    float: left;
-    display: block;
-  }
-
-  .small-box>.view-last {
-    float: left;
-    width: 100%;
-    margin-bottom: 0px;
-  }
-
-  .mrg-bt-0 {
-
-    font-size: 14px;
-    margin-bottom: 0px;
-  }
-
-  .a-tag {
-    width: 100%;
-    float: left;
-    margin-top: 1px;
-  }
-
-  .small-box>.a-tag .small-box-footer1 {
-    text-align: center;
-    padding: 3px 0;
-    color: #fff;
-    color: rgba(255, 255, 255, 0.8);
-    z-index: 10;
-    width: 100%;
-    float: left;
-    background: rgba(0, 0, 0, 0.1);
-  }
-
-  .small-box>.small-box-footer2 {
-    margin-bottom: -18px;
-  }
-</style>
 <div class="page-wrapper page-wrapper-root page-wrapper_new">
   <div class="page-wrapper-root1">
     <div class="container-fluid">
@@ -471,51 +430,6 @@
 @endrole
 <!-- SUB DEALER ROLE-START -->
 @role('sub_dealer')
-<style>
-  .inner-left {
-    float: left;
-    display: block;
-  }
-
-  .box-2 {
-    width: 100%;
-    float: left;
-    display: block;
-  }
-
-  .small-box>.view-last {
-    float: left;
-    width: 100%;
-    margin-bottom: 0px;
-  }
-
-  .mrg-bt-0 {
-
-    font-size: 14px;
-    margin-bottom: 0px;
-  }
-
-  .a-tag {
-    width: 100%;
-    float: left;
-    margin-top: 1px;
-  }
-
-  .small-box>.a-tag .small-box-footer1 {
-    text-align: center;
-    padding: 3px 0;
-    color: #fff;
-    color: rgba(255, 255, 255, 0.8);
-    z-index: 10;
-    width: 100%;
-    float: left;
-    background: rgba(0, 0, 0, 0.1);
-  }
-
-  .small-box>.small-box-footer2 {
-    margin-bottom: -18px;
-  }
-</style>
 <div class="page-wrapper page-wrapper-root page-wrapper_new">
   <div class="page-wrapper-root1">
     <div class="row">
@@ -1679,6 +1593,51 @@
     <!-- CLIENT ROLE-END -->
 
   </section>
+  <style>
+  .inner-left {
+    float: left;
+    display: block;
+  }
+
+  .box-2 {
+    width: 100%;
+    float: left;
+    display: block;
+  }
+
+  .small-box>.view-last {
+    float: left;
+    width: 100%;
+    margin-bottom: 0px;
+  }
+
+  .mrg-bt-0 {
+
+    font-size: 14px;
+    margin-bottom: 0px;
+  }
+
+  .a-tag {
+    width: 100%;
+    float: left;
+    margin-top: 1px;
+  }
+
+  .small-box>.a-tag .small-box-footer1 {
+    text-align: center;
+    padding: 3px 0;
+    color: #fff;
+    color: rgba(255, 255, 255, 0.8);
+    z-index: 10;
+    width: 100%;
+    float: left;
+    background: rgba(0, 0, 0, 0.1);
+  }
+
+  .small-box>.small-box-footer2 {
+    margin-bottom: -18px;
+  }
+</style>
   @section('script')
 
   <script src="{{asset('js/gps/mdb.js')}}"></script>
@@ -1702,6 +1661,41 @@
   <script src="{{asset('js/gps/GoogleRadar.js')}}"></script>
   <script src="{{asset('dist/js/st.action-panel.js')}}"></script>
   <style type="text/css">
+    #f75 {
+      width: 4%;
+      padding: 8% 8% 7% 3%;
+      margin-right: 3%;
+      float: left;
+      background: #c78307;
+    }
+
+    #f50 {
+      width: 4%;
+      padding: 8% 8% 7% 3%;
+      margin-right: 3%;
+      float: left;
+      background: #f79f1c;
+    }
+
+    #f25 {
+      width: 4%;
+      padding: 8% 8% 7% 3%;
+      margin-right: 3%;
+      float: left;
+      background: #f51902;
+    }
+
+    #f0 {
+      width: 4%;
+      padding: 8% 8% 7% 3%;
+      margin-right: 3%;
+      float: left;
+      background: #cecece;
+    }
+
+    .fuel-outer ul li:last-child {
+      margin-right: 0;
+    }
 
   </style>
   @endrole
