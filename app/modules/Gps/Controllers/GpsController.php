@@ -2073,7 +2073,7 @@ class GpsController extends Controller {
 
     public function getReturnedGpsList(Request $request)
     {
-        $gps_stock      =   GpsStock::select('updated_at','client_id','is_returned','dealer_id','subdealer_id','trader_id','client_id')->withTrashed()
+        $gps_stock      =   GpsStock::withTrashed()
                                     ->orderBy('updated_at','DESC')
                                     ->with('gps')
                                     ->whereNotNull('client_id')

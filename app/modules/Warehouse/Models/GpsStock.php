@@ -17,7 +17,7 @@ class GpsStock extends Model
         static::addGlobalScope(new DeleteScope);
     }
 
-    protected $fillable=[ 'gps_id','inserted_by','dealer_id','subdealer_id','client_id'];
+    protected $fillable=[ 'gps_id','inserted_by','dealer_id','subdealer_id','client_id','refurbished_status'];
 
     // gps 
     public function gps(){
