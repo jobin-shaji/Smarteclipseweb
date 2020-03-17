@@ -48,7 +48,7 @@
                 <input type="text" class="form-control {{ $errors->has('email') ? ' has-error' : '' }}" placeholder="Email" name="email" value="{{ $user->email}}" disabled>
               </div>       
             </div>
-            @if(\Auth::user()->roles->first()->name=='school'&& !empty(\Auth::user()->geofence))
+            <!-- @if(\Auth::user()->roles->first()->name=='school'&& !empty(\Auth::user()->geofence))
          
 
              
@@ -57,7 +57,7 @@
               <div id="map" style=" width:90%;height:320px; "></div>       
             </div>
            
-             @endif
+             @endif -->
           </div>  
           
 
@@ -123,13 +123,13 @@
  
 </div>
 </div>
- @if(\Auth::user()->roles->first()->name=='school' && !empty(\Auth::user()->geofence))
+ <!-- @if(\Auth::user()->roles->first()->name=='school' && !empty(\Auth::user()->geofence))
   @section('script')
     <script src="{{asset('js/gps/school-geofence-details.js')}}"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key={{config('eclipse.keys.googleMap')}}&libraries=drawing&callback=initMap"
          async defer></script>
   @endsection
-@endif
+@endif -->
 @section('script')
   <script>
     $("#choose_image").change(function() {

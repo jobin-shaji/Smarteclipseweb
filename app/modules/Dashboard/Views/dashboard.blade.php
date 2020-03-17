@@ -845,22 +845,20 @@
 
 
 <!-- SCHOOL ROLE-START -->
+<!--
 @role('school')
 
 
 <div class="container-fluid">
-  <div class="row">
+   <div class="row">
     <div class="col-md-12 full-height">
       <div id="map" style="width:100%; height:100%;"></div>
     </div>
-    <!-- <div class="left-bottom-car-details"><img class="left-bottom-car-details-img" src="assets/images/main-car.png"></div> -->
     <div class="pageContainer" style="overflow: scroll">
       <div class="col-lg-12">
         <div class="st-actionContainer right-bottom">
           <div class="st-panel" style="overflow: scroll!important;">
-            <!-- <div class="st-panel-header"><i class="fa fa-bars" aria-hidden="true"></i>
-              <img src="assets/images/logo1.png" style="width:50px;height:20px;"/>
-            </div> -->
+           
             <div class="st-panel-contents" id="vehicle_card_cover">
               @foreach ($vehicles as $vehicle)
 
@@ -931,7 +929,7 @@
           </div>
 
           <div id="myModal" class="modal_for_dash">
-            <!-- Modal content -->
+           
             <div class="modal-content">
               <div class="modal-header">
                 <span class="close"></span>
@@ -956,13 +954,13 @@
             <div class="box bg-cyan1234 text-center">
               <h1 class="font-light text-white"></h1>
               <h1 class="text-white" style="color:#84b752!important">
-                <!-- <img src="assets/images/moving.png" style="width:100%"> -->
+                
                 <i class="fa fa-map-marker" aria-hidden="true"></i>
               </h1>
               <span class="track_status">Moving</span>
               <span style="float:left;width:100%">
                 <h1 id="moving" class="text-white" style="font-size:19px;color:#fab03a!important">0</h1>
-                <!--  <h5 class="text-white">MOVING</h5> -->
+                
               </span>
             </div>
           </div>
@@ -972,13 +970,13 @@
             <div class="box bg-cyan1234 text-center">
               <h1 class="font-light text-white"></h1>
               <h1 class="text-white" style="color: #69b4b9!important">
-                <!--  <img src="assets/images/idling.png" style="width:100%"> -->
+               
                 <i class="fa fa-map-marker" aria-hidden="true"></i>
               </h1>
               <span class="track_status">Halt</span>
               <span style="float:left;width:100%">
                 <h1 id="idle" class="text-white" style="font-size:19px;color:#fab03a!important">0</h1>
-                <!-- <h5 class="text-white">Halt</h5> -->
+                
               </span>
             </div>
           </div>
@@ -988,13 +986,13 @@
             <div class="box bg-cyan1234 text-center">
               <h1 class="font-light text-white"></h1>
               <h1 class="text-white" style="color: #858585!important">
-                <!-- <img src="assets/images/delayed.png" style="width:100%"> -->
+               
                 <i class="fa fa-map-marker" aria-hidden="true"></i>
               </h1>
               <span class="track_status">Sleep</span>
               <span style="float:left;width:100%">
                 <h1 id="stop" class="text-white" style="font-size:19px;color:#fab03a!important">0</h1>
-                <!-- <h5 class="text-white">DELAY</h5> -->
+                
               </span>
             </div>
           </div>
@@ -1004,13 +1002,13 @@
             <div class="box bg-cyan1234 text-center">
               <h1 class="font-light text-white"></h1>
               <h1 class="text-white" style="color:#c41900!important">
-                <!-- <img src="assets/images/stopped.png" style="width:100%"> -->
+               
                 <i class="fa fa-map-marker" aria-hidden="true"></i>
               </h1>
               <span class="track_status">Offline</span>
               <span style="float:left;width:100%">
                 <h1 id="offline" class="text-white" style="font-size:19px;color:#fab03a!important">0</h1>
-                <!--  <h5 class="text-white">STOPPED</h5> -->
+              
               </span>
             </div>
           </div>
@@ -1034,7 +1032,7 @@
                 <div class="bg-dark p-10 text-white text-center" style="float: left;width:50%;border-radius: 0 20px 0 0;">
                   <img src="assets/images/fuel-status.png">
                   <h4 class="m-b-0 m-t-5 score_data_text">Fuel Status</h4>
-                  <!-- <medium id="fuel_status" class="font-light"> -->
+                 
                   <div id="fuel_100" class="fuel-outer">
                     <ul>
                       <li id="f100"></li>
@@ -1138,10 +1136,10 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> 
 
+  @endrole-->
 
-  @endrole
   <!-- SCHOOL ROLE-END -->
 
 
@@ -1573,7 +1571,7 @@
   </style>
   @endrole
 
-  @role('school')
+  <!-- @role('school')
   <script src="{{asset('js/gps/dashb-client.js')}}"></script>
   <script async defer src="https://maps.googleapis.com/maps/api/js?key={{config('eclipse.keys.googleMap')}}&libraries=places&callback=initMap"></script>
   <script type="text/javascript">
@@ -1587,7 +1585,7 @@
       padding-left: 0px !important
     }
   </style>
-  @endrole
+  @endrole -->
 
 
 

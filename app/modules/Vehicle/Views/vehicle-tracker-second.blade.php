@@ -1,4 +1,4 @@
-@extends('layouts.eclipse')
+<!-- @extends('layouts.eclipse')
 @section('content')
 <section class="content box">
 <div class="page-wrapper_new_map">
@@ -11,7 +11,7 @@
     <input type="hidden" name="strokeWeight" id="strokeWeight" value="{{$vehicle_type->strokeWeight}}">
     <input type="hidden" name="lat" id="lat" value="{{$latitude}}">
     <input type="hidden" name="lng" id="lng" value="{{$longitude}}">
-   <!--  <div style="background-color: white"><label style="font-size: 15px;color: red;margin-left: 50%">NETWORK LOST </label></div> -->
+   
    <style type="text/css"></style>
     
     <div class="card data_list_cover pull-right" style="width: 16rem" id="lost_blink_id">
@@ -71,25 +71,14 @@
             <a class="btn btn-block btn-social btn-bitbucket track_item" style="cursor:auto!important">
               <img src="../../assets/images/fuel.png" height="25px" width="30px" class="fapad"><b class="mgl">FUEL <b style="margin-left: 23.5%;font-size: 11px;">: <label class="mgl" id="fuel"></label> </b></b>
             </a>
-            <!-- <a class="btn btn-block btn-social btn-bitbucket track_item">
-              <i><image src="/assets/images/moving-b.png" width="18" height="18"></i><b><label id="car_bettary">MOVING TIME : </label></b>
-            </a>
-            <a class="btn btn-block btn-social btn-bitbucket track_item">
-              <i><image src="/assets/images/stop1-b.png" width="22" height="20"></i><b><label id="car_bettary">STOP TIME : </label></b>
-            </a>
-            <a class="btn btn-block btn-social btn-bitbucket track_item">
-              <i><image src="/assets/images/halt-b.png" width="18" height="18"></i><b><label id="car_bettary">HALT TIME :</label></b>
-            </a>
-            <a class="btn btn-block btn-social btn-bitbucket track_item">
-              <i><image src="/assets/images/sleep-b.png" width="16" height="16"></i><b><label id="car_bettary">SLEEP TIME : </label></b> -->
-            </a>                                                      
+           </a>                                                      
             <div class="viewmore_location">
               <div>
-                <div style="float: left;padding: 3% 5% 8% 3%;"><img src="../../assets/images/marker.png" height="32px" width="24px"> <!-- <i class="fa fa-map-marker"></i> --></div>
+                <div style="float: left;padding: 3% 5% 8% 3%;"><img src="../../assets/images/marker.png" height="32px" width="24px"> </div>
                 <div id="car_location" style="font-size: .7rem!important;padding: 109% 8% 4% 19%;"></div>
             </div>
             </div>
-            <!-- <div id="odometer" class="odometer" style="margin-left: 80px">000000</div> -->
+            
           </div>
             
             <?php
@@ -99,10 +88,10 @@
             @role('fundamental|superior|pro')
             <hr style="margin-left: 3%">
               <div class="share_button">
-                <!--These buttons are created by frinmash.blogspot.com,frinton madtha--> <div id="share-buttons"> <!-- Facebook --> <a target="_blank" href="https://www.facebook.com/sharer.php?u={{$location_url}}" target="_blank"><img src="{{ url('/') }}/share-icons/facebook.png" alt="Facebook" /></a> <!-- Twitter --> <a target="_blank" href="https://twitter.com/share?url={{$location_url}}&text=Simple Share Buttons" target="_blank"><img src="{{ url('/') }}/share-icons/twitter.png" alt="Twitter" /></a>
-                <!-- LinkedIn --> <a target="_blank" href="https://www.linkedin.com/shareArticle?mini=true&url={{$location_url}}" target="_blank"><img src="{{ url('/') }}/share-icons/linkedin.png" alt="LinkedIn" /></a> 
+                <div id="share-buttons">  <a target="_blank" href="https://www.facebook.com/sharer.php?u={{$location_url}}" target="_blank"><img src="{{ url('/') }}/share-icons/facebook.png" alt="Facebook" /></a>  <a target="_blank" href="https://twitter.com/share?url={{$location_url}}&text=Simple Share Buttons" target="_blank"><img src="{{ url('/') }}/share-icons/twitter.png" alt="Twitter" /></a>
+                 <a target="_blank" href="https://www.linkedin.com/shareArticle?mini=true&url={{$location_url}}" target="_blank"><img src="{{ url('/') }}/share-icons/linkedin.png" alt="LinkedIn" /></a> 
                 <a target="_blank" href="mailto:?Subject=FrinMash&Body=I%20saw%20this%20and%20thought%20of%20you!%20 {{$location_url}}"><img src="{{ url('/') }}/share-icons/email.png" alt="Email" /></a>
-                <!-- watsapp -->
+                
                 <a target="_blank" href="https://web.whatsapp.com/send?text={{$location_url}}" data-action="share/whatsapp/share"><img src="{{ url('/') }}/share-icons/whatsapp.png" alt="Email" /></a>
                 </div>
               </div>
@@ -135,15 +124,10 @@
         </a>
       </div>
 
-      <!--  <div class="poi_item">
-        <a target="_blank" href="{{url('/playback-second/'.Crypt::encrypt($Vehicle_id))}}">
-          <img src="{{ url('/') }}/images/playback.png" width="64px" height="64px">
-        </a>
-      </div> -->
+     
     </div>
 
-    <!-- <div id="map" class="live_track_map" style="width:100%;height:85vh;"></div> -->
-
+    
       <div id="markers" style="width:100%px;height:595px; position: relative;">
       
       </div>
@@ -187,7 +171,7 @@ font-size:18px;
 cursor:pointer
 }
 </style>
-<!-- <script src="{{asset('js/odometer.js')}}"></script> -->
+
     <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-core.js"></script>
     <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-service.js"></script>
     <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-ui.js"></script>
@@ -203,4 +187,4 @@ cursor:pointer
 
 @endsection
 
-<!--  <script src="{{asset('js/bootstrap-datetimepicker.js')}}"></script> -->
+ -->

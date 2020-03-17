@@ -1,4 +1,4 @@
-@extends('layouts.eclipse')
+<!-- @extends('layouts.eclipse')
 @section('title')
   Student Creation
 @endsection
@@ -253,4 +253,4 @@
   </script>
   <script src="{{asset('js/gps/student-class-division-dropdown.js')}}"></script>
 @endsection
-@endsection
+@endsection -->

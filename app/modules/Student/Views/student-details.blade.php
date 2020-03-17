@@ -1,4 +1,4 @@
-@extends('layouts.eclipse')
+<!-- @extends('layouts.eclipse')
 @section('title')
   School Details
 @endsection
@@ -133,4 +133,4 @@
 &libraries=places&callback=initMap">
   </script>
 @endsection
-@endsection
+@endsection -->

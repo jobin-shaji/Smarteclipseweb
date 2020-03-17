@@ -1,4 +1,4 @@
-@extends('layouts.eclipse')
+<!-- @extends('layouts.eclipse')
 @section('title')
   Update Student Details
 @endsection
@@ -8,7 +8,7 @@
   .pac-container { position: relative !important;top: -380px !important;margin:0px }
 </style>
 <section class="hilite-content">
-  <!-- title row -->
+
   <div class="page-wrapper_new">
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
@@ -229,4 +229,4 @@
   </script>
   <script src="{{asset('js/gps/student-class-division-dropdown.js')}}"></script>
 @endsection
-@endsection
+@endsection -->
