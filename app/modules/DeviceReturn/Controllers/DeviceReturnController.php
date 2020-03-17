@@ -421,11 +421,11 @@ class DeviceReturnController extends Controller
         $activity                   =   $request->activity;
         $custom_activity            =   'Refurbished device added to stock by '.$employee_code.' and '.$return_code.' is closed';
 
-        $device_to_gps_table        =   (new Gps())->createNewGps($imei,$serial_no,$manufacturing_date,$icc_id,$imsi,$e_sim_number,$batch_number,$employee_code,$model_name,$version);
+        $device_to_gps_table        =   (new Gps())->createRefurbishedGps($imei,$serial_no,$manufacturing_date,$icc_id,$imsi,$e_sim_number,$batch_number,$employee_code,$model_name,$version);
         $root_id                    =   \Auth::user()->root->id;
         if($device_to_gps_table)
         {
-            (new GpsStock())->createNewGpsInStock($device_to_gps_table->id,$root_id);
+            (new GpsStock())->createRefurbishedGpsInStock($device_to_gps_table->id,$root_id);
             $stock_summary          =   (new DeviceReturnHistory())->addHistory($device_return_id, $activity);
             if($stock_summary)
             {

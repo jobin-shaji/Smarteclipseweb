@@ -147,7 +147,7 @@ class Gps extends Model
      *to create new row with gps
      *
      */
-    public function createNewGps($imei,$serial_no,$manufacturing_date,$icc_id,$imsi,$e_sim_number,$batch_number,$employee_code,$model_name,$version)
+    public function createRefurbishedGps($imei,$serial_no,$manufacturing_date,$icc_id,$imsi,$e_sim_number,$batch_number,$employee_code,$model_name,$version)
     {
         
         return  self::create([

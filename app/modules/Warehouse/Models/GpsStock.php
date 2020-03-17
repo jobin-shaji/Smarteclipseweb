@@ -70,7 +70,7 @@ class GpsStock extends Model
                     ->first();
     }
     
-    public function createNewGpsInStock($gps_id,$root_id)
+    public function createRefurbishedGpsInStock($gps_id,$root_id)
     {
         return  self::create([
                         'gps_id'                =>  $gps_id,
