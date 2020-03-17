@@ -19,7 +19,7 @@ var vehicle_data    = {
 $('document').ready(function(){
   getFirebaseData();
   initMap();
-}); 
+});
 
 function initMap(){
   map = new google.maps.Map(document.getElementById('map'), {
@@ -30,14 +30,14 @@ function initMap(){
       zoom: 17,
       fullscreenControl: false,
       mapTypeId: 'roadmap'
-  }); 
+  });
   marker = new SlidingMarker({});
   map.setOptions({maxZoom:19,minZoom:9});
 }
 /**
- * 
- * 
- * 
+ *
+ *
+ *
  */
 function getFirebaseData()
 {
@@ -152,7 +152,7 @@ function getFirebaseData()
       {
         vehicle_reg = live_data_for_tracking.vehicle_register_number;
       }
- 
+
       if( device_time <  last_update_time )
       {
         vehicleStatus           =   "Offline";
@@ -163,7 +163,7 @@ function getFirebaseData()
 
       // for snap routing
       $.ajax({
-        url: 'https://roads.googleapis.com/v1/snapToRoads?path='+clickedPointCurrent+'&key=AIzaSyCXmg0OWU4PM-pEIJPr_GpJAG9dKUHgim4&interpolate=true', //true', 
+        url: 'https://roads.googleapis.com/v1/snapToRoads?path='+clickedPointCurrent+'&key=AIzaSyCXmg0OWU4PM-pEIJPr_GpJAG9dKUHgim4&interpolate=true', //true',
         crossDomain: true,
         dataType: 'jsonp'
       }).done(function(response) {
@@ -206,7 +206,7 @@ function getFirebaseData()
         $("#sleep").hide();
         $("#connection_lost").show();
         vehicleColor="#84b752";
-      } 
+      }
       else if (vehicleStatus == 'M' && Math.floor(speed) == 0 && device_time >= connection_lost_time_motion)
       {
         $("#zero_speed_online").show();
@@ -230,7 +230,7 @@ function getFirebaseData()
         $("#sleep").hide();
         $("#connection_lost").show();
         vehicleColor="#84b752";
-      } 
+      }
       else if (vehicleStatus == 'H' && device_time >= connection_lost_time_halt)
       {
         $("#halt").show();
@@ -278,7 +278,7 @@ function getFirebaseData()
         $("#connection_lost").show();
         vehicleColor="#858585";
       }
-      else 
+      else
       {
         if(last_seen){
         $('#last_seen').text(last_seen);
@@ -303,7 +303,7 @@ function getFirebaseData()
       {
         document.getElementById("car_power").innerHTML = "DISCONNECTED";
       }
-      if(vehicleStatus == 'M' && Math.floor(speed) == 0) 
+      if(vehicleStatus == 'M' && Math.floor(speed) == 0)
       {
         document.getElementById("car_speed").innerHTML = "VEHICLE STOPPED";
         $('#valid_speed').css('display','none');
@@ -402,11 +402,11 @@ function getFirebaseData()
         element.classList.add("lost_blink");
         $('#network_status').addClass('lost1');
       }
-    
+
       document.getElementById("car_battery").innerHTML = battery_status;
-      //for getting place name 
+      //for getting place name
       $.ajax({
-        url: 'https://maps.googleapis.com/maps/api/geocode/json?latlng='+clickedPointCurrent+'&key=AIzaSyCXmg0OWU4PM-pEIJPr_GpJAG9dKUHgim4', 
+        url: 'https://maps.googleapis.com/maps/api/geocode/json?latlng='+clickedPointCurrent+'&key=AIzaSyCXmg0OWU4PM-pEIJPr_GpJAG9dKUHgim4',
       }).done(function(response) {
         place = (response.status=="OK")?response.results[1].formatted_address:'';
         document.getElementById("car_location").innerHTML = place;
@@ -415,15 +415,15 @@ function getFirebaseData()
       document.getElementById("fuel").innerHTML = fuel;
       document.getElementById("odometer").innerHTML = odometer;
     }
-    
-    
+
+
   });
 }
 
 // function liveSnapRoot(clickedPointCurrent)
 // {
 //   $.ajax({
-//     url: 'https://roads.googleapis.com/v1/snapToRoads?path=-35.27801,149.12958&key=AIzaSyCXmg0OWU4PM-pEIJPr_GpJAG9dKUHgim4&interpolate=true', //true', 
+//     url: 'https://roads.googleapis.com/v1/snapToRoads?path=-35.27801,149.12958&key=AIzaSyCXmg0OWU4PM-pEIJPr_GpJAG9dKUHgim4&interpolate=true', //true',
 //     crossDomain: true,
 //     dataType: 'jsonp'
 //   }).done(function(response) {
@@ -436,7 +436,7 @@ function getFirebaseData()
 //   });
 // }
 
-function track(latitude,longitude,angle) 
+function track(latitude,longitude,angle)
 {
 
   var lat = latitude;
@@ -449,10 +449,10 @@ function track(latitude,longitude,angle)
   deltaLat = (lat - posLat) / numDeltas;
   deltaLng = (lng - posLng) / numDeltas;
   moveMarker();
-  var icon = { 
+  var icon = {
               path        : svg_icon,// car icon
               scale       : parseFloat(vehicle_scale),
-              fillColor   : vehicleColor, //<-- Car Color, you can change it 
+              fillColor   : vehicleColor, //<-- Car Color, you can change it
               fillOpacity : parseFloat(opacity),
               strokeWeight: parseFloat(stroke_weight),
               anchor      : new google.maps.Point(0, 5),
@@ -460,10 +460,10 @@ function track(latitude,longitude,angle)
   };
   marker.setIcon(icon);
   marker.setMap(map);
-  
+
 }
 
-function moveMarker() 
+function moveMarker()
 {
   // console.log(i+'start moving - increment lat '+deltaLat+' long '+deltaLng+' numdeltas '+numDeltas);
   // console.log('postlat '+posLat+' long '+posLng);
@@ -474,7 +474,7 @@ function moveMarker()
   marker.setDuration(10);
   map.panTo(latlng);
 
-  if (i != numDeltas) 
+  if (i != numDeltas)
   {
     i++;
     setTimeout(moveMarker, delay);
@@ -483,11 +483,11 @@ function moveMarker()
   {
     // console.log('movement completed');
   }
-  
+
 }
 
  // ---------------------center on  a marker--------------------------
-function offsetCenter(latlng) 
+function offsetCenter(latlng)
 {
   var offsetx=0;
   var offsety=0;

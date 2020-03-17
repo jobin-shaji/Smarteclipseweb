@@ -1429,13 +1429,24 @@ class VehicleController extends Controller
         return view('Vehicle::vehicle-tracker-firebase',['vehicle_details' => $vehicle_details,'vehicle_type_details' => $vehicle_type_details]);
     }
 
+    public function locationFirebaseHmapNew(Request $request)
+    {
+        $decrypted_vehicle_id   =   Crypt::decrypt($request->id);
+        $vehicle_details        =   Vehicle::find($decrypted_vehicle_id);
+        $vehicle_type_details   =   VehicleType::find($vehicle_details->vehicle_type_id);
+        $track_data=Gps::select('lat as latitude',
+                              'lon as longitude'
+                              )
+                              ->where('id',$vehicle_details->gps_id)
+                              ->first();
+        return view('Vehicle::vehicle-tracker-hmap-new',['vehicle_details' => $vehicle_details,'vehicle_type_details' => $vehicle_type_details,'latlong' => $track_data]);
+    }
     /////////////////////////////Vehicle Tracker/////////////////////////////
     public function playback(Request $request){
         $decrypted_id = Crypt::decrypt($request->id);
         return view('Vehicle::vehicle-playback',['Vehicle_id' => $decrypted_id] );
 
     }
-
      public function playbackB(Request $request){
         $decrypted_id = Crypt::decrypt($request->id);
         $get_vehicle=Vehicle::find($decrypted_id);
@@ -2234,27 +2245,27 @@ class VehicleController extends Controller
         return  $rules;
     }
 // --------------------------------------------------------------------------------
-    // function getPlacenameFromLatLng($latitude,$longitude){
-    //     if(!empty($latitude) && !empty($longitude)){
-    //         //Send request and receive json data by address
-    //         $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key='.config('eclipse.keys.googleMap'));
-    //         $output = json_decode($geocodeFromLatLong);
+    function getPlacenameFromLatLng($latitude,$longitude){
+        if(!empty($latitude) && !empty($longitude)){
+            //Send request and receive json data by address
+            $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key='.config('eclipse.keys.googleMap'));
+            $output = json_decode($geocodeFromLatLong);
 
 
-    //         $status = $output->status;
-    //         //Get address from json data
-    //         $address = ($status=="OK")?$output->results[1]->formatted_address:'';
-    //         //Return address of the given latitude and longitude
+            $status = $output->status;
+            //Get address from json data
+            $address = ($status=="OK")?$output->results[1]->formatted_address:'';
+            //Return address of the given latitude and longitude
 
-    //         if(!empty($address)){
-    //             return $address;
-    //         }else{
-    //             return false;
-    //         }
-    //     }else{
-    //         return false;
-    //     }
-    // }
+            if(!empty($address)){
+                return $address;
+            }else{
+                return false;
+            }
+        }else{
+            return false;
+        }
+    }
 /////////////// snap root for live data///////////////////////////////////
     function LiveSnapRoot($b_lat, $b_lng) {
         $lat = $b_lat;

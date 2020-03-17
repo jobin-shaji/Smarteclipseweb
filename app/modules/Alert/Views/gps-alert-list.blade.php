@@ -1,4 +1,4 @@
-@extends('layouts.eclipse')
+<!-- @extends('layouts.eclipse')
 @section('title')
 All Alerts
 @endsection
@@ -22,9 +22,6 @@ All Alerts
 
       <div class="loader-wrapper" id="loader-1">          
 
-      <!-- <div class="loader-wrapper" id="loader-1">
-
-              <div id="loader"></div>-->
             </div>  
 
             <div class="lds-roller"> </div>
@@ -35,7 +32,7 @@ All Alerts
               <div class="panel-heading">               
               </div>
               <div id="alert" class="alert-bg">
-            <!--Loading ANIMATION-->
+           
               <img id="loader" src='http://opengraphicdesign.com/wp-content/uploads/2009/01/loader64.gif'>        
                 <table class="container" style="width: 120%">
                  
@@ -274,4 +271,4 @@ background: rgba(154, 154, 154, 0.05);
     transform: rotate(360deg);
   }
 }
- </style>
+ </style> -->

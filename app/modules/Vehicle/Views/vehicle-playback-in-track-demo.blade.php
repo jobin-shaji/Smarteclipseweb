@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -17,7 +17,7 @@
 </title>
     <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
     <link rel="icon" href="{{asset('playback_assets/assets/img/icon.png')}}" type="image/x-icon" />
-    <!-- Fonts and icons -->
+
     <script src="{{asset('playback_assets/assets/js/plugin/webfont/webfont.min.js')}}"></script>
     <script>
         WebFont.load({
@@ -35,11 +35,10 @@
     <script src="{{asset('playback_assets/assets/Scripts/jquery-3.3.1.min.js')}}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.4.0/jszip.min.js"></script>
     <script src="{{asset('playback_assets/assets/Scripts/moment.min.js')}}"></script>
-    <!-- CSS Files -->
+
     <link rel="stylesheet" type="text/css" href="https://js.api.here.com/v3/3.0/mapsjs-ui.css?dp-version=1549984893" />
     <link rel="stylesheet" href="{{asset('playback_assets/assets/css/bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{asset('playback_assets/assets/css/atlantis.min.css')}}">
-    <!-- CSS Just for demo purpose, don't include it in your project -->
     <link rel="stylesheet" href="{{asset('playback_assets/assets/css/demo.css')}}">
 
 </head>
@@ -101,7 +100,7 @@
 
         <div class="main-panel">
             <div class="content">
-                <!--<div id="markers" style="width:1800px;height:780px"></div>-->
+                
                 <div id="markers" style="width:100%;height:100vh"></div>
                 <div class="page-inner mt--5">
                 </div>
@@ -110,8 +109,7 @@
 
         <div id="cover-spin"></div>
 
-        <!-- Custom template | don't include it in your project! -->
-        <!--<div class="custom-template" style="top:230px">-->
+       
         <div class="custom-template" style="bottom:5px">
            
             <div class="custom-content">
@@ -168,22 +166,20 @@
                             </td>
 
                              <td style="font-weight:bold;text-align:right">
-                                <!--<label style="font-weight:bold">Display Route</label>-->
+                                
                                 <label class="form-check-label">
                                     <input class="form-check-input" id="chkRoute" type="checkbox" value="">
                                     <span class="form-check-sign">Route</span>
                                 </label>
 
-                                <!--<div class="form-check">
-                            </div>-->
+                                
                             </td>
                             <td style="font-weight:bold;text-align:right">
                                 <label class="form-check-label">
                                     <input class="form-check-input" id="chkWarning" type="checkbox" value="">
                                     <span class="form-check-sign">Warning</span>
                                 </label>
-                                <!--<div class="form-check">
-                            </div>-->
+                               
                             </td>
 
 
@@ -201,47 +197,38 @@
             </div>
             
         </div>
-        <!-- End Custom template -->
+       
     </div>
-    <!--   Core JS Files   -->
+    
     <script src="{{asset('playback_assets/assets/js/core/jquery.3.2.1.min.js')}}"></script>
     <script src="{{asset('playback_assets/assets/js/core/popper.min.js')}}"></script>
     <script src="{{asset('playback_assets/assets/js/core/bootstrap.min.js')}}"></script>
-    <!-- jQuery UI -->
+    
     <script src="{{asset('playback_assets/assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js')}}"></script>
     <script src="{{asset('playback_assets/assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js')}}"></script>
-    <!-- jQuery Scrollbar -->
+    
     <script src="{{asset('playback_assets/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js')}}"></script>
 
-    <!-- Chart JS -->
+   
     <script src="{{asset('playback_assets/assets/js/plugin/chart.js/chart.min.js')}}"></script>
-    <!-- jQuery Sparkline -->
+    
     <script src="{{asset('playback_assets/assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js')}}"></script>
-    <!-- Chart Circle -->
+   
     <script src="{{asset('playback_assets/assets/js/plugin/chart-circle/circles.min.js')}}"></script>
-    <!-- Datatables -->
+   
     <script src="{{asset('playback_assets/assets/js/plugin/datatables/datatables.min.js')}}"></script>
-    <!-- Bootstrap Notify -->
+    
     <script src="{{asset('playback_assets/assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js')}}"></script>
-    <!-- jQuery Vector Maps -->
-    <!--<script src="../assets/js/plugin/jqvmap/jquery.vmap.min.js"></script>
-    <script src="../assets/js/plugin/jqvmap/maps/jquery.vmap.world.js"></script>-->
-
-
+   
     <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-core.js"></script>
     <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-service.js"></script>
     <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-ui.js"></script>
     <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-mapevents.js"></script>
 
 
-
-    <!-- Sweet Alert -->
     <script src="{{asset('playback_assets/assets/js/plugin/sweetalert/sweetalert.min.js')}}"></script>
-    <!-- Atlantis JS -->
     <script src="{{asset('playback_assets/assets/js/atlantis.min.js')}}"></script>
-    <!-- Atlantis DEMO methods, don't include it in your project! -->
-    <script src="{{asset('playback_assets/assets/js/setting-demo.js')}}"></script>
-    <!--<script src="../assets/js/demo.js"></script>-->
+     <script src="{{asset('playback_assets/assets/js/setting-demo.js')}}"></script>
     <script>
         var MapResult;
         var PauseFlage = false;
@@ -1914,4 +1901,4 @@ Create matched/unmatched markers that can be used to draw the original/matched t
 
     </script>
 </body>
-</html>
+</html> -->

@@ -1,4 +1,4 @@
-@extends('layouts.eclipse')
+<!-- @extends('layouts.eclipse')
 @section('title')
   All Vehicle
 @endsection
@@ -60,13 +60,13 @@
 						<label>Register Number :</label><span class='model_label' id="register_number"></span><br>							
 						<label>Alert Time:</label><span class='model_label' id="device_time"></span><br>
 						<label>Address :</label><span class='model_label' id="address"></span><br>
-							<!-- <label>Register Number :</label><span id="register_number"></span><br> -->
+							
 
 						</div>
 					</div>
-				<!-- modal-content -->
+				
 				</div>
-			<!-- modal-dialog -->
+			
 			</div>		
 	</div>
 </div>
@@ -74,7 +74,6 @@
 
 <script async defer src ="https://maps.googleapis.com/maps/api/js?key={{config('eclipse.keys.googleMap')}}&callback=initMap"></script>
 <script src="{{asset('js/gps/alert-notification-firebase.js')}}"></script>
-<!-- <script src="{{asset('js/gps/alert-notification.js')}}"></script> -->
 
 		<script>
 		var el = document.querySelector('.notification');
@@ -137,4 +136,4 @@ margin-top: -3px;
 	
 
 
- @endsection
+ @endsection -->

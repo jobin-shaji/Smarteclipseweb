@@ -598,18 +598,18 @@ class DashboardController extends Controller
         ]);
      }
     //get place name
-    public function getLocationFromLatLng(Request $request)
-    {
-        $latitude = $request->latitude;
-        $longitude = $request->longitude;
-        if(!empty($latitude) && !empty($longitude)){
-            $address =  $this->getAddress($latitude,$longitude);
-            if(!empty($address)){
-                $location=$address;
-            }
-            return response()->json($location);
-        }
-    }
+    // public function getLocationFromLatLng(Request $request)
+    // {
+    //     $latitude = $request->latitude;
+    //     $longitude = $request->longitude;
+    //     if(!empty($latitude) && !empty($longitude)){
+    //         $address =  $this->getAddress($latitude,$longitude);
+    //         if(!empty($address)){
+    //             $location=$address;
+    //         }
+    //         return response()->json($location);
+    //     }
+    // }
     function getAddress($latitude,$longitude){
          //Send request and receive json data by address
          

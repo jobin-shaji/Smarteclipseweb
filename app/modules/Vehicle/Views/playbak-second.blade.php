@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -7,12 +7,7 @@
       <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
     <link rel="icon" href="{{asset('playback/assets/img/icon.png')}}" type="image/x-icon" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <!-- Fonts and icons -->
-     <!-- <link rel="stylesheet" href="{{asset('playback_assets/assets/css/bootstrap.min.css')}}"> -->
-    <!-- <link rel="stylesheet" href="{{asset('playback_assets/assets/css/atlantis.min.css')}}"> -->
-    <!-- CSS Just for demo purpose, don't include it in your project -->
-    <!-- <link rel="stylesheet" href="{{asset('playback_assets/assets/css/demo.css')}}"> -->
-
+   
     <script src="{{asset('playback/assets/Scripts/jquery-3.3.1.js')}}"></script>
     <script src="{{asset('playback/assets/Scripts/jquery-3.3.1.min.js')}}"></script>
      <script src="{{asset('playback_assets/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js')}}"></script>
@@ -98,7 +93,7 @@
                    <img id="loading-image" src="{{asset('playback/assets/img/loader.gif')}}" />
                </div>
                </div>
-                <!--<div id="markers" style="width:1800px;height:780px"></div>-->
+               
                 <div id="markers" style="width:100%px;height:595px; position: relative;">
                  
                     <div class="left-alert-box">
@@ -114,8 +109,7 @@
             </div>
         </div>
     </div>
-    <!-- Style -->
-
+   
     <style>
 
 
@@ -332,7 +326,7 @@ padding: 5px 10px;
 
 
     </style>
-    <!--   Core JS Files   -->
+  
     <script src="{{asset('playback/assets/js/core/jquery.3.2.1.min.js')}}"></script>
     <script src="{{asset('playback/assets/js/core/bootstrap.min.js')}}"></script>
     <script src="{{asset('playback_assets/assets/js/core/popper.min.js')}}"></script>
@@ -832,4 +826,4 @@ padding: 5px 10px;
 
 
 </body>
-</html>
+</html> -->
