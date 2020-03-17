@@ -533,29 +533,29 @@ class AlertController extends Controller {
         return view('Reports::alert-tracker',['alert_id' => $decrypted_id,'alertmap' => $get_alerts,'alert_icon' => $alert_icon,'get_vehicle' => $get_vehicle] );
     }
 
-    public function alertLocation(Request $request)
-    {
-        $decrypted_id   =   $request->id;
-        $alert_details  =   Alert::where('id',$decrypted_id)->first();
-        if($alert_details)
-        {
-            $alert_details->status  =   1;
-            $alert_details->save();
-            $place_name             =   $this->getPlacenameFromLatLng($alert_details->latitude,$alert_details->longitude);
-            return response()->json([
-                'address'       =>  $place_name,
-                'status'        =>  1,
-                'message'       =>  'success'
-            ]);
-        }
-        else
-        {
-            return response()->json([
-                'status'        =>  0,
-                'message'       =>  'error'
-            ]);
-        }
-    }
+    // public function alertLocation(Request $request)
+    // {
+    //     $decrypted_id   =   $request->id;
+    //     $alert_details  =   Alert::where('id',$decrypted_id)->first();
+    //     if($alert_details)
+    //     {
+    //         $alert_details->status  =   1;
+    //         $alert_details->save();
+    //         $place_name             =   $this->getPlacenameFromLatLng($alert_details->latitude,$alert_details->longitude);
+    //         return response()->json([
+    //             'address'       =>  $place_name,
+    //             'status'        =>  1,
+    //             'message'       =>  'success'
+    //         ]);
+    //     }
+    //     else
+    //     {
+    //         return response()->json([
+    //             'status'        =>  0,
+    //             'message'       =>  'error'
+    //         ]);
+    //     }
+    // }
 
 
 
@@ -613,41 +613,41 @@ class AlertController extends Controller {
             'status' => 'notificationAlerts'
         ]);
     }
-    public function alertUpdation(Request $request){
-        $decrypted_id = $request->id;
-        $get_alerts=Alert::where('id',$decrypted_id)->first();
-        $get_alerts->status=1;
-        $get_alerts->save();
-        $placeName=$this->getPlacenameFromLatLng($get_alerts->latitude,$get_alerts->longitude);
-        $alert_icon  =  AlertType:: select(['description'])->where('id',$get_alerts->alert_type_id)->first();
-        $get_vehicle=Vehicle::select(['id','name','register_number',
-            'vehicle_type_id'])->where('id',$get_alerts->gps->vehicle->id)->first();
-        return response()->json([
-            'alert_id' =>    $decrypted_id,
-            'alertmap' =>    $get_alerts,
-            'alert_icon' =>  $alert_icon,
-            'get_vehicle'=>  $get_vehicle,
-            'address'=>      $placeName,
-            'status' =>      'gpsAlertconfirm'
-        ]);
-    }
-    function getPlacenameFromLatLng($latitude,$longitude){
-        if(!empty($latitude) && !empty($longitude)){
-            //Send request and receive json data by address
+    // public function alertUpdation(Request $request){
+    //     $decrypted_id = $request->id;
+    //     $get_alerts=Alert::where('id',$decrypted_id)->first();
+    //     $get_alerts->status=1;
+    //     $get_alerts->save();
+    //     $placeName=$this->getPlacenameFromLatLng($get_alerts->latitude,$get_alerts->longitude);
+    //     $alert_icon  =  AlertType:: select(['description'])->where('id',$get_alerts->alert_type_id)->first();
+    //     $get_vehicle=Vehicle::select(['id','name','register_number',
+    //         'vehicle_type_id'])->where('id',$get_alerts->gps->vehicle->id)->first();
+    //     return response()->json([
+    //         'alert_id' =>    $decrypted_id,
+    //         'alertmap' =>    $get_alerts,
+    //         'alert_icon' =>  $alert_icon,
+    //         'get_vehicle'=>  $get_vehicle,
+    //         'address'=>      $placeName,
+    //         'status' =>      'gpsAlertconfirm'
+    //     ]);
+    // }
+    // function getPlacenameFromLatLng($latitude,$longitude){
+    //     if(!empty($latitude) && !empty($longitude)){
+    //         //Send request and receive json data by address
             
-            $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key='.config('eclipse.keys.googleMap'));
-            $output = json_decode($geocodeFromLatLong);
-            $status = $output->status;
-            $address = ($status=="OK")?$output->results[0]->formatted_address:'';
-            if(!empty($address)){
-                return $address;
-            }else{
-                return false;
-            }
-        }else{
-            return false;
-        }
-    }
+    //         $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key='.config('eclipse.keys.googleMap'));
+    //         $output = json_decode($geocodeFromLatLong);
+    //         $status = $output->status;
+    //         $address = ($status=="OK")?$output->results[0]->formatted_address:'';
+    //         if(!empty($address)){
+    //             return $address;
+    //         }else{
+    //             return false;
+    //         }
+    //     }else{
+    //         return false;
+    //     }
+    // }
     
     public function allGpsAlerts(Request $request)
     {

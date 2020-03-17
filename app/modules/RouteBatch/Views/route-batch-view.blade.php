@@ -1,12 +1,9 @@
-@extends('layouts.eclipse')
+<!-- @extends('layouts.eclipse')
 @section('title')
   View Route
 @endsection
 @section('content')
 
-<!-- ============================================================== -->
-<!-- Page wrapper  -->
-<!-- ============================================================== -->
 <div class="page-wrapper_new_map">
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
@@ -138,4 +135,4 @@
         backgroundPostData(url,data,'callBackDataTables',{alert:true});  
       }
     </script>
-  @endsection
+  @endsection -->

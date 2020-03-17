@@ -1,4 +1,4 @@
-@extends('layouts.eclipse')
+<!-- @extends('layouts.eclipse')
 @section('title')
   Update Bus Stop Details
 @endsection
@@ -8,7 +8,7 @@
   .pac-container { position: relative !important;top: -380px !important;margin:0px }
 </style>
 <section class="hilite-content">
-  <!-- title row -->
+ 
   <div class="page-wrapper_new">
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
@@ -95,4 +95,4 @@
    src="https://maps.googleapis.com/maps/api/js?key={{config('eclipse.keys.googleMap')}}&libraries=places&callback=initMap">
   </script>
 @endsection
-@endsection
+@endsection -->

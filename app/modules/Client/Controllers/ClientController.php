@@ -64,6 +64,9 @@ class ClientController extends Controller {
     //upload employee details to database table
     public function save(Request $request)
     {
+        /**
+         * getCityGeoCodes getting lat lng from city table
+         */
         $placeLatLng = (new City())->getCityGeoCodes($request->city_id);
         $location_lat=$placeLatLng['latitude'];
         $location_lng=$placeLatLng['longitude'];

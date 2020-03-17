@@ -1,11 +1,11 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
    <head>
       <meta http-equiv="X-UA-Compatible" content="IE=edge" />
       <title>CSS Corp Info</title>
       <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
       <link rel="icon" href="{{asset('playback/assets/img/icon.png')}}" type="image/x-icon" />
-      <!-- Fonts and icons -->
+  
       <script src="{{asset('playback/assets/js/plugin/webfont/webfont.min.js')}}"></script>
       <script>
          WebFont.load({
@@ -20,11 +20,11 @@
       <script src="{{asset('playback/assets/Scripts/jquery-3.3.1.js')}}"></script>
       <script src="{{asset('playback/assets/Scripts/jquery-3.3.1.min.js')}}"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.4.0/jszip.min.js"></script>
-      <!-- CSS Files -->
+     
       <link rel="stylesheet" type="text/css" href="https://js.api.here.com/v3/3.0/mapsjs-ui.css?dp-version=1549984893" />
       <link rel="stylesheet" href="{{asset('playback/assets/css/bootstrap.min.css')}}">
       <link rel="stylesheet" href="{{asset('playback/assets/css/atlantis.min.css')}}">
-      <!-- CSS Just for demo purpose, don't include it in your project -->
+
       <link rel="stylesheet" href="{{asset('playback/assets/css/demo.css')}}">
    </head>
    <style>
@@ -83,14 +83,14 @@
         
          <div class="main-panel">
             <div class="content">
-               <!--<div id="markers" style="width:1800px;height:780px"></div>-->
+              
                <div id="markers" style="width:1360px;height:595px"></div>
                <div class="page-inner mt--5">
                </div>
             </div>
            
          </div>
-         <!-- Custom template | don't include it in your project! -->
+         
          <div class="custom-template" style="top:230px">
             <div class="title">Route PlayBack</div>
             <div class="custom-content">
@@ -101,7 +101,6 @@
                      <tr style="width:90px">
                         <td><label>Select Speed (km/hr)         </label></td>
                         <td>
-                           <!--<select class="form-control form-control" style="color:white" id="defaultSelect">-->
                            <select id="cmbSelect">
                               <option value="10">10</option>
                               <option value="20">20</option>
@@ -121,7 +120,7 @@
                         <td>Total Distance</td>
                         <td>
                            <textarea id="lblKMRouteCalculation" style="width:90px;resize:none" rows="1" readonly disabled>  </textarea>
-                           km<!--<span > km </span>-->
+                           km
                         </td>
                      </tr>
                      <tr style="width:90px">
@@ -155,41 +154,37 @@
                <i class="flaticon-settings"></i>
             </div>
          </div>
-         <!-- End Custom template -->
+       
       </div>
-      <!--   Core JS Files   -->
+      
       <script src="{{asset('playback/assets/js/core/jquery.3.2.1.min.js')}}"></script>
       <script src="{{asset('playback/assets/js/core/popper.min.js')}}"></script>
       <script src="{{asset('playback/assets/js/core/bootstrap.min.js')}}"></script>
-      <!-- jQuery UI -->
+      
       <script src="{{asset('playback/assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js')}}"></script>
       <script src="{{asset('playback/assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js')}}"></script>
-      <!-- jQuery Scrollbar -->
+     
       <script src="{{asset('playback/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js')}}"></script>
-      <!-- Chart JS -->
+
       <script src="{{asset('playback/assets/js/plugin/chart.js/chart.min.js')}}"></script>
-      <!-- jQuery Sparkline -->
+
       <script src="{{asset('playback/assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js')}}"></script>
-      <!-- Chart Circle -->
+
       <script src="{{asset('playback/assets/js/plugin/chart-circle/circles.min.js')}}"></script>
-      <!-- Datatables -->
+
       <script src="{{asset('playback/assets/js/plugin/datatables/datatables.min.js')}}"></script>
-      <!-- Bootstrap Notify -->
+
       <script src="{{asset('playback/assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js')}}"></script>
-      <!-- jQuery Vector Maps -->
-      <!--<script src="../assets/js/plugin/jqvmap/jquery.vmap.min.js"></script>
-         <script src="../assets/js/plugin/jqvmap/maps/jquery.vmap.world.js"></script>-->
+
       <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-core.js"></script>
       <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-service.js"></script>
       <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-ui.js"></script>
       <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-mapevents.js"></script>
-      <!-- Sweet Alert -->
+
       <script src="{{asset('playback/assets/js/plugin/sweetalert/sweetalert.min.js')}}"></script>
-      <!-- Atlantis JS -->
+
       <script src="{{asset('playback/assets/js/atlantis.min.js')}}"></script>
-      <!-- Atlantis DEMO methods, don't include it in your project! -->
       <script src="{{asset('playback/assets/js/setting-demo.js')}}"></script>
-      <!--<script src="../assets/js/demo.js"></script>-->
        <script type="text/javascript">
    $(document).ready(function() {
      getInputfromServer();
@@ -1144,4 +1139,4 @@ Create matched/unmatched markers that can be used to draw the original/matched t
       }
 </script>
    </body>
-</html>
+</html> -->
