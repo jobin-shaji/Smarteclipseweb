@@ -991,7 +991,7 @@ public function serviceJobDetails(Request $request)
         return $pdf->download('installation-certificate.pdf');
     }
 
-    public function jobHistoryList()
+    public function jobHistoryList(Request $request)
     {
         $key = ( isset($request->new_installation_search_key) ) ? $request->new_installation_search_key : null;
         return view('Servicer::completed-installation-history-list',['servicer_jobs'=> (new ServicerJob())->getCompletedInstallationList($key)]); 

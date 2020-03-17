@@ -126,7 +126,7 @@ class ServicerJob extends Model
         if( $key != null )
         {
           $query->where(function($query) use($key){
-            dd($key);
+          
             $query = $query->where('clients.name','like','%'.$key.'%')
               ->orWhere('gps.serial_no','like','%'.$key.'%');
               // ->orWhere('vehicles.register_number','like','%'.$key.'%')
