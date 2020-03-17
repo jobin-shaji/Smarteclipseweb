@@ -256,7 +256,7 @@ class DashboardController extends Controller
       
         return response()->json([
 
-            'pending_jobs' => ServicerJob::select('job_complete_date')->whereNull('job_complete_date')
+            'new_installation_jobs' => ServicerJob::select('job_complete_date')->whereNull('job_complete_date')
              ->where('servicer_id',$servicer_id)->where('job_type',1)->where('status',1)->count(),
              'on_progress_installation_jobs' => ServicerJob::select('id','status','job_complete_date')->whereNull('job_complete_date')
               ->where('servicer_id',$servicer_id)->where('status',2)->where('job_type',1)->count(),

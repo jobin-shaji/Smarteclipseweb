@@ -765,10 +765,11 @@
   <div class="page-wrapper-root1">
     <section class="content">
       <div class="row">
+       
         <div class="col-lg-3 col-xs-6 gps_dashboard_grid dash_grid" style="background-color: #009182!important">
           <div class="small-box bg-green bxs">
             <div class="inner">
-              <h3 id="pending_jobs">
+              <h3 id="new_installation_jobs">
                 <div class="loader"></div>
               </h3>
               <p>New Installations</p>
@@ -776,9 +777,10 @@
             <div class="icon">
               <i class="fa fa-tablet"></i>
             </div>
-            <a href="/job-list" class="small-box-footer" style="background-color: #5e9791!important">View <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="/job-list" class="small-box-footer" style="background-color: #3dd0c1!important">View <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
+        
         <div class="col-lg-3 col-xs-6 gps_dashboard_grid dash_grid" style="background-color: #d6270b!important">
           <div class="small-box bg-green bxs">
             <div class="inner">
@@ -790,7 +792,7 @@
             <div class="icon">
               <i class="fa fa-tablet"></i>
             </div>
-            <a href="/job-list" class="small-box-footer" style="background-color: #b32b16!important">View <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="/on-progress-installation-job-list" class="small-box-footer" style="background-color: #b32b16!important">View <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         

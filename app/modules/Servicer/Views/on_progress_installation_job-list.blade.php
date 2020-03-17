@@ -11,8 +11,8 @@ $key        = (isset($_GET['new_installation_search_key'])) ? $_GET['new_install
 <div class="page-wrapper_new">
    <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Installation Pending Jobs List</li>
-        <b> New Installation Jobs List</b>
+        <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/On Progress Installation Jobs List</li>
+        <b> Progress Installation Jobs List</b>
      </ol>
       @if(Session::has('message'))
           <div class="pad margin no-print">
@@ -26,7 +26,7 @@ $key        = (isset($_GET['new_installation_search_key'])) ? $_GET['new_install
     <!-- <div class="mlt-list">
     <!-- Search and filters -->
     <div align="right" class="search-1">
-      <form method="GET" action="{{route('job_list')}}" class="search-top">
+      <form method="GET" action="{{route('on_progress_job_list')}}" class="search-top">
         {{csrf_field()}}
         <div class="pull-right cover_list_search">
         <div class="row" >
@@ -116,12 +116,12 @@ $key        = (isset($_GET['new_installation_search_key'])) ? $_GET['new_install
                     @endif
                     @if($servicer_job->status == 0)
                     <td><font color='red'>Cancelled</font></td>
-                    @elseif ($servicer_job->status == 1)
+                    @elseif ($servicer_job->status == 2)
                   
                     <td> <a href="/job/{{Crypt::encrypt($servicer_job->id)}}/details"class='btn btn-xs btn-info'><i class='glyphicon glyphicon-map-marker'></i>Job Completion</a></td>      
                   
                     @else
-                    <td> <a href="/job/{{Crypt::encrypt($servicer_job->id)}}/details"class='btn btn-xs btn-info'><i class='glyphicon glyphicon-map-marker'></i>Job Completion</a></td>     
+                    <td>Completed</td>     
                     @endif
                 </tr>
                 @endforeach

@@ -57,7 +57,7 @@ function dbcount(res){
       $('#stop').text(res.stop);
       $('#offline').text(res.offline);
 
-      $('#pending_jobs').text(res.pending_jobs);
+      $('#new_installation_jobs').text(res.new_installation_jobs);
        $('#on_progress_installation_jobs').text(res.on_progress_installation_jobs);
       $('#pending_service_jobs').text(res.pending_service_jobs);
       $('#completed_jobs').text(res.completed_jobs);

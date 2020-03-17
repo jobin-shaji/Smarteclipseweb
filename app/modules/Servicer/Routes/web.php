@@ -40,8 +40,10 @@ Route::group(['middleware' => ['web','auth','role:sub_dealer|trader'] , 'namespa
 
 
 Route::group(['middleware' => ['web','auth','role:servicer'] , 'namespace' => 'App\Modules\Servicer\Controllers' ] , function() {
+Route::get('/job-list','ServicerController@jobList')->name('job_list');
+// for on progress installation
+Route::get('/on-progress-installation-job-list','ServicerController@onProgressInstallationJobList')->name('on_progress_job_list');	
 
-	Route::get('/job-list','ServicerController@jobList')->name('job.list');
 	Route::get('/service-job-list','ServicerController@serviceJobList')->name('service.job.list');
 
 
@@ -75,10 +77,8 @@ Route::group(['middleware' => ['web','auth','role:servicer'] , 'namespace' => 'A
 	// Route::get('/sub-dealer-assign-servicer-list','ServicerController@SubDealerAssignServicerList')->name('sub-dealer.assign.servicer.list');
 	// Route::post('/sub-dealer-list-assign-servicer','ServicerController@getSubDealerAssignServicerList')->name('sub-dealer.list.assign.servicer');
 //for installation job history
-	Route::get('/job-history-list','ServicerController@jobHistoryList')->name('job.history.list');
-
-
-	Route::post('/list-history-jobs','ServicerController@getJobsHistoryList')->name('list.history.jobs');	
+	Route::get('/job-history-list','ServicerController@jobHistoryList')->name('completed.installation.job.list');
+    Route::post('/list-history-jobs','ServicerController@getJobsHistoryList')->name('list.history.jobs');	
 //for service job history
 	Route::get('/servicerjob-history-list','ServicerController@serviceJobHistoryList')->name('servicerjob.history.list');
     Route::post('/servicelist-history-jobs','ServicerController@getserviceJobsHistoryList')->name('servicelist.history.jobs');	

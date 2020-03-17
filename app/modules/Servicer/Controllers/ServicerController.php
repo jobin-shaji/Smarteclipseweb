@@ -421,36 +421,22 @@ class ServicerController extends Controller {
         ->rawColumns(['link'])
         ->make();
     }
-    public function jobList()
+    public function jobList(Request $request)
     {
-        $user_id=\Auth::user()->servicer->id;
-        $servicer_jobs = ServicerJob::select(
-            'id',
-            'servicer_id',
-            'client_id',
-            'job_id',
-            'job_type',
-            'user_id',
-            'description',
-            'gps_id',
-            'job_complete_date',
-            'job_date',
-            'created_at',
-            'location',
-            'status','completion_code'
-        )
-        ->where('servicer_id',$user_id)
-        ->where('job_type',1)
-        ->whereNull('job_complete_date')
-        ->with('gps:id,imei,serial_no')
-        ->with('user:id,username')
-        ->with('clients.user')
-        ->with('servicer:id,name')
-        ->get();
-       
-        return view('Servicer::job-list',['servicer_jobs' => $servicer_jobs]);
-       
+        $key = ( isset($request->new_installation_search_key) ) ? $request->new_installation_search_key : null;
+         return view('Servicer::job-list',['servicer_jobs'=> (new ServicerJob())->getNewInstallationList($key)]); 
+  
     }
+
+    public function onProgressInstallationJobList(Request $request)
+    {
+        $key = ( isset($request->new_installation_search_key) ) ? $request->new_installation_search_key : null;
+        return view('Servicer::on_progress_installation_job-list',['servicer_jobs'=> (new ServicerJob())->getOnProgressInstallationList($key)]); 
+  
+    }
+
+
+
      // for service
      public function serviceJobList()
     {
@@ -1007,7 +993,9 @@ public function serviceJobDetails(Request $request)
 
     public function jobHistoryList()
     {
-        return view('Servicer::job-history-list');
+        $key = ( isset($request->new_installation_search_key) ) ? $request->new_installation_search_key : null;
+        return view('Servicer::completed-installation-history-list',['servicer_jobs'=> (new ServicerJob())->getCompletedInstallationList($key)]); 
+       
     }
 
     public function serviceJobHistoryList()
