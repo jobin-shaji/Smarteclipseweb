@@ -22,7 +22,7 @@ class Gps extends Model
     //     'allergies'
     // ];
 
-    protected $fillable=[ 'serial_no','icc_id','imsi','imei','manufacturing_date','e_sim_number','batch_number','model_name','version','user_id','status','device_time','employee_code'];
+    protected $fillable=[ 'serial_no','icc_id','imsi','imei','manufacturing_date','e_sim_number','batch_number','model_name','version','user_id','status','device_time','employee_code','refurbished_status'];
 
     //join user table with gps table
     public function user()
@@ -109,5 +109,60 @@ class Gps extends Model
     public function getGpsId($imei)
     {
         return self::select('id')->where('imei',$imei)->first();
+    }
+    /**
+     *
+     *
+     *
+     */
+    public function getGpsDetails($gps_id)
+    {
+        return self::select(
+                    'id',
+                    'imei',
+                    'serial_no',
+                    'manufacturing_date',
+                    'icc_id',
+                    'imsi',
+                    'e_sim_number',
+                    'batch_number',
+                    'employee_code',
+                    'model_name',
+                    'version',
+                    'is_returned'
+                    )
+                    ->where('id',$gps_id)
+                    ->first();
+    }
+
+    public function getCountBasedOnImeiAndSerialNo($imei_RET,$serial_no_RET)
+    {
+        return self::select('imei','serial_no')
+                    ->where('imei', 'like','%'.$imei_RET.'%')
+                    ->where('serial_no', 'like', '%'.$serial_no_RET.'%')
+                    ->count();
+    }
+    /**
+     *
+     *to create new row with gps
+     *
+     */
+    public function createRefurbishedGps($imei,$serial_no,$manufacturing_date,$icc_id,$imsi,$e_sim_number,$batch_number,$employee_code,$model_name,$version)
+    {
+        
+        return  self::create([
+                        'serial_no'             =>  $serial_no,
+                        'icc_id'                =>  $icc_id,
+                        'imsi'                  =>  $imsi,
+                        'imei'                  =>  $imei,
+                        'manufacturing_date'    =>  $manufacturing_date,
+                        'e_sim_number'          =>  $e_sim_number,
+                        'batch_number'          =>  $batch_number,
+                        'model_name'            =>  $model_name,
+                        'version'               =>  $version,
+                        'employee_code'         =>  $employee_code,
+                        'status'                =>  1,
+                        'refurbished_status'    =>  1
+                    ]); 
     }
 }

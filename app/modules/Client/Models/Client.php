@@ -31,29 +31,39 @@ class Client extends Model
       ->whereIn('alert_type_id',[1,12,13,14,15,16]);
   }
 
-  public function all_driver_points(){
-      return $this->hasMany('App\Modules\Client\Models\ClientAlertPoint','client_id','id');
+  public function all_driver_points()
+  {
+    return $this->hasMany('App\Modules\Client\Models\ClientAlertPoint','client_id','id');
   }
 
-   public function vehicles() 
-    {
-        return $this->hasMany('App\Modules\Vehicle\Models\Vehicle', 'client_id')->whereNull('deleted_at')->orderBy('id', 'desc');
-    }
-   
-   public function state(){
-        return $this->hasOne('App\Modules\TrafficRules\Models\State','id','state_id');
-    }
+  public function vehicles() 
+  {
+    return $this->hasMany('App\Modules\Vehicle\Models\Vehicle', 'client_id')->whereNull('deleted_at')->orderBy('id', 'desc');
+  } 
 
-    public function country(){
-        return $this->hasOne('App\Modules\TrafficRules\Models\Country','id','country_id');
-    }
+  public function state()
+  {
+    return $this->hasOne('App\Modules\TrafficRules\Models\State','id','state_id');
+  }
 
-    public function city(){
-        return $this->hasOne('App\Modules\TrafficRules\Models\City','id','city_id');
-    }
+  public function country()
+  {
+    return $this->hasOne('App\Modules\TrafficRules\Models\Country','id','country_id');
+  }
 
-    public function getClientDetails($user_id){
-      return self::select('user_id','latitude','longitude','location','name','address','city_id')->with('user:id,mobile,email')->with('city.state.country')->withTrashed()->where('user_id', $user_id)->first();
+  public function city()
+  {
+    return $this->hasOne('App\Modules\TrafficRules\Models\City','id','city_id');
+  }
+
+  public function getClientDetailsWithClientId($client_id)
+	{
+		return self::select('name')->where('id',$client_id)->first();
+	}
+
+  public function getClientDetails($user_id)
+  {
+    return self::select('user_id','latitude','longitude','location','name','address','city_id')->with('user:id,mobile,email')->with('city.state.country')->withTrashed()->where('user_id', $user_id)->first();
   }
 
 

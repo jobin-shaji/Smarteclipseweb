@@ -12,13 +12,13 @@ class GpsTransferItems extends Model
     //join user table with gps table
     public function gps()
     {
-    	return $this->hasOne('App\Modules\Gps\Models\Gps','id','gps_id');
+        return $this->hasOne('App\Modules\Gps\Models\Gps','id','gps_id');
     }
-     public function gpstransfer()
+    public function gpstransfer()
     {
-    	return $this->hasOne('App\Modules\Gps\Models\Gps','id','gps_id');
+        return $this->hasOne('App\Modules\Gps\Models\Gps','id','gps_id');
     }
-      /**
+    /**
      * 
      * 
      */
@@ -27,6 +27,14 @@ class GpsTransferItems extends Model
         return self::select('gps_id')
             ->where('gps_transfer_id', $gps_transfer_id)
             ->get();
+    }
+
+    public function updateReturnStatusInTrasferItem($gps_id)
+    {
+        return self::select('id','gps_id','is_returned')->where('gps_id',$gps_id)
+                ->update([
+                    'is_returned' =>  1,
+                ]);
     }
     
 }

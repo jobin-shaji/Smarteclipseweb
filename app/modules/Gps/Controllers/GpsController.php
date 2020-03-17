@@ -39,20 +39,31 @@ class GpsController extends Controller {
         return view('Gps::gps-list');
 	}
 	//returns gps as json
-    public function getGps()
+    public function getGps(Request $request)
     {
-        $user_id=\Auth::user()->id;
-        $gps_stocks = GpsStock::select(
-            'id',
-        	'gps_id',
-            'dealer_id',
-            'deleted_at'
-        )
-        ->orderBy('id','desc')
-        ->withTrashed()
-        ->with('gps:id,imei,serial_no,manufacturing_date,e_sim_number,batch_number,employee_code,model_name,version,deleted_at')
-        ->where('dealer_id',null)
-        ->get();
+        $new_device             =   $request->new_device;
+        $refurbished_device     =   $request->refurbished_device;
+        $user_id                =   \Auth::user()->id;
+        $gps_stocks             =   GpsStock::select(
+                                        'id',
+                                        'gps_id',
+                                        'dealer_id',
+                                        'deleted_at'
+                                )
+                                ->orderBy('id','desc')
+                                ->withTrashed()
+                                ->with('gps:id,imei,serial_no,manufacturing_date,e_sim_number,batch_number,employee_code,model_name,version,deleted_at')
+                                ->where('dealer_id',null);
+        if($new_device == '1' && $refurbished_device == '1')
+        {
+            $gps_stocks->get();
+        }
+        else if($new_device == '1' && $refurbished_device == '0'){
+            $gps_stocks->where('refurbished_status',0)->get();
+        }
+        else if($new_device == '0' && $refurbished_device == '1'){
+            $gps_stocks->where('refurbished_status',1)->get();
+        }
         return DataTables::of($gps_stocks)
         ->addIndexColumn()
         ->addColumn('action', function ($gps_stocks) {
@@ -177,7 +188,7 @@ class GpsController extends Controller {
             ]);
 
         if($gps){
-           $gps_stock = GpsStock::create([
+            $gps_stock = GpsStock::create([
                 'gps_id'=> $gps->id,
                 'inserted_by' => $root_id
             ]);
@@ -191,14 +202,14 @@ class GpsController extends Controller {
     public function details(Request $request)
     {
 
-         \QrCode::size(500)
-          ->format('png')
-          ->generate(public_path('images/qrcode.png'));
+        \QrCode::size(500)
+            ->format('png')
+            ->generate(public_path('images/qrcode.png'));
         $eid=$request->id;
         $decrypted_id = Crypt::decrypt($request->id);
         $gps = Gps::find($decrypted_id);
         if($gps == null){
-           return view('Gps::404');
+            return view('Gps::404');
         }
 
         return view('Gps::gps-details',['gps' => $gps,'eid' => $eid]);
@@ -2062,11 +2073,11 @@ class GpsController extends Controller {
 
     public function getReturnedGpsList(Request $request)
     {
-        $gps_stock      =   GpsStock::select('id','updated_at','client_id','is_returned','dealer_id','subdealer_id','trader_id','client_id')->withTrashed()
-                                    ->orderBy('updated_at','DESC')
-                                    ->with('gps')
-                                    ->whereNotNull('client_id')
-                                    ->where('is_returned',1);
+        $gps_stock      =   GpsStock::withTrashed()
+            ->orderBy('updated_at','DESC')
+            ->with('gps')
+            ->whereNotNull('client_id')
+            ->where('is_returned',1);
         if(\Auth::user()->hasRole('root'))
         {
             $gps_stock  =   $gps_stock->get();
