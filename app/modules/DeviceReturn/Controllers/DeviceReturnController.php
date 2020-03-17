@@ -78,7 +78,7 @@ class DeviceReturnController extends Controller
             if($device_return)
             {
                 $servicer_details           =   (new Servicer())->getServicerDetails($servicer_id);
-                $client_details             =   (new Client())->getClientDetails($request->client_id);
+                $client_details             =   (new Client())->getClientDetailsWithClientId($request->client_id);
                 $gps_details                =   (new Gps())->getGpsDetails($request->gps_id);
                 $servicer_name              =   $servicer_details->name;
                 $gps_imei                   =   $gps_details->imei;
