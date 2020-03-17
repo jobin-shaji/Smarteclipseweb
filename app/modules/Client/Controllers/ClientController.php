@@ -64,17 +64,10 @@ class ClientController extends Controller {
     //upload employee details to database table
     public function save(Request $request)
     {
-
-        $placeLatLng=$this->getPlaceLatLng($request->search_place);
-        if($placeLatLng==null){
-            $request->session()->flash('message', 'Enter correct location');
-            $request->session()->flash('alert-class', 'alert-danger');
-            return redirect(route('client.create'));
-        }
-
+        $placeLatLng = (new City())->getCityGeoCodes($request->city_id);
         $location_lat=$placeLatLng['latitude'];
         $location_lng=$placeLatLng['longitude'];
-        $location=$request->search_place;
+        // $location=$request->search_place;
         $current_date=date('Y-m-d H:i:s');
         if($request->user()->hasRole('sub_dealer'))
         {
@@ -111,17 +104,18 @@ class ClientController extends Controller {
                 'address' => $request->address,
                 'latitude'=>$location_lat,
                 'longitude'=>$location_lng,
-                'location'=>$location,
+                // 'location'=>$location,
                 'country_id'=>$request->country_id,
                 'state_id'=>$request->state_id,
                 'city_id'=>$request->city_id,
                 'latest_user_updates'=>$current_date
             ]);
+            // dd($user);
             if($request->client_category=="school"){
-                User::select('username')->where('username', $request->username)->first()->assignRole('school');
+                User::select('id','username')->where('username', $request->username)->first()->assignRole('school');
 
             }else{
-                User::select('username')->where('username', $request->username)->first()->assignRole('client');
+                User::select('id','username')->where('username', $request->username)->first()->assignRole('client');
 
             }
             $alert_types = AlertType::select('id','driver_point')->get();
@@ -168,7 +162,6 @@ class ClientController extends Controller {
                 'password' => bcrypt($request->password),
                 'role' => 0,
             ]);
-
             $client = Client::create([
                 'user_id' => $user->id,
                 'trader_id' => $trader_id,
@@ -183,9 +176,9 @@ class ClientController extends Controller {
                 'latest_user_updates'=>$current_date
             ]);
             if($request->client_category=="school"){
-                User::select('username')->where('username', $request->username)->first()->assignRole('school');
+                User::select('id','username')->where('username', $request->username)->first()->assignRole('school');
             }else{
-                User::select('username')->where('username', $request->username)->first()->assignRole('client');
+                User::select('id','username')->where('username', $request->username)->first()->assignRole('client');
             }
            
             $alert_types = AlertType::select(
@@ -276,81 +269,53 @@ class ClientController extends Controller {
         ->make();
     }
     public function edit(Request $request)
-    {
-
+    {     
         $decrypted = Crypt::decrypt($request->id);
-        $client = Client::select(
-            'id',
-            'user_id',
-            'latitude',
-            'longitude',
-            'location',
-            'name',
-            'address'
-
-            )->withTrashed()->where('user_id', $decrypted)->first();
-        $latitude= $client->latitude;
-        $longitude=$client->longitude;
-        if(!empty($latitude) && !empty($longitude))
-        {
-            $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key='.Config::get("eclipse.keys.googleMap").'&libraries=drawing&callback=initMap');
-
-
-            $output = json_decode($geocodeFromLatLong, true);
-            $location = $client->location;
-         }
-        else
-        {
-              $location="";
-        }
-
-        $user=User::find($decrypted);
-
+        $client = (new Client())->getClientDetails($decrypted); 
+        $countries = (new Country())->getCountryDetails();
+        $states = (new State())->getStateDetails($client->city->state->country->id);
+        $cities = (new City())->getCityDetails($client->city->state->id);         
         if($client == null)
         {
-           return view('Client::404');
+            return view('Client::404');
         }
-        return view('Client::client-edit',['client' => $client,'user' => $user,'location' => $location]);
+        return view('Client::client-edit',['client' => $client,'countries'=>$countries,'states'=>$states,'cities'=>$cities]);
     }
 
     //update dealers details
     public function update(Request $request)
     {
-        $client = Client::select('user_id','name','latitude','longitude','location','address','latest_user_updates')
-                  ->where('user_id', $request->id)->first();
+        $client = Client::where('user_id', $request->id)->first();
         if($client == null){
-           return view('Client::404');
+            return view('Client::404');
         }
-
         $url=url()->current();
         $rayfleet_key="rayfleet";
         $eclipse_key="eclipse";
         if (strpos($url, $rayfleet_key) == true) {
-             $rules = $this->rayfleetClientUpdateRules($client);
+            $rules = $this->rayfleetClientUpdateRules($client);
         }
         else
         {
-           $rules = $this->clientUpdateRules($client);
+            $rules = $this->clientUpdateRules($client);
         }
         $this->validate($request, $rules);
         $user = User::find($request->id);
         $did = encrypt($user->id);
-        $placeLatLng=$this->getPlaceLatLng($request->search_place);
-        if($placeLatLng==null){
-            $request->session()->flash('message', 'Enter correct location');
-            $request->session()->flash('alert-class', 'alert-danger');
-            return redirect(route('client.edit',$did));
-        }
+        $client->city_id=$request->city_id;
+        $client->state_id=$request->state_id;
+        $client->country_id=$request->country_id;
+        $placeLatLng = (new City())->getCityGeoCodes($request->city_id);
         $location_lat=$placeLatLng['latitude'];
         $location_lng=$placeLatLng['longitude'];
         $client->name = $request->name;
         $client->latitude= $location_lat;
         $client->longitude=$location_lng;
-        $client->location=$request->search_place;
         $client->address=$request->address;
         $current_date=date('Y-m-d H:i:s');
         $client->latest_user_updates = $current_date;
         $client->save();
+        // dd($client);
         $user->mobile = $request->mobile_number;
         $user->save();
 
@@ -377,7 +342,7 @@ class ClientController extends Controller {
 
         $client=\Auth::user()->sub_dealer;
         $user=User::find($request->id);
-        $client=Client::select('user_id','latest_user_updates')->where('user_id',$user->id)->first();
+        $client=Client::where('user_id',$user->id)->first();
         $current_date=date('Y-m-d H:i:s');
         $client->latest_user_updates = $current_date;
         $client->save();
@@ -499,33 +464,19 @@ class ClientController extends Controller {
         return $rules;
     }
 
-
-    //employee details view
+    /**
+     * Client Details view
+     * 
+     */
     public function details(Request $request)
     {
         $decrypted = Crypt::decrypt($request->id);
-        $client = Client::select('user_id','latitude','longitude','location','name','address')->withTrashed()->where('user_id', $decrypted)->first();
-        $user=User::find($decrypted);
-        $latitude= $client->latitude;
-        $longitude=$client->longitude;
-        if(!empty($latitude) && !empty($longitude))
-        {
-            //Send request and receive json data by address
-            $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key='.config("eclipse.keys.googleMap").'&libraries=drawing&callback=initMap');
-            $output = json_decode($geocodeFromLatLong, true);
-           // $status = $output->status;
-            $location = $client->location;
-
-        }
-        else
-        {
-            $location="";
-        }
+        $client = (new Client())->getClientDetails($decrypted);
         if($client == null)
         {
-           return view('Client::404');
+            return view('Client::404');
         }
-        return view('Client::client-details',['client' => $client,'user' => $user,'location' => $location]);
+        return view('Client::client-details',['client' => $client]);
     }
 
 
@@ -932,7 +883,7 @@ class ClientController extends Controller {
      //update dealers details
     public function profileUpdate(Request $request)
     {
-        $client = Client::select('user_id','latest_user_updates','name','address')->where('user_id', $request->id)->first();
+        $client = Client::where('user_id', $request->id)->first();
         if($client == null){
            return view('Client::404');
         }
@@ -1106,8 +1057,7 @@ public function selectTrader(Request $request)
             $this->validate($request, $rules);
             $subdealer_id = $request->sub_dealer;
             $trader_id = $request->trader;
-            $location=$request->search_place;
-            $placeLatLng=$this->getPlaceLatLng($request->search_place);
+            $placeLatLng = (new City())->getCityGeoCodes($request->city_id);
             $location_lat=$placeLatLng['latitude'];
             $location_lng=$placeLatLng['longitude'];
             $current_date=date('Y-m-d H:i:s');
@@ -1124,9 +1074,10 @@ public function selectTrader(Request $request)
                         'address' => $request->address,
                         'latitude'=>$location_lat,
                         'longitude'=>$location_lng,
-                        'location'=>$location,
+                        // 'location'=>$location,
                         'country_id'=>$request->country_id,
                         'state_id'=>$request->state_id,
+                        'city_id'=>$request->city_id,
                         'latest_user_updates'=>$current_date];
 
                         if($trader_id == null)
@@ -1278,7 +1229,7 @@ public function selectTrader(Request $request)
     {
         $rules = [
             'name' => 'required',
-            'search_place'=>'required',
+            // 'search_place'=>'required',
             'address' => 'required|string|max:150',
             'client_category' => 'required',
             'country_id' => 'required',
@@ -1296,7 +1247,7 @@ public function selectTrader(Request $request)
         {
             $rules = [
                 'name' => 'required',
-                'search_place'=>'required',
+                // 'search_place'=>'required',
                 'address' => 'required|string|max:150',
                 'client_category' => 'required',
                 'country_id' => 'required',
@@ -1325,7 +1276,7 @@ public function selectTrader(Request $request)
             'country_id' => 'required',
             'state_id' => 'required',
             'city_id' => 'required',
-            'search_place'=>'required',
+            // 'search_place'=>'required',
             'username' => 'required|unique:users',
             'mobile_number' => 'required|digits:10|unique:users,mobile',
             'email' => 'nullable|string|email|max:255|unique:users',
@@ -1344,7 +1295,7 @@ public function selectTrader(Request $request)
             'country_id' => 'required',
             'state_id' => 'required',
             'city_id' => 'required',
-            'search_place'=>'required',
+            // 'search_place'=>'required',
             'username' => 'required|unique:users',
             'mobile_number' => 'required|digits:11|unique:users,mobile',
             'email' => 'nullable|string|email|max:255|unique:users',
@@ -1359,7 +1310,10 @@ public function selectTrader(Request $request)
         $rules = [
             'name' => 'required',
             'address' => 'required',
-            'search_place'=>'required',
+            'city_id' => 'required',
+            'state_id' => 'required',
+            'country_id' => 'required',
+            
             'mobile_number' => 'required|digits:10|unique:users,mobile,'.$client->user_id
               ];
         return  $rules;
@@ -1370,39 +1324,17 @@ public function selectTrader(Request $request)
         $rules = [
             'name' => 'required',
             'address' => 'required',
-            'search_place'=>'required',
+            'city_id' => 'required',
+            'state_id' => 'required',
+            'country_id' => 'required',
+
+           
             'mobile_number' => 'required|digits:11|unique:users,mobile,'.$client->user_id
               ];
         return  $rules;
     }
 
 
-
-#####################################################################################
-    function getPlaceLatLng($address)
-    {
-        $data = urlencode($address);
-        $url = "https://maps.googleapis.com/maps/api/geocode/json?address=" . $data . "&sensor=false&key=".config('eclipse.keys.googleMap');
-        $geocode_stats = file_get_contents($url);
-
-
-        // dd($geocode_stats);
-        $output_deals = json_decode($geocode_stats);
-      //  dd($output_deals);
-        if ($output_deals->status != "OK") {
-            return null;
-        }
-        if ($output_deals) {
-            $latLng = $output_deals->results[0]->geometry->location;
-
-            $lat = $latLng->lat;
-            $lng = $latLng->lng;
-            $locationData = ["latitude" => $lat, "longitude" => $lng];
-            return $locationData;
-        } else {
-            return null;
-        }
-    }
     public function clientProfileUpdateRules($client)
     {
         $rules = [

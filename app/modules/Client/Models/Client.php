@@ -61,6 +61,10 @@ class Client extends Model
 		return self::select('name')->where('id',$client_id)->first();
 	}
 
+    public function getClientDetails($user_id){
+      return self::select('user_id','latitude','longitude','location','name','address','city_id')->with('user:id,mobile,email')->with('city.state.country')->withTrashed()->where('user_id', $user_id)->first();
+  }
+
 
 
   

@@ -141,16 +141,16 @@ function iterate() {
 
 
 
-    function pathStartPoint(path) {
-        var d = path.attr('d');
+function pathStartPoint(path) {
+    var d = path.attr('d');
 
-        dsplitted = d.split("L")[0].slice(1).split(",");
-        var point = []
-        point[0] = parseInt(dsplitted[0]);
-        point[1] = parseInt(dsplitted[1]);
+    dsplitted = d.split("L")[0].slice(1).split(",");
+    var point = []
+    point[0] = parseInt(dsplitted[0]);
+    point[1] = parseInt(dsplitted[1]);
 
-        return point;
-    }
+    return point;
+}
 
 
     var startPoint = pathStartPoint(path);
@@ -188,12 +188,6 @@ function iterate() {
                 .attr("r", 5)
                 .attr('style', 'opacity:1');
 
-
-
-
-
-
-
         } else { //Transition marker to show empty taxi
 
             marker
@@ -204,9 +198,6 @@ function iterate() {
 
         }
     });
-
-
-
 
     function transition(path) {
 
@@ -274,9 +265,6 @@ function iterate() {
             } else {
                 tweenToggle = 0;
             }
-
-
-
             return i(t);
         }
     }
@@ -376,7 +364,7 @@ function process(dataInput){
     map.on("zoomend", reset);
     reset();
     startTrip(1);
-    
+
 }
 
 
