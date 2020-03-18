@@ -589,7 +589,7 @@
             }
     ?>
     @role('client')
-    <input type="hidden" id="client_id" name="client_id" value="{{\Auth::user()->client->id}}">
+    <input type="hidden" id="user_id" name="user_id" value="{{\Auth::user()->id}}">
     @endrole
     <input type="hidden" id="header_role" name="header_role" value="{{$role}}">
     </nav>
