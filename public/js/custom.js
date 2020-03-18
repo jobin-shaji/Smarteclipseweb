@@ -1829,7 +1829,7 @@ var alert_user_id=document.getElementById('user_id').value;
             dataType: "json",
             success: function (res) 
             {                   
-                notificationCount(res.data) ;
+                notificationCount(res.data.count) ;
             }
         });
     }
@@ -1848,7 +1848,7 @@ var alert_user_id=document.getElementById('user_id').value;
             dataType: "json",
             success: function (res) 
             { 
-                alertNotification(res.data) ;
+                alertNotification(res.data.alerts) ;
             }
         });
     }
