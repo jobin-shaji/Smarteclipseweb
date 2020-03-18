@@ -521,7 +521,6 @@ width: 30px;
   height: 44px;
   /* background: #fa183d; */
   border-radius: 50%;
-  cursor: pointer;
   padding: 18px 20px 18px 28px;
 }
 
@@ -1497,7 +1496,7 @@ color: #f4ab28;
 .modal-footer .btn  i{
     color: #fff;
 }
-
+/*===================Login page style start==========================*/
 
 
 .login-banner-left{
@@ -1543,53 +1542,7 @@ color: #f4ab28;
     font-size: 3.125em;
 }
 
-.login-form input[type="text"], .login-form input, .login-form textarea {
-    padding: 14px 11% 16px 10%;
-}
-.login-banner-left{
-    width: 47%;
-    margin-top: 70px;
-    float: left;
-    margin-bottom: 70px;
-}
-
-.login-banner-left img {
-    width: 100%;
-}
-.login-banner-right {
-    width: 480px;
-    float:right;
-        margin-right: 60px;
-    padding-top: 160px;
-}
-.login-form{
-	width:100%;
-	float:left;
-	display:block;
-}
-.login-top-head{
-    width: 100%;
-    float: left;
-    padding-bottom: 50px;
-}
-.login-head-icon{
-    width: 75px;
-    float: left;
-}
-.login-head-icon img{
-    width: 100%;
-}
-
-.login-text{
-    width: auto;
-    float: left;
-    padding-left: 30px;
-    color: #373535;
-    font-weight: 600;
-    font-size: 3.125em;
-}
-
-.login-form input[type="text"], .login-form input, .login-form textarea {
+.login-form input[type="text"], .login-form textarea {
     padding: 14px 11% 16px 10%;
     margin: 0 0 36px;
     display: block;
