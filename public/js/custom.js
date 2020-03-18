@@ -1336,8 +1336,8 @@ function getClientServicerGps(client_id){
         }
         var url = 'servicer-client-gps';
         var data = {
-             client_id : client_id,
-             job_type:job_type
+            client_id : client_id,
+            job_type:job_type
         };
         backgroundPostData(url,data,'clientGps',{alert:false});
     }

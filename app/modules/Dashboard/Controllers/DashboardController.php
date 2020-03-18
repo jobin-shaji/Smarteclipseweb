@@ -223,14 +223,21 @@ class DashboardController extends Controller
     {
         
        
-         $gps_manufactured           =    Gps::select('id','is_returned')
-                                                ->where('is_returned',0)
-                                                ->orWhere('is_returned',NULL)
+        $gps_manufactured           =    Gps::select('id','is_returned')
+                                                ->where('refurbished_status',0)
                                                 ->count();
 
         $gps_nontransferred_stock   =   GpsStock::select('id','dealer_id','subdealer_id','client_id','is_returned')
-                                                ->whereNull('dealer_id')->whereNull('subdealer_id')
-                                                ->whereNull('client_id')->where(function ($query) {
+                                                ->whereNull('dealer_id')->whereNull('subdealer_id')->whereNull('client_id')
+                                                ->where('refurbished_status',0)
+                                                ->where(function ($query) {
+                                                $query->where('is_returned', '=', 0)
+                                                ->orWhere('is_returned', '=', NULL);
+                                                })->count();
+        $gps_refurbished_stock      =   GpsStock::select('id','dealer_id','subdealer_id','client_id','is_returned')
+                                                ->whereNull('dealer_id')->whereNull('subdealer_id')->whereNull('client_id')
+                                                ->where('refurbished_status',1)
+                                                ->where(function ($query) {
                                                 $query->where('is_returned', '=', 0)
                                                 ->orWhere('is_returned', '=', NULL);
                                                 })->count();
@@ -240,6 +247,7 @@ class DashboardController extends Controller
         return response()->json([
             'gps_manufactured'          => $gps_manufactured, 
             'gps'                       => $gps_nontransferred_stock, 
+            'gps_refurbished_stock'     => $gps_refurbished_stock,
             'gps_transferred'           => $gps_transferred, 
             'gps_to_be_added_to_stock'  => $gps_to_be_added_to_stock, 
             'gps_returned'              => $gps_returned, 
@@ -601,18 +609,18 @@ class DashboardController extends Controller
         ]);
      }
     //get place name
-    public function getLocationFromLatLng(Request $request)
-    {
-        $latitude = $request->latitude;
-        $longitude = $request->longitude;
-        if(!empty($latitude) && !empty($longitude)){
-            $address =  $this->getAddress($latitude,$longitude);
-            if(!empty($address)){
-                $location=$address;
-            }
-            return response()->json($location);
-        }
-    }
+    // public function getLocationFromLatLng(Request $request)
+    // {
+    //     $latitude = $request->latitude;
+    //     $longitude = $request->longitude;
+    //     if(!empty($latitude) && !empty($longitude)){
+    //         $address =  $this->getAddress($latitude,$longitude);
+    //         if(!empty($address)){
+    //             $location=$address;
+    //         }
+    //         return response()->json($location);
+    //     }
+    // }
     function getAddress($latitude,$longitude){
          //Send request and receive json data by address
          

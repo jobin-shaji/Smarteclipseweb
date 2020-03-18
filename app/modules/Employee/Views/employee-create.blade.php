@@ -170,7 +170,7 @@
 </section>
 
 @section('script')
-   <script>
+   <!-- <script>
      function initMap()
      {
       var input1 = document.getElementById('search_place');
@@ -179,8 +179,8 @@
      }
    </script>
    <script async defer
-   src="https://maps.googleapis.com/maps/api/js?key={{config('eclipse.keys.googleMap')}}&libraries=places&callback=initMap"></script>
-<script src="{{asset('js/gps/client-create.js')}}"></script>
+   src="https://maps.googleapis.com/maps/api/js?key={{config('eclipse.keys.googleMap')}}&libraries=places&callback=initMap"></script> -->
+<!-- <script src="{{asset('js/gps/client-create.js')}}"></script> -->
 
 @endsection
 @endsection

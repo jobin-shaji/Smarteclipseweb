@@ -1,6 +1,6 @@
 $(document).ready(function () {
 
-   $('#fuel_100, #fuel_75, #fuel_50, #fuel_25, #fuel_0').hide();
+   $('#fuel_100, #fuel_75, #fuel_50, #fuel_25, #fuel_0, #upgrade').hide();
 
   var url = 'dash-count';
   var data = {
@@ -19,7 +19,8 @@ $(document).ready(function () {
  var activeElement;
 
 function dbcount(res){
-	    $('#gps').text(res.gps);
+      $('#gps').text(res.gps);
+      $('#refurbished_gps').text(res.gps_refurbished_stock);
       $('#gps_manufactured').text(res.gps_manufactured);
       $('#gps_transferred').text(res.gps_transferred);
       $('#gps_to_be_added_to_stock').text(res.gps_to_be_added_to_stock);
@@ -156,6 +157,12 @@ function vehicle_details(res){
   else if(fuel > 75)
   {
     $('#fuel_100').show();
+    $('.fa-spinner').hide();
+  }
+  else
+  {
+    $('#upgrade').show();
+    document.getElementById("upgradefuel").innerHTML = "Upgrade Version";
     $('.fa-spinner').hide();
   }
 

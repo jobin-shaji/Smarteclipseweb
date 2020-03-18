@@ -66,7 +66,7 @@
                   <div class="form-group has-feedback form-group-1 mrg-rt-5">
                     <label class="srequired">Comments</label>
                     <textarea rows="5" cols="10" maxlength="500" class="form-control {{ $errors->has('comments') ? ' has-error' : '' }}" placeholder="Comments" name="comments" value="{{ old('comments') }}" required></textarea>
-                    @if ($errors->has('description'))
+                    @if ($errors->has('comments'))
                       <span class="help-block">
                         <strong class="error-text">{{ $errors->first('comments') }}</strong>
                       </span>

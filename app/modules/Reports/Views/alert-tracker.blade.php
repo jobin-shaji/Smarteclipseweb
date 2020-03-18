@@ -1,4 +1,4 @@
-@extends('layouts.eclipse')
+<!-- @extends('layouts.eclipse')
 @section('title')
   Create Route
 @endsection
@@ -12,11 +12,9 @@
     @endif  
 
 <section class="hilite-content">
-      <!-- title row -->
+     
   <div class="page-wrapper_new">
-            <!-- ============================================================== -->
-            <!-- Bread crumb and right sidebar toggle -->
-            <!-- ============================================================== -->
+           
     <div class="page-breadcrumb">
         <div class="row">
             <div class="col-12 d-flex no-block align-items-center">
@@ -31,16 +29,9 @@
             </div>
         </div>
     </div>
-            <!-- ============================================================== -->
-            <!-- End Bread crumb and right sidebar toggle -->
-            <!-- ============================================================== -->
-            <!-- ============================================================== -->
-            <!-- Container fluid  -->
-            <!-- ============================================================== -->
+           
     <div class="container-fluid">
-                <!-- ============================================================== -->
-                <!-- Start Page Content -->
-                <!-- ============================================================== -->
+                
       <div class="card-body">
         <div class="table-responsive">
             <input type="hidden" name="hd_id" id="hd_id" value="{{$alert_id}}">
@@ -62,4 +53,4 @@
     <script src="https://maps.googleapis.com/maps/api/js?key={{config('eclipse.keys.googleMap')}}&libraries=drawing&callback=initMap"
          async defer></script>
     @endsection
- @endsection
+ @endsection -->

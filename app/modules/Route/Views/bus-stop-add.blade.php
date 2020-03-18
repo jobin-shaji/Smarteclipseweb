@@ -1,4 +1,4 @@
-@extends('layouts.eclipse')
+<!-- @extends('layouts.eclipse')
 @section('title')
   Bus Stop Creation
 @endsection
@@ -103,4 +103,4 @@
    src="https://maps.googleapis.com/maps/api/js?key={{config('eclipse.keys.googleMap')}}&libraries=places&callback=initMap">
   </script>
 @endsection
-@endsection
+@endsection -->

@@ -354,12 +354,20 @@ class ServicerController extends Controller {
         // $location_lat=$placeLatLng['latitude'];
         // $location_lng=$placeLatLng['logitude'];
         $location=$request->search_place;
-
+        if($request->job_type == 2)
+        {
+            $start_code = str_pad(mt_rand(100000, 999999), 6, '0', STR_PAD_LEFT);
+        }
+        else
+        {
+            $start_code = NULL;
+        }
         $user_id=\Auth::user()->id;
                 $servicer = ServicerJob::create([
                 'servicer_id' => $request->servicer,
                 'client_id' => $request->client,
                 'job_id' => $job_id,
+                'start_code' => $start_code,
                 'job_type' => $request->job_type,
                 'user_id' => $user_id,
                 'description' => $request->description,
@@ -1217,25 +1225,25 @@ public function serviceJobDetails(Request $request)
 
 
 #################################################
-    function getPlaceLatLng($address){
+    // function getPlaceLatLng($address){
 
-        $data = urlencode($address);
-        $url = "https://maps.googleapis.com/maps/api/geocode/json?address=" . $data . "&sensor=false&key=".config('eclipse.keys.googleMap');
-        $geocode_stats = file_get_contents($url);
-        $output_deals = json_decode($geocode_stats);
-        if ($output_deals->status != "OK") {
-            return null;
-        }
-        if ($output_deals) {
-            $latLng = $output_deals->results[0]->geometry->location;
-            $lat = $latLng->lat;
-            $lng = $latLng->lng;
-            $locationData = ["latitude" => $lat, "logitude" => $lng];
-            return $locationData;
-        } else {
-            return null;
-        }
-    }
+    //     $data = urlencode($address);
+    //     $url = "https://maps.googleapis.com/maps/api/geocode/json?address=" . $data . "&sensor=false&key=".config('eclipse.keys.googleMap');
+    //     $geocode_stats = file_get_contents($url);
+    //     $output_deals = json_decode($geocode_stats);
+    //     if ($output_deals->status != "OK") {
+    //         return null;
+    //     }
+    //     if ($output_deals) {
+    //         $latLng = $output_deals->results[0]->geometry->location;
+    //         $lat = $latLng->lat;
+    //         $lng = $latLng->lng;
+    //         $locationData = ["latitude" => $lat, "logitude" => $lng];
+    //         return $locationData;
+    //     } else {
+    //         return null;
+    //     }
+    // }
 ################################################################################
 
 

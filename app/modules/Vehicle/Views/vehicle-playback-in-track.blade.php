@@ -1200,10 +1200,10 @@ jQuery("#preloader").delay(1000).fadeOut("slow");
 });
 
 /**
- * Bug #I698 
+ * Bug #I698
  * If playback window is opened and user is logged out from the main window
  * the user should not be able to access the playback functionality when the window is
- * refocused. 
+ * refocused.
  * @author PMS
  * date 2020-02-28
  * @return void
@@ -1245,7 +1245,7 @@ window.addEventListener('blur', function(){ forceReload(); });
       });
 
 });
-    </script/>
+    </script>
           <style type="text/css">
               .col-date-outer{
       margin-top: 23px;

@@ -1429,13 +1429,24 @@ class VehicleController extends Controller
         return view('Vehicle::vehicle-tracker-firebase',['vehicle_details' => $vehicle_details,'vehicle_type_details' => $vehicle_type_details]);
     }
 
+    public function locationFirebaseHmapNew(Request $request)
+    {
+        $decrypted_vehicle_id   =   Crypt::decrypt($request->id);
+        $vehicle_details        =   Vehicle::find($decrypted_vehicle_id);
+        $vehicle_type_details   =   VehicleType::find($vehicle_details->vehicle_type_id);
+        $track_data=Gps::select('lat as latitude',
+                              'lon as longitude'
+                              )
+                              ->where('id',$vehicle_details->gps_id)
+                              ->first();
+        return view('Vehicle::vehicle-tracker-hmap-new',['vehicle_details' => $vehicle_details,'vehicle_type_details' => $vehicle_type_details,'latlong' => $track_data]);
+    }
     /////////////////////////////Vehicle Tracker/////////////////////////////
     public function playback(Request $request){
         $decrypted_id = Crypt::decrypt($request->id);
         return view('Vehicle::vehicle-playback',['Vehicle_id' => $decrypted_id] );
 
     }
-
      public function playbackB(Request $request){
         $decrypted_id = Crypt::decrypt($request->id);
         $get_vehicle=Vehicle::find($decrypted_id);
@@ -2461,41 +2472,41 @@ class VehicleController extends Controller
     }
 
      /////////////////////////////Vehicle Tracker/////////////////////////////
-    public function vehicleLocationTrack(Request $request)
-    {
-        $decrypted_id = Crypt::decrypt($request->id);
-        $get_vehicle=Vehicle::find($decrypted_id);
-        $vehicle_type=VehicleType::find($get_vehicle->vehicle_type_id);
-        $track_data=Gps::select('lat as latitude',
-                              'lon as longitude'
-                              )
-                              ->where('id',$get_vehicle->gps_id)
-                              ->first();
-        if($track_data==null)
-        {
-            $request->session()->flash('message', 'No Data Received From GPS!!!');
-            $request->session()->flash('alert-class', 'alert-success');
-            return redirect(route('vehicle'));
-        }
-        else if($track_data->latitude==null || $track_data->longitude==null)
-        {
-            $request->session()->flash('message', 'No Data Received From GPS!!!');
-            $request->session()->flash('alert-class', 'alert-success');
-            return redirect(route('vehicle'));
-        }
-        else
-        {
-            $latitude=$track_data->latitude;
-            $longitude= $track_data->longitude;
-        }
+    // public function vehicleLocationTrack(Request $request)
+    // {
+    //     $decrypted_id = Crypt::decrypt($request->id);
+    //     $get_vehicle=Vehicle::find($decrypted_id);
+    //     $vehicle_type=VehicleType::find($get_vehicle->vehicle_type_id);
+    //     $track_data=Gps::select('lat as latitude',
+    //                           'lon as longitude'
+    //                           )
+    //                           ->where('id',$get_vehicle->gps_id)
+    //                           ->first();
+    //     if($track_data==null)
+    //     {
+    //         $request->session()->flash('message', 'No Data Received From GPS!!!');
+    //         $request->session()->flash('alert-class', 'alert-success');
+    //         return redirect(route('vehicle'));
+    //     }
+    //     else if($track_data->latitude==null || $track_data->longitude==null)
+    //     {
+    //         $request->session()->flash('message', 'No Data Received From GPS!!!');
+    //         $request->session()->flash('alert-class', 'alert-success');
+    //         return redirect(route('vehicle'));
+    //     }
+    //     else
+    //     {
+    //         $latitude=$track_data->latitude;
+    //         $longitude= $track_data->longitude;
+    //     }
 
-        $snapRoute=$this->LiveSnapRoot($latitude,$longitude);
-        $latitude=$snapRoute['lat'];
-        $longitude=$snapRoute['lng'];
+    //     $snapRoute=$this->LiveSnapRoot($latitude,$longitude);
+    //     $latitude=$snapRoute['lat'];
+    //     $longitude=$snapRoute['lng'];
 
 
-        return view('Vehicle::vehicle-tracker-second',['Vehicle_id' => $decrypted_id,'vehicle_type' => $vehicle_type,'latitude' => $latitude,'longitude' => $longitude] );
-    }
+    //     return view('Vehicle::vehicle-tracker-second',['Vehicle_id' => $decrypted_id,'vehicle_type' => $vehicle_type,'latitude' => $latitude,'longitude' => $longitude] );
+    // }
 
 
 

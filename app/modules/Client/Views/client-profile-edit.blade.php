@@ -102,7 +102,7 @@
               </div>             
                  </form>       
             </div>
-            @if(\Auth::user()->roles->first()->name=='school'&& !empty(\Auth::user()->geofence))
+            <!-- @if(\Auth::user()->roles->first()->name=='school'&& !empty(\Auth::user()->geofence))
               <div class="col-lg-6">
                 <input type="hidden" name="hd_id" id="g_id" value="{{$client->id}}">
                 <input type="hidden" class="form-control"name="lat" id="lat" value="{{$lat}}" required> 
@@ -120,7 +120,7 @@
               <div id="map" style=" width:90%;height:320px; "></div>       
             </div>
            
-            @endif
+            @endif -->
           </div> 
        </div>
       </div>
@@ -131,12 +131,12 @@
 </div>
 
   @section('script')
-  @if(\Auth::user()->roles->first()->name=='school'&& !empty(\Auth::user()->geofence)) 
+  <!-- @if(\Auth::user()->roles->first()->name=='school'&& !empty(\Auth::user()->geofence)) 
  <script src="{{asset('js/gps/school-geofence-edit.js')}}"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key={{config('eclipse.keys.googleMap')}}&libraries=drawing,places,geometry&callback=initMap"
    async defer></script>
 
-@endif
+@endif -->
   @endsection
 <div class="clearfix"></div>
 @endsection

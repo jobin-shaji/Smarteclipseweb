@@ -1,811 +1,811 @@
-function getUrl() {
-    return $('meta[name = "domain"]').attr('content');
-}
- var vehiclePath = document.getElementById('svg_con').value;
- var start_lat = document.getElementById('lat').value;
- var start_lng = document.getElementById('lng').value;
- var vehicle_scale = document.getElementById('vehicle_scale').value;
- var opacity = document.getElementById('opacity').value;
- var strokeWeight = document.getElementById('strokeWeight').value;
- var track_vehicle_id = document.getElementById('vehicle_id_data').value;
+// function getUrl() {
+//     return $('meta[name = "domain"]').attr('content');
+// }
+//  var vehiclePath = document.getElementById('svg_con').value;
+//  var start_lat = document.getElementById('lat').value;
+//  var start_lng = document.getElementById('lng').value;
+//  var vehicle_scale = document.getElementById('vehicle_scale').value;
+//  var opacity = document.getElementById('opacity').value;
+//  var strokeWeight = document.getElementById('strokeWeight').value;
+//  var track_vehicle_id = document.getElementById('vehicle_id_data').value;
 
-var marker, map,locationData,markerData,markerPointData,vehicleDetails,icon;
-var numDeltas = 100;
-var delay = 5; //milliseconds
-var i = 0;
-var posLat = parseFloat(start_lat);
-var posLng = parseFloat(start_lng);
-var markericon;
-var deltaLat, deltaLng;
-var marker;
-var map;
-var vehicleColor = "#0C2161";
-var vehicleScale = vehicle_scale;
+// var marker, map,locationData,markerData,markerPointData,vehicleDetails,icon;
+// var numDeltas = 100;
+// var delay = 5; //milliseconds
+// var i = 0;
+// var posLat = parseFloat(start_lat);
+// var posLng = parseFloat(start_lng);
+// var markericon;
+// var deltaLat, deltaLng;
+// var marker;
+// var map;
+// var vehicleColor = "#0C2161";
+// var vehicleScale = vehicle_scale;
 
-var angle;
-var clickedPointRecent
-var clickedPointCurrent;
-var clickedPointCurrentlatlng;
-var locationQueue=[];
-var recentPoppedLocation;
+// var angle;
+// var clickedPointRecent
+// var clickedPointCurrent;
+// var clickedPointCurrentlatlng;
+// var locationQueue=[];
+// var recentPoppedLocation;
 
-var recent_angle_latlng=null;
-var current_angle_latlng;
-var service;
-var ac;
-var battery_status;
-var connection_lost_time_motion;
-var dateTime;
-var fuel;
-var fuelquantity;
-var ign;
-var last_seen;
-var latitude;
-var longitude;
-var place;
-var power;
-var signalStrength;
-var speed;
-var vehicleStatus;
-var connection_lost_time_halt;
-var connection_lost_time_sleep;
-var connection_lost_time_minutes;
+// var recent_angle_latlng=null;
+// var current_angle_latlng;
+// var service;
+// var ac;
+// var battery_status;
+// var connection_lost_time_motion;
+// var dateTime;
+// var fuel;
+// var fuelquantity;
+// var ign;
+// var last_seen;
+// var latitude;
+// var longitude;
+// var place;
+// var power;
+// var signalStrength;
+// var speed;
+// var vehicleStatus;
+// var connection_lost_time_halt;
+// var connection_lost_time_sleep;
+// var connection_lost_time_minutes;
 
 
-$('document').ready(function(){setTimeout(getMarkers,5000);}); 
+// $('document').ready(function(){setTimeout(getMarkers,5000);}); 
 
-$('document').ready(function(){
-  initMap();
-  setTimeout(getMarkers,5000);
-  setInterval(function() {
-        var url = 'continuous-alert';
-        var data = { 
-          vehicle_id:track_vehicle_id
-        };
-        backgroundPostData(url,data,'continuousAlert',{alert:false});
-  }, 8000);
+// $('document').ready(function(){
+//   initMap();
+//   setTimeout(getMarkers,5000);
+//   setInterval(function() {
+//         var url = 'continuous-alert';
+//         var data = { 
+//           vehicle_id:track_vehicle_id
+//         };
+//         backgroundPostData(url,data,'continuousAlert',{alert:false});
+//   }, 8000);
 
-}); 
-$('document').ready(function(){setTimeout(doWork,1000);});  
+// }); 
+// $('document').ready(function(){setTimeout(doWork,1000);});  
 
-function continuousAlert(res){
-    if(res.status == 'success'){
-        var latitude=res.alerts[0].latitude;
-        var longitude=res.alerts[0].longitude;
-        getPlaceNameFromLatLng(latitude,longitude);
+// function continuousAlert(res){
+//     if(res.status == 'success'){
+//         var latitude=res.alerts[0].latitude;
+//         var longitude=res.alerts[0].longitude;
+//         getPlaceNameFromLatLng(latitude,longitude);
         
-        var modal = document.getElementById('track_alert');
-        modal.style.display = "block";
-        document.getElementById("alert_id").value = res.alerts[0].alert_type_id;
-        document.getElementById("alert_vehicle_id").value = res.vehicle;
-        document.getElementById("decrypt_vehicle_id").value = res.alerts[0].gps.vehicle.id;
-        $('#critical_alert_name').text(res.alerts[0].alert_type.description);
-        $('#critical_alert_time').text(res.alerts[0].device_time); 
-    }
-}
+//         var modal = document.getElementById('track_alert');
+//         modal.style.display = "block";
+//         document.getElementById("alert_id").value = res.alerts[0].alert_type_id;
+//         document.getElementById("alert_vehicle_id").value = res.vehicle;
+//         document.getElementById("decrypt_vehicle_id").value = res.alerts[0].gps.vehicle.id;
+//         $('#critical_alert_name').text(res.alerts[0].alert_type.description);
+//         $('#critical_alert_time').text(res.alerts[0].device_time); 
+//     }
+// }
 
-function verifyCriticalAlert(){
-    var alert_id = document.getElementById("alert_id").value;
-    var vehicle_id = document.getElementById("alert_vehicle_id").value;
-    var decrypt_id = document.getElementById("decrypt_vehicle_id").value;
-    var url = 'continuous-alert/verify';
-    var data = {
-    id : vehicle_id,
-    alert_id : alert_id
-    };
-    backgroundPostData(url,data,'verifyCriticalAlertResponse',{alert:false}); 
-}
+// function verifyCriticalAlert(){
+//     var alert_id = document.getElementById("alert_id").value;
+//     var vehicle_id = document.getElementById("alert_vehicle_id").value;
+//     var decrypt_id = document.getElementById("decrypt_vehicle_id").value;
+//     var url = 'continuous-alert/verify';
+//     var data = {
+//     id : vehicle_id,
+//     alert_id : alert_id
+//     };
+//     backgroundPostData(url,data,'verifyCriticalAlertResponse',{alert:false}); 
+// }
 
-function verifyCriticalAlertResponse(res){
-    if(res){
-        var modal = document.getElementById('track_alert');
-        modal.style.display = "none";
-    }
-}
-
-
-
-// ---------------------que list--------------------------
- function addToLocationQueue(loc,angle,ac,battery_status,connection_lost_time_motion,dateTime,fuel,fuelquantity,ign,last_seen,latitude,longitude,place,power,signalStrength,speed,vehicleStatus,connection_lost_time_halt,connection_lost_time_sleep,connection_lost_time_minutes,odometer)
-  {
+// function verifyCriticalAlertResponse(res){
+//     if(res){
+//         var modal = document.getElementById('track_alert');
+//         modal.style.display = "none";
+//     }
+// }
 
 
-   var location_angle=[loc,angle,ac,battery_status,connection_lost_time_motion,dateTime,fuel,fuelquantity,ign,last_seen,latitude,longitude,place,power,signalStrength,speed,vehicleStatus,connection_lost_time_halt,connection_lost_time_sleep,connection_lost_time_minutes,odometer];
-   locationQueue.push(location_angle);
 
-  }
- function popFromLocationQueue()
-  {
-   if(locationQueue.length>0)
-    {
-          return locationQueue.splice(0,1)[0];    
-    }
-      else
-      return null;
-  }
-  /*
------------------------------------------------*/
-  function getSnappedPoint(unsnappedWaypoints,angle,ac,battery_status,connection_lost_time_motion,dateTime,fuel,fuelquantity,ign,last_seen,latitude,longitude,place,power,signalStrength,speed,vehicleStatus,connection_lost_time_halt,connection_lost_time_sleep,connection_lost_time_minutes,odometer)
-   {
-      $.ajax({
-       url: 'https://roads.googleapis.com/v1/snapToRoads?path=' + unsnappedWaypoints.join('|') + '&key=AIzaSyCXmg0OWU4PM-pEIJPr_GpJAG9dKUHgim4&interpolate=true', //true', 
-      crossDomain: true,
-      dataType: 'jsonp'
-       }).done(function(response) {
-      if (response.error) {
-        // alert("error" + response.error.message);
-        return;
-      }
-      $.each(response.snappedPoints, function (i, snap_data) {
-      var loc=snap_data.location;
-      var latlng = new google.maps.LatLng(loc.latitude, loc.longitude);
-      addToLocationQueue(latlng,angle,ac,battery_status,connection_lost_time_motion,dateTime,fuel,fuelquantity,ign,last_seen,latitude,longitude,place,power,signalStrength,speed,vehicleStatus,connection_lost_time_halt,connection_lost_time_sleep,connection_lost_time_minutes,odometer);
-      });
-     });
-   }
+// // ---------------------que list--------------------------
+//  function addToLocationQueue(loc,angle,ac,battery_status,connection_lost_time_motion,dateTime,fuel,fuelquantity,ign,last_seen,latitude,longitude,place,power,signalStrength,speed,vehicleStatus,connection_lost_time_halt,connection_lost_time_sleep,connection_lost_time_minutes,odometer)
+//   {
 
-/*
-   ------unsnapped points-------
-   function getSnappedPoint(unsnappedWaypoints,angle,ac,battery_status,connection_lost_time_motion,dateTime,fuel,fuelquantity,ign,last_seen,latitude,longitude,place,power,signalStrength,speed,vehicleStatus,connection_lost_time_halt,connection_lost_time_sleep,connection_lost_time_minutes)
-   {
+
+//    var location_angle=[loc,angle,ac,battery_status,connection_lost_time_motion,dateTime,fuel,fuelquantity,ign,last_seen,latitude,longitude,place,power,signalStrength,speed,vehicleStatus,connection_lost_time_halt,connection_lost_time_sleep,connection_lost_time_minutes,odometer];
+//    locationQueue.push(location_angle);
+
+//   }
+//  function popFromLocationQueue()
+//   {
+//    if(locationQueue.length>0)
+//     {
+//           return locationQueue.splice(0,1)[0];    
+//     }
+//       else
+//       return null;
+//   }
+//   /*
+// -----------------------------------------------*/
+//   function getSnappedPoint(unsnappedWaypoints,angle,ac,battery_status,connection_lost_time_motion,dateTime,fuel,fuelquantity,ign,last_seen,latitude,longitude,place,power,signalStrength,speed,vehicleStatus,connection_lost_time_halt,connection_lost_time_sleep,connection_lost_time_minutes,odometer)
+//    {
+//       $.ajax({
+//        url: 'https://roads.googleapis.com/v1/snapToRoads?path=' + unsnappedWaypoints.join('|') + '&key=AIzaSyCXmg0OWU4PM-pEIJPr_GpJAG9dKUHgim4&interpolate=true', //true', 
+//       crossDomain: true,
+//       dataType: 'jsonp'
+//        }).done(function(response) {
+//       if (response.error) {
+//         // alert("error" + response.error.message);
+//         return;
+//       }
+//       $.each(response.snappedPoints, function (i, snap_data) {
+//       var loc=snap_data.location;
+//       var latlng = new google.maps.LatLng(loc.latitude, loc.longitude);
+//       addToLocationQueue(latlng,angle,ac,battery_status,connection_lost_time_motion,dateTime,fuel,fuelquantity,ign,last_seen,latitude,longitude,place,power,signalStrength,speed,vehicleStatus,connection_lost_time_halt,connection_lost_time_sleep,connection_lost_time_minutes,odometer);
+//       });
+//      });
+//    }
+
+// /*
+//    ------unsnapped points-------
+//    function getSnappedPoint(unsnappedWaypoints,angle,ac,battery_status,connection_lost_time_motion,dateTime,fuel,fuelquantity,ign,last_seen,latitude,longitude,place,power,signalStrength,speed,vehicleStatus,connection_lost_time_halt,connection_lost_time_sleep,connection_lost_time_minutes)
+//    {
       
     
-      var latlng = new google.maps.LatLng(latitude,longitude);
-      addToLocationQueue(latlng,angle,ac,battery_status,connection_lost_time_motion,dateTime,fuel,fuelquantity,ign,last_seen,latitude,longitude,place,power,signalStrength,speed,vehicleStatus,connection_lost_time_halt,connection_lost_time_sleep,connection_lost_time_minutes);
+//       var latlng = new google.maps.LatLng(latitude,longitude);
+//       addToLocationQueue(latlng,angle,ac,battery_status,connection_lost_time_motion,dateTime,fuel,fuelquantity,ign,last_seen,latitude,longitude,place,power,signalStrength,speed,vehicleStatus,connection_lost_time_halt,connection_lost_time_sleep,connection_lost_time_minutes);
       
-   }*/
-// ---------------------que list--------------------------
-function transition(result)
-    {
-     angle=result.liveData.angle;
-     ac=result.liveData.ac;
-     battery_status=result.liveData.battery_status;
-     connection_lost_time_motion=result.liveData.connection_lost_time_motion;
-     dateTime=result.liveData.dateTime;
-     fuel=result.liveData.fuel;
-     fuelquantity=result.liveData.fuelquantity;
-     ign=result.liveData.ign;
-     last_seen=result.liveData.last_seen;
-     latitude=result.liveData.latitude;
-     longitude=result.liveData.longitude;
-     place=result.liveData.place;
-     power=result.liveData.power;
-     signalStrength=result.liveData.signalStrength;
-     speed=result.liveData.speed;
-     vehicleStatus=result.liveData.vehicleStatus;
-     connection_lost_time_halt=result.liveData.connection_lost_time_halt;
-     connection_lost_time_sleep=result.liveData.connection_lost_time_sleep;
-     connection_lost_time_minutes=result.liveData.connection_lost_time_minutes;
-     odometer=result.liveData.odometer;
+//    }*/
+// // ---------------------que list--------------------------
+// function transition(result)
+//     {
+//      angle=result.liveData.angle;
+//      ac=result.liveData.ac;
+//      battery_status=result.liveData.battery_status;
+//      connection_lost_time_motion=result.liveData.connection_lost_time_motion;
+//      dateTime=result.liveData.dateTime;
+//      fuel=result.liveData.fuel;
+//      fuelquantity=result.liveData.fuelquantity;
+//      ign=result.liveData.ign;
+//      last_seen=result.liveData.last_seen;
+//      latitude=result.liveData.latitude;
+//      longitude=result.liveData.longitude;
+//      place=result.liveData.place;
+//      power=result.liveData.power;
+//      signalStrength=result.liveData.signalStrength;
+//      speed=result.liveData.speed;
+//      vehicleStatus=result.liveData.vehicleStatus;
+//      connection_lost_time_halt=result.liveData.connection_lost_time_halt;
+//      connection_lost_time_sleep=result.liveData.connection_lost_time_sleep;
+//      connection_lost_time_minutes=result.liveData.connection_lost_time_minutes;
+//      odometer=result.liveData.odometer;
 
 
-     clickedPointCurrent = result.liveData.latitude + ',' + result.liveData.longitude;
-     clickedPointCurrentlatlng=new google.maps.LatLng(result.liveData.latitude, result.liveData.longitude);
+//      clickedPointCurrent = result.liveData.latitude + ',' + result.liveData.longitude;
+//      clickedPointCurrentlatlng=new google.maps.LatLng(result.liveData.latitude, result.liveData.longitude);
       
 
-     if(clickedPointRecent==undefined || clickedPointRecent==null)
-     {
-        getSnappedPoint([clickedPointCurrent],angle,ac,battery_status,connection_lost_time_motion,dateTime,fuel,fuelquantity,ign,last_seen,latitude,longitude,place,power,signalStrength,speed,vehicleStatus,connection_lost_time_halt,connection_lost_time_sleep,connection_lost_time_minutes,odometer)
-     }
-     else
-     { 
-      // var distance=checkDistanceBetweenTwoPoints(clickedPointRecentlatlng,clickedPointCurrentlatlng);
-      getSnappedPoint([clickedPointRecent,clickedPointCurrent],angle,ac,battery_status,connection_lost_time_motion,dateTime,fuel,fuelquantity,ign,last_seen,latitude,longitude,place,power,signalStrength,speed,vehicleStatus,connection_lost_time_halt,connection_lost_time_sleep,connection_lost_time_minutes,odometer);       
-     }
-     clickedPointRecent = clickedPointCurrent;
-     clickedPointRecentlatlng=clickedPointCurrentlatlng;
-    }
+//      if(clickedPointRecent==undefined || clickedPointRecent==null)
+//      {
+//         getSnappedPoint([clickedPointCurrent],angle,ac,battery_status,connection_lost_time_motion,dateTime,fuel,fuelquantity,ign,last_seen,latitude,longitude,place,power,signalStrength,speed,vehicleStatus,connection_lost_time_halt,connection_lost_time_sleep,connection_lost_time_minutes,odometer)
+//      }
+//      else
+//      { 
+//       // var distance=checkDistanceBetweenTwoPoints(clickedPointRecentlatlng,clickedPointCurrentlatlng);
+//       getSnappedPoint([clickedPointRecent,clickedPointCurrent],angle,ac,battery_status,connection_lost_time_motion,dateTime,fuel,fuelquantity,ign,last_seen,latitude,longitude,place,power,signalStrength,speed,vehicleStatus,connection_lost_time_halt,connection_lost_time_sleep,connection_lost_time_minutes,odometer);       
+//      }
+//      clickedPointRecent = clickedPointCurrent;
+//      clickedPointRecentlatlng=clickedPointCurrentlatlng;
+//     }
 
-  // --------------------------------------------------------
-function doWork()
-    {
-      var current=popFromLocationQueue();
+//   // --------------------------------------------------------
+// function doWork()
+//     {
+//       var current=popFromLocationQueue();
 
-      if(current!=null)
-       {
-        if(recentPoppedLocation==null)
-        {  
+//       if(current!=null)
+//        {
+//         if(recentPoppedLocation==null)
+//         {  
                  
-             updateStatusData(current);
-             track(current[0],current[1]);
-            // setMarketLocation(current[0],current[1]);
-            // drawLine(current[0],current[0]); 
-            // track()           
-        }
-        else{   
+//              updateStatusData(current);
+//              track(current[0],current[1]);
+//             // setMarketLocation(current[0],current[1]);
+//             // drawLine(current[0],current[0]); 
+//             // track()           
+//         }
+//         else{   
 
-            updateStatusData(current);
-            track(current[0],current[1]);
+//             updateStatusData(current);
+//             track(current[0],current[1]);
 
             
-            // drawLine(recentPoppedLocation[0],current[0]);
-            // setMarketLocation(current[0],current[1]);
-         }
+//             // drawLine(recentPoppedLocation[0],current[0]);
+//             // setMarketLocation(current[0],current[1]);
+//          }
         
-        recentPoppedLocation = current[0];
+//         recentPoppedLocation = current[0];
         
-     }
-     else{
+//      }
+//      else{
      
-     }
+//      }
 
-    setTimeout(doWork,1000);
-    }
-
-
-
-function updateStatusData(current)
-{
-  var latlng=current[0];
-  var angle=current[1];
-  var ac=current[2];
-  var battery_status=current[3];
-  var connection_lost_time_motion=current[4];
-  var dateTime=current[5];
-  var fuel=current[6];
-  var fuelquantity=current[7];
-  var ign=current[8];
-  var last_seen=current[9];
-  var latitude=current[10];
-  var longitude=current[11];
-  var place=current[12];
-  var power=current[13];
-  var signalStrength=current[14];
-  var speed=current[15];
-  var vehicleStatus=current[16];
-  var connection_lost_time_halt=current[17];
-  var connection_lost_time_sleep=current[18];
-  var connection_lost_time_minutes=current[19];
-   var odometer=current[20];
-  var device_time=dateTime;
+//     setTimeout(doWork,1000);
+//     }
 
 
 
+// function updateStatusData(current)
+// {
+//   var latlng=current[0];
+//   var angle=current[1];
+//   var ac=current[2];
+//   var battery_status=current[3];
+//   var connection_lost_time_motion=current[4];
+//   var dateTime=current[5];
+//   var fuel=current[6];
+//   var fuelquantity=current[7];
+//   var ign=current[8];
+//   var last_seen=current[9];
+//   var latitude=current[10];
+//   var longitude=current[11];
+//   var place=current[12];
+//   var power=current[13];
+//   var signalStrength=current[14];
+//   var speed=current[15];
+//   var vehicleStatus=current[16];
+//   var connection_lost_time_halt=current[17];
+//   var connection_lost_time_sleep=current[18];
+//   var connection_lost_time_minutes=current[19];
+//    var odometer=current[20];
+//   var device_time=dateTime;
 
-    if (vehicleStatus == 'M' && speed != '0' && device_time >= connection_lost_time_motion)
-    {
-      $("#online").show();
-      $("#zero_speed_online").hide();
-      $("#halt").hide();
-      $("#offline").hide();
-      $("#sleep").hide();
-      $("#connection_lost").hide();
-      vehicleColor="#84b752";
-    }
-    else if (vehicleStatus == 'M' && speed != '0' && device_time <= connection_lost_time_motion)
-    {
-      if(connection_lost_time_minutes){
-        $('#connection_lost_last_seen').text(connection_lost_time_minutes);
-      }
-      $("#online").hide();
-      $("#zero_speed_online").hide();
-      $("#halt").hide();
-      $("#offline").hide();
-      $("#sleep").hide();
-      $("#connection_lost").show();
-      vehicleColor="#84b752";
-    } 
-    else if (vehicleStatus == 'M' && speed == '0' && device_time >= connection_lost_time_motion)
-    {
-      $("#zero_speed_online").show();
-      $("#halt").hide();
-      $("#online").hide();
-      $("#offline").hide();
-      $("#sleep").hide();
-      $("#connection_lost").hide();
-      vehicleColor="#84b752";
 
-    }
-    else if (vehicleStatus == 'M' && speed == '0' && device_time <= connection_lost_time_motion)
-    {
-      if(connection_lost_time_minutes){
-        $('#connection_lost_last_seen').text(connection_lost_time_minutes);
-      }
-      $("#online").hide();
-      $("#zero_speed_online").hide();
-      $("#halt").hide();
-      $("#offline").hide();
-      $("#sleep").hide();
-      $("#connection_lost").show();
-      vehicleColor="#84b752";
-    } 
-    else if (vehicleStatus == 'H' && device_time >= connection_lost_time_halt)
-    {
-      $("#halt").show();
-      $("#zero_speed_online").hide();
-      $("#online").hide();
-      $("#offline").hide();
-      $("#sleep").hide();
-      $("#connection_lost").hide();
-      vehicleColor="#69b4b9";
 
-    }
-    else if (vehicleStatus == 'H' && device_time <= connection_lost_time_halt)
-    {
-      if(connection_lost_time_minutes){
-        $('#connection_lost_last_seen').text(connection_lost_time_minutes);
-      }
-      $("#online").hide();
-      $("#zero_speed_online").hide();
-      $("#halt").hide();
-      $("#offline").hide();
-      $("#sleep").hide();
-      $("#connection_lost").show();
-      vehicleColor="#69b4b9";
-    }
-    else if (vehicleStatus == 'S' && device_time >= connection_lost_time_sleep)
-    {
-      $("#sleep").show();
-      $("#zero_speed_online").hide();
-      $("#halt").hide();
-      $("#online").hide();
-      $("#offline").hide();
-      $("#connection_lost").hide();
-      vehicleColor=" #858585";
-    }
-    else if (vehicleStatus == 'S' && device_time <= connection_lost_time_sleep)
-    {
-      if(connection_lost_time_minutes){
-        $('#connection_lost_last_seen').text(connection_lost_time_minutes);
-      }
-      $("#online").hide();
-      $("#zero_speed_online").hide();
-      $("#halt").hide();
-      $("#offline").hide();
-      $("#sleep").hide();
-      $("#connection_lost").show();
-      vehicleColor="#858585";
-    }
-    else 
-    {
-      if(last_seen){
-       $('#last_seen').text(last_seen);
-      }
-      $("#offline").show();
-      $("#sleep").hide();
-      $("#halt").hide();
-      $("#online").hide();
-      $("#zero_speed_online").hide();
-      $("#connection_lost").hide();
-      vehicleColor="#c41900";
-    }
-      if(ign == 1) {
-        document.getElementById("ignition").innerHTML = "ON";
-      }else
-      {
-        document.getElementById("ignition").innerHTML = "OFF";
-      }
-      if(power == 1) {
-        document.getElementById("car_power").innerHTML = "CONNECTED";
-      }else
-      {
-        document.getElementById("car_power").innerHTML = "DISCONNECTED";
-      }
-      if(vehicleStatus == 'M' && speed == '0') {
-        document.getElementById("car_speed").innerHTML = "VEHICLE STOPPED";
-        $('#valid_speed').css('display','none');
-      }else
-      {
-        document.getElementById("car_speed").innerHTML = speed;
-        $('#valid_speed').css('display','inline-block');
-      }
 
-      if(vehicleStatus == 'M')
-      {
-        if (signalStrength >= 19 && device_time >= connection_lost_time_motion) {
-          document.getElementById("network_status").innerHTML = "GOOD";
-          var element = document.getElementById("lost_blink_id");
-          element.classList.remove("lost_blink");
-           $('#network_status').removeClass('lost1');
-        }
-        else if (signalStrength < 19 && signalStrength >= 13 && device_time >= connection_lost_time_motion) {
-          document.getElementById("network_status").innerHTML = "AVERAGE";
-          var element = document.getElementById("lost_blink_id");
-          element.classList.remove("lost_blink");
-           $('#network_status').removeClass('lost1');
-        }
-        else if (signalStrength <= 12 && device_time >= connection_lost_time_motion) {
-          document.getElementById("network_status").innerHTML = "POOR";
-          var element = document.getElementById("lost_blink_id");
-          element.classList.remove("lost_blink");
-           $('#lost_blink_id1').removeClass('lost1');
-        }
-        else{
-          document.getElementById("network_status").innerHTML = "LOST";
-          var element = document.getElementById("lost_blink_id");
-          element.classList.add("lost_blink");
-           $('#network_status').addClass('lost1');
-        }
-      }
-      else if(vehicleStatus == 'H')
-      {
-        if (signalStrength >= 19 && device_time >= connection_lost_time_halt) {
-          document.getElementById("network_status").innerHTML = "GOOD";
-          var element = document.getElementById("lost_blink_id");
-          element.classList.remove("lost_blink");
-           $('#network_status').removeClass('lost1');
-        }
-        else if (signalStrength < 19 && signalStrength >= 13 && device_time >= connection_lost_time_halt) {
-          document.getElementById("network_status").innerHTML = "AVERAGE";
-          var element = document.getElementById("lost_blink_id");
-          element.classList.remove("lost_blink");
-           $('#network_status').removeClass('lost1');
-        }
-        else if (signalStrength <= 12 && device_time >= connection_lost_time_halt) {
-          document.getElementById("network_status").innerHTML = "POOR";
-          var element = document.getElementById("lost_blink_id");
-          element.classList.remove("lost_blink");
-           $('#lost_blink_id1').removeClass('lost1');
-        }
-        else{
-          document.getElementById("network_status").innerHTML = "LOST";
-          var element = document.getElementById("lost_blink_id");
-          element.classList.add("lost_blink");
-           $('#network_status').addClass('lost1');
-        }
-      }
-      else if(vehicleStatus == 'S')
-      {
-        if (signalStrength >= 19 && device_time >= connection_lost_time_sleep) {
-          document.getElementById("network_status").innerHTML = "GOOD";
-          var element = document.getElementById("lost_blink_id");
-          element.classList.remove("lost_blink");
-           $('#network_status').removeClass('lost1');
-        }
-        else if (signalStrength < 19 && signalStrength >= 13 && device_time >= connection_lost_time_sleep) {
-          document.getElementById("network_status").innerHTML = "AVERAGE";
-          var element = document.getElementById("lost_blink_id");
-          element.classList.remove("lost_blink");
-           $('#network_status').removeClass('lost1');
-        }
-        else if (signalStrength <= 12 && device_time >= connection_lost_time_sleep) {
-          document.getElementById("network_status").innerHTML = "POOR";
-          var element = document.getElementById("lost_blink_id");
-          element.classList.remove("lost_blink");
-           $('#lost_blink_id1').removeClass('lost1');
-        }
-        else{
-          document.getElementById("network_status").innerHTML = "LOST";
-          var element = document.getElementById("lost_blink_id");
-          element.classList.add("lost_blink");
-           $('#network_status').addClass('lost1');
-        }
-      }
-      else
-      {
-        document.getElementById("network_status").innerHTML = "LOST";
-        var element = document.getElementById("lost_blink_id");
-        element.classList.add("lost_blink");
-        $('#network_status').addClass('lost1');
-      }
+//     if (vehicleStatus == 'M' && speed != '0' && device_time >= connection_lost_time_motion)
+//     {
+//       $("#online").show();
+//       $("#zero_speed_online").hide();
+//       $("#halt").hide();
+//       $("#offline").hide();
+//       $("#sleep").hide();
+//       $("#connection_lost").hide();
+//       vehicleColor="#84b752";
+//     }
+//     else if (vehicleStatus == 'M' && speed != '0' && device_time <= connection_lost_time_motion)
+//     {
+//       if(connection_lost_time_minutes){
+//         $('#connection_lost_last_seen').text(connection_lost_time_minutes);
+//       }
+//       $("#online").hide();
+//       $("#zero_speed_online").hide();
+//       $("#halt").hide();
+//       $("#offline").hide();
+//       $("#sleep").hide();
+//       $("#connection_lost").show();
+//       vehicleColor="#84b752";
+//     } 
+//     else if (vehicleStatus == 'M' && speed == '0' && device_time >= connection_lost_time_motion)
+//     {
+//       $("#zero_speed_online").show();
+//       $("#halt").hide();
+//       $("#online").hide();
+//       $("#offline").hide();
+//       $("#sleep").hide();
+//       $("#connection_lost").hide();
+//       vehicleColor="#84b752";
 
-      // document.getElementById("vehicle_name").innerHTML = res.vehicle_reg;
+//     }
+//     else if (vehicleStatus == 'M' && speed == '0' && device_time <= connection_lost_time_motion)
+//     {
+//       if(connection_lost_time_minutes){
+//         $('#connection_lost_last_seen').text(connection_lost_time_minutes);
+//       }
+//       $("#online").hide();
+//       $("#zero_speed_online").hide();
+//       $("#halt").hide();
+//       $("#offline").hide();
+//       $("#sleep").hide();
+//       $("#connection_lost").show();
+//       vehicleColor="#84b752";
+//     } 
+//     else if (vehicleStatus == 'H' && device_time >= connection_lost_time_halt)
+//     {
+//       $("#halt").show();
+//       $("#zero_speed_online").hide();
+//       $("#online").hide();
+//       $("#offline").hide();
+//       $("#sleep").hide();
+//       $("#connection_lost").hide();
+//       vehicleColor="#69b4b9";
+
+//     }
+//     else if (vehicleStatus == 'H' && device_time <= connection_lost_time_halt)
+//     {
+//       if(connection_lost_time_minutes){
+//         $('#connection_lost_last_seen').text(connection_lost_time_minutes);
+//       }
+//       $("#online").hide();
+//       $("#zero_speed_online").hide();
+//       $("#halt").hide();
+//       $("#offline").hide();
+//       $("#sleep").hide();
+//       $("#connection_lost").show();
+//       vehicleColor="#69b4b9";
+//     }
+//     else if (vehicleStatus == 'S' && device_time >= connection_lost_time_sleep)
+//     {
+//       $("#sleep").show();
+//       $("#zero_speed_online").hide();
+//       $("#halt").hide();
+//       $("#online").hide();
+//       $("#offline").hide();
+//       $("#connection_lost").hide();
+//       vehicleColor=" #858585";
+//     }
+//     else if (vehicleStatus == 'S' && device_time <= connection_lost_time_sleep)
+//     {
+//       if(connection_lost_time_minutes){
+//         $('#connection_lost_last_seen').text(connection_lost_time_minutes);
+//       }
+//       $("#online").hide();
+//       $("#zero_speed_online").hide();
+//       $("#halt").hide();
+//       $("#offline").hide();
+//       $("#sleep").hide();
+//       $("#connection_lost").show();
+//       vehicleColor="#858585";
+//     }
+//     else 
+//     {
+//       if(last_seen){
+//        $('#last_seen').text(last_seen);
+//       }
+//       $("#offline").show();
+//       $("#sleep").hide();
+//       $("#halt").hide();
+//       $("#online").hide();
+//       $("#zero_speed_online").hide();
+//       $("#connection_lost").hide();
+//       vehicleColor="#c41900";
+//     }
+//       if(ign == 1) {
+//         document.getElementById("ignition").innerHTML = "ON";
+//       }else
+//       {
+//         document.getElementById("ignition").innerHTML = "OFF";
+//       }
+//       if(power == 1) {
+//         document.getElementById("car_power").innerHTML = "CONNECTED";
+//       }else
+//       {
+//         document.getElementById("car_power").innerHTML = "DISCONNECTED";
+//       }
+//       if(vehicleStatus == 'M' && speed == '0') {
+//         document.getElementById("car_speed").innerHTML = "VEHICLE STOPPED";
+//         $('#valid_speed').css('display','none');
+//       }else
+//       {
+//         document.getElementById("car_speed").innerHTML = speed;
+//         $('#valid_speed').css('display','inline-block');
+//       }
+
+//       if(vehicleStatus == 'M')
+//       {
+//         if (signalStrength >= 19 && device_time >= connection_lost_time_motion) {
+//           document.getElementById("network_status").innerHTML = "GOOD";
+//           var element = document.getElementById("lost_blink_id");
+//           element.classList.remove("lost_blink");
+//            $('#network_status').removeClass('lost1');
+//         }
+//         else if (signalStrength < 19 && signalStrength >= 13 && device_time >= connection_lost_time_motion) {
+//           document.getElementById("network_status").innerHTML = "AVERAGE";
+//           var element = document.getElementById("lost_blink_id");
+//           element.classList.remove("lost_blink");
+//            $('#network_status').removeClass('lost1');
+//         }
+//         else if (signalStrength <= 12 && device_time >= connection_lost_time_motion) {
+//           document.getElementById("network_status").innerHTML = "POOR";
+//           var element = document.getElementById("lost_blink_id");
+//           element.classList.remove("lost_blink");
+//            $('#lost_blink_id1').removeClass('lost1');
+//         }
+//         else{
+//           document.getElementById("network_status").innerHTML = "LOST";
+//           var element = document.getElementById("lost_blink_id");
+//           element.classList.add("lost_blink");
+//            $('#network_status').addClass('lost1');
+//         }
+//       }
+//       else if(vehicleStatus == 'H')
+//       {
+//         if (signalStrength >= 19 && device_time >= connection_lost_time_halt) {
+//           document.getElementById("network_status").innerHTML = "GOOD";
+//           var element = document.getElementById("lost_blink_id");
+//           element.classList.remove("lost_blink");
+//            $('#network_status').removeClass('lost1');
+//         }
+//         else if (signalStrength < 19 && signalStrength >= 13 && device_time >= connection_lost_time_halt) {
+//           document.getElementById("network_status").innerHTML = "AVERAGE";
+//           var element = document.getElementById("lost_blink_id");
+//           element.classList.remove("lost_blink");
+//            $('#network_status').removeClass('lost1');
+//         }
+//         else if (signalStrength <= 12 && device_time >= connection_lost_time_halt) {
+//           document.getElementById("network_status").innerHTML = "POOR";
+//           var element = document.getElementById("lost_blink_id");
+//           element.classList.remove("lost_blink");
+//            $('#lost_blink_id1').removeClass('lost1');
+//         }
+//         else{
+//           document.getElementById("network_status").innerHTML = "LOST";
+//           var element = document.getElementById("lost_blink_id");
+//           element.classList.add("lost_blink");
+//            $('#network_status').addClass('lost1');
+//         }
+//       }
+//       else if(vehicleStatus == 'S')
+//       {
+//         if (signalStrength >= 19 && device_time >= connection_lost_time_sleep) {
+//           document.getElementById("network_status").innerHTML = "GOOD";
+//           var element = document.getElementById("lost_blink_id");
+//           element.classList.remove("lost_blink");
+//            $('#network_status').removeClass('lost1');
+//         }
+//         else if (signalStrength < 19 && signalStrength >= 13 && device_time >= connection_lost_time_sleep) {
+//           document.getElementById("network_status").innerHTML = "AVERAGE";
+//           var element = document.getElementById("lost_blink_id");
+//           element.classList.remove("lost_blink");
+//            $('#network_status').removeClass('lost1');
+//         }
+//         else if (signalStrength <= 12 && device_time >= connection_lost_time_sleep) {
+//           document.getElementById("network_status").innerHTML = "POOR";
+//           var element = document.getElementById("lost_blink_id");
+//           element.classList.remove("lost_blink");
+//            $('#lost_blink_id1').removeClass('lost1');
+//         }
+//         else{
+//           document.getElementById("network_status").innerHTML = "LOST";
+//           var element = document.getElementById("lost_blink_id");
+//           element.classList.add("lost_blink");
+//            $('#network_status').addClass('lost1');
+//         }
+//       }
+//       else
+//       {
+//         document.getElementById("network_status").innerHTML = "LOST";
+//         var element = document.getElementById("lost_blink_id");
+//         element.classList.add("lost_blink");
+//         $('#network_status').addClass('lost1');
+//       }
+
+//       // document.getElementById("vehicle_name").innerHTML = res.vehicle_reg;
     
-      document.getElementById("car_bettary").innerHTML = battery_status;
-      document.getElementById("car_location").innerHTML = place;
-      document.getElementById("ac").innerHTML = ac;
-      document.getElementById("fuel").innerHTML = fuel;
-       document.getElementById("odometer").innerHTML = odometer;
-      // document.getElementById("user").innerHTML = res.vehicle_name;
+//       document.getElementById("car_bettary").innerHTML = battery_status;
+//       document.getElementById("car_location").innerHTML = place;
+//       document.getElementById("ac").innerHTML = ac;
+//       document.getElementById("fuel").innerHTML = fuel;
+//        document.getElementById("odometer").innerHTML = odometer;
+//       // document.getElementById("user").innerHTML = res.vehicle_name;
 
-      $("#km_live_track").html('');
-      $("#km_live_track").append(speed);
-}
-
-
-function initMap(){
-  map = new google.maps.Map(document.getElementById('map'), {
-        center: {
-            lat: parseFloat(start_lat),
-            lng: parseFloat(start_lng)
-        },
-        zoom: 17,
-        fullscreenControl: false,
-        mapTypeId: 'roadmap'
-
-    });  
+//       $("#km_live_track").html('');
+//       $("#km_live_track").append(speed);
+// }
 
 
-    // marker = new google.maps.Marker({});
-    marker = new SlidingMarker({});
+// function initMap(){
+//   map = new google.maps.Map(document.getElementById('map'), {
+//         center: {
+//             lat: parseFloat(start_lat),
+//             lng: parseFloat(start_lng)
+//         },
+//         zoom: 17,
+//         fullscreenControl: false,
+//         mapTypeId: 'roadmap'
 
-    // marker = new google.maps.Marker({});
+//     });  
+
+
+//     // marker = new google.maps.Marker({});
+//     marker = new SlidingMarker({});
+
+//     // marker = new google.maps.Marker({});
 
 
     
-    map.setOptions({maxZoom:19,minZoom:9});
-     getMarkers(map);
+//     map.setOptions({maxZoom:19,minZoom:9});
+//      getMarkers(map);
 
-  service = new google.maps.places.PlacesService(map);
- }
-
-
+//   service = new google.maps.places.PlacesService(map);
+//  }
 
 
 
 
- function getMarkers() {
 
-    var url = 'vehicles/location-track';
-    var id = $("#vehicle_id_data").val();
-    // var id=1;
-    data = {
-        id:id
-    };
-    var purl = getUrl() + '/' + url;
-    var triangleCoords = [];
-    $.ajax({
-        type: 'POST',
-        url: purl,
-        data: data,
-        async: true,
-        headers: {
-            'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-        },
-        success: function(res) {
 
-            if(res.hasOwnProperty('liveData')){
+//  function getMarkers() {
 
-                    document.getElementById("user").innerHTML = res.vehicle_name;
-                    document.getElementById("vehicle_name").innerHTML = res.vehicle_reg;
+//     var url = 'vehicles/location-track';
+//     var id = $("#vehicle_id_data").val();
+//     // var id=1;
+//     data = {
+//         id:id
+//     };
+//     var purl = getUrl() + '/' + url;
+//     var triangleCoords = [];
+//     $.ajax({
+//         type: 'POST',
+//         url: purl,
+//         data: data,
+//         async: true,
+//         headers: {
+//             'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+//         },
+//         success: function(res) {
 
-                    transition(res);
-                    // track(map, res);
-                    setTimeout(getMarkers, 5000);
-            }
+//             if(res.hasOwnProperty('liveData')){
 
-        },
-        error: function(err) {
-            var message = (err.responseJSON) ? err.responseJSON.message : err.responseText;
-        }
-    });
+//                     document.getElementById("user").innerHTML = res.vehicle_name;
+//                     document.getElementById("vehicle_name").innerHTML = res.vehicle_reg;
 
-  }
+//                     transition(res);
+//                     // track(map, res);
+//                     setTimeout(getMarkers, 5000);
+//             }
 
-   var SameThreshold = 0.1;
-   var increment_angle=5.0;
-   var stop_angle;
-   var recent_angle_increment_value;
-   function track(latlng,angle) {
-        current_angle_latlng=latlng;
+//         },
+//         error: function(err) {
+//             var message = (err.responseJSON) ? err.responseJSON.message : err.responseText;
+//         }
+//     });
 
-        if(recent_angle_latlng== null){
-          angle=parseFloat(angle);
-        }else{
+//   }
+
+//    var SameThreshold = 0.1;
+//    var increment_angle=5.0;
+//    var stop_angle;
+//    var recent_angle_increment_value;
+//    function track(latlng,angle) {
+//         current_angle_latlng=latlng;
+
+//         if(recent_angle_latlng== null){
+//           angle=parseFloat(angle);
+//         }else{
          
          
-        if (google.maps.geometry.spherical.computeDistanceBetween(recent_angle_latlng,current_angle_latlng) < SameThreshold){
-           if(recent_angle_increment_value==undefined){
-             recent_angle_increment_value=angle;
-           }
-           // angle=(parseFloat(recent_angle_increment_value) + parseFloat(increment_angle))%360;
-           // recent_angle_increment_value=angle;
-            angle=parseFloat(angle);
+//         if (google.maps.geometry.spherical.computeDistanceBetween(recent_angle_latlng,current_angle_latlng) < SameThreshold){
+//            if(recent_angle_increment_value==undefined){
+//              recent_angle_increment_value=angle;
+//            }
+//            // angle=(parseFloat(recent_angle_increment_value) + parseFloat(increment_angle))%360;
+//            // recent_angle_increment_value=angle;
+//             angle=parseFloat(angle);
 
-         }else{
-          // angle = google.maps.geometry.spherical.computeHeading(current_angle_latlng,recent_angle_latlng);
-            angle=parseFloat(angle);
+//          }else{
+//           // angle = google.maps.geometry.spherical.computeHeading(current_angle_latlng,recent_angle_latlng);
+//             angle=parseFloat(angle);
           
-         }
+//          }
          
-        }
-        var lat = parseFloat(latlng.lat());
-        var lng = parseFloat(latlng.lng());
+//         }
+//         var lat = parseFloat(latlng.lat());
+//         var lng = parseFloat(latlng.lng());
    
 
 
-        var markerLatLng = new google.maps.LatLng(latlng.lat(),latlng.lng());
-        i = 0;
-        deltaLat = (lat - posLat) / numDeltas;
-        deltaLng = (lng - posLng) / numDeltas;
+//         var markerLatLng = new google.maps.LatLng(latlng.lat(),latlng.lng());
+//         i = 0;
+//         deltaLat = (lat - posLat) / numDeltas;
+//         deltaLng = (lng - posLng) / numDeltas;
        
-        map.panTo(markerLatLng);
-        moveMarker();
-        var icon = { // car icon
-                    path:"M240.495,26.188c5.91,0,11.819,0,17.729,0c0.608,0.132,1.212,0.297,1.826,0.391  c9.103,1.394,18.338,2.132,27.291,4.268c66.45,15.852,118.037,74.103,126.42,146.035c1.825,15.664,1.727,31.19-2.022,46.581   c-4.007,16.449-9.975,32.05-16.967,47.216c-13.597,29.492-30.118,57.034-47.751,83.814c-25.505,38.735-53.272,75.499-82.296,111.17  c-3.6,4.425-7.293,8.44-12.834,9.717c-1.688,0-3.377,0-5.065,0c-5.46-1.263-9.213-5.1-12.689-9.556   c-11.363-14.564-23.014-28.867-34.225-43.566c-27.51-36.071-53.502-73.37-76.185-113.272   c-12.267-21.579-23.478-43.763-31.567-67.646c-4.233-12.498-7.702-25.246-8.234-38.636c-0.945-23.777,3.054-46.669,11.611-68.541  c14.672-37.502,38.923-65.677,71.621-85.333c19.396-11.66,40.216-18.695,62.27-21.351C233.116,27.033,236.806,26.617,240.495,26.188   z M138.852,197.45c0.139,3.339,0.194,6.397,0.416,9.44c0.199,2.737,0.475,5.478,0.901,8.183  c4.936,31.304,19.557,56.161,43.236,74.477c37.503,29.009,87.413,30.664,126.375,3.956c28.564-19.58,45.743-47.665,49.355-84.482  c3.156-32.164-5.546-60.742-25.355-84.725c-25.666-31.075-58.342-43.924-96.382-40.165c-24.762,2.447-46.523,13.108-64.796,31.539   C150.681,137.787,139.456,165.208,138.852,197.45z M277.659,246.997c29.739-18.278,35.921-60.088,12.904-87.214   c-18.325-21.597-50.145-25.416-72.904-8.749c-21.237,15.552-29.158,43.721-19.327,68.734c8.344,21.231,28.802,35.354,51.109,35.282  C259.499,255.055,268.91,252.374,277.659,246.997z",
-                    scale: 0.1,
-                    fillColor: vehicleColor, //<-- Car Color, you can change it 
-                    // fillOpacity: 1,
-                    // strokeWeight: 1,
-                    fillOpacity: parseFloat(opacity),
-                    strokeWeight: parseFloat(strokeWeight),
-                    anchor: new google.maps.Point(0, 5)
-                    // rotation:angle  //<-- Car angle
-                };
-              marker.setIcon(icon);
-              marker.setMap(map);
-              recent_angle_latlng=current_angle_latlng;
+//         map.panTo(markerLatLng);
+//         moveMarker();
+//         var icon = { // car icon
+//                     path:"M240.495,26.188c5.91,0,11.819,0,17.729,0c0.608,0.132,1.212,0.297,1.826,0.391  c9.103,1.394,18.338,2.132,27.291,4.268c66.45,15.852,118.037,74.103,126.42,146.035c1.825,15.664,1.727,31.19-2.022,46.581   c-4.007,16.449-9.975,32.05-16.967,47.216c-13.597,29.492-30.118,57.034-47.751,83.814c-25.505,38.735-53.272,75.499-82.296,111.17  c-3.6,4.425-7.293,8.44-12.834,9.717c-1.688,0-3.377,0-5.065,0c-5.46-1.263-9.213-5.1-12.689-9.556   c-11.363-14.564-23.014-28.867-34.225-43.566c-27.51-36.071-53.502-73.37-76.185-113.272   c-12.267-21.579-23.478-43.763-31.567-67.646c-4.233-12.498-7.702-25.246-8.234-38.636c-0.945-23.777,3.054-46.669,11.611-68.541  c14.672-37.502,38.923-65.677,71.621-85.333c19.396-11.66,40.216-18.695,62.27-21.351C233.116,27.033,236.806,26.617,240.495,26.188   z M138.852,197.45c0.139,3.339,0.194,6.397,0.416,9.44c0.199,2.737,0.475,5.478,0.901,8.183  c4.936,31.304,19.557,56.161,43.236,74.477c37.503,29.009,87.413,30.664,126.375,3.956c28.564-19.58,45.743-47.665,49.355-84.482  c3.156-32.164-5.546-60.742-25.355-84.725c-25.666-31.075-58.342-43.924-96.382-40.165c-24.762,2.447-46.523,13.108-64.796,31.539   C150.681,137.787,139.456,165.208,138.852,197.45z M277.659,246.997c29.739-18.278,35.921-60.088,12.904-87.214   c-18.325-21.597-50.145-25.416-72.904-8.749c-21.237,15.552-29.158,43.721-19.327,68.734c8.344,21.231,28.802,35.354,51.109,35.282  C259.499,255.055,268.91,252.374,277.659,246.997z",
+//                     scale: 0.1,
+//                     fillColor: vehicleColor, //<-- Car Color, you can change it 
+//                     // fillOpacity: 1,
+//                     // strokeWeight: 1,
+//                     fillOpacity: parseFloat(opacity),
+//                     strokeWeight: parseFloat(strokeWeight),
+//                     anchor: new google.maps.Point(0, 5)
+//                     // rotation:angle  //<-- Car angle
+//                 };
+//               marker.setIcon(icon);
+//               marker.setMap(map);
+//               recent_angle_latlng=current_angle_latlng;
 
-    }
+//     }
 
-    function moveMarker() {
-        // infowindow.open(map, marker);
-        posLat += deltaLat;
-        posLng += deltaLng;
-        var latlng = new google.maps.LatLng(posLat, posLng);
-        marker.setPosition(offsetCenter(latlng));
-        marker.setDuration(10);
+//     function moveMarker() {
+//         // infowindow.open(map, marker);
+//         posLat += deltaLat;
+//         posLng += deltaLng;
+//         var latlng = new google.maps.LatLng(posLat, posLng);
+//         marker.setPosition(offsetCenter(latlng));
+//         marker.setDuration(10);
 
-        if (i != numDeltas) {
-            i++;
-            setTimeout(moveMarker, delay);
-        }
-    }
+//         if (i != numDeltas) {
+//             i++;
+//             setTimeout(moveMarker, delay);
+//         }
+//     }
 
- // ---------------------center on  a marker--------------------------
-function offsetCenter(latlng) 
-  {
-    var offsetx=0;
-    var offsety=0;
-    // offsetx is the distance you want that point to move to the right, in pixels
-    // offsety is the distance you want that point to move upwards, in pixels
-    var scale = Math.pow(2, map.getZoom());
-    var worldCoordinateCenter = map.getProjection().fromLatLngToPoint(latlng);
-    var pixelOffset = new google.maps.Point((offsetx/scale) || 0,(offsety/scale) ||0);
-    var worldCoordinateNewCenter = new google.maps.Point(
-        worldCoordinateCenter.x - pixelOffset.x,
-        worldCoordinateCenter.y + pixelOffset.y
-    );
-    var newCenter = map.getProjection().fromPointToLatLng(worldCoordinateNewCenter);
-    return newCenter;
-   }
-// ---------------------center on  a marker--------------------------
-  // marker.addListener('click', function() {
-  //   alert(1);
-  //   infowindow.open(map, marker);
-  // });
+//  // ---------------------center on  a marker--------------------------
+// function offsetCenter(latlng) 
+//   {
+//     var offsetx=0;
+//     var offsety=0;
+//     // offsetx is the distance you want that point to move to the right, in pixels
+//     // offsety is the distance you want that point to move upwards, in pixels
+//     var scale = Math.pow(2, map.getZoom());
+//     var worldCoordinateCenter = map.getProjection().fromLatLngToPoint(latlng);
+//     var pixelOffset = new google.maps.Point((offsetx/scale) || 0,(offsety/scale) ||0);
+//     var worldCoordinateNewCenter = new google.maps.Point(
+//         worldCoordinateCenter.x - pixelOffset.x,
+//         worldCoordinateCenter.y + pixelOffset.y
+//     );
+//     var newCenter = map.getProjection().fromPointToLatLng(worldCoordinateNewCenter);
+//     return newCenter;
+//    }
+// // ---------------------center on  a marker--------------------------
+//   // marker.addListener('click', function() {
+//   //   alert(1);
+//   //   infowindow.open(map, marker);
+//   // });
 
-  // var contentString = 'hiiii';
+//   // var contentString = 'hiiii';
 
-  // var infowindow = new google.maps.InfoWindow({
-  //   content: contentString
-  // });
-// ----------------------------------------------------------------
+//   // var infowindow = new google.maps.InfoWindow({
+//   //   content: contentString
+//   // });
+// // ----------------------------------------------------------------
 
-// -------------------------------------------------------------
+// // -------------------------------------------------------------
 
-var POI_markers = [];
-var lat=posLat;
-var lng=posLng;
+// var POI_markers = [];
+// var lat=posLat;
+// var lng=posLng;
 
-var poi_atm_clicked = false;
-var clicked_poi_item = '';
-var petrol_flag=0;
-var hospital_flag=0;
+// var poi_atm_clicked = false;
+// var clicked_poi_item = '';
+// var petrol_flag=0;
+// var hospital_flag=0;
 
-$('.poi_item').click(function(){
-  var marker_images             = {
-    atm:{
-      'icon': '/images/ATM.svg',
-      'label': 'ATM'
-    },
-    gas_station:{
-      'icon': '/images/petrol-pump.svg',
-      'label': 'Petrol Pump'
-    },
-    hospital:{
-      'icon': '/images/hospital.svg',
-      'label': 'Hospital'
-    }
-  };
-  // map filter
-  var filter = $(this).attr('filter');
-  if(filter == 'undefined')
-  {
-    return true;
-  }
-  // clear existing markers
-  deleteMarkersPOI();
-  $('.poi_item').removeClass('poi_item_active');
+// $('.poi_item').click(function(){
+//   var marker_images             = {
+//     atm:{
+//       'icon': '/images/ATM.svg',
+//       'label': 'ATM'
+//     },
+//     gas_station:{
+//       'icon': '/images/petrol-pump.svg',
+//       'label': 'Petrol Pump'
+//     },
+//     hospital:{
+//       'icon': '/images/hospital.svg',
+//       'label': 'Hospital'
+//     }
+//   };
+//   // map filter
+//   var filter = $(this).attr('filter');
+//   if(filter == 'undefined')
+//   {
+//     return true;
+//   }
+//   // clear existing markers
+//   deleteMarkersPOI();
+//   $('.poi_item').removeClass('poi_item_active');
 
-  if( clicked_poi_item != filter)
-  {
-    // set active class
-    $(this).addClass('poi_item_active');
-    // filter map contents
-    var latlng_location = {lat: parseFloat(lat), lng: parseFloat(lng)};
-    service.nearbySearch({
-      location: latlng_location, radius: 1000, type:[filter]
-    },
-    function(results, status) 
-    {
-      if (status !== 'OK') 
-      {
-        alert(' No '+marker_images[filter]['label']+' found within 1 KM');
-        return;
-      }
-      createMarkers(results, marker_images[filter]['icon']);
-      map.setZoom(15);
-     });
-    // set selected item
-    clicked_poi_item = filter;
-  }
-  else
-  {
-    clicked_poi_item = '';
-    map.setZoom(17);
-  }
-});
+//   if( clicked_poi_item != filter)
+//   {
+//     // set active class
+//     $(this).addClass('poi_item_active');
+//     // filter map contents
+//     var latlng_location = {lat: parseFloat(lat), lng: parseFloat(lng)};
+//     service.nearbySearch({
+//       location: latlng_location, radius: 1000, type:[filter]
+//     },
+//     function(results, status) 
+//     {
+//       if (status !== 'OK') 
+//       {
+//         alert(' No '+marker_images[filter]['label']+' found within 1 KM');
+//         return;
+//       }
+//       createMarkers(results, marker_images[filter]['icon']);
+//       map.setZoom(15);
+//      });
+//     // set selected item
+//     clicked_poi_item = filter;
+//   }
+//   else
+//   {
+//     clicked_poi_item = '';
+//     map.setZoom(17);
+//   }
+// });
 
-// ---------------find nearest map points-----------------
- var infowindow = new google.maps.InfoWindow();
- function createMarkers(places,image_icon) {
-        deleteMarkersPOI();
-        var bounds = new google.maps.LatLngBounds();
-        for (var i = 0, place; place = places[i]; i++) {
-           var image = {
-            url: image_icon,
-            size: new google.maps.Size(50, 50),
-            origin: new google.maps.Point(0, 0),
-            anchor: new google.maps.Point(10, 20),
-            scaledSize: new google.maps.Size(30, 30)
-          };
-          var marker = new google.maps.Marker({
-            icon: image,
-            title: place.name,
-            position: place.geometry.location,
-            data:place.vicinity
-          });
-          var place_name=place.name;
+// // ---------------find nearest map points-----------------
+//  var infowindow = new google.maps.InfoWindow();
+//  function createMarkers(places,image_icon) {
+//         deleteMarkersPOI();
+//         var bounds = new google.maps.LatLngBounds();
+//         for (var i = 0, place; place = places[i]; i++) {
+//            var image = {
+//             url: image_icon,
+//             size: new google.maps.Size(50, 50),
+//             origin: new google.maps.Point(0, 0),
+//             anchor: new google.maps.Point(10, 20),
+//             scaledSize: new google.maps.Size(30, 30)
+//           };
+//           var marker = new google.maps.Marker({
+//             icon: image,
+//             title: place.name,
+//             position: place.geometry.location,
+//             data:place.vicinity
+//           });
+//           var place_name=place.name;
 
 
 
-          POI_markers.push(marker);
-          bounds.extend(place.geometry.location);
+//           POI_markers.push(marker);
+//           bounds.extend(place.geometry.location);
 
          
-        }
-        map.fitBounds(bounds);
-        setMapOnAllPOI(map); 
+//         }
+//         map.fitBounds(bounds);
+//         setMapOnAllPOI(map); 
         
-      }
-      function setMapOnAllPOI(map) {
-        for (var i = 0; i < POI_markers.length; i++) {
-          POI_markers[i].setMap(map);
-           google.maps.event.addListener(POI_markers[i], 'click', (function(marker, i) {
-          return function() {
-            infowindow.setContent('<i>'+POI_markers[i].title +'</i><br><span style="margin-top: 25px;">'+POI_markers[i].data+'</span>');
-            infowindow.setOptions({maxWidth: 200});
-            infowindow.open(map, POI_markers[i]);
-          }
-          }) (marker, i));
-        }
-      }
-      function clearMarkersPOI() {
-        setMapOnAllPOI(null);
-      }
-      function deleteMarkersPOI() {
-        clearMarkersPOI();
-         POI_markers = [];
+//       }
+//       function setMapOnAllPOI(map) {
+//         for (var i = 0; i < POI_markers.length; i++) {
+//           POI_markers[i].setMap(map);
+//            google.maps.event.addListener(POI_markers[i], 'click', (function(marker, i) {
+//           return function() {
+//             infowindow.setContent('<i>'+POI_markers[i].title +'</i><br><span style="margin-top: 25px;">'+POI_markers[i].data+'</span>');
+//             infowindow.setOptions({maxWidth: 200});
+//             infowindow.open(map, POI_markers[i]);
+//           }
+//           }) (marker, i));
+//         }
+//       }
+//       function clearMarkersPOI() {
+//         setMapOnAllPOI(null);
+//       }
+//       function deleteMarkersPOI() {
+//         clearMarkersPOI();
+//          POI_markers = [];
         
-      }
+//       }
      
-// ---------------find nearest map points-----------------
-// -------------------playback---------------------------
+// // ---------------find nearest map points-----------------
+// // -------------------playback---------------------------
 
 
-$( "#playback_form" ).submit(function( event ) {
-  var vehicle_id=$('#vehicle_id').val();
-  var from_date=$('#fromDate').val();
-  var to_date=$('#toDate').val();
-  var url_data=encodeURI('from_date='+from_date+"&to_date="+to_date+"&vehicle_id="+vehicle_id);
-  window.open("/vehicle_playback?"+url_data, "myWindow", "width=700,height=500");
-  event.preventDefault();
-});
+// $( "#playback_form" ).submit(function( event ) {
+//   var vehicle_id=$('#vehicle_id').val();
+//   var from_date=$('#fromDate').val();
+//   var to_date=$('#toDate').val();
+//   var url_data=encodeURI('from_date='+from_date+"&to_date="+to_date+"&vehicle_id="+vehicle_id);
+//   window.open("/vehicle_playback?"+url_data, "myWindow", "width=700,height=500");
+//   event.preventDefault();
+// });
 
-// -------------------playback---------------------------
-var contentString = 
- '<div style="width:13%;float:left">'+
- '<div class="text-center mb-4" style="margin:0 0 1.5rem .5rem!important">'+
+// // -------------------playback---------------------------
+// var contentString = 
+//  '<div style="width:13%;float:left">'+
+//  '<div class="text-center mb-4" style="margin:0 0 1.5rem .5rem!important">'+
 
 
- '<a class="btn btn-block btn-social btn-bitbucket track_item">'+
- '<i class="fa fa-tachometer"></i> <b><label id="km_live_track">-</label> km/h</b></a>'+
- '</div>';
+//  '<a class="btn btn-block btn-social btn-bitbucket track_item">'+
+//  '<i class="fa fa-tachometer"></i> <b><label id="km_live_track">-</label> km/h</b></a>'+
+//  '</div>';
 
-var infowindow = new google.maps.InfoWindow({
-    content: contentString
-});
+// var infowindow = new google.maps.InfoWindow({
+//     content: contentString
+// });
 
 
 

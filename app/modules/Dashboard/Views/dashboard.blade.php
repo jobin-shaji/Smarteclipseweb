@@ -58,16 +58,20 @@
         <div class="col-lg-3 col-xs-6 gps_dashboard_grid dash_grid">
           <!-- small box -->
           <div class="small-box bg-green bxs">
-            <div class="inner">
-              <h3 id="gps">
-                <div class="loader"></div>
-              </h3>
-              <p>GPS Devices In Stock</p>
+
+            <div class="inner inner-left">
+              <div class="box-2">
+                <div style="float:left; width:50%">
+                  <h3 id="gps"></h3>
+                  <p class="mrg-bt-0">GPS Devices In Stock</p>
+                </div>
+                <div style="float:left; width:50%">
+                  <h3 id="refurbished_gps"></h3>
+                  <p class="mrg-bt-0">Refurbished GPS Devices In Stock</p>
+                </div>
+              </div>
             </div>
-            <div class="icon">
-              <i class="fa fa-tablet"></i>
-            </div>
-            <a href="/gps" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="/gps" class="small-box-footer view-last">View <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <div class="col-lg-3 col-xs-6 transferred_gps_dashboard_grid dash_grid">
@@ -181,51 +185,6 @@
 
 <!-- DEALER ROLE-START -->
 @role('dealer')
-<style>
-  .inner-left {
-    float: left;
-    display: block;
-  }
-
-  .box-2 {
-    width: 100%;
-    float: left;
-    display: block;
-  }
-
-  .small-box>.view-last {
-    float: left;
-    width: 100%;
-    margin-bottom: 0px;
-  }
-
-  .mrg-bt-0 {
-
-    font-size: 14px;
-    margin-bottom: 0px;
-  }
-
-  .a-tag {
-    width: 100%;
-    float: left;
-    margin-top: 1px;
-  }
-
-  .small-box>.a-tag .small-box-footer1 {
-    text-align: center;
-    padding: 3px 0;
-    color: #fff;
-    color: rgba(255, 255, 255, 0.8);
-    z-index: 10;
-    width: 100%;
-    float: left;
-    background: rgba(0, 0, 0, 0.1);
-  }
-
-  .small-box>.small-box-footer2 {
-    margin-bottom: -18px;
-  }
-</style>
 <div class="page-wrapper page-wrapper-root page-wrapper_new">
   <div class="page-wrapper-root1">
     <div class="container-fluid">
@@ -471,51 +430,6 @@
 @endrole
 <!-- SUB DEALER ROLE-START -->
 @role('sub_dealer')
-<style>
-  .inner-left {
-    float: left;
-    display: block;
-  }
-
-  .box-2 {
-    width: 100%;
-    float: left;
-    display: block;
-  }
-
-  .small-box>.view-last {
-    float: left;
-    width: 100%;
-    margin-bottom: 0px;
-  }
-
-  .mrg-bt-0 {
-
-    font-size: 14px;
-    margin-bottom: 0px;
-  }
-
-  .a-tag {
-    width: 100%;
-    float: left;
-    margin-top: 1px;
-  }
-
-  .small-box>.a-tag .small-box-footer1 {
-    text-align: center;
-    padding: 3px 0;
-    color: #fff;
-    color: rgba(255, 255, 255, 0.8);
-    z-index: 10;
-    width: 100%;
-    float: left;
-    background: rgba(0, 0, 0, 0.1);
-  }
-
-  .small-box>.small-box-footer2 {
-    margin-bottom: -18px;
-  }
-</style>
 <div class="page-wrapper page-wrapper-root page-wrapper_new">
   <div class="page-wrapper-root1">
     <div class="row">
@@ -787,7 +701,7 @@
               <h3 id="on_progress_installation_jobs">
                 <div class="loader"></div>
               </h3>
-              <p>On Progress Installations </p>
+              <p>In Progress Installations </p>
             </div>
             <div class="icon">
               <i class="fa fa-tablet"></i>
@@ -834,7 +748,7 @@
               <h3 id="all_pending_jobs">
                 <div class="loader"></div>
               </h3>
-              <p> On Progress Services</p>
+              <p> In Progress Services</p>
             </div>
             <div class="icon">
               <i class="fa fa-tablet"></i>
@@ -865,22 +779,20 @@
 
 
 <!-- SCHOOL ROLE-START -->
+<!--
 @role('school')
 
 
 <div class="container-fluid">
-  <div class="row">
+   <div class="row">
     <div class="col-md-12 full-height">
       <div id="map" style="width:100%; height:100%;"></div>
     </div>
-    <!-- <div class="left-bottom-car-details"><img class="left-bottom-car-details-img" src="assets/images/main-car.png"></div> -->
     <div class="pageContainer" style="overflow: scroll">
       <div class="col-lg-12">
         <div class="st-actionContainer right-bottom">
           <div class="st-panel" style="overflow: scroll!important;">
-            <!-- <div class="st-panel-header"><i class="fa fa-bars" aria-hidden="true"></i>
-              <img src="assets/images/logo1.png" style="width:50px;height:20px;"/>
-            </div> -->
+           
             <div class="st-panel-contents" id="vehicle_card_cover">
               @foreach ($vehicles as $vehicle)
 
@@ -951,7 +863,7 @@
           </div>
 
           <div id="myModal" class="modal_for_dash">
-            <!-- Modal content -->
+           
             <div class="modal-content">
               <div class="modal-header">
                 <span class="close"></span>
@@ -976,13 +888,13 @@
             <div class="box bg-cyan1234 text-center">
               <h1 class="font-light text-white"></h1>
               <h1 class="text-white" style="color:#84b752!important">
-                <!-- <img src="assets/images/moving.png" style="width:100%"> -->
+                
                 <i class="fa fa-map-marker" aria-hidden="true"></i>
               </h1>
               <span class="track_status">Moving</span>
               <span style="float:left;width:100%">
                 <h1 id="moving" class="text-white" style="font-size:19px;color:#fab03a!important">0</h1>
-                <!--  <h5 class="text-white">MOVING</h5> -->
+                
               </span>
             </div>
           </div>
@@ -992,13 +904,13 @@
             <div class="box bg-cyan1234 text-center">
               <h1 class="font-light text-white"></h1>
               <h1 class="text-white" style="color: #69b4b9!important">
-                <!--  <img src="assets/images/idling.png" style="width:100%"> -->
+               
                 <i class="fa fa-map-marker" aria-hidden="true"></i>
               </h1>
               <span class="track_status">Halt</span>
               <span style="float:left;width:100%">
                 <h1 id="idle" class="text-white" style="font-size:19px;color:#fab03a!important">0</h1>
-                <!-- <h5 class="text-white">Halt</h5> -->
+                
               </span>
             </div>
           </div>
@@ -1008,13 +920,13 @@
             <div class="box bg-cyan1234 text-center">
               <h1 class="font-light text-white"></h1>
               <h1 class="text-white" style="color: #858585!important">
-                <!-- <img src="assets/images/delayed.png" style="width:100%"> -->
+               
                 <i class="fa fa-map-marker" aria-hidden="true"></i>
               </h1>
               <span class="track_status">Sleep</span>
               <span style="float:left;width:100%">
                 <h1 id="stop" class="text-white" style="font-size:19px;color:#fab03a!important">0</h1>
-                <!-- <h5 class="text-white">DELAY</h5> -->
+                
               </span>
             </div>
           </div>
@@ -1024,13 +936,13 @@
             <div class="box bg-cyan1234 text-center">
               <h1 class="font-light text-white"></h1>
               <h1 class="text-white" style="color:#c41900!important">
-                <!-- <img src="assets/images/stopped.png" style="width:100%"> -->
+               
                 <i class="fa fa-map-marker" aria-hidden="true"></i>
               </h1>
               <span class="track_status">Offline</span>
               <span style="float:left;width:100%">
                 <h1 id="offline" class="text-white" style="font-size:19px;color:#fab03a!important">0</h1>
-                <!--  <h5 class="text-white">STOPPED</h5> -->
+              
               </span>
             </div>
           </div>
@@ -1054,7 +966,7 @@
                 <div class="bg-dark p-10 text-white text-center" style="float: left;width:50%;border-radius: 0 20px 0 0;">
                   <img src="assets/images/fuel-status.png">
                   <h4 class="m-b-0 m-t-5 score_data_text">Fuel Status</h4>
-                  <!-- <medium id="fuel_status" class="font-light"> -->
+                 
                   <div id="fuel_100" class="fuel-outer">
                     <ul>
                       <li id="f100"></li>
@@ -1158,10 +1070,10 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> 
 
+  @endrole-->
 
-  @endrole
   <!-- SCHOOL ROLE-END -->
 
 
@@ -1172,163 +1084,362 @@
   @role('client')
   <input type="hidden" id="lat" name="lat" value="{{$client->latitude}}">
   <input type="hidden" id="lng" name="lng" value="{{$client->longitude}}">
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-md-12 full-height">
-
-        <div id="map_refresh_button" class="refresh_map" onclick="refreshPage()">
-          <button id="refresh_button" type="submit" class="btn btn-primary btn-block">
-            <i class="fa fa-refresh"></i> Refresh
-          </button>
-        </div>
-
-        <div id="map" style="width:100%; height:100%;"></div>
-      </div>
-      <!-- <div class="left-bottom-car-details"><img class="left-bottom-car-details-img" src="assets/images/main-car.png"></div> -->
-      <div class="pageContainer">
-
-        <div class="col-lg-12">
-          <div class="st-actionContainer right-bottom">
-            <div class="st-panel" style="width: 50%">
-              <!-- <div class="st-panel-header"><i class="fa fa-bars" aria-hidden="true"></i>
-              <img src="assets/images/logo1.png" style="width:50px;height:20px;"/>
-            </div> -->
-              <div class="st-panel-contents" id="vehicle_card_cover" style="overflow: scroll!important;height: auto;width: 103%;max-height: 164px">
-                @foreach ($vehicles as $vehicle)
-                <div class="border-card">
-
-                  <div class="content-wrapper con-radio">
-
-                    <div class="card-type-icon with-border">
-                      <input type="radio" id="radio" id="gpsid{{ $loop->iteration }}" class="vehicle_gps_id" name="radio" onclick="getVehicle({{$vehicle->gps_id}},true)" value="{{$vehicle->gps_id}}">
-                    </div>
-
-                    <div class="label-group fixed">
-                      <p class="title">
-                        <span><i class="fa fa-car"></i></span>
-                      </p>
-                      <p class="caption" id="vehicle_name{{ $loop->iteration }}">{{$vehicle->name}}</p>
-                    </div>
-                    <div class="min-gap"></div>
-                    <div class="label-group">
-                      <p class="title">
-                        <span><i class="fas fa-arrow-alt-circle-left"></i></span>
-                      </p>
-                      <p class="caption" id="register_number{{ $loop->iteration }}">{{$vehicle->register_number}}</p>
-                    </div>
-                    <!-- <div id="msg"></div> -->
-                    <div class="min-gap"></div>
-
-                  </div>
+  <div id="map_refresh_button" class="refresh_map" onclick="refreshPage()">
+    <button id="refresh_button" type="submit" class="btn btn-primary btn-block">
+      <i class="fa fa-refresh"></i> Refresh
+    </button>
+  </div>
+  <div class="dashboar-1-map-box">
+    <div class="dasb-board-googlemap">
+      <div id="map" style="width:100%; height:100%;"></div>
+      <div class="st-actionContainer right-bottom">
+        <div class="st-panel st-panel-dashboard1" style="width: 50%">
+          <div class="st-panel-contents" id="vehicle_card_cover" style="overflow: scroll!important;height: auto;width: 103%;max-height: 164px">
+            @foreach ($vehicles as $vehicle)
+            <div class="border-card">
+              <div class="content-wrapper con-radio">
+                <div class="card-type-icon with-border">
+                  <input type="radio" id="radio" id="gpsid{{ $loop->iteration }}" class="vehicle_gps_id" name="radio" onclick="getVehicle({{$vehicle->gps_id}},true)" value="{{$vehicle->gps_id}}">
                 </div>
-                @endforeach
-              </div>
-
-              <style>
-                .content-wrapper.con-radio {
-                  height: auto;
-                }
-              </style>
-
-              <div id="msg"></div>
-            </div>
-            <div class="right-bottom">
-              <div class="st-button-main">
-                <img class="left-bottom-car-details-img" src="assets/images/stearing.png" width="66px">
-              </div>
-
-            </div>
-
-
-
-
-            @role('fundamental|superior|pro|school')
-            <div class="right-bottom2">
-              <form onsubmit="return locationSearch();">
-                <div class="col-lg-12 col-md-12">
-                  <div class="container-fluid bg-light map_search">
-                    <div class="row align-items-center justify-content-center">
-                      <div class="col-lg-4 col-md-4 ">
-                        <div class="form-group">
-                          <input type="text" id="search_place" class="form-control" value="">
-
-
-                        </div>
-                      </div>
-                      <div class="col-lg-4 col-md-4 ">
-                        <div class="form-group">
-                          <select id="search_radius" class="form-control">
-                            <option selected>KM</option>
-                            <option value="10">10 KM</option>
-                            <option value="30">30 KM</option>
-                            <option value="50">50 KM</option>
-                            <option value="75">75 KM</option>
-                            <option value="100">100 KM</option>
-                          </select>
-                        </div>
-                      </div>
-                      <div class="col-lg-2 col-md-2 ">
-                        <button type="submit" class="btn btn-primary btn-block">
-                          <i class="fas fa-search"></i>
-                        </button>
-                      </div>
-
-                    </div>
-
-                  </div>
+                <div class="label-group fixed">
+                  <p class="title">
+                    <span><i class="fa fa-car"></i></span>
+                  </p>
+                  <p class="caption" id="vehicle_name{{ $loop->iteration }}">{{$vehicle->name}}</p>
                 </div>
-              </form>
-            </div>
-            <style type="text/css">
-              .pac-container {
-                position: absolute !important;
-                bottom: -53px !important;
-                margin: 0px;
-                top: inherit !important;
-              }
-
-              .new-track-stle {
-                right: 4%;
-              }
-            </style>
-
-            <div id="myModal" class="modal_for_dash">
-              <!-- Modal content -->
-              <div class="modal-content">
-                <div class="modal-header">
-                  <span class="close"></span>
-                  <div class="container">
-                    <div class="container">
-                      <canvas id="myChart" style="max-width: 500px;"></canvas>
-                    </div>
-                  </div>
+                <div class="min-gap"></div>
+                <div class="label-group">
+                  <p class="title">
+                    <span><i class="fas fa-arrow-alt-circle-left"></i></span>
+                  </p>
+                  <p class="caption" id="register_number{{ $loop->iteration }}">{{$vehicle->register_number}}</p>
                 </div>
+                <div class="min-gap"></div>
               </div>
             </div>
-            @endrole
-
-
+            @endforeach
           </div>
         </div>
       </div>
+      <div class="dashboard-serch-km-section">
+        <div class="dash-bord-bottom">
+          <div class="st-button-main str-icon">
+            <img class="left-bottom-car-details-img" src="assets/images/stearing.png" width="66px">
+          </div>
+          <div class="dash-board-bt-inner">
+            <div class="right-bottom">
+            </div>
+            @role('fundamental|superior|pro|school')
+            <form onsubmit="return locationSearch();">
+              <input type="text" id="search_place" class="form-control" value="">
+              <select id="search_radius" name="cars">
+                <option selected>KM</option>
+                <option value="10">10 KM</option>
+                <option value="30">30 KM</option>
+                <option value="50">50 KM</option>
+                <option value="75">75 KM</option>
+                <option value="100">100 KM</option>
+              </select>
+              <button><i class="fa fa-search" aria-hidden="true"></i></button>
+            </form>
+            @endrole
+          </div>
+        </div>
+      </div>
+      <div class="dash-baord-rt-new-box">
+        <div class="dash-boad1-rt-box">
+          <div class="dash-boad1-rt-box-sm green" onclick="moving('M')">
+            <a href="#">
+              <i class="fa fa-map-marker green" aria-hidden="true"></i>
+              <div class="track_status dash-boad1-rt-move">Moving</div>
+              <div id="moving" class="dash-boad1-rt-move-no">0</div>
+            </a>
+          </div>
+          <div class="dash-boad1-rt-box-sm blue" onclick="moving('H')">
+            <a href="#">
+              <i class="fa fa-map-marker blue" aria-hidden="true"></i>
+              <div class="track_status dash-boad1-rt-move">Halt</div>
+              <div id="idle" class="dash-boad1-rt-move-no">0</div>
+            </a>
+          </div>
+          <div class="dash-boad1-rt-box-sm gray" onclick="moving('S')">
+            <a href="#">
+              <i class="fa fa-map-marker gray" aria-hidden="true"></i>
+              <div class="track_status dash-boad1-rt-move">Sleep</div>
+              <div id="stop" class="dash-boad1-rt-move-no">0</div>
+            </a>
+          </div>
+          <div class="dash-boad1-rt-box-sm red border-0" onclick="moving('O')">
+            <a href="#">
+              <i class="fa fa-map-marker red" aria-hidden="true"></i>
+              <div class="track_status dash-boad1-rt-move">Offline</div>
+              <div id="offline" class="dash-boad1-rt-move-no">0</div>
+            </a>
+          </div>
+        </div>
+        <div class="location-sction">
+          <div class="location-sction-icon"><i class="fa fa-location-arrow" aria-hidden="true"></i></div>
+          <div class="location-sction-content">
+            <medium id="address" class="font-light">
+          </div>
+        </div>
+        <div class="dash-vechile-detials-1">
+          <div class="dash-vechile-detials-1-inner">
+            <div class="dash-vechile-detials-1-inner-lf">
+              <div class="dash-vechile-detials-img">
+                <img src="assets/images/network-status.png" id="network_online">
+                <img src="assets/images/no-network.png" id="network_offline" style="display: none;">
+              </div>
+              <div class="dash-vechile-detail-text"><p>Network Status</p>
+                <medium id="network_status" class="font-light">
+                <i class="fa fa-spinner" aria-hidden="true"></i>
+              </div>
+            </div>
+            <div class="dash-vechile-detials-1-inner-lf">
+              <div class="dash-vechile-detials-img">
+                <img src="assets/images/fuel-status.png">
+              </div>
+              <div class="dash-vechile-detail-text"><p>Fuel Status</p>
+                <div id="fuel_100" class="fuel-outer fuel-out">
+                  <ul>
+                    <li id="f100"></li>
+                    <li id="f100"></li>
+                    <li id="f100"></li>
+                    <li id="f100"></li>
+                  </ul>
+                </div>
+                <div id="fuel_75" class="fuel-outer fuel-out">
+                  <ul>
+                    <li id="f75"></li>
+                    <li id="f75"></li>
+                    <li id="f75"></li>
+                    <li id="f0"></li>
+                  </ul>
+                </div>
+                <div id="fuel_50" class="fuel-outer fuel-out">
+                  <ul>
+                    <li id="f50"></li>
+                    <li id="f50"></li>
+                    <li id="f0"></li>
+                    <li id="f0"></li>
+                  </ul>
+                </div>
+                <div id="fuel_25" class="fuel-outer fuel-out">
+                  <ul>
+                    <li id="f25"></li>
+                    <li id="f0"></li>
+                    <li id="f0"></li>
+                    <li id="f0"></li>
+                  </ul>
+                </div>
+                <div id="fuel_0" class="fuel-outer fuel-out">
+                  <ul>
+                    <li id="f0"></li>
+                    <li id="f0"></li>
+                    <li id="f0"></li>
+                    <li id="f0"></li>
+                  </ul>
+                </div>
+                <div id="upgrade" class="fuel-outer fuel-out">
+                  <medium id="upgradefuel" class="font-light">
+                </div>
+                <i class="fa fa-spinner" aria-hidden="true"></i>
+              </div>
+            </div>
+          </div>
+          <div class="dash-vechile-detials-1-inner">
+            <div class="dash-vechile-detials-1-inner-lf">
+              <div class="dash-vechile-detials-img">
+                <img src="assets/images/speed.png">
+              </div>
+              <div class="dash-vechile-detail-text"><p>Speed</p>
+                <medium id="speed" class="font-light">
+                <i class="fa fa-spinner" aria-hidden="true"></i>
+              </div>
+            </div>
+            <div class="dash-vechile-detials-1-inner-lf">
+              <div class="dash-vechile-detials-img">
+                <img src="assets/images/odometer.png">
+              </div>
+              <div class="dash-vechile-detail-text"><p>Odometer</p>
+                <medium id="odometer" class="font-light">
+                <i class="fa fa-spinner" aria-hidden="true"></i>
+              </div>
+            </div>
+          </div>
+          <div class="dash-vechile-detials-1-inner">
+            <div class="dash-vechile-detials-1-inner-lf">
+              <div class="dash-vechile-detials-img">
+                <img src="assets/images/vehicle-status.png" id="vehicle_status">
+                <img src="assets/images/moving-dashboard.png" id="vehicle_moving" style="display: none;">
+                <img src="assets/images/halt-dashboard.png" id="vehicle_halt" style="display: none;">
+                <img src="assets/images/sleep-dashboard.png" id="vehicle_sleep" style="display: none;">
+                <img src="assets/images/offline-dashboard.png" id="vehicle_stop" style="display: none;">
+              </div>
+              <div class="dash-vechile-detail-text"><p>Vehicle Status</p>
+                <medium id="mode" class="font-light">
+                <i class="fa fa-spinner" aria-hidden="true"></i>
+              </div>
+            </div>
+            <div class="dash-vechile-detials-1-inner-lf">
+              <div class="dash-vechile-detials-img">
+                <img src="assets/images/sattelite.png">
+              </div>
+              <div class="dash-vechile-detail-text"><p>Satellite</p>
+                <medium id="satelite" class="font-light">
+                <i class="fa fa-spinner" aria-hidden="true"></i>
+              </div>
+            </div>
+          </div>
+          <div class="dash-vechile-detials-1-inner mrg-bottom-0 border-last-0">
+            <div class="dash-vechile-detials-1-inner-lf">
+              <div class="dash-vechile-detials-img">
+                <img src="assets/images/battery-status.png">
+              </div>
+              <div class="dash-vechile-detail-text"><p>Internal Battery Status</p>
+                <medium id="battery_status" class="font-light">
+                <i class="fa fa-spinner" aria-hidden="true"></i>
+              </div>
+            </div>
+            <div class="dash-vechile-detials-1-inner-lf ">
+              <div class="dash-vechile-detials-img">
+                <img src="assets/images/ignition-dashboard.png">
+              </div>
+              <div class="dash-vechile-detail-text"><p>Ignition</p>
+                <medium id="ignition" class="font-light">
+                <i class="fa fa-spinner" aria-hidden="true"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-      <div class="dashboard-main-Right cover_vehicle_track_list new-track-stle">
 
 
-        <div class="iconsbg1234">
+
+    <!-- <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12 full-height">
+          <div id="map_refresh_button" class="refresh_map" onclick="refreshPage()">
+            <button id="refresh_button" type="submit" class="btn btn-primary btn-block">
+              <i class="fa fa-refresh"></i> Refresh
+            </button>
+          </div>
+        </div>
+        <div class="pageContainer">
+          <div class="col-lg-12">
+            <div class="st-actionContainer right-bottom">
+              <div class="st-panel" style="width: 50%">
+                <div class="st-panel-contents" id="vehicle_card_cover" style="overflow: scroll!important;height: auto;width: 103%;max-height: 164px"> -->
+                  <!-- @foreach ($vehicles as $vehicle)
+                  <div class="border-card">
+                    <div class="content-wrapper con-radio">
+                      <div class="card-type-icon with-border">
+                        <input type="radio" id="radio" id="gpsid{{ $loop->iteration }}" class="vehicle_gps_id" name="radio" onclick="getVehicle({{$vehicle->gps_id}},true)" value="{{$vehicle->gps_id}}">
+                      </div>
+                      <div class="label-group fixed">
+                        <p class="title">
+                          <span><i class="fa fa-car"></i></span>
+                        </p>
+                        <p class="caption" id="vehicle_name{{ $loop->iteration }}">{{$vehicle->name}}</p>
+                      </div>
+                      <div class="min-gap"></div>
+                      <div class="label-group">
+                        <p class="title">
+                          <span><i class="fas fa-arrow-alt-circle-left"></i></span>
+                        </p>
+                        <p class="caption" id="register_number{{ $loop->iteration }}">{{$vehicle->register_number}}</p>
+                      </div>
+                      <div class="min-gap"></div>
+                    </div>
+                  </div>
+                  @endforeach
+                 </div>
+                 <div id="msg"></div>
+               </div>
+               <div class="right-bottom">
+                <div class="st-button-main">
+                  <img class="left-bottom-car-details-img" src="assets/images/stearing.png" width="66px">
+                </div>
+              </div>
+              @role('fundamental|superior|pro|school')
+              <div class="right-bottom2">
+                <form onsubmit="return locationSearch();">
+                  <div class="col-lg-12 col-md-12">
+                    <div class="container-fluid bg-light map_search">
+                      <div class="row align-items-center justify-content-center">
+                        <div class="col-lg-4 col-md-4 ">
+                          <div class="form-group">
+                            <input type="text" id="search_place" class="form-control" value="">
+                          </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 ">
+                          <div class="form-group">
+                            <select id="search_radius" class="form-control">
+                              <option selected>KM</option>
+                              <option value="10">10 KM</option>
+                              <option value="30">30 KM</option>
+                              <option value="50">50 KM</option>
+                              <option value="75">75 KM</option>
+                              <option value="100">100 KM</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="col-lg-2 col-md-2 ">
+                          <button type="submit" class="btn btn-primary btn-block">
+                            <i class="fas fa-search"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div> -->
+              <style type="text/css">
+                .pac-container {
+                  position: absolute !important;
+                  bottom: 105px !important;
+                  margin: 0px;
+                  top: inherit !important;
+                }
+                .new-track-stle {
+                  right: 4%;
+                }
+                .content-wrapper.con-radio {
+                    height: auto;
+                  }
+              </style>
+              <!-- <div id="myModal" class="modal_for_dash">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <span class="close"></span>
+                    <div class="container">
+                      <div class="container">
+                        <canvas id="myChart" style="max-width: 500px;"></canvas>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              @endrole
+          </div>
+        </div>
+      </div>-->
+
+      <!--<div class="dashboard-main-Right cover_vehicle_track_list new-track-stle">
+         <div class="iconsbg1234">
           <div class="col-md-6 col-lg-2 col-xlg-3 cover_track_data" onclick="moving('M')" style="max-width: 23%!important">
-            <!-- <div class="card card-hover"> -->
             <div class="card card-hover" style="cursor: pointer;">
               <div class="box bg-cyan1234 text-center">
                 <h1 class="font-light text-white"></h1>
                 <h1 class="text-white" style="color:#84b752!important">
-                  <!-- <img src="assets/images/moving.png" style="width:100%"> -->
                   <i class="fa fa-map-marker" aria-hidden="true"></i>
                 </h1>
                 <span class="track_status">Moving</span>
                 <span style="float:left;width:100%">
                   <h1 id="moving" class="text-white" style="font-size:19px;color:#fab03a!important">0</h1>
-                  <!--  <h5 class="text-white">MOVING</h5> -->
                 </span>
               </div>
             </div>
@@ -1338,13 +1449,11 @@
               <div class="box bg-cyan1234 text-center">
                 <h1 class="font-light text-white"></h1>
                 <h1 class="text-white" style="color: #69b4b9!important">
-                  <!--  <img src="assets/images/idling.png" style="width:100%"> -->
                   <i class="fa fa-map-marker" aria-hidden="true"></i>
                 </h1>
                 <span class="track_status">Halt</span>
                 <span style="float:left;width:100%">
                   <h1 id="idle" class="text-white" style="font-size:19px;color:#fab03a!important">0</h1>
-                  <!-- <h5 class="text-white">Halt</h5> -->
                 </span>
               </div>
             </div>
@@ -1354,13 +1463,11 @@
               <div class="box bg-cyan1234 text-center">
                 <h1 class="font-light text-white"></h1>
                 <h1 class="text-white" style="color: #858585!important">
-                  <!-- <img src="assets/images/delayed.png" style="width:100%"> -->
                   <i class="fa fa-map-marker" aria-hidden="true"></i>
                 </h1>
                 <span class="track_status">Sleep</span>
                 <span style="float:left;width:100%">
                   <h1 id="stop" class="text-white" style="font-size:19px;color:#fab03a!important">0</h1>
-                  <!-- <h5 class="text-white">DELAY</h5> -->
                 </span>
               </div>
             </div>
@@ -1370,13 +1477,11 @@
               <div class="box bg-cyan1234 text-center">
                 <h1 class="font-light text-white"></h1>
                 <h1 class="text-white" style="color:#c41900!important">
-                  <!-- <img src="assets/images/stopped.png" style="width:100%"> -->
                   <i class="fa fa-map-marker" aria-hidden="true"></i>
                 </h1>
                 <span class="track_status">Offline</span>
                 <span style="float:left;width:100%">
                   <h1 id="offline" class="text-white" style="font-size:19px;color:#fab03a!important">0</h1>
-                  <!--  <h5 class="text-white">STOPPED</h5> -->
                 </span>
               </div>
             </div>
@@ -1399,7 +1504,6 @@
                   <div class="bg-dark p-10 text-white text-center" style="float: left;width:50%;border-radius: 0 20px 0 0;">
                     <img src="assets/images/fuel-status.png">
                     <h4 class="m-b-0 m-t-5 score_data_text">Fuel Status</h4>
-                    <!-- <medium id="fuel_status" class="font-light"> -->
                     <div id="fuel_100" class="fuel-outer">
                       <ul>
                         <li id="f100"></li>
@@ -1426,7 +1530,7 @@
                     </div>
                     <div id="fuel_25" class="fuel-outer">
                       <ul>
-                        <li id="f25"></li>
+                  <li id="f25"></li>
                         <li id="f0"></li>
                         <li id="f0"></li>
                         <li id="f0"></li>
@@ -1504,18 +1608,68 @@
           </div>
         </div>
       </div>
-    </div>
+    </div>-->
     @endrole
     <!-- CLIENT ROLE-END -->
-  </div>
+
   </section>
+  <style>
+  .inner-left {
+    float: left;
+    display: block;
+  }
+
+  .box-2 {
+    width: 100%;
+    float: left;
+    display: block;
+  }
+
+  .small-box>.view-last {
+    float: left;
+    width: 100%;
+    margin-bottom: 0px;
+  }
+
+  .mrg-bt-0 {
+
+    font-size: 14px;
+    margin-bottom: 0px;
+  }
+
+  .a-tag {
+    width: 100%;
+    float: left;
+    margin-top: 1px;
+  }
+
+  .small-box>.a-tag .small-box-footer1 {
+    text-align: center;
+    padding: 3px 0;
+    color: #fff;
+    color: rgba(255, 255, 255, 0.8);
+    z-index: 10;
+    width: 100%;
+    float: left;
+    background: rgba(0, 0, 0, 0.1);
+  }
+
+  .small-box>.small-box-footer2 {
+    margin-bottom: -18px;
+  }
+</style>
   @section('script')
 
   <script src="{{asset('js/gps/mdb.js')}}"></script>
   <script src="{{asset('js/gps/dashb.js')}}"></script>
 
+
   @role('client')
-  <script src="{{asset('js/gps/dashb-client.js')}}"></script>
+  <link rel="stylesheet" href="{{asset('css/firebaselivetrack-new-css.css')}}" type="text/css" / >
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href='https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+    <script src="{{asset('js/gps/dashb-client.js')}}"></script>
 
   <script async defer src="https://maps.googleapis.com/maps/api/js?key={{config('eclipse.keys.googleMap')}}&libraries=places&callback=initMap"></script>
   <script type="text/javascript">
@@ -1525,36 +1679,8 @@
     }
   </script>
   <script src="{{asset('js/gps/GoogleRadar.js')}}"></script>
-
   <script src="{{asset('dist/js/st.action-panel.js')}}"></script>
   <style type="text/css">
-    .container-fluid {
-      padding-left: 0px !important
-    }
-
-    .fuel-outer {
-      width: 67px;
-      float: right;
-      display: block;
-      margin-top: 6px;
-    }
-
-    .fuel-outer ul {
-      width: 100%;
-      float: left;
-      margin: 0;
-      padding: 0;
-      list-style: none;
-    }
-
-    #f100 {
-      width: 4%;
-      padding: 8% 8% 7% 3%;
-      margin-right: 3%;
-      float: left;
-      background: #74ce12;
-    }
-
     #f75 {
       width: 4%;
       padding: 8% 8% 7% 3%;
@@ -1590,10 +1716,11 @@
     .fuel-outer ul li:last-child {
       margin-right: 0;
     }
+
   </style>
   @endrole
 
-  @role('school')
+  <!-- @role('school')
   <script src="{{asset('js/gps/dashb-client.js')}}"></script>
   <script async defer src="https://maps.googleapis.com/maps/api/js?key={{config('eclipse.keys.googleMap')}}&libraries=places&callback=initMap"></script>
   <script type="text/javascript">
@@ -1607,7 +1734,7 @@
       padding-left: 0px !important
     }
   </style>
-  @endrole
+  @endrole -->
 
 
 

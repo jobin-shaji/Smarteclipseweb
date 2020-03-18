@@ -17,7 +17,7 @@ class GpsStock extends Model
         static::addGlobalScope(new DeleteScope);
     }
 
-    protected $fillable=[ 'gps_id','inserted_by','dealer_id','subdealer_id','client_id'];
+    protected $fillable=[ 'gps_id','inserted_by','dealer_id','subdealer_id','client_id','refurbished_status'];
 
     // gps 
     public function gps(){
@@ -57,6 +57,26 @@ class GpsStock extends Model
     public function deviceReturn()
     {
         return $this->hasone('App\Modules\DeviceReturn\Models\DeviceReturn','gps_id','gps_id')->where('status','!=',0);
+    }
+
+    public function getSingleGpsStockDetails($gps_id)
+    {
+        return self::select(
+                    'id',
+                    'gps_id',
+                    'is_returned'
+                    )
+                    ->where('gps_id',$gps_id)
+                    ->first();
+    }
+    
+    public function createRefurbishedGpsInStock($gps_id,$root_id)
+    {
+        return  self::create([
+                        'gps_id'                =>  $gps_id,
+                        'inserted_by'           =>  $root_id,
+                        'refurbished_status'    =>  1
+                    ]); 
     }
 
 }

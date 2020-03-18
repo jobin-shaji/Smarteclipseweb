@@ -68,7 +68,7 @@ Create Geofence
 </section>
 @section('script')
 <script src="{{asset('js/gps/school-geofence.js')}}"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key={{config('eclipse.keys.googleMap')}}&libraries=drawing,places,geometry&callback=initMap"
-   async defer></script>
+<!-- <script src="https://maps.googleapis.com/maps/api/js?key={{config('eclipse.keys.googleMap')}}&libraries=drawing,places,geometry&callback=initMap"
+   async defer></script> -->
 @endsection
 @endsection
