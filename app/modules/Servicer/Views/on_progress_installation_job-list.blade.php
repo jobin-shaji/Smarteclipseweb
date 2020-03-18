@@ -8,20 +8,20 @@ $perPage    = 10;
 $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
 $key        = (isset($_GET['new_installation_search_key'])) ? $_GET['new_installation_search_key'] : '';
 ?>
-<div class="page-wrapper_new">
-   <nav aria-label="breadcrumb">
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/On Progress Installation Jobs List</li>
-        <b> Progress Installation Jobs List</b>
-     </ol>
-      @if(Session::has('message'))
-          <div class="pad margin no-print">
-            <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
-                {{ Session::get('message') }}
+  <div class="page-wrapper_new">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/On Progress Installation Jobs List</li>
+          <b> Progress Installation Jobs List</b>
+      </ol>
+        @if(Session::has('message'))
+            <div class="pad margin no-print">
+              <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
+                  {{ Session::get('message') }}
+              </div>
             </div>
-          </div>
-        @endif
-    </nav>
+          @endif
+      </nav>
 
     <!-- <div class="mlt-list">
     <!-- Search and filters -->
@@ -34,7 +34,7 @@ $key        = (isset($_GET['new_installation_search_key'])) ? $_GET['new_install
                  <div class="row">
                     <div class="col-lg-8">
                       <div class="form-group" style="width: 100%;">
-                         <input type="text" class="form-control" placeholder=" Search for Vehicle" name="new_installation_search_key" id="new_installation_search_key" value="{{ $key }}">
+                         <input type="text" class="form-control" placeholder="Enter Serial No,Assigne,user name,user email,user mobile,registration number" name="new_installation_search_key" id="new_installation_search_key" value="{{ $key }}">
                       </div>
                     </div>
 
@@ -44,41 +44,37 @@ $key        = (isset($_GET['new_installation_search_key'])) ? $_GET['new_install
                       </div>
                     </div>
                     <div class="col-lg-2" style="margin: 0 0px 18px 0;">
-                      <div class="form-group" style="width: 100%;">
-                      <button   type="submit" class="btn btn-primary" onclick="clearSearch()">Clear</button>
-                         <!-- <button type="submit"  class="btn btn-primary search_data_list" title="Enter IMEI,Owner,Vehicle,Distributor,Dealer,Service Engineer name">Search</button> -->
+                      <div class="form-group" style="width: 50%;">
+                      <button   type="submit" class="btninst btninst-primary" onclick="clearSearch()">Clear</button>
+                        
                       </div>
+                     </div> 
                     </div>
-
+                   </div>
                  </div>
-          
-               </div>
-            </div>
-        </div>
-         
-  </form>
-    </div> 
+              </div>
+           </form>
+       </div> 
           <table class="table table-hover table-bordered  table-striped datatable"  style="width:100%;text-align: center" >
           <thead class="indigo white-text">
-                            <tr>
-                            <th><b>SL.No</b></th>
-                                <th><b>Job Code</b></th>
-                                <th><b>User Details</b></th>
-                                <th><b>Assignee<b></th>
-                                <th><b>GPS Serial No<b></th>
-                                <th><b>Description<b></th>
-                                <th><b>Location<b></th>
-                                <th><b>Job Date<b></th>
-                                <th><b>Status<b></th>  
-                                <th><b>Action</b></th>  
-                              </tr>
-                            </thead>
-                            <tbody>
+               <tr>
+                <th><b>SL.No</b></th>
+                <th><b>Job Code</b></th>
+                <th><b>User Details</b></th>
+                <th><b>Assignee<b></th>
+                <th><b>GPS Serial No<b></th>
+                <th><b>Description<b></th>
+                <th><b>Location<b></th>
+                <th><b>Job Date<b></th>
+                <th><b>Status<b></th>  
+                <th><b>Action</b></th>  
+                 </tr>
+                </thead>
+                     <tbody>                        
                               @if($servicer_jobs->count() == 0)
                                     <tr>
                                       <td></td>
                                       <td></td>
-                                      
                                       <td></td>
                                       <td></td>
                                       <td><b style="float: right;margin-right: -13px">No data</b></td>
@@ -87,12 +83,10 @@ $key        = (isset($_GET['new_installation_search_key'])) ? $_GET['new_install
                                       <td></td>
                                       <td></td>
                                       <td></td>
-                                      
-                                </tr>
+                                       </tr>
                                     @endif
                               
               @foreach($servicer_jobs  as $key => $servicer_job)
-                            
                 <tr>
                 <td style="width:4%;">{{ (($perPage * ($page - 1)) + $loop->iteration) }}</td>
                     <td>{{$servicer_job->job_id}}</td>
@@ -103,7 +97,6 @@ $key        = (isset($_GET['new_installation_search_key'])) ? $_GET['new_install
                     <td>{{ ($servicer_job->gps_serial_no) ? $servicer_job->gps_serial_no: ''}}</td>
                     <td>{{$servicer_job->description}}</td>
                     <td>{{$servicer_job->location}}</td>
-
                     <td>{{$servicer_job->job_date}}</td>
                     @if($servicer_job->status == 0)
                     <td>Cancel</td>
@@ -127,25 +120,35 @@ $key        = (isset($_GET['new_installation_search_key'])) ? $_GET['new_install
                 @endforeach
             </tbody>
         </table>
-
-      </div>
-      <style>
-        th {
-          background-color:#778899 ;
-          color: white;
-      } 
-      .cover_list_search {
-          width: 32%;
-      }
-        </style>
-      @endsection
-
-        @section('script')
-        <script type="text/javascript">
-        function clearSearch()
-      {
-          document.getElementById('new_installation_search_key').value = '';
-      }
-
-        </script>
+        </div>
+        <style>
+          th {
+                background-color:#778899 ;
+                color: white;
+            } 
+            .cover_list_search {
+                width: 32%;
+            }
+          .btninst {
+              background: #3ab3bf;
+              border: none;
+              color: white;
+              padding: 8px;
+            font-size: 14px;
+              margin: 3px;
+          }
+          .btninst-primary {
+              color: #fff!important;
+              background-color: #3ab3bf;
+          }
+          </style>
         @endsection
+        @section('script')
+          <script type="text/javascript">
+          function clearSearch()
+          {
+            document.getElementById('new_installation_search_key').value = '';
+          }
+
+          </script>
+          @endsection

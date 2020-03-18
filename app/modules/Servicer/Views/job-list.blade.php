@@ -34,7 +34,7 @@ $key        = (isset($_GET['new_installation_search_key'])) ? $_GET['new_install
                  <div class="row">
                     <div class="col-lg-8">
                       <div class="form-group" style="width: 100%;">
-                         <input type="text" class="form-control" placeholder=" Search for Vehicle" name="new_installation_search_key" id="new_installation_search_key" value="{{ $key }}">
+                         <input type="text" class="form-control" placeholder="Enter Serial No,Assigne,user name,user email,user mobile" name="new_installation_search_key" id="new_installation_search_key" value="{{ $key }}">
                       </div>
                     </div>
 
@@ -44,8 +44,8 @@ $key        = (isset($_GET['new_installation_search_key'])) ? $_GET['new_install
                       </div>
                     </div>
                     <div class="col-lg-2" style="margin: 0 0px 18px 0;">
-                      <div class="form-group" style="width: 100%;">
-                      <button   type="submit" class="btn btn-primary" onclick="clearSearch()">Clear</button>
+                      <div class="form-group" style="width: 50%;">
+                      <button   type="submit" class="btninst btninst-primary" onclick="clearSearch()">Clear</button>
                          <!-- <button type="submit"  class="btn btn-primary search_data_list" title="Enter IMEI,Owner,Vehicle,Distributor,Dealer,Service Engineer name">Search</button> -->
                       </div>
                     </div>
@@ -137,6 +137,18 @@ $key        = (isset($_GET['new_installation_search_key'])) ? $_GET['new_install
       .cover_list_search {
           width: 32%;
       }
+      .btninst {
+      background: #3ab3bf;
+      border: none;
+      color: white;
+      padding: 8px;
+     font-size: 14px;
+      margin: 3px;
+  }
+  .btninst-primary {
+      color: #fff!important;
+      background-color: #3ab3bf;
+  }
         </style>
       @endsection
 

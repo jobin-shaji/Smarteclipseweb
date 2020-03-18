@@ -104,38 +104,37 @@ class ServicerJob extends Model
     }  
     public function getCompletedInstallationList($key = null)
     {
-      $user_id=\Auth::user()->servicer->id;
-
-      $query = DB::table('servicer_jobs')
-        ->join('clients', 'servicer_jobs.client_id', '=', 'clients.id')
-        ->join('users', 'users.id', '=', 'clients.user_id')
-        ->join('servicers', 'servicer_jobs.servicer_id', '=','servicers.id')
-        ->join('gps', 'servicer_jobs.gps_id', '=', 'gps.id')
-        ->join('vehicles', 'servicer_jobs.gps_id', '=', 'vehicles.id')
-        ->select('servicer_jobs.id','servicer_jobs.job_complete_date','servicer_jobs.status','servicer_jobs.job_id','clients.name as client_name',
-        'users.username as user_name','users.email as user_email','users.mobile as mobile_number', 
-        'servicer_jobs.description','servicer_jobs.job_type','servicer_jobs.location','servicer_jobs.status',
-        'servicer_jobs.job_date',
-        'gps.serial_no as gps_serial_no','clients.address as client_address','vehicles.register_number as register_number')
-        ->where('servicer_id',$user_id)
-       ->where('servicer_jobs.status',3)
-        ->whereNotNull('servicer_jobs.job_complete_date')
-        ->orderBy('servicer_jobs.job_complete_date','desc')
-        ->where('job_type',1);
-        
-        if( $key != null )
-        {
-          $query->where(function($query) use($key){
+            $user_id=\Auth::user()->servicer->id;
+            $query = DB::table('servicer_jobs')
+            ->join('clients', 'servicer_jobs.client_id', '=', 'clients.id')
+            ->join('users', 'users.id', '=', 'clients.user_id')
+            ->join('servicers', 'servicer_jobs.servicer_id', '=','servicers.id')
+            ->join('gps', 'servicer_jobs.gps_id', '=', 'gps.id')
+            ->join('vehicles', 'servicer_jobs.gps_id', '=', 'vehicles.id')
+            ->select('servicer_jobs.id','servicer_jobs.job_complete_date','servicer_jobs.status','servicer_jobs.job_id','clients.name as client_name',
+            'users.username as user_name','users.email as user_email','users.mobile as mobile_number', 
+            'servicer_jobs.description','servicer_jobs.job_type','servicer_jobs.location','servicer_jobs.status',
+            'servicer_jobs.job_date',
+            'gps.serial_no as gps_serial_no','clients.address as client_address','vehicles.register_number as register_number')
+            ->where('servicer_id',$user_id)
+            ->where('servicer_jobs.status',3)
+            ->whereNotNull('servicer_jobs.job_complete_date')
+            ->orderBy('servicer_jobs.job_complete_date','desc')
+            ->where('job_type',1);
+            
+            if( $key != null )
+            {
+                $query->where(function($query) use($key){
+              
+                    $query = $query->where('clients.name','like','%'.$key.'%')
+                    ->orWhere('gps.serial_no','like','%'.$key.'%')
+                    ->orWhere('vehicles.register_number','like','%'.$key.'%')
+                    ->orWhere('users.mobile','like','%'.$key.'%')
+                    ->orWhere('users.username','like','%'.$key.'%')
+                    ->orWhere('users.email','like','%'.$key.'%');
+              });       
+            }
+                return $query->paginate(10);
+        }  
           
-            $query = $query->where('clients.name','like','%'.$key.'%')
-              ->orWhere('gps.serial_no','like','%'.$key.'%');
-              // ->orWhere('vehicles.register_number','like','%'.$key.'%')
-              // ->orWhere('users.mobile','like','%'.$key.'%')
-              // ->orWhere('users.username','like','%'.$key.'%')
-              // ->orWhere('users.email','like','%'.$key.'%');
-          });       
-        }
-        return $query->paginate(10);
-    }  
-      
 }
