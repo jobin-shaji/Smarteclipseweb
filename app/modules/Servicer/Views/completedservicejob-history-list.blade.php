@@ -6,13 +6,13 @@
 <?php
 $perPage    = 10;
 $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
-$key        = (isset($_GET['new_installation_search_key'])) ? $_GET['new_installation_search_key'] : '';
+$key        = (isset($_GET['completed_search_key'])) ? $_GET['completed_search_key'] : '';
 ?>
 <div class="page-wrapper_new">
    <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Completed Installation Jobs List</li>
-        <b> Completed Installation Jobs List</b>
+        <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Completed Service Jobs List</li>
+        <b> Completed service Jobs List</b>
      </ol>
       @if(Session::has('message'))
           <div class="pad margin no-print">
@@ -26,7 +26,7 @@ $key        = (isset($_GET['new_installation_search_key'])) ? $_GET['new_install
     <!-- <div class="mlt-list">
     <!-- Search and filters -->
     <div align="right" class="search-1">
-      <form method="GET" action="{{route('completed.installation.job.list')}}" class="search-top">
+      <form method="GET" action="{{route('completed.service.job.list')}}" class="search-top">
         {{csrf_field()}}
         <div class="pull-right cover_list_search">
         <div class="row" >
@@ -34,7 +34,7 @@ $key        = (isset($_GET['new_installation_search_key'])) ? $_GET['new_install
                  <div class="row">
                     <div class="col-lg-8">
                       <div class="form-group" style="width: 100%;">
-                         <input type="text" class="form-control" placeholder="Enter Serial No,Assigne,user name,user email,user mobile,registration number" name="new_installation_search_key" id="new_installation_search_key" value="{{ $key }}">
+                         <input type="text" class="form-control" placeholder="Enter Serial No,Assigne,user name,user email,user mobile,registration number" name="completed_search_key" id="completed_search_key" value="{{ $key }}">
                       </div>
                     </div>
 
@@ -150,7 +150,7 @@ $key        = (isset($_GET['new_installation_search_key'])) ? $_GET['new_install
         <script type="text/javascript">
         function clearSearch()
       {
-          document.getElementById('new_installation_search_key').value = '';
+          document.getElementById('completed_search_key').value = '';
       }
 
         </script>

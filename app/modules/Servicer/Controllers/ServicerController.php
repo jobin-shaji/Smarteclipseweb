@@ -442,178 +442,30 @@ class ServicerController extends Controller {
         return view('Servicer::on_progress_installation_job-list',['servicer_jobs'=> (new ServicerJob())->getOnProgressInstallationList($key)]); 
   
     }
-
-
-
-     // for service
-     public function serviceJobList()
+  // for new services
+    public function serviceJobList(Request $request)
     {
-
-        return view('Servicer::service-job-list');
+        $key = ( isset($request->new_service_search_key) ) ? $request->new_service_search_key : null;
+        return view('Servicer::new-service-job-list',['servicer_jobs'=> (new ServicerJob())->getNewServiceList($key)]); 
+     
     }
-    public function getJobsList()
+    public function onProgresserviceJobList(Request $request)
     {
-        $user_id=\Auth::user()->servicer->id;
-        $servicer_job = ServicerJob::select(
-            'id',
-            'servicer_id',
-            'client_id',
-            'job_id',
-            'job_type',
-            'user_id',
-            'description',
-            'gps_id',
-            'job_complete_date',
-            'job_date',
-            'created_at',
-            'location',
-            'status'
-        )
-        ->where('servicer_id',$user_id)
-        ->where('job_type',1)
-        ->whereNull('job_complete_date')
-        ->with('gps:id,imei,serial_no')
-        ->with('user:id,username')
-        ->with('clients.user')
-        ->with('servicer:id,name')
-        ->get();
-        return DataTables::of($servicer_job)
-        ->addIndexColumn()
-        ->addColumn('job_type', function ($servicer_job) {
-            if($servicer_job->job_type==1)
-            {
-                return "Installation" ;
-            }
-            else
-            {
-                return "Service" ;
-            }
-         })
-           ->addColumn('status', function ($servicer_job) {
-            if($servicer_job->status==0)
-            {
-                return "Cancel" ;
-            }
-            else if($servicer_job->status==1)
-            {
-                return "Assigned" ;
-            }
-            else if($servicer_job->status==2)
-            {
-                return "Pending" ;
-            } else{
-                  return "Completed" ;
-            }
-         })
-
-         ->addColumn('action', function ($servicer_job) {
-             $b_url = \URL::to('/');
-if($servicer_job->status==0){
-    return "<font color='red'>Cancelled</font>";
-
-            }
-            elseif($servicer_job->status==1)
-            {
-                return "
-                <a href=".$b_url."/job/".Crypt::encrypt($servicer_job->id)."/details class='btn btn-xs btn-info'><i class='fas fa-eye' data-toggle='tooltip' title='Job completion'></i>Job Completion</a>";
-            }
-            else
-            {
-                return "
-                <a href=".$b_url."/job/".Crypt::encrypt($servicer_job->id)."/details class='btn btn-xs btn-info'><i class='fas fa-eye' data-toggle='tooltip' title='Job completion'></i>Job Completion</a>";
-            }
-
-        })
-        ->rawColumns(['link', 'action'])
-        ->make();
+        $key = ( isset($request->in_progress_service_search_key) ) ? $request->in_progress_service_search_key : null;
+        return view('Servicer::onProgress-service-job-list',['servicer_jobs'=> (new ServicerJob())->getOnProgressServiceList($key)]); 
+     
     }
-
-// for service
- public function getServiceJobsList()
+    //for completed service job list
+    public function serviceJobHistoryList(Request $request)
     {
-        $user_id=\Auth::user()->servicer->id;
-        $servicer_job = ServicerJob::select(
-            'id',
-            'servicer_id',
-            'client_id',
-            'job_id',
-            'job_type',
-            'user_id',
-            'description',
-            'gps_id',
-            'job_complete_date',
-            'job_date',
-            'created_at',
-            'location',
-            'status'
-        )
-        ->where('servicer_id',$user_id)
-        ->where('job_type',2)
-        ->whereNull('job_complete_date')
-        ->with('gps:id,imei,serial_no')
-        ->with('user:id,username')
-        ->with('clients.user')
-        ->with('servicer:id,name')
-        ->get();
-        return DataTables::of($servicer_job)
-        ->addIndexColumn()
-        ->addColumn('job_type', function ($servicer_job) {
-            if($servicer_job->job_type==1)
-            {
-                return "Installation" ;
-            }
-            else
-            {
-                return "Service" ;
-            }
-         })
-         ->addColumn('status', function ($servicer_job) {
-            if($servicer_job->status==0)
-            {
-                return "Cancel" ;
-            }
-            else if($servicer_job->status==1)
-            {
-                return "Assigned" ;
-            }
-            else if($servicer_job->status==2)
-            {
-                return "Pending" ;
-            } else{
-                  return "Completed" ;
-            }
-         })
-        ->addColumn('action', function ($servicer_job) {
-             $b_url = \URL::to('/');
-                if($servicer_job->status==0){
-    return "<font color='red'>Cancelled</font>";
-
-            }else
-            {
-                if($servicer_job->status==1)
-            {
-               return "
-                <a href=".$b_url."/servicejob/".Crypt::encrypt($servicer_job->id)."/servicedetails class='btn btn-xs btn-info'><i class='fas fa-eye' data-toggle='tooltip' title='Job completion'></i>Job Completion</a>";
-            }
-            else{
-
-                  return "<a href=".$b_url."/servicejob/".Crypt::encrypt($servicer_job->id)."/servicedetails class='btn btn-xs btn-info'><i class='fas fa-eye' data-toggle='tooltip' title='Job completion'></i>View</a>";
-
-            }
-
-            }
-
-        })
-
-        ->rawColumns(['link', 'action'])
-        ->make();
+        $key = ( isset($request->completed_search_key) ) ? $request->completed_search_key : null;
+        return view('Servicer::completedservicejob-history-list',['servicer_jobs'=> (new ServicerJob())->getCompletedServiceList($key)]); 
+        // return view('Servicer::servicejob-history-list');
     }
 
 
 
-
-
-    public function jobDetails(Request $request)
+ public function jobDetails(Request $request)
     {
 
         $decrypted = Crypt::decrypt($request->id);
@@ -1006,10 +858,7 @@ public function serviceJobDetails(Request $request)
        
     }
 
-    public function serviceJobHistoryList()
-    {
-        return view('Servicer::servicejob-history-list');
-    }
+  
 
     public function getJobsHistoryList()
     {

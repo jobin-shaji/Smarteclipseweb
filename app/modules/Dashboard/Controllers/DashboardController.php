@@ -261,19 +261,14 @@ class DashboardController extends Controller
     function servicerDashboardView($user)
     {
         $servicer_id=$user->servicer->id;
-      
         return response()->json([
-
-            'new_installation_jobs' => ServicerJob::select('job_complete_date')->whereNull('job_complete_date')
-             ->where('servicer_id',$servicer_id)->where('job_type',1)->where('status',1)->count(),
-             'on_progress_installation_jobs' => ServicerJob::select('id','status','job_complete_date')->whereNull('job_complete_date')
-              ->where('servicer_id',$servicer_id)->where('status',2)->where('job_type',1)->count(),
-             'pending_service_jobs' => ServicerJob::select('id','job_complete_date','servicer_id','job_type')->whereNull('job_complete_date')->where('servicer_id',$servicer_id) ->where('job_type',2)->count(),
-            'completed_jobs' => ServicerJob::select('job_complete_date','servicer_id','job_type','status')->whereNotNull('job_complete_date')->where('servicer_id',$servicer_id)->where('job_type',1)->where('status',3)->count(),
-            'service_completed_jobs' => ServicerJob::select('job_complete_date','servicer_id','job_type','status')->whereNotNull('job_complete_date')->where('servicer_id',$servicer_id)->where('job_type',2)->where('status',3)->count(),
-            'servicer_all_pending_jobs' => ServicerJob::select('id','job_date','job_complete_date','servicer_id')->whereNull('job_complete_date')->where('servicer_id',$servicer_id)->where('status',2)->where('job_type',2)->count(),
-
-            'status' => 'dbcount'
+                'new_installation_jobs' => (new ServicerJob())->getNewInstallationJobCount( $servicer_id), 
+                'on_progress_installation_jobs' =>(new ServicerJob())->getOnProgressJobCount( $servicer_id), 
+                'completed_jobs' =>(new ServicerJob())->getCompletedJobCount( $servicer_id), 
+                'pending_service_jobs' =>(new ServicerJob())->getPendingServiceJobCount( $servicer_id),
+                'servicer_all_pending_jobs' =>(new ServicerJob())->getProgressServiceJobCount( $servicer_id),
+                'service_completed_jobs' =>(new ServicerJob())->getCompletedServiceJobCount( $servicer_id),
+                'status' => 'dbcount'
         ]);
     }
     

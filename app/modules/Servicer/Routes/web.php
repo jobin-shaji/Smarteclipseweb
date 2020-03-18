@@ -43,13 +43,10 @@ Route::group(['middleware' => ['web','auth','role:servicer'] , 'namespace' => 'A
 Route::get('/job-list','ServicerController@jobList')->name('job_list');
 // for on progress installation
 Route::get('/on-progress-installation-job-list','ServicerController@onProgressInstallationJobList')->name('on_progress_job_list');	
-
-	Route::get('/service-job-list','ServicerController@serviceJobList')->name('service.job.list');
-
-
-
-	Route::get('/pending-job-list','ServicerController@pendingJob')->name('pending.job.list');
-	Route::post('/pending-job-list','ServicerController@pendingJobList')->name('pending.job.list');
+Route::get('/service-job-list','ServicerController@serviceJobList')->name('new.service.job.list');
+Route::get('/on-progress-service-job-list','ServicerController@onProgresserviceJobList')->name('inprogress.service.job.list');	
+Route::get('/pending-job-list','ServicerController@pendingJob')->name('pending.job.list');
+Route::post('/pending-job-list','ServicerController@pendingJobList')->name('pending.job.list');
 
 
 	Route::post('/list-jobs','ServicerController@getJobsList')->name('list.jobs');
@@ -80,7 +77,7 @@ Route::get('/on-progress-installation-job-list','ServicerController@onProgressIn
 	Route::get('/job-history-list','ServicerController@jobHistoryList')->name('completed.installation.job.list');
     Route::post('/list-history-jobs','ServicerController@getJobsHistoryList')->name('list.history.jobs');	
 //for service job history
-	Route::get('/servicerjob-history-list','ServicerController@serviceJobHistoryList')->name('servicerjob.history.list');
+	Route::get('/servicerjob-history-list','ServicerController@serviceJobHistoryList')->name('completed.service.job.list');
     Route::post('/servicelist-history-jobs','ServicerController@getserviceJobsHistoryList')->name('servicelist.history.jobs');	
 
 	Route::get('/servicer/profile','ServicerController@servicerProfile')->name('servicer.profile');
@@ -98,7 +95,5 @@ Route::group(['middleware' => ['web','auth','role:root|sub_dealer|servicer|trade
 	Route::get('/servicer-job-history/{id}/details','ServicerController@serviceJobHistoryDetails')->name('servicer.job.history.details');
 	Route::post('/servicer/vehicles/history','ServicerController@servicerJobHistory')->name('servicer.vehicles.history');
     Route::get('/job-complete-certificate/{id}','ServicerController@jobCompleteCertificate')->name('job-complete.certificate');
-
-    
 	Route::get('/job-complete/{id}/downloads','ServicerController@downloadJobCompleteCertificate')->name('job.complete.certificate.download');
 });
