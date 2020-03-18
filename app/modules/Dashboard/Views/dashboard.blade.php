@@ -1106,10 +1106,10 @@
           <div class="st-button-main str-icon">
             <img class="left-bottom-car-details-img" src="assets/images/stearing.png" width="66px">
           </div>
+          @role('fundamental|superior|pro|school')
           <div class="dash-board-bt-inner">
             <div class="right-bottom">
             </div>
-            @role('fundamental|superior|pro|school')
             <form onsubmit="return locationSearch();">
               <input type="text" id="search_place" class="form-control" value="">
               <select id="search_radius" name="cars">
