@@ -103,7 +103,7 @@ class ServicerJob extends Model
         return $query->paginate(10);
     }  
     public function getCompletedInstallationList($key = null)
-    {
+      {
 
             $user_id=\Auth::user()->servicer->id;
             
@@ -136,13 +136,8 @@ class ServicerJob extends Model
               });       
             }
             return $query->paginate(10);
-
-
-
-           
-              
-        }  
-        public function getNewServiceList($key = null)
+      }  
+    public function getNewServiceList($key = null)
         {
           $user_id=\Auth::user()->servicer->id;
 
@@ -172,7 +167,7 @@ class ServicerJob extends Model
             }
             return $query->paginate(10);
         }  
-        public function getOnProgressServiceList($key = null)
+    public function getOnProgressServiceList($key = null)
         {
           $user_id=\Auth::user()->servicer->id;
 
@@ -202,7 +197,7 @@ class ServicerJob extends Model
             }
             return $query->paginate(10);
         }  
-        public function getCompletedServiceList($key = null)
+    public function getCompletedServiceList($key = null)
         {
                 $user_id=\Auth::user()->servicer->id;
                 $query = DB::table('servicer_jobs')
@@ -237,7 +232,7 @@ class ServicerJob extends Model
                     return $query->paginate(10);
             } 
            
-                public function getNewInstallationJobCount($servicer_id)
+        public function getNewInstallationJobCount($servicer_id)
                 {
              
                     return self::select('job_complete_date')
@@ -245,13 +240,13 @@ class ServicerJob extends Model
                           ->where('servicer_id',$servicer_id)->where('job_type',1)
                           ->where('status',1)->count();
                 } 
-                public function getOnProgressJobCount($servicer_id)
+        public function getOnProgressJobCount($servicer_id)
                 {
                   return self::select('id','status','job_complete_date')->whereNull('job_complete_date')
                   ->where('servicer_id',$servicer_id)->where('status',2)->where('job_type',1)->count();
             
                 } 
-                public function getCompletedJobCount($servicer_id)
+         public function getCompletedJobCount($servicer_id)
                 {
                   return self::select(
                     'job_complete_date',
@@ -267,23 +262,18 @@ class ServicerJob extends Model
                   
             
                 } 
-                public function getPendingServiceJobCount($servicer_id)
+          public function getPendingServiceJobCount($servicer_id)
                 {
-            return self::select('id','job_complete_date','servicer_id','job_type')->whereNull('job_complete_date')->where('servicer_id',$servicer_id)->where('job_type',2)->where('status',1)->count();
-                  
-            
+              return self::select('id','job_complete_date','servicer_id','job_type')->whereNull('job_complete_date')->where('servicer_id',$servicer_id)->where('job_type',2)->where('status',1)->count();
                 } 
-                public function getProgressServiceJobCount($servicer_id)
+          public function getProgressServiceJobCount($servicer_id)
                 {
                 return  self::select('id','job_date','job_complete_date','servicer_id')->whereNull('job_complete_date')->where('servicer_id',$servicer_id)->where('job_type',2)->where('status',2)->count();
                 } 
-                public function getCompletedServiceJobCount($servicer_id)
+          public function getCompletedServiceJobCount($servicer_id)
                 {
                   return  self::select('job_complete_date','servicer_id','job_type','status')->whereNotNull('job_complete_date')->where('servicer_id',$servicer_id)->where('job_type',2)->where('status',3)->count();
-                
                 } 
                
-                
-                
-              }
+               }
 
