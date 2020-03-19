@@ -19,6 +19,7 @@ use App\Modules\Vehicle\Models\VehicleType;
 use App\Modules\User\Models\User;
 use App\Modules\Client\Models\Client;
 use App\Modules\Driver\Models\Driver;
+use App\Modules\Configuration\Models\Configuration;
 use DataTables;
 use PDF;
 class ServicerController extends Controller {
@@ -465,9 +466,107 @@ class ServicerController extends Controller {
 
     public function newInstallationJobDetails(Request $request)
     {
-        $servicer_id = Crypt::decrypt($request->id);
-        return view('Servicer::new-installation-first-step',['servicer_id' => $servicer_id]);
+        $servicerjob_id = Crypt::decrypt($request->id);
+        $service_engineer_installation   = (new ServicerJob())->getServicerJob($servicerjob_id);
+        
+        if($service_engineer_installation  == null)
+        {
+            $request->session()->flash('message', 'jobs not found for the servicer');
+            $request->session()->flash('alert-class', 'alert-danger');
+        }
+        else
+        {
+                $job_plan               =   $service_engineer_installation->role;
+           
+                if($service_engineer_installation->unboxing_checklist != null)
+                {
+                $unboxing_checklist  = json_decode($service_engineer_installation->unboxing_checklist, true);
+                    
+                }
+                else
+                {
+                $check_list_configuration   = (new Configuration())->getConfiguration('gps_unboxing_checklist');
+              
+                if(isset($check_list_configuration[0])&& isset($job_plan)) {
+                $unboxing_checklist=json_decode($check_list_configuration[0]['value'],true )[$job_plan];
+              
+                }
+                }
+        
+        }
+// for installation command
+        $service_eng_installation_command   = (new ServicerJob())->getInstallationJob($servicerjob_id);
+      
+        if($service_eng_installation_command  == null)
+        {
+            $request->session()->flash('message', 'jobs not found for the servicer');
+            $request->session()->flash('alert-class', 'alert-danger');
+        }
+        else
+        {
+               if($service_eng_installation_command->device_command != null)
+                 {
+                $command_configuration  = json_decode($service_eng_installation_command->device_command, true);
+                 }
+                else
+                {
+                    $command_configuration  = (new Configuration())->getConfiguration('gps_init_commands');
+                    $job_plan               = 'general';
+                 if(isset($command_configuration[0])&& isset($job_plan)) {
+                $command_configuration=json_decode($command_configuration[0]['value'],true )[$job_plan];
+              
+                }
+                }
+     
+        }
+        // for installation job completion
+        $servicer_job = ServicerJob::select(
+                        'id',
+                        'servicer_id',
+                        'client_id',
+                        'job_id',
+                        'job_type',
+                        'user_id',
+                        'description',
+                        'job_date',
+                        'job_complete_date',
+                        'status',
+                        'latitude',
+                        'longitude',
+                        'location',
+                        'gps_id',
+                        'unboxing_checklist',
+                        'device_test_scenario',
+                        'device_command'
+                    )
+                    ->withTrashed()
+                    ->where('id', $servicerjob_id)
+                    ->with('gps:id,imei,serial_no')
+                    ->with('clients:id,name')
+                    ->with('user:id,email,mobile')
+                    ->with('sub_dealer:user_id,name')
+                    ->with('trader:user_id,name')
+                    ->first();
+                    $client_id=$servicer_job->client_id;
+                  
+                    $servicer_id=\Auth::user()->servicer->id;
+                    $vehicleTypes=VehicleType::select(
+                        'id','name'
+                    )
+                    ->get();
+                    $drivers=Driver::select('id','name')
+                    ->where('client_id',$client_id)
+                    ->get();
+                     $makes=VehicleMake::select('id','name')->get();
+            
+                     $models=VehicleModels::select('id','name')->get();
+                   if($servicer_job == null){
+                       return view('Servicer::404');
+                    }
+
+        return view('Servicer::new-installation-first-step',['unboxing_checklist' => $unboxing_checklist,'command_configuration'=>$command_configuration,'servicer_job' => $servicer_job,'vehicleTypes'=>$vehicleTypes,'models'=>$models,'client_id'=>$request->id,'drivers'=>$drivers,'makes'=>$makes]);
     }
+   
 //old job completion of installation
 //  public function jobDetails(Request $request)
 //     {

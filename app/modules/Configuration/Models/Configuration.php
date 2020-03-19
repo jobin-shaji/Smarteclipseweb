@@ -11,4 +11,8 @@ class Configuration extends Model
   public function create($data){
    return Self::create($data);
   }
+  public function getConfiguration($code)
+  {
+      return self::select('id', 'name', 'value', 'code', 'date', 'version')->where('code',$code)->get();
+  }
 }

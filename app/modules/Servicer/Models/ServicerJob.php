@@ -274,6 +274,14 @@ class ServicerJob extends Model
                 {
                   return  self::select('job_complete_date','servicer_id','job_type','status')->whereNotNull('job_complete_date')->where('servicer_id',$servicer_id)->where('job_type',2)->where('status',3)->count();
                 } 
-               
+                public function getServicerJob($servicer_id)
+                {
+                  return self::find($servicer_id);
+                } 
+                public function getInstallationJob($servicerjob_id = null)
+                {
+                    return self::find($servicerjob_id);
+                }
+
                }
 
