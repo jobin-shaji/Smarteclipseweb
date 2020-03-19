@@ -1,6 +1,6 @@
 $(document).ready(function () {
 
-   $('#fuel_100, #fuel_75, #fuel_50, #fuel_25, #fuel_0, #upgrade').hide();
+   hideFuelBlocks();
 
   var url = 'dash-count';
   var data = {
@@ -95,7 +95,13 @@ function refreshPage(){
     window.location.reload();
 }
 
+function hideFuelBlocks()
+{
+  $('#fuel_100, #fuel_75, #fuel_50, #fuel_25, #fuel_0, #upgrade').hide();
+}
+
 function vehicle_details(res){
+  hideFuelBlocks()
   //console.log(res);
   var network_status=res.network_status;
   var vehicle_mode=res.mode;
