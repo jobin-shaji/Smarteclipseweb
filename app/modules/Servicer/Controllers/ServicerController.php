@@ -463,57 +463,61 @@ class ServicerController extends Controller {
         // return view('Servicer::servicejob-history-list');
     }
 
-
-
- public function jobDetails(Request $request)
+    public function newInstallationJobDetails(Request $request)
     {
-
-        $decrypted = Crypt::decrypt($request->id);
-        $servicer_job = ServicerJob::select(
-            'id',
-            'servicer_id',
-            'client_id',
-            'job_id',
-            'job_type',
-            'user_id',
-            'description',
-            'job_date',
-            'job_complete_date',
-            'status',
-            'latitude',
-            'longitude',
-            'location',
-            'gps_id',
-            'unboxing_checklist',
-            'device_test_scenario',
-            'device_command'
-        )
-        ->withTrashed()
-        ->where('id', $decrypted)
-        ->with('gps:id,imei,serial_no')
-        ->with('clients:id,name')
-        ->with('user:id,email,mobile')
-        ->with('sub_dealer:user_id,name')
-        ->with('trader:user_id,name')
-        ->first();
-        $client_id=$servicer_job->client_id;
-        // dd($client_id);
-        $servicer_id=\Auth::user()->servicer->id;
-        $vehicleTypes=VehicleType::select(
-            'id','name'
-        )
-        ->get();
-        $drivers=Driver::select('id','name')
-        ->where('client_id',$client_id)
-        ->get();
-         $makes=VehicleMake::select('id','name')->get();
-
-         $models=VehicleModels::select('id','name')->get();
-       if($servicer_job == null){
-           return view('Servicer::404');
-        }
-        return view('Servicer::job-details',['servicer_job' => $servicer_job,'vehicleTypes'=>$vehicleTypes,'models'=>$models,'client_id'=>$request->id,'drivers'=>$drivers,'makes'=>$makes]);
+        $servicer_id = Crypt::decrypt($request->id);
+        return view('Servicer::new-installation-first-step',['servicer_id' => $servicer_id]);
     }
+//old job completion of installation
+//  public function jobDetails(Request $request)
+//     {
+
+//         $decrypted = Crypt::decrypt($request->id);
+//         $servicer_job = ServicerJob::select(
+//             'id',
+//             'servicer_id',
+//             'client_id',
+//             'job_id',
+//             'job_type',
+//             'user_id',
+//             'description',
+//             'job_date',
+//             'job_complete_date',
+//             'status',
+//             'latitude',
+//             'longitude',
+//             'location',
+//             'gps_id',
+//             'unboxing_checklist',
+//             'device_test_scenario',
+//             'device_command'
+//         )
+//         ->withTrashed()
+//         ->where('id', $decrypted)
+//         ->with('gps:id,imei,serial_no')
+//         ->with('clients:id,name')
+//         ->with('user:id,email,mobile')
+//         ->with('sub_dealer:user_id,name')
+//         ->with('trader:user_id,name')
+//         ->first();
+//         $client_id=$servicer_job->client_id;
+//         // dd($client_id);
+//         $servicer_id=\Auth::user()->servicer->id;
+//         $vehicleTypes=VehicleType::select(
+//             'id','name'
+//         )
+//         ->get();
+//         $drivers=Driver::select('id','name')
+//         ->where('client_id',$client_id)
+//         ->get();
+//          $makes=VehicleMake::select('id','name')->get();
+
+//          $models=VehicleModels::select('id','name')->get();
+//        if($servicer_job == null){
+//            return view('Servicer::404');
+//         }
+//         return view('Servicer::job-details',['servicer_job' => $servicer_job,'vehicleTypes'=>$vehicleTypes,'models'=>$models,'client_id'=>$request->id,'drivers'=>$drivers,'makes'=>$makes]);
+//     }
 // FOR SERVICE
 public function serviceJobDetails(Request $request)
     {

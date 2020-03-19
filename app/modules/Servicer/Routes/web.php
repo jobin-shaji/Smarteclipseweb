@@ -52,7 +52,7 @@ Route::post('/pending-job-list','ServicerController@pendingJobList')->name('pend
 	Route::post('/list-jobs','ServicerController@getJobsList')->name('list.jobs');
 	Route::post('/service-list-jobs','ServicerController@getServiceJobsList')->name('service.list.jobs');
 
-	 Route::get('/job/{id}/details','ServicerController@jobDetails')->name('job.details');
+	 Route::get('/job/{id}/details','ServicerController@newInstallationJobDetails')->name('job.details');
 
 	Route::get('/servicejob/{id}/servicedetails','ServicerController@serviceJobDetails')->name('service.job.details');
 

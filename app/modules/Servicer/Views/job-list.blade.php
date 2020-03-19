@@ -118,10 +118,10 @@ $key        = (isset($_GET['new_installation_search_key'])) ? $_GET['new_install
                     <td><font color='red'>Cancelled</font></td>
                     @elseif ($servicer_job->status == 1)
                   
-                    <td> <a href="/job/{{Crypt::encrypt($servicer_job->id)}}/details"class='btn btn-xs btn-info'><i class='glyphicon glyphicon-map-marker'></i>Job Completion</a></td>      
+                    <td> <a href="/job/{{Crypt::encrypt($servicer_job->id)}}/details"class='btn btn-xs btn-info'><i class='glyphicon glyphicon-map-marker'></i>Start Installation</a></td>      
                   
                     @else
-                    <td> <a href="/job/{{Crypt::encrypt($servicer_job->id)}}/details"class='btn btn-xs btn-info'><i class='glyphicon glyphicon-map-marker'></i>Job Completion</a></td>     
+                    <td> <a href="/job/{{Crypt::encrypt($servicer_job->id)}}/details"class='btn btn-xs btn-info'><i class='glyphicon glyphicon-map-marker'></i>Start Installation</a></td>     
                     @endif
                 </tr>
                 @endforeach
