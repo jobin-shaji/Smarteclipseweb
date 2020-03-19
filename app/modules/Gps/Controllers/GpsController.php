@@ -2104,6 +2104,36 @@ class GpsController extends Controller {
             ->addIndexColumn()
             ->make();
     }
+    /**
+     * esim updation
+     */
+    public function esimUpdation()
+    {
+        return view('Gps::esim-updation');
+    }
+    
+
+    public function saveVehicleType(Request $request)
+    {
+        
+        // // online vehicle image
+        // $online_vehicle=$request->online_icon;
+        // if($online_vehicle){
+        // $getFileExt   = $online_vehicle->getClientOriginalExtension();
+        // $online_uploadedFile =   time().'_online_vehicle.'.$getFileExt;
+        // //Move Uploaded File
+        // $destinationPath = 'documents';
+        // $online_vehicle->move($destinationPath,$online_uploadedFile);
+        // }
+       
+       
+
+        
+        // $this->updateVehicleTypeApiResponse();
+        // $request->session()->flash('message', 'New Vehicle type created successfully!');
+        // $request->session()->flash('alert-class', 'alert-success');
+        // return redirect(route('vehicle_type.details',Crypt::encrypt($vehicle_type->id)));
+    }
 
     //validation for gps creation
     public function gpsCreateRules(){
