@@ -41,7 +41,8 @@ return  [
        'Trader',
        'Monitoring',
        'VltData',
-       'DeviceReturn'
+       'DeviceReturn',
+       'Mail'
 
     ]
 ]

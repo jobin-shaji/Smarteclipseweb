@@ -25,7 +25,17 @@ use App\Modules\Subscription\Models\Subscription;
 use DataTables;
 use Illuminate\Support\Facades\Hash;
 use Intervention\Image\ImageManagerStatic as Image;
+use App\Http\Traits\MailTrait;
+
+
 class ClientController extends Controller {
+
+    use MailTrait;
+
+    public function sendTestEmail()
+    {
+        $this->sendMail('head.php@vstmobility.com', 'Varghese Tismon', 'developer.php02@vstmobility.com', 'Christeena', 'mail', 'Test email at '.date('Y-m-d H:i:s'), $data = []);
+    }
 
     //employee creation page
     public function create()
