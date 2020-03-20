@@ -52,8 +52,6 @@
         <li><a href="/#service">Authorized Service Center</a></li>
           <li><a href="/#appscreen">App Screens</a></li>
         <li><a href="/#contact">Contact</a></li>
-          
-               <li><a href="/login" class="login-button button-color">Login</a></li>
       </ul>
     </div>
                           </div>
@@ -88,19 +86,19 @@
 @csrf
 <div class="input-warpper animatable fadeInUp">
 <span><img src="assets/images/login-user-icon.png"/></span>
-  <input type="text" name="username" class="{{ $errors->has('username') ? ' is-invalid' : '' }}" id="username" placeholder="Username" value="{{ old('username') }}" required autofocus>
+  <input type="text" name="username" class="form-control{{ $errors->has('username') ? ' is-invalid' : '' }}" id="username" placeholder="Username" value="{{ old('username') }}" required autofocus>
   @if ($errors->has('username'))
- <span class="invalid-feedback" role="alert">
- <strong>{{ $errors->first('username') }}</strong>
- </span>
+ <div class="invalid-feedback" role="alert" style="margin-bottom: 10%">
+ <strong style="color: red;font-weight :700">{{ $errors->first('username') }}</strong>
+</div>
  @endif
   </div>  
   <div class="input-warpper animatable fadeInUp">
-  <input type="password" id="password" class="{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" placeholder="Password" required>
+  <input type="password" id="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" placeholder="Password" required>
   @if ($errors->has('password'))
- <span class="invalid-feedback" role="alert">
+ <div class="invalid-feedback" role="alert" style="margin-bottom: 10%">
  <strong>{{ $errors->first('password') }}</strong>
- </span>
+</div>
  @endif
   <span class="pass"><img src="assets/images/login-password-icon.png"/></span>
   </div>

@@ -1590,7 +1590,7 @@ color: #f4ab28;
 }
 
 .login-form input[type="text"], .login-form input, .login-form textarea {
-    padding: 14px 11% 16px 10%;
+    padding: 9px 11% 11px 10%;
     margin: 0 0 36px;
     display: block;
     width: 99%;
@@ -1603,9 +1603,14 @@ color: #f4ab28;
     font-family: lato, sans-serif;
     border: 1px solid #fbedd2;
     font-weight: 300;
-    line-height: 24px;
+    line-height: 28px;
+    height: auto;
 }
-
+input:-internal-autofill-selected {
+    background-color:#fff!important;
+    background-image: none !important;
+    color: -internal-light-dark-color(black, white) !important;
+}
 
 .login-form input[type="submit"], .login-form input[type="button"] {
     color: #fff;
@@ -1626,6 +1631,7 @@ color: #f4ab28;
     font-family: lato, sans-serif;
     width: 100%;
     outline: 0;
+    font-weight: 400;
 }
 .login-form input[type="submit"]:hover, .login-form input[type="button"]:hover{
  /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#f4aa29+0,fcd100+100 */
