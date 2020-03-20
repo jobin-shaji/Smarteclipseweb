@@ -1891,3 +1891,26 @@ var alert_user_id=document.getElementById('user_id').value;
             $('#alert_content').text(alert_content);  
             $('#alert_address').text(res.address);           
         }
+
+    function ajaxRequest(url,data,method,successCallBack,errorCallBack)
+      {
+          var purl = getUrl() + '/'+url ;
+          
+          $.ajax({
+              type: method,
+              url:  purl,
+              data: data,
+              processData: false,
+              contentType: false,
+              async: true,
+              headers: {
+                  'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+              },
+              success: function (response) {
+                  return successCallBack(response)
+              },
+              error: function (error) {
+                  return errorCallBack(error)
+              }
+          })
+     }

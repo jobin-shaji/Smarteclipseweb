@@ -67,6 +67,7 @@ class ClientController extends Controller {
         /**
          * getCityGeoCodes getting lat lng from city table
          */
+      
         $placeLatLng = (new City())->getCityGeoCodes($request->city_id);
         $location_lat=$placeLatLng['latitude'];
         $location_lng=$placeLatLng['longitude'];
@@ -206,9 +207,14 @@ class ClientController extends Controller {
         }
 
         $eid= encrypt($user->id);
-        $request->session()->flash('message', 'New end user created successfully!');
-        $request->session()->flash('alert-class', 'alert-success');
-        return redirect(route('clients'));
+        // $request->session()->flash('message', 'New end user created successfully!');
+        // $request->session()->flash('alert-class', 'alert-success');
+        // // return redirect(route('clients'));
+        return response()->json([
+            'status'    => true,
+            'message'   => 'New end user created successfully'
+        ]);
+       
     }
 
     public function clientList()
