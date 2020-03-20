@@ -24,6 +24,17 @@ use DataTables;
 use PDF;
 class ServicerController extends Controller {
 
+    CONST JOB_STATUS_NEW            = 1;
+    CONST JOB_STATUS_IN_PROGRESS    = 2;
+    CONST JOB_STATUS_COMPLETED      = 3;
+    CONST JOB_TYPE_INSTALLATION     = 1;
+    CONST JOB_TYPE_SERVICE          = 2;
+    CONST JOB_UNBOXING_STAGE        = 1;
+    CONST JOB_FITTING_STAGE         = 2;
+    CONST JOB_COMMAND_STAGE         = 3;
+    CONST JOB_TEST_START_STAGE      = 4;
+    CONST JOB_COMPLETED_STAGE       = 5;
+    CONST JOB_DEVICE_TEST_START     = 1;
 
     public function create()
     {
@@ -467,8 +478,16 @@ class ServicerController extends Controller {
     public function newInstallationJobDetails(Request $request)
     {
         $servicerjob_id = Crypt::decrypt($request->id);
+        if (!$servicerjob_id) { 
+            $servicerjob_id="";
+         }else
+         {
+            $servicerjob_id=Crypt::decrypt($request->id);
+            
+         }
         $service_engineer_installation   = (new ServicerJob())->getServicerJob($servicerjob_id);
-        
+       
+
         if($service_engineer_installation  == null)
         {
             $request->session()->flash('message', 'jobs not found for the servicer');
@@ -481,7 +500,7 @@ class ServicerController extends Controller {
                 if($service_engineer_installation->unboxing_checklist != null)
                 {
                 $unboxing_checklist  = json_decode($service_engineer_installation->unboxing_checklist, true);
-                    
+                  
                 }
                 else
                 {
@@ -489,36 +508,37 @@ class ServicerController extends Controller {
               
                 if(isset($check_list_configuration[0])&& isset($job_plan)) {
                 $unboxing_checklist=json_decode($check_list_configuration[0]['value'],true )[$job_plan];
-              
+           
                 }
                 }
+               $stage=$service_engineer_installation->job_status ;
         
         }
 // for installation command
         $service_eng_installation_command   = (new ServicerJob())->getInstallationJob($servicerjob_id);
       
         if($service_eng_installation_command  == null)
-        {
-            $request->session()->flash('message', 'jobs not found for the servicer');
-            $request->session()->flash('alert-class', 'alert-danger');
-        }
+            {
+                $request->session()->flash('message', 'jobs not found for the servicer');
+                $request->session()->flash('alert-class', 'alert-danger');
+            }
         else
-        {
-               if($service_eng_installation_command->device_command != null)
-                 {
-                $command_configuration  = json_decode($service_eng_installation_command->device_command, true);
-                 }
-                else
-                {
-                    $command_configuration  = (new Configuration())->getConfiguration('gps_init_commands');
-                    $job_plan               = 'general';
-                 if(isset($command_configuration[0])&& isset($job_plan)) {
-                $command_configuration=json_decode($command_configuration[0]['value'],true )[$job_plan];
-              
-                }
-                }
+            {
+                if($service_eng_installation_command->device_command != null)
+                    {
+                    $command_configuration  = json_decode($service_eng_installation_command->device_command, true);
+                    }
+                    else
+                    {
+                        $command_configuration  = (new Configuration())->getConfiguration('gps_init_commands');
+                        $job_plan               = 'general';
+                    if(isset($command_configuration[0])&& isset($job_plan)) {
+                    $command_configuration=json_decode($command_configuration[0]['value'],true )[$job_plan];
+                
+                    }
+                    }
      
-        }
+             }
         // for installation job completion
         $servicer_job = ServicerJob::select(
                         'id',
@@ -563,10 +583,126 @@ class ServicerController extends Controller {
                    if($servicer_job == null){
                        return view('Servicer::404');
                     }
+              
+                    // for DEVICE TEST command
+        $service_eng_installation_command   = (new ServicerJob())->getInstallationJob($servicerjob_id);
+      
+        if($service_eng_installation_command  == null)
+        {
+            $request->session()->flash('message', 'jobs not found for the servicer');
+            $request->session()->flash('alert-class', 'alert-danger');
+        }
+        else
+        {
+                if($service_eng_installation_command->device_command != null)
+                    {
+                    $command_configuration  = json_decode($service_eng_installation_command->device_command, true);
+                    }
+                    else
+                    {
+                        $command_configuration  = (new Configuration())->getConfiguration('gps_init_commands');
+                        $job_plan               = 'general';
+                         if(isset($command_configuration[0])&& isset($job_plan)) {
+                         $command_configuration=json_decode($command_configuration[0]['value'],true )[$job_plan];
+                
+                    }
+                }
+     
+        }
 
-        return view('Servicer::new-installation-first-step',['unboxing_checklist' => $unboxing_checklist,'command_configuration'=>$command_configuration,'servicer_job' => $servicer_job,'vehicleTypes'=>$vehicleTypes,'models'=>$models,'client_id'=>$request->id,'drivers'=>$drivers,'makes'=>$makes]);
+        $device_test_installation_list = (new ServicerJob())->getInstallationJob($servicerjob_id);
+         
+        if($device_test_installation_list == null)
+            {
+            $request->session()->flash('message', 'jobs not found for the servicer');
+            $request->session()->flash('alert-class', 'alert-danger');
+            }
+            else
+            {
+            if($device_test_installation_list->device_test_scenario != null)
+            {
+          
+            $device_test_case = json_decode($device_test_installation_list->device_test_scenario, true);
+          
+             }
+            else
+            {
+              
+            $device_test_case = (new Configuration())->getConfiguration('device_test_scenario');
+            
+            if(isset($device_test_case[0])&& isset($device_test_installation_list->role)) 
+            {
+            $device_tests = json_decode($device_test_case[0],true)['value'];
+            $device_test_case = json_decode($device_tests,true)[$device_test_installation_list->role]; 
+
+            $device_test_installation_list->device_test_scenario=json_encode($device_test_case,true );
+            $device_test_installation_list->save();
+            }
+            }
+            }
+
+
+        return view('Servicer::new-installation-first-step',['unboxing_checklist' => $unboxing_checklist,
+        'command_configuration'=>$command_configuration,'servicer_job' => $servicer_job,'vehicleTypes'=>$vehicleTypes,
+        'models'=>$models,'client_id'=>$request->id,'drivers'=>$drivers,'makes'=>$makes,'device_test_case'=>$device_test_case,
+        'servicerjob_id'=>$servicerjob_id,'stage'=>$stage]);
     }
-   
+    public function getchecklist(Request $request)
+    {
+       $onload_stage  = $request->onload_stage;
+       $servicer_jobid  = $request->servicer_jobid;
+       $checklist       = json_decode($request->checkboxdata,true);
+       $service_engineer_installation   = (new ServicerJob())->getServicerJob($servicer_jobid);
+       if($service_engineer_installation  == null)
+       {
+           $request->session()->flash('message', 'jobs not found for the servicer');
+           $request->session()->flash('alert-class', 'alert-danger');
+       }
+       else
+       {
+               $job_plan               =   $service_engineer_installation->role;
+          
+               if($service_engineer_installation->unboxing_checklist != null)
+               {
+               $unboxing_checklist  = json_decode($service_engineer_installation->unboxing_checklist, true);
+                   
+               }
+               else
+               {
+               $check_list_configuration   = (new Configuration())->getConfiguration('gps_unboxing_checklist');
+             
+               if(isset($check_list_configuration[0])&& isset($job_plan)) {
+               $unboxing_checklist=json_decode($check_list_configuration[0]['value'],true )[$job_plan];
+          
+               }
+               }
+               $check_list_items    =  $unboxing_checklist['checklist'][0]['items'];
+               $i=0;
+               foreach ($check_list_items as $items)
+               {
+                    if (in_array($items['id'], $checklist))
+                    {
+                        $unboxing_checklist['checklist'][0]['items'][$i]['checked'] = true;
+                    }else{
+                        $unboxing_checklist['checklist'][0]['items'][$i]['checked'] = false;  
+                    }
+                    $i++;
+               }
+               $service_engineer_installation->unboxing_checklist = json_encode($unboxing_checklist,true);
+               $service_engineer_installation->job_status         = self::JOB_UNBOXING_STAGE;
+               $service_engineer_installation->save();
+               return json_encode([
+                                    'status'    => true,
+                                    'message'   => "success",
+                                    'stage'     => $service_engineer_installation->job_status
+
+                                 ]);
+               
+       }
+       
+  
+    }
+
 //old job completion of installation
 //  public function jobDetails(Request $request)
 //     {
