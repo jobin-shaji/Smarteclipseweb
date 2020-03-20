@@ -44,7 +44,7 @@ $key        = (isset($_GET['monitoring_module_search_key'])) ? $_GET['monitoring
     <a target="_blank" href="{{url('/monitor-map')}}">
       <li class="mlt ">Map</li>
     </a>
-    <li class="mlt" value="alert" id="mlt_alert"><a href="#">Alert</a></li>
+    <!-- <li class="mlt" value="alert" id="mlt_alert"><a href="#">Alert</a></li> -->
   </ul>
   <div class="mlt-list">
     <!-- Search and filters -->
