@@ -25,6 +25,9 @@ use App\Modules\Subscription\Models\Subscription;
 use DataTables;
 use Illuminate\Support\Facades\Hash;
 use Intervention\Image\ImageManagerStatic as Image;
+use App\Jobs\MailJob;
+
+
 class ClientController extends Controller {
 
     //employee creation page
@@ -35,7 +38,7 @@ class ClientController extends Controller {
             'name'
         ])
         ->get();
-       return view('Client::client-create',['countries'=>$countries]);
+        return view('Client::client-create',['countries'=>$countries]);
     }
     //get state in dependent dropdown
     public function getStateList(Request $request)
