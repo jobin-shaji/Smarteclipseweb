@@ -25,17 +25,10 @@ use App\Modules\Subscription\Models\Subscription;
 use DataTables;
 use Illuminate\Support\Facades\Hash;
 use Intervention\Image\ImageManagerStatic as Image;
-use App\Http\Traits\MailTrait;
+use App\Jobs\MailJob;
 
 
 class ClientController extends Controller {
-
-    use MailTrait;
-
-    public function sendTestEmail()
-    {
-        $this->sendMail('head.php@vstmobility.com', 'Varghese Tismon', 'developer.php02@vstmobility.com', 'Christeena', 'mail', 'Test email at '.date('Y-m-d H:i:s'), $data = []);
-    }
 
     //employee creation page
     public function create()
@@ -45,7 +38,7 @@ class ClientController extends Controller {
             'name'
         ])
         ->get();
-       return view('Client::client-create',['countries'=>$countries]);
+        return view('Client::client-create',['countries'=>$countries]);
     }
     //get state in dependent dropdown
     public function getStateList(Request $request)
