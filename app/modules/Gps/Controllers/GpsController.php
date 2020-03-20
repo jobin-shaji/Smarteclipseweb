@@ -2104,6 +2104,31 @@ class GpsController extends Controller {
             ->addIndexColumn()
             ->make();
     }
+    /**
+     * esim updation
+     */
+    public function esimUpdation()
+    {
+        return view('Gps::esim-updation');
+    }
+    public function esimUpload(Request $request)
+    {
+    $imsi_gps = $request->imsi; 
+    $esim = $request->msisdn; 
+    dd($imsi_gps);
+    if($imsi_gps){
+        foreach ($imsi_gps as $imsi) {  
+
+            // $user_alert = UserAlerts::select('id','alert_id','client_id','status')->where('alert_id', $alert_id)->where('client_id', $client->id)->first();                
+            // if($user_alert)
+            // {
+            //     $user_alert->status =1;
+            //     $user_alert->save();                         
+            // }                
+        }
+    }     
+    
+    }
 
     //validation for gps creation
     public function gpsCreateRules(){
