@@ -1,6 +1,6 @@
 $(document).ready(function() {
     $('table').hide();
-    // document.getElementById("deletebutton").style.display = "none"; 
+    document.getElementById("deletebutton").style.display = "none"; 
 });
 var check_box = '';
     function Upload() {
@@ -49,7 +49,7 @@ var check_box = '';
         var excelRows = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[firstSheet]);
         for (var i = 0; i < excelRows.length; i++) {
             var j=i+1;
-            var excel = '<tr><td><input type="checkbox" name="checkbox[]" id="checkbox'+i+'" value="'+i+'"></td>'+ 
+            var excel = '<tr id="check'+i+'"><td><input onclick="show_button()" type="checkbox" name="checkbox[]" id="checkbox'+i+'" value="'+i+'"></td>'+ 
             '<td><label  name="imsi[]" id="imsi'+i+'" >'+excelRows[i]["IMSI"]+'</label></td>'+
             '<td><label  name="msisdn[]" id="msisdn'+i+'" >'+excelRows[i]["MSISDN"]+'</label></td>'+
                 
@@ -57,33 +57,35 @@ var check_box = '';
             $("#dvExcel").append(excel);
             
         }
-        // var checkboxes = document.getElementsByName("checkbox");
-        //     if(checkboxes.checked == true)
-        //     {
-        //         check_box = true;
-        //     }
-       
+        
         $('table').show();
         $('#file_name').text(filename+',total no of rows uploaded :'+excelRows.length);
     };
-    
+    function show_button()
+    {
+        var hidecheck = $('input[type=checkbox]').is(':checked');
+        if(hidecheck == true)
+        {
+            document.getElementById("deletebutton").style.display = "block"; 
+        }
+        else
+        {
+            document.getElementById("deletebutton").style.display = "none";
+        }
+
+    }
     function deletedata(){
        
         var checkArray = new Array(); 
         arrays=[];
         $('input[type=checkbox]').each(function () {
             checkArray.push($(this).is(':checked'));
-           if(checkArray){
-            arrays[]= $(this).val();
-           }
-            // this.checked ? checkArray.push("1") : checkArray.push("0");
+            for(var i=0;i<=checkArray.length;i++){
+                if(checkArray[i] === true)
+                {
+                    $('#check'+i).remove();
+                }
+            }
         });
-//         var checkArray = [];
 
-// $('input.publish').each(function () {
-//    checkArray.push($(this).is(':checked'));
-// });
-
-
-alert(arrays);
     }

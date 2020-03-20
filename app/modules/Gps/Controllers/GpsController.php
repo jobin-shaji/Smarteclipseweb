@@ -2111,28 +2111,23 @@ class GpsController extends Controller {
     {
         return view('Gps::esim-updation');
     }
-    
-
-    public function saveVehicleType(Request $request)
+    public function esimUpload(Request $request)
     {
-        
-        // // online vehicle image
-        // $online_vehicle=$request->online_icon;
-        // if($online_vehicle){
-        // $getFileExt   = $online_vehicle->getClientOriginalExtension();
-        // $online_uploadedFile =   time().'_online_vehicle.'.$getFileExt;
-        // //Move Uploaded File
-        // $destinationPath = 'documents';
-        // $online_vehicle->move($destinationPath,$online_uploadedFile);
-        // }
-       
-       
+    $imsi_gps = $request->imsi; 
+    $esim = $request->msisdn; 
+    dd($imsi_gps);
+    if($imsi_gps){
+        foreach ($imsi_gps as $imsi) {  
 
-        
-        // $this->updateVehicleTypeApiResponse();
-        // $request->session()->flash('message', 'New Vehicle type created successfully!');
-        // $request->session()->flash('alert-class', 'alert-success');
-        // return redirect(route('vehicle_type.details',Crypt::encrypt($vehicle_type->id)));
+            // $user_alert = UserAlerts::select('id','alert_id','client_id','status')->where('alert_id', $alert_id)->where('client_id', $client->id)->first();                
+            // if($user_alert)
+            // {
+            //     $user_alert->status =1;
+            //     $user_alert->save();                         
+            // }                
+        }
+    }     
+    
     }
 
     //validation for gps creation
