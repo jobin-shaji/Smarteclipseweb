@@ -4,7 +4,7 @@ Create Vehicle Type
 @endsection
 @section('content')
 <div class="page-wrapper page-wrapper-root page-wrapper_new">
-    <div class="page-wrapper-root1">
+    <div class="page-wrapper-root1" style="min-height:100vh">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Create Vehicle Type</li>
@@ -32,10 +32,10 @@ Create Vehicle Type
 
                             <!-- file uploader -->
                             <div class="esim-upload-section">
-                                <input type="file" class="{{ $errors->has('fileUpload') ? ' has-error' : '' }}" placeholder="Choose File" name="fileUpload" id="fileUpload" value="{{ old('fileUpload') }}" > 
+                                <input type="file" class="{{ $errors->has('fileUpload') ? ' has-error' : '' }} browse" placeholder="Choose File" name="fileUpload" id="fileUpload" value="{{ old('fileUpload') }}" > 
                                 &nbsp;
                                 <!-- file upload button -->
-                                <input type="button" id="upload" value="Upload" onclick="uploadFile()" />
+                                <input type="button" class="upload_xl" id="upload" value="Upload" onclick="uploadFile()" /><input type="button" class="refresh" id="refresh" value="Refresh" onclick="refreshPage()" />
                                 <!-- /file upload button -->
                             </div>
                             <!-- /file uploader -->
@@ -63,11 +63,22 @@ Create Vehicle Type
                             <!-- /action bar -->
 
                             <!-- temporary listing -->
+                            <div class="loader">
+                                <div class="text">Loading</div>
+                                <div class="dots">
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                                </div>
+                            </div>
+                            <p id="file_name"> </p>
+                            <p id="file_rows"> </p>
                             <div class="esim-upload-section uploaded-excel-details-wrapper action-items">
                                 <table class="table table-bordered">
                                     <thead>
                                     <tr>
-                                        <th></th>
+                                        <th><label id="check_uncheck_label">Uncheck All</label>&nbsp;<input type="checkbox" name="checkall" id="checkAll" checked></th>
                                         <th>IMSI Number</th>
                                         <th>E-SIM/MSISDN Number</th>
                                         <th>Business Unit Name</th>
@@ -77,65 +88,25 @@ Create Vehicle Type
                                     </thead>
                                     <tbody id="uploaded-excel-details"></tbody>
                                 </table>
-                            </div>
-                            <!-- /temporary listing -->
-
-                            <!-- update button -->
-                            <div class="esim-upload-section action-items">
                                 <input type="button" class="pull-right" value="Update E-Sim Numbers" onclick="updateEsimNumbersToDatabase()" />
                             </div>
-                            <!-- /update button -->
-
-                            <div class="col-lg-3">
-                                <div class="form-group has-feedback">
-                                    <div class="form-group has-feedback">
-                                    </div>
-                                    
-                                    
-                                    
-                                    
-                                </div>
-                            </div>                                 
-                            <!-- <div class="row">
-                                <div class="col-md-12 pt-3">
-                                    <button type="submit" class="btn btn-primary btn-lg form-btn pull-left">Save </button>
-                                </div>                            
-                            </div> -->
+                            <!-- /temporary listing -->
                         </form>
-                        <label id="file_name"> </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="clearfix"></div>
                         
-                        <div class="table-contain" style="">
-                        
-                        <style>
-/* .table-contain
-{
-    margin-left: -31%;
-    float: left;
-    margin-top: 7%;
-    height: 203px;
-    margin-bottom:6%;
-} */
-/* .excel-table{
-    width: 276px; float: left;
-}
-.excel-table thead {
-    display: block;
-    float: left;
-    width: 100%;
-}
-.excel-table tbody{
-max-height: 200px;
-    overflow: scroll;
-    height: auto;
-    display: block;
-    width: 100%;
-} */
+<style>
+
 .esim-update-helptext-general{
     line-height: 29px;
 }
 .esim-upload-section{
-    margin-top:10px;
-    margin-bottom:10px;
+    margin-bottom:20px;
 }
 .esim-upload-section > .action-item ul li{
     cursor:pointer;
@@ -148,16 +119,65 @@ max-height: 200px;
 .uploaded-excel-details thead th{
     width:200px;
 }
+#check_uncheck_label{
+    font-size:0.8rem;
+    font-weight:50;
+ }
+.loader {
+    display:flex;
+    //align-items:baseline;
+    
+    font-size:2em;
+}  
+.dots {
+    display:flex;
+    position: relative;
+    top:20px;
+    left:-10px;
+    width:100px;
+    animation: dots 4s ease infinite 1s;
+}
+.dots div {
+    position: relative;
+    width:10px;
+    height:10px;
+    margin-right:10px;
+    border-radius:100%;
+    background-color:black;
+}
+.dots div:nth-child(1) {
+    width:0px;
+    height:0px;
+    margin:5px;
+    margin-right:15px;
+    animation: show-dot 4s ease-out infinite 1s;
+}
 
-                               </style>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="clearfix"></div>
+@keyframes dots {
+   0% {
+      left:-10px;
+   }
+   20%,100% {
+      left:10px;
+   }
+}
+
+@keyframes show-dot {
+   0%,20% {
+      width:0px;
+      height:0px;
+      margin:5px;
+      margin-right:15px;
+   }
+   30%,100% {
+      width:10px;
+      height:10px;
+      margin:0px;
+      margin-right:10px;
+   }
+}
+
+</style>
 @endsection
 @section('script')
   

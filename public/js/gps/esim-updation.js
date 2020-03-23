@@ -1,6 +1,6 @@
 $(document).ready(function() {
-    $('.action-items').hide();
-    // document.getElementById("deletebutton").style.display = "none"; 
+    $('.action-items,.refresh,.loader').hide();
+    $('.upload_xl,.browse').show();
 });
 var check_box = '';
 
@@ -20,6 +20,7 @@ var check_box = '';
         var uploadedContent = document.getElementById("fileUpload");      
         if (uploadedFileTypes.test(uploadedContent.value.toLowerCase()))
         {
+            $('.loader').show();
             if (typeof (FileReader) != "undefined")
             {
                 var reader = new FileReader();
@@ -49,14 +50,30 @@ var check_box = '';
                     };
                     reader.readAsArrayBuffer(uploadedContent.files[0]);
                 }
+                
             } else {
                 alert("This browser does not support HTML5.");
             }
         } else {
             alert("Please upload a valid Excel file.");
         }
+        $('.upload_xl,.browse').hide();
+        $('.refresh').show();
     }
 
+    function refreshPage(){
+        window.location.reload();
+    } 
+
+    $('#checkAll').click(function() {
+        if ($(this).prop('checked')) {
+            $('.check_uncheck').prop('checked', true);
+            document.getElementById("check_uncheck_label").innerHTML = "Uncheck All";
+        } else {
+            $('.check_uncheck').prop('checked', false);
+            document.getElementById("check_uncheck_label").innerHTML = "Check All";
+        }
+    });
     /**
      * 
      * 
@@ -69,9 +86,8 @@ var check_box = '';
 
         var sheetName   = workbook.SheetNames[0];
         var filename    = document.getElementById("fileUpload").files[0].name;
-       
         // read all rows from first sheet into an JSON array.
-        var excelRows   = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+        var excelRows = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
         for (var i = 0; i < excelRows.length; i++)
         {
             uploadedFileContentsProcessed.push({
@@ -82,6 +98,8 @@ var check_box = '';
                 'activation_date'       : (typeof excelRows[i]["Activation Date"] != 'undefined') ? excelRows[i]["Activation Date"] : ''
             });
         }
+        $('#file_name').text('File:- '+filename);
+        $('#file_rows').text('Total no of rows uploaded:- '+excelRows.length);
     }
 
     /**
@@ -91,10 +109,13 @@ var check_box = '';
      */
     function listUploadedFileContents()
     {
+        $('.loader').hide();
+        $('#checkAll').prop('checked', true);
+        document.getElementById("check_uncheck_label").innerHTML = "Uncheck All";
         $("#uploaded-excel-details").html('');
         for (var i = 0; i < uploadedFileContentsProcessed.length; i++)
         {
-            $("#uploaded-excel-details").append('<tr id="checkbox-'+i+'"><td>'+i+'<input onclick="checkboxClicked('+i+')" type="checkbox" name="checkbox[]" checked id="checkbox'+i+'" value="'+i+'"></td>'+ 
+            $("#uploaded-excel-details").append('<tr id="checkbox-'+i+'"><td>'+i+'<input onclick="checkboxClicked('+i+')" type="checkbox" name="checkbox[]" class="check_uncheck" checked id="checkbox'+i+'" value="'+i+'"></td>'+ 
             '<td><label>'+uploadedFileContentsProcessed[i]["imsi"]+'</label></td>'+
             '<td><label>'+uploadedFileContentsProcessed[i]["msisdn"]+'</label></td>'+
             '<td><label>'+uploadedFileContentsProcessed[i]["business_unit_name"]+'</label></td>'+
@@ -131,6 +152,8 @@ var check_box = '';
         else
         {
             userSelectedItems.splice(userSelectedItems.indexOf(clickedItemIndex), 1);
+            $('#checkAll').prop('checked', false);
+            document.getElementById("check_uncheck_label").innerHTML = "Check All";
         }
         manageActionItems();
     }
@@ -180,6 +203,8 @@ var check_box = '';
         }
         else
         {
+            $('.action-items').hide();
+            $('.loader').show();
             $.ajax({
                 type:'POST',
                 url: "update-esim-numbers",
@@ -190,7 +215,9 @@ var check_box = '';
                 },
                 success: function (res) 
                 {
+                    $('.loader').hide();
                     alert('successs');
+                    refreshPage();
                 }
   
             });
