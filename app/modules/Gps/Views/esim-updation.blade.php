@@ -25,26 +25,74 @@ Create Vehicle Type
                         <form  method="POST" action="" enctype="multipart/form-data">
                             {{csrf_field()}}
                             <div class="row">
-                                <div class="form-group has-feedback">
-                                    <p>
-                                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-                                        Why do we use it?
-                                        It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
-                                    </p> 
+                                <div class="form-group esim-update-helptext-general">
+                                    Update device's E-SIM numbers with an excel upload. The uploaded file must contains columns "IMSI" and "MSISDN". Each "MSISDN" number will be updated on the system against "IMSI" number. Upload a file to proceed.
                                 </div>                 
-                            </div>               
-                            <div class="col-lg-3">
-                                <div class="form-group has-feedback">
-                                    <div class="form-group has-feedback">
-                                        <input type="file" class="form-control {{ $errors->has('fileUpload') ? ' has-error' : '' }}" placeholder="Choose File" name="fileUpload" id="fileUpload" value="{{ old('fileUpload') }}" > 
-                                    </div>
-                                    @if ($errors->has('fileUpload'))
+                            </div>
+
+                            <!-- file uploader -->
+                            <div class="esim-upload-section">
+                                <input type="file" class="{{ $errors->has('fileUpload') ? ' has-error' : '' }}" placeholder="Choose File" name="fileUpload" id="fileUpload" value="{{ old('fileUpload') }}" > 
+                                &nbsp;
+                                <!-- file upload button -->
+                                <input type="button" id="upload" value="Upload" onclick="uploadFile()" />
+                                <!-- /file upload button -->
+                            </div>
+                            <!-- /file uploader -->
+
+                            <!-- file upload error -->
+                            <div class="esim-upload-section">
+                                @if ($errors->has('fileUpload'))
                                     <span class="help-block">
                                         <strong class="error-text">{{ $errors->first('fileUpload') }}</strong>
                                     </span>
-                                    @endif
-                                    <input type="button" id="upload" value="Upload" onclick="Upload()" />
-                                    <input type="button" id="deletebutton" value="Delete" onclick="deletedata()" style="float: left"/>
+                                @endif
+                            </div>
+                            <!-- /file upload error -->
+
+                            <!-- action bar -->
+                            <div class="esim-upload-section pull-right action-items">
+                                <!-- action items -->
+                                <button class="dropdown-toggle" type="button" data-toggle="dropdown">Choose
+                                <span class="caret"></span></button>
+                                <ul class="dropdown-menu">
+                                <li onclick="removeSelectedRows()"> Remove selected rows </li>
+                                </ul>
+                                <!-- /action items -->
+                            </div>
+                            <!-- /action bar -->
+
+                            <!-- temporary listing -->
+                            <div class="esim-upload-section uploaded-excel-details-wrapper action-items">
+                                <table class="table table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>IMSI Number</th>
+                                        <th>E-SIM/MSISDN Number</th>
+                                        <th>Business Unit Name</th>
+                                        <th>Product Status</th>
+                                        <th>Activation Date</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="uploaded-excel-details"></tbody>
+                                </table>
+                            </div>
+                            <!-- /temporary listing -->
+
+                            <!-- update button -->
+                            <div class="esim-upload-section action-items">
+                                <input type="button" class="pull-right" value="Update E-Sim Numbers" onclick="updateEsimNumbersToDatabase()" />
+                            </div>
+                            <!-- /update button -->
+
+                            <div class="col-lg-3">
+                                <div class="form-group has-feedback">
+                                    <div class="form-group has-feedback">
+                                    </div>
+                                    
+                                    
+                                    
                                     
                                 </div>
                             </div>                                 
@@ -57,32 +105,17 @@ Create Vehicle Type
                         <label id="file_name"> </label>
                         
                         <div class="table-contain" style="">
-                        <form  method="POST" action="{{route('esim.number.updation.p')}}" enctype="multipart/form-data">
-                            {{csrf_field()}}
-                        <table border="1" id="table" class="excel-table">
-                            <thead >
-                                <tr>
-                                    <th style="width: 4.15%"></th>
-                                    <th style="width: 33.9%">IMSI</th>
-                                    <th style="width: 24.5%">MSISDN</th>
-                               </tr>
-                                </thead>
-                               
-                            <tbody id="dvExcel"></tbody>
-       
-                        </table>
-                        <!-- <button type="submit" class="btn btn-primary btn-lg form-btn pull-left">Save </button> -->
-                        </form>
+                        
                         <style>
-.table-contain
+/* .table-contain
 {
     margin-left: -31%;
     float: left;
     margin-top: 7%;
     height: 203px;
     margin-bottom:6%;
-}
-.excel-table{
+} */
+/* .excel-table{
     width: 276px; float: left;
 }
 .excel-table thead {
@@ -96,6 +129,24 @@ max-height: 200px;
     height: auto;
     display: block;
     width: 100%;
+} */
+.esim-update-helptext-general{
+    line-height: 29px;
+}
+.esim-upload-section{
+    margin-top:10px;
+    margin-bottom:10px;
+}
+.esim-upload-section > .action-item ul li{
+    cursor:pointer;
+}
+.uploaded-excel-details-wrapper{
+    width:100%;
+    height:500px;
+    overflow:auto;
+}
+.uploaded-excel-details thead th{
+    width:200px;
 }
 
                                </style>

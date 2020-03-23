@@ -165,4 +165,16 @@ class Gps extends Model
                         'refurbished_status'    =>  1
                     ]); 
     }
+
+    /**
+     * 
+     * 
+     * 
+     */
+    public function updateEsimNumbers($imsi, $msisdn)
+    {
+        return self::where('imsi', $imsi)->update([
+            'e_sim_number'  => $msisdn
+        ]);
+    }
 }
