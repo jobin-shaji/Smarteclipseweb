@@ -104,22 +104,27 @@
           </div>
         </div>
       </div>
-      <div class="row">
+      <div class="row"> 
         <div class="col-lg-3 col-xs-6 gps_returned_dashboard_grid dash_grid">
           <!-- small box -->
           <div class="small-box bg-green bxs">
-            <div class="inner">
-              <h3 id="gps_returned">
-                <div class="loader"></div>
-              </h3>
-              <p>GPS Devices: Return</p>
+
+            <div class="inner inner-left">
+              <div class="box-2">
+                <div style="float:left; width:50%">
+                  <h3 id="gps_returned"></h3>
+                  <p class="mrg-bt-0">GPS Devices: Returned</p>
+                </div>
+                <div style="float:left; width:50%">
+                  <h3 id="gps_returned_request"></h3>
+                  <p class="mrg-bt-0">GPS Devices: Return Request</p>
+                </div>
+              </div>
             </div>
-            <div class="icon">
-              <i class="fa fa-tablet"></i>
-            </div>
-            <a href="/returned-gps" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="/returned-gps" class="small-box-footer" style='float: left;width: 49%;'>View <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="/device-return-history-list" class="small-box-footer" style='float: left;width: 51%;'>View <i class="fa fa-arrow-circle-right"></i></a>
           </div>
-        </div>             
+        </div>          
         <!-- ./col -->
         <div class="col-lg-3 col-xs-6 dealer_dashboard_grid dash_grid">
           <!-- small box -->

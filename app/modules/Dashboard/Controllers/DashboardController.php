@@ -20,9 +20,9 @@ use App\Modules\Vehicle\Models\Document;
 use App\Modules\Gps\Models\GpsTransferItems;
 use App\Modules\Servicer\Models\ServicerJob;
 use App\Modules\Operations\Models\VehicleModels;
-
 use App\Modules\User\Models\User;
 use App\Modules\Warehouse\Models\GpsStock;
+use App\Modules\DeviceReturn\Models\DeviceReturn;
 use DataTables;
 use DB;
 use Carbon\Carbon;
@@ -251,6 +251,7 @@ class DashboardController extends Controller
             'gps_transferred'           => $gps_transferred, 
             'gps_to_be_added_to_stock'  => $gps_to_be_added_to_stock, 
             'gps_returned'              => $gps_returned, 
+            'gps_returned_request'      => DeviceReturn::select('id')->where('status',0)->count(), 
             'dealers'                   => Dealer::select('id')->count(), 
             'subdealers'                => SubDealer::select('id')->count(),
             'clients'                   => Client::select('id')->count(),
