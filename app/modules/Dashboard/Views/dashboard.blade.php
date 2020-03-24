@@ -121,7 +121,8 @@
                 </div>
               </div>
             </div>
-            <a href="/returned-gps" class="small-box-footer" style='float: left;width: 50%;'>View <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="/returned-gps" class="small-box-footer" style='float: left;width: 49%;'>View <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="/device-return-history-list" class="small-box-footer" style='float: left;width: 51%;'>View <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>          
         <!-- ./col -->
