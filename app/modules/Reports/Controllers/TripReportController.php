@@ -14,16 +14,28 @@ class TripReportController extends Controller
 {
   use VehicleDataProcessorTrait;
 
+    public function TripReportView()
+    {
+        $trips = [];
+        $vehicles = \Auth::user()->client->vehicles;
+        return view('Reports::trip-report',compact('trips','vehicles'));
+    }
+
     public function tripReport(Request $request)
     {
-        // $id = decrypt($id);
-        $id = $request->id;
 
-       $alerts = Alert::where('gps_id', $id)->whereIn('alert_type_id',[19,20])->whereDate('device_time','2020-02-19')->orderBy('device_time')->get();
+        $rules = $this->tripReortRules();
+        
+        $this->validate($request, $rules);  
 
-       $trips = [];
+        $id = $request->vehicle;
+        $date = $request->date;
 
-       $i=0;
+        $alerts = Alert::where('gps_id', $id)->whereIn('alert_type_id',[19,20])->whereDate('device_time',$date)->orderBy('device_time')->get();
+
+        $trips = [];
+
+        $i=0;
 
         foreach ($alerts as $item) {
             if($item->alert_type_id == 19)
@@ -65,9 +77,19 @@ class TripReportController extends Controller
 
         }
 
+        $vehicles = \Auth::user()->client->vehicles;
 
-        return view('Reports::trip-report',compact('trips'));
+        return view('Reports::trip-report',compact('vehicles','trips'));
 
     }  
+
+    public function tripReortRules()
+    {
+        $rules = [
+            'vehicle' => 'required',
+            'date' => 'required'
+        ];
+        return  $rules;
+    }
 
 }
