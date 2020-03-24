@@ -1181,8 +1181,8 @@ class VehicleController extends Controller
             )
             ->with('client:id,name')
             ->with('vehicleType:id,name')
-            ->with('gps:id,imei,serial_no')
-            ->get();
+            ->with('gps:id,imei,serial_no');
+            // ->get();
             return DataTables::of($vehicles)
             ->addIndexColumn()
             ->addColumn('dealer',function($vehicles){
@@ -1205,6 +1205,12 @@ class VehicleController extends Controller
                $vehicle = Vehicle::find($vehicles->id);
                return ( isset($vehicle->client->trader) ) ? $vehicle->client->trader->name : '';
              })
+             ->addColumn('serial_no',function($vehicles){
+                return    $vehicles->gps->serial_no ?? '' ;
+            })
+            ->addColumn('vehicle_type_name',function($vehicles){
+                return    $vehicles->vehicleType->name ?? '' ;
+            })
             ->addColumn('action', function ($vehicles) {
                 $b_url = \URL::to('/');
                 if($vehicles->deleted_at == null){
@@ -1215,7 +1221,7 @@ class VehicleController extends Controller
                 }
             })
             ->rawColumns(['link', 'action'])
-            ->make();
+            ->make(true);
     }
 
     /////////////////////////////Vehicle Tracker/////////////////////////////
