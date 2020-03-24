@@ -295,7 +295,7 @@
         var form = $(this)[0];
         var data = new FormData(form);
         $(".create_btn").attr('disabled', true);
-        ajaxRequest("client/create",data,'POST', succesClientCreate, errorClientCreate)        
+        ajaxRequest("client/create",data,'POST', successClientCreate, errorClientCreate)        
     });
 
     $(".cancel-btn").click(function(){
@@ -308,7 +308,7 @@
 
     
 
-    function succesClientCreate(response)
+    function successClientCreate(response)
     {
       if(response.status == true)
       {
@@ -320,7 +320,7 @@
     }
 
     function  errorClientCreate(error){
-      
+      displayAjaxError(error,$("#client-creation-form"));
     }
 
   })

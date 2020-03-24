@@ -1893,24 +1893,29 @@ var alert_user_id=document.getElementById('user_id').value;
         }
 
     function ajaxRequest(url,data,method,successCallBack,errorCallBack)
-      {
-          var purl = getUrl() + '/'+url ;
-          
-          $.ajax({
-              type: method,
-              url:  purl,
-              data: data,
-              processData: false,
-              contentType: false,
-              async: true,
-              headers: {
-                  'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-              },
-              success: function (response) {
-                  return successCallBack(response)
-              },
-              error: function (error) {
-                  return errorCallBack(error)
-              }
-          })
-     }
+    {
+        var purl = getUrl() + '/'+url ;
+        
+        $.ajax({
+            type: method,
+            url:  purl,
+            data: data,
+            processData: false,
+            contentType: false,
+            async: true,
+            headers: {
+                'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function (response) {
+                return successCallBack(response)
+            },
+            error: function (error) {
+                return errorCallBack(error)
+            }
+        })
+    }
+
+    function displayAjaxError(error,form)
+    {
+       
+    }
