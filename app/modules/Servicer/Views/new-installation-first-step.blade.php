@@ -68,6 +68,9 @@ Assign Servicer
 <!-- </form> -->
 </div>
 </div>
+
+
+
 <div class="panel panel-primary setup-content" id="step-2">
 <form method="POST" action="{{route('job.complete.save',$servicer_job->id)}}"enctype="multipart/form-data">
 <div class="row">
