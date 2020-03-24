@@ -46,6 +46,8 @@ function countSection(data)
                 $('#stock_message').html(res.stock_string);
             }
             $('#transferred_section').show();
+            $('#from_date').show();
+            $('#to_date').show();
             $('#transferred_count').html(res.transferred_gps_count);
             $('#transferred_message').html(res.transferred_string);
         },
