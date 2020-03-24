@@ -51,6 +51,7 @@ Assign Servicer
 </div>
 
 <div class="panel-body">
+<!-- <form method="POST" action="{{route('job.installation.checkbo.save',$servicer_job->id)}}"enctype="multipart/form-data"> -->
 <div class="row">
 <?php foreach ($unboxing_checklist['checklist'][0]['items'] as $list){ ?>
 <div class="col-lg-6">
@@ -64,6 +65,7 @@ Assign Servicer
 <?php } ?>
 <button class="btn btn-primary nextBtn pull-right"  onclick="return selectedCheckList()" type="button">Save</button>
 </div>
+<!-- </form> -->
 </div>
 </div>
 <div class="panel panel-primary setup-content" id="step-2">

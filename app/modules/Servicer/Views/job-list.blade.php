@@ -23,8 +23,9 @@ $key        = (isset($_GET['new_installation_search_key'])) ? $_GET['new_install
         @endif
     </nav>
 
-    <!-- <div class="mlt-list">
+  <div class="mlt-list">
     <!-- Search and filters -->
+
     <div align="right" class="search-1">
       <form method="GET" action="{{route('job_list')}}" class="search-top">
         {{csrf_field()}}
@@ -58,7 +59,8 @@ $key        = (isset($_GET['new_installation_search_key'])) ? $_GET['new_install
          
   </form>
     </div> 
-          <table class="table table-hover table-bordered  table-striped datatable"  style="width:100%;text-align: center" >
+          <table class="table table-hover table-bordered  datatable"  style="width:70%;text-align: center" >
+            <!-- <table class="table table-hover table-bordered  table-striped datatable"  style="width:70%;text-align: center" > -->
           <thead class="indigo white-text">
                             <tr>
                             <th><b>SL.No</b></th>
@@ -129,7 +131,13 @@ $key        = (isset($_GET['new_installation_search_key'])) ? $_GET['new_install
         </table>
         {{ $servicer_jobs->appends(Request::all())->links() }}
       </div>
+    </div>
       <style>
+       .table td, .table th {
+            padding: .86rem;
+            vertical-align: top;
+            border-top: 0px solid #dee2e6;
+        }
         th {
           background-color:#778899 ;
           color: white;
