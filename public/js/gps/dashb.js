@@ -59,7 +59,8 @@ function dbcount(res){
       $('#stop').text(res.stop);
       $('#offline').text(res.offline);
 
-      $('#pending_jobs').text(res.pending_jobs);
+      $('#new_installation_jobs').text(res.new_installation_jobs);
+       $('#on_progress_installation_jobs').text(res.on_progress_installation_jobs);
       $('#pending_service_jobs').text(res.pending_service_jobs);
       $('#completed_jobs').text(res.completed_jobs);
       $('#service_completed_jobs').text(res.service_completed_jobs);
@@ -68,7 +69,7 @@ function dbcount(res){
       $('#gps').text(res.gps);
       $('#gps_add_to_stock').text(res.gps_add_to_stock);
       $('#pending_gps').text(res.gps_to_verify);
-      $('#all_pending_jobs').text(res.all_pending_jobs);
+      $('#all_pending_jobs').text(res.servicer_all_pending_jobs);
 
 
 
