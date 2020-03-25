@@ -763,13 +763,13 @@ class ServicerController extends Controller {
 }
 
 
- public function getupdateCommandlist(Request $request)
+ public function updateCommandcompleted(Request $request)
       {
 
         $servicer_jobid  = $request->id;
         // $rules=$this->updateChecklistRule();
         // $this->validate($request,$rules);
-             
+             dd('1');
         if(isset($_POST['commandcheckbox']))
             {
                      
@@ -804,7 +804,7 @@ class ServicerController extends Controller {
                     if(isset($command_configuration[0])&& isset($job_plan)) {
                     $command_configuration=json_decode($command_configuration[0]['value'],true )[$job_plan];
                     
-                
+                dd($command_configuration);
                     }
                     }
                $check_list_items    =  $unboxing_checklist['checklist'][0]['items'];
@@ -1084,7 +1084,7 @@ public function serviceJobDetails(Request $request)
             
             $request->session()->flash('message', 'Job  completed successfully!');
             $request->session()->flash('alert-class', 'alert-success');
-             $service_eng_installation_command   = (new ServicerJob())->getInstallationJob($servicerjob_id);
+             $service_eng_installation_command   = (new ServicerJob())->getInstallationJob($servicer_jobid);
       //for listing command
         if($service_eng_installation_command  == null)
         {

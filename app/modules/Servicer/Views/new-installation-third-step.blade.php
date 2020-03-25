@@ -12,7 +12,7 @@ Assign Servicer
 <h4 class="panel-title">Command</h4>
 </div>
 <div class="panel-body">
-	<form  method="POST" action="{{route('updatecommand.installationnew-save.p',$servicer_job->id)}}">
+	<form  method="POST" action="{{route('command.complete.save',$servicer_job->id)}}">
    {{csrf_field()}}
 <div class="row">
 <?php foreach ($command_configuration as $command){ ?>
