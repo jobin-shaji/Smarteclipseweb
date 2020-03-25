@@ -1907,6 +1907,7 @@ var alert_user_id=document.getElementById('user_id').value;
                 'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
             },
             success: function (response) {
+                $('body').find('.ajax-alert').remove();
                 return successCallBack(response)
             },
             error: function (error) {
@@ -1915,7 +1916,16 @@ var alert_user_id=document.getElementById('user_id').value;
         })
     }
 
-    function displayAjaxError(error,form)
+    function displayAjaxError(error_response,form)
     {
+
+        var error = JSON.parse(error_response.responseText);
+        toastr.error( error.message , 'Error Message');
+        $(form).find('.ajax-alert').remove();
+        $.each(error.errors, function(index, value) {
+            
+            $(form).find('[name = "'+index+'"]')
+            .after(' <span class="help-block ajax-alert"><strong class="error-text">'+value.join()+'</strong></span>');
+        });
        
     }

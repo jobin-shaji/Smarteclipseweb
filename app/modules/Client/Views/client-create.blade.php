@@ -22,6 +22,8 @@
           </div>
         @endif  
     </nav>
+
+    <input type="hidden" id = "role_type"  value={{ \Auth::user()->getRoleNames()[0]}}>
     <form  method="POST" id = "client-creation-form" action="{{route('client.create.p')}}">
       {{csrf_field()}}
       <div class="row">
@@ -302,12 +304,16 @@
       window.location.href = "/clients";
     })
 
-    $(".confirm-btn").click(function(){
-      window.location.href ="/gps-transfer-sub-dealer/create";
+    $(".confirm-btn").click(function()
+    {
+      if( $('#role_type').val() == 'trader' ){
+        window.location.href ="/sub-dealer-assign-servicer";
+      }else{
+        window.location.href ="/gps-transfer-sub-dealer/create";
+      }
+      
     })
-
     
-
     function successClientCreate(response)
     {
       if(response.status == true)
@@ -320,7 +326,8 @@
     }
 
     function  errorClientCreate(error){
-      displayAjaxError(error,$("#client-creation-form"));
+      $(".create_btn").attr('disabled', false);
+      displayAjaxError(error,"#client-creation-form");
     }
 
   })
