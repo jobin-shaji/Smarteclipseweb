@@ -531,6 +531,9 @@ function backgroundPostData(url, data, callBack, options) {
                 else if(callBack=='rootVehicle'){
                     rootVehicle(res);
                 }
+                else if(callBack=='searchDevice'){
+                    searchDevice(res);
+                }
 
 
 
@@ -1805,7 +1808,8 @@ localStorage.setItem('login', 1);
 
 
 // ---------------check notification-----------------------------------
-var alert_user_id=document.getElementById('user_id').value;
+if(document.getElementById('user_id').value!=null){
+    var alert_user_id=document.getElementById('user_id').value;
 
     setInterval(function() {
         alertCount(alert_user_id);
@@ -1817,6 +1821,8 @@ var alert_user_id=document.getElementById('user_id').value;
         alertCount(alert_user_id);
         clientAlerts(alert_user_id);
     });
+}
+
 
     function alertCount(alert_user_id)
     {
