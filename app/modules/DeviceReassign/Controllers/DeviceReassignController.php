@@ -35,7 +35,25 @@ class DeviceReassignController extends Controller
     public function getDeviceList(Request $request)
     {
         dd($request->imei);
-        return  $request->imei;    
+        $device_return = DeviceReturn::select(
+                'id', 
+                'gps_id',                      
+                'type_of_issues',
+                'comments',                                        
+                'created_at',
+                'servicer_id',
+                'status',
+                'deleted_at'
+            )
+            ->withTrashed()
+            ->with('gps:id,imei,serial_no')
+            ->orderBy('id','desc')->get();
+            // $device_return      =   $device_return->where('servicer_id',$servicer_id)->get();
+            return DataTables::of($device_return)
+            ->addIndexColumn()
+            ->rawColumns(['link', 'action'])
+            ->make();
+        
     }
 
     /**
