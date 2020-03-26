@@ -36,13 +36,15 @@ $(document).ready(function() {
     });
 
 
-$('#upload_form').on('submit', function(event){
-   
-       event.preventDefault();
-       $("#load4").removeAttr("style");
-       $("#load-4").removeAttr("style");
-        
-      var data_val=new FormData(this);
+$('#upload_form').on('submit', function(event)
+{
+    event.preventDefault();
+    $("#load4").removeAttr("style");
+    $("#load-4").removeAttr("style");
+    var submitBtn = $(this).find('[type="submit"]');
+    submitBtn.attr("disabled", true).html("Processing...");
+    var data_val=new FormData(this);
+    
       $.ajax({
            url:'/document-upload',
            method:"POST",
@@ -55,7 +57,7 @@ $('#upload_form').on('submit', function(event){
            {
             $("#load4").attr("style", "display: none;");
             $("#load-4").attr("style", "display: none;");
-              
+            submitBtn.attr("disabled", false).html("Save");  
                 if(typeof res.error != 'undefined')
                 {
                     Object.keys(res.error).forEach(key => {
