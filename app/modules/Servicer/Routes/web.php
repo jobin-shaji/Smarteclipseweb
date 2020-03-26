@@ -67,9 +67,9 @@ Route::post('/allcheck-list','ServicerController@getchecklist')->name('allcheck.
 	//for installation check list save
 	Route::post('/servicer/{id}/updatecheckbox-installation-save','ServicerController@getchecklist')->name('updatecheckbox.installation.save.p');
      // for vehicle list save
-     Route::post('/servicer/{id}/vehiclejob-complete-save','ServicerController@vehicleDataUpdated')->name('vehiclejob.complete.save');
+     Route::post('/vehiclejob-complete-save/{id}','ServicerController@vehicleDataUpdated')->name('vehiclejob.complete.save');
      // //for installation command list save
-	Route::post('/servicer/{id}/command-complete-save','ServicerController@updateCommandcompleted')->name('command.complete.save');
+	Route::post('/updatecommand-complete-save/{id}','ServicerController@updateCommandcompleted')->name('command.complete.save');
 
 	// Route::post('/servicejob-complete-save/{id}','ServicerController@getchecklist')->name('servicejob.complete.save');
 

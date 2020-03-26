@@ -285,7 +285,7 @@ Assign Servicer
 </div>
 <div class="row">
 <div class="col-md-3 ">
-<button type="submit" class="btn btn-primary btn-md form-btn ">Job completion</button>
+<button type="submit" class="btn btn-primary btn-md form-btn ">Next</button>
 </div>
 </div>
 </div> 
