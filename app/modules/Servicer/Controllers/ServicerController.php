@@ -14,6 +14,7 @@ use App\Modules\SubDealer\Models\SubDealer;
 use App\Modules\Trader\Models\Trader;
 use App\Modules\Servicer\Models\Servicer;
 use App\Modules\Servicer\Models\FcmLog;
+use App\Modules\Servicer\Models\ServicerNotification;
 use App\Modules\Servicer\Models\ServicerJob;
 use App\Modules\Vehicle\Models\Document;
 use App\Modules\Vehicle\Models\VehicleType;
@@ -266,9 +267,35 @@ class ServicerController extends Controller {
             'job_status'=>0
             // 'longitude'=>$location_lng
         ]);
-        // $gps = Gps::find($request->gps);
-        // $gps->user_id = null;
-        // $gps->save();
+
+        if($request->job_type == 1)
+        {
+            $tttle   ="New Insatallation Job"; 
+            $message = ['job_id'  => $job_id,
+                        'content' => $request->description,
+                        'date'    => date('Y-m-d H:i:s')
+                         ];
+        }else{
+            $tttle   = "New Service Job"; 
+            $message = ['job_id'  => $job_id,
+                        'content' => $request->description,
+                        'date'    => date('Y-m-d H:i:s')
+                         ];
+        }
+              
+        ServicerNotification::create([
+                                        'servicer_id'=> $request->servicer,
+                                        'title'      => $tttle,
+                                        'data'       => json_encode($message,true)
+                                    ]);
+
+        $servicer = Servicer::find($request->servicer);      
+        $devices  = $servicer->devices;
+        foreach ($devices as $device) {
+            $this->fcmPushNotification($device->firebase_token,$tttle,$message);
+        }
+
+     
         $request->session()->flash('message', 'Assign  servicer successfully!');
         $request->session()->flash('alert-class', 'alert-success');
         return redirect(route('assign.servicer'));
@@ -393,10 +420,31 @@ class ServicerController extends Controller {
                 'job_status'=>0
                 // 'longitude'=>$location_lng
             ]);
+            if($request->job_type == 1)
+            {
+                $tttle   ="New Insatallation Job"; 
+                $message = ['job_id'  => $job_id,
+                            'content' => $request->description,
+                            'date'    => date('Y-m-d H:i:s')
+                             ];
+            }else{
+                $tttle   = "New Service Job"; 
+                $message = ['job_id'  => $job_id,
+                            'content' => $request->description,
+                            'date'    => date('Y-m-d H:i:s')
+                             ];
+            }
+                  
+            ServicerNotification::create([
+                                            'servicer_id'=> $request->servicer,
+                                            'title'      => $tttle,
+                                            'data'       => json_encode($message,true)
+                                        ]);
+
             $servicer = Servicer::find($request->servicer);      
             $devices  = $servicer->devices;
             foreach ($devices as $device) {
-                $this->fcmPushNotification($device->firebase_token);
+                $this->fcmPushNotification($device->firebase_token,$tttle,$message);
             }
             $request->session()->flash('message', 'Assigned Job successfully!');
             $request->session()->flash('alert-class', 'alert-success');
@@ -1780,17 +1828,12 @@ public function serviceJobDetails(Request $request)
     }
 
 
-    public static function fcmPushNotification($device_id)
+    public static function fcmPushNotification($device_id,$tttle,$message)
     {
-        $message = "sample";
         $api_key = 'AAAAgmOkdoQ:APA91bE2v6k93s_cXtcscgODZkDBFT2_D-6DpY_aPt_pwpvKJBHjSURcHrxh4TJfPoNPAOjmp8J7AEVQsNd7eAjr1HHSZ5quR4mz6JRgQtfaE47BYwrwrlVuTp8fJgfLDbmjWumfmVdF';
-        
         $url = 'https://fcm.googleapis.com/fcm/send';
-
-        $title = "sample";
-
-        $body = "sample";
-
+        $title = $tttle;
+        $body = json_encode($message,true);
         $n = [
             "to"=> $device_id,
             "data" => [
@@ -1799,8 +1842,6 @@ public function serviceJobDetails(Request $request)
             ]
         ];
    
-    
-
         $fields = array (
                 'registration_ids' => array (
                         $device_id
