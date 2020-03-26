@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Modules\Gps\Models\GpsData;
 use App\Modules\Gps\Models\Gps;
-
+use App\Modules\Vehicle\Models\VehicleGps;
 use App\Modules\Vehicle\Models\Vehicle;
 use App\Modules\Gps\Models\GpsModeChange;
 use App\Modules\Alert\Models\Alert;
@@ -26,65 +26,54 @@ class TotalKMReportController extends Controller
 
     public function totalKMReport()
     {
-    	$client_id=\Auth::user()->client->id;
-    	 $vehicles=Vehicle::select('id','name','register_number','client_id')
-        ->where('client_id',$client_id)
-        ->withTrashed()
-        ->get();    
+    	$client_id      =   \Auth::user()->client->id;
+        $vehicles       =   (new Vehicle())->getVehicleListBasedOnClient($client_id);  
         return view('Reports::total-km-report',['vehicles'=>$vehicles]);  
     }  
 
     public function totalKMReportList(Request $request)
     {
-        $single_vehicle_id = [];
-        $client_id=\Auth::user()->client->id;
-        // $from = $request->data['from_date'];
-        // $to = $request->data['to_date'];
-        $vehicle =$request->data['vehicle'];
-        // $search_from_date=date("Y-m-d", strtotime($from));
-        // $search_to_date=date("Y-m-d", strtotime($to));
-        if($vehicle!=0)
+        $vehicle_gps_ids                =   [];
+        $total_km_details               =   [];
+        $client_id                      =   \Auth::user()->client->id;
+        $vehicle_id                     =   $request->data['vehicle_id'];
+        if($vehicle_id != 0)
         {
-          
-            $vehicle_details=Vehicle::select('id','gps_id')
-                                        ->where('id',$vehicle)
-                                        ->withTrashed()
-                                        ->first();
-            $single_vehicle_ids = $vehicle_details->gps_id;
+            $vehicle_details            =   (new Vehicle())->getSingleVehicleDetailsBasedOnVehicleId($vehicle_id);
+            $vehicle_gps_details        =   (new VehicleGps())->getGpsDetailsBasedOnVehicle($vehicle_id);
+            foreach($vehicle_gps_details as $each_vehicle_gps)
+            {
+                $vehicle_gps_ids[]      =   $each_vehicle_gps->gps_id;
+            }
+            $km                         =   (new Gps())->getSumOfKmBasedOnGpsOfVehicle($vehicle_gps_ids);
+            $total_km_details[]         =   [   'vehicle_name'              => $vehicle_details->name,
+                                                'vehicle_register_number'   => $vehicle_details->register_number,
+                                                'total_km'                  => $km                             
+                                            ];
         }
         else
         {
-           
-            $vehicle_details =  Vehicle::select('id','gps_id','client_id')->where('client_id',$client_id)->withTrashed()->get();
-
-            foreach($vehicle_details as $vehicle_detail){
-                $single_vehicle_id[] = $vehicle_detail->gps_id; 
-
+            $vehicle_details            =   (new Vehicle())->getVehicleListBasedOnClient($client_id);
+            foreach($vehicle_details as $each_vehicle)
+            {
+                $vehicle_id             =   $each_vehicle->id; 
+                $vehicle_gps_details    =   (new VehicleGps())->getGpsDetailsBasedOnVehicle($vehicle_id);
+                foreach($vehicle_gps_details as $each_vehicle_gps)
+                {
+                    $vehicle_gps_ids[]  =   $each_vehicle_gps->gps_id;
+                }
+                $km                     =   (new Gps())->getSumOfKmBasedOnGpsOfVehicle($vehicle_gps_ids);
+                $total_km_details[]     =   [   'vehicle_name'              => $each_vehicle->name,
+                                                'vehicle_register_number'   => $each_vehicle->register_number,
+                                                'total_km'                  => $km                             
+                                            ];
             }
         }
-         $query =Gps::select(
-            'id', 
-             'km'
-        )
-        ->with('vehicle') 
-        ->orderBy('id', 'desc');             
-         if($vehicle==0 || $vehicle==null)
-        {        
-            $query = $query->whereIn('id',$single_vehicle_id);           
-        }
-        else
-        {
-            $query = $query->where('id',$single_vehicle_ids);               
-        }   
-        // if($from){            
-        //     $query = $query->whereDate('date', '>=', $search_from_date)->whereDate('date', '<=', $search_to_date);
-        // }                     
-        $totalkm_report = $query->get();
-        return DataTables::of($totalkm_report)
+        return DataTables::of($total_km_details)
         ->addIndexColumn()        
-        ->addColumn('totalkm', function ($totalkm_report) {
-          $gps_km=$totalkm_report->km;
-          $km=round($gps_km/1000);
+        ->addColumn('totalkm', function ($total_km_details) {
+            $gps_km=$total_km_details['total_km'];
+            $km=round($gps_km/1000);
             return $km;
         })
         ->make();

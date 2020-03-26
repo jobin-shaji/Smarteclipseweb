@@ -123,7 +123,7 @@ var check_box = '';
         $("#uploaded-excel-details").html('');
         for (var i = 0; i < uploadedFileContentsProcessed.length; i++)
         {
-            $("#uploaded-excel-details").append('<tr id="checkbox-'+i+'"><td>'+i+'<input onclick="checkboxClicked('+i+')" type="checkbox" name="checkbox[]" class="check_uncheck" checked id="checkbox'+i+'" value="'+i+'"></td>'+ 
+            $("#uploaded-excel-details").append('<tr class = "text-center" id="checkbox-'+i+'"><td><input onclick="checkboxClicked('+i+')" type="checkbox" name="checkbox[]" class="check_uncheck" checked id="checkbox'+i+'" value="'+i+'"></td>'+ 
             '<td><label>'+uploadedFileContentsProcessed[i]["imsi"]+'</label></td>'+
             '<td><label>'+uploadedFileContentsProcessed[i]["msisdn"]+'</label></td>'+
             '<td><label>'+uploadedFileContentsProcessed[i]["business_unit_name"]+'</label></td>'+

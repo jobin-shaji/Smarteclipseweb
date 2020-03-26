@@ -20,9 +20,9 @@ use App\Modules\Vehicle\Models\Document;
 use App\Modules\Gps\Models\GpsTransferItems;
 use App\Modules\Servicer\Models\ServicerJob;
 use App\Modules\Operations\Models\VehicleModels;
-
 use App\Modules\User\Models\User;
 use App\Modules\Warehouse\Models\GpsStock;
+use App\Modules\DeviceReturn\Models\DeviceReturn;
 use DataTables;
 use DB;
 use Carbon\Carbon;
@@ -251,6 +251,7 @@ class DashboardController extends Controller
             'gps_transferred'           => $gps_transferred, 
             'gps_to_be_added_to_stock'  => $gps_to_be_added_to_stock, 
             'gps_returned'              => $gps_returned, 
+            'gps_returned_request'      => DeviceReturn::select('id')->where('status',0)->count(), 
             'dealers'                   => Dealer::select('id')->count(), 
             'subdealers'                => SubDealer::select('id')->count(),
             'clients'                   => Client::select('id')->count(),
@@ -262,15 +263,13 @@ class DashboardController extends Controller
     {
         $servicer_id=$user->servicer->id;
         return response()->json([
-
-            'pending_jobs' => ServicerJob::select('job_complete_date')->whereNull('job_complete_date')
-             ->where('servicer_id',$servicer_id)->where('job_type',1)->count(),
-             'pending_service_jobs' => ServicerJob::select('job_complete_date','servicer_id','job_type')->whereNull('job_complete_date')->where('servicer_id',$servicer_id) ->where('job_type',2)->count(),
-            'completed_jobs' => ServicerJob::select('job_complete_date','servicer_id','job_type','status')->whereNotNull('job_complete_date')->where('servicer_id',$servicer_id)->where('job_type',1)->where('status',3)->count(),
-            'service_completed_jobs' => ServicerJob::select('job_complete_date','servicer_id','job_type','status')->whereNotNull('job_complete_date')->where('servicer_id',$servicer_id)->where('job_type',2)->where('status',3)->count(),
-            'all_pending_jobs' => ServicerJob::select('job_date','job_complete_date','servicer_id')->where('job_date','<',date('Y-m-d H:i:s'))->whereNull('job_complete_date')->where('servicer_id',$servicer_id)->count(),
-
-            'status' => 'dbcount'
+                'new_installation_jobs' => (new ServicerJob())->getNewInstallationJobCount( $servicer_id), 
+                'on_progress_installation_jobs' =>(new ServicerJob())->getOnProgressJobCount( $servicer_id), 
+                'completed_jobs' =>(new ServicerJob())->getCompletedJobCount( $servicer_id), 
+                'pending_service_jobs' =>(new ServicerJob())->getPendingServiceJobCount( $servicer_id),
+                'servicer_all_pending_jobs' =>(new ServicerJob())->getProgressServiceJobCount( $servicer_id),
+                'service_completed_jobs' =>(new ServicerJob())->getCompletedServiceJobCount( $servicer_id),
+                'status' => 'dbcount'
         ]);
     }
     

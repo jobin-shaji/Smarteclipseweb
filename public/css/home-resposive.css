@@ -7,7 +7,12 @@
     width: 1350px;
 
 }
-    
+.input-warpper span {
+    top: 13px;
+}
+.input-warpper span img {
+    width: 17px;
+}
 
 }
     

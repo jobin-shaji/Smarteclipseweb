@@ -11,8 +11,8 @@ $key        = (isset($_GET['new_installation_search_key'])) ? $_GET['new_install
 <div class="page-wrapper_new">
    <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Installation Pending Jobs List</li>
-        <b> New Installation Jobs List</b>
+        <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Completed Installation Jobs List</li>
+        <b> Completed Installation Jobs List</b>
      </ol>
       @if(Session::has('message'))
           <div class="pad margin no-print">
@@ -26,7 +26,7 @@ $key        = (isset($_GET['new_installation_search_key'])) ? $_GET['new_install
     <!-- <div class="mlt-list">
     <!-- Search and filters -->
     <div align="right" class="search-1">
-      <form method="GET" action="{{route('job_list')}}" class="search-top">
+      <form method="GET" action="{{route('completed.installation.job.list')}}" class="search-top">
         {{csrf_field()}}
         <div class="pull-right cover_list_search">
         <div class="row" >
@@ -34,13 +34,13 @@ $key        = (isset($_GET['new_installation_search_key'])) ? $_GET['new_install
                  <div class="row">
                     <div class="col-lg-8">
                       <div class="form-group" style="width: 100%;">
-                         <input type="text" class="form-control" placeholder="Enter Serial No,Assigne,user name,user email,user mobile" name="new_installation_search_key" id="new_installation_search_key" value="{{ $key }}">
+                         <input type="text" class="form-control" placeholder="Enter Serial No,Assigne,user name,user email,user mobile,registration number" name="new_installation_search_key" id="new_installation_search_key" value="{{ $key }}">
                       </div>
                     </div>
 
                     <div class="col-lg-2" style="margin: 0 0px 18px 0;">
                       <div class="form-group" style="width: 100%;">
-                         <button type="submit"  class="btn btn-primary search_data_list" title="Enter IMEI,Owner,Vehicle,Distributor,Dealer,Service Engineer name">Search</button>
+                         <button type="submit"  class="btn btn-primary search_data_list">Search</button>
                       </div>
                     </div>
                     <div class="col-lg-2" style="margin: 0 0px 18px 0;">
@@ -64,12 +64,13 @@ $key        = (isset($_GET['new_installation_search_key'])) ? $_GET['new_install
                             <th><b>SL.No</b></th>
                                 <th><b>Job Code</b></th>
                                 <th><b>User Details</b></th>
-                                <th><b>Assignee<b></th>
+                                <th><b>Registration Number<b></th>
                                 <th><b>GPS Serial No<b></th>
                                 <th><b>Description<b></th>
                                 <th><b>Location<b></th>
                                 <th><b>Job Date<b></th>
-                                <th><b>Status<b></th>  
+                                <th>Job Completed Date</th> 
+                                <th><b>Job Type<b></th>  
                                 <th><b>Action</b></th>  
                               </tr>
                             </thead>
@@ -99,30 +100,23 @@ $key        = (isset($_GET['new_installation_search_key'])) ? $_GET['new_install
                     <td>{{$servicer_job->client_name}} , {{$servicer_job->mobile_number}}
                     <br>{{$servicer_job->user_email}}<br>{{$servicer_job->client_address}}
                     </td>
-                    <td>{{$servicer_job->user_name}}</td>
+                    <td>{{$servicer_job->register_number}}</td>
                     <td>{{ ($servicer_job->gps_serial_no) ? $servicer_job->gps_serial_no: ''}}</td>
                     <td>{{$servicer_job->description}}</td>
                     <td>{{$servicer_job->location}}</td>
 
                     <td>{{$servicer_job->job_date}}</td>
-                    @if($servicer_job->status == 0)
-                    <td>Cancel</td>
-                    @elseif ($servicer_job->status == 1)
-                    <td>Assigned</td>
-                    @elseif ($servicer_job->status == 2)
-                    <td>Pending</td>
-                    @else
-                    <td>Completed</td>
-                    @endif
-                    @if($servicer_job->status == 0)
-                    <td><font color='red'>Cancelled</font></td>
-                    @elseif ($servicer_job->status == 1)
-                  
-                    <td> <a href="/job/{{Crypt::encrypt($servicer_job->id)}}/details"class='btn btn-xs btn-info'><i class='glyphicon glyphicon-map-marker'></i>Start Installation</a></td>      
+                    <td>{{$servicer_job->job_complete_date}}</td>
+
+                    @if($servicer_job->job_type == 1)
+                    <td>Installation</td>
                   
                     @else
-                    <td> <a href="/job/{{Crypt::encrypt($servicer_job->id)}}/details"class='btn btn-xs btn-info'><i class='glyphicon glyphicon-map-marker'></i>Start Installation</a></td>     
+                    <td>Service</td>
                     @endif
+                   <td> <a href="/job-history/{{Crypt::encrypt($servicer_job->id)}}/details"class='btn btn-xs btn-info'><i class='glyphicon glyphicon-map-marker'></i>View</a></td>      
+                  
+                   
                 </tr>
                 @endforeach
             </tbody>

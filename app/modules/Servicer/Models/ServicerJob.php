@@ -1,8 +1,9 @@
 <?php
 
 namespace App\Modules\Servicer\Models;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 
 class ServicerJob extends Model
@@ -40,5 +41,247 @@ class ServicerJob extends Model
      public function vehicle()
     {
       return $this->hasOne('App\Modules\Vehicle\Models\Vehicle','gps_id','gps_id')->withTrashed();
-    }    
-}
+    }  
+    public function getNewInstallationList($key = null)
+    {
+      $user_id=\Auth::user()->servicer->id;
+
+      $query = DB::table('servicer_jobs')
+        ->join('clients', 'servicer_jobs.client_id', '=', 'clients.id')
+        ->join('users', 'users.id', '=', 'clients.user_id')
+        ->join('servicers', 'servicer_jobs.servicer_id', '=','servicers.id')
+        ->join('gps', 'servicer_jobs.gps_id', '=', 'gps.id')
+        ->select('servicer_jobs.id','servicer_jobs.status','servicer_jobs.job_id','clients.name as client_name',
+        'users.username as user_name','users.email as user_email','users.mobile as mobile_number', 
+        'servicer_jobs.description','servicer_jobs.location','servicer_jobs.status',
+        'servicer_jobs.job_date','servicer_jobs.status',
+        'gps.serial_no as gps_serial_no','clients.address as client_address')
+        ->where('servicer_id',$user_id)
+        ->where('job_type',1)
+        ->whereNull('job_complete_date')
+        ->where('servicer_jobs.status',1);
+        if( $key != null )
+        {
+          $query->where(function($query) use($key){
+            $query = $query->where('clients.name','like','%'.$key.'%')
+              ->orWhere('gps.serial_no','like','%'.$key.'%')
+              ->orWhere('users.mobile','like','%'.$key.'%')
+              ->orWhere('users.username','like','%'.$key.'%')
+              ->orWhere('users.email','like','%'.$key.'%');
+          });       
+        }
+        return $query->paginate(10);
+    }  
+    public function getOnProgressInstallationList($key = null)
+    {
+      $user_id=\Auth::user()->servicer->id;
+
+      $query = DB::table('servicer_jobs')
+        ->join('clients', 'servicer_jobs.client_id', '=', 'clients.id')
+        ->join('users', 'users.id', '=', 'clients.user_id')
+        ->join('servicers', 'servicer_jobs.servicer_id', '=','servicers.id')
+        ->join('gps', 'servicer_jobs.gps_id', '=', 'gps.id')
+        ->select('servicer_jobs.id','servicer_jobs.status','servicer_jobs.job_id','clients.name as client_name',
+        'users.username as user_name','users.email as user_email','users.mobile as mobile_number', 
+        'servicer_jobs.description','servicer_jobs.location','servicer_jobs.status',
+        'servicer_jobs.job_date',
+        'gps.serial_no as gps_serial_no','clients.address as client_address')
+        ->where('servicer_id',$user_id)
+        ->where('job_type',1)
+        ->where('servicer_jobs.status',2)
+        ->whereNull('job_complete_date');
+        if( $key != null )
+        {
+          $query->where(function($query) use($key){
+            $query = $query->where('clients.name','like','%'.$key.'%')
+              ->orWhere('gps.serial_no','like','%'.$key.'%')
+              ->orWhere('users.mobile','like','%'.$key.'%')
+              ->orWhere('users.username','like','%'.$key.'%')
+              ->orWhere('users.email','like','%'.$key.'%');
+          });       
+        }
+        return $query->paginate(10);
+    }  
+    public function getCompletedInstallationList($key = null)
+      {
+
+            $user_id=\Auth::user()->servicer->id;
+            
+            $query = DB::table('servicer_jobs')
+            ->join('clients', 'servicer_jobs.client_id', '=', 'clients.id')
+            ->join('users', 'users.id', '=', 'clients.user_id')
+            ->join('servicers', 'servicer_jobs.servicer_id', '=','servicers.id')
+            ->join('gps', 'servicer_jobs.gps_id', '=', 'gps.id')
+            ->join('vehicles', 'servicer_jobs.gps_id', '=', 'vehicles.gps_id')
+            ->where('servicer_jobs.servicer_id',$user_id)
+             ->where('servicer_jobs.status',3)
+            ->whereNotNull('servicer_jobs.job_complete_date')
+            ->orderBy('servicer_jobs.job_complete_date','desc')
+             ->where('servicer_jobs.job_type',1)
+             ->select('servicer_jobs.id','servicer_jobs.job_complete_date','servicer_jobs.status','servicer_jobs.job_id','clients.name as client_name',
+            'users.username as user_name','users.email as user_email','users.mobile as mobile_number', 
+            'servicer_jobs.description','servicer_jobs.job_type','servicer_jobs.location','servicer_jobs.status',
+            'servicer_jobs.job_date',
+            'gps.serial_no as gps_serial_no','clients.address as client_address','vehicles.register_number as register_number');
+            if( $key != null )
+            {
+                $query->where(function($query) use($key){
+              
+                    $query = $query->where('clients.name','like','%'.$key.'%')
+                    ->orWhere('gps.serial_no','like','%'.$key.'%')
+                    ->orWhere('vehicles.register_number','like','%'.$key.'%')
+                    ->orWhere('users.mobile','like','%'.$key.'%')
+                    ->orWhere('users.username','like','%'.$key.'%')
+                    ->orWhere('users.email','like','%'.$key.'%');
+              });       
+            }
+            return $query->paginate(10);
+      }  
+    public function getNewServiceList($key = null)
+        {
+          $user_id=\Auth::user()->servicer->id;
+
+          $query = DB::table('servicer_jobs')
+            ->join('clients', 'servicer_jobs.client_id', '=', 'clients.id')
+            ->join('users', 'users.id', '=', 'clients.user_id')
+            ->join('servicers', 'servicer_jobs.servicer_id', '=','servicers.id')
+            ->join('gps', 'servicer_jobs.gps_id', '=', 'gps.id')
+            ->select('servicer_jobs.id','servicer_jobs.status','servicer_jobs.job_id','clients.name as client_name',
+            'users.username as user_name','users.email as user_email','users.mobile as mobile_number', 
+            'servicer_jobs.description','servicer_jobs.location','servicer_jobs.status',
+            'servicer_jobs.job_date','servicer_jobs.status','servicer_jobs.job_type',
+            'gps.serial_no as gps_serial_no','clients.address as client_address')
+            ->where('servicer_id',$user_id)
+            ->where('job_type',2)
+            ->whereNull('job_complete_date')
+            ->where('servicer_jobs.status',1);
+            if( $key != null )
+            {
+              $query->where(function($query) use($key){
+                $query = $query->where('clients.name','like','%'.$key.'%')
+                  ->orWhere('gps.serial_no','like','%'.$key.'%')
+                  ->orWhere('users.mobile','like','%'.$key.'%')
+                  ->orWhere('users.username','like','%'.$key.'%')
+                  ->orWhere('users.email','like','%'.$key.'%');
+              });       
+            }
+            return $query->paginate(10);
+        }  
+    public function getOnProgressServiceList($key = null)
+        {
+          $user_id=\Auth::user()->servicer->id;
+
+          $query = DB::table('servicer_jobs')
+            ->join('clients', 'servicer_jobs.client_id', '=', 'clients.id')
+            ->join('users', 'users.id', '=', 'clients.user_id')
+            ->join('servicers', 'servicer_jobs.servicer_id', '=','servicers.id')
+            ->join('gps', 'servicer_jobs.gps_id', '=', 'gps.id')
+            ->select('servicer_jobs.id','servicer_jobs.status','servicer_jobs.job_id','clients.name as client_name',
+            'users.username as user_name','users.email as user_email','users.mobile as mobile_number', 
+            'servicer_jobs.description','servicer_jobs.location','servicer_jobs.status',
+            'servicer_jobs.job_date','servicer_jobs.status','servicer_jobs.job_type',
+            'gps.serial_no as gps_serial_no','clients.address as client_address')
+            ->where('servicer_id',$user_id)
+            ->where('job_type',2)
+            ->whereNull('job_complete_date')
+            ->where('servicer_jobs.status',2);
+            if( $key != null )
+            {
+              $query->where(function($query) use($key){
+                $query = $query->where('clients.name','like','%'.$key.'%')
+                  ->orWhere('gps.serial_no','like','%'.$key.'%')
+                  ->orWhere('users.mobile','like','%'.$key.'%')
+                  ->orWhere('users.username','like','%'.$key.'%')
+                  ->orWhere('users.email','like','%'.$key.'%');
+              });       
+            }
+            return $query->paginate(10);
+        }  
+    public function getCompletedServiceList($key = null)
+        {
+                $user_id=\Auth::user()->servicer->id;
+                $query = DB::table('servicer_jobs')
+                ->join('clients', 'servicer_jobs.client_id', '=', 'clients.id')
+                ->join('users', 'users.id', '=', 'clients.user_id')
+                ->join('servicers', 'servicer_jobs.servicer_id', '=','servicers.id')
+                ->join('gps', 'servicer_jobs.gps_id', '=', 'gps.id')
+                ->join('vehicles', 'servicer_jobs.gps_id', '=', 'vehicles.gps_id')
+                ->select('servicer_jobs.id','servicer_jobs.job_complete_date','servicer_jobs.status','servicer_jobs.job_id','clients.name as client_name',
+                'users.username as user_name','users.email as user_email','users.mobile as mobile_number', 
+                'servicer_jobs.description','servicer_jobs.job_type','servicer_jobs.location','servicer_jobs.status',
+                'servicer_jobs.job_date',
+                'gps.serial_no as gps_serial_no','clients.address as client_address','vehicles.register_number as register_number')
+                ->where('servicer_id',$user_id)
+                ->where('servicer_jobs.status',3)
+                ->whereNotNull('servicer_jobs.job_complete_date')
+                ->orderBy('servicer_jobs.job_complete_date','desc')
+                ->where('job_type',2);
+                
+                if( $key != null )
+                {
+                    $query->where(function($query) use($key){
+                  
+                        $query = $query->where('clients.name','like','%'.$key.'%')
+                        ->orWhere('gps.serial_no','like','%'.$key.'%')
+                        ->orWhere('vehicles.register_number','like','%'.$key.'%')
+                        ->orWhere('users.mobile','like','%'.$key.'%')
+                        ->orWhere('users.username','like','%'.$key.'%')
+                        ->orWhere('users.email','like','%'.$key.'%');
+                  });       
+                }
+                    return $query->paginate(10);
+            } 
+           
+        public function getNewInstallationJobCount($servicer_id)
+                {
+             
+                    return self::select('job_complete_date')
+                          ->whereNull('job_complete_date')
+                          ->where('servicer_id',$servicer_id)->where('job_type',1)
+                          ->where('status',1)->count();
+                } 
+        public function getOnProgressJobCount($servicer_id)
+                {
+                  return self::select('id','status','job_complete_date')->whereNull('job_complete_date')
+                  ->where('servicer_id',$servicer_id)->where('status',2)->where('job_type',1)->count();
+            
+                } 
+         public function getCompletedJobCount($servicer_id)
+                {
+                  return self::select(
+                    'job_complete_date',
+                    'servicer_id',
+                    'job_type',
+                    'status'
+                )
+                ->whereNotNull('job_complete_date')
+                ->where('servicer_id',$servicer_id)
+                ->where('job_type',1)
+                ->where('status',3)
+                ->count();
+                  
+            
+                } 
+          public function getPendingServiceJobCount($servicer_id)
+                {
+              return self::select('id','job_complete_date','servicer_id','job_type')->whereNull('job_complete_date')->where('servicer_id',$servicer_id)->where('job_type',2)->where('status',1)->count();
+                } 
+          public function getProgressServiceJobCount($servicer_id)
+                {
+                return  self::select('id','job_date','job_complete_date','servicer_id')->whereNull('job_complete_date')->where('servicer_id',$servicer_id)->where('job_type',2)->where('status',2)->count();
+                } 
+          public function getCompletedServiceJobCount($servicer_id)
+                {
+                  return  self::select('job_complete_date','servicer_id','job_type','status')->whereNotNull('job_complete_date')->where('servicer_id',$servicer_id)->where('job_type',2)->where('status',3)->count();
+                } 
+                public function getServicerJob($servicer_id)
+                {
+                  return self::find($servicer_id);
+                } 
+                public function getInstallationJob($servicerjob_id = null)
+                {
+                    return self::find($servicerjob_id);
+                }
+
+               }
+

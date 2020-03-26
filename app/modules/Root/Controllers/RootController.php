@@ -4,12 +4,10 @@ namespace App\Modules\Root\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Modules\Employee\Models\Employee;
-use App\Modules\Employee\Models\EmployeeDesignation;
-use App\Modules\Employee\Models\EmploymentType;
-use App\Modules\Employee\Models\BloodGroup;
 use App\Modules\Depot\Models\State;
+use App\Modules\Root\Models\Root;
 use Illuminate\Support\Facades\Crypt;
+use App\Jobs\MailJob;
 use DataTables;
 use DB;
 use App\Modules\User\Models\User;
@@ -50,7 +48,7 @@ class RootController extends Controller {
         $rules = $this->userCreateRule();
         $request->validate($rules);
 
-         $user =  DB::table('users')->insert([
+        $user =  DB::table('users')->insert([
             'username' => $request->username,
             'mobile' => $request->mobile,
             'email' => $request->email,
@@ -73,7 +71,7 @@ class RootController extends Controller {
         $decrypted = Crypt::decrypt($request->id);
         $user = User::where('id', $decrypted)->first();
         if($user == null){
-           return view('Root::404');
+            return view('Root::404');
         }
         return view('Root::root-change-password',['user' => $user]);
     }
@@ -81,15 +79,25 @@ class RootController extends Controller {
     //update password
     public function updateRootPassword(Request $request)
     {
-        $user=User::find($request->id);
-        if($user== null){
+        $user           =   User::find($request->id);
+        if($user        ==  null)
+        {
             return view('Root::404');
         }
-        $did=encrypt($user->id);
-        $rules=$this->updateRootPasswordRule();
+        $root_details   =   Root::select('name')->where('user_id',$request->id)->first();
+        $did            =   encrypt($user->id);
+        $rules          =   $this->updateRootPasswordRule();
         $this->validate($request,$rules);
-        $user->password=bcrypt($request->password);
+        $user->password =   bcrypt($request->password);
         $user->save();
+        $email = [
+            'to'        =>  $user->email, 
+            'toName'    =>  $root_details->name, 
+            'template'  =>  'mail', 
+            'subject'   =>  'Change password email at '.date('Y-m-d H:i:s'), 
+            'data'      =>  [ 'name' =>$root_details->name,'content' =>'Your new password is '.$request->password ]
+        ];
+        MailJob::dispatch($email);
         $request->session()->flash('message','Password updated successfully');
         $request->session()->flash('alert-class','alert-success');
         return  redirect(route('root.change.password',$did));  
