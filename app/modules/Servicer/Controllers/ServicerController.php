@@ -13,6 +13,7 @@ use App\Modules\Operations\Models\VehicleMake;
 use App\Modules\SubDealer\Models\SubDealer;
 use App\Modules\Trader\Models\Trader;
 use App\Modules\Servicer\Models\Servicer;
+use App\Modules\Servicer\Models\FcmLog;
 use App\Modules\Servicer\Models\ServicerJob;
 use App\Modules\Vehicle\Models\Document;
 use App\Modules\Vehicle\Models\VehicleType;
@@ -1826,11 +1827,11 @@ public function serviceJobDetails(Request $request)
         // echo $result;
         curl_close ( $ch );
 
-        // FcmLog::create([
-        //     'user_device_id' => $device_id,
-        //     'body' => $fields,
-        //     'response' => $result
-        // ]);
+        FcmLog::create([
+            'user_device_id' => $device_id,
+            'body' => $fields,
+            'response' => $result
+        ]);
     
     }
 public function servicerProfileUpdateRules($servicer)
