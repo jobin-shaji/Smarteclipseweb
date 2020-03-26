@@ -53,7 +53,7 @@ Create Vehicle Type
                             <!-- action bar -->
                             <div class="esim-upload-section pull-right action-items">
                                 <!-- action items -->
-                                <button class="dropdown-toggle" type="button" data-toggle="dropdown">Choose
+                                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Choose
                                 <span class="caret"></span></button>
                                 <ul class="dropdown-menu">
                                 <li onclick="removeSelectedRows()"> Remove selected rows </li>

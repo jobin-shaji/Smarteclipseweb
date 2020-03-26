@@ -74,7 +74,6 @@ var check_box = '';
             document.getElementById("check_uncheck_label").innerHTML = "Uncheck All";
             for (var i = 0; i < uploadedFileContentsProcessed.length; i++)
             {
-                // items to update on database
                 userSelectedItems.push(i);
             }
             
@@ -189,6 +188,9 @@ var check_box = '';
         }
         else
         {
+            if(!confirm('Do you want to remove selected items?'))
+                return false;
+            userSelectedItems.sort()
             for(index = userSelectedItems.length - 1  ; index >= 0 ; index--)
             {
                 uploadedFileContentsProcessed.splice(userSelectedItems[index], 1);
@@ -248,7 +250,7 @@ var check_box = '';
                 success: function (res) 
                 {
                     $('.loader').hide();
-                    alert('successs');
+                    alert('Success Count -'+ res.success.length + ' Failed Count -'+  res.failed.length);
                     refreshPage();
                 }
   
