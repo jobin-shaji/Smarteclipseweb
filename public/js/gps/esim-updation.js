@@ -65,10 +65,19 @@ var check_box = '';
         window.location.reload();
     } 
 
-    $('#checkAll').click(function() {
-        if ($(this).prop('checked')) {
+    $('#checkAll').click(function() 
+    {
+        userSelectedItems = [];
+        if ($(this).prop('checked')) 
+        {
             $('.check_uncheck').prop('checked', true);
             document.getElementById("check_uncheck_label").innerHTML = "Uncheck All";
+            for (var i = 0; i < uploadedFileContentsProcessed.length; i++)
+            {
+                // items to update on database
+                userSelectedItems.push(i);
+            }
+            
         } else {
             $('.check_uncheck').prop('checked', false);
             document.getElementById("check_uncheck_label").innerHTML = "Check All";
@@ -99,7 +108,6 @@ var check_box = '';
             });
         }
         $('#file_name').text('File:- '+filename);
-        $('#file_rows').text('Total no of rows uploaded:- '+excelRows.length);
     }
 
     /**
@@ -109,6 +117,7 @@ var check_box = '';
      */
     function listUploadedFileContents()
     {
+        userSelectedItems  = [];
         $('.loader').hide();
         $('#checkAll').prop('checked', true);
         document.getElementById("check_uncheck_label").innerHTML = "Uncheck All";
@@ -124,9 +133,12 @@ var check_box = '';
             '</tr>');
             // items to update on database
             userSelectedItems.push(i);
-            // manage action items
-            manageActionItems();
+            
         }
+        $('#file_rows').text('Total no of rows uploaded:- '+uploadedFileContentsProcessed.length);
+        // manage action items
+        manageActionItems();
+
     }
 
     /**
@@ -148,6 +160,11 @@ var check_box = '';
         if( $('#checkbox'+clickedItemIndex).is(':checked') )
         {
             userSelectedItems.push(clickedItemIndex);
+            if(userSelectedItems.length == uploadedFileContentsProcessed.length)
+            {
+                $('#checkAll').prop('checked', true);
+                document.getElementById("check_uncheck_label").innerHTML = "Uncheck All";
+            }
         }
         else
         {
@@ -155,7 +172,7 @@ var check_box = '';
             $('#checkAll').prop('checked', false);
             document.getElementById("check_uncheck_label").innerHTML = "Check All";
         }
-        manageActionItems();
+        // manageActionItems();
     }
 
     /**
@@ -172,7 +189,7 @@ var check_box = '';
         }
         else
         {
-            for(index = 0; index < userSelectedItems.length; index++)
+            for(index = userSelectedItems.length - 1  ; index >= 0 ; index--)
             {
                 uploadedFileContentsProcessed.splice(userSelectedItems[index], 1);
             }
@@ -192,10 +209,25 @@ var check_box = '';
     /**
      * 
      * 
+     */
+    function removeUncheckedFileContentsProcessed()
+    {
+        var checkedFileContent = []; 
+        for(index = 0   ; index < userSelectedItems.length ; index++)
+        {
+            checkedFileContent.push(uploadedFileContentsProcessed[userSelectedItems[index]]);
+        }
+        return checkedFileContent;
+    }
+
+    /**
+     * 
+     * 
      * 
      */
     function updateEsimNumbersToDatabase()
     { 
+       
         if( userSelectedItems.length == 0 )
         {
             alert('Please choose at least one row to update');
@@ -208,7 +240,7 @@ var check_box = '';
             $.ajax({
                 type:'POST',
                 url: "update-esim-numbers",
-                data: { selected_items: JSON.stringify(uploadedFileContentsProcessed) },
+                data: { selected_items: JSON.stringify(removeUncheckedFileContentsProcessed()) },
                 async: true,
                 headers: {
                     'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
