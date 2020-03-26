@@ -1,5 +1,5 @@
 <?php
-
+ 
 namespace App\Modules\Servicer\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -374,6 +374,7 @@ class ServicerController extends Controller {
         {
             $start_code = NULL;
         }
+
         $user_id=\Auth::user()->id;
                 $servicer = ServicerJob::create([
                 'servicer_id' => $request->servicer,
@@ -391,6 +392,11 @@ class ServicerController extends Controller {
                 'job_status'=>0
                 // 'longitude'=>$location_lng
             ]);
+            $servicer = Servicer::find($request->servicer);      
+            $devices  = $servicer->devices;
+            foreach ($devices as $device) {
+                $this->fcmPushNotification($device->firebase_token);
+            }
             $request->session()->flash('message', 'Assigned Job successfully!');
             $request->session()->flash('alert-class', 'alert-success');
 
@@ -1770,6 +1776,62 @@ public function serviceJobDetails(Request $request)
         $request->session()->flash('alert-class','alert-success');
         return redirect(route('servicer.list'));
 
+    }
+
+
+    public static function fcmPushNotification($device_id)
+    {
+        $message = "sample";
+        $api_key = 'AAAAgmOkdoQ:APA91bE2v6k93s_cXtcscgODZkDBFT2_D-6DpY_aPt_pwpvKJBHjSURcHrxh4TJfPoNPAOjmp8J7AEVQsNd7eAjr1HHSZ5quR4mz6JRgQtfaE47BYwrwrlVuTp8fJgfLDbmjWumfmVdF';
+        
+        $url = 'https://fcm.googleapis.com/fcm/send';
+
+        $title = "sample";
+
+        $body = "sample";
+
+        $n = [
+            "to"=> $device_id,
+            "data" => [
+                "title" => $title,
+                "content" => $body,
+            ]
+        ];
+   
+    
+
+        $fields = array (
+                'registration_ids' => array (
+                        $device_id
+                ),
+                'data' => array (
+                        "message" => $message
+                )
+        );
+        $fields = json_encode ( $fields );
+    
+        $headers = array (
+                'Authorization: key=' . $api_key,
+                'Content-Type: application/json'
+        );
+    
+        $ch = curl_init ();
+        curl_setopt ( $ch, CURLOPT_URL, $url );
+        curl_setopt ( $ch, CURLOPT_POST, true );
+        curl_setopt ( $ch, CURLOPT_HTTPHEADER, $headers );
+        curl_setopt ( $ch, CURLOPT_RETURNTRANSFER, true );
+        curl_setopt ( $ch, CURLOPT_POSTFIELDS, json_encode($n) );
+    
+        $result = curl_exec ( $ch );
+        // echo $result;
+        curl_close ( $ch );
+
+        // FcmLog::create([
+        //     'user_device_id' => $device_id,
+        //     'body' => $fields,
+        //     'response' => $result
+        // ]);
+    
     }
 public function servicerProfileUpdateRules($servicer)
     {
