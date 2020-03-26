@@ -165,4 +165,15 @@ class Gps extends Model
                         'refurbished_status'    =>  1
                     ]); 
     }
+    /**
+     *
+     *sum of km based on vehicle gps
+     *
+     */
+    public function getSumOfKmBasedOnGpsOfVehicle($vehicle_gps_ids)
+    {
+        return self::select('id','km')
+                    ->whereIn('id',$vehicle_gps_ids)
+                    ->sum('km');
+    }
 }

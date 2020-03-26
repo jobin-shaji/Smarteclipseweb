@@ -186,4 +186,33 @@ class Vehicle extends Model
                     ->withTrashed()
                     ->first();
     }
+
+    //get vehicle list based on client
+    public function getVehicleListBasedOnClient($client_id)
+    {
+      return self::select(
+                      'id',
+                      'name',
+                      'register_number',
+                      'gps_id',
+                      'client_id',
+                      'driver_id',
+                      'vehicle_type_id',
+                      'deleted_at'
+                      )
+                    ->withTrashed()
+                    ->where('client_id',$client_id)
+                    ->with('vehicleType:id,name')
+                    ->with('driver:id,name')
+                    ->with('gps:id,imei,serial_no')
+                    ->get();
+    }
+
+    public function getSingleVehicleDetailsBasedOnVehicleId($vehicle_id)
+    {
+      return self::select('id','name','register_number')
+                  ->where('id',$vehicle_id)
+                  ->withTrashed()
+                  ->first();
+    }
 }

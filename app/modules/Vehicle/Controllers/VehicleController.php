@@ -92,53 +92,38 @@ class VehicleController extends Controller
 
     public function getVehicleList()
     {
-        $client_id=\Auth::user()->client->id;
-        $vehicles = Vehicle::select(
-                    'id',
-                    'name',
-                    'register_number',
-                    'gps_id',
-                    'driver_id',
-                    'vehicle_type_id',
-                    'deleted_at'
-                    )
-            ->withTrashed()
-            ->where('client_id',$client_id)
-            ->with('vehicleType:id,name')
-            ->with('driver:id,name')
-            ->with('gps:id,imei,serial_no')
-            ->get();
-            return DataTables::of($vehicles)
-            ->addIndexColumn()
-             ->addColumn('driver', function ($vehicles) {
-                if($vehicles->driver_id== null || $vehicles->driver_id==0)
-                {
-                    return "Not assigned";
-                }
-                else
-                {
-                  return $vehicles->driver->name;
+        $client_id          =   \Auth::user()->client->id;
+        $vehicles           =   (new Vehicle())->getVehicleListBasedOnClient($client_id);  
+        return DataTables::of($vehicles)
+        ->addIndexColumn()
+        ->addColumn('driver', function ($vehicles) 
+        {
+            if($vehicles->driver_id== null || $vehicles->driver_id==0)
+            {
+                return "Not assigned";
+            }
+            else
+            {
+                return $vehicles->driver->name;
 
-                }
-            })
-            ->addColumn('action', function ($vehicles) {
-                $b_url = \URL::to('/');
-                if($vehicles->deleted_at == null){
-                        return "
+            }
+        })
+        ->addColumn('action', function ($vehicles) 
+        {
+            $b_url = \URL::to('/');
+            if($vehicles->deleted_at == null)
+            {
+                return "
+                <a href=".$b_url."/vehicles/".Crypt::encrypt($vehicles->id)."/location class='btn btn-xs btn btn-warning' data-toggle='tooltip' title='Location'><i class='fa fa-map-marker'></i> Track</i></a>
+                <a href=".$b_url."/vehicles/".Crypt::encrypt($vehicles->id)."/details class='btn btn-xs btn-info' data-toggle='tooltip' title='View'>View/Edit</i> </a>"
+                ;
 
-                        <a href=".$b_url."/vehicles/".Crypt::encrypt($vehicles->id)."/location class='btn btn-xs btn btn-warning' data-toggle='tooltip' title='Location'><i class='fa fa-map-marker'></i> Track</i></a>
-
-                         <a href=".$b_url."/vehicles/".Crypt::encrypt($vehicles->id)."/details class='btn btn-xs btn-info' data-toggle='tooltip' title='View'>View/Edit</i> </a>"
-
-
-                         ;
-
-                }else{
-                     return "";
-                }
-             })
-            ->rawColumns(['link', 'action'])
-            ->make();
+            }else{
+                    return "";
+            }
+        })
+        ->rawColumns(['link', 'action'])
+        ->make();
     }
 
     // create a new vehicle
