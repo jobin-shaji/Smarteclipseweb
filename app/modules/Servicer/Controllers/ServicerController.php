@@ -272,6 +272,7 @@ class ServicerController extends Controller {
         {
             $tttle   ="New Insatallation Job"; 
             $message = ['job_id'  => $job_id,
+                        'title'   => $tttle,
                         'content' => $request->description,
                         'type'    => "INSTALLATION",
                         'date'    => date('Y-m-d H:i:s')
@@ -279,6 +280,7 @@ class ServicerController extends Controller {
         }else{
             $tttle   = "New Service Job"; 
             $message = ['job_id'  => $job_id,
+                        'title'   => $tttle,
                         'content' => $request->description,
                         'type'    => "SERVICE",
                         'date'    => date('Y-m-d H:i:s')
@@ -426,6 +428,7 @@ class ServicerController extends Controller {
             {
                 $tttle   ="New Insatallation Job"; 
                 $message = ['job_id'  => $job_id,
+                            'title'   => $tttle,
                             'content' => $request->description,
                             'type'    => "INSTALLATION",
                             'date'    => date('Y-m-d H:i:s')
@@ -433,6 +436,7 @@ class ServicerController extends Controller {
             }else{
                 $tttle   = "New Service Job"; 
                 $message = ['job_id'  => $job_id,
+                            'title'   => $tttle,
                             'content' => $request->description,
                             'type'    => "SERVICE",
                             'date'    => date('Y-m-d H:i:s')
