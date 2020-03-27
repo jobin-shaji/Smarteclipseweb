@@ -23,7 +23,7 @@
     <div class="table-responsive">
       <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">  <div class="row">
           <div class="col-sm-12">
-            
+            <form method="get" action="{{route('devicehierarchy')}}">
               <div class="row mrg-bt-10 inner-mrg">
                 <div class="col-md-6">
                   <div class="form-group has-feedback form-group-1 mrg-rt-5">
@@ -39,12 +39,13 @@
               <div class="row">
                 <!-- /.col -->
                 <div class="col-md-3 ">
-                  <button type="button" onclick="searchData()" class="btn btn-primary btn-md form-btn ">SUBMIT</button>
+                  <button type="submit" class="btn btn-primary btn-md form-btn ">SUBMIT</button>
                 </div>
                 <!-- /.col -->
               </div>
-            <!-- </form> -->
+            </form>
           </div>
+          @if(isset($datalist))  
           <div class="container-fluid">
     <div class="card-body">
       <div class="table-responsive ">
@@ -65,9 +66,36 @@
 
                   </tr>
                 </thead>
+                <tbody>
+                  @if($datalist->count() == 0)
+                  <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td><b style="float: right;margin-right: -13px">No data</b></td>
+                    <td><b style="float: left;margin-left: -15px">Available</b></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                  @endif
+
+                  @foreach($datalist as $data)                  
+                  <tr> 
+                    <td>{{$loop->iteration}}</td>
+                    <td>{{$data->imei}}</td>
+                    <td>{{$data->serial_no}}</td>
+                    <td>{{$data->gpsStock->root['name']}}</td>  
+                    <td>{{$data->gpsStock->dealer['name']}}</td>     
+                    <td>{{$data->gpsStock->subdealer['name']}}</td>                               
+                    <td>{{$data->gpsStock->trader['name']}}</td>
+                    <td>{{$data->gpsStock->client['name']}}</td>  
+                  </tr>
+                  @endforeach
+                </tbody>
               </table>
 
-               <<!-- table class="table table-hover table-bordered  table-striped datatable" style="width:100%;text-align: center;" >
+               <!-- table class="table table-hover table-bordered  table-striped datatable" style="width:100%;text-align: center;" >
                 <thead>
                   <tr>
                     <th>SL.No</th>
@@ -89,33 +117,47 @@
       </div>
     </div>        
   </div>
-      
-      <div class="row " >
-                <div class="col-md-12">
-                  <div class="form-group has-feedback">
-                    <label class="srequired">Choose What action to do</label>
-                   <select class="form-control select2"  name="return_to" data-live-search="true" title="Select " id='return_to'  required>
-                    <option selected disabled>Select </option>
-                   
-                    </select>
-                    @if ($errors->has('return_to'))
-                    <span class="help-block">
-                        <strong class="error-text">{{ $errors->first('return_to') }}</strong>
-                    </span>
-                    @endif
-                  </div>
-              </div>
-              <div class="row">
-                <!-- /.col -->
-                <div class="col-md-3 ">
-                  <button type="button" onclick="searchData()" class="btn btn-primary btn-md form-btn ">SUBMIT</button>
-                </div>
-                <!-- /.col -->
-              </div>
-            <!-- </form> -->
-          </div>
-
-
+  <div class="row " >
+    <div class="col-md-12">
+      <div class="form-group has-feedback">
+        <label class="srequired">Reassign To</label>
+        <select class="form-control select2"  name="return_to" data-live-search="true" title="Select " id='return_to'  required>
+            @foreach ($datalist as $data)
+              @if($data->gpsStock->client['name'] != '')
+                <option selected disabled>Select</option>
+                <option value="{{$data->gpsStock->id}}">{{$data->gpsStock->trader['name']}}</option>
+                <option value="{{$data->gpsStock->id}}">{{$data->gpsStock->subdealer['name']}}</option>
+                <option value="{{$data->gpsStock->id}}">{{$data->gpsStock->dealer['name']}}</option>
+              @elseif(($data->gpsStock->client['name'] != '') && ($data->gpsStock->trader['name'] == ''))
+                <option selected disabled>Select</option>
+                <option value="{{$data->gpsStock->id}}">{{$data->gpsStock->subdealer['name']}}</option>
+                <option value="{{$data->gpsStock->id}}">{{$data->gpsStock->dealer['name']}}</option>
+              @elseif(($data->gpsStock->client['name'] == '') && ($data->gpsStock->trader['name'] != ''))
+                <option selected disabled>Select</option>
+                <option value="{{$data->gpsStock->id}}">{{$data->gpsStock->subdealer['name']}}</option>
+                <option value="{{$data->gpsStock->id}}">{{$data->gpsStock->dealer['name']}}</option>
+              @elseif(($data->gpsStock->trader['name'] == '') && ($data->gpsStock->client['name'] == '') && ($data->gpsStock->subdealer['name'] != ''))
+                <option selected disabled>Select</option>
+                <option value="{{$data->gpsStock->id}}">{{$data->gpsStock->dealer['name']}}</option>
+              @elseif(($data->gpsStock->trader['name'] == '') && ($data->gpsStock->client['name'] == '') && ($data->gpsStock->subdealer['name'] == ''))
+                <option selected disabled>Device is with Distributor cant reassign back.</option>
+              @endif
+            @endforeach      
+        </select>
+        @if ($errors->has('return_to'))
+        <span class="help-block">
+            <strong class="error-text">{{ $errors->first('return_to') }}</strong>
+        </span>
+        @endif
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3 ">
+        <button type="button" onclick="searchData()" class="btn btn-primary btn-md form-btn ">SUBMIT</button>
+      </div>
+    </div>
+  </div>
+  @endif
         </div>
       </div>
     </div>
@@ -149,6 +191,6 @@ margin-bottom: 1.2em;
 </style>
 
 @section('script')
-  <script src="{{asset('js/gps/device-reassign.js')}}"></script> 
+  <!-- <script src="{{asset('js/gps/device-reassign.js')}}"></script>  -->
 @endsection
 @endsection

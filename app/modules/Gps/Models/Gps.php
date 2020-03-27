@@ -2,6 +2,7 @@
 
 namespace App\Modules\Gps\Models;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Scopes\DeleteScope;
 
@@ -187,5 +188,48 @@ class Gps extends Model
 
         ->get();
        
+    }
+
+    public function getDeviceHierarchyDetails($imei)
+    {
+        return self::select(
+            'id',
+            'imei',
+            'serial_no',
+            'manufacturing_date',
+            'icc_id',
+            'imsi',
+            'e_sim_number',
+            'batch_number',
+            'employee_code',
+            'model_name',
+            'version',
+            'is_returned'
+        )  
+        ->where('imei',$imei) 
+        ->with('gpsStock:id,gps_id,dealer_id,subdealer_id,client_id,trader_id,inserted_by')
+        ->with('gpsStock.root:id,name')
+        ->with('gpsStock.dealer:id,name')
+        ->with('gpsStock.subdealer:id,name')
+        ->with('gpsStock.trader:id,name')
+        ->with('gpsStock.client:id,name')             
+        // ->with('gpsStock:trader')                   
+        ->get();
+        // return DB::table('gps')
+        //         ->join('gps_stocks', 'gps.id', '=', 'gps_stocks.gps_id')
+        //         ->join('roots', 'gps_stocks.inserted_by', '=', 'roots.id')
+        //         ->join('dealers', 'gps_stocks.dealer_id', '=', 'dealers.id')
+        //         ->join('sub_dealers', 'gps_stocks.subdealer_id', '=', 'sub_dealers.id')
+        //         ->join('traders', 'gps_stocks.trader_id', '=', 'traders.id')
+        //         ->join('clients', 'gps_stocks.client_id', '=', 'clients.id')
+        //         ->select('gps.imei as imei','gps.serial_no as serial',
+        //           'roots.name as manufacturer_name',
+        //           'dealers.name as distributor_name',
+        //           'sub_dealers.name as dealer_name',
+        //           'traders.name as subdealer_name',
+        //           'clients.name as client_name'
+        //         )
+        //         ->where('gps.imei','=',$imei)
+        //         ->get();
     }
 }
