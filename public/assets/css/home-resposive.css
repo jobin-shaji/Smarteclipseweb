@@ -1,0 +1,1148 @@
+@media only screen and (max-width: 1700px) {
+    .container-home-nav {
+    width: 1400px;
+}
+    
+    .container-home {
+    width: 1350px;
+
+}
+    
+
+}
+    
+    @media only screen and (max-width: 1500px) {
+  .container-home-nav {
+    width: 1200px;
+}
+    
+    .container-home {
+    width: 1150px;
+
+}
+.banner-left {
+    width: 56%;
+        padding-top: 100px;
+}
+        .banner-right {
+    width: 44%;
+ }
+.banner-head {
+    font-size: 5.5em;
+}
+        
+   .banner-about-bt {
+    margin-top: 45px;
+}     
+     .alert-box-inner ul li {
+    width: 22%;
+    margin-bottom: 25px;
+    font-size: 1em;
+}   
+    .about-right-content p {
+    margin: 35px 0;
+} 
+.about-right-content {
+    padding-top: 20px;
+}    
+    .about-button {
+    font-size: 1.5em;
+}
+        .banner-about-bt-left a {
+    padding: 6px 32px 10px;
+    font-size: 1.5em;
+  }
+        .banner-about-bt-right {
+    font-size: 1.5em;    
+}
+.banner-sbu-hd {
+    font-size: 1.5em;
+    margin-top: 40px;
+
+}        
+.vechicle-track-rt {
+    margin-top: 10px;
+}        
+ .download-app-right {
+    margin-top: 100px;
+}    
+        .our-certificate-icon {
+    width: 80px !important;  margin: 0px 29px;
+}
+   
+        .gps-tacker-text p {
+    font-size: 1.3em;
+}
+        .footer-top-bg {
+    padding: 44px 0 43px;
+}
+.common-head {
+    font-size: 2em;
+}        
+.sevice-cent-sub-head {
+    font-size: 1.4em;
+
+}  
+.sevice-cent-sub-text span {
+    font-size: 1.2em;
+}    
+.sevice-cent-sub-text p {
+
+font-size: 1em;
+}        
+  p {
+    font-size: 1.1em;
+}      
+       .bootl-feature {
+    font-size: 1.1em;
+} 
+  .service-round-bg-1 p {
+  line-height: 1.2em;
+}      
+       
+.service-round-bg-1 {
+    width: 200px;
+    height: 200px;
+}        
+.service-round-bg {
+    width: 762px;
+}   
+    .footer-address p {
+    font-size: 1em;
+}
+  .gps-tacker-text p span {
+    padding: 0px 26px;
+} 
+        .footer-download-button {
+    width: 135px;
+}
+        .footer-app-ixon-lf {
+    margin-left: 15px;
+}
+        .footer-social-box {
+    width: 18%;
+}
+        .footer-top {
+    height: 85px;
+}
+   
+        .footer-contact a {
+    font-size: 1.1em;
+}
+        
+     /* ======login page sty start=======*/  
+        
+    .login-banner-right {
+    width: 460px;
+        padding-top: 95px;
+      margin-right: 35px;
+}    
+        .login-banner-left {
+    width: 44%;
+            margin-top: 83px;
+}
+      
+/* ======login page sty END=======*/  
+        
+        
+}
+
+    @media only screen and (max-width: 1300px) {
+        
+.container-home-nav {
+    width: 1050px;
+}
+       .container-home {
+     width: 1050px;
+} 
+.alert-bg-outer {
+    background-image: url(../images/alert-right-1.png);
+    background-position: right bottom;
+}   
+     .alert-left-bg {
+    width: 70%;
+    float: left;
+    display: block;
+}   
+        .footer-download-button {
+    width: 125px;
+    padding: 9px 22px;
+}
+.footer-top-bg {
+    width: 70%;
+    left: 15%;
+}
+        
+.footer-middle {
+    padding-top: 170px;
+}        
+    .service-round-bg-1 span {
+    margin-top: 40px;
+
+} 
+             /* ======login page sty start=======*/  
+        
+        .login-banner-right {
+    width: 415px;
+    padding-top: 95px;
+}
+        
+        .login-form input[type="text"], .login-form textarea {
+    padding: 10px 11% 13px 10%;
+    margin: 0 0 30px;
+         font-size: 1.2em;
+       line-height: 28px;
+}
+        
+        .input-warpper span {
+    padding-left: 15px;
+    top: 12px;
+}
+        .login-form input[type="submit"], .login-form input[type="button"] {
+    font-size: 1.6em;
+      padding: 5px 0 10px;
+
+}
+        .squaredThree span {
+    font-size: 1.2em;
+    top: 0px;
+    padding-left:0px;
+}
+        .login-text {
+    padding-left: 25px;
+    font-size: 2.525em;
+    padding-top: 5px;
+}
+   .login-head-icon {
+    width: 65px;
+}
+        
+             /* ======login page sty END=======*/  
+        
+}
+
+  @media only screen and (max-width: 1200px) {
+      
+      
+      .container-home-nav {
+    width: 90%;
+}
+      .container-home {
+    width: 90%;
+}
+      .banner-head {
+    font-size: 4em;
+}
+    .banner-about-bt-left a {
+    padding: 6px 20px 10px;
+    font-size: 1.3em;
+}  
+      .banner-about-bt-right {
+    font-size: 1.3em;
+              padding-left: 25px;
+}
+.banner-sbu-hd {
+    font-size: 1.3em;
+}      
+   
+      .alert-left-bg {
+    width: 100%;
+            overflow: hidden;
+    max-width: 100%;
+}
+      
+ 
+      .vechicle-track-rt-head {
+    padding-bottom: 24px;
+}
+      .service-round-bg-1 p {
+    font-size: 1.3em;
+}
+      .service-round-bg-1 span {
+    font-size: 2.5em;
+}
+      .service-round-bg-1 {
+    width: 180px;
+    height: 180px;
+}
+      .mrg-lef-80 {
+    margin-left: 40px;
+}
+      .service-round-bg {
+    width: 623px;
+}
+      .logo {
+    width: 170px;
+}
+     #menu {
+    padding-right: 5px;
+} 
+     #menu ul li a {
+    font-size: 1em;
+}
+       #menu ul li {
+    margin-left: 15px;
+}
+      .app-sceen-right {
+    width: 330px;
+}
+      .app-sceen-lf {
+    width: 330px;
+}
+      .service-center-content-box-lf {
+    width: 35px;
+}
+      .service-center-content-box-rt {
+    width: 87%;
+    padding-left: 10px;
+}
+.sevice-cent-sub-head {
+    font-size: 1.2em;
+}  
+      .sevice-cent-sub-text span {
+    font-size: 1.1em;
+}
+      
+      .service-center-content {
+    padding-top: 45px;
+}
+    .footer-download-button {
+    width: 125px;
+    margin-bottom: 15px;
+    margin-left: 0;
+    display: block;
+    clear: both;
+}
+      .footer-sub-head {
+    font-size: 1.1em;
+}
+  
+      .footer-content-box {
+    width: 26%;
+}
+      .footer-social-box {
+    width: 22%;
+}
+      .our-certification-icons {
+    width: 86%;
+    padding-left: 11.5%;
+}
+        
+}
+
+
+  @media only screen and (max-width: 980px) {
+
+.logo {
+    width: 170px;
+    float: none;
+    margin: 0px auto;
+    padding-bottom: 10px;
+}
+.banner-head {
+    font-size: 3em;
+}
+      .banner-sbu-hd {
+    font-size: 1.1em;
+}
+      .banner-about-bt-left a img {
+    width: 23px;
+    padding-left: 6px;
+}
+      .banner-about-bt-right {
+    font-size: 1.1em;
+    padding-left: 10px;
+}
+      .banner-about-bt-left a {
+    padding: 6px 14px 10px;
+    font-size: 1.1em;
+}
+      .banner-about-bt-right img {
+    width: 32px;
+    margin-left: 10px;
+}
+.banner-left {
+    padding-top: 80px;
+}      
+.banner-bottom-bg {
+    padding: 50px 0;
+}      
+.common-head {
+    font-size: 1.5em;
+} 
+      h2.common-head {
+    margin-bottom: 20px;
+}
+      p {
+    font-size: 1em;
+    line-height: 1.8em;
+}
+      .about-content {
+    padding: 50px 0;
+}
+      .about-right-content p {
+    margin: 20px 0;
+}
+.about-button {
+    font-size: 1.1em;
+    padding: 9px 20px;
+}      
+ .about-right-content {
+    padding-top: 0;
+}     
+  .alert-bg-outer {
+    padding: 50px 0 50px;
+}    
+      
+.alert-box-inner ul li {
+       margin-bottom: 21px;
+    font-size: 1em;
+    padding: 15px 2% 8px;
+    min-height: 118px;
+ }  
+      .service-center-bg-rt-bg {
+    width: 500px;
+}
+      .service-center-bg-left-bt {
+    width: 500px;
+}
+      
+      .service-center-bg-left-bt img{
+          width: 100%;
+      }
+    .service-cennter-bg {
+    padding: 50px 0;
+} 
+      .service-center-content-box-rt {
+       width: 90%
+}
+      .service-center-content-box-lf {
+    width: 30px;
+}
+   .sevice-cent-sub-head {
+    font-size: 1.1em;
+}
+      .sevice-cent-sub-text span {
+    font-size: 1em;
+}
+    .service-center-content {
+    float: none;
+}  
+.service-center-content-box {
+    width: calc(100% / 2);
+    margin-top: 25px;
+}      
+  
+      .vechicle-track-outer {
+    padding: 50px 0;
+}
+      .vechicle-track-outer .myaccordion .card-header {
+    padding: .3em 0;
+}
+    .vechicle-track-rt-head {
+    padding-bottom: 15px;
+}
+      .bootl-feature {
+    font-size: 1em;
+    margin-top: 10px;
+    margin-left: 41px;
+}
+    .service-round-bg-1 span {
+    font-size: 2em;
+}
+      .service-round-bg-1 p {
+      font-size: 0.9em;
+}
+      .service-round-bg-1 span {
+    font-size: 1.8em;
+              line-height: 1.3em;
+}
+      .service-round-bg-1 {
+    width: 150px;
+    height: 150px;
+}
+      .mrg-lef-80 {
+    margin-left: 26px;
+}
+      .service-round-bg {
+    width: 504px;
+}
+      .service-conte-bottom {
+    padding: 30px 0;
+}
+      .app-screen-bg {
+    padding: 50px 0;
+}
+  .app-sceen-content {
+    margin-bottom: 20px;
+}
+      .app-head {
+    padding-bottom: 20px;
+} .app-sceen-lf {
+    width: 225px;
+}
+      .app-sceen-right {
+    width: 215px;
+}
+.download-button {
+    width: 150px;
+    padding: 10px 24px;
+}      
+     .download-app-right-hd {
+    padding-bottom: 24px;
+} 
+      .download-app-right {
+    margin-top: 50px;
+}
+      .download-icon-mrg {
+    margin-left: 20px;
+}
+      .our-certification-bg-hd {
+    padding-bottom: 30px;
+}
+      .our-certification-bg {
+    padding: 50px 0;
+}
+.our-certificate-icon {
+    width: 65px !important;
+    margin: 0px 16px;
+} 
+      .footer-top-bg {
+    width: 90%;
+    left: 5%;
+              padding: 25px 0 25px;
+}
+.gps-tacker-hd {
+    padding-bottom: 10px;
+}      
+    .gps-tacker-text p {
+    font-size: 1.1em;
+}  
+      .footer-content-box {
+    width: 50%;
+}
+      
+      
+      .footer-content-box-2 {
+    min-height: 200px;
+}
+      .footer-social-box {
+    width: 50%;
+}
+      .footer-sub-head {
+    padding-bottom: 20px;
+    font-size: 1.25em;
+    margin-top: 20px;
+    font-size: 1em;
+}
+      .footer-contact a {
+    font-size: 1em;
+}
+      .footer-middle {
+    padding-top: 75px;
+}
+      .footer-top {
+    height: 58px;
+}
+      .home-header nav {
+    padding-top: 19px;
+}
+      .footer-download-button {
+    width: 115px;
+    margin-bottom: 15px;
+    display: inline;
+    clear: inherit;
+}
+      .footer-app-ixon-lf {
+    margin-left: 15px;
+}
+      .app-sceen-image {
+    padding-right: 10px;
+    padding-left: 10px;
+}
+         /* ======login page sty Start=======*/  
+.login-banner-right {
+    width: 320px;
+    padding-top: 70px;
+    margin-right: 6px;
+}
+.login-form input[type="text"], .login-form textarea {
+    padding: 7px 11% 10px 10%;
+    margin: 0 0 30px;
+    font-size: 1em;
+    line-height: 25px;
+}
+      .input-warpper span img {
+    float: left;
+    position: relative;
+    width: 15px;
+}
+      .input-warpper span {
+    padding-left: 13px;
+    top: 11px;
+}
+      .squaredThree label {
+    width: 23px;
+    height: 23px;
+}
+      .squaredThree span {
+    font-size: 1em;
+    top: 0px;
+    padding-left: 0px;
+              width: 115px;
+}
+      .forgot-r a {
+    font-size: 1em;
+      }
+      .login-head-icon {
+    width: 55px;
+}
+      .login-text {
+    padding-left: 16px;
+    font-size: 2em;
+    padding-top: 5px;
+}
+      .login-top-head {
+      padding-bottom: 30px;
+}
+     .login-form input[type="submit"], .login-form input[type="button"] {
+    font-size: 1.3em;
+    padding: 5px 0 10px;
+}
+      .mrg-40 {
+    margin: 0 0 30px 0;
+}
+      
+      .squaredThree label:after {
+      left: 4px;
+}
+      
+      
+           /* ======login page sty END=======*/  
+}
+
+
+
+/*** Responsive Menu For Smaller Device ***/
+@media screen and (max-width: 767px) {
+  #menu-toggle {
+    display: -webkit-box;
+    display: flex;
+       width: 44px;
+    height: 44px;
+          margin-right: 30px;
+          background: #f4ab2a;
+  }
+
+  
+    
+ .home-header ul {
+    display: inline-block;
+    width: 100vw;
+    height: 0;
+    background: #fff;
+    position: absolute;
+    top: 160px;
+    -webkit-transform: translate(, );
+            transform: translate(, );
+    /*box-shadow: 0 5px 30px -4px rgba(0, 0, 0, 0.2);*/
+    -webkit-transition: all 0.3s;
+    transition: all 0.3s;
+  }
+  .home-header ul.showMenu {
+    height: 100vh;
+   top: 55px !important;
+  }
+  .home-header ul.showMenu li {
+    height: 55px;
+    opacity: 1;
+    visibility: visible;
+  }
+
+ .home-header li {
+    width: 50%;
+    height: 80px;
+    float: left;
+    padding-left: 40px;
+    opacity: 0;
+    visibility: hidden;
+    margin-left: 0;
+    -webkit-transition: all 0.3s 0.1s;
+    transition: all 0.3s 0.1s;
+  }
+  .home-header li:first-child{
+    margin-top: 80px;
+  }
+.home-header nav {
+    padding-top: 6px;
+}
+  #head-line {
+    -webkit-transform: scale(0.8);
+            transform: scale(0.8);
+  }
+    
+    .container-home-nav{
+	width:100%;
+}
+       
+    #menu {
+    padding-right: 0px;
+}
+ 
+    .logo {
+    width: 150px;
+    float: left;
+        padding-left: 30px;
+            margin-top: 15px;
+}
+       nav.navShadow .logo {
+      width: 130px;
+    padding-top: 12px;
+    padding-bottom: 0;
+            margin-top: 0px;
+}
+nav.navShadow {
+    padding-top: 6px;
+    padding-bottom: 7px;
+} 
+    .banner-left {
+      padding-top: 10px;
+    padding-left: 5%;
+    width: 50%;
+}
+    .banner-right {
+    margin-top: 5px;
+    margin-bottom: 40px;
+            padding-right: 5%;
+}
+.banner-head {
+    font-size: 1.3em;
+    line-height: 1.2em;
+}
+    .banner-sbu-hd {
+    margin-top: 20px;
+ font-size: 0.9em;
+}
+    .banner-about-bt {
+    margin-top: 20px;
+}
+    .banner-about-bt-right {
+    font-size: 1em;
+}
+    .banner-about-bt-left a {
+    padding: 6px 10px 9px;
+    font-size: 1em;
+}
+    .banner {
+    padding-top: 75px;
+    padding-bottom: 10px;
+}
+.common-head {
+    font-size: 1.2em;
+}
+    .banner-bottom-text {
+    width: 80%;
+}
+    .banner-bottom-bg {
+    padding: 35px 0;
+}
+    .about-left {
+    width: 100%;
+}
+    .about-right-content {
+    width: 100%;
+    margin-top: 20px;
+}
+.alert-box-inner ul li {
+    width: 29%;
+    margin-bottom: 25px;
+    min-height: 122px;
+       font-size: 0.9em;
+}
+    .alert-box-inner ul li:nth-child(5) {
+    margin-left: 2%;
+}
+    .alert-box-inner ul li:nth-last-child(5n) {
+     margin-right: 2%;
+    margin-left: 2%;
+}
+    .alert-box-inner ul li:first-child {
+    margin-left: 2%;
+}
+    .alert-box-inner ul li span img {
+    margin-bottom: 8px;;
+}
+.service-center-content-box-rt {
+    width: 98%;
+    padding-left: 0px;
+}
+    .service-round-bg-1 {
+    width: 104px;
+    height: 104px;
+}
+.mrg-lef-80 {
+    margin-left: 20px;
+}
+    .service-round-bg {
+    width: 353px;
+}
+    .service-round-bg-1 span {
+    margin-top: 16px;
+            font-size: 1.5em;
+    padding-bottom: 1px;
+}
+    .service-center-bg-left-bt {
+    width: 300px;
+}
+    .service-center-bg-rt-bg {
+    width: 300px;
+}
+    p {
+    font-size: 0.9em;
+    line-height: 1.8em;
+}
+    .sevice-cent-sub-text p {
+    font-size: 0.9em;
+}
+    .sevice-cent-sub-head {
+    font-size: 1em;
+}
+    .sevice-cent-sub-text span {
+    font-size: 0.9em;
+    font-weight: 400;
+}
+    .bootl-feature {
+    font-size: 0.9em;
+    margin-top: 5px;
+    margin-left: 38px;
+}
+    .myaccordion .btn span i {
+    font-size: .6em;
+}
+   
+    .vechicle-track-rt {
+    width: 56%;
+}
+    .myaccordion .card-body ul li {
+    font-size: 0.9em;
+}
+    .service-conte-bottom {
+    padding: 15px 0;
+}
+    .service-center-content {
+    padding-top: 25px;
+}
+    .app-content-box .slick-dots li button{
+            width: 13px;
+    height: 13px;
+    }
+.app-content-box .slick-dots li button:before {
+    font-size: 34px;
+    width: 9px;
+    height: 10px;   padding-left: 0.5px;
+    padding-left: 0px;
+    line-height: 13px;
+}    
+    
+.alert-left-bg .slick-dots li button {
+    width: 13px;
+    height: 13px;
+}    
+    .alert-left-bg .slick-dots li button:before {
+    font-size: 34px;
+    width: 9px;
+    height: 10px;   padding-left: 0.5px;
+    padding-left: 0px;
+    line-height: 13px;
+}    
+    .download-button {
+    width: 97px;
+    padding: 8px 12px;
+}
+    .download-app-right {
+    margin-top: 20px;
+}
+    .gps-tacker-text p {
+    font-size: 0.9em;
+}
+    .gps-tacker-text p span {
+    padding: 0px 8px;
+}
+    .footer-top-bg {
+    padding: 17px 0 17px;
+}
+    .our-certification-bg {
+    padding: 40px 0;
+}
+.footer-content-box {
+    width: 100%;
+    text-align: center;
+}
+    .footer-contact a i {
+  float: none; 
+    text-align: center;
+}.footer-contact a {
+  width: 100%;
+
+}
+    .footer-contact {
+    margin-bottom: 10px;
+}
+    .footer-download-bg {
+    width: 250px;
+    float: none;
+    margin: 0px auto;
+}.footer-content-box-2 {
+    min-height: auto;
+}
+    .footer-social-box {
+    width: 100%;
+    text-align: center;
+}
+    .footer-social-icon-bg {
+    width: 182px;
+    float: none;
+    margin: 0px auto;
+}
+    .footer-content-section {
+    padding-bottom: 40px;
+}.footer-top {
+    height: 43px;
+}
+    .footer-middle {
+    padding-top: 50px;
+}
+    .footer-bottm-bg {
+    font-size: 0.9em;
+}
+    .alert-head-sub {
+    font-size: 0.9em;
+        padding-bottom: 25px;
+    padding-top: 5px;
+}
+    .alert-left-bg-inner {
+    text-align: center;
+}
+    .footer-address p {
+    font-size: 0.9em;
+}
+    .footer-contact a {
+    font-size: 0.9em;
+}
+      .footer-download-button {
+    margin-bottom: 0px;
+}
+      .alert-bg-outer {
+     background-image: url(../images/alert-right-mob.png);
+    background-position: right bottom;
+}
+    #menu ul li {
+    margin-left: 3px;
+    width: 85%;
+}
+    
+        /* ======login page sty Start=======*/ 
+    
+    .login-banner-right {
+    width: 80%;
+    padding-top: 10px;
+    margin-right: 10%;
+}
+    .login-head-icon {
+    width: 45px;
+}
+    .login-text {
+    font-size: 1.5em;
+}
+ .login-form input[type="text"], .login-form textarea {
+    padding: 7px 7% 8px 12%;
+    margin: 0px 0 23px;
+    font-size: 1em;
+    line-height: 22px;
+}
+    .input-warpper span {
+    padding-left: 10px;
+    top: 9spx;
+}
+    .squaredThree label {
+    width: 20px;
+    height: 20px;
+}
+  
+    .squaredThree span {
+    font-size: 0.9em;
+    top: 0px;
+    padding-left: 0px;
+    left: 24px;
+    width: 112px;
+}
+  
+    .forgot-r a {
+    font-size: 0.9em;
+}
+    .login-form input[type="submit"], .login-form input[type="button"] {
+    font-size: 1.2em;
+    padding: 5px 0 8px;
+    border-radius: 10px;
+}
+    .mrg-40 {
+    margin: 0 0 20px 0;
+}
+    
+    .login-banner-left {
+width: 50%;
+    margin-top: 36px;
+    margin-left: 25%;
+    margin-bottom: 30px;
+}
+    .login-top-head {
+    width: 126px;
+    margin: 0px auto;
+    float: none;
+    margin-bottom: 40px;
+}
+    
+    .squaredThree label:after {
+    width: 14px;
+    height: 8px;
+    top: 4px;
+    left: 4px;
+    border: 2px solid #f6b225;
+  }
+    
+        /* ======login page sty END=======*/ 
+}
+
+
+@media screen and (max-width:480px) {
+    
+    .banner-right {
+    width: 96%;
+}
+    .banner-left {
+    padding-left: 0%;
+    width: 100%;
+    text-align: center;
+}
+    .banner-about-bt-left {
+    width: 112px;
+    float: none;
+    margin: 0px auto;
+}
+.banner-about-bt-right {
+    width: 205px;
+    float: none;
+    margin: 0px auto;
+    padding-left: 0;
+    padding-top: 11px;
+    margin-top: 35px;
+}    
+    .banner-about-bt {
+    width: 100%;
+}
+    .banner-head br{
+        display: none;
+    }
+    .service-round-bg-1 {
+    width: 90px;
+    height: 90px;
+}
+    .mrg-lef-80 {
+    margin-left: 10px;
+}
+    .service-round-bg-1 span {
+    margin-top: 14px;
+    font-size: 1.2em;
+    padding-bottom: 1px;
+}
+    .service-round-bg {
+    width: 290px;
+}
+    .vechicle-track {
+    width: 100%;
+    margin-bottom: 15px;
+}
+    .vechicle-track-rt {
+    width: 100%;
+}
+    .common-head {
+    font-size: 1.1em;
+}
+    .service-center-content-box {
+    width: calc(100% /1);
+    margin-top: 25px;
+}
+    .service-center-content-box-rt {
+    width: 85%;
+    padding-left: 10px;
+}
+    .download-app-right {
+    width: 63%;
+}
+    .download-button {
+    width: 83px;
+    padding: 8px 6px;
+}
+    .download-icon-mrg {
+    margin-left: 7px;
+}
+    .app-sceen-right {
+    width: 90px;
+}
+    .app-sceen-lf{
+    width: 90px;
+}
+ .app-screen-bg {
+    padding: 30px 0;
+}
+    .download-app-right-hd {
+    padding-bottom: 10px;
+}
+    .gps-tacker-text p {
+    font-size: 0.9em;
+    line-height: 1.2em;
+}
+    .alert-left-bg .slick-dots {
+    left: 30%;
+}
+    .alert-bg-outer {
+     background-image: url(../images/alert-right-mob-320.png);
+    background-position: right bottom;
+}
+    .about-button {
+    font-size: 0.9em;
+    padding: 8px 10px;
+}
+    
+    .app-content-box .slick-dots {
+    padding-left: 36%;
+    margin-top: 25px;
+}
+    
+            /* ======login page sty START========*/
+    
+    .login-banner-left {
+    width: 79%;
+    margin-top: 35px;
+    margin-bottom: 0;
+    margin-left: 10%;
+}
+    .login-banner-right {
+    width: 88%;
+    padding-top: 34px;
+    margin-right: 6%;
+}
+    .login-form input[type="text"], .login-form textarea {
+    padding: 7px 7% 9px 30px;
+    font-size: 1em;
+}
+    .login-top-head {
+    width: 126px;
+    margin: 0px auto;
+    float: none;
+    margin-bottom: 40px;
+}
+    
+    
+    /* ======login page sty END=======*/
+}

@@ -19,6 +19,10 @@ Route::group(['middleware' => ['web','auth','role:root'] , 'namespace' => 'App\M
 	Route::get('/gps_playback','GpsController@playbackPage')->name('gps_playback');
 	Route::get('/gps_playback_data','GpsController@playbackPageData')->name('gps_playback_data');
 
+	Route::get('/esim-updation','GpsController@esimUpdation')->name('esim.updation');
+	Route::post('/esim-upload','GpsController@saveVehicleType')->name('esim.upload');
+	Route::post('/esim-number-update','GpsController@esimUpload')->name('esim.number.updation.p');
+	
 	});
 	Route::group(['middleware' => ['web','auth','role:dealer'] , 'namespace' => 'App\Modules\Gps\Controllers' ] , function() {
 
