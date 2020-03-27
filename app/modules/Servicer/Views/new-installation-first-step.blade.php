@@ -43,14 +43,14 @@ Assign Servicer
 </div>
 </div>
 <input type="hidden"  name="servicer_jobid"  id="servicer_jobid" value={{$servicerjob_id}}>
-<input type="hidden"  name="onload_stage"  id="onload_stage" value={{$stage}}>
+
 
 <div class="panel panel-primary setup-content" id="step-1">
 <div class="panel-heading">
 <h4 class="panel-title">Installation check list</h4>
 </div>
 <div class="panel-body">
-<form  method="POST" action="{{route('updatecheckbox.installation.save.p',$servicer_job->id)}}">
+<form  method="POST" action="{{route('checkbox.installation.save.p',$servicerjob_id)}}">
    {{csrf_field()}}
  
  <div class="row">

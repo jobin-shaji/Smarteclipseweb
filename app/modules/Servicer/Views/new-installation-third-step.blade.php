@@ -49,15 +49,17 @@ Assign Servicer
 <h4 class="panel-title">Command</h4>
 </div>
 <div class="panel-body">
-	<form  method="POST" action="{{route('command.complete.save',$servicer_job->id)}}">
+	<form  method="POST" action="{{route('completedcommand.save',$servicer_jobid)}}">
    {{csrf_field()}}
 <div class="row">
 <?php foreach ($command_configuration as $command){ ?>
 <div class="col-lg-6">
 <div class="funkyradio">
 <div class="funkyradio-success">
-<input type="checkbox" name="commandcheckbox[]" value="{{$command['id']}}" id="command{{$command['id']}}"/>
+<input type="checkbox" name="commandcheckbox[]" value="{{$command['id']}}" id="command{{$command['id']}}"
+<?php if($command['checked']== true){ echo "checked"; }?>/>
 <label for="command{{$command['id']}}">{{$command['command']}}</label>
+
 </div>
 </div>
 </div>

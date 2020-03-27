@@ -23,11 +23,11 @@ Assign Servicer
 <div class="stepwizard">
 <div class="stepwizard-row setup-panel">
 <div class="stepwizard-step col-xs-3"> 
-<a href="#step-1" type="button" class="btn btn-success btn-circle">1</a>
+<a href="#step-1" type="button" class="btn btn-success btn-circle" disabled="disabled">1</a>
 <p><small>Installation Job checklist</small></p>
 </div>
 <div class="stepwizard-step col-xs-3"> 
-<a href="#step-2" type="button" class="btn btn-default btn-circle" disabled="disabled">2</a>
+<a href="#step-2" type="button" class="btn btn-default btn-circle" >2</a>
 <p><small>Vehicle Details</small></p>
 </div>
 <div class="stepwizard-step col-xs-3"> 
