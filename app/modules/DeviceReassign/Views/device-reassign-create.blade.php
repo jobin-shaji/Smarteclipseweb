@@ -81,7 +81,9 @@
                   </tr>
                   @endif
 
-                  @foreach($datalist as $data)                  
+                  @foreach($datalist as $data)    
+
+                   <input type="hidden" id="gp" value="{{$data->id}}">              
                   <tr> 
                     <td>{{$loop->iteration}}</td>
                     <td>{{$data->imei}}</td>
@@ -104,22 +106,23 @@
   <div class="row " >
     <div class="col-md-12">
       <div class="form-group has-feedback">
+     
         <label class="srequired">Reassign To</label>
         <select class="form-control select2"  name="return_to" data-live-search="true" title="Select " id='return_to'  required>
-        <option selected disabled>Select</option>
+        <option selected disabled value="">Select</option>
             @foreach ($datalist as $data)
               @if($data->gpsStock->client['name'] != '')
-                <option value="{{$data->gpsStock->id}}">{{$data->gpsStock->trader['name']}}</option>
-                <option value="{{$data->gpsStock->id}}">{{$data->gpsStock->subdealer['name']}}</option>
-                <option value="{{$data->gpsStock->id}}">{{$data->gpsStock->dealer['name']}}</option>
+                <option value="{{$data->imei}}">{{$data->gpsStock->trader['name']}}</option>
+                <option value="{{$data->imei}}">{{$data->gpsStock->subdealer['name']}}</option>
+                <option value="{{$data->imei}}">{{$data->gpsStock->dealer['name']}}</option>
               @elseif(($data->gpsStock->client['name'] != '') && ($data->gpsStock->trader['name'] == ''))
-                <option value="{{$data->gpsStock->id}}">{{$data->gpsStock->subdealer['name']}}</option>
-                <option value="{{$data->gpsStock->id}}">{{$data->gpsStock->dealer['name']}}</option>
+                <option value="{{$data->imei}}">{{$data->gpsStock->subdealer['name']}}</option>
+                <option value="{{$data->imei}}">{{$data->gpsStock->dealer['name']}}</option>
               @elseif(($data->gpsStock->client['name'] == '') && ($data->gpsStock->trader['name'] != ''))
-                <option value="{{$data->gpsStock->id}}">{{$data->gpsStock->subdealer['name']}}</option>
-                <option value="{{$data->gpsStock->id}}">{{$data->gpsStock->dealer['name']}}</option>
+                <option value="{{$data->imei}}">{{$data->gpsStock->subdealer['name']}}</option>
+                <option value="{{$data->imei}}">{{$data->gpsStock->dealer['name']}}</option>
               @elseif(($data->gpsStock->trader['name'] == '') && ($data->gpsStock->client['name'] == '') && ($data->gpsStock->subdealer['name'] != ''))
-                <option value="{{$data->gpsStock->id}}">{{$data->gpsStock->dealer['name']}}</option>
+                <option value="{{$data->imei}}">{{$data->gpsStock->dealer['name']}}</option>
               @endif
             @endforeach      
         </select>
