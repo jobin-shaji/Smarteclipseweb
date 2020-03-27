@@ -5,7 +5,7 @@
 Route::group(['middleware' => ['web','auth','role:root'] , 'namespace' => 'App\Modules\DeviceReassign\Controllers' ] , function() {	
 
 Route::get('/devicereassign/create','DeviceReassignController@create')->name('devicereassign.create');
-Route::post('/device-reassign','DeviceReassignController@getDeviceList')->name('device.reassign.p');
+Route::post('/device-reassign-list','DeviceReassignController@getDeviceList')->name('device.reassign.list.p');
 // Route::get('/devicereturn','DeviceReturnController@deviceListPage')->name('devicereturn');
 // Route::post('/device-return-list','DeviceReturnController@getDeviceList')->name('device.return.list');
 // Route::get('/device','DeviceReturnController@DeviceReturnListPage')->name('device');

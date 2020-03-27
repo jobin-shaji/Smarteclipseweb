@@ -531,8 +531,8 @@ function backgroundPostData(url, data, callBack, options) {
                 else if(callBack=='rootVehicle'){
                     rootVehicle(res);
                 }
-                else if(callBack=='searchDevice'){
-                    searchDevice(res);
+                else if(callBack=='deviceReassign'){
+                    deviceReassign(res);
                 }
 
 

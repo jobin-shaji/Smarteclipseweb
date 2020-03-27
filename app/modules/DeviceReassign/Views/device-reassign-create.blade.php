@@ -54,23 +54,68 @@
               <table class="table table-hover table-bordered  table-striped datatable" style="width:100%!important;text-align: center" id="dataTable">
                 <thead>
                   <tr>
-                    <th>SL.No</th>
-                    <th>imei </th>   
-                    <th>Serial Number</th>
-                    <th>Date</th>
-                    <th>Type of issues</th>
-                    <th>Comments</th>
-                    <th>Status</th>
-                    <th>Action</th>
+                   <th>SL.No</th>
+                    <th>imei </th> 
+                    <th>Serial No</th>
+                    <th>Manufacturer</th>
+                    <th>Distributor</th>
+                    <th>Dealer</th>
+                    <th>Sub Dealer</th>
+                    <th>Client</th>
+
                   </tr>
                 </thead>
               </table>
+
+               <<!-- table class="table table-hover table-bordered  table-striped datatable" style="width:100%;text-align: center;" >
+                <thead>
+                  <tr>
+                    <th>SL.No</th>
+                   <th>imei </th> 
+                    <th>Serial No</th>
+                    <th>Manufacturer</th>
+                    <th>Distributor</th>
+                    <th>Dealer</th>
+                    <th>Sub Dealer</th>
+                    <th>Client</th>
+                  </tr>
+                </thead>
+                <tbody id="device_route">
+                </tbody>
+              </table> -->
             </div>
           </div>
         </div>
       </div>
     </div>        
   </div>
+      
+      <div class="row " >
+                <div class="col-md-12">
+                  <div class="form-group has-feedback">
+                    <label class="srequired">Choose What action to do</label>
+                   <select class="form-control select2"  name="return_to" data-live-search="true" title="Select " id='return_to'  required>
+                    <option selected disabled>Select </option>
+                   
+                    </select>
+                    @if ($errors->has('return_to'))
+                    <span class="help-block">
+                        <strong class="error-text">{{ $errors->first('return_to') }}</strong>
+                    </span>
+                    @endif
+                  </div>
+              </div>
+              <div class="row">
+                <!-- /.col -->
+                <div class="col-md-3 ">
+                  <button type="button" onclick="searchData()" class="btn btn-primary btn-md form-btn ">SUBMIT</button>
+                </div>
+                <!-- /.col -->
+              </div>
+            <!-- </form> -->
+          </div>
+
+
         </div>
       </div>
     </div>

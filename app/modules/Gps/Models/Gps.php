@@ -165,4 +165,27 @@ class Gps extends Model
                         'refurbished_status'    =>  1
                     ]); 
     }
+    public function getDeviceDetails($imei)
+    {
+        return self::select(
+            'id',
+            'imei',
+            'serial_no',
+            'manufacturing_date',
+            'icc_id',
+            'imsi',
+            'e_sim_number',
+            'batch_number',
+            'employee_code',
+            'model_name',
+            'version',
+            'is_returned'
+        )
+        ->where('imei',$imei)
+        ->with('gpsStock:id,gps_id,dealer_id,subdealer_id,client_id,trader_id,inserted_by')                   
+        // ->with('gpsStock:trader')                   
+
+        ->get();
+       
+    }
 }
