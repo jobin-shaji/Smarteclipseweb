@@ -54,16 +54,17 @@ Over Speed Report
                           </div>
                           </div>
                           <div class="col-lg-3 col-md-3 pt-4">
-                           <div class="form-group">          
-                            <button class="btn btn-sm btn-info btn2 srch" onclick="check()"> <i class="fa fa-search"></i> </button>
-                            <button class="btn btn-sm btn1 btn-primary dwnld" onclick="downloadOverSpeedReport()">
-                              <i class="fa fa-file"></i>Download Excel</button>                        </div>
+                            <div class="form-group">          
+                              <button class="btn btn-sm btn-info btn2 srch" onclick="check()"> <i class="fa fa-search"></i> </button>
+                              <button class="btn btn-sm btn1 btn-primary dwnld" id = 'overspeed_report_download' style = 'display:none;' onclick="downloadOverSpeedReport()">
+                                <i class="fa fa-file"></i>Download Excel</button>                        
+                            </div>
                           </div>
                           
                         </div>
                       </div>
                       </div>                 
-                    <table class="table table-hover table-bordered  table-striped datatable" style="width:100%;text-align: center" id="dataTable">
+                    <table class="table table-hover table-bordered  table-striped datatable" style="width:100%;text-align: center;display:none;" id="dataTable">
                         <thead>
                             <tr>
                              <th>SL.No</th>
@@ -71,7 +72,7 @@ Over Speed Report
                               <th>Alert Type</th>
                               <!-- <th>Location</th> -->
                               <th>Date & Time</th>
-                              <th>Action</th>       
+                              <!-- <th>Action</th>        -->
                             </tr>
                         </thead>
                     </table>

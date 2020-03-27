@@ -60,9 +60,7 @@ Total KM Report
                             <div class="form-group">          
                               <button class="btn btn-sm btn-info btn2 srch" onclick="check()">
                                 <i class="fa fa-search"></i> 
-                              </button>
-                              <!-- <button class="btn btn-sm btn1 btn-primary form-control" id="excel" onclick="downloadKMReport()">
-                              <i class="fa fa-file"></i>Download Excel</button>   -->                      
+                              </button>                     
                             </div>
                           </div>                        
                         </div>
@@ -301,7 +299,7 @@ Total KM Report
 </section>
 @section('script')
   <link rel="stylesheet" href="{{asset('css/km-loader-1.css')}}">
-    <script src="{{asset('js/gps/km-list.js')}}"></script>
+  <script src="{{asset('js/gps/vehicle-report.js')}}"></script>
 @endsection
 @endsection
 

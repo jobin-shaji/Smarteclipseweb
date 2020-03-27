@@ -29,9 +29,79 @@ class Alert extends Model
 	  return $this->hasOne('App\Modules\Alert\Models\AlertType','id','alert_type_id');
 	}
 
+	public function getGeofenceAlerts($gps_ids)
+	{
+		return 	self::select(          
+					'id',
+					'alert_type_id',
+					'device_time',   
+					'gps_id',
+					'latitude',
+					'longitude',
+					'status'
+				)
+				->with('alertType:id,description')
+				->with('gps.vehicle')
+				->whereIn('gps_id',$gps_ids)
+				->whereIn('alert_type_id',[5,6])
+				->orderBy('device_time', 'DESC')
+				->limit(1000);  
+	}
 
+	public function getOverspeedAlerts($gps_ids)
+	{
+		return 	self::select(          
+					'id',
+					'alert_type_id',
+					'device_time',   
+					'gps_id',
+					'latitude',
+					'longitude',
+					'status'
+				)
+				->with('alertType:id,description')
+				->with('gps.vehicle')
+				->whereIn('gps_id',$gps_ids)
+				->where('alert_type_id',12)
+				->orderBy('device_time', 'DESC')
+				->limit(1000);  
+	}
 
+	public function getAlertsDetailsForVehicleReport($single_vehicle_gps_ids,$from_date,$to_date)
+	{
+		return 	self::select(
+					'id',
+					'alert_type_id', 
+					'device_time',    
+					'gps_id', 
+					'latitude',
+					'longitude', 
+					'status'
+				)
+				->whereIn('gps_id',$single_vehicle_gps_ids)
+				->whereNotIn('alert_type_id',[17,18,23,24])
+				->whereDate('device_time', '>=', $from_date)
+				->whereDate('device_time', '<=', $to_date)
+				->get(); 
+	}
 
-	
+	public function getHarshBreakingAlerts($gps_ids)
+	{
+		return 	self::select(          
+					'id',
+					'alert_type_id',
+					'device_time',   
+					'gps_id',
+					'latitude',
+					'longitude',
+					'status'
+				)
+				->with('alertType:id,description')
+				->with('gps.vehicle')
+				->whereIn('gps_id',$gps_ids)
+				->where('alert_type_id',1)
+				->orderBy('device_time', 'DESC')
+				->limit(1000);  
+	}
 
 }

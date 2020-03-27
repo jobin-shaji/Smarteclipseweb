@@ -25,87 +25,71 @@
                     <div class="panel-body">
                       <div class="panel-heading">
                         <div class="cover_div_search">
-                        <div class="row">
-                          <div class="col-lg-3 col-md-3">
-                          <div class="form-group"> 
-                          <label>Vehicle</label>                           
-                            <select class="form-control selectpicker" data-live-search="true" title="Select Vehicle" id="vehicle" name="vehicle">
-                              <option value=""  selected="selected">Select</option>
-                              @foreach ($vehicles as $vehicles)
-                              <option value="{{$vehicles->id}}">{{$vehicles->name}} || {{$vehicles->register_number}}</option>
-                              @endforeach  
-                            </select>
+                          <div class="row">
+                            <div class="col-lg-3 col-md-3">
+                              <div class="form-group"> 
+                              <label>Vehicle</label>                           
+                                <select class="form-control selectpicker" data-live-search="true" title="Select Vehicle" id="vehicle" name="vehicle">
+                                  <option value=""  selected="selected">Select</option>
+                                  @foreach ($vehicles as $vehicles)
+                                  <option value="{{$vehicles->id}}">{{$vehicles->name}} || {{$vehicles->register_number}}</option>
+                                  @endforeach  
+                                </select>
+                              </div>
+                            </div>
+                            <div class="col-lg-3 col-md-3"> 
+                              <div class="form-group">
+                                <label>Report type</label>                           
+                                <select class="form-control selectpicker" data-live-search="true" title="Select report type" id="report" name="report">
+                                  <option value="" selected="selected" >Select</option>
+                                  <option value="1">Today</option>
+                                  <option value="2">Yesterday</option>
+                                  <option value="3">Last 7 days</option>
+                                  <option value="5">Last 30 Days</option> 
+                                  @if(\Auth::user()->hasRole('fundamental|superior|pro'))
+                                    <option value="6">2 Months</option>
+                                    @endif 
+                                    @if(\Auth::user()->hasRole('superior|pro'))
+                                    <option value="7">4 Months</option>
+                                    @endif
+                                    @if(\Auth::user()->hasRole('pro'))
+                                    <option value="8">6 Months</option>
+                                    @endif         
+                                  <!-- <option value="5">Custom Range</option>                           -->
+                                </select>
+                              </div>
+                            </div> 
+                            <div class="col-lg-3 col-md-3 pt-4">
+                              <div class="form-group">          
+                                <button class="btn btn-sm btn-info btn2 srch" onclick="trackMode()"> <i class="fa fa-search"></i> </button>                   
+                              </div>
+                            </div>                          
                           </div>
-                          </div>
-                         
-                           <div class="col-lg-3 col-md-3"> 
-                           <div class="form-group">
-                            <label>Report type</label>                           
-                            <select class="form-control selectpicker" data-live-search="true" title="Select report type" id="report" name="report">
-                              <option value="" selected="selected" >Select</option>
-                              <option value="1">Today</option>
-                              <option value="2">Yesterday</option>
-                              <option value="3">Last 7 days</option>
-                              <option value="5">Last 30 Days</option> 
-                               @if(\Auth::user()->hasRole('fundamental|superior|pro'))
-                                <option value="6">2 Months</option>
-                                @endif 
-                                @if(\Auth::user()->hasRole('superior|pro'))
-                                <option value="7">4 Months</option>
-                                @endif
-                                @if(\Auth::user()->hasRole('pro'))
-                                <option value="8">6 Months</option>
-                                @endif         
-                              <!-- <option value="5">Custom Range</option>                           -->
-                            </select>
-                          </div>
-                          </div> 
-                          <!--  <div class="col-lg-3 col-md-3">   
-                          <div class="form-group">                   
-                            <label> From Date</label>
-                            <input type="text" class="datetimepicker form-control" id="fromDate" name="fromDate" required>
-                          </div>
-                          </div>
-                          <div class="col-lg-3 col-md-3"> 
-                          <div class="form-group">                     
-                            <label> To Date</label>
-                            <input type="text" class="datetimepicker form-control" id="toDate" name="toDate" required>
-                          </div>
-                          </div>  -->     
-
-                           <div class="col-lg-3 col-md-3 pt-4">
-                           <div class="form-group">          
-                            <button class="btn btn-sm btn-info btn2 srch" onclick="trackMode()"> <i class="fa fa-search"></i> </button>
-                            <!-- <button class="btn btn-sm btn1 btn-primary form-control" onclick="downloadTrackReport()">
-                              <i class="fa fa-file"></i>Download Excel</button> -->                       
-                               </div>
-                          </div>                          
                         </div>
-                      </div>
                       </div>    
 
-                    <table class="table table-hover table-bordered  table-striped datatable" style="width:100%;text-align: center">
-                        <thead>
-                            <tr>
-                              <th><b>SL.No</b></th>
-                              <th><b>Moving</b></th>
-                              <th><b>Halt</b></th>
-                              <th><b>Sleep</b></th>                              
-                            </tr>
-                        </thead>
-                         <tbody>
-                            <tr>
-                              <td id="sl"></td>
-                              <td id="motion"><b style="float: right;margin-right: -13px">No data</b></td>
-                              <td id="halt"><b style="float: left;margin-left: -15px">Available</b></td>
-                              <td id="sleep"></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <div class="loader-wrapper" id="load-6">
-                      <div id="load6"></div>
-                    </div> 
-                  </div>
+                      <table class="table table-hover table-bordered  table-striped datatable" style="width:100%;text-align: center">
+                          <thead>
+                              <tr>
+                                <th><b>SL.No</b></th>
+                                <th><b>Moving</b></th>
+                                <th><b>Halt</b></th>
+                                <th><b>Sleep</b></th>                              
+                              </tr>
+                          </thead>
+                          <tbody>
+                              <tr>
+                                <td id="sl"></td>
+                                <td id="motion"><b style="float: right;margin-right: -13px">No data</b></td>
+                                <td id="halt"><b style="float: left;margin-left: -15px">Available</b></td>
+                                <td id="sleep"></td>
+                              </tr>
+                          </tbody>
+                      </table>
+                      <div class="loader-wrapper" id="load-6">
+                        <div id="load6"></div>
+                      </div> 
+                    </div>
                   </div>
                 </div>
               </div>

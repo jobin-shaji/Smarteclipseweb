@@ -10,14 +10,13 @@
      <tbody>
         @foreach($totalkmReportExport as $totalkmReport)
         <?php
-       $gps_km=$totalkmReport->km;
-          $km=round($gps_km/1000);
-            
-       ?>
+            $gps_km     =   $totalkmReport['total_km'];
+            $km         =   round($gps_km/1000); 
+        ?>
         <tr>           
             <td>{{ $loop->iteration }}</td>
-            <td>{{ $totalkmReport->vehicle->name }}</td>           
-            <td>{{ $totalkmReport->vehicle->register_number }}</td>            
+            <td>{{ $totalkmReport['vehicle_name'] }}</td>           
+            <td>{{ $totalkmReport['vehicle_register_number'] }}</td>            
             <td>{{ $km }}</td>         
         </tr>
         @endforeach

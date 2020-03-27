@@ -448,10 +448,11 @@ function backgroundPostData(url, data, callBack, options) {
                 {
                    TotalKM(res)
                 }
-                else if(callBack=='kmReport')
+                else if(callBack=='vehicleReport')
                 {
-                    kmReport(res);
-                }else if(callBack=='geofenceResponse')
+                    vehicleReport(res);
+                }
+                else if(callBack=='geofenceResponse')
                 {
                     geofenceResponse(res);
                 }
@@ -814,63 +815,24 @@ function downloadAlertReport(){
 }
 
 
-function downloadGeofenceReport(){
-
-    var url = 'geofence-report/export';
-    var  vehicles=$('#vehicle').val();
-    if(vehicles==null)
+function downloadGeofenceReport()
+{
+    var url             =   'geofence-report/export';
+    var vehicle         =   $('#vehicle').val();
+    var fromDate        =   $('#fromDate').val();
+    var toDate          =   $('#toDate').val();
+    if(fromDate)
     {
-       var vehicle=0;
+        var data        =   { id : $('meta[name = "client"]').attr('content'),'vehicle':vehicle,'fromDate':fromDate,'toDate':toDate };
+        downloadFile(url,data);
     }
     else
     {
-       var vehicle=vehicles;
-    }
-     // console.log(alert);
-    var fromDate=$('#fromDate').val();
-    var toDate=$('#toDate').val();
-    if(fromDate){
-        var data = {
-        id : $('meta[name = "client"]').attr('content'),'vehicle':vehicle,'fromDate':fromDate,'toDate':toDate
-        };
-        downloadFile(url,data);
-    }else{
-        var data = {
-        id : $('meta[name = "client"]').attr('content'),'vehicle':vehicle
-        };
+        var data = { id : $('meta[name = "client"]').attr('content'),'vehicle':vehicle };
         downloadFile(url,data);
     }
 }
 
-
-
-function downloadTrackReport(){
-
-    var url = 'track-report/export';
-    var  vehicles=$('#vehicle').val();
-    if(vehicles==null)
-    {
-       var vehicle=0;
-    }
-    else
-    {
-       var vehicle=vehicles;
-    }
-     // console.log(alert);
-    var fromDate=$('#fromDate').val();
-    var toDate=$('#toDate').val();
-    if(fromDate){
-        var data = {
-        id : $('meta[name = "client"]').attr('content'),'vehicle':vehicle,'fromDate':fromDate,'toDate':toDate
-        };
-        downloadFile(url,data);
-    }else{
-        var data = {
-        id : $('meta[name = "client"]').attr('content'),'vehicle':vehicle
-        };
-        downloadFile(url,data);
-    }
-}
 function downloadRouteDeviationReport(){
 
     var url = 'route-report/export';
@@ -899,30 +861,20 @@ function downloadRouteDeviationReport(){
     }
 }
 
-function downloadharshBrakingReport(){
-
-    var url = 'harsh-braking-report/export';
-    var  vehicles=$('#vehicle').val();
-    if(vehicles==null)
+function downloadharshBrakingReport()
+{
+    var url             =   'harsh-braking-report/export';
+    var vehicle         =   $('#vehicle').val();
+    var fromDate        =   $('#fromDate').val();
+    var toDate          =   $('#toDate').val();
+    if(fromDate)
     {
-       var vehicle=0;
+        var data        =   { id : $('meta[name = "client"]').attr('content'),'vehicle':vehicle,'fromDate':fromDate,'toDate':toDate };
+        downloadFile(url,data);
     }
     else
     {
-       var vehicle=vehicles;
-    }
-     // console.log(alert);
-    var fromDate=$('#fromDate').val();
-    var toDate=$('#toDate').val();
-    if(fromDate){
-        var data = {
-        id : $('meta[name = "client"]').attr('content'),'vehicle':vehicle,'fromDate':fromDate,'toDate':toDate
-        };
-        downloadFile(url,data);
-    }else{
-        var data = {
-        id : $('meta[name = "client"]').attr('content'),'vehicle':vehicle
-        };
+        var data = { id : $('meta[name = "client"]').attr('content'),'vehicle':vehicle };
         downloadFile(url,data);
     }
 }
@@ -957,31 +909,19 @@ function downloadSuddenAccelerationReport(){
 
 function downloadOverSpeedReport(){
 
-    var url = 'over-speed-report/export';
-    var  vehicles=$('#vehicle').val();
-    if(vehicles==null)
+    var url             =   'over-speed-report/export';
+    var vehicle_id      =   $('#vehicle').val();
+    var fromDate        =   $('#fromDate').val();
+    var toDate          =   $('#toDate').val();
+    if(fromDate)
     {
-       var vehicle=0;
-    }
-    else
-    {
-       var vehicle=vehicles;
-    }
-    // console.log(alert);
-    var fromDate=$('#fromDate').val();
-    var toDate=$('#toDate').val();
-    if(fromDate){
         var data = {
-        id : $('meta[name = "client"]').attr('content'),'vehicle':vehicle,'fromDate':fromDate,'toDate':toDate
+        id : $('meta[name = "client"]').attr('content'),'vehicle_id':vehicle_id,'fromDate':fromDate,'toDate':toDate
         };
         downloadFile(url,data);
-         // backgroundPostData(url,data,'downloadData',{alert:false});
-
-
-        //
     }else{
         var data = {
-        id : $('meta[name = "client"]').attr('content'),'vehicle':vehicle
+        id : $('meta[name = "client"]').attr('content'),'vehicle_id':vehicle_id
         };
         downloadFile(url,data);
     }
@@ -1105,63 +1045,13 @@ function downloadGpsProcessedDataReport(){
     downloadFile(url,data);
 }
 
-
-// function downloadTotalKMReport(){
-//     var url = 'total-km-report/export';
-//     var  vehicles=$('#vehicle').val();
-//     if(vehicles==null)
-//     {
-//        var vehicle=0;
-//     }
-//     else
-//     {
-//        var vehicle=vehicles;
-//     }
-//     // console.log(alert);
-//     var fromDate=$('#fromDate').val();
-//     var toDate=$('#toDate').val();
-//     if(fromDate){
-//         var data = {
-//         id : $('meta[name = "client"]').attr('content'),'vehicle':vehicle,'fromDate':fromDate,'toDate':toDate
-//         };
-//         console.log(url);
-//         downloadFile(url,data);
-//     }else{
-//         var data = {
-//             id : $('meta[name = "client"]').attr('content'),'vehicle':vehicle
-//         };
-//         downloadFile(url,data);
-//     }
-// }
-
 function downloadTotalKMReport(){
-    var url = 'total-km-report/export';
-    var  vehicles=$('#vehicle').val();
-    if(vehicles==null)
-    {
-       var vehicle=0;
-    }
-    else
-    {
-       var vehicle=vehicles;
-    }
-    // console.log(alert);
-    // var fromDate=$('#fromDate').val();
-    // var toDate=$('#toDate').val();
-    // if(fromDate){
-    //     var data = {
-    //     id : $('meta[name = "client"]').attr('content'),'vehicle':vehicle,'fromDate':fromDate,'toDate':toDate
-    //     };
-
-
-    //     downloadFile(url,data);
-    // }else{
-
-        var data = {
-            id : $('meta[name = "client"]').attr('content'),'vehicle':vehicle
-        };
-        downloadFile(url,data);
-    // }
+    var url             =   'total-km-report/export';
+    var vehicle_id      =   $('#vehicle').val();
+    var data            =   {
+                                id : $('meta[name = "client"]').attr('content'),'vehicle_id':vehicle_id
+                            };
+    downloadFile(url,data);
 }
 
 
@@ -1598,30 +1488,6 @@ function rootVehicle(res)
     //     }
     // }
 
-    
-/////////////////////////Km Report/////////////////////////
-function downloadKMReport(){
-    var url = 'km-report/export';
-    var  vehicle=$('#vehicle').val();
-    var  report_type=$('#report').val();
-    if(vehicle==null)
-    {
-       alert("Please select Vehicle")
-    }
-    else if(report_type==null)
-    {
-      alert("Please select Report Type")
-    }
-    else
-    {
-
-        var data = {
-    id : $('meta[name = "client"]').attr('content'),'vehicle':vehicle,'report_type':report_type
-    };
-    downloadFile(url,data);
-    }
-
-}
 function getdata(id){
     var url = 'get-gps-data';
     var data = {

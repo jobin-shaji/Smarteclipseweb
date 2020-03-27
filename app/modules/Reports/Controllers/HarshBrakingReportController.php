@@ -7,88 +7,57 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Modules\Gps\Models\GpsData;
 use App\Modules\Alert\Models\Alert;
 use App\Modules\Vehicle\Models\Vehicle;
+use App\Modules\Vehicle\Models\VehicleGps;
 use App\Modules\Warehouse\Models\GpsStock;
 use Illuminate\Support\Facades\Crypt;
 use DataTables;
+
 class HarshBrakingReportController extends Controller
 {
     public function harshBrakingReport()
     {
-        $client_id=\Auth::user()->client->id;
-        $vehicles=Vehicle::select('id','name','register_number','client_id')
-        ->where('client_id',$client_id)
-        ->withTrashed()
-        ->get();
+        $client_id      =   \Auth::user()->client->id;
+        $vehicles       =   (new Vehicle())->getVehicleListBasedOnClient($client_id);
         return view('Reports::harsh-braking-report',['vehicles'=>$vehicles]);  
     } 
     public function harshBrakingReportList(Request $request)
     {
-
-        $client= $request->data['client']; 
-        $vehicle= $request->data['vehicle'];
-        $from = $request->data['from_date'];
-        $to = $request->data['to_date'];   
-        $query =Alert::select(
-            'id',
-            'alert_type_id', 
-            'device_time',    
-            'gps_id', 
-            'latitude',
-            'longitude', 
-            'status'
-        )
-        ->with('alertType:id,description')
-        ->with('gps.vehicle')
-        // ->orderBy('id', 'desc')
-        ->orderBy('device_time', 'DESC')
-        ->limit(1000);
-        // if($vehicle==null)
-        // {
-        //     $query = $query->where('client_id',$client)
-        //     ->where('alert_type_id',1)
-        //     ->where('status',1);
-
-        // }   
-        if($vehicle==0 || $vehicle==null)
+        $single_vehicle_gps_ids     =   []; 
+        $client_id                  =   $request->client;
+        $vehicle_id                 =   $request->vehicle;
+        $from_date                  =   $request->from_date;
+        $to_date                    =   $request->to_date;
+        if($vehicle_id != 0)
         {
-            $gps_stocks=GpsStock::select('id','client_id','gps_id')->where('client_id',$client)->get();
-            $gps_list=[];
-            foreach ($gps_stocks as $gps) {
-                $gps_list[]=$gps->gps_id;
-            }
-            $query = $query->whereIn('gps_id',$gps_list)
-                            ->where('alert_type_id',1);
-            if($from){
-                $search_from_date=date("Y-m-d", strtotime($from));
-                $search_to_date=date("Y-m-d", strtotime($to)); 
-                $query = $query->whereDate('device_time', '>=', $search_from_date)->whereDate('device_time', '<=', $search_to_date);
-            }            
+            $vehicle_gps_ids        =   (new VehicleGps())->getGpsDetailsBasedOnVehicleWithDates($vehicle_id,$from_date,$to_date);         
         }
         else
         {
-            // $vehicle=Vehicle::withTrashed()->find($vehicle); 
-            $vehicle    =   Vehicle::select('id','gps_id')
-                            ->where('id',$vehicle)
-                            ->withTrashed()
-                            ->first();
-            $query = $query->where('alert_type_id',1)->where('gps_id',$vehicle->gps_id);
-            // ->where('status',1);
-            if($from){
-               $search_from_date=date("Y-m-d", strtotime($from));
-                $search_to_date=date("Y-m-d", strtotime($to));
-                $query = $query->whereDate('device_time', '>=', $search_from_date)->whereDate('device_time', '<=', $search_to_date);
-            }
+            $vehicle_details        =   (new Vehicle())->getVehicleListBasedOnClient($client_id);
+            $vehicle_ids            =   [];
+            foreach($vehicle_details as $each_vehicle)
+            {
+                $vehicle_ids[]      =   $each_vehicle->id; 
+            }  
+            $vehicle_gps_ids        =   (new VehicleGps())->getGpsDetailsBasedOnVehiclesWithDates($vehicle_ids,$from_date,$to_date);
         }
-        $alert = $query->get();      
-        return DataTables::of($alert)
+        $single_vehicle_gps_ids     =   ['5'];
+        $query                      =   (new Alert())->getHarshBreakingAlerts($single_vehicle_gps_ids); 
+        if($from_date)
+        {
+            $search_from_date       =   date("Y-m-d", strtotime($from_date));
+            $search_to_date         =   date("Y-m-d", strtotime($to_date));
+            $query                  =   $query->whereDate('device_time', '>=', $search_from_date)->whereDate('device_time', '<=', $search_to_date);
+        }
+        $harsh_breking_alerts       =   $query->get();       
+        return DataTables::of($harsh_breking_alerts)
         ->addIndexColumn()
-       
-        ->addColumn('action', function ($alert) { 
-         $b_url = \URL::to('/');             
-            return "
-            <a href=".$b_url."/alert/report/".Crypt::encrypt($alert->id)."/mapview class='btn btn-xs btn-info'><i class='glyphicon glyphicon-map-marker'></i> Map view </a>";
-        })
-        ->rawColumns(['link', 'action'])
+        // ->addColumn('action', function ($harsh_breking_alerts) { 
+        //  $b_url = \URL::to('/');             
+        //     return "
+        //     <a href=".$b_url."/alert/report/".Crypt::encrypt($harsh_breking_alerts->id)."/mapview class='btn btn-xs btn-info'><i class='glyphicon glyphicon-map-marker'></i> Map view </a>";
+        // })
+        // ->rawColumns(['link', 'action'])
         ->make();
    
 }

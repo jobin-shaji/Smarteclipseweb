@@ -9,51 +9,38 @@ use App\Modules\Gps\Models\GpsData;
 use App\Modules\Warehouse\Models\GpsStock;
 use App\Modules\Route\Models\RouteDeviation;
 use App\Modules\Vehicle\Models\Vehicle;
+use App\Modules\Vehicle\Models\VehicleGps;
+
 class HarshBrakingReportExport implements FromView
 {
-	protected $harshBrakingReportExport;
-	public function __construct($client,$vehicle,$from,$to)
+    protected $harshBrakingReportExport;
+    
+	public function __construct($client_id,$vehicle_id,$from_date,$to_date)
     {  
-         $query =Alert::select(
-            'id',
-            'alert_type_id', 
-            'device_time',    
-            'gps_id',
-            'latitude',
-            'longitude', 
-            'status'
-        )
-        ->with('alertType:id,description')
-        ->with('gps.vehicle')
-        ->orderBy('device_time', 'DESC');
-        if($vehicle==0 || $vehicle==null)
+        $single_vehicle_gps_ids             =   []; 
+        if($vehicle_id != 0)
         {
-            $gps_stocks=GpsStock::select('id','client_id','gps_id')->where('client_id',$client)->get();
-            $gps_list=[];
-            foreach ($gps_stocks as $gps) {
-                $gps_list[]=$gps->gps_id;
-            }
-            $query = $query->whereIn('gps_id',$gps_list)
-                            ->where('alert_type_id',1);
-            if($from){
-                $search_from_date=date("Y-m-d", strtotime($from));
-                $search_to_date=date("Y-m-d", strtotime($to)); 
-                $query = $query->whereDate('device_time', '>=', $search_from_date)->whereDate('device_time', '<=', $search_to_date);
-            }   
+            $vehicle_gps_ids                =   (new VehicleGps())->getGpsDetailsBasedOnVehicleWithDates($vehicle_id,$from_date,$to_date);         
         }
         else
         {
-           
-            $vehicle=Vehicle::select('id','gps_id')->where('id',$vehicle)->withTrashed()->first();
-            $query = $query->where('alert_type_id',1)->where('gps_id',$vehicle->gps_id);
-            // ->where('status',1);
-            if($from){
-               $search_from_date=date("Y-m-d", strtotime($from));
-                $search_to_date=date("Y-m-d", strtotime($to));
-                $query = $query->whereDate('device_time', '>=', $search_from_date)->whereDate('device_time', '<=', $search_to_date);
-            }
+            $vehicle_details                =   (new Vehicle())->getVehicleListBasedOnClient($client_id);
+            $vehicle_ids                    =   [];
+            foreach($vehicle_details as $each_vehicle)
+            {
+                $vehicle_ids[]              =   $each_vehicle->id; 
+            }  
+            $vehicle_gps_ids                =   (new VehicleGps())->getGpsDetailsBasedOnVehiclesWithDates($vehicle_ids,$from_date,$to_date);
         }
-        $this->harshBrakingReportExport = $query->get();          
+        $single_vehicle_gps_ids             =   ['5'];
+        $query                              =   (new Alert())->getHarshBreakingAlerts($single_vehicle_gps_ids); 
+        if($from_date)
+        {
+            $search_from_date               =   date("Y-m-d", strtotime($from_date));
+            $search_to_date                 =   date("Y-m-d", strtotime($to_date));
+            $query                          =   $query->whereDate('device_time', '>=', $search_from_date)->whereDate('device_time', '<=', $search_to_date);
+        }
+        $this->harshBrakingReportExport     =   $query->get();          
     }
     public function view(): View
 	{

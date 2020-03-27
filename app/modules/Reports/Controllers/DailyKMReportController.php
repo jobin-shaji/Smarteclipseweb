@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Modules\Gps\Models\GpsData;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Modules\Vehicle\Models\Vehicle;
+use App\Modules\Vehicle\Models\VehicleGps;
 use App\Modules\Vehicle\Models\DailyKm;
 use App\Modules\Warehouse\Models\GpsStock;
 use DataTables;
@@ -13,22 +14,35 @@ class DailyKMReportController extends Controller
 {
     public function dailyKMReport()
     {
-    	$client_id=\Auth::user()->client->id;
-    	$vehicles=Vehicle::select('id','name','register_number','client_id')
-        ->where('client_id',$client_id)
-        ->withTrashed()
-        ->get();        
+    	$client_id      =   \Auth::user()->client->id;
+    	$vehicles       =   (new Vehicle())->getVehicleListBasedOnClient($client_id);
         return view('Reports::daily-km-report',['vehicles'=>$vehicles]);  
     }  
     public function dailyKMReportList(Request $request)
     {
-        $client_id=\Auth::user()->client->id;
-        $from = $request->data['from_date'];
-        // $to = $request->data['to_date'];
-        $search_from_date=date("Y-m-d", strtotime($from));
-        // $search_to_date=date("Y-m-d", strtotime($to));
-        // dd($from);
-        $vehicle_id = $request->data['vehicle'];  
+        $single_vehicle_gps_ids     =   []; 
+        $client_id                  =   \Auth::user()->client->id;
+        $date                       =   $request->date;
+        $search_date                =   date("Y-m-d", strtotime($date));
+        $vehicle_id                 =   $request->vehicle;  
+        if($vehicle_id != 0)
+        {
+            $vehicle_gps_ids        =   (new VehicleGps())->getGpsDetailsBasedOnVehicleWithSingleDate($vehicle_id,$search_date); 
+        }
+        else
+        {
+            $vehicle_details        =   (new Vehicle())->getVehicleListBasedOnClient($client_id);
+            $vehicle_ids            =   [];
+            foreach($vehicle_details as $each_vehicle)
+            {
+                $vehicle_ids[]      =   $each_vehicle->id; 
+            }  
+            $vehicle_gps_ids        =   (new VehicleGps())->getGpsDetailsBasedOnVehiclesWithSingleDate($vehicle_ids,$search_date);
+        }
+
+
+
+
         $query =DailyKm::select(
             'gps_id', 
             'date',      
