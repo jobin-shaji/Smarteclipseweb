@@ -23,7 +23,8 @@
     <div class="table-responsive">
       <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">  <div class="row">
           <div class="col-sm-12">
-            <form method="get" action="{{route('devicehierarchy')}}">
+            <form method="post" action="{{route('devicehierarchy')}}">
+            {{csrf_field()}}
               <div class="row mrg-bt-10 inner-mrg">
                 <div class="col-md-6">
                   <div class="form-group has-feedback form-group-1 mrg-rt-5">
@@ -94,23 +95,6 @@
                   @endforeach
                 </tbody>
               </table>
-
-               <!-- table class="table table-hover table-bordered  table-striped datatable" style="width:100%;text-align: center;" >
-                <thead>
-                  <tr>
-                    <th>SL.No</th>
-                   <th>imei </th> 
-                    <th>Serial No</th>
-                    <th>Manufacturer</th>
-                    <th>Distributor</th>
-                    <th>Dealer</th>
-                    <th>Sub Dealer</th>
-                    <th>Client</th>
-                  </tr>
-                </thead>
-                <tbody id="device_route">
-                </tbody>
-              </table> -->
             </div>
           </div>
         </div>
@@ -122,25 +106,20 @@
       <div class="form-group has-feedback">
         <label class="srequired">Reassign To</label>
         <select class="form-control select2"  name="return_to" data-live-search="true" title="Select " id='return_to'  required>
+        <option selected disabled>Select</option>
             @foreach ($datalist as $data)
               @if($data->gpsStock->client['name'] != '')
-                <option selected disabled>Select</option>
                 <option value="{{$data->gpsStock->id}}">{{$data->gpsStock->trader['name']}}</option>
                 <option value="{{$data->gpsStock->id}}">{{$data->gpsStock->subdealer['name']}}</option>
                 <option value="{{$data->gpsStock->id}}">{{$data->gpsStock->dealer['name']}}</option>
               @elseif(($data->gpsStock->client['name'] != '') && ($data->gpsStock->trader['name'] == ''))
-                <option selected disabled>Select</option>
                 <option value="{{$data->gpsStock->id}}">{{$data->gpsStock->subdealer['name']}}</option>
                 <option value="{{$data->gpsStock->id}}">{{$data->gpsStock->dealer['name']}}</option>
               @elseif(($data->gpsStock->client['name'] == '') && ($data->gpsStock->trader['name'] != ''))
-                <option selected disabled>Select</option>
                 <option value="{{$data->gpsStock->id}}">{{$data->gpsStock->subdealer['name']}}</option>
                 <option value="{{$data->gpsStock->id}}">{{$data->gpsStock->dealer['name']}}</option>
               @elseif(($data->gpsStock->trader['name'] == '') && ($data->gpsStock->client['name'] == '') && ($data->gpsStock->subdealer['name'] != ''))
-                <option selected disabled>Select</option>
                 <option value="{{$data->gpsStock->id}}">{{$data->gpsStock->dealer['name']}}</option>
-              @elseif(($data->gpsStock->trader['name'] == '') && ($data->gpsStock->client['name'] == '') && ($data->gpsStock->subdealer['name'] == ''))
-                <option selected disabled>Device is with Distributor cant reassign back.</option>
               @endif
             @endforeach      
         </select>
@@ -153,7 +132,7 @@
     </div>
     <div class="row">
       <div class="col-md-3 ">
-        <button type="button" onclick="searchData()" class="btn btn-primary btn-md form-btn ">SUBMIT</button>
+        <button type="button" onclick="searchData()" class="btn btn-primary btn-md form-btn ">Reassign</button>
       </div>
     </div>
   </div>
@@ -191,6 +170,6 @@ margin-bottom: 1.2em;
 </style>
 
 @section('script')
-  <!-- <script src="{{asset('js/gps/device-reassign.js')}}"></script>  -->
+  <script src="{{asset('js/gps/device-reassign.js')}}"></script> 
 @endsection
 @endsection
