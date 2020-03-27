@@ -46,12 +46,12 @@
         </div>
       </div>
       <ul>
-        <li><a href="#home" >Home</a></li>
-        <li><a href="#about">About</a></li>
-        <li><a href="#products">Products</a></li>
-        <li><a href="#service">Authorized Service Center</a></li>
-          <li><a href="#appscreen">App Screens</a></li>
-        <li><a href="#contact">Contact</a></li>
+        <li><a href="/#home" >Home</a></li>
+        <li><a href="/#about">About</a></li>
+        <li><a href="/#products">Products</a></li>
+        <li><a href="/#service">Authorized Service Center</a></li>
+          <li><a href="/#appscreen">App Screens</a></li>
+        <li><a href="/#contact">Contact</a></li>
           
                <li><a href="/login" class="login-button button-color">Login</a></li>
       </ul>
@@ -66,7 +66,7 @@
             <div class="container-home-nav">
             <div class="banner-left">
 
-                <div class="banner-head animatable moveUp">Ais 140 <br>
+                <div class="banner-head animatable moveUp">AIS 140 <br>
                Certified</div>
                 <div class="banner-sbu-hd animatable moveUp">
                 ARAI, CDAC, KMVD Approved

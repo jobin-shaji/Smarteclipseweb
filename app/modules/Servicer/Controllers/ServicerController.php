@@ -1,5 +1,5 @@
 <?php
-
+ 
 namespace App\Modules\Servicer\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -13,6 +13,8 @@ use App\Modules\Operations\Models\VehicleMake;
 use App\Modules\SubDealer\Models\SubDealer;
 use App\Modules\Trader\Models\Trader;
 use App\Modules\Servicer\Models\Servicer;
+use App\Modules\Servicer\Models\FcmLog;
+use App\Modules\Servicer\Models\ServicerNotification;
 use App\Modules\Servicer\Models\ServicerJob;
 use App\Modules\Vehicle\Models\Document;
 use App\Modules\Vehicle\Models\VehicleType;
@@ -266,9 +268,39 @@ class ServicerController extends Controller {
             'job_status'=>0
             // 'longitude'=>$location_lng
         ]);
-        // $gps = Gps::find($request->gps);
-        // $gps->user_id = null;
-        // $gps->save();
+
+        if($request->job_type == 1)
+        {
+            $tttle   ="New Insatallation Job"; 
+            $message = ['job_id'  => $job_id,
+                        'title'   => $tttle,
+                        'content' => $request->description,
+                        'type'    => "INSTALLATION",
+                        'date'    => date('Y-m-d H:i:s')
+                         ];
+        }else{
+            $tttle   = "New Service Job"; 
+            $message = ['job_id'  => $job_id,
+                        'title'   => $tttle,
+                        'content' => $request->description,
+                        'type'    => "SERVICE",
+                        'date'    => date('Y-m-d H:i:s')
+                         ];
+        }
+              
+        ServicerNotification::create([
+                                        'servicer_id'=> $request->servicer,
+                                        'title'      => $tttle,
+                                        'data'       => json_encode($message,true)
+                                    ]);
+
+        $servicer = Servicer::find($request->servicer);      
+        $devices  = $servicer->devices;
+        foreach ($devices as $device) {
+            $this->fcmPushNotification($device->firebase_token,$tttle,$message);
+        }
+
+     
         $request->session()->flash('message', 'Assign  servicer successfully!');
         $request->session()->flash('alert-class', 'alert-success');
         return redirect(route('assign.servicer'));
@@ -375,6 +407,7 @@ class ServicerController extends Controller {
         {
             $start_code = NULL;
         }
+
         $user_id=\Auth::user()->id;
                 $servicer = ServicerJob::create([
                 'servicer_id' => $request->servicer,
@@ -392,6 +425,36 @@ class ServicerController extends Controller {
                 'job_status'=>0
                 // 'longitude'=>$location_lng
             ]);
+            if($request->job_type == 1)
+            {
+                $tttle   ="New Insatallation Job"; 
+                $message = ['job_id'  => $job_id,
+                            'title'   => $tttle,
+                            'content' => $request->description,
+                            'type'    => "INSTALLATION",
+                            'date'    => date('Y-m-d H:i:s')
+                             ];
+            }else{
+                $tttle   = "New Service Job"; 
+                $message = ['job_id'  => $job_id,
+                            'title'   => $tttle,
+                            'content' => $request->description,
+                            'type'    => "SERVICE",
+                            'date'    => date('Y-m-d H:i:s')
+                             ];
+            }
+                  
+            ServicerNotification::create([
+                                            'servicer_id'=> $request->servicer,
+                                            'title'      => $tttle,
+                                            'data'       => json_encode($message,true)
+                                        ]);
+
+            $servicer = Servicer::find($request->servicer);      
+            $devices  = $servicer->devices;
+            foreach ($devices as $device) {
+                $this->fcmPushNotification($device->firebase_token,$tttle,$message);
+            }
             $request->session()->flash('message', 'Assigned Job successfully!');
             $request->session()->flash('alert-class', 'alert-success');
 
@@ -1810,6 +1873,55 @@ public function serviceJobDetails(Request $request)
         $request->session()->flash('alert-class','alert-success');
         return redirect(route('servicer.list'));
 
+    }
+
+
+    public static function fcmPushNotification($device_id,$tttle,$message)
+    {
+        $api_key = 'AAAAgmOkdoQ:APA91bE2v6k93s_cXtcscgODZkDBFT2_D-6DpY_aPt_pwpvKJBHjSURcHrxh4TJfPoNPAOjmp8J7AEVQsNd7eAjr1HHSZ5quR4mz6JRgQtfaE47BYwrwrlVuTp8fJgfLDbmjWumfmVdF';
+        $url = 'https://fcm.googleapis.com/fcm/send';
+        $title = $tttle;
+        $body = json_encode($message,true);
+        $n = [
+            "to"=> $device_id,
+            "data" => [
+                "title" => $title,
+                "content" => $body,
+            ]
+        ];
+   
+        $fields = array (
+                'registration_ids' => array (
+                        $device_id
+                ),
+                'data' => array (
+                        "message" => $message
+                )
+        );
+        $fields = json_encode ( $fields );
+    
+        $headers = array (
+                'Authorization: key=' . $api_key,
+                'Content-Type: application/json'
+        );
+    
+        $ch = curl_init ();
+        curl_setopt ( $ch, CURLOPT_URL, $url );
+        curl_setopt ( $ch, CURLOPT_POST, true );
+        curl_setopt ( $ch, CURLOPT_HTTPHEADER, $headers );
+        curl_setopt ( $ch, CURLOPT_RETURNTRANSFER, true );
+        curl_setopt ( $ch, CURLOPT_POSTFIELDS, json_encode($n) );
+    
+        $result = curl_exec ( $ch );
+        // echo $result;
+        curl_close ( $ch );
+
+        FcmLog::create([
+            'user_device_id' => $device_id,
+            'body' => $fields,
+            'response' => $result
+        ]);
+    
     }
 public function servicerProfileUpdateRules($servicer)
     {

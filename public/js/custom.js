@@ -1805,23 +1805,23 @@ localStorage.setItem('login', 1);
 
 
 // ---------------check notification-----------------------------------
-var alert_client_id=document.getElementById('client_id').value;
+var alert_user_id=document.getElementById('user_id').value;
 
     setInterval(function() {
-        alertCount(alert_client_id);
-        clientAlerts(alert_client_id);
+        alertCount(alert_user_id);
+        clientAlerts(alert_user_id);
     }, 8000);
 
     $( document ).ready(function() {
 
-        alertCount(alert_client_id);
-        clientAlerts(alert_client_id);
+        alertCount(alert_user_id);
+        clientAlerts(alert_user_id);
     });
 
-    function alertCount(alert_client_id)
+    function alertCount(alert_user_id)
     {
-        var data={ client_id:  alert_client_id}; 
-        // alert(alert_client_id);
+        var data={ user_id:  alert_user_id}; 
+        // alert(alert_user_id);
         $.ajax({
             type:'post',
             data:data,
@@ -1829,7 +1829,7 @@ var alert_client_id=document.getElementById('client_id').value;
             dataType: "json",
             success: function (res) 
             {                   
-                notificationCount(res.data) ;
+                notificationCount(res.data.count) ;
             }
         });
     }
@@ -1839,8 +1839,8 @@ var alert_client_id=document.getElementById('client_id').value;
             var count_notification=res;
             $("#bell_notification_count").text(count_notification);
     }
-    function clientAlerts(alert_client_id){  
-        var data={ client_id:  alert_client_id};      
+    function clientAlerts(alert_user_id){  
+        var data={ user_id:  alert_user_id};      
         $.ajax({
             type:'post',
             data:data,
@@ -1848,7 +1848,7 @@ var alert_client_id=document.getElementById('client_id').value;
             dataType: "json",
             success: function (res) 
             { 
-                alertNotification(res.data) ;
+                alertNotification(res.data.alerts) ;
             }
         });
     }

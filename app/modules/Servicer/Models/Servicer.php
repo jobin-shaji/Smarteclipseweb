@@ -38,6 +38,10 @@ class Servicer extends Model
     public function getServicerDetails($servicer_id)
 	{
 		return self::select('name')->where('id',$servicer_id)->first();
+    }
+    
+    public function devices(){
+		return $this->hasMany('App\Modules\Servicer\Models\UserDevice');
 	}
 
 

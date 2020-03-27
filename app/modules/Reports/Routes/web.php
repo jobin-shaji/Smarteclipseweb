@@ -108,6 +108,11 @@ Route::post('/main-battery-disconnect-report/export','MainBatteryDisconnectRepor
   	//duration report
 	Route::get('/duration-report','DurationReportController@durationReport')->name('total-km-report');
 	Route::post('/duration-report-list','DurationReportController@durationReportList')->name('duration-report-list');
+
+	Route::get('/trip-report','TripReportController@TripReportView')->name('trip-report.view');
+	Route::post('/trip-report','TripReportController@TripReport')->name('trip.report.p');
+
+
 });
 
 Route::group(['middleware' => ['web','auth','role:sub_dealer|trader'] , 'namespace' => 'App\Modules\Reports\Controllers' ] , function() {

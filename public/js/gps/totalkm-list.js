@@ -15,31 +15,20 @@ $(document).ready(function () {
     callBackDataTable();
 });
 
-function check(){
-     
-     if(document.getElementById('vehicle').value == ''){
+function check()
+{
+    if(document.getElementById('vehicle').value == '')
+    {
         alert('Please Select Vehicle');
     }
-    // else if(document.getElementById('fromDate').value == ''){
-    //     alert('please enter from date');
-    // }else if(document.getElementById('toDate').value == ''){
-    //     alert('please enter to date');
-    // }
     else{
-        
-
         callBackDataTable();
     }
 }
-function callBackDataTable(){
-    var vehicle =document.getElementById('vehicle').value;
-    // var from_date =document.getElementById('fromDate').value;
-    // var to_date = document.getElementById('toDate').value;
-    var  data = {
-        vehicle : vehicle,
-        // from_date : from_date,
-        // to_date : to_date
-    }; 
+function callBackDataTable()
+{
+    var vehicle_id  =   document.getElementById('vehicle').value;
+    var  data       =   { vehicle_id : vehicle_id }; 
     $("#dataTable").DataTable({
         bStateSave: true,
         bDestroy: true,
@@ -61,8 +50,8 @@ function callBackDataTable(){
         },      
         columns: [
             {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: true, searchable: false},
-            {data: 'vehicle.name', name: 'vehicle.name', orderable: false},
-            {data: 'vehicle.register_number', name: 'vehicle.register_number', orderable: false},
+            {data: 'vehicle_name', name: 'vehicle_name', orderable: false},
+            {data: 'vehicle_register_number', name: 'vehicle_register_number', orderable: false},
             {data: 'totalkm', name: 'totalkm', orderable: false},
         ],        
         aLengthMenu: [[25, 50, 100, -1], [25, 50, 100, 'All']]

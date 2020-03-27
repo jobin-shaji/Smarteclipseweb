@@ -32,14 +32,19 @@
                                      <div id="loader" class="load-style"></div>
                                      </div> 			
 								</div>
+								<div id="show_more" class="show_more">					
+									
+                                     </div> 			
+								</div>
 							</div>
 						</div>					
 					</div>
-				</div>
-				<div class="mp-outer-bg">
+					<div class="mp-outer-bg">
 				<div id="map" style="width:100%; height:600px;border: 1px solid #c5c7c7;">
 					
 				</div>
+				</div>
+				
 			</div>
 			</div>			
 			<div class="modal right fade" id="clickedModelInDetailPage" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2">
@@ -72,7 +77,7 @@
 </div>
 @section('script')
 
-<script async defer src ="https://maps.googleapis.com/maps/api/js?key=AIzaSyCXmg0OWU4PM-pEIJPr_GpJAG9dKUHgim4&callback=initMap"></script>
+<script async defer src ="https://maps.googleapis.com/maps/api/js?key={{config('eclipse.keys.googleMap')}}&callback=initMap"></script>
 <!-- <script src="{{asset('js/gps/alert-notification-firebase.js')}}"></script> -->
 <script src="{{asset('js/gps/alert-notification.js')}}"></script>
 

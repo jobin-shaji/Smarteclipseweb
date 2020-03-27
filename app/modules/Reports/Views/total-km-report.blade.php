@@ -25,64 +25,47 @@ Total KM Report
                         <div class="cover_div_search">
                           <div class="row">
                            <div class="col-lg-3 col-md-3"> 
-                           <div class="form-group">
-                            <label>Vehicle</label>                           
-                            <select class="form-control selectpicker" data-live-search="true" title="Select Vehicle" id="vehicle" name="vehicle">
-                              <option value="0">All</option>
-                              @foreach ($vehicles as $vehicles)
-                              <option value="{{$vehicles->id}}">{{$vehicles->name}} || {{$vehicles->register_number}}</option>
-                              @endforeach  
-                            </select>
+                            <div class="form-group">
+                              <label>Vehicle</label>                           
+                              <select class="form-control selectpicker" data-live-search="true" title="Select Vehicle" id="vehicle" name="vehicle">
+                                <option value="0">All</option>
+                                @foreach ($vehicles as $vehicles)
+                                <option value="{{$vehicles->id}}">{{$vehicles->name}} || {{$vehicles->register_number}}</option>
+                                @endforeach  
+                              </select>
+                            </div>
                           </div>
+                          <div class="col-lg-3 col-md-3 pt-4">
+                              <div>          
+                                <button class="btn btn-sm btn-info btn2 srch" onclick="check()"> <i class="fa fa-search"></i> </button>
+                                </div>
+                                <div style="float: right;margin-top: -14%;margin-right: 10%;">
+                                  <button class="btn btn-sm btn1 btn-primary dwnld" id="excel" onclick="downloadTotalKMReport()">
+                                    <i class="fa fa-file"></i>Download Excel</button>                        
+                                </div>
+                            </div>
                           </div>
-                        <!--   <div class="col-lg-3 col-md-3"> 
-                           <div class="form-group">                    
-                            <label> From Date</label>
-                            <input type="text" class="@if(\Auth::user()->hasRole('fundamental'))datepickerFundamental @elseif(\Auth::user()->hasRole('superior')) datepickerSuperior @elseif(\Auth::user()->hasRole('pro')) datepickerPro @else datepickerFreebies @endif form-control" id="fromDate" name="fromDate" onkeydown="return false">
-                          </div>
-                        </div> -->
-                      <!--     <div class="col-lg-3 col-md-3">  
-                           <div class="form-group">                   
-                            <label> To Date</label>
-                            <input type="text" class="@if(\Auth::user()->hasRole('fundamental'))datepickerFundamental @elseif(\Auth::user()->hasRole('superior')) datepickerSuperior @elseif(\Auth::user()->hasRole('pro')) datepickerPro @else datepickerFreebies @endif form-control" id="toDate" name="toDate" onkeydown="return false">
-                          </div>
-                          </div> -->
-                           <div class="col-lg-3 col-md-3 pt-4">
-                             <div>          
-                              <button class="btn btn-sm btn-info btn2 srch" onclick="check()"> <i class="fa fa-search"></i> </button>
-                              </div>
-                              <div style="float: right;margin-top: -14%;margin-right: 10%;">
-                                <button class="btn btn-sm btn1 btn-primary dwnld" id="excel" onclick="downloadTotalKMReport()">
-                                  <i class="fa fa-file"></i>Download Excel</button>                        
-                              </div>
-                          </div>
-                        
                         </div>
-                      </div>
                       </div>                                 
                     <table class="table table-hover table-bordered  table-striped datatable" style="width:100%;text-align: center;" id="dataTable">
-                        <thead>
-                            <tr>
-                              <th>SL.No</th>
-                              <th>Vehicle</th>
-                              <th>Registration Number</th>                          
-                              <th>Total KM</th>
-                            </tr>
-                        </thead>
+                      <thead>
+                          <tr>
+                            <th>SL.No</th>
+                            <th>Vehicle</th>
+                            <th>Registration Number</th>                          
+                            <th>Total KM</th>
+                          </tr>
+                      </thead>
                     </table>
-                </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <div class="row">           
-          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 </section>
 @section('script')
     <script src="{{asset('js/gps/totalkm-list.js')}}"></script>

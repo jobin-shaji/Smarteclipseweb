@@ -7,7 +7,12 @@
     width: 1350px;
 
 }
-    
+.input-warpper span {
+    top: 13px;
+}
+.input-warpper span img {
+    width: 17px;
+}
 
 }
     
@@ -49,8 +54,8 @@
     font-size: 1.5em;
 }
         .banner-about-bt-left a {
-    padding: 6px 32px 10px;
-    font-size: 1.5em;
+            padding: 9px 32px 8px;
+            font-size: 1.5em;
   }
         .banner-about-bt-right {
     font-size: 1.5em;    
@@ -129,6 +134,19 @@ font-size: 1em;
         .footer-contact a {
     font-size: 1.1em;
 }
+.login-banner-right {
+    width: 460px;
+        padding-top: 95px;
+      margin-right: 35px;
+}    
+        .login-banner-left {
+    width: 44%;
+            margin-top: 83px;
+}.login-text {
+      font-size: 2.9em;
+    margin-top: 13px;
+}
+      
 }
 
     @media only screen and (max-width: 1300px) {
@@ -164,6 +182,42 @@ font-size: 1em;
     margin-top: 40px;
 
 } 
+   
+.login-banner-right {
+    width: 415px;
+    padding-top: 95px;
+}
+        
+        .login-form input[type="text"], .login-form textarea {
+    padding: 10px 11% 13px 10%;
+    margin: 0 0 30px;
+         font-size: 1.2em;
+       line-height: 28px;
+}
+        
+        .input-warpper span {
+    padding-left: 15px;
+    top: 12px;
+}
+        .login-form input[type="submit"], .login-form input[type="button"] {
+    font-size: 1.6em;
+      padding: 5px 0 10px;
+
+}
+        .squaredThree span {
+    font-size: 1.2em;
+    top: 0px;
+    padding-left:0px;
+}
+        .login-text {
+    padding-left: 25px;
+    font-size: 2.525em;
+    padding-top: 5px;
+}
+   .login-head-icon {
+    width: 65px;
+}
+   
         
 }
 
@@ -505,6 +559,62 @@ font-size: 1em;
     padding-right: 10px;
     padding-left: 10px;
 }
+.login-banner-right {
+    width: 320px;
+    padding-top: 70px;
+    margin-right: 6px;
+}
+.login-form input[type="text"], .login-form textarea {
+    padding: 7px 11% 10px 10%;
+    margin: 0 0 30px;
+    font-size: 1em;
+    line-height: 25px;
+}
+      .input-warpper span img {
+    float: left;
+    position: relative;
+    width: 15px;
+}
+      .input-warpper span {
+    padding-left: 13px;
+    top: 11px;
+}
+      .squaredThree label {
+    width: 23px;
+    height: 23px;
+}
+      .squaredThree span {
+    font-size: 1em;
+    top: 0px;
+    padding-left: 0px;
+              width: 115px;
+}
+      .forgot-r a {
+    font-size: 1em;
+      }
+      .login-head-icon {
+    width: 55px;
+}
+      .login-text {
+    padding-left: 16px;
+    font-size: 2em;
+    padding-top: 5px;
+}
+      .login-top-head {
+      padding-bottom: 30px;
+}
+     .login-form input[type="submit"], .login-form input[type="button"] {
+    font-size: 1.3em;
+    padding: 5px 0 10px;
+}
+      .mrg-40 {
+    margin: 0 0 30px 0;
+}
+      
+      .squaredThree label:after {
+      left: 4px;
+}
+      
 }
 
 
@@ -826,6 +936,73 @@ nav.navShadow {
     margin-left: 3px;
     width: 85%;
 }
+
+.login-banner-right {
+    width: 80%;
+    padding-top: 10px;
+    margin-right: 10%;
+}
+    .login-head-icon {
+    width: 45px;
+}
+    .login-text {
+    font-size: 1.5em;
+}
+ .login-form input[type="text"], .login-form textarea {
+    padding: 7px 7% 8px 12%;
+    margin: 0px 0 23px;
+    font-size: 1em;
+    line-height: 22px;
+}
+    .input-warpper span {
+    padding-left: 10px;
+    top: 9spx;
+}
+    .squaredThree label {
+    width: 20px;
+    height: 20px;
+}
+  
+    .squaredThree span {
+    font-size: 0.9em;
+    top: 0px;
+    padding-left: 0px;
+    left: 24px;
+    width: 112px;
+}
+  
+    .forgot-r a {
+    font-size: 0.9em;
+}
+    .login-form input[type="submit"], .login-form input[type="button"] {
+    font-size: 1.2em;
+    padding: 5px 0 8px;
+    border-radius: 10px;
+}
+    .mrg-40 {
+    margin: 0 0 20px 0;
+}
+    
+    .login-banner-left {
+width: 50%;
+    margin-top: 36px;
+    margin-left: 25%;
+    margin-bottom: 30px;
+}
+    .login-top-head {
+    width: 126px;
+    margin: 0px auto;
+    float: none;
+    margin-bottom: 40px;
+}
+    
+    .squaredThree label:after {
+    width: 14px;
+    height: 8px;
+    top: 4px;
+    left: 4px;
+    border: 2px solid #f6b225;
+  }
 }
 
 
@@ -933,4 +1110,26 @@ nav.navShadow {
     padding-left: 36%;
     margin-top: 25px;
 }
+    .login-banner-left {
+    width: 79%;
+    margin-top: 35px;
+    margin-bottom: 0;
+    margin-left: 10%;
+}
+    .login-banner-right {
+    width: 88%;
+    padding-top: 34px;
+    margin-right: 6%;
+}
+    .login-form input[type="text"], .login-form textarea {
+    padding: 7px 7% 9px 30px;
+    font-size: 1em;
+}
+    .login-top-head {
+    width: 126px;
+    margin: 0px auto;
+    float: none;
+    margin-bottom: 40px;
+}
+    
 }

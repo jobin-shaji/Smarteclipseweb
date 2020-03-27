@@ -8,9 +8,23 @@ function initMap() {
     mapTypeId: 'terrain'
   });
 }
+var page=1;
 $(document).ready(function () {
- 
-  var data={ client_id:  alert_client_id}; 
+  
+  var data={ user_id:  alert_user_id,page:page}; 
+  lastSevendaysAlert(data);
+});
+
+function viewMoreAlerts(total_page){
+  if(total_page>page)
+  {
+    page=page+1;
+    var data={ user_id:  alert_user_id,page:page}; 
+    lastSevendaysAlert(data);
+  }
+}
+function lastSevendaysAlert(data)
+{
   $(".loader-1").show();
     $.ajax({
             type:'post',
@@ -18,23 +32,25 @@ $(document).ready(function () {
             url: url_ms_alerts+"/last-seven-days-alerts",
             dataType: "json",
             success: function (res) 
-            {            
+            {  
+              // console.log(page);          
               notificationAlertsList(res.data) 
             }
           });
-});
+        }
+  
 function notificationAlertsList(res)
 {
     $(".loader-1").hide();
-    for (var i = 0; i < res.length; i++)
+    for (var i = 0; i < res.alerts.length; i++)
     {
-      register_number = res[i].gps.connected_vehicle_registration_number;
-      vehicle_name    = res[i].gps.connected_vehicle_name;
-      alert           = res[i].alert_type.description;
-      device_time     = res[i].device_time;
-      id              = res[i]._id;
+      register_number = res.alerts[i].gps.connected_vehicle_registration_number;
+      vehicle_name    = res.alerts[i].gps.connected_vehicle_name;
+      alert           = res.alerts[i].alert_type.description;
+      device_time     = res.alerts[i].device_time;
+      id              = res.alerts[i]._id;
       // read alerts
-      if(res[i].is_read == 1)
+      if(res.alerts[i].is_read == 1)
       {
         var notification=' <div class="item active-read psudo-link" id="alert" data-toggle="modal" onclick="gpsAlertCount(\''+id+'\')" data-target="#clickedModelInDetailPage">'+  
         '<div class="not-icon-bg">'+
@@ -52,7 +68,7 @@ function notificationAlertsList(res)
         '</div>  ';    
       }
       // unread alerts
-      if(res[i].is_read == 0)
+      if(res.alerts[i].is_read == 0)
       {
         var notification=' <div class="item active-read alert psudo-link alert_color_'+id+'" id="alert_'+id+'" data-toggle="modal" onclick="gpsAlertCount(\''+id+'\')" data-target="#clickedModelInDetailPage"  >'+  
         '<div class="not-icon-bg" >'+
@@ -71,8 +87,18 @@ function notificationAlertsList(res)
       }   
       $("#notification").append(notification);       
     }
+    if(res.alerts.length != 0)
+    {
+      // console.log(res.alerts.length);
+      var show_more = ' <div class=" " id="page_count"  >' + 
+      '<div class="deatils-bx-rt">'+    
+      '<div class="run-date" ><button onclick="viewMoreAlerts('+res.total_pages+')">SHOW MORE</button></div>'+
+      '</div>'+
+      '</div>';
+      $("#show_more").html(show_more); 
+    }
     // empty alerts message
-    if(res.length == 0)
+    else if(res.alerts.length == 0)
     {
       var notification = ' <div class="item active-read psudo-link"  data-toggle="modal">No alerts found'+
       '</div>';
@@ -90,12 +116,14 @@ function gpsAlertCount(value){
     dataType: "json",
     success: function (res) 
     {  
+     
       gpsAlertTracker(res.data.alert) 
     }
   });
 }
 function gpsAlertTracker(res)
 {  
+  console.log(res);
   $('#alert_'+res._id).removeClass('alert');
   var latitude=parseFloat(res.latitude);
   var longitude=parseFloat(res.longitude);

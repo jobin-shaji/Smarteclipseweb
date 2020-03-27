@@ -30,7 +30,7 @@
             <td>{{ $device_return_details->return_code}}</td>
           </tr>
           <tr class="success">
-            <td><b>Returned Servicer </b></td>
+            <td><b>Returned Service Engineer </b></td>
             <td>{{ $device_return_details->servicer->name}}</td>
           </tr>
           <tr class="success">
