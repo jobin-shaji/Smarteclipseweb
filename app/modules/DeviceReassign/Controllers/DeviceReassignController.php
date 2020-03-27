@@ -35,8 +35,11 @@ class DeviceReassignController extends Controller
 
     public function hierarchylist(Request $request)
     {
-        $data  =   (new Gps())->getDeviceHierarchyDetails($request->imei);
-        return view('DeviceReassign::device-reassign-create',['datalist'=>$data]);
+        // dd($request->imei);
+        // $data  =   (new Gps())->getDeviceHierarchyDetails($request->imei);
+        $device  =   (new Gps())->getDeviceDetails($request->imei);
+        // dd($device);
+        return view('DeviceReassign::device-reassign-create',['datalist'=>$device]);
     }
     /**
      * 

@@ -23,7 +23,8 @@
     <div class="table-responsive">
       <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">  <div class="row">
           <div class="col-sm-12">
-            <form method="get" action="{{route('devicehierarchy')}}">
+            <form method="post" action="{{route('devicehierarchy')}}">
+              {{csrf_field()}}
               <div class="row mrg-bt-10 inner-mrg">
                 <div class="col-md-6">
                   <div class="form-group has-feedback form-group-1 mrg-rt-5">
