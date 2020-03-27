@@ -719,8 +719,102 @@ class ServicerController extends Controller {
              
     }
 
+    public function startTest(Request $request)
+    {
+         $servicer_jobid  = $request->servicer_jobid;
+         $servicer_job =  (new ServicerJob())->getServicerJob($servicer_jobid);
+            
+             if($servicer_job  ==  null)
+              {
+              $request->session()->flash('message', 'jobs not found for the servicer');
+              $request->session()->flash('alert-class', 'alert-danger');
+              }
+             else
+              {
+                $servicer_job->job_status  = self::JOB_TEST_START_STAGE;
+                $servicer_job->status      = self::JOB_STATUS_IN_PROGRESS;
+                if($servicer_job->save())
+                {
+                    $gps_id=$servicer_job->gps_id;
+                    
+                    $gps=Gps::where('id',$gps_id)->first();
+
+                    $gps->test_status   = self::JOB_DEVICE_TEST_START;
+                    $gps->calibrated_on = null;
+                    $gps->gps_fix_on    = null;
+                    $gps->save();
+                    $stage= self::JOB_TEST_START_STAGE;
+                    
+                }
+
+                
+               }
+                $device_test_installation_list = (new ServicerJob())->getInstallationJob($servicer_jobid);
+         
+             if($device_test_installation_list == null)
+               {
+               $request->session()->flash('message', 'jobs not found for the servicer');
+               $request->session()->flash('alert-class', 'alert-danger');
+               }
+               else
+               {
+               if($device_test_installation_list->device_test_scenario != null)
+                {
+          
+                 $device_test_case = json_decode($device_test_installation_list->device_test_scenario, true);
+                }
+                else
+                {
+                $device_test_case = (new Configuration())->getConfiguration('device_test_scenario');
+            
+               if(isset($device_test_case[0])&& isset($device_test_installation_list->role)) 
+               {
+               $device_tests = json_decode($device_test_case[0],true)['value'];
+               $device_test_case = json_decode($device_tests,true)[$device_test_installation_list->role]; 
+               $device_test_installation_list->device_test_scenario=json_encode($device_test_case,true );
+               $device_test_installation_list->save();
+                }
+                }
+            }
+         return view('Servicer::new-installation-fourth-step',['servicer_jobid'=>$servicer_jobid,'stage'=>$stage,'device_test_case'=>$device_test_case]);
+     }
     
-    
+
+
+public function completeTestCase(Request $request)
+    {
+       
+       
+             $servicer_jobid  = $request->id;
+            
+             $servicer_job =  (new ServicerJob())->getServicerJob($servicer_jobid);
+             $gps=$servicer_job->gps_id;
+             if($servicer_job  ==  null)
+              {
+              $request->session()->flash('message', 'jobs not found for the servicer');
+              $request->session()->flash('alert-class', 'alert-danger');
+              }
+             else
+              {
+                $servicer_job->job_status  = self::JOB_COMPLETED_STAGE;
+                $servicer_job->status      = self::JOB_STATUS_COMPLETED;
+                if($servicer_job->save())
+                {
+                    
+                     $gps=Gps::where('id',$gps)->first();
+                     dd($gps);
+                     $gps->test_status   = 0;
+                     $gps->save();
+                }
+
+                 return redirect(route('completed.installation.job.list'));
+               }
+              
+             
+    }
+
+
+
 
 //old job completion of installation
 //  public function jobDetails(Request $request)

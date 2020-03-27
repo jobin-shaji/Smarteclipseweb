@@ -11,7 +11,7 @@ $key        = (isset($_GET['new_installation_search_key'])) ? $_GET['new_install
 <div class="page-wrapper_new">
    <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Installation Pending Jobs List</li>
+        <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/ New Installation Jobs List</li>
         <b> New Installation Jobs List</b>
      </ol>
       @if(Session::has('message'))

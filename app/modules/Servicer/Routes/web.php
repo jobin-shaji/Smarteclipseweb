@@ -70,7 +70,11 @@ Route::post('/allcheck-list','ServicerController@getchecklist')->name('allcheck.
      Route::post('/servicer/vehiclejob-complete-save/{id}','ServicerController@vehicleDataUpdated')->name('vehiclejob.complete.save');
      // //for installation command list save
 	Route::post('/servicer/completedcommand-save/{id}','ServicerController@updateCommandcompleted')->name('completedcommand.save');
+	// for intialising test start
+    Route::post('/servicer/testsstart-save','ServicerController@startTest')->name('teststart.save.p');
+     //for testcomplete
 
+    Route::post('/servicer/finish-testcase-save/{id}','ServicerController@completeTestCase')->name('finish.testcase.save.p');
 	// Route::post('/servicejob-complete-save/{id}','ServicerController@getchecklist')->name('servicejob.complete.save');
 
 
