@@ -427,6 +427,7 @@ class ComplaintController extends Controller {
         $servicer = ServicerJob::create([
             'servicer_id' => $request->servicer,
             'client_id' => $client->id,
+            'complaint_id' => $request->complaint_id,
             'job_id' => str_pad(mt_rand(0, 999999), 5, '0', STR_PAD_LEFT),
             'job_type' => 2,
             'start_code' => str_pad(mt_rand(100000, 999999), 6, '0', STR_PAD_LEFT),
