@@ -10,8 +10,8 @@ Assign Servicer
 <div class="page-wrapper-root1">
 <nav aria-label="breadcrumb">
 <ol class="breadcrumb">
-<li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Job Details</li>
-<b>Job Details</b>
+<li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Installation Check List</li>
+<b>Installation Check List</b>
 </ol>
 @if(Session::has('message'))
 <div class="pad margin no-print">
@@ -26,7 +26,7 @@ Assign Servicer
 <div class="stepwizard-row setup-panel">
 <div class="stepwizard-step col-xs-3"> 
 <a href="#step-1" type="button" class="btn btn-success btn-circle">1</a>
-<p><small>Installation Job checklist</small></p>
+<p><small>Installation Job Checklist</small></p>
 </div>
 <div class="stepwizard-step col-xs-3"> 
 <a href="#step-2" type="button" class="btn btn-default btn-circle" disabled="disabled">2</a>
@@ -64,14 +64,15 @@ Assign Servicer
    </div>
   </div>
    <?php } ?>
- 
- <button type="submit" class="btn btn-primary btn-md form-btn">Save</button>
+ <br>
+ <button type="submit" class="btn btn-primary btn-md form-btn pull-right">Save</button>
   </div>
   </form>
  </div>
 </div>
 
 </div>
+</div></div>
 @endsection
 @section('script')
 <link rel="stylesheet" href="{{asset('css/installation-step-servicer.css')}}">

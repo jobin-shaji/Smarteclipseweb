@@ -748,6 +748,8 @@ class ServicerController extends Controller {
                 $service_eng_installation_command->status      =  self::JOB_STATUS_IN_PROGRESS;
                 $service_eng_installation_command->save();
                 $stage= self::JOB_COMMAND_STAGE;
+                //   $request->session()->flash('message', 'Command added successfully!');
+                // $request->session()->flash('alert-class', 'alert-success');
                }
                
                 $device_test_installation_list = (new ServicerJob())->getInstallationJob($servicer_jobid);
@@ -776,7 +778,8 @@ class ServicerController extends Controller {
                $device_test_installation_list->save();
                 }
                 }
-
+               $request->session()->flash('message', 'Command added successfully!');
+                $request->session()->flash('alert-class', 'alert-success');
               return view('Servicer::new-installation-fourth-step',['device_test_case'=>$device_test_case,'servicer_jobid'=>$servicer_jobid,'stage'=>$stage]);
         }
              
@@ -786,7 +789,7 @@ class ServicerController extends Controller {
     {
          $servicer_jobid  = $request->servicer_jobid;
          $servicer_job =  (new ServicerJob())->getServicerJob($servicer_jobid);
-            
+           
              if($servicer_job  ==  null)
               {
               $request->session()->flash('message', 'jobs not found for the servicer');
@@ -807,11 +810,9 @@ class ServicerController extends Controller {
                     $gps->gps_fix_on    = null;
                     $gps->save();
                     $stage= self::JOB_TEST_START_STAGE;
-                    
+                   
                 }
-
-                
-               }
+                }
                 $device_test_installation_list = (new ServicerJob())->getInstallationJob($servicer_jobid);
          
              if($device_test_installation_list == null)
@@ -823,23 +824,28 @@ class ServicerController extends Controller {
                {
                if($device_test_installation_list->device_test_scenario != null)
                 {
-          
+                
+
                  $device_test_case = json_decode($device_test_installation_list->device_test_scenario, true);
                 }
                 else
                 {
+                   
                 $device_test_case = (new Configuration())->getConfiguration('device_test_scenario');
-            
+                
                if(isset($device_test_case[0])&& isset($device_test_installation_list->role)) 
                {
                $device_tests = json_decode($device_test_case[0],true)['value'];
                $device_test_case = json_decode($device_tests,true)[$device_test_installation_list->role]; 
+            
                $device_test_installation_list->device_test_scenario=json_encode($device_test_case,true );
                $device_test_installation_list->save();
                 }
                 }
-            }
-         return view('Servicer::new-installation-fourth-step',['servicer_jobid'=>$servicer_jobid,'stage'=>$stage,'device_test_case'=>$device_test_case]);
+                return view('Servicer::new-installation-fourth-step',['servicer_jobid'=>$servicer_jobid,'stage'=>$stage,'device_test_case'=>$device_test_case]);
+                }
+
+         
      }
     
 
@@ -865,7 +871,7 @@ public function completeTestCase(Request $request)
                 {
                     
                      $gps=Gps::where('id',$gps)->first();
-                     dd($gps);
+                    
                      $gps->test_status   = 0;
                      $gps->save();
                 }
@@ -1130,7 +1136,7 @@ public function serviceJobDetails(Request $request)
             ]);
            
             
-            $request->session()->flash('message', 'Job  completed successfully!');
+            $request->session()->flash('message', 'Vehicle Details Added successfully!');
             $request->session()->flash('alert-class', 'alert-success');
              $service_eng_installation_command   = (new ServicerJob())->getInstallationJob($servicer_jobid);
       //for listing command

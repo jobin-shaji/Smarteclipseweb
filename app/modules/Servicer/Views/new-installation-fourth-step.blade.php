@@ -10,8 +10,8 @@ Assign Servicer
 <div class="page-wrapper-root1">
 <nav aria-label="breadcrumb">
 <ol class="breadcrumb">
-<li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Job Details</li>
-<b>Job Details</b>
+<li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Device Test</li>
+<b>Device Test</b>
 </ol>
 @if(Session::has('message'))
 <div class="pad margin no-print">
@@ -166,6 +166,5 @@ Assign Servicer
 	</style>
 @section('script')
 <link rel="stylesheet" href="{{asset('css/installation-step-servicer.css')}}">
- <script src="{{asset('js/gps/new-installation-step.js')}}"></script>
-<script src="{{asset('js/gps/servicer-driver-create.js')}}"></script>
+ 
 @endsection
