@@ -535,6 +535,10 @@ function backgroundPostData(url, data, callBack, options) {
                     deviceReassign(res);
                 }
 
+                else if(callBack=='reassign_count')
+                {
+                    reassign_count(res);
+                }
 
 
 

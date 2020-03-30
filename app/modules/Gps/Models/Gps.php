@@ -213,6 +213,6 @@ class Gps extends Model
         ->with('gpsStock.subdealer:id,name')
         ->with('gpsStock.trader:id,name')
         ->with('gpsStock.client:id,name')           
-        ->get();
+        ->first();
     }
 }

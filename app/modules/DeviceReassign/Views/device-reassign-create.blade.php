@@ -29,7 +29,7 @@
                 <div class="col-md-6">
                   <div class="form-group has-feedback form-group-1 mrg-rt-5">
                     <label class="srequired">Imei</label>
-                    <input type="text" name="imei" id="imei" class="form-control" value="@if(isset($datalist))@foreach($datalist as $data){{$data->imei}}@endforeach @endif" required>
+                    <input type="text" name="imei" id="imei" class="form-control" value="@if(isset($data)){{$data->imei}} @endif" required>
                     @if ($errors->has('imei'))
                     <span class="help-block">
                         <strong class="error-text">{{ $errors->first('imei') }}</strong>
@@ -46,7 +46,9 @@
               </div>
             </form>
           </div>
-          @if(isset($datalist))  
+          @if(isset($data)) 
+
+          <!-- {{$data}}  -->
           <div class="container-fluid">
     <div class="card-body">
       <div class="table-responsive ">
@@ -56,7 +58,6 @@
               <table class="table table-hover table-bordered  table-striped" style="width:100%!important;text-align: center">
                 <thead>
                   <tr>
-                   <th>SL.No</th>
                     <th>imei </th> 
                     <th>Serial No</th>
                     <th>Manufacturer</th>
@@ -68,9 +69,8 @@
                   </tr>
                 </thead>
                 <tbody>
-                  @if($datalist->count() == 0)
+                  @if($data->count() == 0)
                   <tr>
-                    <td></td>
                     <td></td>
                     <td></td>
                     <td><b style="float: right;margin-right: -13px">No data</b></td>
@@ -81,9 +81,7 @@
                   </tr>
                   @endif
                   
-                  @foreach($datalist as $data)           
                   <tr> 
-                    <td>{{$loop->iteration}}</td>
                     <td>{{$data->imei}}</td>
                     <td>{{$data->serial_no}}</td>
                     <td>{{$data->gpsStock->root['name']}}</td>  
@@ -92,37 +90,51 @@
                     <td>{{$data->gpsStock->trader['name']}}</td>
                     <td>{{$data->gpsStock->client['name']}}</td>  
                   </tr>
-                  @endforeach
                 </tbody>
               </table>
+              <input type="hidden" name="gps_id" id="gps_id" value="{{$data->id}}">
             </div>
           </div>
         </div>
       </div>
     </div>        
   </div>
+<?php
+$client=false;$trader = false;
+   if($data->gpsStock->client['name'] != '')
+   {
+     $client = true ;
+     if($data->gpsStock->trader['name'] != ''){
+       $trader = true ;
+     }
+     else{
+       $trader = false;
+     }
+   }
+   elseif($data->gpsStock->trader['name'] != '')
+   {
+     $trader = true ;
+   }
+   else
+   {
+     $subdealer = true;
+   }
+?>
   <div class="row " >
     <div class="col-md-12">
-      <div class="form-group has-feedback">
-     
+      <div class="form-group has-feedback">    
         <label class="srequired">Reassign To</label>
         <select class="form-control select2"  name="return_to" data-live-search="true" title="Select " id='return_to'  required>
-        <option selected disabled value="">Select</option>
-            @foreach ($datalist as $data)
-              @if($data->gpsStock->client['name'] != '')
-                <option value="{{$data->imei}}">{{$data->gpsStock->trader['name']}}</option>
-                <option value="{{$data->imei}}">{{$data->gpsStock->subdealer['name']}}</option>
-                <option value="{{$data->imei}}">{{$data->gpsStock->dealer['name']}}</option>
-              @elseif(($data->gpsStock->client['name'] != '') && ($data->gpsStock->trader['name'] == ''))
-                <option value="{{$data->imei}}">{{$data->gpsStock->subdealer['name']}}</option>
-                <option value="{{$data->imei}}">{{$data->gpsStock->dealer['name']}}</option>
-              @elseif(($data->gpsStock->client['name'] == '') && ($data->gpsStock->trader['name'] != ''))
-                <option value="{{$data->imei}}">{{$data->gpsStock->subdealer['name']}}</option>
-                <option value="{{$data->imei}}">{{$data->gpsStock->dealer['name']}}</option>
-              @elseif(($data->gpsStock->trader['name'] == '') && ($data->gpsStock->client['name'] == '') && ($data->gpsStock->subdealer['name'] != ''))
-                <option value="{{$data->imei}}">{{$data->gpsStock->dealer['name']}}</option>
-              @endif
-            @endforeach      
+        <option selected disabled value="">Select</option> 
+        @if(($client == true) && ($trader == true)) 
+        <option value="4">Revert to Subdealer</option>
+        @elseif(($client == true) && ($trader == false))
+        <option value="3">Revert to Dealer</option>
+        @elseif(($client == false) && ($trader == true))
+        <option value="2">Revert to Dealer</option>
+        @elseif($subdealer == true)
+        <option value="1">Revert to Distributor</option>
+        @endif 
         </select>
         @if ($errors->has('return_to'))
         <span class="help-block">
@@ -131,26 +143,42 @@
         @endif
       </div>
     </div>
+    </div>
     <div class="row">
       <div class="col-md-3 ">
-        <button type="button" onclick="searchData()" class="btn btn-primary btn-md form-btn ">Reassign</button>
+        <button type="button" onclick="searchData()" class="btn btn-primary btn-md form-btn ">Preview</button>
       </div>
     </div>
   </div>
-  <table class="table table-hover table-bordered  table-striped" style="width:100%;text-align: center;" id="count_data">
+  <div id="count_data">
+  <table class="table table-hover table-bordered  table-striped" style="width:100%;text-align: center;">
     <thead>
       <tr>
           <th><b>GPS Data Count</b></th>
           <th><b>VLT Data Count</b></th>
+          <th><b>Alerts Count</b></th>
+          <th><b>Daily KM Count</b></th>
+          <th><b>Vehicle Daily Updates Count</b></th>
+          <th><b>Complaints Count</b></th>
       </tr>
     </thead>
     <tbody>
       <tr>
         <td id="gps_data_count"></td>
         <td id="vlt_data_count"></td>
+        <td id="alert_count"></td>
+        <td id="dailykm_count"></td>
+        <td id="vehicle_daily_updates_count"></td>
+        <td id="complaints_count"></td>
       </tr>
     </tbody>
   </table>
+  <div class="row">
+    <div class="col-md-3 ">
+      <button type="button" onclick="reassigndevice()" class="btn btn-primary btn-md form-btn ">Reassign</button>
+    </div>
+  </div>
+  </div>
   @endif
         </div>
       </div>
