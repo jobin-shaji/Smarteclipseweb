@@ -9,15 +9,14 @@
     </thead>
      <tbody>
         @foreach($dailykmReportExport as $dailykmReport)
-       <?php
-       $gps_km=$dailykmReport->km;
-          $km=round($gps_km/1000);
-            
-       ?>
+        <?php
+            $gps_km     =   $dailykmReport->km;
+            $km         =   round($gps_km/1000); 
+        ?>
         <tr>           
             <td>{{ $loop->iteration }}</td>
-            <td>{{ $dailykmReport->gps->vehicle->name }}</td>           
-            <td>{{ $dailykmReport->gps->vehicle->register_number }}</td>            
+            <td>{{ $dailykmReport->vehicle->name }}</td>           
+            <td>{{ $dailykmReport->vehicle->register_number }}</td>            
             <td>{{ $km }}</td>         
         </tr>
         @endforeach

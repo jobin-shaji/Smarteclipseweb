@@ -39,44 +39,13 @@ class DailyKMReportController extends Controller
             }  
             $vehicle_gps_ids        =   (new VehicleGps())->getGpsDetailsBasedOnVehiclesWithSingleDate($vehicle_ids,$search_date);
         }
-
-
-
-
-        $query =DailyKm::select(
-            'gps_id', 
-            'date',      
-           'km'
-        )
-        ->with('gps.vehicle')    
-        ->orderBy('id', 'desc');      
-       
-        if($vehicle_id==0 || $vehicle_id==null){
-            $gps_stocks=GpsStock::select('id','client_id','gps_id')->where('client_id',$client_id)->get();
-            $gps_list=[];
-            foreach ($gps_stocks as $gps) {
-                $gps_list[]=$gps->gps_id;
-            }
-            $query = $query->whereIn('gps_id',$gps_list);          
-        }
-        else{
-           
-            $vehicle    =   Vehicle::select('id','gps_id')
-                                    ->where('id',$vehicle_id)
-                                    ->withTrashed()
-                                    ->first();
-            $query = $query->where('gps_id',$vehicle->gps_id);            
-        }  
-        if($from){            
-            $query = $query->whereDate('date', $search_from_date);
-        }                     
-        $dailykm_report = $query->get(); 
-        // dd($dailykm_report);    
+        $single_vehicle_gps_ids     =   ['5'];
+        $dailykm_report             =   (new DailyKm())->getDailyKmBasedOnDateAndGps($single_vehicle_gps_ids,$search_date);    
         return DataTables::of($dailykm_report)
         ->addIndexColumn()        
-       ->addColumn('totalkm', function ($dailykm_report) {
-          $gps_km=$dailykm_report->km;
-          $km=round($gps_km/1000);
+        ->addColumn('totalkm', function ($dailykm_report) {
+            $gps_km                 =   $dailykm_report->km;
+            $km                     =   round($gps_km/1000);
             return $km;
         })
         ->make();
@@ -85,7 +54,7 @@ class DailyKMReportController extends Controller
     {
         ob_end_clean(); 
         ob_start();
-        return Excel::download(new DailyKMReportExport($request->id,$request->vehicle,$request->fromDate), 'Daily-km-report.xlsx');
+        return Excel::download(new DailyKMReportExport($request->id,$request->vehicle_id,$request->date), 'Daily-km-report.xlsx');
     }
    
 }

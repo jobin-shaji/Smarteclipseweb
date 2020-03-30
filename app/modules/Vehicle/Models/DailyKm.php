@@ -37,5 +37,44 @@ class DailyKm extends Model
             ->where('date', '<=', $to_date)
             ->sum('km');
     }
+    /**
+     * 
+     * 
+     */
+    public function getDailyKmBasedOnDateAndGps($gps_ids, $search_date)
+    {
+        return self::whereIn('gps_id', $gps_ids)
+            ->where('date', $search_date)
+            ->with('vehicle')
+            ->get();
+    }
+    /**
+     * 
+     * 
+     */
+    public function getSumOfKmForFuelReportBasedOnDate($gps_ids,$date)
+    {
+        return self::select(
+            'km',
+            'date'
+        )
+        ->whereIn('gps_id', $gps_ids)
+        ->whereDate('date',$date)
+        ->sum('km');
+    }
+     /**
+     * 
+     * 
+     */
+    public function getSumOfKmForFuelReportBasedOnMonth($gps_ids,$month)
+    {
+        return self::select(
+            'km',
+            'date'
+        )
+        ->whereIn('gps_id', $gps_ids)
+        ->whereRaw('MONTH(date) = ?',[$month])
+        ->sum('km');
+    }
 }
 

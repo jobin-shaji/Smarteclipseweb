@@ -7,99 +7,63 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Modules\Gps\Models\GpsData;
 use App\Modules\Alert\Models\Alert;
 use App\Modules\Vehicle\Models\Vehicle;
+use App\Modules\Vehicle\Models\VehicleGps;
 use Illuminate\Support\Facades\Crypt;
 use DataTables;
+
 class ZigZagDrivingReportController extends Controller
 {
     public function zigZagDrivingReport()
     {
-        $client_id=\Auth::user()->client->id;
-        $vehicles=Vehicle::select('id','name','register_number','client_id')
-        ->where('client_id',$client_id)
-        ->withTrashed()
-        ->get();
+        $client_id      =   \Auth::user()->client->id;
+        $vehicles       =   (new Vehicle())->getVehicleListBasedOnClient($client_id);
         return view('Reports::zig-zag-driving-report',['vehicles'=>$vehicles]);  
     }  
     public function zigZagDrivingReportList(Request $request)
     {
-        $single_vehicle_id = [];
-        $client= $request->data['client'];
-        $vehicle= $request->data['vehicle'];
-        $from = $request->data['from_date'];
-        $to = $request->data['to_date']; 
-        if($vehicle!=0)
+        $single_vehicle_gps_ids     =   []; 
+        $client_id                  =   $request->client;
+        $vehicle_id                 =   $request->vehicle;
+        $from_date                  =   $request->from_date;
+        $to_date                    =   $request->to_date;
+        if($vehicle_id != 0)
         {
-            
-            $vehicle_details=Vehicle::select('id','gps_id')
-                                        ->where('id',$vehicle)
-                                        ->withTrashed()
-                                        ->first();
-            $single_vehicle_ids = $vehicle_details->gps_id;
+            $vehicle_gps_ids        =   (new VehicleGps())->getGpsDetailsBasedOnVehicleWithDates($vehicle_id,$from_date,$to_date); 
         }
         else
         {
-            
-            $vehicle_details =  Vehicle::select('id','gps_id','client_id')->where('client_id',$client)->withTrashed()->get();
-            
-            foreach($vehicle_details as $vehicle_detail){
-                $single_vehicle_id[] = $vehicle_detail->gps_id; 
-
-            }
+            $vehicle_details        =   (new Vehicle())->getVehicleListBasedOnClient($client_id);
+            $vehicle_ids            =   [];
+            foreach($vehicle_details as $each_vehicle)
+            {
+                $vehicle_ids[]      =   $each_vehicle->id; 
+            }  
+            $vehicle_gps_ids        =   (new VehicleGps())->getGpsDetailsBasedOnVehiclesWithDates($vehicle_ids,$from_date,$to_date);
         }
-        $query =Alert::select(
-            'id',
-            'alert_type_id', 
-            'device_time',    
-            'gps_id',
-            'latitude',
-            'longitude', 
-            'status'
-        )
-        ->with('alertType:id,description')
-        ->with('gps.vehicle')
-        ->orderBy('device_time', 'DESC')
-        ->limit(1000);
-        if($vehicle==0 || $vehicle==null)
+        $single_vehicle_gps_ids     =   ['5'];
+        $query                      =   (new Alert())->getRashTurningAlerts($single_vehicle_gps_ids); 
+        if($from_date)
         {
-            $query = $query->whereIn('gps_id',$single_vehicle_id)
-            ->where('alert_type_id',3);
-            // ->where('status',1);
-            if($from){
-               $search_from_date=date("Y-m-d", strtotime($from));
-                $search_to_date=date("Y-m-d", strtotime($to));
-                $query = $query->whereDate('device_time', '>=', $search_from_date)->whereDate('device_time', '<=', $search_to_date);
-            }
+            $search_from_date       =   date("Y-m-d", strtotime($from_date));
+            $search_to_date         =   date("Y-m-d", strtotime($to_date));
+            $query                  =   $query->whereDate('device_time', '>=', $search_from_date)->whereDate('device_time', '<=', $search_to_date);
         }
-        else
-        {
-             $query = $query->where('gps_id',$single_vehicle_ids)
-            ->where('alert_type_id',3);
-            // ->where('status',1);
-            if($from){
-               $search_from_date=date("Y-m-d", strtotime($from));
-                $search_to_date=date("Y-m-d", strtotime($to));
-                $query = $query->whereDate('device_time', '>=', $search_from_date)->whereDate('device_time', '<=', $search_to_date);
-            }
-        }
-        
-        $zigzagdriving = $query->get();   
-
+        $zigzagdriving              =   $query->get(); 
         return DataTables::of($zigzagdriving)
         ->addIndexColumn()
-        
-         ->addColumn('action', function ($zigzagdriving) {
-         $b_url = \URL::to('/');              
-            return "
-            <a href=".$b_url."/alert/report/".Crypt::encrypt($zigzagdriving->id)."/mapview class='btn btn-xs btn-info'><i class='glyphicon glyphicon-map-marker'></i> Map view </a>";
-        })
-        ->rawColumns(['link', 'action'])
+        // ->addColumn('action', function ($zigzagdriving) {
+        //  $b_url = \URL::to('/');              
+        //     return "
+        //     <a href=".$b_url."/alert/report/".Crypt::encrypt($zigzagdriving->id)."/mapview class='btn btn-xs btn-info'><i class='glyphicon glyphicon-map-marker'></i> Map view </a>";
+        // })
+        // ->rawColumns(['link', 'action'])
         ->make();
     } 
     public function export(Request $request)
     {
         ob_end_clean(); 
         ob_start();
-        return Excel::download(new ZigZagDrivingReportExport($request->id,$request->vehicle,$request->fromDate,$request->toDate), 'zigzag-driving-report.xlsx');
+        return Excel::download(new ZigZagDrivingReportExport($request->id,$request->vehicle_id,$request->fromDate,$request->toDate), 'zigzag-driving-report.xlsx');
     } 
    
 }

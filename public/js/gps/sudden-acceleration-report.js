@@ -2,15 +2,15 @@ function check()
 {
     if(document.getElementById('vehicle').value == '')
     {
-        alert('Please select vehicle');
+        alert('please select vehicle');
     }
     else if(document.getElementById('fromDate').value == '')
     {
-        alert('Please enter from date');
+        alert('Please select From date');
     }
     else if(document.getElementById('toDate').value == '')
     {
-        alert('Please enter to date');
+        alert('Please select To date');
     }
     else
     {
@@ -23,12 +23,12 @@ function check()
         };
         if(document.getElementById('toDate').value == '')
         {
-            $("#zigzag_driving_report_download").hide(); 
+            $("#sudden_acceleration_report_download").hide(); 
             $('#dataTable tbody').empty();
         }
         else{
             callBackDataTable(data);
-        }
+        }      
     }
 }
 function calculate() 
@@ -43,15 +43,17 @@ function calculate()
     var DateDiff        =   Math.floor(timeDiff / (60 * 60 * 24));
     if(DateDiff > 15)
     {
+        var fromDate    =   $('#fromDate').val();
         document.getElementById("toDate").value = "";
         alert("Please select date upto 15 days ");
     }
 }
-
-function callBackDataTable(data=null){
+ 
+function callBackDataTable(data=null)
+{
     if(data != null)
     {
-        $('#zigzag_driving_report_download').show();
+        $('#sudden_acceleration_report_download').show();
         $('#dataTable').show();
     }
     $("#dataTable").DataTable({
@@ -62,26 +64,26 @@ function callBackDataTable(data=null){
         deferRender: true,
         // order: [[1, 'desc']],
         ajax: {
-            url: 'zigzag-driving-report-list',
+            url: 'sudden-acceleration-report-list',
             type: 'POST',
             data: data,
             headers: {
                 'X-CSRF-Token': $('meta[name = "csrf-token"]').attr('content')
             }
         },
-
+       
         fnDrawCallback: function (oSettings, json) {
 
         },
         columns: [
-            {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: true, searchable: false},
+            {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
             {data: 'gps.vehicle.register_number', name: 'gps.vehicle.register_number', orderable: false},
-            {data: 'alert_type.description', name: 'alert_type.description' ,orderable: false , searchable: false},
+            {data: 'alert_type.description', name: 'alert_type.description', orderable: false, searchable: false},
             {data: 'device_time', name: 'device_time', orderable: false},
             // {data: 'action', name: 'action', orderable: false, searchable: false}
-
+           
         ],
-
+        
         aLengthMenu: [[25, 50, 100, -1], [25, 50, 100, 'All']]
     });
 }

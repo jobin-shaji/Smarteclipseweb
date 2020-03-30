@@ -1,60 +1,71 @@
-
-$(document).ready(function () {
-    callBackDataTable();
-});
-
-function check(){
-
-    if(document.getElementById('vehicle').value == ''){
+function check()
+{
+    if(document.getElementById('vehicle').value == '')
+    {
         alert('Please select vehicle');
     }
-    else if(document.getElementById('fromDate').value == ''){
+    else if(document.getElementById('fromDate').value == '')
+    {
         alert('Please enter from date');
-    }else if(document.getElementById('toDate').value == ''){
+    }
+    else if(document.getElementById('toDate').value == '')
+    {
         alert('Please enter to date');
     }
-    else{  
-        calculate();      
-        callBackDataTable();
+    else
+    {  
+        calculate();
+        var  data = {
+            client      :   $('meta[name = "client"]').attr('content'),
+            from_date   :   document.getElementById('fromDate').value,
+            to_date     :   document.getElementById('toDate').value,
+            vehicle     :   document.getElementById('vehicle').value,
+        };
+        if(document.getElementById('toDate').value == '')
+        {
+            $("#accident_impact_alert_report_download").hide(); 
+            $('#dataTable tbody').empty();
+        }
+        else{
+            callBackDataTable(data);
+        }
     }
 }
-function calculate() {
-    var d1 = $('#fromDate').data("DateTimePicker").date();
-    var d2 = $('#toDate').data("DateTimePicker").date();
-    var timeDiff = 0
-    if(d2) {
-        timeDiff = (d2 - d1) / 1000;
-    }
-    var DateDiff = Math.floor(timeDiff / (60 * 60 * 24));
-    if(DateDiff>15)
+function calculate() 
+{
+    var d1              =   $('#fromDate').data("DateTimePicker").date();
+    var d2              =   $('#toDate').data("DateTimePicker").date();
+    var timeDiff        =   0
+    if(d2) 
     {
-        var fromDate=$('#fromDate').val();
+        timeDiff        =   (d2 - d1) / 1000;
+    }
+    var DateDiff        =   Math.floor(timeDiff / (60 * 60 * 24));
+    if(DateDiff > 15)
+    {
         document.getElementById("toDate").value = "";
         alert("Please select date upto 15 days ");
     }
 }
  
-function callBackDataTable(){
-    var data = {
-        client: $('meta[name = "client"]').attr('content'),
-        from_date : document.getElementById('fromDate').value,
-        to_date : document.getElementById('toDate').value,
-        vehicle : document.getElementById('vehicle').value,
-    }; 
-
+function callBackDataTable(data=null)
+{
+    if(data != null)
+    {
+        $('#accident_impact_alert_report_download').show();
+        $('#dataTable').show();
+    }
     $("#dataTable").DataTable({
         bStateSave: true,
         bDestroy: true,
         bProcessing: true,
         serverSide: true,
         deferRender: true,
-        order: [[1, 'desc']],
+        // order: [[1, 'desc']],
         ajax: {
             url: 'accident-impact-alert-report-list',
             type: 'POST',
-            data: {
-                'data': data
-            },
+            data: data,
             headers: {
                 'X-CSRF-Token': $('meta[name = "csrf-token"]').attr('content')
             }
@@ -66,11 +77,9 @@ function callBackDataTable(){
         columns: [
             {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: true, searchable: false},
             {data: 'gps.vehicle.register_number', name: 'gps.vehicle.register_number', orderable: false},
-                   
-            {data: 'alert_type.description', name: 'alert_type.description', searchable: false},
-            {data: 'location', name: 'location', orderable: false},
+            {data: 'alert_type.description', name: 'alert_type.description', orderable: false, searchable: false},
             {data: 'device_time', name: 'device_time', orderable: false},
-             {data: 'action', name: 'action', orderable: false, searchable: false}
+            // {data: 'action', name: 'action', orderable: false, searchable: false}
            
         ],
         
@@ -78,19 +87,6 @@ function callBackDataTable(){
     });
 }
 
-
-
-function refresh(){
-    if(document.getElementById('fromDate').value == '' || document.getElementById('toDate').value == ''){
-        callBackDataTable();
-    }
-    else{                      
-    var from_date = document.getElementById('fromDate').value;
-    var to_date = document.getElementById('toDate').value;
-    var data = { 'agent':agent,'depot':depot, 'from_date':from_date , 'to_date':to_date};
-    callBackDataTable(data);
-    }   
-}
 
 
 

@@ -65,7 +65,6 @@ Route::group(['middleware' => ['web','auth','role:client|school'] , 'namespace' 
 
 	//zigzag-driving-report
 	Route::get('/zigzag-driving-report','ZigZagDrivingReportController@zigZagDrivingReport')->name('zigzag-driving-report');
-
 	Route::post('/zigzag-driving-report-list','ZigZagDrivingReportController@zigZagDrivingReportList')->name('zigzag-driving-report-list');
 	Route::post('/zigzag-driving-report/export','ZigZagDrivingReportController@export')->name('zigzag.driving.report.export');
 
@@ -77,19 +76,17 @@ Route::group(['middleware' => ['web','auth','role:client|school'] , 'namespace' 
 
 
 
-	//accident-imapct-alert-report
-	Route::get('/terain-roads-condition-operation-temperature-report','TerainRoadsConditionOperationTemperatureReportController@terainRoadConditionReport')->name('terain-roads-condition-operation-temperature-report');
+	//Halt report(Idle report)
 	Route::get('/idle-report','IdleReportController@idleReport')->name('idle-report');
 	Route::post('/idle-report-list','IdleReportController@idleReportList')->name('idle-report-list');
-	Route::post('/idle-report/export','IdleReportController@export')->name('idle.report.export');
 
+	//parking report
 	Route::get('/parking-report','ParkingReportController@parkingReport')->name('parking-report');
 	Route::post('/parking-report-list','ParkingReportController@parkingReportList')->name('parking-report-list');
-	Route::post('/parking-report/export','ParkingReportController@export')->name('parking.report.export');
-
 
 	Route::get('/offline-report','OfflineReportController@accidentImpactAlertReport')->name('offline-report');
 
+	//main battery disconnect report
 	Route::get('/mainbattery-disconnect-report','MainBatteryDisconnectReportController@mainBatteryDisconnectReport')->name('mainbattery-disconnect-report');
 	Route::post('/mainbattery-disconnect-report-list','MainBatteryDisconnectReportController@mainBatteryDisconnectReportList')->name('mainbattery-disconnect-report-list');
 	Route::post('/main-battery-disconnect-report/export','MainBatteryDisconnectReportController@export')->name('main.battery.disconnect.report.export');

@@ -6,7 +6,7 @@ function check()
     }
     else if(document.getElementById('fromDate').value == '')
     {
-        alert('Please enter from date');
+        alert('Please enter date');
     }
     else{
         var  data = {
@@ -35,7 +35,7 @@ function callBackDataTable(data=null)
         ajax: {
             url: 'dailykm-report-list',
             type: 'POST',
-            data: date,
+            data: data,
             headers: {
                 'X-CSRF-Token': $('meta[name = "csrf-token"]').attr('content')
             }
@@ -44,8 +44,8 @@ function callBackDataTable(data=null)
         },
         columns: [
             {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: true, searchable: false},
-            {data: 'gps.vehicle.name', name: 'gps.vehicle.name', orderable: false, searchable: false},
-            {data: 'gps.vehicle.register_number', name: 'gps.vehicle.register_number', orderable: false},
+            {data: 'vehicle.name', name: 'vehicle.name', orderable: false, searchable: false},
+            {data: 'vehicle.register_number', name: 'vehicle.register_number', orderable: false},
             {data: 'totalkm', name: 'totalkm', orderable: false},
             {data: 'date', name: 'date', orderable: false},
         ],

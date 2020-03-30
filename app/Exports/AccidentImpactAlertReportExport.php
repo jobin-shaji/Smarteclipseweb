@@ -7,60 +7,38 @@ use Illuminate\Contracts\View\View;
 use App\Modules\Alert\Models\Alert;
 use App\Modules\Gps\Models\GpsData;
 use App\Modules\Vehicle\Models\Vehicle;
+use App\Modules\Vehicle\Models\VehicleGps;
+
 class AccidentImpactAlertReportExport implements FromView
 {
-	protected $accidentImpactAlertReportExport;
-	public function __construct($client,$vehicle,$from,$to)
+    protected $accidentImpactAlertReportExport;
+    
+	public function __construct($client_id,$vehicle_id,$from_date,$to_date)
     {  
-         $single_vehicle_id = [];
-        if($vehicle!=0)
+        $single_vehicle_gps_ids                 =   []; 
+        if($vehicle_id != 0)
         {
-            $vehicle_details =Vehicle::select('id','gps_id')->withTrashed()->find($vehicle);
-            $single_vehicle_ids = $vehicle_details->gps_id;
+            $vehicle_gps_ids                    =   (new VehicleGps())->getGpsDetailsBasedOnVehicleWithDates($vehicle_id,$from_date,$to_date); 
         }
         else
         {
-            $vehicle_details =Vehicle::select('id','gps_id','client_id')->withTrashed()->where('client_id',$client)->get();             
-            foreach($vehicle_details as $vehicle_detail){
-                $single_vehicle_id[] = $vehicle_detail->gps_id; 
-
-            }
-        }  
-         $query =Alert::select(
-            'id',
-            'alert_type_id', 
-            'device_time',    
-            'gps_id',
-            'latitude',
-            'longitude', 
-            'status'
-        )
-        ->with('alertType:id,description')
-        ->with('gps.vehicle')
-        ->orderBy('device_time', 'DESC');
-       if($vehicle==0 || $vehicle==null)
-        {
-            $query = $query->whereIn('gps_id',$single_vehicle_id)
-            ->where('alert_type_id',14);
-            // ->where('status',1);
-            if($from){
-                $search_from_date=date("Y-m-d", strtotime($from));
-                $search_to_date=date("Y-m-d", strtotime($to));
-                $query = $query->whereDate('device_time', '>=', $search_from_date)->whereDate('device_time', '<=', $search_to_date);
-            }
+            $vehicle_details                    =   (new Vehicle())->getVehicleListBasedOnClient($client_id);
+            $vehicle_ids                        =   [];
+            foreach($vehicle_details as $each_vehicle)
+            {
+                $vehicle_ids[]                  =   $each_vehicle->id; 
+            }  
+            $vehicle_gps_ids                    =   (new VehicleGps())->getGpsDetailsBasedOnVehiclesWithDates($vehicle_ids,$from_date,$to_date);
         }
-        else
+        $single_vehicle_gps_ids                 =   ['5'];
+        $query                                  =   (new Alert())->getAccidentImpactAlerts($single_vehicle_gps_ids); 
+        if($from_date)
         {
-            $query = $query->where('gps_id',$single_vehicle_ids)
-            ->where('alert_type_id',14);
-            // ->where('status',1);
-            if($from){
-                $search_from_date=date("Y-m-d", strtotime($from));
-                $search_to_date=date("Y-m-d", strtotime($to));
-                $query = $query->whereDate('device_time', '>=', $search_from_date)->whereDate('device_time', '<=', $search_to_date);
-            }
+            $search_from_date                   =   date("Y-m-d", strtotime($from_date));
+            $search_to_date                     =   date("Y-m-d", strtotime($to_date));
+            $query                              =   $query->whereDate('device_time', '>=', $search_from_date)->whereDate('device_time', '<=', $search_to_date);
         }
-        $this->accidentImpactAlertReportExport = $query->get();          
+        $this->accidentImpactAlertReportExport  =   $query->get();          
     }
     public function view(): View
 	{

@@ -1,13 +1,13 @@
 @extends('layouts.eclipse')
 @section('title')
-Parking Report
+  Parking Report
 @endsection
 @section('content')
 <div class="page-wrapper_new">
   <div class="page-breadcrumb">
     <div class="row">
       <div class="col-12 d-flex no-block align-items-center">
-        <b>  Parking Report</b>
+        <b> Parking Report</b>
       </div>
     </div>
   </div>
@@ -23,54 +23,52 @@ Parking Report
                     <div class="panel-body">
                       <div class="panel-heading">
                         <div class="cover_div_search">
-                        <div class="row">
-                          <div class="col-lg-3 col-md-3"> 
-                           <div class="form-group">
-                            <label>Vehicle</label>                      
-                            <select class="form-control selectpicker" data-live-search="true" title="Select Vehicle" id="vehicle" name="vehicle">
-                              <option value="" selected="selected" disabled="disabled">select</option>
-                              @foreach ($vehicles as $vehicles)
-                              <option value="{{$vehicles->id}}">{{$vehicles->name}} || {{$vehicles->register_number}}</option>
-                              @endforeach  
-                            </select>
-                          </div>
-                          </div>
-                          <div class="col-lg-3 col-md-3">
-                          <div class="form-group">                     
-                            <label> From Date</label>
-                            <input type="text" class="@if(\Auth::user()->hasRole('fundamental'))datepickerFundamental @elseif(\Auth::user()->hasRole('superior')) datepickerSuperior @elseif(\Auth::user()->hasRole('pro')) datepickerPro @else datepickerFreebies @endif form-control" id="fromDate" name="fromDate" required autocomplete="off" onkeydown="return false" required>
-                            <span class="input-group-addon" style="z-index: 99;">
-                                <span class="calender1"  style=""><i class="fa fa-calendar"></i></span>
-                            </span>
-                          </div>
-                          </div>
-                          <div class="col-lg-3 col-md-3">
-                          <div class="form-group">                     
-                            <label> To Date</label>
-                            <input type="text" class="@if(\Auth::user()->hasRole('fundamental'))datepickerFundamental @elseif(\Auth::user()->hasRole('superior')) datepickerSuperior @elseif(\Auth::user()->hasRole('pro')) datepickerPro @else datepickerFreebies @endif form-control" id="toDate" name="toDate" autocomplete="off" required onkeydown="return false" required>
-                            <span class="input-group-addon" style="z-index: 99;">
-                                <span class="calender1"  style=""><i class="fa fa-calendar"></i></span>
-                            </span>
-                          </div>
-                          </div>
+                          <div class="row">
+                            <div class="col-lg-3 col-md-3"> 
+                              <div class="form-group">
+                                <label>Vehicle</label>                      
+                                <select class="form-control selectpicker" data-live-search="true" title="Select Vehicle" id="vehicle" name="vehicle">
+                                  <option value="" selected="selected" disabled="disabled">select</option>
+                                  @foreach ($vehicles as $vehicles)
+                                  <option value="{{$vehicles->id}}">{{$vehicles->name}} || {{$vehicles->register_number}}</option>
+                                  @endforeach  
+                                </select>
+                              </div>
+                            </div>
+                            <div class="col-lg-3 col-md-3">
+                              <div class="form-group">                     
+                                <label> From Date</label>
+                                <input type="text" class="@if(\Auth::user()->hasRole('fundamental'))datepickerFundamental @elseif(\Auth::user()->hasRole('superior')) datepickerSuperior @elseif(\Auth::user()->hasRole('pro')) datepickerPro @else datepickerFreebies @endif form-control" id="fromDate" name="fromDate" required autocomplete="off" onkeydown="return false" required>
+                                <span class="input-group-addon" style="z-index: 99;">
+                                    <span class="calender1"  style=""><i class="fa fa-calendar"></i></span>
+                                </span>
+                              </div>
+                            </div>
+                            <div class="col-lg-3 col-md-3">
+                              <div class="form-group">                     
+                                <label> To Date</label>
+                                <input type="text" class="@if(\Auth::user()->hasRole('fundamental'))datepickerFundamental @elseif(\Auth::user()->hasRole('superior')) datepickerSuperior @elseif(\Auth::user()->hasRole('pro')) datepickerPro @else datepickerFreebies @endif form-control" id="toDate" name="toDate" autocomplete="off" required onkeydown="return false" required>
+                                <span class="input-group-addon" style="z-index: 99;">
+                                    <span class="calender1"  style=""><i class="fa fa-calendar"></i></span>
+                                </span>
+                              </div>
+                            </div>
                             <div class="col-lg-3 col-md-3 pt-4">
-                           <div class="form-group">          
-                            <button class="btn btn-sm btn-info btn2 srch" onclick="trackMode()"> <i class="fa fa-search"></i> </button>
+                              <div class="form-group">          
+                                <button class="btn btn-sm btn-info btn2 srch" onclick="trackMode()"> <i class="fa fa-search"></i> </button>
+                              </div>
                             </div>
                           </div>
-                          
                         </div>
-                      </div>
                       </div>  
-                
-                    <table class="table table-hover table-bordered  table-striped datatable" style="width:100%;text-align: center" >
+                      <table class="table table-hover table-bordered  table-striped datatable" style="width:100%;text-align: center" >
                         <thead>
-                            <tr>
-                              <th><b>SL.No</b></th>
-                              <th><b>Vehicle</b></th>
-                              <th><b>Registration Number</b></th>                              
-                              <th><b>Parking</b></th>                              
-                            </tr>
+                          <tr>
+                            <th><b>SL.No</b></th>
+                            <th><b>Vehicle</b></th>
+                            <th><b>Registration Number</b></th>                              
+                            <th><b>Parking</b></th>                              
+                          </tr>
                         </thead>
                         <tbody>
                           <tr style="text-align: center;">
@@ -80,14 +78,12 @@ Parking Report
                             <td id="sleep"></td>
                           </tr>
                         </tbody>
-                    </table>
-                 </div>
+                      </table>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div class="row">           
           </div>
         </div>
       </div>

@@ -67,6 +67,82 @@ class Alert extends Model
 				->limit(1000);  
 	}
 
+	public function getSuddenAccelerationAlerts($gps_ids)
+	{
+		return 	self::select(          
+					'id',
+					'alert_type_id',
+					'device_time',   
+					'gps_id',
+					'latitude',
+					'longitude',
+					'status'
+				)
+				->with('alertType:id,description')
+				->with('gps.vehicle')
+				->whereIn('gps_id',$gps_ids)
+				->where('alert_type_id',2)
+				->orderBy('device_time', 'DESC')
+				->limit(1000);  
+	}
+
+	public function getAccidentImpactAlerts($gps_ids)
+	{
+		return 	self::select(          
+					'id',
+					'alert_type_id',
+					'device_time',   
+					'gps_id',
+					'latitude',
+					'longitude',
+					'status'
+				)
+				->with('alertType:id,description')
+				->with('gps.vehicle')
+				->whereIn('gps_id',$gps_ids)
+				->where('alert_type_id',14)
+				->orderBy('device_time', 'DESC')
+				->limit(1000);  
+	}
+
+	public function getMainBatteryDisconnectAlerts($gps_ids)
+	{
+		return 	self::select(          
+					'id',
+					'alert_type_id',
+					'device_time',   
+					'gps_id',
+					'latitude',
+					'longitude',
+					'status'
+				)
+				->with('alertType:id,description')
+				->with('gps.vehicle')
+				->whereIn('gps_id',$gps_ids)
+				->where('alert_type_id',11)
+				->orderBy('device_time', 'DESC')
+				->limit(1000);  
+	}
+
+	public function getRashTurningAlerts($gps_ids)
+	{
+		return 	self::select(          
+					'id',
+					'alert_type_id',
+					'device_time',   
+					'gps_id',
+					'latitude',
+					'longitude',
+					'status'
+				)
+				->with('alertType:id,description')
+				->with('gps.vehicle')
+				->whereIn('gps_id',$gps_ids)
+				->where('alert_type_id',3)
+				->orderBy('device_time', 'DESC')
+				->limit(1000);  
+	}
+
 	public function getAlertsDetailsForVehicleReport($single_vehicle_gps_ids,$from_date,$to_date)
 	{
 		return 	self::select(
