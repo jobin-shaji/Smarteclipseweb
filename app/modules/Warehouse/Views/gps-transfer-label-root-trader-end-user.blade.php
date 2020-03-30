@@ -40,6 +40,11 @@
                       <a href="{{route('gps-transfer-label-root-trader-end-user.export',$gps_transfer->id)}}">
                         <button type="button" class="btn btn-primary btn-md form-btn">Download</button>
                       </a>
+
+                      <a href="{{route('sub-dealer.assign.servicer')}}">
+                        <button type="button" class="btn btn-primary btn-md form-btn">Create Job</button>
+                      </a>
+
                     </div>
                     <div class="col-md-7">
                         <div class="card-body">
