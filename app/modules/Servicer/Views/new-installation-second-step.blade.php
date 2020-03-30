@@ -43,7 +43,7 @@ Assign Servicer
 
 
 <div class="panel panel-primary setup-content" id="step-2">
-<form method="POST" action="{{route('vehiclejob.complete.save',$servicer_job->id)}}"enctype="multipart/form-data">
+<form method="POST" action="{{route('vehiclejob.complete.save.p',$servicer_job->id)}}"enctype="multipart/form-data">
 <div class="row">
 <div class="col-md-6"> 
 {{csrf_field()}}

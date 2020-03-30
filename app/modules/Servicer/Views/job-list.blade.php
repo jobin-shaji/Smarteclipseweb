@@ -23,7 +23,7 @@ $key        = (isset($_GET['new_installation_search_key'])) ? $_GET['new_install
         @endif
     </nav>
 
-  <div class="mlt-list">
+  
     <!-- Search and filters -->
 
     <div align="right" class="search-1">
@@ -126,7 +126,7 @@ $key        = (isset($_GET['new_installation_search_key'])) ? $_GET['new_install
             </tbody>
         </table>
         {{ $servicer_jobs->appends(Request::all())->links() }}
-      </div>
+     
     </div>
       <style>
        .table td, .table th {

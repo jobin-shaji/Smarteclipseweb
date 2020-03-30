@@ -38,6 +38,10 @@ class ServicerController extends Controller {
     CONST JOB_TEST_START_STAGE      = 4;
     CONST JOB_COMPLETED_STAGE       = 5;
     CONST JOB_DEVICE_TEST_START     = 1;
+    CONST SOS_TEST_TYPE_STOP        = "STOP";
+    CONST SOS_TEST_TYPE_RESET       = "RESET";
+
+    CONST OTA_COMMAND_EMERGENCY_OFF = "SET EO";
 
     public function create()
     {
@@ -377,6 +381,9 @@ class ServicerController extends Controller {
 
         return view('Servicer::sub-dealer-assign-servicer',['servicers'=>$servicer,'clients'=>$clients]);
     }
+
+
+
     public function saveSubDealerAssignServicer(Request $request)
     {
         $rules = $this->servicerJobRules();
@@ -541,7 +548,9 @@ class ServicerController extends Controller {
 
     public function newInstallationJobDetails(Request $request)
     {
+
         $servicerjob_id = Crypt::decrypt($request->id);
+     
         if (!$servicerjob_id) { 
             $servicerjob_id="";
          }else
@@ -578,12 +587,14 @@ class ServicerController extends Controller {
                $stage=$service_engineer_installation->job_status ;
         
         }
+        // dd($servicerjob_id);
          return view('Servicer::new-installation-first-step',['unboxing_checklist' => $unboxing_checklist,'servicerjob_id'=>$servicerjob_id]);
         }
     public function getchecklist(Request $request)
     {
 
        $servicer_jobid  = $request->id;
+
         // $rules=$this->updateChecklistRule();
         // $this->validate($request,$rules);
            
@@ -748,8 +759,8 @@ class ServicerController extends Controller {
                 $service_eng_installation_command->status      =  self::JOB_STATUS_IN_PROGRESS;
                 $service_eng_installation_command->save();
                 $stage= self::JOB_COMMAND_STAGE;
-                //   $request->session()->flash('message', 'Command added successfully!');
-                // $request->session()->flash('alert-class', 'alert-success');
+                  $request->session()->flash('message', 'Command added successfully!');
+                  $request->session()->flash('alert-class', 'alert-success');
                }
                
                 $device_test_installation_list = (new ServicerJob())->getInstallationJob($servicer_jobid);
@@ -778,7 +789,7 @@ class ServicerController extends Controller {
                $device_test_installation_list->save();
                 }
                 }
-               $request->session()->flash('message', 'Command added successfully!');
+                 $request->session()->flash('message', 'Command added successfully!');
                 $request->session()->flash('alert-class', 'alert-success');
               return view('Servicer::new-installation-fourth-step',['device_test_case'=>$device_test_case,'servicer_jobid'=>$servicer_jobid,'stage'=>$stage]);
         }
@@ -878,12 +889,83 @@ public function completeTestCase(Request $request)
 
                  return redirect(route('completed.installation.job.list'));
                }
-              
-             
-    }
+          }
 
+        public function sosButtonStop(Request $request)
+        {
+            $servicer_jobid=$request->servicer_jobid;
+            $service_eng_installation_command   =  (new ServicerJob())->getServicerJob($servicer_jobid);
+            
+            if($service_eng_installation_command  ==  null)
+            {
+            $request->session()->flash('message', 'jobs not found for the servicer');
+            $request->session()->flash('alert-class', 'alert-danger');
+            }else
+            {
+                 $sos_button_test_type     =   self::SOS_TEST_TYPE_STOP;
+                 $gps_id                   =   $service_eng_installation_command->gps_id;
+                if($sos_button_test_type  == self::SOS_TEST_TYPE_STOP)
+                {
+                    $ota_command           =    'SET EO';
+                    $ota_eo_response       =    (new OtaResponse())->checkOTARequested(self::OTA_COMMAND_EMERGENCY_OFF, $gps_id);
+                    if($ota_eo_response > 0)
+                    {
+                       
+                       return response()->json(['success' =>"success", 'message' => " Stop Command Already Send" ]);  
+                    }
+                    else
+                    {
+                        $otaResponse           =  new OtaResponse();
+                        $otaResponse->gps_id   =  $gps_id;
 
+                        $otaResponse->response = self::OTA_COMMAND_EMERGENCY_OFF;
+                        if ($otaResponse->save())
+                        {
+                            return response()->json([ 'success' =>"success", 'message' => "SOS Button Stopped Successfully"]);
+                        }
+                        else
+                        {
+                           return response()->json([  'success' => $this->success, 'message' => "failed" ]);
+                        }
+                    }
+                }
+            }
+            
+         }
+          public function sosButtonReset(Request $request)
+        {
+            $servicer_jobid=$request->servicer_jobid;
+            $service_eng_installation_job   =  (new ServicerJob())->getServicerJob($servicer_jobid);
+             if($service_eng_installation_job  ==  null)
+            {
+              return response()->json([  'message' => "Jobs Not Found "]);
+            }else
+            {
+             $sos_button_test_type=self::SOS_TEST_TYPE_RESET;
+             if($sos_button_test_type == self::SOS_TEST_TYPE_RESET)
+                {
+                   $gps_id=$service_eng_installation_job->gps_id;
+                    
+                    $gps=Gps::where('id',$gps_id)->first();
+                    $gps->emergency_status     = 0;
+                    $gps->test_status          = 1;
 
+                    // update json response
+                    $device_test               = json_decode($service_eng_installation_job->device_test_scenario, true);
+                  
+                    $device_test['tests'][4]['sos']['status']   = 0;
+                    $device_test['tests'][4]['test_status']     = 0;
+                    $service_eng_installation_job->device_test_scenario     = json_encode($device_test, true);
+
+                    $service_eng_installation_job->save();
+                    $this->message                              = 'Success';
+                    return response()->json([  'message' => "SOS Button Reset Activated Sucessfuly"]);
+                }
+                
+            
+            }
+        }
+        
 
 //old job completion of installation
 //  public function jobDetails(Request $request)
@@ -1028,6 +1110,7 @@ public function serviceJobDetails(Request $request)
     public function vehicleDataUpdated(Request $request)
     {
      $servicer_jobid  = $request->id;
+     
         $custom_messages = [
             'file.required' => 'Rc Book cannot be blank',
              // 'file.uploaded' => 'Failed to upload an image. The image maximum size is 4kb.'

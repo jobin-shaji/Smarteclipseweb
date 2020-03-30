@@ -32,7 +32,7 @@ $key        = (isset($_GET['new_installation_search_key'])) ? $_GET['new_install
         <div class="row" >
             <div class="col-lg-12" >
                  <div class="row">
-                    <div class="col-lg-8">
+                    <div class="col-lg-7">
                       <div class="form-group" style="width: 100%;">
                          <input type="text" class="form-control" placeholder="Enter Serial No,Assigne,user name,user email,user mobile,registration number" name="new_installation_search_key" id="new_installation_search_key" value="{{ $key }}">
                       </div>
@@ -58,7 +58,7 @@ $key        = (isset($_GET['new_installation_search_key'])) ? $_GET['new_install
          
   </form>
     </div> 
-          <table class="table table-hover table-bordered  table-striped datatable"  style="width:100%;text-align: center" >
+       <table class="table table-hover table-bordered   datatable"  style="width:70%;text-align: center">
           <thead class="indigo white-text">
                             <tr>
                             <th><b>SL.No</b></th>
@@ -70,7 +70,7 @@ $key        = (isset($_GET['new_installation_search_key'])) ? $_GET['new_install
                                 <th><b>Location<b></th>
                                 <th><b>Job Date<b></th>
                                 <th>Job Completed Date</th> 
-                                <th><b>Job Type<b></th>  
+                               <!--  <th><b>Job Type<b></th>  --> 
                                 <th><b>Action</b></th>  
                               </tr>
                             </thead>
@@ -108,22 +108,25 @@ $key        = (isset($_GET['new_installation_search_key'])) ? $_GET['new_install
                     <td>{{$servicer_job->job_date}}</td>
                     <td>{{$servicer_job->job_complete_date}}</td>
 
-                    @if($servicer_job->job_type == 1)
+                  <!--   @if($servicer_job->job_type == 1)
                     <td>Installation</td>
                   
                     @else
                     <td>Service</td>
-                    @endif
+                    @endif -->
                    <td> <a href="/job-history/{{Crypt::encrypt($servicer_job->id)}}/details"class='btn btn-xs btn-info'><i class='glyphicon glyphicon-map-marker'></i>View</a></td>      
-                  
-                   
-                </tr>
+                   </tr>
                 @endforeach
             </tbody>
         </table>
         {{ $servicer_jobs->appends(Request::all())->links() }}
       </div>
       <style>
+           .table td, .table th {
+            padding: .25rem;
+            vertical-align: top;
+            border-top: 0px solid #dee2e6;
+        }
         th {
           background-color:#778899 ;
           color: white;
