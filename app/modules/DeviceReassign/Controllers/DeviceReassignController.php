@@ -46,10 +46,30 @@ class DeviceReassignController extends Controller
      * 
      * 
      */
+
+    public function getGpsCount(Request $request)
+    {
+        $gps_data = GpsData::select(
+            'id'
+        )
+        ->where('imei',$request->imei)
+        ->count();
+        return $gps_data;
+    }
+
+    public function getVltCount(Request $request)
+    {
+        $vlt_data = VltData::select(
+            'id'
+        )
+        ->where('imei',$request->imei)
+        ->count();
+        return $vlt_data;
+    }
+    
     public function getDeviceList(Request $request)
     {
         $device  =   (new Gps())->getDeviceDetails($request->imei);
-        // dd($device->gpsStock);
         return DataTables::of($device)
         ->addIndexColumn()
         ->addColumn('sub_dealer', function ($device) { 
