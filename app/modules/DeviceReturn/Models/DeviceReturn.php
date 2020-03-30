@@ -67,6 +67,26 @@ class DeviceReturn extends Model
 					->get();
 	}
 
+	public function getDeviceReturnListBasedOnServiceEngineer($servicer_id)
+	{
+		return self::select(
+			'id', 
+			'return_code',    
+			'gps_id',                      
+			'type_of_issues',
+			'comments',                                        
+			'created_at',
+			'servicer_id',
+			'status',
+			'deleted_at'
+		)
+		->withTrashed()
+		->with('gps:id,imei,serial_no')
+		->orderBy('id','desc')
+		->where('servicer_id',$servicer_id)
+		->get();
+	}
+
 	public function getSingleDeviceReturnDetails($device_return_id)
 	{
 		return self::select(
