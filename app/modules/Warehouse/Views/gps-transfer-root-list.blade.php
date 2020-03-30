@@ -57,6 +57,24 @@
                       </select>
                     </div>
                   </div>
+                  <div class="col-lg-3 col-md-2"> 
+                    <div class="form-group">                      
+                      <label> From Date</label>
+                      <input type="text" class="form-control" id="fromDate" name="fromDate" onkeydown="return false" autocomplete="off"  required>
+                      <span class="input-group-addon" style="z-index: 99;">
+                        <span class="calender1"  style=""><i class="fa fa-calendar"></i></span>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="col-lg-3 col-md-2"> 
+                    <div class="form-group">                     
+                      <label> To Date</label>
+                      <input type="text" class="form-control" id="toDate" name="toDate" onkeydown="return false" autocomplete="off" required>
+                      <span class="input-group-addon" style="z-index: 99;">                 
+                        <span class="calender1"  style=""><i class="fa fa-calendar"></i></span>
+                      </span>
+                    </div>
+                  </div>
                   <div class="col-lg-3 col-md-2 pt-4">
 
                   <div class="form-group">          
