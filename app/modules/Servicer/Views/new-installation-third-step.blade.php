@@ -1,17 +1,18 @@
+
 @extends('layouts.eclipse')
 @section('title')
 Assign Servicer
 @endsection
 @section('content')
-<!-- added code -->
+<!------ Include the above in your HEAD tag ---------->
 
 <!------ Include the above in your HEAD tag ---------->
 <div class="page-wrapper page-wrapper-root page-wrapper_new">
 <div class="page-wrapper-root1">
 <nav aria-label="breadcrumb">
 <ol class="breadcrumb">
-<li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Installation Check List</li>
-<b>Installation Check List</b>
+<li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Installation Command</li>
+<b>Installation Command</b>
 </ol>
 @if(Session::has('message'))
 <div class="pad margin no-print">
@@ -25,15 +26,15 @@ Assign Servicer
 <div class="stepwizard">
 <div class="stepwizard-row setup-panel">
 <div class="stepwizard-step col-xs-3"> 
-<a href="#step-1" type="button" class="btn btn-success btn-circle">1</a>
-<p><small>Installation Job Checklist</small></p>
+<a href="#step-1" type="button" class="btn btn-success btn-circle" disabled="disabled">1</a>
+<p><small>Installation Job checklist</small></p>
 </div>
 <div class="stepwizard-step col-xs-3"> 
 <a href="#step-2" type="button" class="btn btn-default btn-circle" disabled="disabled">2</a>
 <p><small>Vehicle Details</small></p>
 </div>
 <div class="stepwizard-step col-xs-3"> 
-<a href="#step-3" type="button" class="btn btn-default btn-circle" disabled="disabled">3</a>
+<a href="#step-3" type="button" class="btn btn-default btn-circle" >3</a>
 <p><small>Command</small></p>
 </div>
 <div class="stepwizard-step col-xs-3"> 
@@ -42,40 +43,40 @@ Assign Servicer
 </div>
 </div>
 </div>
-<input type="hidden"  name="servicer_jobid"  id="servicer_jobid" value={{$servicerjob_id}}>
 
-
-<div class="panel panel-primary setup-content" id="step-1">
+<div class="panel panel-primary setup-content" id="step-3">
 <div class="panel-heading">
-<h4 class="panel-title">Installation check list</h4>
+<h4 class="panel-title">Command</h4>
 </div>
 <div class="panel-body">
-<form  method="POST" action="{{route('checkbox.installation.save.p',$servicerjob_id)}}">
+	<form  method="POST" action="{{route('completedcommand.save',$servicer_jobid)}}">
    {{csrf_field()}}
- 
- <div class="row">
-  <?php foreach ($unboxing_checklist['checklist'][0]['items'] as $list){ ?>
-    <div class="col-lg-6">
-       <div class="funkyradio">
-       <div class="funkyradio-success">
-        <input type="checkbox" name="checkbox_first_installation[]" value="{{$list['id']}}" id="checkbox{{$list['id']}}"<?php if($list['checked']== true){ echo "checked"; }?>/>
-       <label for="checkbox{{$list['id']}}">{{$list['label']}}</label>
-      </div>
-   </div>
-  </div>
-   <?php } ?>
- <br>
- <button type="submit" class="btn btn-primary btn-md form-btn pull-right">Save</button>
-  </div>
-  </form>
- </div>
-</div>
+<div class="row">
+<?php foreach ($command_configuration as $command){ ?>
+<div class="col-lg-6">
+<div class="funkyradio">
+<div class="funkyradio-success">
+<input type="checkbox" name="commandcheckbox[]" value="{{$command['id']}}" id="command{{$command['id']}}"
+<?php if($command['checked']== true){ echo "checked"; }?>/>
+<label for="command{{$command['id']}}">{{$command['command']}}</label>
 
 </div>
-</div></div>
+</div>
+</div>
+<?php } ?>
+<button type="submit" class="btn btn-primary btn-md form-btn">Save</button>
+</div>
+</form>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+
 @endsection
 @section('script')
 <link rel="stylesheet" href="{{asset('css/installation-step-servicer.css')}}">
-<script src="{{asset('js/gps/new-installation-step.js')}}"></script>
+<!-- <script src="{{asset('js/gps/new-installation-step.js')}}"></script> -->
 <script src="{{asset('js/gps/servicer-driver-create.js')}}"></script>
 @endsection
