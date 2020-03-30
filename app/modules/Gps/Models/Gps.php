@@ -212,24 +212,7 @@ class Gps extends Model
         ->with('gpsStock.dealer:id,name')
         ->with('gpsStock.subdealer:id,name')
         ->with('gpsStock.trader:id,name')
-        ->with('gpsStock.client:id,name')             
-        // ->with('gpsStock:trader')                   
+        ->with('gpsStock.client:id,name')           
         ->get();
-        // return DB::table('gps')
-        //         ->join('gps_stocks', 'gps.id', '=', 'gps_stocks.gps_id')
-        //         ->join('roots', 'gps_stocks.inserted_by', '=', 'roots.id')
-        //         ->join('dealers', 'gps_stocks.dealer_id', '=', 'dealers.id')
-        //         ->join('sub_dealers', 'gps_stocks.subdealer_id', '=', 'sub_dealers.id')
-        //         ->join('traders', 'gps_stocks.trader_id', '=', 'traders.id')
-        //         ->join('clients', 'gps_stocks.client_id', '=', 'clients.id')
-        //         ->select('gps.imei as imei','gps.serial_no as serial',
-        //           'roots.name as manufacturer_name',
-        //           'dealers.name as distributor_name',
-        //           'sub_dealers.name as dealer_name',
-        //           'traders.name as subdealer_name',
-        //           'clients.name as client_name'
-        //         )
-        //         ->where('gps.imei','=',$imei)
-        //         ->get();
     }
 }

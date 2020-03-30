@@ -29,7 +29,7 @@
                 <div class="col-md-6">
                   <div class="form-group has-feedback form-group-1 mrg-rt-5">
                     <label class="srequired">Imei</label>
-                    <input type="text" name="imei" id="imei" class="form-control" required>
+                    <input type="text" name="imei" id="imei" class="form-control" value="@if(isset($datalist))@foreach($datalist as $data){{$data->imei}}@endforeach @endif" required>
                     @if ($errors->has('imei'))
                     <span class="help-block">
                         <strong class="error-text">{{ $errors->first('imei') }}</strong>
@@ -53,7 +53,7 @@
         <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">                     
           <div class="row">
             <div class="col-sm-12" style="overflow: scroll">
-              <table class="table table-hover table-bordered  table-striped datatable" style="width:100%!important;text-align: center" id="dataTable">
+              <table class="table table-hover table-bordered  table-striped" style="width:100%!important;text-align: center">
                 <thead>
                   <tr>
                    <th>SL.No</th>
@@ -80,10 +80,8 @@
                     <td></td>
                   </tr>
                   @endif
-
-                  @foreach($datalist as $data)    
-
-                   <input type="hidden" id="gp" value="{{$data->id}}">              
+                  
+                  @foreach($datalist as $data)           
                   <tr> 
                     <td>{{$loop->iteration}}</td>
                     <td>{{$data->imei}}</td>
@@ -139,6 +137,20 @@
       </div>
     </div>
   </div>
+  <table class="table table-hover table-bordered  table-striped" style="width:100%;text-align: center;" id="count_data">
+    <thead>
+      <tr>
+          <th><b>GPS Data Count</b></th>
+          <th><b>VLT Data Count</b></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td id="gps_data_count"></td>
+        <td id="vlt_data_count"></td>
+      </tr>
+    </tbody>
+  </table>
   @endif
         </div>
       </div>
