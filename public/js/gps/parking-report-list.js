@@ -1,3 +1,7 @@
+$(document).ready(function () {
+    $("#loader-1").hide();
+});
+
 function trackMode()
 {  
     if(document.getElementById('vehicle').value == '')
@@ -26,11 +30,13 @@ function trackMode()
                                     'from_date':from_date , 
                                     'to_date':to_date
                                 };
+        $("#loader-1").show();
         backgroundPostData(url,data,'vehicleParkingReport',{alert:true});  
     }
 }
 function vehicleParkingReport(res)
 {
+    $("#loader-1").hide();
     $('#sl').text("1");      
     $('#vehicle_name').text(res.vehicle_name);
     $('#register_number').text(res.register_number);

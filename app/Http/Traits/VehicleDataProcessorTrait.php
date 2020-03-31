@@ -84,21 +84,7 @@ trait VehicleDataProcessorTrait{
 
     public function vehicleDailyUpdates($gps_ids,$from_date,$to_date)
     {
-        $vehicle_durations          =   VehicleDailyUpdate::select(
-                                            \DB::raw('sum(ignition_on) as ignition_on'),
-                                            \DB::raw('sum(ignition_off) as ignition_off'),
-                                            \DB::raw('sum(moving) as moving'),
-                                            \DB::raw('sum(halt) as halt'),
-                                            \DB::raw('sum(sleep) as sleep'),
-                                            \DB::raw('sum(stop) as stop'),
-                                            \DB::raw('sum(ac_on) as ac_on'),
-                                            \DB::raw('sum(ac_off) as ac_off'),
-                                            \DB::raw('sum(ac_on_idle) as ac_on_idle')
-                                        )
-                                        ->where('date', '>=', $from_date)
-                                        ->where('date', '<=', $to_date)
-                                        ->whereIn('gps_id',$gps_ids)
-                                        ->first();
+        $vehicle_durations          =   (new VehicleDailyUpdate())->getVehicleDurationsBasedOnDates($gps_ids,$from_date,$to_date); 
         $ignition_on_time           =   $this->timeFormate($vehicle_durations->ignition_on);
         $ignition_off_time          =   $this->timeFormate($vehicle_durations->ignition_off);
         $moving_time                =   $this->timeFormate($vehicle_durations->moving);
@@ -128,7 +114,11 @@ trait VehicleDataProcessorTrait{
         //$single_vehicle_gps_id        =   $this->vehicleGps($vehicle_id);
         $from_date                      =   date('Y-m-d', strtotime($date_and_time['from_date']));
         $to_date                        =   date('Y-m-d', strtotime($date_and_time['to_date']));
-        $single_vehicle_gps_ids         =   $this->vehicleGpsBasedOnDate($vehicle_id,$from_date,$to_date);
+        $vehicle_gps_ids                =   (new VehicleGps())->getGpsDetailsBasedOnVehicleWithDates($vehicle_id,$from_date,$to_date);
+        foreach($vehicle_gps_ids as $vehicle_gps_id)
+        {
+            $single_vehicle_gps_ids[]   =   $vehicle_gps_id->gps_id;
+        }
         $total_km                       =   $this->vehicleTotalKilometres($from_date, $to_date, $single_vehicle_gps_ids);       
         //getting durations from vehicle daily update table
         $vehicle_daily_updates          =   $this->vehicleDailyUpdates($single_vehicle_gps_ids,$from_date,$to_date);
@@ -176,18 +166,6 @@ trait VehicleDataProcessorTrait{
         //convert meter to kilometer
         $total_km_in_kilometer      =   round($total_km_in_meter)/1000;
         return round($total_km_in_kilometer);
-    }
-    /**
-     * 
-     * 
-     * 
-     */
-    public function vehicleGpsBasedOnDate($vehicle_id,$from_date,$to_date)
-    {
-        $vehicle_gps_ids            =   [];
-        $vehicle_gps_details        =   (new VehicleGps())->getGpsDetailsBasedOnVehicleWithDates($vehicle_id,$from_date,$to_date);
-        //dd(DB::select("SELECT gps_id FROM `vehicle_gps` where vehicle_id=4 and date(gps_fitted_on) >= '2020-03-24' and IF( date(gps_removed_on) IS NULL, date('2020-03-24') - INTERVAL 1 DAY, date(gps_removed_on)) <= '2020-03-24'"));
-        return ['5'];
     }
     /**
      * 

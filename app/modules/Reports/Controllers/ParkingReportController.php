@@ -31,7 +31,6 @@ class ParkingReportController extends Controller
         $to_date            =   $request->to_date;
         $vehicle_id         =   $request->vehicle;
         $vehicle_details    =   (new Vehicle())->getSingleVehicleDetailsBasedOnVehicleId($vehicle_id);
-        $vehicleGps         =   (new VehicleGps())->getGpsDetailsBasedOnVehicleWithDates($vehicle_id,$from_date,$to_date);
         $date_and_time      =   array('from_date' => $from_date, 'to_date' => $to_date);
         $vehicle_profile    =   $this->vehicleProfile($vehicle_id,$date_and_time,$client_id);
         return response()->json([           

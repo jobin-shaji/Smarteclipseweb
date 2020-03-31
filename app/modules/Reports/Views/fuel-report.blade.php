@@ -79,7 +79,7 @@
                           <tr>
                             <th>SL.No</th>
                             <th>Vehicle Name</th>
-                            <th>Register Number</th>
+                            <th>Registration Number</th>
                             <th>Percentage</th>
                             <th>Created On</th>
                           </tr>

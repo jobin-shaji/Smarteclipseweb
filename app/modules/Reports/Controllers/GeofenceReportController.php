@@ -39,13 +39,11 @@ class GeofenceReportController extends Controller
         else
         {  
             $vehicle_gps_ids                =   (new VehicleGps())->getGpsDetailsBasedOnVehicleWithDates($vehicle_id,$from_date,$to_date);         
-        } 
-        // foreach($vehicle_gps_ids as $vehicle_gps_id)
-        // {
-        //     dd($vehicle_gps_id);
-        // }
-        
-        $single_vehicle_gps_ids             =   ['5'];
+        }
+        foreach($vehicle_gps_ids as $vehicle_gps_id)
+        {
+            $single_vehicle_gps_ids[]       =   $vehicle_gps_id->gps_id;
+        }
         $query                              =   (new Alert())->getGeofenceAlerts($single_vehicle_gps_ids);        
         if($from_date)
         {

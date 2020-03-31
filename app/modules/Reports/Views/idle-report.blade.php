@@ -28,7 +28,7 @@
                               <div class="form-group">
                                 <label>Vehicle</label>                     
                                 <select class="form-control selectpicker" data-live-search="true" title="Select Vehicle" id="vehicle" name="vehicle">
-                                  <option value="" selected="selected" disabled="disabled">select</option>
+                                  <option value="" selected="selected" disabled="disabled">Select Vehicle</option>
                                   @foreach ($vehicles as $vehicles)
                                   <option value="{{$vehicles->id}}">{{$vehicles->name}} || {{$vehicles->register_number}}</option>
                                   @endforeach  

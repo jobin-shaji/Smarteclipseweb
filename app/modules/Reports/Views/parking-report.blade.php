@@ -28,7 +28,7 @@
                               <div class="form-group">
                                 <label>Vehicle</label>                      
                                 <select class="form-control selectpicker" data-live-search="true" title="Select Vehicle" id="vehicle" name="vehicle">
-                                  <option value="" selected="selected" disabled="disabled">select</option>
+                                  <option value="" selected="selected" disabled="disabled">Select Vehicle</option>
                                   @foreach ($vehicles as $vehicles)
                                   <option value="{{$vehicles->id}}">{{$vehicles->name}} || {{$vehicles->register_number}}</option>
                                   @endforeach  
@@ -79,6 +79,9 @@
                           </tr>
                         </tbody>
                       </table>
+                      <div class="loader-wrapper" id="loader-1">
+                        <div id="loader"></div>
+                      </div> 
                     </div>
                   </div>
                 </div>
@@ -92,6 +95,7 @@
 </div>
 </section>
 @section('script')
+    <link rel="stylesheet" href="{{asset('css/loader-1.css')}}">
     <script src="{{asset('js/gps/parking-report-list.js')}}"></script>
 @endsection
 @endsection

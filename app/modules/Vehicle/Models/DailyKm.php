@@ -26,6 +26,10 @@ class DailyKm extends Model
     {
        return self::where('gps_id',$gps_id)->where('date',date("Y-m-d"))->update(['km'=> $value]);
     }
+
+    public function vehicleGps(){
+		return $this->hasOne('App\Modules\Vehicle\Models\VehicleGps','gps_id','gps_id');
+	}
     /**
      * 
      * 
@@ -45,7 +49,7 @@ class DailyKm extends Model
     {
         return self::whereIn('gps_id', $gps_ids)
             ->where('date', $search_date)
-            ->with('vehicle')
+            ->with('vehicleGps.vehicle')
             ->get();
     }
     /**

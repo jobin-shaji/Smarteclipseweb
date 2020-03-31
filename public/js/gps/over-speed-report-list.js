@@ -75,7 +75,8 @@ function callBackDataTable(data=null){
         },
         columns: [
             {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: true, searchable: false},
-            {data: 'gps.vehicle.register_number', name: 'gps.vehicle.register_number', orderable: false},
+            {data: 'vehicle_gps.vehicle.name', name: 'vehicle_gps.vehicle.name', orderable: false},
+            {data: 'vehicle_gps.vehicle.register_number', name: 'vehicle_gps.vehicle.register_number', orderable: false},
             {data: 'alert_type.description', name: 'alert_type.description', orderable: false, searchable: false},
             //{data: 'location', name: 'location', orderable: false},
             {data: 'device_time', name: 'device_time', orderable: false},

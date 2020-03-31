@@ -29,6 +29,10 @@ class Alert extends Model
 	  return $this->hasOne('App\Modules\Alert\Models\AlertType','id','alert_type_id');
 	}
 
+	public function vehicleGps(){
+		return $this->hasOne('App\Modules\Vehicle\Models\VehicleGps','gps_id','gps_id');
+	}
+
 	public function getGeofenceAlerts($gps_ids)
 	{
 		return 	self::select(          
@@ -41,7 +45,7 @@ class Alert extends Model
 					'status'
 				)
 				->with('alertType:id,description')
-				->with('gps.vehicle')
+				->with('vehicleGps.vehicle')
 				->whereIn('gps_id',$gps_ids)
 				->whereIn('alert_type_id',[5,6])
 				->orderBy('device_time', 'DESC')
@@ -60,7 +64,7 @@ class Alert extends Model
 					'status'
 				)
 				->with('alertType:id,description')
-				->with('gps.vehicle')
+				->with('vehicleGps.vehicle')
 				->whereIn('gps_id',$gps_ids)
 				->where('alert_type_id',12)
 				->orderBy('device_time', 'DESC')
@@ -79,7 +83,7 @@ class Alert extends Model
 					'status'
 				)
 				->with('alertType:id,description')
-				->with('gps.vehicle')
+				->with('vehicleGps.vehicle')
 				->whereIn('gps_id',$gps_ids)
 				->where('alert_type_id',2)
 				->orderBy('device_time', 'DESC')
@@ -98,7 +102,7 @@ class Alert extends Model
 					'status'
 				)
 				->with('alertType:id,description')
-				->with('gps.vehicle')
+				->with('vehicleGps.vehicle')
 				->whereIn('gps_id',$gps_ids)
 				->where('alert_type_id',14)
 				->orderBy('device_time', 'DESC')
@@ -117,7 +121,7 @@ class Alert extends Model
 					'status'
 				)
 				->with('alertType:id,description')
-				->with('gps.vehicle')
+				->with('vehicleGps.vehicle')
 				->whereIn('gps_id',$gps_ids)
 				->where('alert_type_id',11)
 				->orderBy('device_time', 'DESC')
@@ -136,7 +140,7 @@ class Alert extends Model
 					'status'
 				)
 				->with('alertType:id,description')
-				->with('gps.vehicle')
+				->with('vehicleGps.vehicle')
 				->whereIn('gps_id',$gps_ids)
 				->where('alert_type_id',3)
 				->orderBy('device_time', 'DESC')
@@ -173,7 +177,7 @@ class Alert extends Model
 					'status'
 				)
 				->with('alertType:id,description')
-				->with('gps.vehicle')
+				->with('vehicleGps.vehicle')
 				->whereIn('gps_id',$gps_ids)
 				->where('alert_type_id',1)
 				->orderBy('device_time', 'DESC')

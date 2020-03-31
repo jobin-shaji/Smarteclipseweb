@@ -32,7 +32,10 @@ class HarshBrakingReportExport implements FromView
             }  
             $vehicle_gps_ids                =   (new VehicleGps())->getGpsDetailsBasedOnVehiclesWithDates($vehicle_ids,$from_date,$to_date);
         }
-        $single_vehicle_gps_ids             =   ['5'];
+        foreach($vehicle_gps_ids as $vehicle_gps_id)
+        {
+            $single_vehicle_gps_ids[]       =   $vehicle_gps_id->gps_id;
+        }
         $query                              =   (new Alert())->getHarshBreakingAlerts($single_vehicle_gps_ids); 
         if($from_date)
         {

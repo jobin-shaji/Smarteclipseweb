@@ -11,6 +11,10 @@ class FuelUpdate extends Model
     	return $this->hasOne('App\Modules\Gps\Models\Gps','id','gps_id');
     }
 
+    public function vehicleGps(){
+		return $this->hasOne('App\Modules\Vehicle\Models\VehicleGps','gps_id','gps_id');
+	}
+
     public function getFuelDetailsForReport($gps_ids)
     {
         return self::select(
@@ -21,6 +25,6 @@ class FuelUpdate extends Model
         )
         ->whereIn('gps_id', $gps_ids)
         ->orderBy('created_at', 'ASC')
-        ->with('gps.vehicle');
+        ->with('vehicleGps.vehicle');
     }
 }

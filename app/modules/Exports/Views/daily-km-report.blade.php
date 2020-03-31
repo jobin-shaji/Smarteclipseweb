@@ -2,9 +2,10 @@
     <thead>
     <tr>
         <th>SL.No</th>
-        <th>Vehicle</th>
+        <th>Vehicle Name</th>
         <th>Registration Number</th>                          
         <th>Total KM</th>  
+        <th>Date</th>  
     </tr>
     </thead>
      <tbody>
@@ -15,9 +16,10 @@
         ?>
         <tr>           
             <td>{{ $loop->iteration }}</td>
-            <td>{{ $dailykmReport->vehicle->name }}</td>           
-            <td>{{ $dailykmReport->vehicle->register_number }}</td>            
-            <td>{{ $km }}</td>         
+            <td>{{ $dailykmReport->vehicleGps->vehicle->name }}</td>           
+            <td>{{ $dailykmReport->vehicleGps->vehicle->register_number }}</td>            
+            <td>{{ $km }}</td>     
+            <td>{{ $dailykmReport->date }}</td>     
         </tr>
         @endforeach
     </tbody>

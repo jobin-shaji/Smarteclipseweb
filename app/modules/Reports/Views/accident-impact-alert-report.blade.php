@@ -67,7 +67,8 @@
                         <thead>
                           <tr>
                             <th>SL.No</th>
-                            <th>Vehicle</th>
+                            <th>Vehicle Name</th>
+                            <th>Registration Number</th>
                             <th>Alert Type</th>
                             <th>Date & Time</th>
                             <!-- <th>Action</th> -->

@@ -2,7 +2,8 @@
     <thead>
     <tr>
         <th>SL.No</th>
-        <th>Vehicle</th>
+        <th>Vehicle Name</th>
+        <th>Registration Number</th>
         <th>Alert Type</th>
         <!-- <th>Location</th> -->
         <th>DateTime</th>  
@@ -24,7 +25,8 @@
         ?> 
         <tr>           
             <td>{{ $loop->iteration }}</td>
-            <td>{{ $overspeedReportExport->gps->vehicle->register_number }}</td>           
+            <td>{{ $overspeedReportExport->vehicleGps->vehicle->name }}</td> 
+            <td>{{ $overspeedReportExport->vehicleGps->vehicle->register_number }}</td>           
             <td>{{ $overspeedReportExport->alertType->description }}</td>
             <td>{{ $overspeedReportExport->device_time }}</td>         
         </tr>
