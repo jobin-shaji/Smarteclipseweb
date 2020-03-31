@@ -17,7 +17,9 @@ function getDeviceTransferList()
         var transfer_type = document.getElementById('transfer_type').value;
         var from_id = document.getElementById('from_id').value;
         var to_id = document.getElementById('to_id').value;
-        var data = {'transfer_type':transfer_type , 'from_id':from_id , 'to_id':to_id};
+        var from_date = document.getElementById('fromDate').value;
+        var to_date = document.getElementById('toDate').value;
+        var data = {'transfer_type':transfer_type , 'from_id':from_id , 'to_id':to_id, 'from_date':from_date, 'to_date':to_date};
         callBackDataTable(data);
         countSection(data);
     }
@@ -46,6 +48,8 @@ function countSection(data)
                 $('#stock_message').html(res.stock_string);
             }
             $('#transferred_section').show();
+            // $('#from_date').show();
+            // $('#to_date').show();
             $('#transferred_count').html(res.transferred_gps_count);
             $('#transferred_message').html(res.transferred_string);
         },
@@ -64,9 +68,7 @@ function callBackDataTable(data){
         ajax: {
             url: 'gps-transfer-list-root',
             type: 'POST',
-            data: {
-                'data': data
-            },
+            data: {'data': data},
             headers: {
                 'X-CSRF-Token': $('meta[name = "csrf-token"]').attr('content')
             }

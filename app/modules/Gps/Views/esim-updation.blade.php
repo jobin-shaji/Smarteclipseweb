@@ -4,7 +4,7 @@ Create Vehicle Type
 @endsection
 @section('content')
 <div class="page-wrapper page-wrapper-root page-wrapper_new">
-    <div class="page-wrapper-root1">
+    <div class="page-wrapper-root1" style="min-height:100vh">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Create Vehicle Type</li>
@@ -25,81 +25,73 @@ Create Vehicle Type
                         <form  method="POST" action="" enctype="multipart/form-data">
                             {{csrf_field()}}
                             <div class="row">
-                                <div class="form-group has-feedback">
-                                    <p>
-                                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-                                        Why do we use it?
-                                        It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
-                                    </p> 
+                                <div class="form-group esim-update-helptext-general">
+                                    Update device's E-SIM numbers with an excel upload. The uploaded file must contains columns "IMSI" and "MSISDN". Each "MSISDN" number will be updated on the system against "IMSI" number. Upload a file to proceed.
                                 </div>                 
-                            </div>               
-                            <div class="col-lg-3">
-                                <div class="form-group has-feedback">
-                                    <div class="form-group has-feedback">
-                                        <input type="file" class="form-control {{ $errors->has('fileUpload') ? ' has-error' : '' }}" placeholder="Choose File" name="fileUpload" id="fileUpload" value="{{ old('fileUpload') }}" > 
-                                    </div>
-                                    @if ($errors->has('fileUpload'))
+                            </div>
+
+                            <!-- file uploader -->
+                            <div class="esim-upload-section">
+                                <input type="file" class="{{ $errors->has('fileUpload') ? ' has-error' : '' }} browse" placeholder="Choose File" name="fileUpload" id="fileUpload" value="{{ old('fileUpload') }}" > 
+                                &nbsp;
+                                <!-- file upload button -->
+                                <input type="button" class="upload_xl" id="upload" value="Upload" onclick="uploadFile()" /><input type="button" class="refresh" id="refresh" value="Refresh" onclick="refreshPage()" />
+                                <!-- /file upload button -->
+                            </div>
+                            <!-- /file uploader -->
+
+                            <!-- file upload error -->
+                            <div class="esim-upload-section">
+                                @if ($errors->has('fileUpload'))
                                     <span class="help-block">
                                         <strong class="error-text">{{ $errors->first('fileUpload') }}</strong>
                                     </span>
-                                    @endif
-                                    <input type="button" id="upload" value="Upload" onclick="Upload()" />
-                                    <input type="button" id="deletebutton" value="Delete" onclick="deletedata()" style="float: left"/>
-                                    
-                                </div>
-                            </div>                                 
-                            <!-- <div class="row">
-                                <div class="col-md-12 pt-3">
-                                    <button type="submit" class="btn btn-primary btn-lg form-btn pull-left">Save </button>
-                                </div>                            
-                            </div> -->
-                        </form>
-                        <label id="file_name"> </label>
-                        
-                        <div class="table-contain" style="">
-                        <form  method="POST" action="{{route('esim.number.updation.p')}}" enctype="multipart/form-data">
-                            {{csrf_field()}}
-                        <table border="1" id="table" class="excel-table">
-                            <thead >
-                                <tr>
-                                    <th style="width: 4.15%"></th>
-                                    <th style="width: 33.9%">IMSI</th>
-                                    <th style="width: 24.5%">MSISDN</th>
-                               </tr>
-                                </thead>
-                               
-                            <tbody id="dvExcel"></tbody>
-       
-                        </table>
-                        <!-- <button type="submit" class="btn btn-primary btn-lg form-btn pull-left">Save </button> -->
-                        </form>
-                        <style>
-.table-contain
-{
-    margin-left: -31%;
-    float: left;
-    margin-top: 7%;
-    height: 203px;
-    margin-bottom:6%;
-}
-.excel-table{
-    width: 276px; float: left;
-}
-.excel-table thead {
-    display: block;
-    float: left;
-    width: 100%;
-}
-.excel-table tbody{
-max-height: 200px;
-    overflow: scroll;
-    height: auto;
-    display: block;
-    width: 100%;
-}
+                                @endif
+                            </div>
+                            <!-- /file upload error -->
 
-                               </style>
-                        </div>
+                            <!-- action bar -->
+                            <div class="esim-upload-section pull-right action-items">
+                                <!-- action items -->
+                                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Choose
+                                <span class="caret"></span></button>
+                                <ul class="dropdown-menu">
+                                <li onclick="removeSelectedRows()"> Remove selected rows </li>
+                                </ul>
+                                <!-- /action items -->
+                            </div>
+                            <!-- /action bar -->
+
+                            <!-- temporary listing -->
+                            <div class="loader">
+                                <div class="text">Loading</div>
+                                <div class="dots">
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                                </div>
+                            </div>
+                            <p id="file_name"> </p>
+                            <p id="file_rows"> </p>
+                            <div class="esim-upload-section uploaded-excel-details-wrapper action-items">
+                                <table class="table table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th><label id="check_uncheck_label">Uncheck All</label>&nbsp;<input type="checkbox" name="checkall" id="checkAll" checked></th>
+                                        <th>IMSI Number</th>
+                                        <th>E-SIM/MSISDN Number</th>
+                                        <th>Business Unit Name</th>
+                                        <th>Product Status</th>
+                                        <th>Activation Date</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="uploaded-excel-details"></tbody>
+                                </table>
+                                <input type="button" class="pull-right" value="Update E-Sim Numbers" onclick="updateEsimNumbersToDatabase()" />
+                            </div>
+                            <!-- /temporary listing -->
+                        </form>
                     </div>
                 </div>
             </div>
@@ -107,6 +99,85 @@ max-height: 200px;
     </div>
 </div>
 <div class="clearfix"></div>
+                        
+<style>
+
+.esim-update-helptext-general{
+    line-height: 29px;
+}
+.esim-upload-section{
+    margin-bottom:20px;
+}
+.esim-upload-section > .action-item ul li{
+    cursor:pointer;
+}
+.uploaded-excel-details-wrapper{
+    width:100%;
+    height:500px;
+    overflow:auto;
+}
+.uploaded-excel-details thead th{
+    width:200px;
+}
+#check_uncheck_label{
+    font-size:0.8rem;
+    font-weight:50;
+ }
+.loader {
+    display:flex;
+    //align-items:baseline;
+    
+    font-size:2em;
+}  
+.dots {
+    display:flex;
+    position: relative;
+    top:20px;
+    left:-10px;
+    width:100px;
+    animation: dots 4s ease infinite 1s;
+}
+.dots div {
+    position: relative;
+    width:10px;
+    height:10px;
+    margin-right:10px;
+    border-radius:100%;
+    background-color:black;
+}
+.dots div:nth-child(1) {
+    width:0px;
+    height:0px;
+    margin:5px;
+    margin-right:15px;
+    animation: show-dot 4s ease-out infinite 1s;
+}
+
+@keyframes dots {
+   0% {
+      left:-10px;
+   }
+   20%,100% {
+      left:10px;
+   }
+}
+
+@keyframes show-dot {
+   0%,20% {
+      width:0px;
+      height:0px;
+      margin:5px;
+      margin-right:15px;
+   }
+   30%,100% {
+      width:10px;
+      height:10px;
+      margin:0px;
+      margin-right:10px;
+   }
+}
+
+</style>
 @endsection
 @section('script')
   

@@ -216,4 +216,27 @@ class Gps extends Model
         ->with('gpsStock.client:id,name')           
         ->first();
     }
+    /**
+     *
+     *sum of km based on vehicle gps
+     *
+     */
+    public function getSumOfKmBasedOnGpsOfVehicle($vehicle_gps_ids)
+    {
+        return self::select('id','km')
+                    ->whereIn('id',$vehicle_gps_ids)
+                    ->sum('km');
+    }
+
+     /**
+     * 
+     * esim updation
+     * 
+     */
+    public function updateEsimNumbers($imsi, $msisdn)
+    {
+        return self::where('imsi', $imsi)->update([
+            'e_sim_number'  => $msisdn
+        ]);
+    }
 }

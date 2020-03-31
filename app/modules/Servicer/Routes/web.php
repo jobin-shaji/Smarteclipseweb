@@ -60,12 +60,22 @@ Route::post('/allcheck-list','ServicerController@getchecklist')->name('allcheck.
 
 	Route::post('/servicer/vehicles/save_vehicle','ServicerController@servicerSaveVehicle')->name('servicer.vehicles.create.p');
 
-	Route::post('/job-complete-save/{id}','ServicerController@servicerJobSave')->name('job.complete.save');
+	
 	Route::post('/servicejob-complete-save/{id}','ServicerController@jobSave')->name('servicejob.complete.save');
 	Route::post('/servicejob-complete-edit/{id}','ServicerController@jobupdate')->name('servicejob.complete.edit');
 	Route::post('/get-vehicle-models', 'ServicerController@getVehicleModels')->name('get.vehicle.models');
-	// Route::post('/job-complete-save/{id}','ServicerController@jobSave')->name('job.complete.save');
-	// Route::post('/servicejob-complete-save/{id}','ServicerController@servicerJobSave')->name('servicejob.complete.save');
+	//for installation check list save
+	Route::post('/servicer/checkbox-installation-save/{id}','ServicerController@getchecklist')->name('checkbox.installation.save.p');
+     // for vehicle list save
+     Route::post('/servicer/vehiclejob-complete-save/{id}','ServicerController@vehicleDataUpdated')->name('vehiclejob.complete.save');
+     // //for installation command list save
+	Route::post('/servicer/completedcommand-save/{id}','ServicerController@updateCommandcompleted')->name('completedcommand.save');
+	// for intialising test start
+    Route::post('/servicer/testsstart-save','ServicerController@startTest')->name('teststart.save.p');
+     //for testcomplete
+
+    Route::post('/servicer/finish-testcase-save/{id}','ServicerController@completeTestCase')->name('finish.testcase.save.p');
+	// Route::post('/servicejob-complete-save/{id}','ServicerController@getchecklist')->name('servicejob.complete.save');
 
 
 	// Route::get('/job-complete/{id}/downloads/{vid}','ServicerController@downloadJobCompleteCertificate')->name('job.complete.certificate.download');

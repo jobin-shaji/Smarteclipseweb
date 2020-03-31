@@ -11,7 +11,7 @@ $key        = (isset($_GET['new_installation_search_key'])) ? $_GET['new_install
 <div class="page-wrapper_new">
    <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Installation Pending Jobs List</li>
+        <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/ New Installation Jobs List</li>
         <b> New Installation Jobs List</b>
      </ol>
       @if(Session::has('message'))
@@ -23,8 +23,9 @@ $key        = (isset($_GET['new_installation_search_key'])) ? $_GET['new_install
         @endif
     </nav>
 
-    <!-- <div class="mlt-list">
+  <div class="mlt-list">
     <!-- Search and filters -->
+
     <div align="right" class="search-1">
       <form method="GET" action="{{route('job_list')}}" class="search-top">
         {{csrf_field()}}
@@ -32,12 +33,11 @@ $key        = (isset($_GET['new_installation_search_key'])) ? $_GET['new_install
         <div class="row" >
             <div class="col-lg-12" >
                  <div class="row">
-                    <div class="col-lg-8">
+                    <div class="col-lg-7">
                       <div class="form-group" style="width: 100%;">
-                         <input type="text" class="form-control" placeholder="Enter Serial No,Assigne,user name,user email,user mobile" name="new_installation_search_key" id="new_installation_search_key" value="{{ $key }}">
+                         <input type="text" class="form-control" placeholder="Enter Serial No,Assigne,UserDetails" name="new_installation_search_key" id="new_installation_search_key"  size="100" value="{{ $key }}">
                       </div>
                     </div>
-
                     <div class="col-lg-2" style="margin: 0 0px 18px 0;">
                       <div class="form-group" style="width: 100%;">
                          <button type="submit"  class="btn btn-primary search_data_list" title="Enter IMEI,Owner,Vehicle,Distributor,Dealer,Service Engineer name">Search</button>
@@ -46,19 +46,17 @@ $key        = (isset($_GET['new_installation_search_key'])) ? $_GET['new_install
                     <div class="col-lg-2" style="margin: 0 0px 18px 0;">
                       <div class="form-group" style="width: 50%;">
                       <button   type="submit" class="btninst btninst-primary" onclick="clearSearch()">Clear</button>
-                         <!-- <button type="submit"  class="btn btn-primary search_data_list" title="Enter IMEI,Owner,Vehicle,Distributor,Dealer,Service Engineer name">Search</button> -->
                       </div>
                     </div>
-
-                 </div>
-          
-               </div>
-            </div>
+                   </div>
+                  </div>
+                </div>
         </div>
          
   </form>
     </div> 
-          <table class="table table-hover table-bordered  table-striped datatable"  style="width:100%;text-align: center" >
+          <table class="table table-hover table-bordered  datatable"  style="width:70%;text-align: center" >
+            <!-- <table class="table table-hover table-bordered  table-striped datatable"  style="width:70%;text-align: center" > -->
           <thead class="indigo white-text">
                             <tr>
                             <th><b>SL.No</b></th>
@@ -129,13 +127,20 @@ $key        = (isset($_GET['new_installation_search_key'])) ? $_GET['new_install
         </table>
         {{ $servicer_jobs->appends(Request::all())->links() }}
       </div>
+    </div>
       <style>
+       .table td, .table th {
+            padding: .86rem;
+            vertical-align: top;
+            border-top: 0px solid #dee2e6;
+        }
         th {
           background-color:#778899 ;
           color: white;
       } 
       .cover_list_search {
-          width: 32%;
+          width: 35%;
+          size:100;
       }
       .btninst {
       background: #3ab3bf;

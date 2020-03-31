@@ -26,6 +26,33 @@
           <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">                     
             <div class="row">
               <div class="col-sm-12">
+                <div class="cover_div_search">
+                  <div class="row">
+                    <div class="col-lg-3 col-md-2"> 
+                      <div class="form-group">                      
+                        <label> From Date</label>
+                        <input type="text" class="form-control" id="fromDate" name="fromDate" onkeydown="return false" autocomplete="off"  required>
+                        <span class="input-group-addon" style="z-index: 99;">
+                          <span class="calender1"  style=""><i class="fa fa-calendar"></i></span>
+                        </span>
+                      </div>
+                    </div>
+                    <div class="col-lg-3 col-md-2"> 
+                      <div class="form-group">                     
+                        <label> To Date</label>
+                        <input type="text" class="form-control" id="toDate" name="toDate" onkeydown="return false" autocomplete="off" required>
+                        <span class="input-group-addon" style="z-index: 99;">                 
+                          <span class="calender1"  style=""><i class="fa fa-calendar"></i></span>
+                        </span>
+                      </div>
+                    </div>
+                    <div class="col-lg-3 col-md-2 pt-4">
+                      <div class="form-group">          
+                        <button class="btn btn-sm btn-info btn2 srch" onclick="getDeviceTransferList()"> <i class="fa fa-search"></i> </button>
+                      </div>
+                    </div>  
+                  </div>
+                </div>
                 <table class="table table-hover table-bordered  table-striped datatable" style="text-align: center;" id="dataTable">
                   <thead>
                     <tr>

@@ -19,7 +19,7 @@
             <a class="dropdown-item" href="{{url('/gps-transfer-root')}}">TRANSFER DEVICES</a>
             <a class="dropdown-item" href="{{url('/gps-transferred-root')}}">DEVICE TRANSFER LIST  <span class="badge">New</span> </a>
             <a class="dropdown-item" href="{{url('/gps-device-track-root')}}">DEVICE TRACK  <span class="badge">New</span></a>
-            <!-- <a class="dropdown-item" href="{{url('/esim-updation')}}">ESIM UPDATION </a> -->
+            <a class="dropdown-item" href="{{url('/esim-updation')}}">ESIM UPDATION </a>
             <a class="dropdown-item" href="{{url('/device-reassign')}}">DEVICE REASSIGN  </a>
             
         </div>
