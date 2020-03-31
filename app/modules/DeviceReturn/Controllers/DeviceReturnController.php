@@ -109,62 +109,70 @@ class DeviceReturnController extends Controller
      */
     public function getDeviceList()
     {
-        $device_return = DeviceReturn::select(
-                'id', 
-                'gps_id',                      
-                'type_of_issues',
-                'comments',                                        
-                'created_at',
-                'servicer_id',
-                'status',
-                'deleted_at'
-            )
-            ->withTrashed()
-            ->with('gps:id,imei,serial_no')
-            ->orderBy('id','desc');
-            $servicer_id        =   \Auth::user()->servicer->id;
-            $device_return      =   $device_return->where('servicer_id',$servicer_id)->get();
-            return DataTables::of($device_return)
-            ->addIndexColumn()
-            ->addColumn('comments', function ($device_return) { 
-                $str            =   mb_strimwidth("$device_return->comments", 0, 20, "...");
-                return $str;
-            })
-            ->addColumn('type_of_issues', function ($device_return) { 
-                if($device_return->type_of_issues==0)
-                {
-                    return "Hardware";
-                }
-                else 
-                {
-                    return "software";
-                }
-            })
-            ->addColumn('status', function ($device_return) { 
-                if($device_return->status == 1 && $device_return->deleted_at != NULL ){
-                    return "Cancelled";
-                }
-                else if($device_return->status==0){
-                    return "Submitted";
-                }
-                else
-                {
-                    return "Accepted";
-                }
-                            
-            })
-                
-            ->addColumn('action', function ($device_return){
-                if($device_return->status == 0)
-                {
-                    return "
-                    <button onclick=cancelDeviceReturn(".$device_return->id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-remove'></i> Cancel
-                    </button>";
-                }
-            })
-            ->rawColumns(['link', 'action'])
-            ->make();
+        $servicer_id        =   \Auth::user()->servicer->id;
+        $device_return      =   (new DeviceReturn())->getDeviceReturnListBasedOnServiceEngineer($servicer_id);
+        return DataTables::of($device_return)
+        ->addIndexColumn()
+        ->addColumn('comments', function ($device_return) { 
+            $str            =   mb_strimwidth("$device_return->comments", 0, 20, "...");
+            return $str;
+        })
+        ->addColumn('type_of_issues', function ($device_return) { 
+            if($device_return->type_of_issues==0)
+            {
+                return "Hardware";
+            }
+            else 
+            {
+                return "software";
+            }
+        })
+        ->addColumn('status', function ($device_return) { 
+            if($device_return->status == 1 && $device_return->deleted_at != NULL ){
+                return "Cancelled";
+            }
+            else if($device_return->status==0){
+                return "Submitted";
+            }
+            else if($device_return->status==2)
+            {
+                return "Accepted";
+            }
+                        
+        })
+            
+        ->addColumn('action', function ($device_return){
+            $b_url = \URL::to('/');
+            if($device_return->status == 0)
+            {
+                return "
+                <a href=".$b_url."/device-return/".Crypt::encrypt($device_return->id)."/view class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
+                <button onclick=cancelDeviceReturn(".$device_return->id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-remove'></i> Cancel
+                </button>";
+            }
+            else
+            {
+                return "
+                <a href=".$b_url."/device-return/".Crypt::encrypt($device_return->id)."/view class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>";
+            }
+        })
+        ->rawColumns(['link', 'action'])
+        ->make();
         
+    }
+    /**
+     * device return details view
+     * 
+     */
+    public function getdeviceReturnListView(Request $request)
+    {
+        $decrypted_device_return_id     =   Crypt::decrypt($request->id); 
+        $device_return_details          =   (new DeviceReturn())->getSingleDeviceReturnDetails($decrypted_device_return_id); 
+        if($device_return_details == null)
+        {
+            return view('DeviceReturn::404');
+        }
+        return view('DeviceReturn::device-return-servicer-view',['device_return_details' => $device_return_details]);
     }
 
     /**
