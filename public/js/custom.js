@@ -153,22 +153,22 @@ $(function () {
     });
 
     $( ".monthpickerFreebies" ).datetimepicker({
-        format: 'MM-YYYY',
+        format: 'YYYY-MM',
         maxDate: new Date(),
         minDate: new Date(currentYear, currentMonth-1, currentDate)
     });
     $(".monthpickerFundamental").datetimepicker({
-        format: 'MM-YYYY',
+        format: 'YYYY-MM',
         maxDate: new Date(),
         minDate: new Date(currentYear, currentMonth-2, currentDate)
     });
     $( ".monthpickerSuperior" ).datetimepicker({
-        format: 'MM-YYYY',
+        format: 'YYYY-MM',
         maxDate: new Date(),
         minDate: new Date(currentYear, currentMonth-4, currentDate)
      });
     $(".monthpickerPro" ).datetimepicker({
-        format: 'MM-YYYY',
+        format: 'YYYY-MM',
         maxDate: new Date(),
         minDate: new Date(currentYear, currentMonth-6, currentDate)
     });

@@ -28,16 +28,26 @@ class FuelReportController extends Controller
         {
             $date                       =   date('Y-m-d',strtotime($request->date));
             $vehicle_gps_ids            =   (new VehicleGps())->getGpsDetailsBasedOnVehicleWithSingleDate($vehicle_id,$date);
-        }
-        else{
-            $month                      =   $request->date;
-            $vehicle_gps_ids            =   (new VehicleGps())->getGpsDetailsBasedOnVehicleWithMonth($vehicle_id,$month);
-        }
-        foreach($vehicle_gps_ids as $vehicle_gps_id)
+            foreach($vehicle_gps_ids as $vehicle_gps_id)
         {
             $single_vehicle_gps_ids[]   =   $vehicle_gps_id->gps_id;
         }
-
+        }
+        else{
+            $search_month               =   $request->date;
+            $month                      =   date('Ym',strtotime($search_month));
+            //$vehicle_gps_ids            =   (new VehicleGps())->getGpsDetailsBasedOnVehicleWithMonth($vehicle_id,$search_month);
+            $yearmonth                  =   (new vehicleGps())->getYearAndMonthBasedOnVehicleId($vehicle_id);
+            foreach($yearmonth as $each_yearmonth)
+            {
+                $gps_fitted_on          =   $each_yearmonth->gps_fitted_on;
+                $gps_removed_on         =   $each_yearmonth->gps_removed_on;
+                if($month >= $gps_fitted_on && $month <= $gps_removed_on)
+                {
+                    $single_vehicle_gps_ids[]   =   $each_yearmonth->gps_id;
+                }
+            }
+        }
         $fuel_details                   =   (new FuelUpdate())->getFuelDetailsForReport($single_vehicle_gps_ids);
         if($report_type==1)
         {
@@ -45,7 +55,8 @@ class FuelReportController extends Controller
             $fuel_details               =   $fuel_details->whereDate('created_at',$date);
         }
         else{
-            $month                      =   $request->date;
+            $search_month               =   $request->date;
+            $month                      =   date('m',strtotime($search_month));
             $fuel_details               =   $fuel_details->whereRaw('MONTH(created_at) = ?',[$month]);
         }
         $fuel_details                   =   $fuel_details->get();
@@ -69,17 +80,27 @@ class FuelReportController extends Controller
         {
             $date                       =   date('Y-m-d',strtotime($request->date));
             $vehicle_gps_ids            =   (new VehicleGps())->getGpsDetailsBasedOnVehicleWithSingleDate($vehicle_id,$date);
-        }
-        else
-        {
-            $month                      =   $request->date;
-            $vehicle_gps_ids            =   (new VehicleGps())->getGpsDetailsBasedOnVehicleWithMonth($vehicle_id,$month);
-        }
-        foreach($vehicle_gps_ids as $vehicle_gps_id)
+            foreach($vehicle_gps_ids as $vehicle_gps_id)
         {
             $single_vehicle_gps_ids[]   =   $vehicle_gps_id->gps_id;
         }
-
+        }
+        else
+        {
+            $search_month               =   $request->date;
+            $month                      =   date('Ym',strtotime($search_month));
+            //$vehicle_gps_ids            =   (new VehicleGps())->getGpsDetailsBasedOnVehicleWithMonth($vehicle_id,$search_month);
+            $yearmonth                  =   (new vehicleGps())->getYearAndMonthBasedOnVehicleId($vehicle_id);
+            foreach($yearmonth as $each_yearmonth)
+            {
+                $gps_fitted_on          =   $each_yearmonth->gps_fitted_on;
+                $gps_removed_on         =   $each_yearmonth->gps_removed_on;
+                if($month >= $gps_fitted_on && $month <= $gps_removed_on)
+                {
+                    $single_vehicle_gps_ids[]   =   $each_yearmonth->gps_id;
+                }
+            }
+        }
         $fuel_details                   =   (new FuelUpdate())->getFuelDetailsForReport($single_vehicle_gps_ids);
         if($report_type==1)
         {
@@ -89,7 +110,8 @@ class FuelReportController extends Controller
         }
         else
         {
-            $month                      =   $request->date;
+            $search_month               =   $request->date;
+            $month                      =   date('m',strtotime($search_month));
             $fuel_details               =   $fuel_details->whereRaw('MONTH(created_at) = ?',[$month]);
             $fuel_km                    =   (new DailyKM())->getSumOfKmForFuelReportBasedOnMonth($single_vehicle_gps_ids,$month);
         }

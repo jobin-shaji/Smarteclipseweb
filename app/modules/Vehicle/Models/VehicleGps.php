@@ -72,4 +72,10 @@ class VehicleGps extends Model
     {
     
     }
+
+    public function getYearAndMonthBasedOnVehicleId($vehicle_id)
+    {
+      return DB::select("SELECT gps_id, extract( YEAR_MONTH FROM gps_fitted_on) as gps_fitted_on, extract( YEAR_MONTH FROM IF (gps_removed_on IS NULL, CURDATE() , gps_removed_on)) as gps_removed_on
+      FROM vehicle_gps WHERE vehicle_id = '$vehicle_id'");
+    }
 }
