@@ -207,6 +207,7 @@ class Gps extends Model
             'is_returned'
         )  
         ->where('imei',$imei) 
+        ->with('vehicle:id,gps_id')
         ->with('gpsStock:id,gps_id,dealer_id,subdealer_id,client_id,trader_id,inserted_by')
         ->with('gpsStock.root:id,name')
         ->with('gpsStock.dealer:id,name')

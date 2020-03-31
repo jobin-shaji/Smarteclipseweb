@@ -29,7 +29,7 @@
                 <div class="col-md-6">
                   <div class="form-group has-feedback form-group-1 mrg-rt-5">
                     <label class="srequired">Imei</label>
-                    <input type="text" name="imei" id="imei" class="form-control" value="@if(isset($data)){{$data->imei}} @endif" required>
+                    <input type="text" name="imei" id="imei" class="form-control" value="@if(isset($data)){{$data->imei}}@endif" required>
                     @if ($errors->has('imei'))
                     <span class="help-block">
                         <strong class="error-text">{{ $errors->first('imei') }}</strong>
@@ -55,7 +55,7 @@
         <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">                     
           <div class="row">
             <div class="col-sm-12" style="overflow: scroll">
-              <table class="table table-hover table-bordered  table-striped" style="width:100%!important;text-align: center">
+              <table class="table table-hover table-bordered  table-striped" style="width:100%!important;text-align: center" id="preview_table">
                 <thead>
                   <tr>
                     <th>imei </th> 
@@ -93,6 +93,11 @@
                 </tbody>
               </table>
               <input type="hidden" name="gps_id" id="gps_id" value="{{$data->id}}">
+              <input type="hidden" name="vehicle_id" id="vehicle_id" value="{{$vehicle}}">
+              <input type="hidden" name="dealer" id="dealer" value="{{$data->gpsStock->dealer['id']}}">
+              <input type="hidden" name="subdealer" id="subdealer" value="{{$data->gpsStock->subdealer['id']}}">
+              <input type="hidden" name="trader" id="trader" value="{{$data->gpsStock->trader['id']}}">
+              <input type="hidden" name="client" id="client" value="{{$data->gpsStock->client['id']}}">
             </div>
           </div>
         </div>
@@ -100,7 +105,9 @@
     </div>        
   </div>
 <?php
-$client=false;$trader = false;
+$client=false;
+$trader = false;
+$subdealer = false;
    if($data->gpsStock->client['name'] != '')
    {
      $client = true ;
@@ -115,25 +122,31 @@ $client=false;$trader = false;
    {
      $trader = true ;
    }
+   elseif($data->gpsStock->subdealer['name'] != '')
+   {
+    $subdealer = true;
+   }
    else
    {
-     $subdealer = true;
+     $dealer = true;
    }
 ?>
-  <div class="row " >
+  <div class="row" id="dropdown_menu">
     <div class="col-md-12">
       <div class="form-group has-feedback">    
-        <label class="srequired">Reassign To</label>
+        <label class="srequired">Reassign</label>
         <select class="form-control select2"  name="return_to" data-live-search="true" title="Select " id='return_to'  required>
         <option selected disabled value="">Select</option> 
         @if(($client == true) && ($trader == true)) 
-        <option value="4">Revert to Subdealer</option>
+        <option value="4">Reassign to Subdealer</option>
         @elseif(($client == true) && ($trader == false))
-        <option value="3">Revert to Dealer</option>
+        <option value="3">Reassign to Dealer</option>
         @elseif(($client == false) && ($trader == true))
-        <option value="2">Revert to Dealer</option>
+        <option value="2">Reassign to Dealer</option>
         @elseif($subdealer == true)
-        <option value="1">Revert to Distributor</option>
+        <option value="1">Reassign to Distributor</option>
+        @elseif($dealer == true)
+        <option selected disabled value="">Cannot Reassign</option>
         @endif 
         </select>
         @if ($errors->has('return_to'))
@@ -146,7 +159,7 @@ $client=false;$trader = false;
     </div>
     <div class="row">
       <div class="col-md-3 ">
-        <button type="button" onclick="searchData()" class="btn btn-primary btn-md form-btn ">Preview</button>
+        <button id="preview" type="button" onclick="searchData()" class="btn btn-primary btn-md form-btn ">Preview</button>
       </div>
     </div>
   </div>
@@ -160,6 +173,8 @@ $client=false;$trader = false;
           <th><b>Daily KM Count</b></th>
           <th><b>Vehicle Daily Updates Count</b></th>
           <th><b>Complaints Count</b></th>
+          <th><b>Vehicle Driver Logs Count</b></th>
+          <th><b>Vehicle Geofence Count</b></th>
       </tr>
     </thead>
     <tbody>
@@ -170,6 +185,8 @@ $client=false;$trader = false;
         <td id="dailykm_count"></td>
         <td id="vehicle_daily_updates_count"></td>
         <td id="complaints_count"></td>
+        <td id="vehicle_driver_logs_count"></td>
+        <td id="vehicle_geofence_count"></td>
       </tr>
     </tbody>
   </table>
