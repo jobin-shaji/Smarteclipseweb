@@ -1929,3 +1929,23 @@ var alert_user_id=document.getElementById('user_id').value;
         });
        
     }
+
+    function ajaxRequestMs(url,data,method,successCallBack,errorCallBack)
+    {
+        
+        $.ajax({
+            type: method,
+            url:  url,
+            data: data,
+            processData: false,
+            contentType: false,
+            async: true,
+            success: function (response) {
+                $('body').find('.ajax-alert').remove();
+                return successCallBack(response)
+            },
+            error: function (error) {
+                return errorCallBack(error)
+            }
+        })
+    }
