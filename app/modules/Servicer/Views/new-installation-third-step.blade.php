@@ -49,7 +49,7 @@ Assign Servicer
 <h4 class="panel-title">Command</h4>
 </div>
 <div class="panel-body">
-	<form  method="POST" action="{{route('completedcommand.save',$servicer_jobid)}}">
+	<form  method="POST" action="{{route('completedcommand.save',$pass_servicer_jobid)}}">
    {{csrf_field()}}
 <div class="row">
 <?php foreach ($command_configuration as $command){ ?>
@@ -64,7 +64,11 @@ Assign Servicer
 </div>
 </div>
 <?php } ?>
-<button type="submit"  class="btn btn-primary btn-md form-btn">Save</button>
+
+
+</div>
+<div class="row">
+<button type="submit"   style="width: 8%; height: 20%;" class="btn btn-primary">Save</button>
 </div>
 </form>
 

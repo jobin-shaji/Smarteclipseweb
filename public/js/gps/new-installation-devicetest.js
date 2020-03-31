@@ -10,7 +10,7 @@ function stopActivated()
         var data = { servicer_jobid :servicer_jobid,stage:stage};
         $.ajax({
             type    :'POST',
-            url     : 'alltest-stop',
+            url     : '/servicer/alltest-stop',
             data    : data ,
             async   : true,
             headers : {
@@ -44,7 +44,7 @@ function resetActivated()
         var data = { servicer_jobid :servicer_jobid,stage:stage};
         $.ajax({
             type    :'POST',
-            url     : 'devicetestbutton-reset',
+            url     : '/servicer/devicetestbutton-reset',
             data    : data ,
             async   : true,
             headers : {

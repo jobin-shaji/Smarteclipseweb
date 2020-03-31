@@ -91,9 +91,7 @@ Assign Servicer
 <?php } ?>
 </div>
 </div>
-</div>
-</div>
-</div>
+
 @else
 
 <div class="panel panel-primary setup-content" id="step-4">
@@ -120,10 +118,10 @@ Assign Servicer
 
 
 @if($device_test['sos']['status']== 1 && $device_test['sos']['activate']==true)
-  <button   type="submit" id="stop" onclick="stopActivated()" class="btn btn-primary form-btn">Sos Button Stop</button>
+  <button id="stop" onclick="stopActivated()" class="btn btn-primary form-btn">Sos Button Stop</button>
  @endif
 @if($device_test['sos']['status']== 0 && $device_test['sos']['activate']==true&& $device_test['test_status']==1)
-  <button   type="submit"   id="reset"  onclick="resetActivated()" class="btn btn-primary form-btn"> Sos Button Reset</button>
+  <button      id="reset"  onclick="resetActivated()" class="btn btn-primary form-btn"> Sos Button Reset</button>
  @endif
 
 </div>
@@ -186,11 +184,10 @@ Assign Servicer
         <br>
         <br>
         <br>
+        
    @endif
-</div>
-</div>
-</div>
 
+</div>
 @endsection
 <style>
   .btn-primary {

@@ -68,10 +68,17 @@ Route::post('/allcheck-list','ServicerController@getchecklist')->name('allcheck.
 	//for installation check list save
 	// Route::post('/servicer/checkbox-installation-save/{id}','ServicerController@getchecklist')->name('checkbox.installation.save.p');
 	Route::post('/servicer/checkbox-installation-save/{id}','ServicerController@getchecklist')->name('checkbox.installation.save.p');
+ 	Route::get('/servicer-installation-vehicle-details/{id}/vehicle-add','ServicerController@getVehicleAddPage')->name('serviceeng.installation.vehicle.details');
+
      // for vehicle list save
      Route::post('/servicer/vehiclejob-complete-save/{id}','ServicerController@vehicleDataUpdated')->name('vehiclejob.complete.save.p');
+
+ 	Route::get('/servicer-installation-vehicle-details/{id}/vehicle-add','ServicerController@getVehicleAddPage')->name('serviceeng.installation.vehicle.details');
+ 	Route::get('/servicer-installation-command-details/{id}/command-add','ServicerController@getCommandAddPage')->name('serviceeng.installation.command.details');
      // //for installation command list save
 	Route::post('/servicer/completedcommand-save/{id}','ServicerController@updateCommandcompleted')->name('completedcommand.save');
+
+	Route::get('/servicer-installation-devicetest-details/{id}/device-add','ServicerController@getDeviceTestAddPage')->name('serviceeng.installation.devicetest.details');
 	// for intialising test start
     Route::post('/servicer/testsstart-save','ServicerController@startTest')->name('teststart.save.p');
      //for testcomplete

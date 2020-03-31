@@ -55,7 +55,7 @@ $key        = (isset($_GET['new_installation_search_key'])) ? $_GET['new_install
               </div>
            </form>
        </div> 
-          <table class="table table-hover table-bordered  table-striped datatable"  style="width:70%;text-align: center" >
+          <table class="table table-hover table-bordered  table-striped datatable"  style="width:100%;text-align: center" >
           <thead class="indigo white-text">
                <tr>
                 <th><b>SL.No</b></th>
@@ -111,7 +111,9 @@ $key        = (isset($_GET['new_installation_search_key'])) ? $_GET['new_install
                     <td><font color='red'>Cancelled</font></td>
                     @elseif ($servicer_job->status == 2)
                   
-                    <td> <a href="/job/{{Crypt::encrypt($servicer_job->id)}}/details"class='btn btn-xs btn-info'><i class='glyphicon glyphicon-map-marker'></i>View</a></td>      
+                    <td> 
+                      <a 
+                      href="/servicer-installation-vehicle-details/{{Crypt::encrypt($servicer_job->id)}}/vehicle-add"class='btn btn-xs btn-info'><i class='glyphicon glyphicon-map-marker'></i>View</a></td>      
                   
                     @else
                     <td>Completed</td>     
@@ -122,11 +124,16 @@ $key        = (isset($_GET['new_installation_search_key'])) ? $_GET['new_install
         </table>
         </div>
         <style>
-              .table td, .table th {
-            padding: .99;
+
+.table{
+    table-layout: fixed;
+    width: 300px;
+}
+            /*  .table td, .table th {
+            padding: .86rem;
             vertical-align: top;
             border-top: 0px solid #dee2e6;
-        }
+        }*/
           th {
                 background-color:#778899 ;
                 color: white;
