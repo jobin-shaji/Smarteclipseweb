@@ -26,16 +26,59 @@ class DailyKm extends Model
     {
        return self::where('gps_id',$gps_id)->where('date',date("Y-m-d"))->update(['km'=> $value]);
     }
+
+    public function vehicleGps(){
+		return $this->hasOne('App\Modules\Vehicle\Models\VehicleGps','gps_id','gps_id');
+	}
     /**
      * 
      * 
      */
-    public function vehicleTotalKilometres($from_date, $to_date, $gps_id)
+    public function vehicleTotalKilometres($from_date, $to_date, $gps_ids)
     {
-        return self::where('gps_id', $gps_id)
+        return self::whereIn('gps_id', $gps_ids)
             ->where('date', '>=', $from_date)
             ->where('date', '<=', $to_date)
             ->sum('km');
+    }
+    /**
+     * 
+     * 
+     */
+    public function getDailyKmBasedOnDateAndGps($gps_ids, $search_date)
+    {
+        return self::whereIn('gps_id', $gps_ids)
+            ->where('date', $search_date)
+            ->with('vehicleGps.vehicle')
+            ->get();
+    }
+    /**
+     * 
+     * 
+     */
+    public function getSumOfKmForFuelReportBasedOnDate($gps_ids,$date)
+    {
+        return self::select(
+            'km',
+            'date'
+        )
+        ->whereIn('gps_id', $gps_ids)
+        ->whereDate('date',$date)
+        ->sum('km');
+    }
+     /**
+     * 
+     * 
+     */
+    public function getSumOfKmForFuelReportBasedOnMonth($gps_ids,$month)
+    {
+        return self::select(
+            'km',
+            'date'
+        )
+        ->whereIn('gps_id', $gps_ids)
+        ->whereRaw('MONTH(date) = ?',[$month])
+        ->sum('km');
     }
 }
 

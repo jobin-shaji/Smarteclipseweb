@@ -2,7 +2,7 @@ function check()
 {
     if(document.getElementById('vehicle').value == '')
     {
-        alert('Please select Vehicle');
+        alert('please select vehicle');
     }
     else if(document.getElementById('fromDate').value == '')
     {
@@ -15,19 +15,20 @@ function check()
     else
     {
         calculate();
-        var client      =   $('meta[name = "client"]').attr('content');
-        var from_date   =   document.getElementById('fromDate').value;
-        var to_date     =   document.getElementById('toDate').value;
-        var vehicle     =   document.getElementById('vehicle').value;
-        var data        =   {'client':client,'vehicle':vehicle, 'from_date':from_date , 'to_date':to_date};
-        if(to_date == '')
+        var  data = {
+            client      :   $('meta[name = "client"]').attr('content'),
+            from_date   :   document.getElementById('fromDate').value,
+            to_date     :   document.getElementById('toDate').value,
+            vehicle     :   document.getElementById('vehicle').value,
+        };
+        if(document.getElementById('toDate').value == '')
         {
-            $("#geofence_report_download").hide(); 
+            $("#sudden_acceleration_report_download").hide(); 
             $('#dataTable tbody').empty();
         }
         else{
             callBackDataTable(data);
-        }
+        }      
     }
 }
 function calculate() 
@@ -40,17 +41,21 @@ function calculate()
         timeDiff        =   (d2 - d1) / 1000;
     }
     var DateDiff        =   Math.floor(timeDiff / (60 * 60 * 24));
-    if(DateDiff>15)
+    if(DateDiff > 15)
     {
+        var fromDate    =   $('#fromDate').val();
         document.getElementById("toDate").value = "";
         alert("Please select date upto 15 days ");
     }
 }
-
+ 
 function callBackDataTable(data=null)
 {
-    $("#geofence_report_download").show(); 
-    $('#dataTable').show();
+    if(data != null)
+    {
+        $('#sudden_acceleration_report_download').show();
+        $('#dataTable').show();
+    }
     $("#dataTable").DataTable({
         bStateSave: true,
         bDestroy: true,
@@ -59,35 +64,30 @@ function callBackDataTable(data=null)
         deferRender: true,
         // order: [[1, 'desc']],
         ajax: {
-            url: 'geofence-report-list',
+            url: 'sudden-acceleration-report-list',
             type: 'POST',
-            data:data,
+            data: data,
             headers: {
                 'X-CSRF-Token': $('meta[name = "csrf-token"]').attr('content')
             }
         },
-
+       
         fnDrawCallback: function (oSettings, json) {
-
 
         },
         columns: [
-            {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: true, searchable: false},
+            {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
             {data: 'vehicle_gps.vehicle.name', name: 'vehicle_gps.vehicle.name', orderable: false},
             {data: 'vehicle_gps.vehicle.register_number', name: 'vehicle_gps.vehicle.register_number', orderable: false},
-            {data: 'alert_type.description', name: 'alert_type.description', orderable: false},
+            {data: 'alert_type.description', name: 'alert_type.description', orderable: false, searchable: false},
             {data: 'device_time', name: 'device_time', orderable: false},
-
+            // {data: 'action', name: 'action', orderable: false, searchable: false}
+           
         ],
-
+        
         aLengthMenu: [[25, 50, 100, -1], [25, 50, 100, 'All']]
     });
 }
-
-var disabledDates = ["2019-11-02"];
-
-
-
 
 
 

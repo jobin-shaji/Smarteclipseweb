@@ -7,67 +7,77 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Modules\Gps\Models\GpsData;
 use App\Modules\Warehouse\Models\GpsStock;
 use App\Modules\Vehicle\Models\Vehicle;
+use App\Modules\Vehicle\Models\VehicleGps;
 use App\Modules\Gps\Models\GpsModeChange;
 use App\Http\Traits\VehicleDataProcessorTrait;
 use DB;
 use Carbon\Carbon;
-
 use DataTables;
+
 class TrackingReportController extends Controller
 {
-  use VehicleDataProcessorTrait;
+    use VehicleDataProcessorTrait;
 
     public function trackingReport()
     {
-        $client_id=\Auth::user()->client->id;
-        $vehicles=Vehicle::select('id','name','register_number','client_id')
-        ->where('client_id',$client_id)
-        ->withTrashed()
-        ->get();
+        $client_id          =   \Auth::user()->client->id;
+        $vehicles           =   (new Vehicle())->getVehicleListBasedOnClient($client_id);
         return view('Reports::tracking-report',['vehicles'=>$vehicles]);  
     }  
     public function trackReportList(Request $request)
     {
-        $vehicle_id         = $request->vehicle;
-        $report_type        = $request->type;
-        $client_id          = \Auth::user()->client->id;  
-        $custom_from_date   = $request->from_date;
-        $custom_to_date     = $request->to_date;
-        $date_and_time      = $this->getDateFromType($report_type, $custom_from_date, $custom_to_date);
-        $vehicle_profile    = $this->vehicleProfile($vehicle_id,$date_and_time,$client_id);
+        $vehicle_id         =   $request->vehicle;
+        $report_type        =   $request->type;
+        $client_id          =   \Auth::user()->client->id;  
+        $date_and_time      =   $this->getDateFromType($report_type);
+        $vehicle_profile    =   $this->vehicleProfile($vehicle_id,$date_and_time,$client_id);
         return response()->json([           
-            'sleep' => $vehicle_profile['sleep'],  
-            'motion' => $vehicle_profile['motion'],   
-            'halt' => $vehicle_profile['halt'],          
-            'status' => 'track_report'           
+            'sleep'         =>  $vehicle_profile['sleep'],  
+            'motion'        =>  $vehicle_profile['motion'],   
+            'halt'          =>  $vehicle_profile['halt'],          
+            'status'        =>  'track_report'           
         ]);           
-    }
-    
-    public function export(Request $request)
-    {
-        ob_end_clean(); 
-        ob_start();   
-        return Excel::download(new TrackReportExport($request->id,$request->vehicle,$request->fromDate,$request->toDate), 'track-report.xlsx');
     }
 
     public function getDateFromType($report_type) 
     {
         if ($report_type == "1") 
         {
-            $from_date = date('Y-m-d H:i:s', strtotime('today midnight'));
-            $to_date = date('Y-m-d H:i:s');
-        } else if ($report_type == "2") {
-            $from_date = date('Y-m-d H:i:s', strtotime('yesterday midnight'));
-            $to_date = date('Y-m-d H:i:s', strtotime("today midnight"));
-        } else if ($report_type == "3") {
-            $from_date = date('Y-m-d H:i:s', strtotime("-7 day midnight"));
-            $to_date = date('Y-m-d H:i:s',strtotime("today midnight"));
-        } else if ($report_type == "5") {
-            $from_date = date('Y-m-d H:i:s', strtotime("-30 day midnight"));
-            $to_date = date('Y-m-d H:i:s',strtotime("today midnight"));
+            $from_date      =   date('Y-m-d H:i:s', strtotime('today midnight'));
+            $to_date        =   date('Y-m-d H:i:s');
+        } 
+        else if ($report_type == "2") 
+        {
+            $from_date      =   date('Y-m-d H:i:s', strtotime('yesterday midnight'));
+            $to_date        =   date('Y-m-d H:i:s', strtotime("yesterday 23:59:59"));
+        } 
+        else if ($report_type == "3") 
+        {
+            $from_date      =   date('Y-m-d H:i:s', strtotime("-7 day midnight"));
+            $to_date        =   date('Y-m-d H:i:s',strtotime("yesterday 23:59:59"));
         }
-        $output_data = ["from_date" => $from_date, 
-                        "to_date" => $to_date
+        else if ($report_type == "5") 
+        {
+            $from_date      =   date('Y-m-d H:i:s', strtotime("-30 day midnight"));
+            $to_date        =   date('Y-m-d H:i:s',strtotime("yesterday 23:59:59"));
+        }
+        else if ($report_type == "6") 
+        {
+            $from_date      =   date('Y-m-d H:i:s', strtotime("-60 day midnight"));
+            $to_date        =   date('Y-m-d H:i:s',strtotime("yesterday 23:59:59"));
+        }
+        else if ($report_type == "7") 
+        {
+            $from_date      =   date('Y-m-d H:i:s', strtotime("-120 day midnight"));
+            $to_date        =   date('Y-m-d H:i:s',strtotime("yesterday 23:59:59"));
+        }
+        else if ($report_type == "8") 
+        {
+            $from_date      =   date('Y-m-d H:i:s', strtotime("-180 day midnight"));
+            $to_date        =   date('Y-m-d H:i:s',strtotime("yesterday 23:59:59"));
+        }
+        $output_data = ["from_date" =>  $from_date, 
+                        "to_date"   =>  $to_date
                        ];
         return $output_data;
     }
