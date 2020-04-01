@@ -253,7 +253,7 @@ class ServicerController extends Controller {
         // $location_lat=$placeLatLng['latitude'];
         // $location_lng=$placeLatLng['logitude'];
         $user_id=\Auth::user()->id;
-        $servicer = ServicerJob::create([
+        $service_job = ServicerJob::create([
             'servicer_id' => $request->servicer,
             'client_id' => $request->client,
             'job_id' => $job_id,
@@ -271,7 +271,7 @@ class ServicerController extends Controller {
 
         if($request->job_type == 1)
         {
-            $tttle   ="New Insatallation Job"; 
+            $title   ="New Insatallation Job"; 
             $message = ['job_id'  => $job_id,
                         'title'   => $tttle,
                         'content' => $request->description,
@@ -281,7 +281,7 @@ class ServicerController extends Controller {
         }else{
             $tttle   = "New Service Job"; 
             $message = ['job_id'  => $job_id,
-                        'title'   => $tttle,
+                        'title'   => $title,
                         'content' => $request->description,
                         'type'    => "SERVICE",
                         'date'    => date('Y-m-d H:i:s')
@@ -290,8 +290,8 @@ class ServicerController extends Controller {
               
         ServicerNotification::create([
                                         'servicer_id'       => $request->servicer,
-                                        'service_job_id'    =>$servicer->id
-                                        'title'             => $tttle,
+                                        'service_job_id'    =>$service_job->id
+                                        'title'             => $title,
                                         'data'              => json_encode($message,true)
                                     ]);
 
@@ -410,7 +410,7 @@ class ServicerController extends Controller {
         }
 
         $user_id=\Auth::user()->id;
-                $servicer = ServicerJob::create([
+                $service_job = ServicerJob::create([
                 'servicer_id' => $request->servicer,
                 'client_id' => $request->client,
                 'job_id' => $job_id,
@@ -436,9 +436,9 @@ class ServicerController extends Controller {
                             'date'    => date('Y-m-d H:i:s')
                              ];
             }else{
-                $tttle   = "New Service Job"; 
+                $title   = "New Service Job"; 
                 $message = ['job_id'  => $job_id,
-                            'title'   => $tttle,
+                            'title'   => $title,
                             'content' => $request->description,
                             'type'    => "SERVICE",
                             'date'    => date('Y-m-d H:i:s')
@@ -447,8 +447,8 @@ class ServicerController extends Controller {
                   
             ServicerNotification::create([
                                         'servicer_id'       => $request->servicer,
-                                        'service_job_id'    =>$servicer->id
-                                        'title'             => $tttle,
+                                        'service_job_id'    =>$service_job->id
+                                        'title'             => $title,
                                         'data'              => json_encode($message,true)
                                     ]);
 
