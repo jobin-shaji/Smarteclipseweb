@@ -11,7 +11,7 @@ class ServicerNotification extends Model
 	 use SoftDeletes;
 
 	 protected $fillable = [
-        'servicer_id', 'title','data'
+        'servicer_id', 'title','data','service_job_id'
     ];
     
 }
