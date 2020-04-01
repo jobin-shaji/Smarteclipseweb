@@ -291,7 +291,7 @@ class ServicerController extends Controller {
               
         ServicerNotification::create([
                                         'servicer_id'       => $request->servicer,
-                                        'service_job_id'    =>$service_job->id
+                                        'service_job_id'    =>$service_job->id,
                                         'title'             => $title,
                                         'data'              => json_encode($message,true)
                                     ]);
@@ -448,7 +448,7 @@ class ServicerController extends Controller {
                   
             ServicerNotification::create([
                                         'servicer_id'       => $request->servicer,
-                                        'service_job_id'    =>$service_job->id
+                                        'service_job_id'    =>$service_job->id,
                                         'title'             => $title,
                                         'data'              => json_encode($message,true)
                                     ]);
