@@ -30,6 +30,7 @@ function stopActivated()
 $(document).ready(function() {
 $("#close").click(function() {
    $("#stopModal").hide();
+    location.reload(true);
 });
 });
 
@@ -55,6 +56,7 @@ function resetActivated()
                
                      $('#resetValue').text(res.message);
                      $('#resetModal').show();
+
                
             }
         });
@@ -64,5 +66,6 @@ function resetActivated()
 $(document).ready(function() {
 $("#resetclose").click(function() {
    $("#resetModal").hide();
+      location.reload(true);
 });
 });

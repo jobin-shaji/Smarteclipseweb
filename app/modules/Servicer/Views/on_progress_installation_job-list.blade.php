@@ -94,6 +94,7 @@ $key        = (isset($_GET['new_installation_search_key'])) ? $_GET['new_install
                     <br>{{$servicer_job->user_email}}<br>{{$servicer_job->client_address}}
                     </td>
                     <td>{{$servicer_job->user_name}}</td>
+
                     <td>{{ ($servicer_job->gps_serial_no) ? $servicer_job->gps_serial_no: ''}}</td>
                     <td>{{$servicer_job->description}}</td>
                     <td>{{$servicer_job->location}}</td>
@@ -124,16 +125,13 @@ $key        = (isset($_GET['new_installation_search_key'])) ? $_GET['new_install
         </table>
         </div>
         <style>
-
-.table{
-    table-layout: fixed;
-    width: 300px;
-}
-            /*  .table td, .table th {
-            padding: .86rem;
+        .table td, .table th {
+          padding: 16px 16px;
             vertical-align: top;
             border-top: 0px solid #dee2e6;
-        }*/
+             /*overflow: hidden;*/
+        }
+
           th {
                 background-color:#778899 ;
                 color: white;
@@ -152,6 +150,9 @@ $key        = (isset($_GET['new_installation_search_key'])) ? $_GET['new_install
           .btninst-primary {
               color: #fff!important;
               background-color: #3ab3bf;
+          }
+          td:last-child {
+           white-space: nowrap;
           }
           </style>
         @endsection

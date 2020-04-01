@@ -102,6 +102,7 @@ Assign Servicer
 
    {{csrf_field()}}
 <?php foreach ($device_test_case['tests'] as $device_test){ ?>
+ 
 <div id="email-list" class="col s10 m8 l8 card-panel z-depth-1">
 <ul class="collection">
 <li class="collection-item avatar email-unread">
