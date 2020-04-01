@@ -253,7 +253,8 @@ class ServicerController extends Controller {
         // $location_lat=$placeLatLng['latitude'];
         // $location_lng=$placeLatLng['logitude'];
         $user_id=\Auth::user()->id;
-        $servicer = ServicerJob::create([
+        //Service Job
+        $service_job = ServicerJob::create([
             'servicer_id' => $request->servicer,
             'client_id' => $request->client,
             'job_id' => $job_id,
@@ -271,17 +272,17 @@ class ServicerController extends Controller {
 
         if($request->job_type == 1)
         {
-            $tttle   ="New Insatallation Job"; 
+            $title   ="New Insatallation Job"; 
             $message = ['job_id'  => $job_id,
-                        'title'   => $tttle,
+                        'title'   => $title,
                         'content' => $request->description,
                         'type'    => "INSTALLATION",
                         'date'    => date('Y-m-d H:i:s')
                          ];
         }else{
-            $tttle   = "New Service Job"; 
+            $title   = "New Service Job"; 
             $message = ['job_id'  => $job_id,
-                        'title'   => $tttle,
+                        'title'   => $title,
                         'content' => $request->description,
                         'type'    => "SERVICE",
                         'date'    => date('Y-m-d H:i:s')
@@ -289,15 +290,16 @@ class ServicerController extends Controller {
         }
               
         ServicerNotification::create([
-                                        'servicer_id'=> $request->servicer,
-                                        'title'      => $tttle,
-                                        'data'       => json_encode($message,true)
+                                        'servicer_id'       => $request->servicer,
+                                        'service_job_id'    =>$service_job->id
+                                        'title'             => $title,
+                                        'data'              => json_encode($message,true)
                                     ]);
 
         $servicer = Servicer::find($request->servicer);      
         $devices  = $servicer->devices;
         foreach ($devices as $device) {
-            $this->fcmPushNotification($device->firebase_token,$tttle,$message);
+            $this->fcmPushNotification($device->firebase_token,$title,$message);
         }
 
      
@@ -409,7 +411,7 @@ class ServicerController extends Controller {
         }
 
         $user_id=\Auth::user()->id;
-                $servicer = ServicerJob::create([
+                $service_job = ServicerJob::create([
                 'servicer_id' => $request->servicer,
                 'client_id' => $request->client,
                 'job_id' => $job_id,
@@ -427,17 +429,17 @@ class ServicerController extends Controller {
             ]);
             if($request->job_type == 1)
             {
-                $tttle   ="New Insatallation Job"; 
+                $title   ="New Insatallation Job"; 
                 $message = ['job_id'  => $job_id,
-                            'title'   => $tttle,
+                            'title'   => $title,
                             'content' => $request->description,
                             'type'    => "INSTALLATION",
                             'date'    => date('Y-m-d H:i:s')
                              ];
             }else{
-                $tttle   = "New Service Job"; 
+                $title   = "New Service Job"; 
                 $message = ['job_id'  => $job_id,
-                            'title'   => $tttle,
+                            'title'   => $title,
                             'content' => $request->description,
                             'type'    => "SERVICE",
                             'date'    => date('Y-m-d H:i:s')
@@ -445,15 +447,16 @@ class ServicerController extends Controller {
             }
                   
             ServicerNotification::create([
-                                            'servicer_id'=> $request->servicer,
-                                            'title'      => $tttle,
-                                            'data'       => json_encode($message,true)
-                                        ]);
+                                        'servicer_id'       => $request->servicer,
+                                        'service_job_id'    =>$service_job->id
+                                        'title'             => $title,
+                                        'data'              => json_encode($message,true)
+                                    ]);
 
             $servicer = Servicer::find($request->servicer);      
             $devices  = $servicer->devices;
             foreach ($devices as $device) {
-                $this->fcmPushNotification($device->firebase_token,$tttle,$message);
+                $this->fcmPushNotification($device->firebase_token,$title,$message);
             }
             $request->session()->flash('message', 'Assigned Job successfully!');
             $request->session()->flash('alert-class', 'alert-success');
@@ -1976,11 +1979,11 @@ public function serviceJobDetails(Request $request)
     }
 
 
-    public static function fcmPushNotification($device_id,$tttle,$message)
+    public static function fcmPushNotification($device_id,$title,$message)
     {
         $api_key = 'AAAAgmOkdoQ:APA91bE2v6k93s_cXtcscgODZkDBFT2_D-6DpY_aPt_pwpvKJBHjSURcHrxh4TJfPoNPAOjmp8J7AEVQsNd7eAjr1HHSZ5quR4mz6JRgQtfaE47BYwrwrlVuTp8fJgfLDbmjWumfmVdF';
         $url = 'https://fcm.googleapis.com/fcm/send';
-        $title = $tttle;
+        $title = $title;
         $body = json_encode($message,true);
         $n = [
             "to"=> $device_id,
