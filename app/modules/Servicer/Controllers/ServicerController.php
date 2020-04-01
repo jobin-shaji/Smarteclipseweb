@@ -605,7 +605,7 @@ class ServicerController extends Controller {
                      return redirect('/servicer-installation-command-details/'.$pass_servicer_jobid.'/command-add');
                 }
               
-            else if($passed_stage_from_url==3) {
+             else if(($passed_stage_from_url==3) || ($passed_stage_from_url==4)){
                      return redirect('/servicer-installation-devicetest-details/'.$pass_servicer_jobid.'/device-add');
                }
                }
@@ -750,7 +750,7 @@ public function getVehicleAddPage(Request $request)
                      return redirect('/servicer-installation-command-details/'.$pass_servicer_jobid.'/command-add');
                      }
               
-                      else if($passed_stage_from_url==3)  {
+                         else if(($passed_stage_from_url==3) || ($passed_stage_from_url==4))  {
                       return redirect('/servicer-installation-devicetest-details/'.$pass_servicer_jobid.'/device-add');
                     }
                 }
@@ -830,6 +830,7 @@ public function getVehicleAddPage(Request $request)
 
 public function getDeviceTestAddPage(Request $request)
 {
+
            $servicer_jobid = Crypt::decrypt($request->id);
 
            $device_test_installation_list = (new ServicerJob())->getInstallationJob($servicer_jobid);
@@ -843,8 +844,9 @@ public function getDeviceTestAddPage(Request $request)
                else
                {
                 $passed_stage_from_url               =    $device_test_installation_list->job_status;
-                 
-                    if($passed_stage_from_url        ==  3)
+                // dd($passed_stage_from_url);
+             if (($passed_stage_from_url==3) || ($passed_stage_from_url==4))
+                    // if($passed_stage_from_url  ==  3)
                     {
                     if($device_test_installation_list->device_test_scenario != null)
                     {
@@ -917,7 +919,7 @@ public function getDeviceTestAddPage(Request $request)
    
 
 
-public function completeTestCase(Request $request)
+    public function completeTestCase(Request $request)
     {
        
        
@@ -1170,7 +1172,7 @@ public function serviceJobDetails(Request $request)
     public function vehicleDataUpdated(Request $request)
     {
      
-      $servicer_jobid = Crypt::decrypt($request->id);
+        $servicer_jobid = Crypt::decrypt($request->id);
         $pass_servicer_jobid=Crypt::encrypt($servicer_jobid);
         $custom_messages = [
             'file.required' => 'Rc Book cannot be blank',
@@ -1179,28 +1181,17 @@ public function serviceJobDetails(Request $request)
             'activation_photo.required' => 'File cannot be blank',
             'vehicle_photo.required' => 'File cannot be blank'
         ];
-        // dd($request->id);
+      
         $rules = $this->servicercompleteJobRules();
         $this->validate($request,$rules,$custom_messages);
-
-
-        // $job_completed_date=date("Y-m-d"), strtotime($request->job_completed_date));
         $job_completed_date = date("Y-m-d H:i:s");
         $servicer_job = ServicerJob::find($servicer_jobid);
         // $servicer_job->job_complete_date = $job_completed_date;
         $driver_id=$request->driver;
-        // $path = $request->path;
         $driver = Driver::find($driver_id);
-        // if($driver)
-        // {
-
-
-            $servicer_job->comment = $request->comment;
-            // // already in  web
-            // $servicer_job->status = 3;
-
-            $servicer_job->status            = 2;
-            $servicer_job->job_status        = 2;
+        $servicer_job->comment = $request->comment;
+        $servicer_job->status       = 2;
+        $servicer_job->job_status   = 2;
             $servicer_job->save();
             if($servicer_job)
             {
@@ -1230,7 +1221,6 @@ public function serviceJobDetails(Request $request)
             $client=Client::find($client_id);
             $client->latest_vehicle_updates=date('Y-m-d H:i:s');
             $client->save();
-            // $this->validate($request, $rules, $custom_messages);
             $file=$request->file;
             $installation_photo=$request->installation_photo;
             $activation_photo=$request->activation_photo;
@@ -1284,9 +1274,9 @@ public function serviceJobDetails(Request $request)
             $request->session()->flash('alert-class', 'alert-success');
 
             return redirect('/servicer-installation-command-details/'.$pass_servicer_jobid.'/command-add');
-                     }
+            }
 
-    }
+        }
      
 //for command list 
  public function getCommandAddPage(Request $request)
@@ -1335,7 +1325,7 @@ public function serviceJobDetails(Request $request)
                     
                 }
               
-            else if($passed_stage_from_url==3) {
+            else if(($passed_stage_from_url==3) || ($passed_stage_from_url==4)) {
                      return redirect('/servicer-installation-devicetest-details/'.$pass_servicer_jobid.'/device-add');
                }
      
