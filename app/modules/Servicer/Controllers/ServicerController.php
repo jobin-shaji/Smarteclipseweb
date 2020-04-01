@@ -253,6 +253,7 @@ class ServicerController extends Controller {
         // $location_lat=$placeLatLng['latitude'];
         // $location_lng=$placeLatLng['logitude'];
         $user_id=\Auth::user()->id;
+        //Service Job
         $service_job = ServicerJob::create([
             'servicer_id' => $request->servicer,
             'client_id' => $request->client,
