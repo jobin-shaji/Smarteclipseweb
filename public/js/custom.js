@@ -535,6 +535,10 @@ function backgroundPostData(url, data, callBack, options) {
                     deviceReassign(res);
                 }
 
+                else if(callBack=='reassign_count')
+                {
+                    reassign_count(res);
+                }
 
 
 
@@ -1897,3 +1901,41 @@ if(document.getElementById('user_id').value!=null){
             $('#alert_content').text(alert_content);  
             $('#alert_address').text(res.address);           
         }
+
+    function ajaxRequest(url,data,method,successCallBack,errorCallBack)
+    {
+        var purl = getUrl() + '/'+url ;
+        
+        $.ajax({
+            type: method,
+            url:  purl,
+            data: data,
+            processData: false,
+            contentType: false,
+            async: true,
+            headers: {
+                'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function (response) {
+                $('body').find('.ajax-alert').remove();
+                return successCallBack(response)
+            },
+            error: function (error) {
+                return errorCallBack(error)
+            }
+        })
+    }
+
+    function displayAjaxError(error_response,form)
+    {
+
+        var error = JSON.parse(error_response.responseText);
+        toastr.error( error.message , 'Error Message');
+        $(form).find('.ajax-alert').remove();
+        $.each(error.errors, function(index, value) {
+            
+            $(form).find('[name = "'+index+'"]')
+            .after(' <span class="help-block ajax-alert"><strong class="error-text">'+value.join()+'</strong></span>');
+        });
+       
+    }

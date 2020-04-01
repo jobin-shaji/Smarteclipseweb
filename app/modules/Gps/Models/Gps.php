@@ -207,12 +207,36 @@ class Gps extends Model
             'is_returned'
         )  
         ->where('imei',$imei) 
+        ->with('vehicle:id,gps_id')
         ->with('gpsStock:id,gps_id,dealer_id,subdealer_id,client_id,trader_id,inserted_by')
         ->with('gpsStock.root:id,name')
         ->with('gpsStock.dealer:id,name')
         ->with('gpsStock.subdealer:id,name')
         ->with('gpsStock.trader:id,name')
         ->with('gpsStock.client:id,name')           
-        ->get();
+        ->first();
+    }
+    /**
+     *
+     *sum of km based on vehicle gps
+     *
+     */
+    public function getSumOfKmBasedOnGpsOfVehicle($vehicle_gps_ids)
+    {
+        return self::select('id','km')
+                    ->whereIn('id',$vehicle_gps_ids)
+                    ->sum('km');
+    }
+
+     /**
+     * 
+     * esim updation
+     * 
+     */
+    public function updateEsimNumbers($imsi, $msisdn)
+    {
+        return self::where('imsi', $imsi)->update([
+            'e_sim_number'  => $msisdn
+        ]);
     }
 }

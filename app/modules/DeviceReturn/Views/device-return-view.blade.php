@@ -104,8 +104,8 @@
       </table>
       <div class="col-md-6 ">
         @if($device_return_details->status==0)
-          <button  onclick=acceptDeviceReturn({{$device_return_details->id}}) class="btn btn-md"><i class='glyphicon glyphicon-remove'></i> Accept Returned Device
-          </button>
+          <!-- <button  onclick=acceptDeviceReturn({{$device_return_details->id}}) class="btn btn-md"><i class='glyphicon glyphicon-remove'></i> Accept Returned Device
+          </button>    commented for testing -->
         @endif       
       </div><br>
       <!-- /table section -->

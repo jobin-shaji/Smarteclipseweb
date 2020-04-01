@@ -2111,23 +2111,24 @@ class GpsController extends Controller {
     {
         return view('Gps::esim-updation');
     }
-    public function esimUpload(Request $request)
-    {
-    $imsi_gps = $request->imsi; 
-    $esim = $request->msisdn; 
-    dd($imsi_gps);
-    if($imsi_gps){
-        foreach ($imsi_gps as $imsi) {  
 
-            // $user_alert = UserAlerts::select('id','alert_id','client_id','status')->where('alert_id', $alert_id)->where('client_id', $client->id)->first();                
-            // if($user_alert)
-            // {
-            //     $user_alert->status =1;
-            //     $user_alert->save();                         
-            // }                
+    /**
+     * 
+     * 
+     */
+    public function updateEsimNumbers(Request $request)
+    {
+        $items      = json_decode($request->selected_items);
+        $result     = [
+            'success'   => [],
+            'failed'    => []
+        ];
+        foreach($items as $each_item)
+        {
+            ( (new Gps())->updateEsimNumbers($each_item->imsi, $each_item->msisdn) ) ? array_push($result['success'], $each_item->imsi) : array_push($result['failed'], $each_item->imsi);
+
         }
-    }     
-    
+        return $result;
     }
 
     //validation for gps creation

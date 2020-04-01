@@ -6,4 +6,5 @@ class OtaUpdates extends Model
     protected $fillable = [
         'gps_id', 'header','value','device_time'
     ]; 
+    
 }

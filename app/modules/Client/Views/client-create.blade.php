@@ -22,7 +22,9 @@
           </div>
         @endif  
     </nav>
-    <form  method="POST" action="{{route('client.create.p')}}">
+
+    <input type="hidden" id = "role_type"  value={{ \Auth::user()->getRoleNames()[0]}}>
+    <form  method="POST" id = "client-creation-form" action="{{route('client.create.p')}}">
       {{csrf_field()}}
       <div class="row">
         <div class="col-lg-6 col-md-12">
@@ -227,7 +229,7 @@
         <div class="col-lg-6 col-md-12">
           <div id="zero_config_wrapper" class="container-fluid dt-bootstrap4">
             <div class="row">
-              <button type="submit" class="btn btn-primary address_btn">Create</button>
+              <button type="submit" class="btn btn-primary create_btn">Create</button>
             </div>
           </div> 
         </div> 
@@ -235,6 +237,31 @@
     </form>
   </div>
 </section>
+
+
+<!-- Modal -->
+<div class="modal fade" id = "client-create-confirm-box" 
+ tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true" data-keyboard="false" data-backdrop="static">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Alert Box</h5>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-12">
+                Client created successfully!!, Do you want to transfer the device to client?     
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary cancel-btn" data-dismiss="modal">No</button>
+        <button type="button" class="btn btn-primary confirm-btn">Yes</button>
+      </div>
+    </div>
+  </div>
+</div>
 
   <style>
     .font-size-14
@@ -259,8 +286,54 @@
          flex: auto;
        }
   </style>      
+@endsection
 @section('script')
+<script>
+  
+  $(document).ready(function()
+  {
+    $("#client-creation-form").submit(function(e){
+        e.preventDefault();
+        var form = $(this)[0];
+        var data = new FormData(form);
+        $(".create_btn").attr('disabled', true);
+        ajaxRequest("client/create",data,'POST', successClientCreate, errorClientCreate)        
+    });
+
+    $(".cancel-btn").click(function(){
+      window.location.href = "/clients";
+    })
+
+    $(".confirm-btn").click(function()
+    {
+      if( $('#role_type').val() == 'trader' ){
+        window.location.href ="/sub-dealer-assign-servicer";
+      }else{
+        window.location.href ="/gps-transfer-sub-dealer/create";
+      }
+      
+    })
+    
+    function successClientCreate(response)
+    {
+      if(response.status == true)
+      {
+        $('#client-create-confirm-box').modal({
+            backdrop: 'static',
+            keyboard: false
+        });
+      }
+    }
+
+    function  errorClientCreate(error){
+      $(".create_btn").attr('disabled', false);
+      displayAjaxError(error,"#client-creation-form");
+    }
+
+  })
+
+
+</script>
   <script src="{{asset('js/gps/client-create.js')}}"></script>
 
-@endsection
 @endsection

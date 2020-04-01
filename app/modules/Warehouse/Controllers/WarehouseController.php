@@ -275,7 +275,8 @@ class WarehouseController extends Controller {
         $transfer_type=$request->data['transfer_type'];
         $from_user_id=$request->data['from_id'];
         $to_user_id=$request->data['to_id'];
-
+        $from_date=$request->data['from_date'];
+        $to_date=$request->data['to_date'];
         $gps_transfer = GpsTransfer::select(
             'id',
             'from_user_id',
@@ -291,6 +292,11 @@ class WarehouseController extends Controller {
         ->withTrashed();
         if($transfer_type == '1')
         {
+            if($from_date){
+                $search_from_date=date("Y-m-d", strtotime($from_date));
+                    $search_to_date=date("Y-m-d", strtotime($to_date));
+                    $gps_transfer = $gps_transfer->whereDate('dispatched_on', '>=', $search_from_date)->whereDate('dispatched_on', '<=', $search_to_date);
+            }
             $gps_transfer = $this->manufacturerToDistributorTransferredListInRoot($gps_transfer,$from_user_id,$to_user_id);
             return DataTables::of($gps_transfer)
             ->addIndexColumn()
@@ -326,6 +332,11 @@ class WarehouseController extends Controller {
 
         }else if($transfer_type == '2')
         {
+            if($from_date){
+                $search_from_date=date("Y-m-d", strtotime($from_date));
+                    $search_to_date=date("Y-m-d", strtotime($to_date));
+                    $gps_transfer = $gps_transfer->whereDate('dispatched_on', '>=', $search_from_date)->whereDate('dispatched_on', '<=', $search_to_date);
+            }
             $gps_transfer = $this->distributorToDealerTransferredListInRoot($gps_transfer,$from_user_id,$to_user_id);
             return DataTables::of($gps_transfer)
             ->addIndexColumn()
@@ -360,6 +371,11 @@ class WarehouseController extends Controller {
         }
         else if($transfer_type == '3')
         {
+            if($from_date){
+                $search_from_date=date("Y-m-d", strtotime($from_date));
+                    $search_to_date=date("Y-m-d", strtotime($to_date));
+                    $gps_transfer = $gps_transfer->whereDate('dispatched_on', '>=', $search_from_date)->whereDate('dispatched_on', '<=', $search_to_date);
+            }
             $gps_transfer = $this->dealerToClientTransferredListInRoot($gps_transfer,$from_user_id,$to_user_id);
             return DataTables::of($gps_transfer)
             ->addIndexColumn()
@@ -394,6 +410,11 @@ class WarehouseController extends Controller {
         }
         else if($transfer_type == '4')
         {
+            if($from_date){
+                $search_from_date=date("Y-m-d", strtotime($from_date));
+                    $search_to_date=date("Y-m-d", strtotime($to_date));
+                    $gps_transfer = $gps_transfer->whereDate('dispatched_on', '>=', $search_from_date)->whereDate('dispatched_on', '<=', $search_to_date);
+            }
             $gps_transfer = $this->dealerToSubDealerTransferredListInRoot($gps_transfer,$from_user_id,$to_user_id);
             return DataTables::of($gps_transfer)
             ->addIndexColumn()
@@ -428,6 +449,11 @@ class WarehouseController extends Controller {
         }
         else if($transfer_type == '5')
         {
+            if($from_date){
+                $search_from_date=date("Y-m-d", strtotime($from_date));
+                    $search_to_date=date("Y-m-d", strtotime($to_date));
+                    $gps_transfer = $gps_transfer->whereDate('dispatched_on', '>=', $search_from_date)->whereDate('dispatched_on', '<=', $search_to_date);
+            }
             $gps_transfer = $this->subDealerToClientTransferredListInRoot($gps_transfer,$from_user_id,$to_user_id);
             return DataTables::of($gps_transfer)
             ->addIndexColumn()
@@ -1412,9 +1438,11 @@ class WarehouseController extends Controller {
     }
 
     //gps transfer list data - dealer
-    public function getDealerListData()
+    public function getDealerListData(Request $request)
     {
         $user_id=\Auth::user()->id;
+        $from_date=$request->data['from_date'];
+        $to_date=$request->data['to_date'];
         $gps_transfer = GpsTransfer::select(
             'id',
             'from_user_id',
@@ -1429,8 +1457,12 @@ class WarehouseController extends Controller {
         ->with('gpsTransferItems')
         ->where('from_user_id',$user_id)
         ->orderBy('id','DESC')
-        ->withTrashed()
-        ->get();
+        ->withTrashed();
+        if($from_date){
+            $search_from_date=date("Y-m-d", strtotime($from_date));
+            $search_to_date=date("Y-m-d", strtotime($to_date));
+            $gps_transfer = $gps_transfer->whereDate('dispatched_on', '>=', $search_from_date)->whereDate('dispatched_on', '<=', $search_to_date)->get();
+        }
         return DataTables::of($gps_transfer)
         ->addIndexColumn()
         ->addColumn('count', function ($gps_transfer)
@@ -1588,12 +1620,14 @@ class WarehouseController extends Controller {
     }
 
     //gps transfer list data - sub dealer to trader
-    public function getSubDealerToTraderTransferredListData() 
+    public function getSubDealerToTraderTransferredListData(Request $request) 
     {
         $user_id            = \Auth::user()->id;
         $subdealer_id       = \Auth::user()->subdealer->id;
         $traders            = Trader::select('user_id')->where('sub_dealer_id',$subdealer_id)->withTrashed()->get();
         $trader_user_ids    = [];
+        $from_date=$request->data['from_date'];
+        $to_date=$request->data['to_date'];
 
         foreach($traders as $trader)
         {
@@ -1615,8 +1649,12 @@ class WarehouseController extends Controller {
         ->where('from_user_id',$user_id)
         ->whereIn('to_user_id',$trader_user_ids)
         ->orderBy('id','DESC')
-        ->withTrashed()
-        ->get();
+        ->withTrashed();
+        if($from_date){
+            $search_from_date=date("Y-m-d", strtotime($from_date));
+            $search_to_date=date("Y-m-d", strtotime($to_date));
+            $gps_transfer = $gps_transfer->whereDate('dispatched_on', '>=', $search_from_date)->whereDate('dispatched_on', '<=', $search_to_date)->get();
+        }
         return DataTables::of($gps_transfer)
         ->addIndexColumn()
         ->addColumn('count', function ($gps_transfer) 
@@ -1783,12 +1821,14 @@ class WarehouseController extends Controller {
     }
 
     //gps transfer list data - dealer
-    public function getSubDealerListData()
+    public function getSubDealerListData(Request $request)
     {
         $user_id            = \Auth::user()->id;
         $subdealer_id       = \Auth::user()->subdealer->id;
         $clients            = Client::select('user_id')->where('sub_dealer_id',$subdealer_id)->withTrashed()->get();
         $client_user_ids    = [];
+        $from_date=$request->data['from_date'];
+        $to_date=$request->data['to_date'];
 
         foreach($clients as $client)
         {
@@ -1810,8 +1850,12 @@ class WarehouseController extends Controller {
         ->where('from_user_id',$user_id)
         ->whereIn('to_user_id',$client_user_ids)
         ->orderBy('id','DESC')
-        ->withTrashed()
-        ->get();
+        ->withTrashed();
+        if($from_date){
+            $search_from_date=date("Y-m-d", strtotime($from_date));
+            $search_to_date=date("Y-m-d", strtotime($to_date));
+            $gps_transfer = $gps_transfer->whereDate('dispatched_on', '>=', $search_from_date)->whereDate('dispatched_on', '<=', $search_to_date)->get();
+        }
         return DataTables::of($gps_transfer)
         ->addIndexColumn()
         ->addColumn('count', function ($gps_transfer)
@@ -1966,9 +2010,11 @@ class WarehouseController extends Controller {
     }
 
     //gps transfer list data - dealer
-    public function getTraderToClientTransferredListData()
+    public function getTraderToClientTransferredListData(Request $request)
     {
-        $user_id            = \Auth::user()->id;
+        $user_id            = \Auth::user()->id; 
+        $from_date=$request->data['from_date'];
+        $to_date=$request->data['to_date'];
         $gps_transfer = GpsTransfer::select(
             'id',
             'from_user_id',
@@ -1983,8 +2029,12 @@ class WarehouseController extends Controller {
         ->with('gpsTransferItems')
         ->where('from_user_id',$user_id)
         ->orderBy('id','DESC')
-        ->withTrashed()
-        ->get();
+        ->withTrashed();
+        if($from_date){
+            $search_from_date=date("Y-m-d", strtotime($from_date));
+            $search_to_date=date("Y-m-d", strtotime($to_date));
+            $gps_transfer = $gps_transfer->whereDate('dispatched_on', '>=', $search_from_date)->whereDate('dispatched_on', '<=', $search_to_date)->get();
+        }
         return DataTables::of($gps_transfer)
         ->addIndexColumn()
         ->addColumn('count', function ($gps_transfer)

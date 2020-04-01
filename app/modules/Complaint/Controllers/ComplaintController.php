@@ -185,9 +185,17 @@ class ComplaintController extends Controller {
                 }
                 else if(\Auth::user()->hasRole('sub_dealer|root|trader'))
                 {
-                    return "
+                    if($complaints->status == 0)
+                    {
+                        return "
                     <a href=/complaint/".Crypt::encrypt($complaints->id)."/view class='btn btn-xs btn-success'><i class='glyphicon glyphicon-eye-open'></i> Complaint Details View </a>
                     <a href=/assign-complaint/".Crypt::encrypt($complaints->id)." class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-eye-open'></i> Assign to Servicer </a>";
+                    }
+                    else
+                    {
+                        return "
+                    <a href=/complaint/".Crypt::encrypt($complaints->id)."/view class='btn btn-xs btn-success'><i class='glyphicon glyphicon-eye-open'></i> Complaint Details View </a>";
+                    }
                 }
             })           
             ->addColumn('assigned_to', function ($complaints) { 
@@ -419,6 +427,7 @@ class ComplaintController extends Controller {
         $servicer = ServicerJob::create([
             'servicer_id' => $request->servicer,
             'client_id' => $client->id,
+            'complaint_id' => $request->complaint_id,
             'job_id' => str_pad(mt_rand(0, 999999), 5, '0', STR_PAD_LEFT),
             'job_type' => 2,
             'start_code' => str_pad(mt_rand(100000, 999999), 6, '0', STR_PAD_LEFT),

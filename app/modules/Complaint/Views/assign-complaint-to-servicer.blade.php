@@ -61,6 +61,7 @@
     <div class="card">
     <div class="card-body">        
     <input type="hidden" name="imei" value="{{ $complaint->gps->imei}}">
+    <input type="hidden" name="complaint_id" value="{{ $complaint->id}}">
     <div class="form-group row" style="float:none!important">
       <label  for="fname" class="col-sm-3 text-right control-label col-form-label">Service Engineer</label> 
       <div class="form-group has-feedback">
