@@ -51,7 +51,7 @@ Total KM Report
                       <thead>
                           <tr>
                             <th>SL.No</th>
-                            <th>Vehicle</th>
+                            <th>Vehicle Name</th>
                             <th>Registration Number</th>                          
                             <th>Total KM</th>
                           </tr>

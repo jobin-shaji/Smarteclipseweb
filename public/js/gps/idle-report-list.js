@@ -1,109 +1,45 @@
-// $(document).ready(function () {
-//    var today = new Date();
-//     var dd = String(today.getDate()).padStart(2, '0');
-//     var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-//     var yyyy = today.getFullYear();
-//     var vehicle = 0;
-//     today = dd + '-' + mm + '-' + yyyy;
-//     var  data = {
-//           from_date : today,
-//           to_date : today,
-//            vehicle : vehicle
-//     };
-//     callBackDataTable(data);
-// });
-
-// function check(){
-//     if(document.getElementById('vehicle').value == ''){
-//         alert('please enter vehicle');
-//     }
-//     // else if(document.getElementById('fromDate').value == ''){
-//     //     alert('please enter from date');
-//     // }else if(document.getElementById('toDate').value == ''){
-//     //     alert('please enter to date');
-//     // }
-//     else{
-//         var vehicle_id=$('#vehicle').val();
-
-//          var client=$('meta[name = "client"]').attr('content');
-//         var from_date = document.getElementById('fromDate').value;
-//         var to_date = document.getElementById('toDate').value;
-//         var data = {'vehicle':vehicle_id,'client':client, 'from_date':from_date , 'to_date':to_date};
-//         callBackDataTable(data);
-//     }
-
-// }
-
-// function callBackDataTable(data=null){
-
-//     $("#dataTable").DataTable({
-//         bStateSave: true,
-//         bDestroy: true,
-//         bProcessing: true,
-//         serverSide: true,
-//         deferRender: true,
-//         order: [[1, 'desc']],
-//         ajax: {
-//             url: 'idle-report-list',
-//             type: 'POST',
-//             data:data,
-//             headers: {
-//                 'X-CSRF-Token': $('meta[name = "csrf-token"]').attr('content')
-//             }
-//         },
-//         fnDrawCallback: function (oSettings, json) {
-//         },
-//         columns: [
-//             {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: true, searchable: false},
-//             {data: 'gps.vehicle.name', name: 'gps.vehicle.name', orderable: false},
-//             {data: 'gps.vehicle.register_number', name: 'gpsvehicle.register_number', orderable: false},
-//             {data: 'sleep', name: 'sleep', orderable: false},
-//             {data: 'device_time', name: 'device_time', orderable: false},
-//         ],
-//         aLengthMenu: [[25, 50, 100, -1], [25, 50, 100, 'All']]
-//     });
-// }
-
 $(document).ready(function () {
-     $("#loader-1").hide();
+    $("#loader-1").hide();
 });
 
 function trackMode()
 {
-     if(document.getElementById('vehicle').value == ''){
+    if(document.getElementById('vehicle').value == '')
+    {
         alert('Please enter vehicle');
     }
-    else if(document.getElementById('fromDate').value == ''){
+    else if(document.getElementById('fromDate').value == '')
+    {
         alert('Please select From date');
-    }else if(document.getElementById('toDate').value == ''){
+    }
+    else if(document.getElementById('toDate').value == '')
+    {
         alert('Please select To date');
     }
-    else{
-        var vehicle_id=$('#vehicle').val();
-        var client=$('meta[name = "client"]').attr('content');
-        var from_date = document.getElementById('fromDate').value;
-        var to_date = document.getElementById('toDate').value;
-        var data = {'vehicle':vehicle_id,'client':client, 'from_date':from_date , 'to_date':to_date};
-        var url = '/idle-report-list';
-        var data = {
-            'vehicle':vehicle_id,
-            'client':client,
-            'from_date':from_date ,
-            'to_date':to_date
-        };
+    else
+    {
+        var vehicle_id      =   $('#vehicle').val();
+        var client          =   $('meta[name = "client"]').attr('content');
+        var from_date       =   document.getElementById('fromDate').value;
+        var to_date         =   document.getElementById('toDate').value;
+        var data            =   {'vehicle':vehicle_id,'client':client, 'from_date':from_date , 'to_date':to_date};
+        var url             =   '/idle-report-list';
+        var data            =   {
+                                    'vehicle':vehicle_id,
+                                    'client':client,
+                                    'from_date':from_date ,
+                                    'to_date':to_date
+                                };
         $("#loader-1").show();
         backgroundPostData(url,data,'vehicleIdleReport',{alert:true});
 
     }
-
-
 }
-function vehicleIdleReport(res){
+function vehicleIdleReport(res)
+{
     $("#loader-1").hide();
     $('#sl').text("1");
     $('#vehicle_name').text(res.vehicle_name);
     $('#register_number').text(res.register_number);
     $('#halt').text(res.halt);
-
-
-  }
+}

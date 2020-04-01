@@ -58,7 +58,7 @@ Geofence Report
                            <div class="form-group">          
                             <button class="btn btn-sm btn-info btn2 srch" onclick="check()"> <i class="fa fa-search"></i> </button>
 
-                            <button class="btn btn-sm btn1 btn-primary dwnld" onclick="downloadGeofenceReport()">
+                            <button class="btn btn-sm btn1 btn-primary dwnld" style = 'display:none;' id = 'geofence_report_download' onclick="downloadGeofenceReport()">
                               <i class="fa fa-file"></i>Download Excel</button>                   
                               
                           </div>
@@ -66,7 +66,7 @@ Geofence Report
                         </div>
                       </div>
                       </div>
-                      <table class="table table-hover table-bordered  table-striped datatable" style="width:100%;text-align: center" id="dataTable">
+                      <table class="table table-hover table-bordered  table-striped datatable" style="width:100%;text-align: center;display:none;" id="dataTable">
                         <thead>
                           <tr>
                             <th>SL.No</th>

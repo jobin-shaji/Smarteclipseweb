@@ -202,7 +202,7 @@
                                 </a>
                             </li>
                             <li class="sys_vapor cover_vehicle_report">
-                                <a href="{{url('/km-report')}}">
+                                <a href="{{url('/vehicle-report')}}">
                                     <div class="system_icon">
                                         <img src="{{ url('/') }}/Report-icons/vehicle-report.png"  />
                                     <span class="system_info" >Vehicle Report</span>
