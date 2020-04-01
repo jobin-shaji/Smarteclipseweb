@@ -7,15 +7,13 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Modules\Route\Models\RouteDeviation;
 use App\Modules\Vehicle\Models\Vehicle;
 use DataTables;
+
 class RouteDeviationReportController extends Controller
 {
     public function routeDeviationReport()
     {
-        $client_id=\Auth::user()->client->id;
-        $vehicles=Vehicle::select('id','name','register_number','client_id')
-        ->where('client_id',$client_id)
-        ->withTrashed()
-        ->get();
+        $client_id      =   \Auth::user()->client->id;
+        $vehicles       =   (new Vehicle())->getVehicleListBasedOnClient($client_id);
         return view('Reports::route-deviation-report',['vehicles'=>$vehicles]);  
     }  
     public function routeDeviationReportList(Request $request)

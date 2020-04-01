@@ -82,39 +82,27 @@ class TotalKMReportController extends Controller
     {
         ob_end_clean(); 
         ob_start();
-        return Excel::download(new TotalKMReportExport($request->id,$request->vehicle), 'Total-km-report.xlsx');
+        return Excel::download(new TotalKMReportExport($request->id,$request->vehicle_id), 'Total-km-report.xlsx');
     } 
 
 
-
-    public function kmReport()
+    public function vehicleReport()
     {
-        $client_id=\Auth::user()->client->id;
-         $vehicles=Vehicle::select('id','name','register_number','client_id')
-        ->where('client_id',$client_id)
-        ->withTrashed()
-        ->get();    
-        return view('Reports::km-report',['vehicles'=>$vehicles]);  
+        $client_id          =   \Auth::user()->client->id;
+        $vehicles           =   (new Vehicle())->getVehicleListBasedOnClient($client_id);  
+        return view('Reports::vehicle-report',['vehicles'=>$vehicles]);  
     } 
 
-    public function kmReportList(Request $request)
+    public function vehicleReportList(Request $request)
     {
-        $vehicle_id =$request->vehicle;
-        $report_type =$request->report_type;
-        $client_id=\Auth::user()->client->id;  
-        $custom_from_date = $request->from_date;
-        $custom_to_date = $request->to_date;
-        $date_and_time = $this->getDateFromType($report_type, $custom_from_date, $custom_to_date);
-        $vehicle_profile = $this->vehicleProfile($vehicle_id,$date_and_time,$client_id);
+        $vehicle_id         =   $request->vehicle_id;
+        $report_type        =   $request->report_type;
+        $client_id          =   \Auth::user()->client->id;  
+        $custom_from_date   =   $request->from_date;
+        $custom_to_date     =   $request->to_date;
+        $date_and_time      =   $this->getDateFromType($report_type, $custom_from_date, $custom_to_date);
+        $vehicle_profile    =   $this->vehicleProfile($vehicle_id,$date_and_time,$client_id);
         return response()->json($vehicle_profile);
     }
-
-    public function kmExport(Request $request)
-    {
-        ob_end_clean(); 
-        ob_start();
-        return Excel::download(new KMReportExport($request->id,$request->vehicle,$request->report_type), 'Km-report.xlsx');
-    }
-    
 }
 

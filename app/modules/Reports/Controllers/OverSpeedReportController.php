@@ -7,123 +7,66 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Modules\Gps\Models\GpsData;
 use App\Modules\Alert\Models\Alert;
 use App\Modules\Vehicle\Models\Vehicle;
+use App\Modules\Vehicle\Models\VehicleGps;
 use Illuminate\Support\Facades\Crypt;
-
 use DataTables;
+
 class OverSpeedReportController extends Controller
 {
     public function overSpeedReport()
     {
-        $client_id=\Auth::user()->client->id;
-        $vehicles=Vehicle::select('id','name','register_number','client_id')
-        ->where('client_id',$client_id)
-        ->withTrashed()
-        ->get();
+        $client_id      =   \Auth::user()->client->id;
+        $vehicles       =   (new Vehicle())->getVehicleListBasedOnClient($client_id);
         return view('Reports::over-speed-report',['vehicles'=>$vehicles]);  
     }  
      public function overSpeedReportList(Request $request)
     {
-        $single_vehicle_id = [];
-        $client= $request->data['client'];
-        $vehicle= $request->data['vehicle'];
-        $from = $request->data['from_date'];
-        $to = $request->data['to_date'];
-        if($vehicle!=0)
+        $single_vehicle_gps_ids         =   []; 
+        $client_id                      =   $request->client;
+        $vehicle_id                     =   $request->vehicle;
+        $from_date                      =   $request->from_date;
+        $to_date                        =   $request->to_date;
+        if($vehicle_id != 0)
         {
-           
-            $vehicle_details=Vehicle::select('id','gps_id')
-                            ->where('id',$vehicle)
-                            ->withTrashed()
-                            ->first();
-            $single_vehicle_id= $vehicle_details->gps_id;
+            $vehicle_gps_ids            =   (new VehicleGps())->getGpsDetailsBasedOnVehicleWithDates($vehicle_id,$from_date,$to_date); 
         }
         else
         {
-            
-            $vehicle_details=Vehicle::select('id','gps_id','client_id')
-                            ->where('client_id',$client)
-                            ->withTrashed()
-                            ->get();
-            foreach($vehicle_details as $vehicle_detail){
-                $single_vehicle_id[] = $vehicle_detail->gps_id; 
-            }
+            $vehicle_details            =   (new Vehicle())->getVehicleListBasedOnClient($client_id);
+            $vehicle_ids                =   [];
+            foreach($vehicle_details as $each_vehicle)
+            {
+                $vehicle_ids[]          =   $each_vehicle->id; 
+            }  
+            $vehicle_gps_ids            =   (new VehicleGps())->getGpsDetailsBasedOnVehiclesWithDates($vehicle_ids,$from_date,$to_date);
         }
-        $overspeed =  $this->overSpeedAlerts($single_vehicle_id,$client,$vehicle,$from,$to);        
+        foreach($vehicle_gps_ids as $vehicle_gps_id)
+        {
+            $single_vehicle_gps_ids[]   =   $vehicle_gps_id->gps_id;
+        }
+        $query                          =   (new Alert())->getOverspeedAlerts($single_vehicle_gps_ids); 
+        if($from_date)
+        {
+            $search_from_date           =   date("Y-m-d", strtotime($from_date));
+            $search_to_date             =   date("Y-m-d", strtotime($to_date));
+            $query                      =   $query->whereDate('device_time', '>=', $search_from_date)->whereDate('device_time', '<=', $search_to_date);
+        }
+        $overspeed                      =   $query->get();   
         return DataTables::of($overspeed)
         ->addIndexColumn()
-        // ->addColumn('location', function ($overspeed) {
-        //     $latitude= $overspeed->latitude;
-        //     $longitude=$overspeed->longitude;          
-        //     if(!empty($latitude) && !empty($longitude)){
-        //         //Send request and receive json data by address
-        //         $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key=AIzaSyAyB1CKiPIUXABe5DhoKPrVRYoY60aeigo&libraries=drawing&callback=initMap'); 
-        //         $output = json_decode($geocodeFromLatLong);         
-        //         $status = $output->status;
-        //         //Get address from json data
-        //         $address = ($status=="OK")?$output->results[1]->formatted_address:'';
-        //         //Return address of the given latitude and longitude
-        //         if(!empty($address)){
-        //             $location=$address;
-        //             return $location;                
-        //         }        
-        //     }
+        // ->addColumn('action', function ($overspeed) { 
+        // $b_url = \URL::to('/');             
+        //     return "
+        //     <a href=".$b_url."/alert/report/".Crypt::encrypt($overspeed->id)."/mapview class='btn btn-xs btn-info'><i class='glyphicon glyphicon-map-marker'></i> Map view </a>";
         // })
-        ->addColumn('action', function ($overspeed) { 
-        $b_url = \URL::to('/');             
-            return "
-            <a href=".$b_url."/alert/report/".Crypt::encrypt($overspeed->id)."/mapview class='btn btn-xs btn-info'><i class='glyphicon glyphicon-map-marker'></i> Map view </a>";
-        })
-        ->rawColumns(['link', 'action'])
+        // ->rawColumns(['link', 'action'])
         ->make();
     } 
+
     public function export(Request $request)
     {
         ob_end_clean(); 
         ob_start();
         return Excel::download(new OverSpeedReportExport($request->id,$request->vehicle,$request->fromDate,$request->toDate), 'over-speed-report.xlsx');
     } 
-
-
-    function overSpeedAlerts($single_vehicle_id,$client,$vehicle,$from,$to)
-    {
-        // dd($vehicle);
-        $query =Alert::select(
-            'id',
-            'alert_type_id', 
-            'device_time',    
-            'gps_id',
-            'latitude',
-            'longitude', 
-            'status'
-        )
-        ->with('alertType:id,description')
-        ->with('gps.vehicle');
-       if($vehicle==0 || $vehicle==null)
-        {
-            $query = $query->whereIn('gps_id',$single_vehicle_id)
-            ->where('alert_type_id',12)
-            ->orderBy('device_time', 'DESC')
-            ->limit(500);
-            // ->where('status',1);
-            if($from){
-               $search_from_date=date("Y-m-d", strtotime($from));
-                $search_to_date=date("Y-m-d", strtotime($to));
-                $query = $query->whereDate('device_time', '>=', $search_from_date)->whereDate('device_time', '<=', $search_to_date);
-            }
-        }
-        else
-        {
-            $query = $query ->where('gps_id',$single_vehicle_id)
-            ->where('alert_type_id',12)
-            ->orderBy('id', 'desc')
-            ->limit(500);
-            // ->where('status',1);
-            if($from){
-                $search_from_date=date("Y-m-d", strtotime($from));
-                $search_to_date=date("Y-m-d", strtotime($to));
-                $query = $query->whereDate('device_time', '>=', $search_from_date)->whereDate('device_time', '<=', $search_to_date);
-            }
-        }  
-        return $overspeed = $query->get();   
-    }   
 }

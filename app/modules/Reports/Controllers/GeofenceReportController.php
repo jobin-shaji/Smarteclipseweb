@@ -6,84 +6,52 @@ use App\Http\Controllers\Controller;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Modules\Gps\Models\GpsData;
 use App\Modules\Alert\Models\Alert;
-
 use App\Modules\Warehouse\Models\GpsStock;
 use App\Modules\Vehicle\Models\Vehicle;
+use App\Modules\Vehicle\Models\VehicleGps;
 use DataTables;
 class GeofenceReportController extends Controller
 {
     public function geofenceReport()
     {
-        $client_id=\Auth::user()->client->id;
-        $vehicles=Vehicle::select('id','name','register_number','client_id')
-        ->where('client_id',$client_id)
-        ->withTrashed()
-        ->get();
+        $client_id      =   \Auth::user()->client->id;
+        $vehicles       =   (new Vehicle())->getVehicleListBasedOnClient($client_id);
         return view('Reports::geofence-report',['vehicles'=>$vehicles]);  
     }  
     public function geofenceReportList(Request $request)
     {
-        $client_id=\Auth::user()->client->id;
-        $from = $request->from_date;
-        $to = $request->to_date;
-        $vehicle = $request->vehicle;
+        $single_vehicle_gps_ids             =   []; 
+        $client_id                          =   \Auth::user()->client->id;
+        $from_date                          =   $request->from_date;
+        $to_date                            =   $request->to_date;
+        $vehicle_id                         =   $request->vehicle;
       
-        if($vehicle==0 || $vehicle==null)
+        if( $vehicle_id ==  0 || $vehicle_id   ==  null )
         {
-            $gps_stocks=GpsStock::select('client_id','gps_id')->where('client_id',$client_id)->get();
-            $gps_list=[];
-            foreach ($gps_stocks as $gps) {
-                $gps_list[]=$gps->gps_id;
-            }
-            $query =Alert::select(          
-                'id',
-                'alert_type_id',
-                'device_time',   
-                'gps_id',
-                'latitude',
-                'longitude',
-                'status'
-            )
-            ->with('alertType:id,description')
-            ->with('gps.vehicle')
-            ->orderBy('device_time', 'DESC')
-           ->whereIn('gps_id',$gps_list)
-            ->whereIn('alert_type_id',[5,6])
-            ->orderBy('device_time', 'DESC')
-            ->limit(1000);           
+            $vehicle_details                =   (new Vehicle())->getVehicleListBasedOnClient($client_id);
+            $vehicle_ids                    =   [];
+            foreach($vehicle_details as $each_vehicle)
+            {
+                $vehicle_ids[]              =   $each_vehicle->id; 
+            }  
+            $vehicle_gps_ids                =   (new VehicleGps())->getGpsDetailsBasedOnVehiclesWithDates($vehicle_ids,$from_date,$to_date);
         }
         else
-        {
-           
-            $vehicle    =   Vehicle::select('id','gps_id')
-                            ->where('id',$vehicle)
-                            ->withTrashed()
-                            ->first();
-            $query =Alert::select(          
-                'id',
-                'alert_type_id',
-                'device_time',   
-                'gps_id',
-                'latitude',
-                'longitude',
-                'status'
-            )
-            ->with('alertType:id,description')
-            ->with('gps.vehicle')
-            ->orderBy('device_time', 'DESC')
-           ->where('gps_id',$vehicle->gps_id)
-            ->whereIn('alert_type_id',[5,6])
-            ->orderBy('device_time', 'DESC')
-            ->limit(1000);           
-        }       
-        if($from){
-            // $query = $query->whereBetween('device_time',[$from,$to]);
-            $search_from_date=date("Y-m-d", strtotime($from));
-                $search_to_date=date("Y-m-d", strtotime($to));
-                $query = $query->whereDate('device_time', '>=', $search_from_date)->whereDate('device_time', '<=', $search_to_date);
+        {  
+            $vehicle_gps_ids                =   (new VehicleGps())->getGpsDetailsBasedOnVehicleWithDates($vehicle_id,$from_date,$to_date);         
         }
-        $geofence = $query->get();  
-        // dd($geofence) ;  
+        foreach($vehicle_gps_ids as $vehicle_gps_id)
+        {
+            $single_vehicle_gps_ids[]       =   $vehicle_gps_id->gps_id;
+        }
+        $query                              =   (new Alert())->getGeofenceAlerts($single_vehicle_gps_ids);        
+        if($from_date)
+        {
+            $search_from_date               =   date("Y-m-d", strtotime($from_date));
+            $search_to_date                 =   date("Y-m-d", strtotime($to_date));
+            $query                          =   $query->whereDate('device_time', '>=', $search_from_date)->whereDate('device_time', '<=', $search_to_date);
+        }
+        $geofence                           =   $query->get();   
         return DataTables::of($geofence)
         ->addIndexColumn()
         ->make();
