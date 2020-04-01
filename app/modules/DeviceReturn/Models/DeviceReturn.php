@@ -102,6 +102,25 @@ class DeviceReturn extends Model
 					->where('id',$device_return_id)
 					->first();
 	}
+
+	public function getDeviceReassignDetails($gps_id)
+	{
+		return self::select(
+					'id', 
+					'return_code',
+					'gps_id',                      
+					'type_of_issues',
+					'comments',                                        
+					'created_at',
+					'servicer_id',
+					'status')
+					->where('gps_id',$gps_id)
+					->with('gps:id,imei,serial_no')
+					->with('servicer:id,name,sub_dealer_id,trader_id')
+					->where('status', '!=' , 1)
+					->orderBy('id','desc')
+					->get();
+	}
     
 }
 
