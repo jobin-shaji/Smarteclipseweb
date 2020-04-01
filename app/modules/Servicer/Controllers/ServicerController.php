@@ -273,13 +273,13 @@ class ServicerController extends Controller {
         {
             $title   ="New Insatallation Job"; 
             $message = ['job_id'  => $job_id,
-                        'title'   => $tttle,
+                        'title'   => $title,
                         'content' => $request->description,
                         'type'    => "INSTALLATION",
                         'date'    => date('Y-m-d H:i:s')
                          ];
         }else{
-            $tttle   = "New Service Job"; 
+            $title   = "New Service Job"; 
             $message = ['job_id'  => $job_id,
                         'title'   => $title,
                         'content' => $request->description,
@@ -298,7 +298,7 @@ class ServicerController extends Controller {
         $servicer = Servicer::find($request->servicer);      
         $devices  = $servicer->devices;
         foreach ($devices as $device) {
-            $this->fcmPushNotification($device->firebase_token,$tttle,$message);
+            $this->fcmPushNotification($device->firebase_token,$title,$message);
         }
 
      
@@ -428,9 +428,9 @@ class ServicerController extends Controller {
             ]);
             if($request->job_type == 1)
             {
-                $tttle   ="New Insatallation Job"; 
+                $title   ="New Insatallation Job"; 
                 $message = ['job_id'  => $job_id,
-                            'title'   => $tttle,
+                            'title'   => $title,
                             'content' => $request->description,
                             'type'    => "INSTALLATION",
                             'date'    => date('Y-m-d H:i:s')
@@ -455,7 +455,7 @@ class ServicerController extends Controller {
             $servicer = Servicer::find($request->servicer);      
             $devices  = $servicer->devices;
             foreach ($devices as $device) {
-                $this->fcmPushNotification($device->firebase_token,$tttle,$message);
+                $this->fcmPushNotification($device->firebase_token,$title,$message);
             }
             $request->session()->flash('message', 'Assigned Job successfully!');
             $request->session()->flash('alert-class', 'alert-success');
@@ -1978,11 +1978,11 @@ public function serviceJobDetails(Request $request)
     }
 
 
-    public static function fcmPushNotification($device_id,$tttle,$message)
+    public static function fcmPushNotification($device_id,$title,$message)
     {
         $api_key = 'AAAAgmOkdoQ:APA91bE2v6k93s_cXtcscgODZkDBFT2_D-6DpY_aPt_pwpvKJBHjSURcHrxh4TJfPoNPAOjmp8J7AEVQsNd7eAjr1HHSZ5quR4mz6JRgQtfaE47BYwrwrlVuTp8fJgfLDbmjWumfmVdF';
         $url = 'https://fcm.googleapis.com/fcm/send';
-        $title = $tttle;
+        $title = $title;
         $body = json_encode($message,true);
         $n = [
             "to"=> $device_id,
