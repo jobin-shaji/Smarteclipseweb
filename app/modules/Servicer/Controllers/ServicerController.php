@@ -289,9 +289,10 @@ class ServicerController extends Controller {
         }
               
         ServicerNotification::create([
-                                        'servicer_id'=> $request->servicer,
-                                        'title'      => $tttle,
-                                        'data'       => json_encode($message,true)
+                                        'servicer_id'       => $request->servicer,
+                                        'service_job_id'    =>$servicer->id
+                                        'title'             => $tttle,
+                                        'data'              => json_encode($message,true)
                                     ]);
 
         $servicer = Servicer::find($request->servicer);      
@@ -445,10 +446,11 @@ class ServicerController extends Controller {
             }
                   
             ServicerNotification::create([
-                                            'servicer_id'=> $request->servicer,
-                                            'title'      => $tttle,
-                                            'data'       => json_encode($message,true)
-                                        ]);
+                                        'servicer_id'       => $request->servicer,
+                                        'service_job_id'    =>$servicer->id
+                                        'title'             => $tttle,
+                                        'data'              => json_encode($message,true)
+                                    ]);
 
             $servicer = Servicer::find($request->servicer);      
             $devices  = $servicer->devices;
