@@ -20,9 +20,9 @@ Route::group(['middleware' => ['web','auth','role:client|school'] , 'namespace' 
 	// Route::post('/alert-report-list-demo','AlertReportController@alertReportListDemo')->name('alert-report-list-demo');
 
 	Route::get('/alert/report/{id}/mapview','AlertReportController@location')->name('alert.report.mapview');
+	Route::get('/alert/report/{id}/map_view','AlertReportController@alertMapView')->name('alert.report.map_view');
 	Route::post('/alert/report/show','AlertReportController@alertmap')->name('alert.report.show');
 	Route::post('/alert-report/export','AlertReportController@export')->name('alert.report.export');
-
 	// tracking report
 	Route::get('/tracking-report','TrackingReportController@trackingReport')->name('tracking-report');
 	Route::post('/track-report-list','TrackingReportController@trackReportList')->name('track-report-list');
