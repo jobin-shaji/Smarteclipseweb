@@ -440,7 +440,7 @@
 
 
 
-                getLocationData();
+                getLocationData(startDate,endDate);
                $('.left-alert-box').css('display','block');
 
                if($('#fromDate').val() !="" && $('#toDate').val() != "" )
@@ -463,11 +463,11 @@
          playback_speed       = playback_speed_base/playback_speed_rate;
         }
 
-        function getLocationData(){
+        function getLocationData(startDate,endDate){
              mapUpdateInterval_location   = window.setInterval(function(){
               if(!pauseMapRendering)
               {
-                plotLocationOnMap();
+                plotLocationOnMap(startDate,endDate);
               }
              }, playback_speed);
 
@@ -720,7 +720,7 @@
 
 
 
-        function plotLocationOnMap()
+        function plotLocationOnMap(startDate,endDate)
         {
 
             // console.log('Current length '+location_data_que.length);
@@ -757,7 +757,7 @@
 
                     moveMarker(direction,endPointLatitude,endPointLongitude,vehicle_mode);
                     addPolylineToMap(startPointLatitude,startPointLongitude,endPointLatitude,endPointLongitude);
-                    kmCalculation(startPointLatitude,startPointLongitude,endPointLatitude,endPointLongitude);
+                    kmCalculation(startPointLatitude,startPointLongitude,endPointLatitude,endPointLongitude,startDate,endDate);
                 }
                 startPointLatitude  = location_data_que[0].lat;
                 startPointLongitude = location_data_que[0].lng;
@@ -1086,14 +1086,33 @@
 
        //  }
 
-        function kmCalculation(lat1,lng1,lat2,lng2) {
+        // function kmCalculation(lat1,lng1,lat2,lng2) {
 
-          var p1 = new google.maps.LatLng(lat1,lng1);
-          var p2 = new google.maps.LatLng(lat2,lng2);
-          var total_distance = google.maps.geometry.spherical.computeDistanceBetween(p1, p2) ;
+        //   var p1 = new google.maps.LatLng(lat1,lng1);
+        //   var p2 = new google.maps.LatLng(lat2,lng2);
+        //   var total_distance = google.maps.geometry.spherical.computeDistanceBetween(p1, p2) ;
 
-              km_data            = km_data+total_distance;
-             $('#km_data').text((km_data/1000).toFixed(2));
+        //       km_data            = km_data+total_distance;
+        //      $('#km_data').text((km_data/1000).toFixed(2));
+        // }
+
+          //  -----01/04/2020-----------
+        function kmCalculation(lat1,lng1,lat2,lng2,fromdate,todate) 
+        {
+          $.ajax({
+                type:'POST',
+                url: "/playback-km",
+                data: {'fromdate':fromdate,'todate':todate},
+                async: true,
+                headers: {
+                    'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function (res) 
+                {
+                  $('#km_data').text(res);
+                }
+  
+            });
         }
 
        function stopPlayback(){

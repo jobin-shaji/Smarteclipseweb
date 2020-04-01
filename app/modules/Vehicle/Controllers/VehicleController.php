@@ -2790,7 +2790,12 @@ class VehicleController extends Controller
         return response()->json($response);
     }
 
-
+    public function Playbackkm(Request $request)
+    {
+        dd($request->fromdate);
+        dd($request->todate);
+        return 15023.2;
+    }
 
 
 
