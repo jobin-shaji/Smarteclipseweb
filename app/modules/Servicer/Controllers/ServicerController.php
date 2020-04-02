@@ -572,27 +572,29 @@ class ServicerController extends Controller {
         }
         else
         {
-            $passed_stage_from_url   =    $service_engineer_installation->job_status;
+            $passed_stage_from_url     =    $service_engineer_installation->job_status;
            
-           if($passed_stage_from_url         ==   0)
-           {
-                  $job_plan          =    $service_engineer_installation->role;
+           if($passed_stage_from_url   ==   0)
+            {
+                $job_plan              =    $service_engineer_installation->role;
            
                 if($service_engineer_installation->unboxing_checklist != null)
                 {
-                $unboxing_checklist   =    json_decode($service_engineer_installation->unboxing_checklist, true);
-                  
-                }
+                     $unboxing_checklist    =    json_decode($service_engineer_installation->unboxing_checklist, true);
+                 }
                 else
                 {
-                $check_list_configuration = (new Configuration())->getConfiguration('gps_unboxing_checklist');
+                    $check_list_configuration   =  (new Configuration())->getConfiguration('gps_unboxing_checklist');
               
-                if(isset($check_list_configuration[0])&& isset($job_plan)) {
-                $unboxing_checklist=json_decode($check_list_configuration[0]['value'],true )[$job_plan];
+                      if(isset($check_list_configuration[0])&& isset($job_plan))
+                         {
+                           $unboxing_checklist  =  json_decode($check_list_configuration[0]['value'],true )[$job_plan];
            
+                           
+                         }
                 }
-                }
-               $stage=$service_engineer_installation->job_status ;
+                $stage=$service_engineer_installation->job_status ;
+
                 return view('Servicer::new-installation-first-step',['unboxing_checklist' => $unboxing_checklist,'servicerjob_id'=>$servicerjob_id,'pass_servicer_jobid'=>$pass_servicer_jobid]);
             }
             else if($passed_stage_from_url==1)
@@ -614,19 +616,16 @@ class ServicerController extends Controller {
     public function getchecklist(Request $request)
     {
     
-       // $servicer_jobid  = $request->id;
-       $servicer_jobid =Crypt::decrypt($request->id);
+       
+        $servicer_jobid =Crypt::decrypt($request->id);
         $pass_servicer_jobid=Crypt::encrypt($servicer_jobid);
        
-        // $rules=$this->updateChecklistRule();
-        // $this->validate($request,$rules);
-           
-         if(isset($_POST['checkbox_first_installation']))
+        if(isset($_POST['checkbox_first_installation']))
             {
-             $checklist       = $_POST['checkbox_first_installation'];
+               $checklist   =   $_POST['checkbox_first_installation'];
             }
             else
-             {
+            {
                $request->session()->flash('message', 'Please select atleast one checkobox');
                $request->session()->flash('alert-class', 'alert-danger');
                return redirect()->back()->with('success', ['your message,here']); 
@@ -651,11 +650,11 @@ class ServicerController extends Controller {
                    {
                       $unboxing_checklist=json_decode($check_list_configuration[0]['value'],true )[$job_plan];
                    }
-                 }
-                 $check_list_items    =  $unboxing_checklist['checklist'][0]['items'];
-                  $i=0;
-                foreach ($check_list_items as $items)
-                 {
+                  }
+                  $check_list_items    =  $unboxing_checklist['checklist'][0]['items'];
+                    $i=0;
+                    foreach ($check_list_items as $items)
+                    {
                     if (in_array($items['id'], $checklist))
                     {
                         $unboxing_checklist['checklist'][0]['items'][$i]['checked'] = true;
@@ -664,11 +663,11 @@ class ServicerController extends Controller {
                     }
                     $i++;
                  }
-               $service_engineer_installation->unboxing_checklist = json_encode($unboxing_checklist,true);
-                $service_engineer_installation->job_status         = self::JOB_UNBOXING_STAGE;
-                $service_engineer_installation->status=  self::JOB_STATUS_IN_PROGRESS;
-                $service_engineer_installation->save();
-               return redirect('/servicer-installation-vehicle-details/'.$pass_servicer_jobid.'/vehicle-add');
+                 $service_engineer_installation->unboxing_checklist = json_encode($unboxing_checklist,true);
+                 $service_engineer_installation->job_status         = self::JOB_UNBOXING_STAGE;
+                 $service_engineer_installation->status=  self::JOB_STATUS_IN_PROGRESS;
+                 $service_engineer_installation->save();
+                 return redirect('/servicer-installation-vehicle-details/'.$pass_servicer_jobid.'/vehicle-add');
  // for installation job completion
        
          }
@@ -721,22 +720,24 @@ public function getVehicleAddPage(Request $request)
                   }
                  else
                  {
-                     $passed_stage_from_url        =    $servicer_job->job_status;
+                    $passed_stage_from_url        =    $servicer_job->job_status;
                   
-                   if($passed_stage_from_url               ==  1)
+                   if($passed_stage_from_url       ==  1)
                      {
                         $drivers                   =    Driver::select('id','name')
                                                        ->where('client_id',$client_id)
                                                        ->get();
                         $makes                     =    VehicleMake::select('id','name')->get();
             
-                         $models                   =    VehicleModels::select('id','name')->get();
-                          if($servicer_job == null)
-                           {
-                           return view('Servicer::404');
-                           }
+                        $models                   =    VehicleModels::select('id','name')->get();
+                          
+
+                           if($servicer_job == null)
+                            {
+                            return view('Servicer::404');
+                            }
               
-                           return view('Servicer::new-installation-second-step',['servicer_job' => $servicer_job,'vehicleTypes'=>$vehicleTypes,
+                            return view('Servicer::new-installation-second-step',['servicer_job' => $servicer_job,'vehicleTypes'=>$vehicleTypes,
                               'models'=>$models,'client_id'=>$request->id,'drivers'=>$drivers,'makes'=>$makes,
                                'servicerjob_id'=>$servicer_jobid,'pass_servicer_jobid'=>$request->id]);
 
@@ -813,7 +814,7 @@ public function getVehicleAddPage(Request $request)
                              $command_configuration[$i]['checked']=false;
                             }
                             $i++;
-                            }
+                        }
                 
                 $service_eng_installation_command->device_command = json_encode($command_configuration,true); 
                 $service_eng_installation_command->job_status  =  self::JOB_COMMAND_STAGE;
@@ -1283,8 +1284,8 @@ public function serviceJobDetails(Request $request)
  {
     $servicer_jobid=Crypt::decrypt($request->id);
 
-          $service_eng_installation_command   = (new ServicerJob())->getInstallationJob($servicer_jobid);
-      //for listing command
+        $service_eng_installation_command   = (new ServicerJob())->getInstallationJob($servicer_jobid);
+   
         if($service_eng_installation_command  == null)
         {
             $request->session()->flash('message', 'jobs not found for the servicer');
@@ -1299,7 +1300,7 @@ public function serviceJobDetails(Request $request)
              
                 if($service_eng_installation_command->device_command != null)
                     {
-        $command_configuration  = json_decode($service_eng_installation_command->device_command,true);
+                    $command_configuration  = json_decode($service_eng_installation_command->device_command,true);
                     }
                     else
                     {
@@ -1309,13 +1310,11 @@ public function serviceJobDetails(Request $request)
                          $command_configuration=json_decode($command_configuration[0]['value'],true )[$job_plan];
 
                     }
-
-              
-                }
+                    }
                  return view('Servicer::new-installation-third-step',['command_configuration' => $command_configuration,
                'servicer_jobid'=>$servicer_jobid,'pass_servicer_jobid'=>$request->id]);
             }
-              else if($passed_stage_from_url==1)
+            else if($passed_stage_from_url==1)
                 {
                     return redirect('/servicer-installation-vehicle-details/'.$pass_servicer_jobid.'/vehicle-add');
                 }
@@ -1325,14 +1324,13 @@ public function serviceJobDetails(Request $request)
                     
                 }
               
-            else if(($passed_stage_from_url==3) || ($passed_stage_from_url==4)) {
+            else if(($passed_stage_from_url==3) || ($passed_stage_from_url==4)) 
+                {
                      return redirect('/servicer-installation-devicetest-details/'.$pass_servicer_jobid.'/device-add');
                }
      
         }
-
-
- }
+    }
     // for service
     public function jobSave(Request $request)
     {

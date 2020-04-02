@@ -167,9 +167,9 @@ Assign Servicer
 
 <div class="pull-right cover_list_search">
         <div class="row" >
-            <div class="col-lg-12" >
-  <form  method="POST" action="{{route('finish.testcase.save.p',$servicer_jobid)}}">
-   {{csrf_field()}}
+         <div class="col-lg-12" >
+          <form  method="POST" action="{{route('finish.testcase.save.p',$servicer_jobid)}}">
+          {{csrf_field()}}
                  <div class="row">
                     <div class="col-lg-2" style="margin: 0 0px 18px 0;">
                       <div class="form-group" style="width: 50%;">
@@ -179,9 +179,9 @@ Assign Servicer
                     </div>
                     </div>
                 </form>
-                  </div>
+              </div>
             </div>
-        </div>
+         </div>
         <br>
         <br>
         <br>
@@ -189,7 +189,10 @@ Assign Servicer
    @endif
 
 </div>
+<!-- </div>
+</div> -->
 @endsection
+
 <style>
   .btn-primary {
   color: #4CAF50; }
