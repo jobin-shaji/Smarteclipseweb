@@ -105,6 +105,9 @@ Route::group(['middleware' => ['web','auth','role:client|school'] , 'namespace' 
 	Route::post('/trip-report','TripReportController@TripReport')->name('trip.report.p');
 	
 Route::get('/trip-report-download','TripReportController@TripReportDownload')->name('trip-report.download');
+Route::post('/trip-report-download','TripReportController@TripReportDownloadList')->name('trip.report.download.list');
+
+
 
 });
 
