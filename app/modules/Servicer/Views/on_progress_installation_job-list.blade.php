@@ -32,7 +32,7 @@ $key        = (isset($_GET['new_installation_search_key'])) ? $_GET['new_install
         <div class="row" >
             <div class="col-lg-12" >
                  <div class="row">
-                    <div class="col-lg-8">
+                    <div class="col-lg-7">
                       <div class="form-group" style="width: 100%;">
                          <input type="text" class="form-control" placeholder="Enter Serial No,Assigne,user name,user email,user mobile,registration number" name="new_installation_search_key" id="new_installation_search_key" value="{{ $key }}">
                       </div>
@@ -94,6 +94,7 @@ $key        = (isset($_GET['new_installation_search_key'])) ? $_GET['new_install
                     <br>{{$servicer_job->user_email}}<br>{{$servicer_job->client_address}}
                     </td>
                     <td>{{$servicer_job->user_name}}</td>
+
                     <td>{{ ($servicer_job->gps_serial_no) ? $servicer_job->gps_serial_no: ''}}</td>
                     <td>{{$servicer_job->description}}</td>
                     <td>{{$servicer_job->location}}</td>
@@ -111,7 +112,9 @@ $key        = (isset($_GET['new_installation_search_key'])) ? $_GET['new_install
                     <td><font color='red'>Cancelled</font></td>
                     @elseif ($servicer_job->status == 2)
                   
-                    <td> <a href="/job/{{Crypt::encrypt($servicer_job->id)}}/details"class='btn btn-xs btn-info'><i class='glyphicon glyphicon-map-marker'></i>Job Completion</a></td>      
+                    <td> 
+                      <a 
+                      href="/servicer-installation-vehicle-details/{{Crypt::encrypt($servicer_job->id)}}/vehicle-add"class='btn btn-xs btn-info'><i class='glyphicon glyphicon-map-marker'></i>View</a></td>      
                   
                     @else
                     <td>Completed</td>     
@@ -122,6 +125,13 @@ $key        = (isset($_GET['new_installation_search_key'])) ? $_GET['new_install
         </table>
         </div>
         <style>
+        .table td, .table th {
+          padding: 16px 16px;
+            vertical-align: top;
+            border-top: 0px solid #dee2e6;
+             /*overflow: hidden;*/
+        }
+
           th {
                 background-color:#778899 ;
                 color: white;
@@ -140,6 +150,9 @@ $key        = (isset($_GET['new_installation_search_key'])) ? $_GET['new_install
           .btninst-primary {
               color: #fff!important;
               background-color: #3ab3bf;
+          }
+          td:last-child {
+           white-space: nowrap;
           }
           </style>
         @endsection

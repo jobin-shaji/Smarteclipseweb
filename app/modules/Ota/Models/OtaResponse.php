@@ -19,4 +19,11 @@ public function sendOtaResponse($gps_id = null, $command = '')
             'response'  => $command
         ]);
     }
+     public function checkOTARequested($command,$gps)
+    {
+       return self::where('response',$command)
+       ->where('gps_id',$gps)
+       ->whereNull('sent_at')
+       ->count(); 
+    }
 }

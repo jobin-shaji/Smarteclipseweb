@@ -50,7 +50,7 @@ Assign Servicer
 <h4 class="panel-title">Installation check list</h4>
 </div>
 <div class="panel-body">
-<form  method="POST" action="{{route('checkbox.installation.save.p',$servicerjob_id)}}">
+<form  method="POST" action="{{route('checkbox.installation.save.p',$pass_servicer_jobid)}}">
    {{csrf_field()}}
  
  <div class="row">
