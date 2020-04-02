@@ -1284,8 +1284,8 @@ public function serviceJobDetails(Request $request)
  {
     $servicer_jobid=Crypt::decrypt($request->id);
 
-        $service_eng_installation_command   = (new ServicerJob())->getInstallationJob($servicer_jobid);
-   
+          $service_eng_installation_command   = (new ServicerJob())->getInstallationJob($servicer_jobid);
+      //for listing command
         if($service_eng_installation_command  == null)
         {
             $request->session()->flash('message', 'jobs not found for the servicer');
@@ -1324,14 +1324,16 @@ public function serviceJobDetails(Request $request)
                     
                 }
               
-            else if(($passed_stage_from_url==3) || ($passed_stage_from_url==4)) 
-                {
+            else if(($passed_stage_from_url==3) || ($passed_stage_from_url==4)) {
                      return redirect('/servicer-installation-devicetest-details/'.$pass_servicer_jobid.'/device-add');
                }
      
         }
-    }
-    // for service
+
+
+ }
+    // for service job save
+ 
     public function jobSave(Request $request)
     {
 
