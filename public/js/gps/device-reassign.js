@@ -66,12 +66,8 @@ function reassigndevice()
 }
 function Reassignredirect()
 {
-  // var url = '/devicereassign/create';
-  // $.ajax({
-  //   type:'get',
-  //   data:{},
-  //   url: "/devicereassign/create"
-  // });
+  
+  // window.location = "/devicereassign/create";
   $('#preview_table').hide();
   $('#preview').hide();
   $('#count_data').hide();

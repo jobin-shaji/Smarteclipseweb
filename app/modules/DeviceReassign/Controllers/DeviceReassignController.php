@@ -44,17 +44,9 @@ class DeviceReassignController extends Controller
      */
 
     public function hierarchylist(Request $request)
-    {
+    {       
         $data  =   (new Gps())->getDeviceHierarchyDetails($request->imei);
-        if($data->vehicle['id'] == null)
-        {
-            $vehicle = "";
-        }
-        else
-        {
-            $vehicle = $data->vehicle['id'];
-        }
-        return view('DeviceReassign::device-reassign-create',['data'=>$data,'vehicle'=>$vehicle]);
+        return view('DeviceReassign::device-reassign-create',['data'=>$data]);
     }
     /**
      * 
@@ -111,7 +103,6 @@ class DeviceReassignController extends Controller
         VehicleGeofence::where('vehicle_id',$vehicle)->delete();
         ServicerJob::where('gps_id',$gps)->delete();
         Vehicle::where('gps_id',$request->gps)->delete();
-
         if($reassign_type_id == 4)
         {
             GpsStock::where('gps_id',$gps)->update(['client_id' => null]);
@@ -120,8 +111,7 @@ class DeviceReassignController extends Controller
             ->where('from_user_id',$trader->user_id)
             ->where('to_user_id',$client->user_id)
             ->first();
-            $gps_transfer_id = $gps_transfer_log->id; 
-            
+            $gps_transfer_id = $gps_transfer_log->id;             
             $count_of_transfer_item = GpsTransferItems::select('id')
                                      ->where('gps_transfer_id',$gps_transfer_id)
                                      ->count();
@@ -130,7 +120,9 @@ class DeviceReassignController extends Controller
                 // Delete $gps_transfer_log
                 GpsTransfer::where('id',$gps_transfer_log->id)->forceDelete();
                 // Delete  row in gps_transfer_item 
-                GpsTransferItems::where('gps_transfer_id',$gps_transfer_id)->where('gps_id', $gps)->delete();
+                GpsTransferItems::where('gps_transfer_id',$gps_transfer_id)
+                ->where('gps_id', $gps)
+                ->delete();
             }
             else
             {
@@ -185,11 +177,10 @@ class DeviceReassignController extends Controller
             ->where('from_user_id',$subdealer->user_id)
             ->where('to_user_id',$trader->user_id)
             ->first();
-            $gps_transfer_id = $gps_transfer_log->id; 
-            
+            $gps_transfer_id = $gps_transfer_log->id;            
             $count_of_transfer_item = GpsTransferItems::select('id')
-                                     ->where('gps_transfer_id',$gps_transfer_id)
-                                     ->count();
+             ->where('gps_transfer_id',$gps_transfer_id)
+             ->count();
             If($count_of_transfer_item == 1)
             {
                 // Delete $gps_transfer_log
