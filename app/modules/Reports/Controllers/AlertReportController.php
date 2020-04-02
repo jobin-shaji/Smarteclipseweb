@@ -34,7 +34,6 @@ class AlertReportController extends Controller
         ->withTrashed()
         ->get();
         $user=\Auth::user();         
-        // return view('Reports::alert-report',['Alerts'=>$AlertType,'vehicles'=>$vehicles]); 
         return view('Reports::alert-report-ms',['Alerts'=>$AlertType,'vehicles'=>$vehicles]); 
     } 
     public function alertReportList(Request $request)
@@ -151,7 +150,6 @@ class AlertReportController extends Controller
     {
         ob_end_clean(); 
         ob_start();
-        // return Excel::download(new AlertReportExport($request->id,$request->alert,$request->vehicle,$request->fromDate,$request->toDate), 'Alert-report.xlsx');  
         return Excel::download(new AlertMsReportExport($request->user_id,$request->alert_type,$request->vehicle_id,$request->start_date,$request->end_date), 'Alert-report.xlsx');  
     }
 

@@ -1,93 +1,104 @@
-function check()
+var filterData = [];
+var user_id    = $("#user_id").val();
+
+function getMsGeofenceAlerts()
 {
-    if(document.getElementById('vehicle').value == '')
-    {
-        alert('Please select Vehicle');
-    }
-    else if(document.getElementById('fromDate').value == '')
-    {
-        alert('Please select From date');
-    }
-    else if(document.getElementById('toDate').value == '')
-    {
-        alert('Please select To date');
-    }
-    else
-    {
-        calculate();
-        var client      =   $('meta[name = "client"]').attr('content');
-        var from_date   =   document.getElementById('fromDate').value;
-        var to_date     =   document.getElementById('toDate').value;
-        var vehicle     =   document.getElementById('vehicle').value;
-        var data        =   {'client':client,'vehicle':vehicle, 'from_date':from_date , 'to_date':to_date};
-        if(to_date == '')
-        {
-            $("#geofence_report_download").hide(); 
-            $('#dataTable tbody').empty();
-        }
-        else{
-            callBackDataTable(data);
-        }
-    }
-}
-function calculate() 
-{
-    var d1              =   $('#fromDate').data("DateTimePicker").date();
-    var d2              =   $('#toDate').data("DateTimePicker").date();
-    var timeDiff        =   0
-    if(d2) 
-    {
-        timeDiff        =   (d2 - d1) / 1000;
-    }
-    var DateDiff        =   Math.floor(timeDiff / (60 * 60 * 24));
-    if(DateDiff>15)
-    {
-        document.getElementById("toDate").value = "";
-        alert("Please select date upto 15 days ");
-    }
+    getFilterData();
+    var url = url_ms_alerts + "/alert-report";
+    ajaxRequestMs(url,filterData,'POST',successGeofenceAlertFilter,failedGeofenceAlertFilter)
 }
 
-function callBackDataTable(data=null)
+function successGeofenceAlertFilter(response) 
 {
-    $("#geofence_report_download").show(); 
-    $('#dataTable').show();
-    $("#dataTable").DataTable({
-        bStateSave: true,
-        bDestroy: true,
-        bProcessing: true,
-        serverSide: true,
-        deferRender: true,
-        // order: [[1, 'desc']],
-        ajax: {
-            url: 'geofence-report-list',
-            type: 'POST',
-            data:data,
-            headers: {
-                'X-CSRF-Token': $('meta[name = "csrf-token"]').attr('content')
-            }
-        },
-
-        fnDrawCallback: function (oSettings, json) {
-
-
-        },
-        columns: [
-            {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: true, searchable: false},
-            {data: 'vehicle_gps.vehicle.name', name: 'vehicle_gps.vehicle.name', orderable: false},
-            {data: 'vehicle_gps.vehicle.register_number', name: 'vehicle_gps.vehicle.register_number', orderable: false},
-            {data: 'alert_type.description', name: 'alert_type.description', orderable: false},
-            {data: 'device_time', name: 'device_time', orderable: false},
-
-        ],
-
-        aLengthMenu: [[25, 50, 100, -1], [25, 50, 100, 'All']]
+    var table       = $(".geo-fence-report-table").find('tbody');
+    var tbody       = "";
+    var alertData   = response.data.alerts;
+    var page        = parseInt(response.data.page);
+    table.html("");
+    $(".loader-1").hide();
+    $.each(alertData,function(key , alert){    
+        tbody += "<tr>"+
+                        "<td>"+page+"</td>"+
+                        "<td>"+alert.gps.connected_vehicle_name+"</td>"+
+                        "<td>"+alert.address+"</td>"+
+                        "<td>"+alert.gps.connected_vehicle_registration_number+"</td>"+
+                        "<td>"+alert.alert_type.description+"</td>"+
+                        "<td>"+alert.device_time+"</td>"+
+                    "</tr>";
+        page =  page + 1;
+        showTable();
     });
+    if(alertData.length == 0)
+    {
+        tbody = '<td colspan ="6"> No data available</td>';
+        hideDownloadBtn()
+    }
+    if(response.data.total_pages > 1)
+    {
+        $('body').find('#giofence-report-pagination').html(response.data.link);
+    }else{
+        $('body').find('#giofence-report-pagination').html("");
+    }
+    
+    table.html(tbody);
 }
 
-var disabledDates = ["2019-11-02"];
+function failedGeofenceAlertFilter(error) 
+{
+    $(".loader-1").hide();
+}
 
+function showTable() 
+{
+    $(".geo-fence-report-table").show();    
+    $(".download-btn").show();
+}
 
+function hideDownloadBtn() 
+{
+    $(".download-btn").hide();
+}
 
+function pagination(url)
+{
+    getFilterData();
+    ajaxRequestMs(url,filterData,'POST',successGeofenceAlertFilter,failedGeofenceAlertFilter)
+}
 
+function getFilterData() 
+{
+    var form = $("#form-giofence-report")[0];
+    filterData = new FormData(form);
+    filterData.append("user_id",user_id); 
+    filterData.append("alert_type[]",18); 
+    filterData.append("alert_type[]",19); 
+}
 
+function downloadAlertMsReport() 
+{
+    var url = 'geofence-report/export';
+    var data = {
+            user_id     : user_id,
+            vehicle_id  : $('#vehicle_id').val(),
+            start_date  : $('#fromDate').val(),
+            end_date    : $('#toDate').val(),
+    };
+    downloadFile(url,data);
+}
 
+$(function(){
+   
+    $("#form-giofence-report").submit(function(event){
+        event.preventDefault();
+        $(".loader-1").show();
+        getMsGeofenceAlerts();
+    })
+
+    $('body').find("#giofence-report-pagination").on("click","a.page-link",function(event){
+        event.preventDefault();
+        $(".loader-1").show();
+        pagination($(this).attr("href"))
+
+    })
+
+});
