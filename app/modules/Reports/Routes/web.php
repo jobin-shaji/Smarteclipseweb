@@ -103,7 +103,8 @@ Route::group(['middleware' => ['web','auth','role:client|school'] , 'namespace' 
 
 	Route::get('/trip-report','TripReportController@TripReportView')->name('trip-report.view');
 	Route::post('/trip-report','TripReportController@TripReport')->name('trip.report.p');
-
+	
+Route::get('/trip-report-download','TripReportController@TripReportDownload')->name('trip-report.download');
 
 });
 

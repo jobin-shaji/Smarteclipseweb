@@ -253,7 +253,8 @@ class ServicerController extends Controller {
         // $location_lat=$placeLatLng['latitude'];
         // $location_lng=$placeLatLng['logitude'];
         $user_id=\Auth::user()->id;
-        $servicer = ServicerJob::create([
+        //Service Job
+        $service_job = ServicerJob::create([
             'servicer_id' => $request->servicer,
             'client_id' => $request->client,
             'job_id' => $job_id,
@@ -289,9 +290,10 @@ class ServicerController extends Controller {
         }
               
         ServicerNotification::create([
-                                        'servicer_id'=> $request->servicer,
-                                        'title'      => $tttle,
-                                        'data'       => json_encode($message,true)
+                                        'servicer_id'       => $request->servicer,
+                                        'service_job_id'    =>$service_job->id,
+                                        'title'             => $title,
+                                        'data'              => json_encode($message,true)
                                     ]);
 
         $servicer = Servicer::find($request->servicer);      
@@ -445,10 +447,11 @@ class ServicerController extends Controller {
             }
                   
             ServicerNotification::create([
-                                            'servicer_id'=> $request->servicer,
-                                            'title'      => $tttle,
-                                            'data'       => json_encode($message,true)
-                                        ]);
+                                        'servicer_id'       => $request->servicer,
+                                        'service_job_id'    =>$service_job->id,
+                                        'title'             => $title,
+                                        'data'              => json_encode($message,true)
+                                    ]);
 
             $servicer = Servicer::find($request->servicer);      
             $devices  = $servicer->devices;

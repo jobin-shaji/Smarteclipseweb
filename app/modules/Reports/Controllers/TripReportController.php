@@ -7,6 +7,7 @@ use App\Modules\Vehicle\Models\Vehicle;
 use App\Http\Traits\VehicleDataProcessorTrait;
 use App\Modules\Alert\Models\Alert;
 use DB;
+use File;
 use Carbon\Carbon;
 use App\Modules\Vehicle\Models\KmUpdate;
 use DataTables;
@@ -82,6 +83,11 @@ class TripReportController extends Controller
         return view('Reports::trip-report',compact('vehicles','trips'));
 
     }  
+    public function TripReportDownload()
+    {
+        $files = File::allFiles('documents/trip_report');
+        return view('Reports::trip-report-download-list',['files'=>$files]);
+    }
 
     public function tripReortRules()
     {
