@@ -282,6 +282,36 @@ class ServicerJob extends Model
                 {
                     return self::find($servicerjob_id);
                 }
+        public function getNewClientServiceList($key = null)
+        {
+          $client_id=\Auth::user()->client->id;
+
+          $query = DB::table('servicer_jobs')
+            ->join('clients', 'servicer_jobs.client_id', '=', 'clients.id')
+            ->join('users', 'users.id', '=', 'clients.user_id')
+            ->join('servicers', 'servicer_jobs.servicer_id', '=','servicers.id')
+            ->join('gps', 'servicer_jobs.gps_id', '=', 'gps.id')
+            ->select('servicer_jobs.id','servicer_jobs.status','servicer_jobs.job_id','clients.name as client_name','servicer_jobs.completion_code','servicer_jobs.comment',
+            'users.username as user_name','users.email as user_email','users.mobile as mobile_number','servicers.name as servicer_name' ,
+            'servicer_jobs.description','servicer_jobs.location','servicer_jobs.status',
+            'servicer_jobs.job_date','servicer_jobs.status','servicer_jobs.job_type',
+            'gps.serial_no as gps_serial_no','clients.address as client_address')
+            ->where('client_id',$client_id)
+            ->where('job_type',2)
+            ->whereNull('job_complete_date')
+            ->where('servicer_jobs.status',1);
+            if( $key != null )
+            {
+              $query->where(function($query) use($key){
+                $query = $query->where('clients.name','like','%'.$key.'%')
+                  ->orWhere('gps.serial_no','like','%'.$key.'%')
+                  ->orWhere('users.mobile','like','%'.$key.'%')
+                  ->orWhere('users.username','like','%'.$key.'%')
+                  ->orWhere('users.email','like','%'.$key.'%');
+              });       
+            }
+            return $query->paginate(10);
+        }  
 
                }
 

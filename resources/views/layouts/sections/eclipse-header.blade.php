@@ -187,6 +187,17 @@
                     </div>
                    
                 </li>
+
+                <li class="nav-item dropdown-submenu">
+                    <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> JOBS
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{{url('/client-job-list')}}"> JOB LIST<span></span></a>                              
+                                                      
+                    </div>
+                   
+                </li>
                 <li class="nav-item dropdown-submenu">
                     <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> REPORTS
                     </a>
