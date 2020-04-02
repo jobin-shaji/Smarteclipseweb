@@ -923,7 +923,7 @@ public function getDeviceTestAddPage(Request $request)
     public function completeTestCase(Request $request)
     {
        
-       
+     
              $servicer_jobid  = $request->id;
             
              $servicer_job =  (new ServicerJob())->getServicerJob($servicer_jobid);
