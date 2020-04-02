@@ -23,7 +23,7 @@ $key        = (isset($_GET['new_installation_search_key'])) ? $_GET['new_install
         @endif
     </nav>
 
-  <div class="mlt-list">
+  
     <!-- Search and filters -->
 
     <div align="right" class="search-1">
@@ -55,7 +55,7 @@ $key        = (isset($_GET['new_installation_search_key'])) ? $_GET['new_install
          
   </form>
     </div> 
-          <table class="table table-hover table-bordered  datatable"  style="width:70%;text-align: center" >
+          <table class="table table-hover table-bordered  datatable"  style="width:100%;text-align: center" >
             <!-- <table class="table table-hover table-bordered  table-striped datatable"  style="width:70%;text-align: center" > -->
           <thead class="indigo white-text">
                             <tr>
@@ -126,19 +126,22 @@ $key        = (isset($_GET['new_installation_search_key'])) ? $_GET['new_install
             </tbody>
         </table>
         {{ $servicer_jobs->appends(Request::all())->links() }}
-      </div>
+     
     </div>
-      <style>
-       .table td, .table th {
-            padding: .86rem;
-            vertical-align: top;
-            border-top: 0px solid #dee2e6;
-        }
-        th {
+ <style>
+      .table td, .table th 
+      {
+          padding: 14px 14px;
+          vertical-align: top;
+          border-top: 0px solid #dee2e6;
+      }
+      th 
+      {
           background-color:#778899 ;
           color: white;
       } 
-      .cover_list_search {
+      .cover_list_search 
+      {
           width: 35%;
           size:100;
       }
