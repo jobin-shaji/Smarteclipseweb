@@ -79,11 +79,12 @@ Geofence Report
                               <th><b>Registration number</b></th>
                               <th><b>Geofence Type</b></th>
                               <th><b>Date & Time</b></th>  
+                              <th><b>Action</b></th>  
                             </tr>
                           </thead>
                           <tbody>
                             <tr>
-                              <td colspan ="6"> No data available</td>
+                              <td colspan ="7"> No data available</td>
                             </tr>
                           </tbody>
                         </table>

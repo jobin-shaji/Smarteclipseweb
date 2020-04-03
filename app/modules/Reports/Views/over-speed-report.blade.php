@@ -78,11 +78,12 @@ Over Speed Report
                               <th><b>Address</b></th>
                               <th><b>Registration number</b></th>
                               <th><b>Date & Time</b></th>  
+                              <th><b>Action</b></th>  
                             </tr>
                           </thead>
                           <tbody>
                             <tr>
-                              <td colspan ="5"> No data available</td>
+                              <td colspan ="6"> No data available</td>
                             </tr>
                           </tbody>
                         </table>
