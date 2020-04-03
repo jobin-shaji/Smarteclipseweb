@@ -16,7 +16,11 @@ function successOverspeedAlertFilter(response)
     var page        = parseInt(response.data.page);
     table.html("");
     $(".loader-1").hide();
-    $.each(alertData,function(key , alert){    
+    var per_page    = parseInt(response.data.per_page);
+    page = (per_page *page) - per_page;
+    showTable();
+    $.each(alertData,function(key , alert){ 
+        page =  page + 1;
         tbody += "<tr>"+
                         "<td>"+page+"</td>"+
                         "<td>"+alert.gps.connected_vehicle_name+"</td>"+
@@ -24,8 +28,6 @@ function successOverspeedAlertFilter(response)
                         "<td>"+alert.gps.connected_vehicle_registration_number+"</td>"+
                         "<td>"+alert.device_time+"</td>"+
                     "</tr>";
-        page =  page + 1;
-        showTable();
     });
     if(alertData.length == 0)
     {

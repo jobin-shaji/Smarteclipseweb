@@ -16,8 +16,10 @@ function successAlertFilter(response)
     var page        = parseInt(response.data.page);
     table.html("");
     $(".loader-1").hide();
-    $.each(alertData,function(key , alert){    
-        var encrypt_    
+    var per_page    = parseInt(response.data.per_page);
+    page = (per_page *page) - per_page;
+    $.each(alertData,function(key , alert){ 
+        page =  page + 1; 
         tbody += "<tr>"+
                         "<td>"+page+"</td>"+
                         "<td>"+alert.gps.connected_vehicle_name+"</td>"+
@@ -28,7 +30,6 @@ function successAlertFilter(response)
                         "<td> <a href='/alert/report/"+alert._id+"/map_view' class='btn btn-xs btn-info'><i class='glyphicon glyphicon-map-marker'></i> Map view </a></td>"+        
 
                     "</tr>";
-        page =  page + 1;
     });
     if(alertData.length == 0)
     {
