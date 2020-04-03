@@ -12,6 +12,7 @@ use App\Modules\Vehicle\Models\Vehicle;
 use App\Modules\Vehicle\Models\VehicleType;
 use App\Modules\Ota\Models\OtaResponse;
 use App\Modules\Vehicle\Models\VehicleRoute;
+use App\Modules\Vehicle\Models\KmUpdate;
 use App\Modules\Route\Models\RouteArea;
 use App\Modules\Vehicle\Models\DocumentType;
 use App\Modules\Vehicle\Models\VehicleDriverLog;
@@ -2372,7 +2373,6 @@ class VehicleController extends Controller
         $to_date   =  date("Y-m-d H:i:s", strtotime($request->toDateTime));
         $get_vehicle = Vehicle::find($vehicleid);
         $offset = $request->offset;
-
         if ($get_vehicle == null)
         {
             $response_data = array(
@@ -2382,7 +2382,7 @@ class VehicleController extends Controller
             );
             return response()->json($response_data);
         }
-        if ($offset == 1 || $offset == null)
+        if ($offset == 0 || $offset == null)
         {
             $start_offset = 0;
             $limit = 30;
@@ -2390,9 +2390,8 @@ class VehicleController extends Controller
         else
         {
             $limit = 30;
-            $start_offset = ($offset * $limit) - $limit;
+            $start_offset = $offset * $limit;
         }
-
 
         $gps_id = $get_vehicle->gps_id;
 
@@ -2425,11 +2424,20 @@ class VehicleController extends Controller
                                       ->where('gps_fix',1)
                                       ->orderBy('device_time', 'asc')
                                       ->get();
+        $km_data = GpsData::select('id','device_time as dateTime')
+                                      ->where('device_time', '>=', $request->fromDateTime)
+                                      ->where('device_time', '<=', $request->toDateTime)
+                                      ->where('gps_id', $gps_id)
+                                      ->where('gps_fix',1)
+                                      ->offset($start_offset)
+                                      ->limit($limit)
+                                      ->orderBy('device_time', 'asc')
+                                      ->get();
 
         $alerts_list    =   [];
 
-        if($track_data->count() > 0){
-
+        if($track_data->count() > 0)
+        {
           $from_date_time   = $track_data->first()->dateTime;
           $last_date_time   = $track_data[$track_data->count()-1]->dateTime;
           $alerts_list      = Alert::select('device_time','gps_id','alert_type_id')->where('device_time', '>=' ,$from_date_time)
@@ -2438,7 +2446,21 @@ class VehicleController extends Controller
                                     ->whereNotIn('alert_type_id',[17,18,23,24])
                                     ->with('alertType')
                                     ->get();
-         }
+        //  $from_date =  date("Y-m-d H:i:s", strtotime($request->fromDateTime));
+        // $to_date   =  date("Y-m-d H:i:s", strtotime($request->toDateTime));
+        }
+
+        if($km_data->count() > 0)
+        {
+            $from_date_time   = $km_data->first()->dateTime;
+            $last_date_time   = $km_data[$km_data->count()-1]->dateTime;
+            $km_updates      = KmUpdate::select('device_time','gps_id','km')
+            ->where('device_time', '>=' ,$from_date_time)
+            ->where('device_time', '<=' ,$last_date_time)
+            ->where('gps_id',$gps_id)
+            ->get();
+        }
+
         if ($track_data->count() > 0)
         {
             $response_data = array(
@@ -2448,6 +2470,7 @@ class VehicleController extends Controller
                 'vehicle_type' => $get_vehicle->vehicleType->name,
                 'total_offset' => $total_index,
                 'playback'     => $track_data,
+                'km_updates'   => $km_updates,
                 'alerts'       => $alerts_list
             );
         }
@@ -2792,9 +2815,11 @@ class VehicleController extends Controller
 
     public function Playbackkm(Request $request)
     {
-        dd($request->fromdate);
-        dd($request->todate);
-        return 15023.2;
+
+        $response = KmUpdate::select('km')->where('gps_id',$request->gps)->where('lat',$request->lat)->where('lng',$request->lng);
+        // dd($response)
+        
+        return $response;
     }
 
 
