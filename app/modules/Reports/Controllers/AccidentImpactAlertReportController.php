@@ -13,6 +13,8 @@ use DataTables;
 
 class AccidentImpactAlertReportController extends Controller
 {
+    const ALERT_TYPE_ACCIDENT_IMPACT = "03";
+
     public function accidentImpactAlertReport()
     {
         $client_id          =   \Auth::user()->client->id;
@@ -76,7 +78,7 @@ class AccidentImpactAlertReportController extends Controller
     public function getAlertsFromMicroService($request)
     {
 
-        $filter         = [ 'user_id' => $request->user_id, 'alert_type' => "03" , 'vehicle_id' => $request->vehicle_id , 'start_date' => $request->start_date , 'end_date' => $request->end_date ,'limit' => 10000 ]; 
+        $filter         = [ 'user_id' => $request->user_id, 'alert_type' => self::ALERT_TYPE_ACCIDENT_IMPACT , 'vehicle_id' => $request->vehicle_id , 'start_date' => $request->start_date , 'end_date' => $request->end_date ,'limit' => 10000 ]; 
         $client 	    = new \GuzzleHttp\Client();
         $response 	    = $client->request('POST',config('eclipse.urls.ms_alerts').'/alert-report', ['json' => $filter]);
         $responseBody   = $response->getBody();

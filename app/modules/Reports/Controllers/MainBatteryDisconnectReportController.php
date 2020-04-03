@@ -15,6 +15,8 @@ use DataTables;
 
 class MainBatteryDisconnectReportController extends Controller
 {
+    const ALERT_TYPE_MAIN_BATTERY_DISCONNECT = "23";
+
     public function mainBatteryDisconnectReport()
     {
         $client_id      =   \Auth::user()->client->id;
@@ -78,7 +80,7 @@ class MainBatteryDisconnectReportController extends Controller
     public function getAlertsFromMicroService($request)
     {
 
-        $filter         = [ 'user_id' => $request->user_id, 'alert_type' => "23" , 'vehicle_id' => $request->vehicle_id , 'start_date' => $request->start_date , 'end_date' => $request->end_date ,'limit' => 10000 ]; 
+        $filter         = [ 'user_id' => $request->user_id, 'alert_type' => self::ALERT_TYPE_MAIN_BATTERY_DISCONNECT , 'vehicle_id' => $request->vehicle_id , 'start_date' => $request->start_date , 'end_date' => $request->end_date ,'limit' => 10000 ]; 
         $client 	    = new \GuzzleHttp\Client();
         $response 	    = $client->request('POST',config('eclipse.urls.ms_alerts').'/alert-report', ['json' => $filter]);
         $responseBody   = $response->getBody();
