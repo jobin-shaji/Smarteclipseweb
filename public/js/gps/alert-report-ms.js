@@ -18,6 +18,7 @@ function successAlertFilter(response)
     $(".loader-1").hide();
     var per_page    = parseInt(response.data.per_page);
     page = (per_page *page) - per_page;
+    showTable();
     $.each(alertData,function(key , alert){ 
         page =  page + 1; 
         tbody += "<tr>"+
@@ -30,10 +31,13 @@ function successAlertFilter(response)
                         "<td> <a href='/alert/report/"+alert._id+"/map_view' class='btn btn-xs btn-info'><i class='glyphicon glyphicon-map-marker'></i> Map view </a></td>"+        
 
                     "</tr>";
+
     });
     if(alertData.length == 0)
     {
         tbody = '<td colspan ="7"> No data available</td>';
+        hideDownloadBtn()
+
     }
     if(response.data.total_pages > 1)
     {
@@ -49,6 +53,16 @@ function successAlertFilter(response)
 function failedAlertFilter(error) 
 {
     $(".loader-1").hide();
+}
+function showTable() 
+{
+    $(".alert-report-table").show();    
+    $(".download-btn").show();
+}
+
+function hideDownloadBtn() 
+{
+    $(".download-btn").hide();
 }
 
 function pagination(url)

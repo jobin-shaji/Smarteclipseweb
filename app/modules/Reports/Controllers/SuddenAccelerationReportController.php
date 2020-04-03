@@ -1,6 +1,6 @@
 <?php
 namespace App\Modules\Reports\Controllers;
-use App\Exports\SuddenAccelerationReportExport;
+use App\Exports\ExcelDocumentExport;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Maatwebsite\Excel\Facades\Excel;
@@ -63,12 +63,43 @@ class SuddenAccelerationReportController extends Controller
         // ->rawColumns(['link', 'action'])
         ->make();
     } 
+    
+    
+
+    /**
+     * export geofence report as excel
+     */
     public function export(Request $request)
     {
         ob_end_clean(); 
-        ob_start();
-        return Excel::download(new SuddenAccelerationReportExport($request->id,$request->vehicle,$request->fromDate,$request->toDate), 'sudden-acceleration-report.xlsx');
-    } 
+        ob_start();    
+        return Excel::download(new ExcelDocumentExport(['SL.No','Vehicle Name','Registration Number','Address','DateTime'],$this->getAlertsFromMicroService($request)), 'sudden-acceleration-report-'.date('YmdHis').'.xlsx');
+    }
+
+    /**
+     * get report view
+    */
+    public function getAlertsFromMicroService($request)
+    {
+
+        $filter         = [ 'user_id' => $request->user_id, 'alert_type' => "14" , 'vehicle_id' => $request->vehicle_id , 'start_date' => $request->start_date , 'end_date' => $request->end_date ,'limit' => 10000 ]; 
+        $client 	    = new \GuzzleHttp\Client();
+        $response 	    = $client->request('POST',config('eclipse.urls.ms_alerts').'/alert-report', ['json' => $filter]);
+        $responseBody   = $response->getBody();
+        $responseData   = json_decode($responseBody->getContents(),true);
+        $alerts         = [];   
+        foreach ($responseData['data']['alerts'] as $key => $alert) 
+        {
+        
+            $alerts[$key]['SL.No']              = $key + 1;
+            $alerts[$key]['Vehicle Name']       = $alert['gps']['connected_vehicle_name'];
+            $alerts[$key]['Registration Number']= $alert['gps']['connected_vehicle_registration_number'];
+            $alerts[$key]['Address']            = $alert['address'];
+            $alerts[$key]['DateTime']           = $alert['device_time'];       
+        
+        }
+        return $alerts;
+    }
    
    
 }

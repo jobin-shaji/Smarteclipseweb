@@ -926,7 +926,7 @@ public function getDeviceTestAddPage(Request $request)
     public function completeTestCase(Request $request)
     {
        
-       
+     
              $servicer_jobid  = $request->id;
             
              $servicer_job =  (new ServicerJob())->getServicerJob($servicer_jobid);
@@ -2191,6 +2191,13 @@ public function serviceJobDetails(Request $request)
             'response' => $result
         ]);
     
+    }
+
+    public function clientJobList(Request $request)
+    {
+        $key = ( isset($request->new_service_search_key) ) ? $request->new_service_search_key : null;
+        return view('Servicer::new-client-service-job-list',['servicer_jobs'=> (new ServicerJob())->getNewClientServiceList($key)]);  
+  
     }
 public function servicerProfileUpdateRules($servicer)
     {

@@ -27,6 +27,7 @@ function successOverspeedAlertFilter(response)
                         "<td>"+alert.address+"</td>"+
                         "<td>"+alert.gps.connected_vehicle_registration_number+"</td>"+
                         "<td>"+alert.device_time+"</td>"+
+                        "<td> <a href='/alert/report/"+alert._id+"/map_view' class='btn btn-xs btn-info'><i class='glyphicon glyphicon-map-marker'></i> Map view </a></td>"+        
                     "</tr>";
     });
     if(alertData.length == 0)
