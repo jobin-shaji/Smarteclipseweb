@@ -24,7 +24,43 @@
           <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">          
             <div class="row">
               <div class="col-sm-12">
-               
+               <div class="panel-heading">
+                <form method="post" action="{{route('trip.report.download.list')}}">
+                          {{csrf_field()}}
+                        <div class="cover_div_search">
+                          <div class="row">
+                           <div class="col-lg-3 col-md-3"> 
+                            <div class="form-group">
+                              <label>Vehicle</label>                           
+                              <select class="form-control selectpicker" data-live-search="true" title="Select Vehicle" id="vehicle" name="vehicle">
+                                <option selected="selected" disabled="disabled">Select</option>
+                                @foreach ($vehicles as $vehicle)
+                                <option value="{{$vehicle->id}}"  @if(isset($files) && $vehicle->id==$vehicle_id){{"selected"}} @endif>{{$vehicle->name}} || {{$vehicle->register_number}}</option>
+                                @endforeach
+                              </select>
+                            </div>
+                          </div>
+                           <div class="col-lg-3 col-md-3">          
+                              <div class="form-group">          
+                                <label> Date</label>
+                                <input type="text" class="@if(\Auth::user()->hasRole('fundamental'))datepickerFundamental @elseif(\Auth::user()->hasRole('superior')) datepickerSuperior @elseif(\Auth::user()->hasRole('pro')) datepickerPro @else datepickerFreebies @endif form-control" id="tripDate" name="tripDate" value="@if(isset($tripdate)) {{$tripdate}} @endif"  required autocomplete = 'off' onkeydown="return false">
+                                <span class="input-group-addon" style="z-index: 99;">
+                                    <span class="calender1"  style=""><i class="fa fa-calendar"></i></span>
+                                </span>
+                              </div>
+                            </div>
+                          <div class="col-lg-3 col-md-3 pt-4">
+                              <div>          
+                                <button class="btn btn-sm btn-info btn2 srch" onclick="check()"> <i class="fa fa-search"></i> </button>
+                                </div>
+                                <div style="float: right;margin-top: -14%;margin-right: 10%;">                        
+                                </div>
+                            </div>
+                          </div>
+                        </div>
+                      </form>
+                      </div>
+                       @if(isset($files)) 
                  @foreach($files as $file)
                   <?php 
                   $file1 = basename($file); 
@@ -32,7 +68,7 @@
                    ?>
                     <a href= "{{$file}}" download='{{$file1}}' class='btn btn-xs btn-success'  data-toggle='tooltip'><i class='fa fa-download'></i> {{$file2}} </a>
                   @endforeach
-                
+                @endif
               </div>
             </div>
           </div>
@@ -41,4 +77,6 @@
     </div>                
   </div>
 @endsection
-   
+ @section('script')
+  <script src="{{asset('js/gps/totalkm-list.js')}}"></script>
+@endsection

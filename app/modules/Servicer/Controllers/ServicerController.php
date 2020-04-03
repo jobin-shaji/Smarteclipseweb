@@ -2192,6 +2192,13 @@ public function serviceJobDetails(Request $request)
         ]);
     
     }
+
+    public function clientJobList(Request $request)
+    {
+        $key = ( isset($request->new_service_search_key) ) ? $request->new_service_search_key : null;
+        return view('Servicer::new-client-service-job-list',['servicer_jobs'=> (new ServicerJob())->getNewClientServiceList($key)]);  
+  
+    }
 public function servicerProfileUpdateRules($servicer)
     {
         $rules = [

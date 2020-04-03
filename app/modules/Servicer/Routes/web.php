@@ -122,3 +122,7 @@ Route::group(['middleware' => ['web','auth','role:root|sub_dealer|servicer|trade
     Route::get('/job-complete-certificate/{id}','ServicerController@jobCompleteCertificate')->name('job-complete.certificate');
 	Route::get('/job-complete/{id}/downloads','ServicerController@downloadJobCompleteCertificate')->name('job.complete.certificate.download');
 });
+Route::group(['middleware' => ['web','auth','role:client'] , 'namespace' => 'App\Modules\Servicer\Controllers' ] , function() {
+Route::get('/client-job-list','ServicerController@clientJobList')->name('client.job.list');
+Route::get('/client-job-list','ServicerController@clientJobList')->name('new.client.job.list');
+});
