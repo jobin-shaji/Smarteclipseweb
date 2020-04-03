@@ -69,10 +69,10 @@ $("#resetclose").click(function() {
       location.reload(true);
 });
 });
-//reload after 5 seconds on page load
- // $(document).ready(function () 
- // {
- //     setTimeout(function(){
- //     location.reload(true);
- //     }, 15000);       
- // });
+// reload after 5 seconds on page load
+ $(document).ready(function () 
+ {
+     setTimeout(function(){
+     location.reload(true);
+     }, 20000);       
+ });
