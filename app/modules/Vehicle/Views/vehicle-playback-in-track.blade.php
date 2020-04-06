@@ -162,13 +162,14 @@
               <span class="play-back-icon1"><img src="{{asset('playback/assets/img/dash-board.png')}}"/></span>
             <span class="play-back-span"><span style="padding: 15px;">:</span><span id="km_data">0.0</span> KM
         </div>
-
+        <input type="hidden" name="gps_id" id="gps_id" value="{{$vehicle->gps_id}}">
 
         </div>
         <input type="hidden" name="online_icon" id="online_icon" value="{{$vehicle_type->web_online_icon}}">
         <input type="hidden" name="offline_icon" id="offline_icon" value="{{$vehicle_type->web_offline_icon}}">
         <input type="hidden" name="ideal_icon" id="ideal_icon" value="{{$vehicle_type->web_idle_icon}}">
         <input type="hidden" name="sleep_icon" id="sleep_icon" value="{{$vehicle_type->web_sleep_icon}}">
+        
 
         <div class="main-panel main-pane-bg">
             <div class="content">
@@ -269,7 +270,7 @@
         var location_data_que   =  new Array();
         var location_details_que =  new Array();
 
-        var offset=1;
+        var offset=0;
         var isDataLoadInProgress = false;
         var dataLoadingCompleted = false;
         var vehicle_mode;
@@ -290,7 +291,7 @@
 
 
 
-
+        var gps_id            = $('#gps_id').val();
         var locationQueue       = [];
         var alertsQueue         = [];
         var previous_data       = [];
@@ -500,7 +501,7 @@
                 data: Objdata,
                 async: true,
                 success: function (response) {
-
+// console.log(response);
                     if(response.status=="failed"){
                        if(first_response == false){
                        $(".start_button").css("display","none");
@@ -521,6 +522,8 @@
                         first_response=true;
                         total_offset=response.total_offset;
                         if(offset < total_offset){
+                        // console.log(response.km_updates);
+                        kmCalculation(response.km_updates);
 
                          locationStore(response.playback);
                          alertStore(response.alerts);
@@ -757,7 +760,23 @@
 
                     moveMarker(direction,endPointLatitude,endPointLongitude,vehicle_mode);
                     addPolylineToMap(startPointLatitude,startPointLongitude,endPointLatitude,endPointLongitude);
-                    kmCalculation(startPointLatitude,startPointLongitude,endPointLatitude,endPointLongitude);
+                    // var from_Date      = $('#fromDate').val();
+                    // var to_Date        = $('#toDate').val();
+                    // var kilometer_updates = $.ajax({
+                    //                           type:'POST',
+                    //                           url: "/playback-km",
+                    //                           data: {'fromdate':from_Date,
+                    //                                  'todate':to_Date,
+                    //                                  'gps':gps_id,
+                    //                                  'lat':endPointLatitude,
+                    //                                  'lng':endPointLongitude},
+                    //                           async: true,
+                    //                           headers: {
+                    //                               'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+                    //                           }                                  
+                    //                         });
+                    // sum_of_kilometer     += kilometer_updates;
+                    // $('#km_data').text((sum_of_kilometer/1000).toFixed(2));
                 }
                 startPointLatitude  = location_data_que[0].lat;
                 startPointLongitude = location_data_que[0].lng;
@@ -1086,14 +1105,26 @@
 
        //  }
 
-        function kmCalculation(lat1,lng1,lat2,lng2) {
+        // function kmCalculation(lat1,lng1,lat2,lng2) {
 
-          var p1 = new google.maps.LatLng(lat1,lng1);
-          var p2 = new google.maps.LatLng(lat2,lng2);
-          var total_distance = google.maps.geometry.spherical.computeDistanceBetween(p1, p2) ;
+        //   var p1 = new google.maps.LatLng(lat1,lng1);
+        //   var p2 = new google.maps.LatLng(lat2,lng2);
+        //   var total_distance = google.maps.geometry.spherical.computeDistanceBetween(p1, p2) ;
 
-              km_data            = km_data+total_distance;
+        //       km_data            = km_data+total_distance;
+        //      $('#km_data').text((km_data/1000).toFixed(2));
+        // }
+
+          //  -----01/04/2020-----------
+        function kmCalculation(res) 
+        {
+          for (var i = 0;  i < res.length; i++) {
+            console.log(res[i].km);
+             var km  = res[i].km;
+             km_data += km;
              $('#km_data').text((km_data/1000).toFixed(2));
+            }
+
         }
 
        function stopPlayback(){

@@ -99,7 +99,12 @@ class GpsData extends Model
 	public function vlt_data()
     {
         return $this->hasOne('App\Modules\VltData\Models\VltData','id','vlt_data');
-    }
+	}
+	
+	// public function kmUpdates()
+    // {
+    //    return $this->hasMany('App\Modules\Vehicle\Models\KmUpdate','gps_id','gps_id')->where('device_time');
+    // }
     protected $casts = [
         'lat' => 'float',
         'lng' => 'float',
