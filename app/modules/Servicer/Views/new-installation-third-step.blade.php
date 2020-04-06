@@ -46,8 +46,9 @@ Assign Servicer
 
 <div class="panel panel-primary setup-content" id="step-3">
 <div class="panel-heading">
-<h4 class="panel-title">Command</h4>
-</div>
+<h4 class="panel-title">Command</h3>
+
+<h4 class="panel-title">Please choose the list of commands to execute as part of device installation</h4></div>
 <div class="panel-body">
 	<form  method="POST" action="{{route('completedcommand.save',$pass_servicer_jobid)}}">
    {{csrf_field()}}
@@ -68,7 +69,7 @@ Assign Servicer
 
 </div>
 <div class="row">
-<button type="submit"   style="width: 8%; height: 20%;" class="btn btn-primary">Save</button>
+<button type="submit"   style="width: 15%; height: 20%;" class="btn btn-primary"> Save And Proceed</button>
 </div>
 </form>
 
