@@ -3,6 +3,11 @@
 Assign Servicer
 @endsection
 @section('content')
+<?php
+$perPage    = 10;
+$page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
+
+?>
 <div class="page-wrapper page-wrapper-root page-wrapper_new">
   <div class="page-wrapper-root1">
     <nav aria-label="breadcrumb">
@@ -18,6 +23,10 @@ Assign Servicer
       </div>
       @endif
     </nav>
+    <div  id="message"class="alert">
+  
+  <h5>Please Select One To View Details</h5>
+   </div>
     <div class="container-fluid">
       <div class="card-body">
         <div class="table-responsive">
@@ -136,60 +145,94 @@ Assign Servicer
               <div class="col-md-6">
                 <div class="card">
                   <div class="card-body">
-                    <div class="form-group row" style="float:none!important">
-                      <label for="fname" class="col-md-5 text-right control-label col-form-label">Unboxing Checklist</label>
-                      <div class="form-group has-feedback">
-                        @if(($servicer_job->unboxing_checklist) != null)
-                        <?php foreach (json_decode($servicer_job->unboxing_checklist)->checklist[0]->items as $each_checklist_item) { ?>
+                     <label for="fname" class="col-md-5 text-right control-label col-form-label">Unboxing Checklist</label>
+                      <table class="table table-bordered ">
+                      <thead>
+                      <tr>
+                       <th  style="width: 15%" scope="col"><b>Serial No<b></th>
+                       <th  style="width: 15%"scope="col"><b>Item<b></th>
+                       <th style="width: 15%" scope="col"><b>Status<b></th>
+                       </tr>
+                       </thead>
+                       <tbody>
+   
+                      <?php 
+                       $i=1;
+                        foreach (json_decode($servicer_job->unboxing_checklist)->checklist[0]->items as $each_checklist_item) { ?>
+                         <tr>
+                         <td style="width: 15%">{{ (($perPage * ($page - 1)) + $i++) }}</td>
+                         <td style="width: 15%"><?php echo $each_checklist_item->label; ?> </td>
+                         <td style="width: 15%">
+                           <div class="checkbox-example">
                           <input type="checkbox" name="gps" id="gps" <?php if ($each_checklist_item->checked) {
-                                                                        echo 'checked';
-                                                                      } ?> readonly> <?php echo $each_checklist_item->label; ?></br>
-                        <?php } ?>
-                        @else
-                        <input type="checkbox" name="gps" id="gps" readonly> GPS Device</br>
-                        <input type="checkbox" name="gps" id="gps" readonly> Connecting Cables</br>
-                        <input type="checkbox" name="gps" id="gps" readonly> Connecting Cables</br>
-                        <input type="checkbox" name="gps" id="gps" readonly> Connecting Cables</br>
-                        <input type="checkbox" name="gps" id="gps" readonly> Connecting Cables</br>
-                        <input type="checkbox" name="gps" id="gps" readonly> Connecting Cables
-                        @endif
-                      </div>
-                    </div>
+                          echo 'checked';
+                           } ?> readonly> </br>
+                          </div>
+                        </td>
+                       </tr>
+                    <?php } ?>
+                   </tbody>
+                  </table>
+                </div>
+
+                   <div class="form-group row" style="float:none!important">
+                    <label for="fname" class="col-md-5 text-right control-label col-form-label">Commands Sent</label>
+                   <table class="table table-bordered secondtable">
+                        <thead>
+                        <tr>
+                       <th style="width: 25%" scope="col">Serial No</th>
+                       <th style="width: 25%"scope="col">Item</th>
+                       <th style="width: 25%"scope="col">Status</th>
+                       </tr>
+                       </thead>
+                        <tbody>
+   
+                       <?php 
+                        $i=1;
+                       foreach (json_decode($servicer_job->device_command) as $each_commands) { ?>
+                         <tr>
+                              <td style="width: 25%">{{ (($perPage * ($page - 1)) + $i++) }}</td>
+                              <td  style="width: 25%"><?php echo $each_commands->command; ?> </td>
+                              <td style="width: 25%"> <input type="checkbox" name="gps" id="gps" <?php if ($each_commands->checked) {
+                                                           echo 'checked';
+                                                          } ?> readonly> </br>
+                        </td>
+                        </tr>
+                    <?php } ?>
+                   </tbody>
+                  </table>
+                  </div>
+
+
 
                     <div class="form-group row" style="float:none!important">
-                      <label for="fname" class="col-md-5 text-right control-label col-form-label">Commands Sent</label>
-                      <div class="form-group has-feedback">
-                        @if(($servicer_job->device_command) != null)
-                        <?php foreach (json_decode($servicer_job->device_command) as $each_commands) { ?>
-                          <input type="checkbox" name="gps" id="gps" <?php if ($each_commands->checked) {
-                                                                        echo 'checked';
-                                                                      } ?> readonly><?php echo $each_commands->command; ?></br>
-                        <?php } ?>
-                        @else
-                        <input type="checkbox" name="gps" id="gps" readonly> ACTV activationkey123</br>
-                        <input type="checkbox" name="gps" id="gps" readonly> SET FMT</br>
-                        <input type="checkbox" name="gps" id="gps" readonly> SET CAL:1</br>
-                        <input type="checkbox" name="gps" id="gps" readonly> SET RS
-                        @endif
-                      </div>
-                    </div>
-                    <div class="form-group row" style="float:none!important">
                       <label for="fname" class="col-md-5 text-right control-label col-form-label">Test Conducted</label>
-                      <div class="form-group has-feedback">
-                        @if(($servicer_job->device_test_scenario) != null)
-                        <?php foreach (json_decode($servicer_job->device_test_scenario)->tests as $each_scenario) { ?>
-                          <input type="checkbox" name="gps" id="gps" <?php if ($each_scenario->sos->activate) {
+                       <table class="table table-bordered thirdtable">
+  <thead>
+    <tr>
+     
+      <th style="width: 25%" scope="col">Serial No</th>
+      <th style="width: 25%" scope="col">Item</th>
+      <th style="width: 25%" scope="col">Status</th>
+    </tr>
+  </thead>
+  <tbody>
+   
+      <?php 
+       $i=1;
+        foreach (json_decode($servicer_job->device_test_scenario)->device_test_scenario->tests as $each_scenario) { ?>
+        <tr>
+      <td style="width: 25%" >{{ (($perPage * ($page - 1)) + $i++) }}</td>
+       <td style="width: 25%" ><?php echo $each_scenario->title;?> </td>
+      <td style="width: 25%" > <input type="checkbox" name="gps" id="gps" <?php if ($each_scenario->sos->activate) {
                                                                         echo 'checked';
-                                                                      } ?> readonly> <?php echo $each_scenario->title; ?></br>
-                        <?php } ?>
-                        @else
-                        <input type="checkbox" name="gps" id="gps" readonly> Caliberation Acknowledgement</br>
-                        <input type="checkbox" name="gps" id="gps" readonly> GPS FIX</br>
-                        <input type="checkbox" name="gps" id="gps" readonly> ALERT TEST</br>
-                        <input type="checkbox" name="gps" id="gps" readonly> NORMAL PACKET</br>
-                        <input type="checkbox" name="gps" id="gps" readonly> SOS BUTTON TEST
-                        @endif
-                      </div>
+                                                                      } ?> readonly> </br>
+                        </td>
+         </tr>
+         <?php } ?>
+  </tbody>
+</table>
+                     
                     </div>
                   </div>
                 </div>
@@ -208,8 +251,42 @@ Assign Servicer
 @endsection
 @section('script')
 <style type="text/css">
+
+  .alert {
+  padding: 2px;
+  background-color: #f0b102;
+  color: white;
+}
+
+.closebtn {
+  margin-left: 15px;
+  color: white;
+  font-weight: bold;
+  float: right;
+  font-size: 22px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
 input[type="checkbox"][readonly] {
   pointer-events: none;
+
+
+}
+/*input[type="checkbox"][]{
+ background-color: #2196F3;
+}*/
+.table {
+    width: 90%;
+   
+}
+.secondtable {
+    width: 95%;
+   
+}
+.thirdtable {
+    width: 95%;
+   
 }
 .servicer_job{
   width: 45%;
@@ -245,6 +322,9 @@ input[type="checkbox"][readonly] {
     $('#installation').removeClass('vst-theme-color');
     $('.job_detail').css('display', 'block');
     $('.installation_detail').css('display', 'none');
+     $('#message').css('display', 'none');
+
+
   });
 
   $('#installation').click(function() {
@@ -252,6 +332,7 @@ input[type="checkbox"][readonly] {
     $('#installation').addClass('vst-theme-color');
     $('.installation_detail').css('display', 'block');
     $('.job_detail').css('display', 'none');
+     $('#message').css('display', 'none');
   });
 </script>
 @endsection

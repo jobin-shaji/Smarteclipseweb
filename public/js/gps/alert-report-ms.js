@@ -29,10 +29,14 @@ function successAlertFilter(response)
 
                     "</tr>";
         page =  page + 1;
+        showTable();
+
     });
     if(alertData.length == 0)
     {
         tbody = '<td colspan ="7"> No data available</td>';
+        hideDownloadBtn()
+
     }
     if(response.data.total_pages > 1)
     {
@@ -48,6 +52,16 @@ function successAlertFilter(response)
 function failedAlertFilter(error) 
 {
     $(".loader-1").hide();
+}
+function showTable() 
+{
+    $(".alert-report-table").show();    
+    $(".download-btn").show();
+}
+
+function hideDownloadBtn() 
+{
+    $(".download-btn").hide();
 }
 
 function pagination(url)

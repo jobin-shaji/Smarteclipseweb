@@ -29,4 +29,12 @@ class OtaResponse extends Model
         }
         return Redis::set( $imei, trim($command));
     }
+    
+    public function checkOTARequested($command,$gps)
+    {
+       return self::where('response',$command)
+       ->where('gps_id',$gps)
+       ->whereNull('sent_at')
+       ->count(); 
+    }
 }

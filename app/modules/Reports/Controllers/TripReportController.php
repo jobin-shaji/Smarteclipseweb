@@ -7,6 +7,7 @@ use App\Modules\Vehicle\Models\Vehicle;
 use App\Http\Traits\VehicleDataProcessorTrait;
 use App\Modules\Alert\Models\Alert;
 use DB;
+use File;
 use Carbon\Carbon;
 use App\Modules\Vehicle\Models\KmUpdate;
 use DataTables;
@@ -82,6 +83,31 @@ class TripReportController extends Controller
         return view('Reports::trip-report',compact('vehicles','trips'));
 
     }  
+    public function TripReportDownload()
+    {
+         $vehicles = \Auth::user()->client->vehicles;
+        return view('Reports::trip-report-download-list',['vehicles'=>$vehicles]);
+    }
+    public function TripReportDownloadList(Request $request)
+    {
+        $vehicle_id=$request->vehicle;
+        // dd($vehicle_id);
+        $client_id=\Auth::user()->client->id;
+        $tripdate=$request->tripDate;
+        $from_date=date("Y-m-d", strtotime($tripdate));         
+        $vehicles = \Auth::user()->client->vehicles;
+        $path='documents/trip_report/'. $client_id.'/'.$vehicle_id.'/'.$from_date;
+       if(!File::exists($path)) {
+         $files="";
+         $request->session()->flash('message', 'invalid date and vehicle!');
+            $request->session()->flash('alert-class', 'alert-success');
+         return view('Reports::trip-report-download-list',['vehicles'=>$vehicles,'tripdate'=>$tripdate,'vehicle_id'=>$vehicle_id]);
+    // path does not exist
+        }else{
+            $files = File::allFiles('documents/trip_report/'. $client_id.'/'.$vehicle_id.'/'.$from_date);
+        return view('Reports::trip-report-download-list',['files'=>$files,'vehicles'=>$vehicles,'tripdate'=>$tripdate,'vehicle_id'=>$vehicle_id]);
+        }
+    }
 
     public function tripReortRules()
     {

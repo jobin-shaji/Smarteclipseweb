@@ -2,7 +2,9 @@
 @section('title')
 All Alerts
 @endsection
-@section('content')       
+@section('content') 
+<link rel="stylesheet" href="{{asset('css/km-loader-1.css')}}">
+<input type="hidden" id="vehicle_id" value="{{$vehicle_id}}">
 <div class="page-wrapper_new"> 
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
@@ -23,34 +25,31 @@ All Alerts
         <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">          
           <div class="row">
             <div class="col-sm-12">
-              <table class="table table-hover table-bordered  table-striped datatable" style="width:100%;text-align: center;" >
-                <thead>
-                  <tr>
-                    <th><b>SL.No</b></th>
-                    <th><b>Alert</b></th>
-                    <th><b>Vehicle Name</b></th>
-                    <th><b>Registration Number</b></th>
-                    <!-- <th>Location</th> -->
-                    <th><b>Date & Time</b></th> 
-                    <th><b>Action</b></th>                 
-                  </tr>
-                </thead>
-                <tbody>
-                   @foreach($alerts as $alert)                  
-                    <tr>           
-                        <td>{{ $loop->iteration }}</td>
-                        <td>{{ $alert->alertType->description }}</td>           
-                        <td>{{ $alert->gps->vehicle->name}}</td>
-                        <td>{{ $alert->gps->vehicle->register_number }}</td>
-                        <td>{{ $alert->device_time }}</td>  
-                         <td> <a href="/alert/report/{{Crypt::encrypt($alert->id)}}/mapview"class='btn btn-xs btn-info'><i class='glyphicon glyphicon-map-marker'></i> Map view </a></td>      
-
+                <table class="table table-hover table-bordered  table-striped alert-list-table" id="alert-list-table" style="width:100%;text-align: center" >
+                  <thead>
+                    <tr style="text-align: center;">
+                      <th><b>SL.No</b></th>
+                      <th><b>Vehicle Name</b></th>
+                      <th><b>Location</b></th>
+                      <th><b>Registration number</b></th>
+                      <th><b>Alert Type</b></th>                             
+                      <th><b>Date & Time</b></th>  
+                      <th><b>Action</b></th>                                   
                     </tr>
-                    @endforeach
-                </tbody>
-              </table>
-             {{ $alerts->appends(['sort' => 'votes'])->links() }}
-              
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td colspan ="7"> No data available</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div class="loader-wrapper loader-1"  >
+                  <div id="loader"></div>
+                </div> 
+                <div class="row float-right">
+                  <div class="col-md-12 " id="alert-list-pagination">
+                  </div>
+                </div>
             </div>
           </div>
         </div>
@@ -59,3 +58,7 @@ All Alerts
   </div>            
 </div>
 @endsection
+@section('script')
+    <script src="{{asset('js/gps/alert-list-ms.js')}}"></script>
+@endsection
+

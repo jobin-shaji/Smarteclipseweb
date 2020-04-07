@@ -43,12 +43,12 @@ Assign Servicer
 </div>
 </div>
 </div>
-
+<input type="hidden" id="servicer_jobid" value={{$servicer_jobid}}>
  @if($stage==3)
 <div class="pull-right cover_list_search">
         <div class="row" >
-            <div class="col-lg-12" >
-	<form  method="POST" action="{{route('teststart.save.p')}}">
+         <div class="col-lg-12" >
+  <form  method="POST" action="{{route('teststart.save.p')}}">
    {{csrf_field()}}
                  <div class="row">
                     <div class="col-lg-2" style="margin: 0 0px 18px 0;">
@@ -59,16 +59,13 @@ Assign Servicer
                     </div>
                     </div>
                 </form>
-                  </div>
+               </div>
             </div>
         </div>
-        <br>
-        <br>
-        <br>
-         @endif
-        @if($stage==3)
+   @endif
+  @if($stage==3)
 <div class="panel panel-primary setup-content" id="step-4" style="display: none">
-	<div class="panel-heading">
+  <div class="panel-heading">
 <h4 class="panel-title">Device Test</h4>
 </div>
  
@@ -94,21 +91,23 @@ Assign Servicer
 <?php } ?>
 </div>
 </div>
+
 @else
 
 <div class="panel panel-primary setup-content" id="step-4">
-	<div class="panel-heading">
+  <div class="panel-heading">
 <h4 class="panel-title">Device Test</h4>
 </div>
  
 
    {{csrf_field()}}
 <?php foreach ($device_test_case['tests'] as $device_test){ ?>
+ 
 <div id="email-list" class="col s10 m8 l8 card-panel z-depth-1">
 <ul class="collection">
 <li class="collection-item avatar email-unread">
 <label>
-<input type="checkbox"  <?php if($device_test['test_status']== 1){ echo "checked"; }?>/> 
+<input type="checkbox"<?php if($device_test['test_status']==1){ echo "checked";}?>/> 
 <span></span>
 </label> 
 
@@ -118,27 +117,59 @@ Assign Servicer
 <span class="email-title">{{$device_test['title']}}</span>
 <p class="truncate grey-text ultra-small">{{$device_test['description']}}</p>
 
-<a href="#!" class="secondary-content email-time">
+
 @if($device_test['sos']['status']== 1 && $device_test['sos']['activate']==true)
-  <button   type="submit" id="stop" class="btn btn-primary form-btn">Stop</button>
+  <button id="stop" onclick="stopActivated()" class="btn btn-primary form-btn">Sos Button Stop</button>
  @endif
 @if($device_test['sos']['status']== 0 && $device_test['sos']['activate']==true&& $device_test['test_status']==1)
-  <button   type="submit"   id="reset" class="btn btn-primary form-btn">Reset</button>
+  <button      id="reset"  onclick="resetActivated()" class="btn btn-primary form-btn"> Sos Button Reset</button>
  @endif
-</a>
+
 </div>
 </li>
 </ul>
 <?php } ?>
-<!-- </form> -->
+<!-- Button to Open the Modal -->
+
+
+<!-- The Modal -->
+<div class="modal" id="stopModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+     <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title"> Stop Button Click Details</h4>
+        <button type="button" class="close" id="close" data-dismiss="modal">&times;</button>
+      </div>
+       <!-- Modal body -->
+      <div class="modal-body" id="modalValue">
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="resetModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+     <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title"> Reset Button Click Details</h4>
+        <button type="button" class="close" id="resetclose" data-dismiss="modal">&times;</button>
+      </div>
+       <!-- Modal body -->
+      <div class="modal-body" id="resetValue">
+      </div>
+    </div>
+  </div>
+</div>
 </div>
 </div>
 
 <div class="pull-right cover_list_search">
         <div class="row" >
-            <div class="col-lg-12" >
-	<form  method="POST" action="{{route('finish.testcase.save.p',$servicer_jobid)}}">
-   {{csrf_field()}}
+         <div class="col-lg-12" >
+          <form  method="POST" action="{{route('finish.testcase.save.p',$servicer_jobid)}}">
+          {{csrf_field()}}
                  <div class="row">
                     <div class="col-lg-2" style="margin: 0 0px 18px 0;">
                       <div class="form-group" style="width: 50%;">
@@ -148,23 +179,26 @@ Assign Servicer
                     </div>
                     </div>
                 </form>
-                  </div>
+              </div>
             </div>
-        </div>
+         </div>
         <br>
         <br>
         <br>
+        
    @endif
-</div>
-</div>
-</div>
 
+</div>
+<!-- </div>
+</div> -->
 @endsection
+
 <style>
-	.btn-primary {
+  .btn-primary {
   color: #4CAF50; }
-	</style>
+  </style>
 @section('script')
 <link rel="stylesheet" href="{{asset('css/installation-step-servicer.css')}}">
- 
+ <script src="{{asset('js/gps/new-installation-devicetest.js')}}"></script>
+
 @endsection
