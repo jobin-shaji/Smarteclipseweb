@@ -12,8 +12,7 @@ class OtaResponse extends Model
         'gps_id', 'response','operations_id'
     ];
 
-
-    public function sendOtaResponse($gps_id = null, $command = '')
+    public function saveCommandsToDevice($gps_id = null, $command = '')
     {
         return self::create([
             'gps_id'    => $gps_id,
@@ -21,12 +20,12 @@ class OtaResponse extends Model
         ]);
     }
 
-    public function writeCommandToRedis($imei,$command)
+    public function writeCommandToDevice($imei,$command)
     {
         $existing_value     =   Redis::get($imei);
         if($existing_value)
         {
-            $command        =  $existing_value.','.trim($command);    
+            $command        =   $existing_value.','.trim($command);    
         }
         return Redis::set( $imei, trim($command));
     }

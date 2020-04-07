@@ -718,11 +718,11 @@ class VltDataController extends Controller
     {
         $gps_id             =   $request->gps_id;
         $command            =   $request->command;
-        $response           =   (new OtaResponse())->sendOtaResponse($gps_id,$command);
+        $response           =   (new OtaResponse())->saveCommandsToDevice($gps_id,$command);
         if($response)
         {
             $gps_details    =   (new Gps())->getGpsDetails($gps_id);
-            (new OtaResponse())->writeCommandToRedis($gps_details->imei,$command);
+            (new OtaResponse())->writeCommandToDevice($gps_details->imei,$command);
             return response()->json([
                 'status' => 1,
                 'title' => 'Success',

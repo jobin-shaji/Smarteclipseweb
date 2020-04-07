@@ -734,7 +734,7 @@ class ServicerController extends Controller {
                              if($command_configuration[$i]['checked'] == true)
                             {
                             $command=$command_configuration[$i]['command'];
-                            (new OtaResponse())->sendOtaResponse($service_eng_installation_command->gps_id,$command);
+                            (new OtaResponse())->saveCommandsToDevice($service_eng_installation_command->gps_id,$command);
                             }   
                             }else
                             {

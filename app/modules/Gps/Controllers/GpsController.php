@@ -1646,22 +1646,22 @@ class GpsController extends Controller {
 
     public function setOtaInConsole(Request $request)
     {
-        $gps_id=$request->gps_id;
-        $command=$request->command;
-        $trimmed_command=trim($command);
-        // dd($response);
-        $response = OtaResponse::create([
-            'gps_id'=>$gps_id,
-            'response'=>$trimmed_command
-        ]);
-        if($response){
+        $gps_id             =   $request->gps_id;
+        $command            =   $request->command;
+        $response           =   (new OtaResponse())->saveCommandsToDevice($gps_id,$command);
+        if($response)
+        {
+            $gps_details    =   (new Gps())->getGpsDetails($gps_id);
+            (new OtaResponse())->writeCommandToDevice($gps_details->imei,$command);
             return response()->json([
                 'status' => 1,
                 'title' => 'Success',
                 'message' => 'Command send successfully'
             ]);
-        }else{
-           return response()->json([
+        }
+        else
+        {
+            return response()->json([
                 'status' => 0,
                 'title' => 'Error',
                 'message' => 'Try again!!'
@@ -1674,18 +1674,16 @@ class GpsController extends Controller {
 
     public function operationsSetOtaInConsole(Request $request)
     {
-        $gps_id=$request->gps_id;
-        $operations_id=\Auth::user()->operations->id;
-        $command=$request->command;
-        $ota=$request->ota;
-        $ota_response=$ota.$command;
-        $response = OtaResponse::create([
-            'gps_id'=>$gps_id,
-            'response'=>trim($ota_response),
-            'operations_id'=>$operations_id
-
-        ]);
+        $gps_id         =   $request->gps_id;
+        $operations_id  =   \Auth::user()->operations->id;
+        $command        =   $request->command;
+        $ota            =   $request->ota;
+        $ota_response   =   $ota.$command;
+        $response       =   (new OtaResponse())->saveCommandsToDevice($gps_id,$ota_response);
+        
         if($response){
+            $gps_details    =   (new Gps())->getGpsDetails($gps_id);
+            (new OtaResponse())->writeCommandToDevice($gps_details->imei,$ota_response);
             return response()->json([
                 'status' => 1,
                 'title' => 'Success',
@@ -2001,15 +1999,14 @@ class GpsController extends Controller {
 
      public function setOtaInUnprocessed(Request $request)
     {
-        $imei=$request->imei;
-        $gps=Gps::select('imei','id')->where('imei',$imei)->first();
-        $gps_id=$gps->id;
-        $command=$request->command;
-        $response = OtaResponse::create([
-            'gps_id'=>$gps_id,
-            'response'=>trim($command)
-        ]);
+        $imei               =   $request->imei;
+        $gps                =   Gps::select('imei','id')->where('imei',$imei)->first();
+        $gps_id             =   $gps->id;
+        $command            =   $request->command;
+        $response           =   (new OtaResponse())->saveCommandsToDevice($gps_id,$command);
+        
         if($response){
+            (new OtaResponse())->writeCommandToDevice($imei,$command);
             return response()->json([
                 'status' => 1,
                 'title' => 'Success',
@@ -2030,18 +2027,21 @@ class GpsController extends Controller {
     }
     public function setOtaInConsoleOperations(Request $request)
     {
-        $rules = $this->otaCreateRules();
+        $rules              =   $this->otaCreateRules();
         $this->validate($request, $rules);
-        $gps_id=$request->gps_id;
-        $command=$request->command;
-        $operations_id=\Auth::user()->operations->id;
+        $gps_id             =   $request->gps_id;
+        $command            =   $request->command;
+        $operations_id      =   \Auth::user()->operations->id;
+        $response           =   (new OtaResponse())->saveCommandsToDevice($gps_id,$command);
         // dd($response);
-        $response = OtaResponse::create([
-            'gps_id'=>$gps_id,
-            'response'=>trim($command),
-            'operations_id'=>$operations_id
-        ]);
+        // $response = OtaResponse::create([
+        //     'gps_id'=>$gps_id,
+        //     'response'=>trim($command),
+        //     'operations_id'=>$operations_id
+        // ]);
         if($response){
+            $gps_details    =   (new Gps())->getGpsDetails($gps_id);
+            (new OtaResponse())->writeCommandToDevice($gps_details->imei,$command);
         //     $request->session()->flash('message', 'Command send successfully');
         // $request->session()->flash('alert-class', 'alert-success');
             return response()->json([
