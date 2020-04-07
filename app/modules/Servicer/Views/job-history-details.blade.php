@@ -220,7 +220,7 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
    
       <?php 
        $i=1;
-        foreach (json_decode($servicer_job->device_test_scenario)->tests as $each_scenario) { ?>
+        foreach (json_decode($servicer_job->device_test_scenario)->device_test_scenario->tests as $each_scenario) { ?>
         <tr>
       <td style="width: 25%" >{{ (($perPage * ($page - 1)) + $i++) }}</td>
        <td style="width: 25%" ><?php echo $each_scenario->title;?> </td>
