@@ -22,10 +22,10 @@ class OtaResponse extends Model
 
     public function writeCommandToDevice($imei,$command)
     {
-        $existing_value     =   Redis::get($imei);
-        if($existing_value)
+        $pending_commands_to_device     =   Redis::get($imei);
+        if($pending_commands_to_device)
         {
-            $command        =   $existing_value.','.trim($command);    
+            $command                    =   $pending_commands_to_device.','.trim($command);    
         }
         return Redis::set( $imei, trim($command));
     }
