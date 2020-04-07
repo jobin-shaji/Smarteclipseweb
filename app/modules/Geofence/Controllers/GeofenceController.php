@@ -10,7 +10,7 @@ use App\Modules\Vehicle\Models\Vehicle;
 use App\Modules\Vehicle\Models\VehicleGeofence;
 use App\Modules\Vehicle\Models\VehicleRoute;
 use App\Modules\Client\Models\Client;
-
+use App\Modules\Gps\Models\Gps;
 use App\Modules\Ota\Models\OtaResponse;
 use Illuminate\Support\Facades\Crypt;
 use DataTables;
@@ -360,10 +360,12 @@ class GeofenceController extends Controller {
         }else{
             $response_string="SET VGF:".trim($response_string);
         }
-        $geofence_response= OtaResponse::create([
-                    'gps_id' => $vehicle->gps_id,
-                    'response' => $response_string
-                ]);
+        $geofence_response  =   (new OtaResponse())->saveCommandsToDevice($vehicle->gps_id,$response_string);
+        if($geofence_response)
+        {
+            $gps_details        =   (new Gps())->getGpsDetails($vehicle->gps_id);
+            (new OtaResponse())->writeCommandToDevice($gps_details->imei,$response_string);
+        }  
         return $geofence_response;
     }
 

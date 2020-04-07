@@ -701,11 +701,13 @@ class ClientController extends Controller {
 
         $vehicles= Vehicle::select('id','client_id','gps_id')->where('client_id',$user->client->id)->withTrashed()->get();
         foreach ($vehicles as $vehicle) {
-            $response_string="CLR VGF";
-            $geofence_response= OtaResponse::create([
-                'gps_id' => $vehicle->gps_id,
-                'response' => $response_string
-            ]);
+            $response_string    =   "CLR VGF";
+            $geofence_response  =   (new OtaResponse())->saveCommandsToDevice($vehicle->gps_id,$response_string);  
+            if($geofence_response)
+            {
+                $gps_details        =   (new Gps())->getGpsDetails($vehicle->gps_id);
+                (new OtaResponse())->writeCommandToDevice($gps_details->imei,$response_string);
+            }
         }
 
         // dd($gps_id);
@@ -757,11 +759,13 @@ class ClientController extends Controller {
 
         $vehicles= Vehicle::select('id','client_id','gps_id')->where('client_id',$user->client->id)->withTrashed()->get();
         foreach ($vehicles as $vehicle) {
-            $response_string="CLR VGF";
-            $geofence_response= OtaResponse::create([
-                'gps_id' => $vehicle->gps_id,
-                'response' => $response_string
-            ]);
+            $response_string    =   "CLR VGF";
+            $geofence_response  =   (new OtaResponse())->saveCommandsToDevice($vehicle->gps_id,$response_string);  
+            if($geofence_response)
+            {
+                $gps_details        =   (new Gps())->getGpsDetails($vehicle->gps_id);
+                (new OtaResponse())->writeCommandToDevice($gps_details->imei,$response_string);
+            }
         }
 
         $user->role = 0;

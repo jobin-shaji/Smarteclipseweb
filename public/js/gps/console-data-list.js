@@ -320,7 +320,7 @@ function setOta(gps_id) {
         var command = document.getElementById('command').value;
         var data = {'gps_id':gps_id, 'command':command};
     }
-    var url = 'setota';
+    var url = 'console-set-ota';
     $.ajax({
         type: 'POST',
         url: url,
