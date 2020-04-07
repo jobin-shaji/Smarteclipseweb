@@ -716,19 +716,21 @@ class VltDataController extends Controller
     }
     public function setOtaInConsole(Request $request)
     {
-        $gps_id     =   $request->gps_id;
-        $command    =   $request->command;
-        $response   =   OtaResponse::create([
-                            'gps_id'=>$gps_id,
-                            'response'=>trim($command)
-        ]);
-        if($response){
+        $gps_id             =   $request->gps_id;
+        $command            =   $request->command;
+        $response           =   (new OtaResponse())->sendOtaResponse($gps_id,$command);
+        if($response)
+        {
+            $gps_details    =   (new Gps())->getGpsDetails($gps_id);
+            (new OtaResponse())->writeCommandToRedis($gps_details->imei,$command);
             return response()->json([
                 'status' => 1,
                 'title' => 'Success',
                 'message' => 'Command send successfully'
             ]);
-        }else{
+        }
+        else
+        {
            return response()->json([
                 'status' => 0,
                 'title' => 'Error',
