@@ -180,7 +180,8 @@ class Vehicle extends Model
         return self::select(
                     'id',
                     'gps_id',
-                    'is_returned'
+                    'is_returned',
+                    'is_reinstallation_job_created'
                     )
                     ->where('gps_id',$gps_id)
                     ->withTrashed()
@@ -213,6 +214,15 @@ class Vehicle extends Model
       return self::select('id','name','register_number')
                   ->where('id',$vehicle_id)
                   ->withTrashed()
+                  ->first();
+    }
+
+    public function getAnyOneReturnedVehicle($client_id)
+    {
+      return self::select('id','client_id','is_returned','is_reinstallation_job_created')
+                  ->where('client_id',$client_id)
+                  ->where('is_returned',1)
+                  ->where('is_reinstallation_job_created',0)
                   ->first();
     }
 }

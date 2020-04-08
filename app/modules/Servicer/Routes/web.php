@@ -15,7 +15,9 @@ Route::group(['middleware' => ['web','auth','role:root|sub_dealer|trader'] , 'na
 	Route::post('/servicer-list-history-jobs','ServicerController@getServicerJobsHistoryList')->name('servicer.list.history.jobs');	
 	//servicer change pasword for root,dealer,subdealer
 	Route::get('/servicer/{id}/password-change','ServicerController@changeServicerPassword')->name('servicer.change.password');
-    Route::post('/servicer/{id}/password-updation','ServicerController@updateServicerPassword')->name('servicer.change.password.p');
+	Route::post('/servicer/{id}/password-updation','ServicerController@updateServicerPassword')->name('servicer.change.password.p');
+	//get client based on job type
+	Route::post('/jobtype-enduser', 'ServicerController@getClientBasedOnJobType')->name('jobtype.enduser');
 
 
 });
