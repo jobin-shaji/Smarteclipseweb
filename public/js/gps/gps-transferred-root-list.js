@@ -3,7 +3,13 @@ window.onload = function()
     document.getElementById('transfer_type').value = "";
     document.getElementById('from_id').value = "";
     document.getElementById('to_id').value = "";
+  $('#dataTable').DataTable().search( this.value ).draw();
+
 }
+
+$('#clear-filter').click(function() {
+  // $('#dataTable').DataTable().search( this.value ).draw();
+});
 function getDeviceTransferList()
 {
     if(document.getElementById('transfer_type').value == ''){
@@ -41,6 +47,7 @@ function countSection(data)
             'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
         },
         success: function(res) {
+            console.log(res);
             if(res.instock_gps_count != undefined)
             {
                 $('#stock_section').show();
@@ -58,6 +65,8 @@ function countSection(data)
 
 
 function callBackDataTable(data){
+  // $('#dataTable').DataTable().search( this.value ).draw();
+     // $('#filter-input').val('');
     $("#dataTable").DataTable({
         bStateSave: true,
         bDestroy: true,

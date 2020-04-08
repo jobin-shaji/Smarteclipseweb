@@ -1,6 +1,12 @@
 $(document).ready(function () {
     callBackDataTable();
-    
+    // var table = $('#dataTable').DataTable();
+ $('#dataTable').DataTable().ajax.reload();
+// table
+//     .clear()
+//     .draw();
+    //  table.clear();
+    // $('input[type=search]').val('').change();
 });
 
 
@@ -8,7 +14,9 @@ function callBackDataTable(){
     var  data = {
     
     }; 
-
+// $('#tableDestroy').on( 'click', function () {
+//     table.destroy();
+// } );
     $("#dataTable").DataTable({
         bStateSave: true,
         responsive: true,

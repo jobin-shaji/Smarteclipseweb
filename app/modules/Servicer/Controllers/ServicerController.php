@@ -296,7 +296,7 @@ class ServicerController extends Controller {
         ServicerNotification::create([
                                         'servicer_id'       => $request->servicer,
                                         'service_job_id'    =>$service_job->id,
-                                        'title'             => $title,
+                                        'title'             => $tttle,
                                         'data'              => json_encode($message,true)
                                     ]);
 
@@ -1621,6 +1621,7 @@ public function serviceJobDetails(Request $request)
         if($servicer_job == null){
            return view('Servicer::404');
         }
+        
         return view('Servicer::job-history-details',['servicer_job' => $servicer_job,'vehicle_device' => $vehicle_device]);
     }
 

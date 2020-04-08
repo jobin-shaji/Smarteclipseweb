@@ -380,6 +380,8 @@ class ComplaintController extends Controller {
         }
         else  if(\Auth::user()->hasRole('root'))
         {
+             $clients= Client::select('id', 'name','trader_id')->get();
+            
             $servicer =$servicer->where('type',1);
         }else
         {

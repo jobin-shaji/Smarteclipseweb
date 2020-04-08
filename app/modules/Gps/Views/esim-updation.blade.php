@@ -88,7 +88,7 @@ Create Vehicle Type
                                     </thead>
                                     <tbody id="uploaded-excel-details"></tbody>
                                 </table>
-                                <input type="button" class="pull-right" value="Update E-Sim Numbers" onclick="updateEsimNumbersToDatabase()" />
+                                <button style="cursor:pointer;" type="button" class="pull-right" value="Update E-Sim Numbers" onclick="updateEsimNumbersToDatabase()" />Update E-Sim Numbers</button>
                             </div>
                             <!-- /temporary listing -->
                         </form>
