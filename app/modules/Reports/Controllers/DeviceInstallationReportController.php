@@ -132,9 +132,9 @@ class DeviceInstallationReportController extends Controller {
         ->whereNotNull('job_complete_date')
         ->with('gps:id,imei,serial_no')
         ->with('clients:id,name')
-        ->with('servicer:id,name')
-        ->where('job_complete_date', '>=', $from_date)
-        ->where('job_complete_date', '<=', $to_date);
+        ->with('servicer:id,name');
+        // ->where('job_complete_date', '>=', $from_date)
+        // ->where('job_complete_date', '<=', $to_date);
         if($client_id==0 && $servicer_id==0)
         { 
            $completed_jobs =$completed_jobs->whereIn('client_id',$all_clients)->whereIn('servicer_id',$all_servicers);
@@ -150,6 +150,9 @@ class DeviceInstallationReportController extends Controller {
         {
             $completed_jobs =$completed_jobs->where('servicer_id',$servicer_id)->where('client_id',$client_id);
         } 
+         if($from_date){
+          $completed_jobs = $completed_jobs->whereDate('job_complete_date', '>=', $from_date)->whereDate('job_complete_date', '<=', $to_date);
+        }
         $completed_jobs =$completed_jobs->get();  
         return DataTables::of($completed_jobs)
         ->addIndexColumn()
