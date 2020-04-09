@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use App\Modules\Gps\Models\Gps;
+use App\Modules\Root\Models\Root;
 use App\Modules\Warehouse\Models\GpsStock;
 use App\Modules\Vehicle\Models\Vehicle;
 use App\Modules\Operations\Models\VehicleModels;
@@ -1431,12 +1432,17 @@ public function serviceJobDetails(Request $request)
         $user_id=$servicer_job->user_id;
         $dealer=SubDealer::where('user_id',$user_id)->first();
         $trader=Trader::where('user_id',$user_id)->first();
+        $root=Root::where('user_id',$user_id)->first();
         if($dealer){
             $dealer_trader=$dealer;
         }
-        else
+        elseif($trader)
         {
             $dealer_trader=$trader;
+        }
+        else
+        {
+            $dealer_trader=$root;
         }
         $client_id=$servicer_job->client_id;
         $client = Client::find($client_id);
