@@ -131,7 +131,7 @@ $key        = (isset($_GET['new_installation_search_key'])) ? $_GET['new_install
  <style>
       .table td, .table th 
       {
-          padding: 14px 14px;
+          padding: 7px 7px;
           vertical-align: top;
           border-top: 0px solid #dee2e6;
       }

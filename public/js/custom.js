@@ -1150,50 +1150,85 @@ function downloadSosLabel(id){
 
 
 // code
-function jobtypeonchange(){
-   $("#client").val("");
-
-
-$('#gps').find('option').remove();
-
-
-
-
+function jobtypeonchange(job_type)
+{
+    $('#client_section').hide();
+    $('#location_section').hide();
+    $('#gps_section').hide();
+    $('#description_section').hide();
+    $('#date_section').hide();
+    $('#submit_section').hide();
+    $("#client").val("");
+    $('#gps').find('option').remove();
+    $.ajax({
+        type:'POST',
+        url: "jobtype-enduser",
+        data: { job_type:job_type} ,
+        async: true,
+        headers: {
+            'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function (res) {
+            $('#client_section').show();
+            $('#client').empty();
+            $('#client').focus;
+            $('#client').append('<option value="">Select End User</option>');   
+            if(res.length == 0)
+            {
+                $('#client').append('<option value="">No end user found</option>'); 
+            } 
+            else
+            {
+                for (var i = 0; i < res.length; i++) {
+                    var client='  <option value="'+res[i].id+'"  >'+res[i].name+'</option>';
+                    $("#client").append(client);
+                }
+            }
+        }
+    });
 }
 
 function getClientServicerGps(client_id){
+    $('#location_section').hide();
+    $('#gps_section').hide();
+    $('#description_section').hide();
+    $('#date_section').hide();
+    $('#submit_section').hide();
     if(client_id)
     {
-        var job_type = $("#job_type option:selected").val();
-        if(job_type==""||job_type==undefined){
+        var job_type    =   $("#job_type option:selected").val();
+        if(job_type == "" || job_type == undefined){
             alert('Please select job type!');
             client_id=0;
-            // $("#gps option[value='']").remove();
-            // $("#gps").append(new Option("Select GPS", ""));
         }
-        var url = 'servicer-client-gps';
-        var data = {
-            client_id : client_id,
-            job_type:job_type
-        };
+        var url         =   'servicer-client-gps';
+        var data        =   {
+                                client_id : client_id,
+                                job_type:job_type
+                            };
         backgroundPostData(url,data,'clientGps',{alert:false});
     }
 }
 
 function clientGps(res)
 {
+    $('#location_section').show();
+    $('#gps_section').show();
+    $('#description_section').show();
+    $('#date_section').show();
+    $("#gps").empty(); 
     if(res.code == 1)
     {
-        $("#gps").empty();
-        var expired_documents;
         length=res.devices.length;
         if(length==0)
         {
-            var gps='<option value=" ">No GPS</option>';
+            var gps='<option value=" ">No GPS Found</option>';
             $("#gps").append(gps);
         }
         else
         {
+            $('#submit_section').show();
+            $('#gps').append('<option value="">Select GPS</option>'); 
             for (var i = 0; i < length; i++) {
              var gps='  <option value="'+res.devices[i].id+'"  >'+res.devices[i].serial_no+'</option>';
              $("#gps").append(gps);
@@ -1204,8 +1239,7 @@ function clientGps(res)
     }
     else if(res.code == 2)
     {
-        $("#gps").empty();
-        var gps='<option value=" ">No GPS</option>';
+        var gps='<option value=" ">No GPS Found</option>';
         $("#gps").append(gps);
         $('#search_place').val(res.location);
     }else
