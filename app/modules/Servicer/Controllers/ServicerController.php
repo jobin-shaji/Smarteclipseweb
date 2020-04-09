@@ -552,11 +552,16 @@ class ServicerController extends Controller {
     }
     public function subDealerAssignServicerList()
     {
+        $user_id=\Auth::user()->id;
+       
+
         return view('Servicer::sub-dealer-assign-servicer-list');
     }
     public function getSubDealerAssignServicerList()
     {
+
         $user_id=\Auth::user()->id;
+     
         $servicer_job = ServicerJob::select(
             'id',
             'servicer_id',
@@ -579,6 +584,7 @@ class ServicerController extends Controller {
         ->with('servicer:id,name')
         ->orderBy('id','desc')
         ->get();
+
         return DataTables::of($servicer_job)
         ->addIndexColumn()
          ->addColumn('job_type', function ($servicer_job) {
@@ -1433,7 +1439,7 @@ public function serviceJobDetails(Request $request)
             $service_job_id=Crypt::encrypt($servicer_job->id);
             $request->session()->flash('message', 'Job  completed successfully!');
             $request->session()->flash('alert-class', 'alert-success');
-            return redirect()->route('servicerjob.history.list');
+            return redirect()->route('completed.service.job.list');
             // return redirect()->route('job.history.details',['id' => encrypt($servicer_job->id)]);
        }else
        {
@@ -1688,6 +1694,7 @@ public function serviceJobDetails(Request $request)
         $decrypted = Crypt::decrypt($request->id);
         // dd($decrypted);
         $servicer_job = ServicerJob::withTrashed()->where('id', $decrypted)->first();
+      
         $client_id=$servicer_job->client_id;
 
         $vehicle_device = Vehicle::select(
