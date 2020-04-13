@@ -36,7 +36,8 @@ class CreateServicerJobsTable extends Migration
             $table->string('start_code', 6)->nullable();
             $table->dateTime('start_code_verified_at')->nullable();
             $table->string('completion_code', 6)->nullable();
-            $table->dateTime('completion_code_verified_at')->nullable();          
+            $table->dateTime('completion_code_verified_at')->nullable(); 
+            $table->integer('reinstallation_vehicle_id')->nullable();         
             $table->timestamps();
             $table->softDeletes();
         });

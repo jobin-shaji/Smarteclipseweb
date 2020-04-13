@@ -42,15 +42,15 @@ Route::group(['middleware' => ['web','auth','role:sub_dealer|trader'] , 'namespa
 
 
 Route::group(['middleware' => ['web','auth','role:servicer'] , 'namespace' => 'App\Modules\Servicer\Controllers' ] , function() {
-Route::get('/job-list','ServicerController@jobList')->name('job_list');
-// for on progress installation
-Route::get('/on-progress-installation-job-list','ServicerController@onProgressInstallationJobList')->name('on_progress_job_list');	
-Route::get('/service-job-list','ServicerController@serviceJobList')->name('new.service.job.list');
-Route::get('/on-progress-service-job-list','ServicerController@onProgresserviceJobList')->name('inprogress.service.job.list');	
-Route::get('/pending-job-list','ServicerController@pendingJob')->name('pending.job.list');
-Route::post('/pending-job-list','ServicerController@pendingJobList')->name('pending.job.list');
+	Route::get('/job-list','ServicerController@jobList')->name('job_list');
+	// for on progress installation
+	Route::get('/on-progress-installation-job-list','ServicerController@onProgressInstallationJobList')->name('on_progress_job_list');	
+	Route::get('/service-job-list','ServicerController@serviceJobList')->name('new.service.job.list');
+	Route::get('/on-progress-service-job-list','ServicerController@onProgresserviceJobList')->name('inprogress.service.job.list');	
+	Route::get('/pending-job-list','ServicerController@pendingJob')->name('pending.job.list');
+	Route::post('/pending-job-list','ServicerController@pendingJobList')->name('pending.job.list');
 
-Route::post('/allcheck-list','ServicerController@getchecklist')->name('allcheck.list');
+	Route::post('/allcheck-list','ServicerController@getchecklist')->name('allcheck.list');
 	Route::post('/list-jobs','ServicerController@getJobsList')->name('list.jobs');
 	Route::post('/service-list-jobs','ServicerController@getServiceJobsList')->name('service.list.jobs');
 
@@ -113,6 +113,10 @@ Route::post('/allcheck-list','ServicerController@getchecklist')->name('allcheck.
 	Route::get('/servicer-profile-edit','ServicerController@servicerProfileEdit')->name('servicer.profile.edit');
 	Route::post('/servicer/profile/{id}/edit','ServicerController@profileUpdate')->name('servicer.profile.update.p');
 	Route::post('/servicer-job-complete','ServicerController@jobstatuscomplete')->name('servicer.job.complete.p');
+
+	Route::get('/reinstallation-job-list','ServicerController@reinstallationJobList')->name('reinstallation-job-list');
+	Route::get('/on-progress-reinstallation-job-list','ServicerController@onProgressReinstallationJobList')->name('on-progress-reinstallation-job-list');
+	Route::get('/reinstallation-job-history-list','ServicerController@ReinstallationJobHistoryList')->name('reinstallation-job-history-list');
 
 });
 

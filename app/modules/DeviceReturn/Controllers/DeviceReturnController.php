@@ -15,6 +15,7 @@ use App\Modules\DeviceReturn\Models\DeviceReturnHistory;
 use App\Modules\Servicer\Models\Servicer;
 use App\Modules\Trader\Models\Trader;
 use App\Modules\Vehicle\Models\Vehicle;
+use App\Modules\Vehicle\Models\VehicleGps;
 use App\Modules\VltData\Models\VltData;
 use DataTables;
 use DB;
@@ -182,20 +183,14 @@ class DeviceReturnController extends Controller
      */
     public function selectVehicle(Request $request)
     {
-        $client_id=$request->client_id;
-        $device_gps_id=DeviceReturn::select('gps_id')
-                    ->where('client_id',$client_id)
-                    ->where('status','!=',1)
-                    ->pluck('gps_id');
-        $vehicle=GpsStock::select(
-                            'gps_id',
-                            'client_id')
-                    ->with('gps')
-                    ->where('client_id',$client_id)
-                    ->whereNotIn('gps_id',$device_gps_id)
-                    ->with('deviceReturn:gps_id,status')
-                    ->get();
-        if($vehicle== null){
+        $client_id                              =   $request->client_id;
+        $device_returned_with_submitted_status  =   DeviceReturn::select('gps_id')
+                                                        ->where('client_id',$client_id)
+                                                        ->where('status','!=',1)
+                                                        ->pluck('gps_id');
+        $non_returned_device_vehicles           =   (new Vehicle())->getNonReturnedDeviceVehiclesOfClient($client_id,$device_returned_with_submitted_status);
+        if($non_returned_device_vehicles == null)
+        {
             return response()->json([
                 'vehicle' => '',
                 'message' => 'no vehicle found'
@@ -203,7 +198,7 @@ class DeviceReturnController extends Controller
         }else
         {
             return response()->json([
-                    'vehicle' => $vehicle,
+                    'vehicle' => $non_returned_device_vehicles,
             ]);
         }
     }
@@ -273,7 +268,12 @@ class DeviceReturnController extends Controller
         $gps_in_vehicle->is_returned                    =    1;
         $gps_in_vehicle->is_reinstallation_job_created  =    0;
         $gps_in_vehicle->save();         
-                
+
+        //Update gps removed date on vehicle gps log table
+        $vehicle_gps_log                    =   (new VehicleGps())->getVehicleGpsLog($gps_in_vehicle->id,$device_return->gps_id);
+        $vehicle_gps_log->gps_removed_on    =   date('Y-m-d H:i:s');
+        $vehicle_gps_log->save();
+        
         //To update imei in vlt data table
         $vlt_Data                            =    (new VltData())->vltDataImeiUpdation($imei,$imei_incremented);     
         
@@ -292,7 +292,7 @@ class DeviceReturnController extends Controller
             'status' => 1,
             'title' => 'Success',
             'message' => 'Device return Accepted successfully'
-            ]);
+        ]);
         
     }
     /**

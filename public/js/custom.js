@@ -1157,9 +1157,13 @@ function jobtypeonchange(job_type)
     $('#gps_section').hide();
     $('#description_section').hide();
     $('#date_section').hide();
-    $('#submit_section').hide();
+    $("#submit_section").prop('disabled', true);
+    $("#submit_text").show();
+    $("#vehicle").prop('required',false); 
+    $('#vehicle_section').hide();
     $("#client").val("");
     $('#gps').find('option').remove();
+    $('#vehicle').find('option').remove();
     $.ajax({
         type:'POST',
         url: "jobtype-enduser",
@@ -1193,7 +1197,11 @@ function getClientServicerGps(client_id){
     $('#gps_section').hide();
     $('#description_section').hide();
     $('#date_section').hide();
-    $('#submit_section').hide();
+    $("#submit_section").prop('disabled', true); 
+    $("#submit_text").show();
+    $('#vehicle_section').hide();
+    $('#gps').find('option').remove();
+    $("#vehicle").prop('required',false);
     if(client_id)
     {
         var job_type    =   $("#job_type option:selected").val();
@@ -1227,29 +1235,57 @@ function clientGps(res)
         }
         else
         {
-            $('#submit_section').show();
+            if( res.job_type != 3 )
+            {
+                $("#submit_section").prop('disabled', false); 
+                $("#submit_text").hide();
+            }
             $('#gps').append('<option value="">Select GPS</option>'); 
             for (var i = 0; i < length; i++) {
              var gps='  <option value="'+res.devices[i].id+'"  >'+res.devices[i].serial_no+'</option>';
              $("#gps").append(gps);
             }
         }
-
         $('#search_place').val(res.location);
+        if( res.job_type == 3 )
+        {
+            $('#vehicle_section').show();
+            if( res.vehicles.length == 0 )
+            {
+                var vehicle='<option value=" ">No Vehicle Found</option>';
+                $("#vehicle").append(vehicle);
+            }
+            else
+            {
+                $("#vehicle").prop('required',true);
+                $("#submit_section").prop('disabled', false); 
+                $("#submit_text").hide();
+                $('#vehicle').append('<option value="">Select Vehicle</option>'); 
+                for (var i = 0; i < length; i++) {
+                var vehicle='  <option value="'+res.vehicles[i].id+'"  >'+res.vehicles[i].name+res.vehicles[i].register_number+'</option>';
+                $("#vehicle").append(vehicle);
+                }
+            }
+        }
     }
     else if(res.code == 2)
     {
         var gps='<option value=" ">No GPS Found</option>';
         $("#gps").append(gps);
         $('#search_place').val(res.location);
+        if( res.job_type == 3 )
+        {
+            var vehicle='<option value=" ">No Vehicle Found</option>';
+            $("#vehicle").append(vehicle);
+        }
     }else
     {
         $("#search_place").val('');
         $("#gps").val('');
+        $("#vehicle").val('');
         $('#client option').prop('selected', function() {
             return this.defaultSelected;
         });
-
     }
 }
 

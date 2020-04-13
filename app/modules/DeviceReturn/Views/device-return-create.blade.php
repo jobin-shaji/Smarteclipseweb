@@ -28,9 +28,9 @@
               <div class="row mrg-bt-10 inner-mrg">
                 <div class="col-md-6">
                   <div class="form-group has-feedback form-group-1 mrg-rt-5">
-                    <label class="srequired">Client</label>
+                    <label class="srequired">End User</label>
                     <select class="form-control select2"  name="client_id" data-live-search="true" title="Select Client" id='client_id'  required>
-                    <option selected disabled>Select Client</option>
+                    <option selected disabled>Select End User</option>
                     @foreach($client as $each_client)
                     <option value="{{$each_client->id}}">{{$each_client->name}}</option>  
                     @endforeach
@@ -45,7 +45,7 @@
                   <div class="form-group has-feedback form-group-1 mrg-rt-5">
                     <label class="srequired">Device</label>
                     <select class="form-control select2" id="gps_id" name="gps_id" data-live-search="true" title="Select Device" required>
-                      <option selected disabled>Select Client First</option>
+                      <option selected disabled>Select End User First</option>
                     </select>
                     <!-- @if ($errors->has('gps_id'))
                     <span class="help-block">
@@ -76,7 +76,7 @@
               <div class="row">
                 <!-- /.col -->
                 <div class="col-md-3 ">
-                  <button type="submit" class="btn btn-primary btn-md form-btn ">ADD</button>
+                  <button type="submit" class="btn btn-primary btn-md form-btn ">Create Return Request</button>
                 </div>
                 <!-- /.col -->
               </div>

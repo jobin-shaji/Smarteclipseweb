@@ -4,15 +4,25 @@ $(document).ready(function () {
 
 function acceptDeviceReturn(device_return_id){
     if(confirm('Are you sure to accept this?')){
-        var url = '/device-return/accept';
         var data = {
             id : device_return_id
         };
-        backgroundPostData(url,data,'callBackDataTables',{alert:true}); 
+        $.ajax({
+            type:'POST',
+            url: '/device-return/accept',
+            data:data ,
+            async: true,
+            headers: {
+              'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+            },
+            success:function(res) {
+                toastr.success('Device return request Accepted successfully');
+                setTimeout(function() {
+                    document.location.reload()
+                }, 2000);
+            }
+          });
     } 
-    setTimeout(function() {
-        document.location.reload()
-    }, 5000);
 }
 function callBackDataTable(){
     var  data = {

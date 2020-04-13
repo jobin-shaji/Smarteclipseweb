@@ -8,6 +8,20 @@ use DB;
 class VehicleGps extends Model
 {
 
+    protected $fillable = [
+        'vehicle_id','gps_id','gps_fitted_on','servicer_job_id'
+    ];
+
+    public function createNewVehicleGpsLog($vehicle_id,$gps_id,$servicer_job_id)
+    {
+      return self::create([
+        'vehicle_id'       =>  $vehicle_id,
+        'gps_id'           =>  $gps_id,
+        'gps_fitted_on'    =>  date("Y-m-d H:i:s"),
+        'servicer_job_id'  =>  $servicer_job_id
+      ]);
+    }
+
     public function vehicle()
     {
       return $this->hasOne('App\Modules\Vehicle\Models\Vehicle','id','vehicle_id')->withTrashed();
@@ -77,5 +91,20 @@ class VehicleGps extends Model
     {
       return DB::select("SELECT gps_id, extract( YEAR_MONTH FROM gps_fitted_on) as gps_fitted_on, extract( YEAR_MONTH FROM IF (gps_removed_on IS NULL, CURDATE() , gps_removed_on)) as gps_removed_on
       FROM vehicle_gps WHERE vehicle_id = '$vehicle_id'");
+    }
+
+    public function getVehicleGpsLog($vehicle_id,$gps_id)
+    {
+      return self::where('vehicle_id',$vehicle_id)->where('gps_id',$gps_id)->first();
+    }
+
+    public function getVehicleGpsLogBasedOnServicerJob($servicer_job_id)
+    {
+      return self::where('servicer_job_id',$servicer_job_id)->first();
+    }
+
+    public function getVehicleGpsLogBasedOnGps($gps_id)
+    {
+      return self::where('gps_id',$gps_id)->first();
     }
 }
