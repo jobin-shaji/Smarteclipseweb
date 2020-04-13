@@ -69,7 +69,7 @@
             @endif
           </tr>
           <tr class="success">
-            <td><b>Client </b></td>
+            <td><b>End User </b></td>
             <td>{{ $device_return_details->client->name}}</td>
           </tr>
           <tr class="success">
@@ -104,8 +104,8 @@
       </table>
       <div class="col-md-6 ">
         @if($device_return_details->status==0)
-          <!-- <button  onclick=acceptDeviceReturn({{$device_return_details->id}}) class="btn btn-md"><i class='glyphicon glyphicon-remove'></i> Accept Returned Device
-          </button>    commented for testing -->
+          <button  onclick=acceptDeviceReturn({{$device_return_details->id}}) class="btn btn-md"><i class='glyphicon glyphicon-remove'></i> Accept Returned Device
+          </button>
         @endif       
       </div><br>
       <!-- /table section -->

@@ -19,6 +19,7 @@ class CreateVehicleGpsTable extends Migration
             $table->integer('gps_id');
             $table->dateTime('gps_fitted_on');
             $table->dateTime('gps_removed_on')->nullable();
+            $table->integer('servicer_job_id');
             $table->timestamps();
         });
     }

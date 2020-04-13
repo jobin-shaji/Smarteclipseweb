@@ -64,7 +64,7 @@ Assign Servicer
 <div class="form-group row" style="float:none!important">
 <label for="fname" class="col-md-5 text-right control-label col-form-label">Job Type</label>
 <div class="form-group has-feedback">
-<input type="text" class="form-control {{ $errors->has('job_type') ? ' has-error' : '' }}" name="job_type" value="<?php if($servicer_job['job_type']==1){echo 'installation';} else { echo 'Services'; } ?>" required readonly>
+<input type="text" class="form-control {{ $errors->has('job_type') ? ' has-error' : '' }}" name="job_type" value="<?php if($servicer_job['job_type']==1){echo 'Installation';} else if($servicer_job['job_type']==2){echo 'Service';} else if($servicer_job['job_type']==3){echo 'Reinstallation';} ?>" required readonly>
 <span class="glyphicon glyphicon-phone form-control-feedback"></span>
 </div>
 @if ($errors->has('job_type'))
@@ -133,144 +133,161 @@ Assign Servicer
 
 <input type="hidden" name="client_id" id="client_id" value="{{$servicer_job->clients->id}}" >
 <input type="hidden" name="servicer_job_id" id="servicer_job_id" value="{{$servicer_job->id}}" > 
-<div class="form-group row" style="float:none!important">
-<label for="fname" class="col-sm-3 text-right control-label col-form-label">Vehicle Name</label>
-<div class="form-group has-feedback">
-<input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Name" name="name" id="name" value="{{ old('name') }}" required> 
-</div>
-@if ($errors->has('name'))
-<span class="help-block">
-<strong class="error-text">{{ $errors->first('name') }}</strong>
-</span>
-@endif
-</div>
-<div class="form-group row" style="float:none!important">
-<label for="fname" class="col-md-6 text-right control-label col-form-label">Registration Number</label>
-<div class="form-group has-feedback">
-<input type="text" class="form-control {{ $errors->has('register_number') ? ' has-error' : '' }}" placeholder="Registration Number" name="register_number" value="{{ old('register_number') }}" id="register_number" required>
-</div>
-@if ($errors->has('register_number'))
-<span class="help-block">
-<strong class="error-text">{{ $errors->first('register_number') }}</strong>
-</span>
-@endif
-</div>
-<div class="form-group row" style="float:none!important">
-<label for="fname" class="col-md-6 text-right control-label col-form-label">Engine Number</label>
-<div class="form-group has-feedback">
-<input type="text" class="form-control {{ $errors->has('engine_number') ? ' has-error' : '' }}" placeholder="Engine Number" name="engine_number" value="{{ old('engine_number') }}" id="engine_number" required>
-</div>
-@if ($errors->has('engine_number'))
-<span class="help-block">
-<strong class="error-text">{{ $errors->first('engine_number') }}</strong>
-</span>
-@endif
-</div>
-<div class="form-group row" style="float:none!important">
-<label for="fname" class="col-md-6 text-right control-label col-form-label">Chassis Number</label>
-<div class="form-group has-feedback">
-<input type="text" class="form-control {{ $errors->has('chassis_number') ? ' has-error' : '' }}" placeholder="Chassis Number" name="chassis_number" value="{{ old('chassis_number') }}" id="chassis_number" required>
-</div>
-@if ($errors->has('chassis_number'))
-<span class="help-block">
-<strong class="error-text">{{ $errors->first('chassis_number') }}</strong>
-</span>
-@endif
-</div>
-<div class="form-group row" style="float:none!important">
-<label for="fname" class="col-md-6 text-right control-label col-form-label">RC Book</label>
-<div class="form-group has-feedback">
-<input type="file" class="form-control {{ $errors->has('file') ? ' has-error' : '' }}" placeholder="Choose File" name="file" id="file" value="{{ old('file') }}" required> 
-</div>
-@if ($errors->has('file'))
-<span class="help-block">
-<strong class="error-text">{{ $errors->first('file') }}</strong>
-</span>
-@endif
-</div>
-<div class="form-group row" style="float:none!important">
-<label for="fname" class="col-md-6 text-right control-label col-form-label">Installation Photo</label>
-<div class="form-group has-feedback">
-<input type="file" class="form-control {{ $errors->has('installation_photo') ? ' has-error' : '' }}" placeholder="Choose File" name="installation_photo" id="installation_photo" value="{{ old('installation_photo') }}" required> 
-</div>
-@if ($errors->has('installation_photo'))
-<span class="help-block">
-<strong class="error-text">{{ $errors->first('installation_photo') }}</strong>
-</span>
-@endif
-</div>
 
-<div class="form-group row" style="float:none!important">
-<label for="fname" class="col-md-6 text-right control-label col-form-label">Activation Photo</label>
-<div class="form-group has-feedback">
-<input type="file" class="form-control {{ $errors->has('activation_photo') ? ' has-error' : '' }}" placeholder="Choose File" name="activation_photo" id="activation_photo" value="{{ old('activation_photo') }}" required> 
-</div>
-@if ($errors->has('activation_photo'))
-<span class="help-block">
-<strong class="error-text">{{ $errors->first('activation_photo') }}</strong>
-</span>
-@endif
-</div>
-<div class="form-group row" style="float:none!important">
-<label for="fname" class="col-md-6 text-right control-label col-form-label">Vehicle Photo</label>
-<div class="form-group has-feedback">
-<input type="file" class="form-control {{ $errors->has('vehicle_photo') ? ' has-error' : '' }}" placeholder="Choose File" name="vehicle_photo" id="vehicle_photo" value="{{ old('vehicle_photo') }}" required> 
-</div>
-@if ($errors->has('vehicle_photo'))
-<span class="help-block">
-<strong class="error-text">{{ $errors->first('vehicle_photo') }}</strong>
-</span>
-@endif
-</div>
-<div class="form-group row" style="float:none!important">
-<label for="fname" class="col-sm-5 text-right control-label col-form-label">Vehicle Type</label>
-<div class="form-group has-feedback">
-<select class="form-control {{ $errors->has('vehicle_type_id') ? ' has-error' : '' }}" placeholder="Name" name="vehicle_type_id" value="{{ old('vehicle_type_id') }}" id="vehicle_type_id" required>
-<option value="" selected disabled>Select Vehicle Type</option>
-@foreach($vehicleTypes as $type)
-<option value="{{$type->id}}">{{$type->name}}</option>
-@endforeach
-</select>
-</div>
-@if ($errors->has('vehicle_type_id'))
-<span class="help-block">
-<strong class="error-text">{{ $errors->first('vehicle_type_id') }}</strong>
-</span>
-@endif
-</div>
-<div class="form-group row" style="float:none!important">
-<label for="fname" class="col-sm-5 text-right control-label col-form-label">Manufacturer</label>
-<div class="form-group has-feedback">
-<select class="form-control {{ $errors->has('make') ? ' has-error' : '' }}" placeholder="Name" name="make" value="{{ old('make') }}" id="make" required onchange="getvehicleModel(this.value)">
-<option value="" selected disabled>Select Vehicle Make</option>
-@foreach($makes as $make)
-<option value="{{$make->id}}">{{$make->name}}</option>
-@endforeach
-</select>
-</div>
-@if ($errors->has('make'))
-<span class="help-block">
-<strong class="error-text">{{ $errors->first('make') }}</strong>
-</span>
-@endif
-</div>
+@if ($servicer_job['job_type']==1)
+    <div class="form-group row" style="float:none!important">
+    <label for="fname" class="col-sm-3 text-right control-label col-form-label">Vehicle Name</label>
+    <div class="form-group has-feedback">
+    <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Name" name="name" id="name" value="{{ old('name') }}" required> 
+    </div>
+    @if ($errors->has('name'))
+    <span class="help-block">
+    <strong class="error-text">{{ $errors->first('name') }}</strong>
+    </span>
+    @endif
+    </div>
+    <div class="form-group row" style="float:none!important">
+    <label for="fname" class="col-md-6 text-right control-label col-form-label">Registration Number</label>
+    <div class="form-group has-feedback">
+    <input type="text" class="form-control {{ $errors->has('register_number') ? ' has-error' : '' }}" placeholder="Registration Number" name="register_number" value="{{ old('register_number') }}" id="register_number" required>
+    </div>
+    @if ($errors->has('register_number'))
+    <span class="help-block">
+    <strong class="error-text">{{ $errors->first('register_number') }}</strong>
+    </span>
+    @endif
+    </div>
+    <div class="form-group row" style="float:none!important">
+    <label for="fname" class="col-md-6 text-right control-label col-form-label">Engine Number</label>
+    <div class="form-group has-feedback">
+    <input type="text" class="form-control {{ $errors->has('engine_number') ? ' has-error' : '' }}" placeholder="Engine Number" name="engine_number" value="{{ old('engine_number') }}" id="engine_number" required>
+    </div>
+    @if ($errors->has('engine_number'))
+    <span class="help-block">
+    <strong class="error-text">{{ $errors->first('engine_number') }}</strong>
+    </span>
+    @endif
+    </div>
+    <div class="form-group row" style="float:none!important">
+    <label for="fname" class="col-md-6 text-right control-label col-form-label">Chassis Number</label>
+    <div class="form-group has-feedback">
+    <input type="text" class="form-control {{ $errors->has('chassis_number') ? ' has-error' : '' }}" placeholder="Chassis Number" name="chassis_number" value="{{ old('chassis_number') }}" id="chassis_number" required>
+    </div>
+    @if ($errors->has('chassis_number'))
+    <span class="help-block">
+    <strong class="error-text">{{ $errors->first('chassis_number') }}</strong>
+    </span>
+    @endif
+    </div>
+    <div class="form-group row" style="float:none!important">
+    <label for="fname" class="col-md-6 text-right control-label col-form-label">RC Book</label>
+    <div class="form-group has-feedback">
+    <input type="file" class="form-control {{ $errors->has('file') ? ' has-error' : '' }}" placeholder="Choose File" name="file" id="file" value="{{ old('file') }}" required> 
+    </div>
+    @if ($errors->has('file'))
+    <span class="help-block">
+    <strong class="error-text">{{ $errors->first('file') }}</strong>
+    </span>
+    @endif
+    </div>
+    <div class="form-group row" style="float:none!important">
+    <label for="fname" class="col-md-6 text-right control-label col-form-label">Installation Photo</label>
+    <div class="form-group has-feedback">
+    <input type="file" class="form-control {{ $errors->has('installation_photo') ? ' has-error' : '' }}" placeholder="Choose File" name="installation_photo" id="installation_photo" value="{{ old('installation_photo') }}" required> 
+    </div>
+    @if ($errors->has('installation_photo'))
+    <span class="help-block">
+    <strong class="error-text">{{ $errors->first('installation_photo') }}</strong>
+    </span>
+    @endif
+    </div>
 
-<div class="form-group row" style="float:none!important">
-<label for="fname" class="col-sm-5 text-right control-label col-form-label">model</label>
-<div class="form-group has-feedback">
-<select class="form-control {{ $errors->has('vehicle_type_id') ? ' has-error' : '' }}" placeholder="Name" name="model" value="{{ old('model') }}" id="model" required>
-<option value="" selected disabled>Select Vehicle Model</option>
-@foreach($models as $model)
-<option value="{{$model->id}}">{{$model->name}}</option>
-@endforeach
-</select>
-</div>
-@if ($errors->has('model'))
-<span class="help-block">
-<strong class="error-text">{{ $errors->first('model') }}</strong>
-</span>
+    <div class="form-group row" style="float:none!important">
+    <label for="fname" class="col-md-6 text-right control-label col-form-label">Activation Photo</label>
+    <div class="form-group has-feedback">
+    <input type="file" class="form-control {{ $errors->has('activation_photo') ? ' has-error' : '' }}" placeholder="Choose File" name="activation_photo" id="activation_photo" value="{{ old('activation_photo') }}" required> 
+    </div>
+    @if ($errors->has('activation_photo'))
+    <span class="help-block">
+    <strong class="error-text">{{ $errors->first('activation_photo') }}</strong>
+    </span>
+    @endif
+    </div>
+    <div class="form-group row" style="float:none!important">
+    <label for="fname" class="col-md-6 text-right control-label col-form-label">Vehicle Photo</label>
+    <div class="form-group has-feedback">
+    <input type="file" class="form-control {{ $errors->has('vehicle_photo') ? ' has-error' : '' }}" placeholder="Choose File" name="vehicle_photo" id="vehicle_photo" value="{{ old('vehicle_photo') }}" required> 
+    </div>
+    @if ($errors->has('vehicle_photo'))
+    <span class="help-block">
+    <strong class="error-text">{{ $errors->first('vehicle_photo') }}</strong>
+    </span>
+    @endif
+    </div>
+    <div class="form-group row" style="float:none!important">
+    <label for="fname" class="col-sm-5 text-right control-label col-form-label">Vehicle Type</label>
+    <div class="form-group has-feedback">
+    <select class="form-control {{ $errors->has('vehicle_type_id') ? ' has-error' : '' }}" placeholder="Name" name="vehicle_type_id" value="{{ old('vehicle_type_id') }}" id="vehicle_type_id" required>
+    <option value="" selected disabled>Select Vehicle Type</option>
+    @foreach($vehicleTypes as $type)
+    <option value="{{$type->id}}">{{$type->name}}</option>
+    @endforeach
+    </select>
+    </div>
+    @if ($errors->has('vehicle_type_id'))
+    <span class="help-block">
+    <strong class="error-text">{{ $errors->first('vehicle_type_id') }}</strong>
+    </span>
+    @endif
+    </div>
+    <div class="form-group row" style="float:none!important">
+    <label for="fname" class="col-sm-5 text-right control-label col-form-label">Manufacturer</label>
+    <div class="form-group has-feedback">
+    <select class="form-control {{ $errors->has('make') ? ' has-error' : '' }}" placeholder="Name" name="make" value="{{ old('make') }}" id="make" required onchange="getvehicleModel(this.value)">
+    <option value="" selected disabled>Select Vehicle Make</option>
+    @foreach($makes as $make)
+    <option value="{{$make->id}}">{{$make->name}}</option>
+    @endforeach
+    </select>
+    </div>
+    @if ($errors->has('make'))
+    <span class="help-block">
+    <strong class="error-text">{{ $errors->first('make') }}</strong>
+    </span>
+    @endif
+    </div>
+
+    <div class="form-group row" style="float:none!important">
+    <label for="fname" class="col-sm-5 text-right control-label col-form-label">model</label>
+    <div class="form-group has-feedback">
+    <select class="form-control {{ $errors->has('vehicle_type_id') ? ' has-error' : '' }}" placeholder="Name" name="model" value="{{ old('model') }}" id="model" required>
+    <option value="" selected disabled>Select Vehicle Model</option>
+    @foreach($models as $model)
+    <option value="{{$model->id}}">{{$model->name}}</option>
+    @endforeach
+    </select>
+    </div>
+    @if ($errors->has('model'))
+    <span class="help-block">
+    <strong class="error-text">{{ $errors->first('model') }}</strong>
+    </span>
+    @endif
+    </div>
+@elseif ($servicer_job['job_type']==3)
+    <div class="form-group row" style="float:none!important">
+        <label class="col-sm-5 text-right control-label col-form-label">Vehicle</label>
+        <div class="form-group has-feedback">
+            <select class="form-control selectpicker" data-live-search="true" title="Select Vehicle" id="vehicle_id" name="vehicle_id" required>
+                <option value="{{$servicer_job->reinstallationVehicle->id}}">{{$servicer_job->reinstallationVehicle->name}} || {{$servicer_job->reinstallationVehicle->register_number}}</option>
+            </select> 
+        </div>
+        @if ($errors->has('vehicle_id'))
+            <span class="help-block">
+                <strong class="error-text">{{ $errors->first('vehicle_id') }}</strong>
+            </span>
+        @endif 
+    </div> 
 @endif
-</div>
 <div class="form-group row" style="float:none!important">
 <label for="fname" class="col-md-6 text-right control-label col-form-label">Comment</label>
 <div class="form-group has-feedback">

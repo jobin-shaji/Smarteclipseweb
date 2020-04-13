@@ -34,13 +34,13 @@ $key        = (isset($_GET['new_installation_search_key'])) ? $_GET['new_install
                  <div class="row">
                     <div class="col-lg-7">
                       <div class="form-group" style="width: 100%;">
-                         <input type="text" class="form-control" placeholder="Enter Serial No,Assigne,user name,user email,user mobile,registration number" name="new_installation_search_key" id="new_installation_search_key" value="{{ $key }}">
+                         <input type="text" class="form-control" placeholder="Enter Job Code, Serial No,End User Details" name="new_installation_search_key" id="new_installation_search_key" autocomplete='off' value="{{ $key }}">
                       </div>
                     </div>
 
                     <div class="col-lg-2" style="margin: 0 0px 18px 0;">
                       <div class="form-group" style="width: 100%;">
-                         <button type="submit"  class="btn btn-primary search_data_list" title="Enter IMEI,Owner,Vehicle,Distributor,Dealer,Service Engineer name">Search</button>
+                         <button type="submit"  class="btn btn-primary search_data_list" title="Enter Job Code, Serial No,End User Details">Search</button>
                       </div>
                     </div>
                     <div class="col-lg-2" style="margin: 0 0px 18px 0;">
@@ -60,8 +60,8 @@ $key        = (isset($_GET['new_installation_search_key'])) ? $_GET['new_install
                <tr>
                 <th><b>SL.No</b></th>
                 <th><b>Job Code</b></th>
-                <th><b>User Details</b></th>
-                <th><b>Assignee<b></th>
+                <th><b>End User Details</b></th>
+                <!-- <th><b>Assignee<b></th> -->
                 <th><b>GPS Serial No<b></th>
                 <th><b>Description<b></th>
                 <th><b>Location<b></th>
@@ -76,7 +76,7 @@ $key        = (isset($_GET['new_installation_search_key'])) ? $_GET['new_install
                                       <td></td>
                                       <td></td>
                                       <td></td>
-                                      <td></td>
+                                      <!-- <td></td> -->
                                       <td><b style="float: right;margin-right: -13px">No data</b></td>
                                       <td><b style="float: left;margin-left: -15px">Available</b></td>
                                       <td></td>
@@ -93,7 +93,7 @@ $key        = (isset($_GET['new_installation_search_key'])) ? $_GET['new_install
                     <td>{{$servicer_job->client_name}} , {{$servicer_job->mobile_number}}
                     <br>{{$servicer_job->user_email}}<br>{{$servicer_job->client_address}}
                     </td>
-                    <td>{{$servicer_job->user_name}}</td>
+                    <!-- <td>{{$servicer_job->user_name}}</td> -->
 
                     <td>{{ ($servicer_job->gps_serial_no) ? $servicer_job->gps_serial_no: ''}}</td>
                     <td>{{$servicer_job->description}}</td>

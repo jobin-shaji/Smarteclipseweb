@@ -69,7 +69,7 @@
             @endif
           </tr>
           <tr class="success">
-            <td><b>Client </b></td>
+            <td><b>End User </b></td>
             <td>{{ $device_return_details->client->name}}</td>
           </tr>
         </tbody>

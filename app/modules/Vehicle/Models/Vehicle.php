@@ -211,18 +211,57 @@ class Vehicle extends Model
 
     public function getSingleVehicleDetailsBasedOnVehicleId($vehicle_id)
     {
-      return self::select('id','name','register_number')
-                  ->where('id',$vehicle_id)
+      return self::where('id',$vehicle_id)
                   ->withTrashed()
                   ->first();
     }
 
-    public function getAnyOneReturnedVehicle($client_id)
+    public function getChoosedVehicleForReinstallation($vehicle_id)
     {
-      return self::select('id','client_id','is_returned','is_reinstallation_job_created')
-                  ->where('client_id',$client_id)
+      return self::select('id','is_returned','is_reinstallation_job_created')
+                  ->where('id',$vehicle_id)
                   ->where('is_returned',1)
                   ->where('is_reinstallation_job_created',0)
                   ->first();
+    }
+
+    public function getReturnedGpsVehiclesUnderClient($client_id)
+    {
+      return self::where('client_id',$client_id)
+                  ->where('is_returned',1)
+                  ->get();
+    }
+
+    public function getReinstallationNeededVehiclesBasedOnClient($client_id)
+    {
+      return self::select('id','name','register_number','client_id','is_returned','is_reinstallation_job_created')
+                  ->where('client_id',$client_id)
+                  ->where('is_returned',1)
+                  ->where('is_reinstallation_job_created',0)
+                  ->get();
+    }
+
+    public function checkAlreadytJobCreatedForVehicle($vehicle_id)
+    {
+      return self::where('id',$vehicle_id)
+                  ->where('is_returned',1)
+                  ->where('is_reinstallation_job_created',1)
+                  ->count();
+    }
+
+    public function getNonReturnedDeviceVehiclesOfClient($client_id,$device_returned_with_submitted_status)
+    {
+      return self::where('client_id',$client_id)
+                  ->with('gps')
+                  ->where(function ($query) {
+                    $query->where('is_returned', '=', 0)
+                    ->orWhere('is_returned', '=', NULL);
+                    })
+                  ->where(function ($query) {
+                    $query->where('is_reinstallation_job_created', '=', 0)
+                    ->orWhere('is_reinstallation_job_created', '=', NULL);
+                    })
+                  ->whereNotIn('gps_id',$device_returned_with_submitted_status)
+                  ->get();
     }
 }

@@ -696,7 +696,7 @@
             <div class="icon">
               <i class="fa fa-tablet"></i>
             </div>
-            <a href="/job-list" class="small-box-footer" style="background-color: #3dd0c1!important">View <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="/job-list" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         
@@ -711,7 +711,7 @@
             <div class="icon">
               <i class="fa fa-tablet"></i>
             </div>
-            <a href="/on-progress-installation-job-list" class="small-box-footer" style="background-color: #b32b16!important">View <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="/on-progress-installation-job-list" class="small-box-footer" >View <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         
@@ -726,10 +726,56 @@
             <div class="icon">
               <i class="fa fa-tablet"></i>
             </div>
-            <a href="/job-history-list" class="small-box-footer" style="background-color: #963f0c!important">View <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="/job-history-list" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
-        <div class="col-lg-3 col-xs-6 gps_dashboard_grid dash_grid" style="background-color: #0ebaa6!important">
+
+        <div class="col-lg-3 col-xs-6 gps_dashboard_grid dash_grid" style="background-color: #0E9205!important">
+          <div class="small-box bg-green bxs">
+            <div class="inner">
+              <h3 id="new_reinstallation_jobs">
+                <div class="loader"></div>
+              </h3>
+              <p>New Reinstallations</p>
+            </div>
+            <div class="icon">
+              <i class="fa fa-tablet"></i>
+            </div>
+            <a href="/reinstallation-job-list" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        
+        <div class="col-lg-3 col-xs-6 gps_dashboard_grid dash_grid" style="background-color: #013467!important">
+          <div class="small-box bg-green bxs">
+            <div class="inner">
+              <h3 id="on_progress_reinstallation_jobs">
+                <div class="loader"></div>
+              </h3>
+              <p>In Progress Reinstallations </p>
+            </div>
+            <div class="icon">
+              <i class="fa fa-tablet"></i>
+            </div>
+            <a href="/on-progress-reinstallation-job-list" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        
+        <div class="col-lg-3 col-xs-6 dealer_dashboard_grid dash_grid" style="background-color: #990299!important">
+          <div class="small-box bg-yellow bxs">
+            <div class="inner">
+              <h3 id="completed_reinstallation_jobs">
+                <div class="loader"></div>
+              </h3>
+              <p> Completed Reinstallations</p>
+            </div>
+            <div class="icon">
+              <i class="fa fa-tablet"></i>
+            </div>
+            <a href="/reinstallation-job-history-list" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-xs-6 gps_dashboard_grid dash_grid" style="background-color: #B2033B!important">
           <div class="small-box bg-green bxs">
             <div class="inner">
               <h3 id="pending_service_jobs">
@@ -740,14 +786,11 @@
             <div class="icon">
               <i class="fa fa-tablet"></i>
             </div>
-            <a href="/service-job-list" class="small-box-footer" style="background-color: #51978f!important">View <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="/service-job-list" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
-
         
-
-        
-        <div class="col-lg-3 col-xs-6 gps_dashboard_grid dash_grid" style="background-color: #f484a0!important">
+        <div class="col-lg-3 col-xs-6 gps_dashboard_grid dash_grid" style="background-color: #783802!important">
           <div class="small-box bg-green bxs">
             <div class="inner">
               <h3 id="all_pending_jobs">
@@ -761,7 +804,7 @@
             <a href="/on-progress-service-job-list" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
-        <div class="col-lg-3 col-xs-6 dealer_dashboard_grid dash_grid" style="background-color: #ffca72!important">
+        <div class="col-lg-3 col-xs-6 dealer_dashboard_grid dash_grid" style="background-color: #B2030B!important">
           <div class="small-box bg-yellow bxs">
             <div class="inner">
               <h3 id="service_completed_jobs">
@@ -772,7 +815,7 @@
             <div class="icon">
               <i class="fa fa-tablet"></i>
             </div>
-            <a href="/servicerjob-history-list" class="small-box-footer" style="background-color: #ddaa54!important">View <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="/servicerjob-history-list" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
       </div>

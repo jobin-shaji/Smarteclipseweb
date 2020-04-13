@@ -124,6 +124,19 @@
                       @endif
                     </div>
 
+                    <div class="form-group row" id='vehicle_section' style="float:none!important;display:none;">
+                      <label for="fname" class="col-sm-3 text-right control-label col-form-label">Vehicle</label>
+                      <div class="form-group has-feedback">
+                        <select class="form-control selectpicker" data-live-search="true" title="Select Vehicle" id="vehicle" name="vehicle">
+                        </select>
+                      </div>
+                      @if ($errors->has('vehicle'))
+                      <span class="help-block">
+                      <strong class="error-text">{{ $errors->first('vehicle') }}</strong>
+                      </span>
+                      @endif
+                    </div>
+
                     <div class="form-group row" id='description_section' style="float:none!important;display:none;">               
                       <label for="fname" class="col-sm-3 text-right control-label col-form-label">Description</label> 
                       <div class="form-group has-feedback">
@@ -151,8 +164,9 @@
                     </div>
                     </div><br>
                     <div class="row">
-                      <div class="col-md-3 ">
-                        <button type="submit" id = 'submit_section' style='display:none;' class="btn btn-primary btn-md form-btn ">Create</button>
+                      <div class="col-md-6 ">
+                        <button type="submit" id = 'submit_section' class="btn btn-primary btn-md form-btn ">Create</button>
+                        <span id='submit_text' style='color:#808080;'> Button is disabled now, Please fill all fields for enable</span>
                       </div>
                     </div>
                   </div>
@@ -181,6 +195,10 @@
 
   
      }
+      $(function() { 
+        // disable create button
+        $("#submit_section").prop('disabled', true); 
+      });
    </script>
 @endsection
 @endsection

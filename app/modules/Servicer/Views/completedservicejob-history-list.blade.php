@@ -34,13 +34,13 @@ $key        = (isset($_GET['completed_search_key'])) ? $_GET['completed_search_k
                  <div class="row">
                     <div class="col-lg-8">
                       <div class="form-group" style="width: 100%;">
-                         <input type="text" class="form-control" placeholder="Enter Serial No,Assigne,user name,user email,user mobile,registration number" name="completed_search_key" id="completed_search_key" value="{{ $key }}">
+                         <input type="text" class="form-control" placeholder="Enter Job Code, Serial No , End User Details" name="completed_search_key" autocomplete='off' id="completed_search_key" value="{{ $key }}">
                       </div>
                     </div>
 
                     <div class="col-lg-2" style="margin: 0 0px 18px 0;">
                       <div class="form-group" style="width: 100%;">
-                         <button type="submit"  class="btn btn-primary search_data_list">Search</button>
+                         <button type="submit"  class="btn btn-primary search_data_list" title='Enter Job Code, Serial No , End User Details'>Search</button>
                       </div>
                     </div>
                     <div class="col-lg-2" style="margin: 0 0px 18px 0;">
@@ -63,14 +63,14 @@ $key        = (isset($_GET['completed_search_key'])) ? $_GET['completed_search_k
                             <tr>
                             <th><b>SL.No</b></th>
                                 <th><b>Job Code</b></th>
-                                <th><b>User Details</b></th>
+                                <th><b>End User Details</b></th>
                                 <th><b>Registration Number<b></th>
                                 <th><b>GPS Serial No<b></th>
                                 <th><b>Description<b></th>
                                 <th><b>Location<b></th>
                                 <th><b>Job Date<b></th>
                                 <th>Job Completed Date</th> 
-                                <th><b>Job Type<b></th>  
+                                <!-- <th><b>Job Type<b></th>   -->
                                 <th><b>Action</b></th>  
                               </tr>
                             </thead>
@@ -79,11 +79,10 @@ $key        = (isset($_GET['completed_search_key'])) ? $_GET['completed_search_k
                                     <tr>
                                       <td></td>
                                       <td></td>
-                                      
                                       <td></td>
                                       <td></td>
-                                      <td><b style="float: right;margin-right: -13px">No data</b></td>
-                                      <td><b style="float: left;margin-left: -15px">Available</b></td>
+                                      <td><b style="float: right;margin-right: -13px">No Data Available</b></td>
+                                      <td></td>
                                       <td></td>
                                       <td></td>
                                       <td></td>
@@ -108,13 +107,13 @@ $key        = (isset($_GET['completed_search_key'])) ? $_GET['completed_search_k
                     <td>{{$servicer_job->job_date}}</td>
                     <td>{{$servicer_job->job_complete_date}}</td>
 
-                    @if($servicer_job->job_type == 1)
+                    <!-- @if($servicer_job->job_type == 1)
                     <td>Installation</td>
                   
                     @else
                     <td>Service</td>
-                    @endif
-                   <td> <a href="/servicer/{{Crypt::encrypt($servicer_job->id)}}/details"class='btn btn-xs btn-info'><i class='glyphicon glyphicon-map-marker'></i>View</a></td>      
+                    @endif -->
+                   <td> <a href="/servicer-job-history/{{Crypt::encrypt($servicer_job->id)}}/details"class='btn btn-xs btn-info'><i class='glyphicon glyphicon-map-marker'></i>View</a></td>      
                   
                    
                 </tr>
