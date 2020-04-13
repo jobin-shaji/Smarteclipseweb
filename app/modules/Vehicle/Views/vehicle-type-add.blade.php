@@ -150,7 +150,7 @@
                   <label class="srequired">Web Online icon</label>
                   
                   <div class="form-group has-feedback">
-                    <input type="file" class="form-control {{ $errors->has('web_online_icon') ? ' has-error' : '' }}" placeholder="Choose File" name="web_online_icon" value="{{ old('web_online_icon') }}" > 
+                    <input type="file" class="form-control {{ $errors->has('web_online_icon') ? ' has-error' : '' }}" placeholder="Choose File" name="web_online_icon" value="{{ old('web_online_icon') }}" required> 
                   </div>
                   @if ($errors->has('web_online_icon'))
                     <span class="help-block">
@@ -165,7 +165,7 @@
                   <label class="srequired">Web offline icon</label>
                  
                   <div class="form-group has-feedback">
-                    <input type="file" class="form-control {{ $errors->has('web_offline_icon') ? ' has-error' : '' }}" placeholder="Choose File" name="web_offline_icon" value="{{ old('web_offline_icon') }}" > 
+                    <input type="file" class="form-control {{ $errors->has('web_offline_icon') ? ' has-error' : '' }}" placeholder="Choose File" name="web_offline_icon" value="{{ old('web_offline_icon') }}" required > 
                   </div>
                   @if ($errors->has('web_offline_icon'))
                     <span class="help-block">
@@ -180,7 +180,7 @@
                   <label class="srequired">Web idle icon</label>
                   
                   <div class="form-group has-feedback">
-                    <input type="file" class="form-control {{ $errors->has('web_idle_icon') ? ' has-error' : '' }}" placeholder="Choose File" name="web_idle_icon" value="{{ old('web_idle_icon') }}" > 
+                    <input type="file" class="form-control {{ $errors->has('web_idle_icon') ? ' has-error' : '' }}" placeholder="Choose File" name="web_idle_icon" value="{{ old('web_idle_icon') }}" required> 
                   </div>
                   @if ($errors->has('web_idle_icon'))
                     <span class="help-block">
@@ -194,7 +194,7 @@
                 <div class="form-group has-feedback">
                   <label class="srequired">Web sleep icon</label>
                   <div class="form-group has-feedback">
-                    <input type="file" class="form-control {{ $errors->has('web_sleep_icon') ? ' has-error' : '' }}" placeholder="Choose File" name="web_sleep_icon" value="{{ old('web_sleep_icon') }}" > 
+                    <input type="file" class="form-control {{ $errors->has('web_sleep_icon') ? ' has-error' : '' }}" placeholder="Choose File" name="web_sleep_icon" value="{{ old('web_sleep_icon') }}" required> 
                   </div>
                   @if ($errors->has('web_sleep_icon'))
                     <span class="help-block">

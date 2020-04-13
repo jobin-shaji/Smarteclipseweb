@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use App\Modules\Gps\Models\Gps;
+use App\Modules\Root\Models\Root;
 use App\Modules\Warehouse\Models\GpsStock;
 use App\Modules\Vehicle\Models\Vehicle;
 use App\Modules\Vehicle\Models\VehicleGps;
@@ -608,11 +609,16 @@ class ServicerController extends Controller {
     }
     public function subDealerAssignServicerList()
     {
+        $user_id=\Auth::user()->id;
+       
+
         return view('Servicer::sub-dealer-assign-servicer-list');
     }
     public function getSubDealerAssignServicerList()
     {
+
         $user_id=\Auth::user()->id;
+     
         $servicer_job = ServicerJob::select(
             'id',
             'servicer_id',
@@ -635,6 +641,7 @@ class ServicerController extends Controller {
         ->with('servicer:id,name')
         ->orderBy('id','desc')
         ->get();
+
         return DataTables::of($servicer_job)
         ->addIndexColumn()
          ->addColumn('job_type', function ($servicer_job) {
@@ -1547,7 +1554,7 @@ public function serviceJobDetails(Request $request)
             $service_job_id=Crypt::encrypt($servicer_job->id);
             $request->session()->flash('message', 'Job  completed successfully!');
             $request->session()->flash('alert-class', 'alert-success');
-            return redirect()->route('servicerjob.history.list');
+            return redirect()->route('completed.service.job.list');
             // return redirect()->route('job.history.details',['id' => encrypt($servicer_job->id)]);
        }else
        {
@@ -1625,12 +1632,17 @@ public function serviceJobDetails(Request $request)
         $user_id=$servicer_job->user_id;
         $dealer=SubDealer::where('user_id',$user_id)->first();
         $trader=Trader::where('user_id',$user_id)->first();
+        $root=Root::where('user_id',$user_id)->first();
         if($dealer){
             $dealer_trader=$dealer;
         }
-        else
+        elseif($trader)
         {
             $dealer_trader=$trader;
+        }
+        else
+        {
+            $dealer_trader=$root;
         }
         $client_id=$servicer_job->client_id;
         $client = Client::find($client_id);
@@ -1810,6 +1822,7 @@ public function serviceJobDetails(Request $request)
         if($servicer_job == null){
            return view('Servicer::404');
         }
+        
         return view('Servicer::job-history-details',['servicer_job' => $servicer_job,'vehicle_device' => $vehicle_device]);
     }
 

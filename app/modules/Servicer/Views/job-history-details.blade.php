@@ -65,7 +65,9 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                       <div class="form-group has-feedback">
                         <input type="text" class="form-control {{ $errors->has('job_type') ? ' has-error' : '' }}" name="job_type" value="<?php if ($servicer_job['job_type'] == 1) {
                                                                                                                                             echo 'installation';
-                                                                                                                                          } else {
+                                                                                                                                          } else if ($servicer_job['job_type'] == 2) {
+                                                                                                                                            echo 'Services';
+                                                                                                                                          }else if ($servicer_job['job_type'] == 3) {
                                                                                                                                             echo 'Services';
                                                                                                                                           } ?>" required readonly>
                         <span class="glyphicon glyphicon-phone form-control-feedback"></span>
@@ -155,9 +157,10 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                        </tr>
                        </thead>
                        <tbody>
-   
                       <?php 
                        $i=1;
+                       if($servicer_job->unboxing_checklist != '')
+                       {
                         foreach (json_decode($servicer_job->unboxing_checklist)->checklist[0]->items as $each_checklist_item) { ?>
                          <tr>
                          <td style="width: 15%">{{ (($perPage * ($page - 1)) + $i++) }}</td>
@@ -170,7 +173,16 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                           </div>
                         </td>
                        </tr>
-                    <?php } ?>
+                    <?php }
+                    }
+                    else{ ?>
+                       <tr>
+                       <td></td>
+                       <td style="width: 15%">No Data Available</td>
+                       <td></td>
+                     </tr>
+                  <?php }
+                     ?>
                    </tbody>
                   </table>
                 </div>
@@ -189,6 +201,8 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
    
                        <?php 
                         $i=1;
+                        if($servicer_job->device_command != '')
+                        {
                        foreach (json_decode($servicer_job->device_command) as $each_commands) { ?>
                          <tr>
                               <td style="width: 25%">{{ (($perPage * ($page - 1)) + $i++) }}</td>
@@ -198,7 +212,15 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                                                           } ?> readonly> </br>
                         </td>
                         </tr>
-                    <?php } ?>
+                    <?php } }
+                    else{ ?>
+                        <tr>
+                             <td></td>
+                             <td>No Data Available</td>
+                             <td></td>
+                       </tr>
+                   <?php }
+                    ?>
                    </tbody>
                   </table>
                   </div>
@@ -217,10 +239,15 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
     </tr>
   </thead>
   <tbody>
-   
+  @role('sub_dealer')
       <?php 
        $i=1;
-        foreach (json_decode($servicer_job->device_test_scenario)->device_test_scenario->tests as $each_scenario) { ?>
+
+       if($servicer_job->device_test_scenario != '')
+       {
+      
+        foreach (json_decode($servicer_job->device_test_scenario)->tests as $each_scenario) { ?>
+        <!--   dd($each_scenario); -->
         <tr>
       <td style="width: 25%" >{{ (($perPage * ($page - 1)) + $i++) }}</td>
        <td style="width: 25%" ><?php echo $each_scenario->title;?> </td>
@@ -229,7 +256,65 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                                                                       } ?> readonly> </br>
                         </td>
          </tr>
-         <?php } ?>
+         <?php } }
+         else{ ?>
+          <tr>
+               <td></td>
+               <td>No Data Available</td>
+               <td></td>
+         </tr>
+     <?php }
+         ?>
+  @endrole
+  @role('trader')
+      <?php 
+       $i=1;
+       if($servicer_job->device_test_scenario != '')
+       {
+        foreach (json_decode($servicer_job->device_test_scenario)->tests as $each_scenario) { ?>
+        <tr>
+      <td style="width: 25%" >{{ (($perPage * ($page - 1)) + $i++) }}</td>
+       <td style="width: 25%" ><?php echo $each_scenario->title;?> </td>
+      <td style="width: 25%" > <input type="checkbox" name="gps" id="gps" <?php if ($each_scenario->sos->activate) {
+                                                                        echo 'checked';
+                                                                      } ?> readonly> </br>
+                        </td>
+         </tr>
+         <?php } }
+         else{ ?>
+          <tr>
+               <td></td>
+               <td>No Data Available</td>
+               <td></td>
+         </tr>
+     <?php }
+         ?>
+  @endrole
+  @role('servicer')
+      <?php 
+       $i=1;
+       if($servicer_job->device_test_scenario != '')
+       {
+        foreach (json_decode($servicer_job->device_test_scenario)->tests as $each_scenario) { ?>
+        <tr>
+      <td style="width: 25%" >{{ (($perPage * ($page - 1)) + $i++) }}</td>
+       <td style="width: 25%" ><?php echo $each_scenario->title;?> </td>
+      <td style="width: 25%" > <input type="checkbox" name="gps" id="gps" <?php if ($each_scenario->sos->activate) {
+                                                                        echo 'checked';
+                                                                      } ?> readonly> </br>
+                        </td>
+         </tr>
+         <?php } }
+         else{ ?>
+          <tr>
+               <td></td>
+               <td>No Data Available</td>
+               <td></td>
+         </tr>
+     <?php }
+         ?>
+  @endrole
+  
   </tbody>
 </table>
                      

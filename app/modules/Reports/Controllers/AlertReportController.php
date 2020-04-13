@@ -154,7 +154,7 @@ class AlertReportController extends Controller
     {
         ob_end_clean(); 
         ob_start();    
-        return Excel::download(new ExcelDocumentExport(['SL.No','Vehicle Name','Registration Number','Address','Alert Type','DateTime'],$this->getAlertsFromMicroService($request)), 'geofence-report.xlsx');
+        return Excel::download(new ExcelDocumentExport(['SL.No','Vehicle Name','Registration Number','Address','Alert Type','DateTime'],$this->getAlertsFromMicroService($request)), 'alert-report-'.date('YmdHis').'.xlsx');
     }
 
     /**

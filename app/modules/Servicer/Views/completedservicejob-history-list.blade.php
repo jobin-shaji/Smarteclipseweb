@@ -113,7 +113,7 @@ $key        = (isset($_GET['completed_search_key'])) ? $_GET['completed_search_k
                     @else
                     <td>Service</td>
                     @endif -->
-                   <td> <a href="/job-history/{{Crypt::encrypt($servicer_job->id)}}/details"class='btn btn-xs btn-info'><i class='glyphicon glyphicon-map-marker'></i>View</a></td>      
+                   <td> <a href="/servicer-job-history/{{Crypt::encrypt($servicer_job->id)}}/details"class='btn btn-xs btn-info'><i class='glyphicon glyphicon-map-marker'></i>View</a></td>      
                   
                    
                 </tr>
@@ -123,6 +123,12 @@ $key        = (isset($_GET['completed_search_key'])) ? $_GET['completed_search_k
         {{ $servicer_jobs->appends(Request::all())->links() }}
       </div>
       <style>
+         .table td, .table th 
+      {
+          padding: 6px 6px;
+          vertical-align: top;
+          border-top: 0px solid #dee2e6;
+      }
         th {
           background-color:#778899 ;
           color: white;

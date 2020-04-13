@@ -58,7 +58,7 @@ $key        = (isset($_GET['new_installation_search_key'])) ? $_GET['new_install
          
   </form>
     </div> 
-       <table class="table table-hover table-bordered   datatable"  style="width:70%;text-align: center">
+       <table class="table table-hover table-bordered   datatable"  style="width:100%;text-align: center">
           <thead class="indigo white-text">
                             <tr>
                             <th><b>SL.No</b></th>

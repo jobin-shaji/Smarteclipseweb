@@ -675,7 +675,9 @@ class WarehouseController extends Controller {
         $transfer_type=$request['transfer_type'];
         $from_user_id=$request['from_id'];
         $to_user_id=$request['to_id'];
-
+        $from_date=$request['from_date'];
+        $to_date=$request['to_date'];
+        
         $gps_transfers = GpsTransfer::select(
             'id',
             'from_user_id',
@@ -687,6 +689,11 @@ class WarehouseController extends Controller {
         ->with('fromUser:id,username')
         ->with('toUser:id,username')
         ->whereNotNULL('accepted_on');
+        if($from_date){
+            $search_from_date=date("Y-m-d", strtotime($from_date));
+                $search_to_date=date("Y-m-d", strtotime($to_date));
+                $gps_transfers = $gps_transfers->whereDate('dispatched_on', '>=', $search_from_date)->whereDate('dispatched_on', '<=', $search_to_date);
+        }
 
         if($transfer_type == 1)
         {
@@ -708,7 +715,7 @@ class WarehouseController extends Controller {
         {
             $transferred_string = $this->subDealerToClientTransferredCountInRoot($gps_transfers,$from_user_id,$to_user_id);
         }
-
+        
         return response()->json($transferred_string);
     }
 

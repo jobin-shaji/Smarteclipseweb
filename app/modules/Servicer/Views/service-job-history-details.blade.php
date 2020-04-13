@@ -107,7 +107,7 @@
                      <div class="form-group row" style="float:none!important">
                       <label for="fname" class="col-md-6 text-right control-label col-form-label">Vehicle</label>
                       <div class="form-group has-feedback">
-                        <input type="text" class=" form-control {{ $errors->has('job_completed_date') ? ' has-error' : '' }}"  name="job_completed_date" value="{{$servicer_job->vehicle->name}} " required readonly="" >
+                        <input type="text" class=" form-control {{ $errors->has('job_completed_date') ? ' has-error' : '' }}"  name="job_completed_date" value="{{$vehicle_device->vehicle->name}} " required readonly="" >
                         <span class="glyphicon glyphicon-phone form-control-feedback"></span>
                       </div>
                       @if ($errors->has('job_completed_date'))
@@ -121,7 +121,7 @@
                      <div class="form-group row" style="float:none!important">
                       <label for="fname" class="col-md-6 text-right control-label col-form-label">Registration Number</label>
                       <div class="form-group has-feedback">
-                        <input type="text" class=" form-control {{ $errors->has('job_completed_date') ? ' has-error' : '' }}"  name="job_completed_date" value="{{$servicer_job->vehicle->register_number}} " required readonly="" >
+                        <input type="text" class=" form-control {{ $errors->has('job_completed_date') ? ' has-error' : '' }}"  name="job_completed_date" value="{{$vehicle_device->vehicle->register_number}} " required readonly="" >
                         <span class="glyphicon glyphicon-phone form-control-feedback"></span>
                       </div>
                       @if ($errors->has('job_completed_date'))
