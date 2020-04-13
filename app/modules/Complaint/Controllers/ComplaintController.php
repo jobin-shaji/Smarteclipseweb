@@ -14,6 +14,8 @@ use App\Modules\Gps\Models\Gps;
 use App\Modules\Vehicle\Models\Vehicle;
 use App\Modules\Warehouse\Models\GpsStock;
 use App\Modules\User\Models\User;
+use App\Modules\Servicer\Models\FcmLog;
+use App\Modules\Servicer\Models\ServicerNotification;
 use Illuminate\Support\Facades\Crypt;
 use DataTables;
 class ComplaintController extends Controller {
@@ -442,7 +444,28 @@ class ComplaintController extends Controller {
         ]);
         $servicer->save(); 
 
-        $did = encrypt($complaint->id);
+        //push notification
+        $title   = "New Service Job"; 
+        $message = ['job_id'  => $servicer->job_id,
+                    'title'   => $title,
+                    'content' => $request->description,
+                    'type'    => "SERVICE",
+                    'date'    => date('Y-m-d H:i:s')
+                    ];
+        ServicerNotification::create([
+                                        'servicer_id'       => $request->servicer,
+                                        'service_job_id'    =>$servicer->id,
+                                        'title'             => $title,
+                                        'data'              => json_encode($message,true)
+                                    ]);
+        $servicer = Servicer::find($request->servicer);      
+        $devices  = $servicer->devices;
+        foreach ($devices as $device) {
+            $this->fcmPushNotification($device->firebase_token,$title,$message);
+        }
+        //push notification
+
+         $did = encrypt($complaint->id);
          $request->session()->flash('message', 'New Complaint successfully Assigned!'); 
         $request->session()->flash('alert-class', 'alert-success'); 
         return redirect(route('complaint'));  
@@ -625,5 +648,55 @@ class ComplaintController extends Controller {
         ];
         return  $rules;
     }
+
+
+       public static function fcmPushNotification($device_id,$tttle,$message)
+    {
+        $api_key = 'AAAAgmOkdoQ:APA91bE2v6k93s_cXtcscgODZkDBFT2_D-6DpY_aPt_pwpvKJBHjSURcHrxh4TJfPoNPAOjmp8J7AEVQsNd7eAjr1HHSZ5quR4mz6JRgQtfaE47BYwrwrlVuTp8fJgfLDbmjWumfmVdF';
+        $url = 'https://fcm.googleapis.com/fcm/send';
+        $title = $tttle;
+        $body = json_encode($message,true);
+        $n = [
+            "to"=> $device_id,
+            "data" => [
+                "title" => $title,
+                "content" => $body,
+            ]
+        ];
+   
+        $fields = array (
+                'registration_ids' => array (
+                        $device_id
+                ),
+                'data' => array (
+                        "message" => $message
+                )
+        );
+        $fields = json_encode ( $fields );
+    
+        $headers = array (
+                'Authorization: key=' . $api_key,
+                'Content-Type: application/json'
+        );
+    
+        $ch = curl_init ();
+        curl_setopt ( $ch, CURLOPT_URL, $url );
+        curl_setopt ( $ch, CURLOPT_POST, true );
+        curl_setopt ( $ch, CURLOPT_HTTPHEADER, $headers );
+        curl_setopt ( $ch, CURLOPT_RETURNTRANSFER, true );
+        curl_setopt ( $ch, CURLOPT_POSTFIELDS, json_encode($n) );
+    
+        $result = curl_exec ( $ch );
+        // echo $result;
+        curl_close ( $ch );
+
+        FcmLog::create([
+            'user_device_id' => $device_id,
+            'body' => $fields,
+            'response' => $result
+        ]);
+    
+    }
+
     
 }
