@@ -8,7 +8,7 @@ $(document).ready(function () {
 //     table.draw();
   // });
    var table = $('#dataTable').DataTable();
-table.search(" ").draw(); 
+// table.search(" ").draw(); 
      // table.search(this.value).val('');
     callBackDataTable();
 
