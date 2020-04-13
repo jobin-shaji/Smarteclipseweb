@@ -182,7 +182,7 @@
             <table border="1" cellspacing="0" cellpadding="5px" style="margin-left: 53px;width:100%;margin-top:-10%;">
                  <tr>
                     <td class="cls_002 yellow">Device IMEI</td>
-                    <td>{{$vehicle->gps->imei}}</td>
+                    <td>{{$servicer_job->gps->imei}}</td>
                 </tr>
                 <tr>
                     <td class="cls_002 grey">Model</td>
@@ -203,11 +203,11 @@
             <table border="1" cellspacing="0" cellpadding="5px" style="margin-left: 53px;width: 100%">
                 <tr>
                     <td class="cls_002 yellow">Registration Number</td>
-                    <td>{{$vehicle->register_number}}</td>
+                    <td>{{$vehicle_servicer_job_log->vehicle->register_number}}</td>
                 </tr>
                 <tr>
                     <td class="cls_002 grey">Chassis Number</td>
-                    <td>{{$vehicle->chassis_number}}</td>
+                    <td>{{$vehicle_servicer_job_log->vehicle->chassis_number}}</td>
                 </tr>
                 <tr>
                     <td class="cls_002 yellow">Registered Owner Name</td>
@@ -219,7 +219,7 @@
                 </tr>
                 <tr>
                     <td class="cls_002 yellow">Engine Number</td>
-                    <td>{{$vehicle->engine_number}}</td>
+                    <td>{{$vehicle_servicer_job_log->vehicle->engine_number}}</td>
                 </tr>
                 <tr>
                     <td class="cls_002 grey">Date of Installation</td>
