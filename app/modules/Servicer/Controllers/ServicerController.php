@@ -1713,6 +1713,7 @@ public function serviceJobDetails(Request $request)
         if($servicer_job == null){
            return view('Servicer::404');
         }
+        
         return view('Servicer::job-history-details',['servicer_job' => $servicer_job,'vehicle_device' => $vehicle_device]);
     }
 

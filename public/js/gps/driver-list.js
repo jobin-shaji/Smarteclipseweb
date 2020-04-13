@@ -40,6 +40,8 @@ function callBackDataTable(){
 
         aLengthMenu: [[25, 50, 100, -1], [25, 50, 100, 'All']]
     });
+    var table = $('#dataTable').DataTable();
+    table.search('').draw();
 }
 function delDriver(driver){
     if(confirm('The driver will be removed from the assigned vehicle.Are you sure to deactivate this driver?')){

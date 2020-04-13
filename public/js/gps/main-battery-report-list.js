@@ -61,6 +61,7 @@ function hideDownloadBtn()
     $(".download-btn").hide();
 }
 
+
 function pagination(url)
 {
     getFilterData();

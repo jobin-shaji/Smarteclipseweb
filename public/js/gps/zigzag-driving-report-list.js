@@ -67,6 +67,7 @@ function pagination(url)
     ajaxRequestMs(url,filterData,'POST',successZigZagAlertFilter,failedZigZagAlertFilter)
 }
 
+
 function getFilterData() 
 {
     var form = $("#form-zig-zag-report")[0];

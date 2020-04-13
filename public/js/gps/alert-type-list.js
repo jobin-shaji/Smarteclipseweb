@@ -40,6 +40,8 @@ function callBackDataTable(){
         ],        
         aLengthMenu: [[25, 50, 100, -1], [25, 50, 100, 'All']]
     });
+    var table = $('#dataTable').DataTable();
+    table.search('').draw();
 }
 function delAlertType(alert_type){
     if(confirm('Are you sure to deactivate this alert type?')){
