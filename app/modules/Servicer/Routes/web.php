@@ -1,6 +1,6 @@
 <?php 
-Route::group(['middleware' => ['web','auth','role:root|sub_dealer|trader'] , 'namespace' => 'App\Modules\Servicer\Controllers' ] , function() {
-
+Route::group(['middleware' => ['web','auth','role:root|sub_dealer|trader|servicer'] , 'namespace' => 'App\Modules\Servicer\Controllers' ] , function() {
+ 
 	Route::get('/create-servicer','ServicerController@create')->name('servicer.create');
 	Route::post('/save-servicer','ServicerController@save')->name('servicer.save');
 	Route::get('/servicers','ServicerController@list')->name('servicer.list');
@@ -11,13 +11,15 @@ Route::group(['middleware' => ['web','auth','role:root|sub_dealer|trader'] , 'na
 	Route::post('/servicer/delete','ServicerController@delete')->name('servicer.delete');
 	Route::post('/servicer/activate','ServicerController@activate')->name('servicer.activate');
 	Route::post('/servicer-client-gps', 'ServicerController@clientGpsList')->name('servicer.client.gps');
-    Route::get('/servicer-job-history-list','ServicerController@servicerJobHistoryList')->name('servicer.job.history-list');
+    Route::get('/servicer-job-history-list','ServicerController@servicerJobHistoryList')->name('servicerjob.history.list');
 	Route::post('/servicer-list-history-jobs','ServicerController@getServicerJobsHistoryList')->name('servicer.list.history.jobs');	
 	//servicer change pasword for root,dealer,subdealer
 	Route::get('/servicer/{id}/password-change','ServicerController@changeServicerPassword')->name('servicer.change.password');
-    Route::post('/servicer/{id}/password-updation','ServicerController@updateServicerPassword')->name('servicer.change.password.p');
+	Route::post('/servicer/{id}/password-updation','ServicerController@updateServicerPassword')->name('servicer.change.password.p');
+	//get client based on job type
+	Route::post('/jobtype-enduser', 'ServicerController@getClientBasedOnJobType')->name('jobtype.enduser');
 
-
+   
 });
  
 Route::group(['middleware' => ['web','auth','role:root'] , 'namespace' => 'App\Modules\Servicer\Controllers' ] , function() {

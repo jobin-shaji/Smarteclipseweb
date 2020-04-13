@@ -2,7 +2,7 @@
 namespace App\Modules\Client\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-// use App\Modules\Vehicle\Models\Vehicle;
+use DB;
 
 class Client extends Model
 {
@@ -58,13 +58,48 @@ class Client extends Model
 
   public function getClientDetailsWithClientId($client_id)
 	{
-		return self::select('name')->where('id',$client_id)->first();
+		return self::where('id',$client_id)->first();
 	}
 
   public function getClientDetails($user_id)
   {
     return self::select('user_id','latitude','longitude','location','name','address','city_id')->with('user:id,mobile,email')->with('city.state.country')->withTrashed()->where('user_id', $user_id)->first();
   }
+
+  public function getDetailsOfClientsUnderSubDealer($sub_dealer_id)
+  {
+    return self::select('id','name')->where('sub_dealer_id',$sub_dealer_id)->get();
+  }
+
+  public function getDetailsOfClientsWithReturnedVehicleGpsUnderSubDealer($sub_dealer_id)
+  {
+    return DB::select("SELECT clients.id,clients.name FROM clients LEFT JOIN vehicles ON vehicles.client_id = clients.id
+    WHERE vehicles.is_returned = 1 AND vehicles.is_reinstallation_job_created = 0 AND clients.sub_dealer_id = '$sub_dealer_id' GROUP BY clients.id");
+  }
+
+  public function getDetailsOfClientsUnderTrader($trader_id)
+  {
+    return self::select('id','name')->where('trader_id',$trader_id)->get();
+  }
+
+  public function getDetailsOfClientsWithReturnedVehicleGpsUnderTrader($trader_id)
+  {
+    return DB::select("SELECT clients.id,clients.name FROM clients LEFT JOIN vehicles ON vehicles.client_id = clients.id
+    WHERE vehicles.is_returned = 1 AND vehicles.is_reinstallation_job_created = 0 AND clients.trader_id = '$trader_id' GROUP BY clients.id");
+  }
+
+  public function getDetailsOfAllClients()
+  {
+    return self::select('id','name')->get();
+  }
+
+  public function getDetailsOfClientsWithReturnedVehicleGps()
+  {
+    return DB::select("SELECT clients.id,clients.name FROM clients LEFT JOIN vehicles ON vehicles.client_id = clients.id
+    WHERE vehicles.is_returned = 1 AND vehicles.is_reinstallation_job_created = 0  GROUP BY clients.id");
+  }
+
+  
 
 
 

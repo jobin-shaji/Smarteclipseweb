@@ -189,11 +189,15 @@ Assign Servicer
    @endif
 
 </div>
-<!-- </div>
-</div> -->
+</div>
+</div>
 @endsection
 
 <style>
+  .footer-bottom {
+    width:auto !important;
+  
+}
   .btn-primary {
   color: #4CAF50; }
   </style>

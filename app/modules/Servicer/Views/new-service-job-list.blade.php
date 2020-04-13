@@ -129,6 +129,12 @@ $key        = (isset($_GET['new_service_search_key'])) ? $_GET['new_service_sear
         {{ $servicer_jobs->appends(Request::all())->links() }}
         </div>
         <style>
+           .table td, .table th 
+      {
+          padding: 7px 7px;
+          vertical-align: top;
+          border-top: 0px solid #dee2e6;
+      }
           th {
                 background-color:#778899 ;
                 color: white;

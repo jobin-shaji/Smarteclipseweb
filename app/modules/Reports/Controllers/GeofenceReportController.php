@@ -12,6 +12,9 @@ use App\Modules\Vehicle\Models\VehicleGps;
 use DataTables;
 class GeofenceReportController extends Controller
 {
+
+    const ALERT_TYPE_GEOFENCE = ["18","19"];
+
     public function geofenceReport()
     {
         $client_id      =   \Auth::user()->client->id;
@@ -64,7 +67,7 @@ class GeofenceReportController extends Controller
     {
         ob_end_clean(); 
         ob_start();    
-        return Excel::download(new ExcelDocumentExport(['SL.No','Vehicle Name','Registration Number','Address','Geofence Type','DateTime'],$this->getAlertsFromMicroService($request)), 'geofence-report.xlsx');
+        return Excel::download(new ExcelDocumentExport(['SL.No','Vehicle Name','Registration Number','Address','Geofence Type','DateTime'],$this->getAlertsFromMicroService($request)), 'geofence-report-'.date('YmdHis').'.xlsx');
     }
 
     /**
@@ -73,7 +76,7 @@ class GeofenceReportController extends Controller
     public function getAlertsFromMicroService($request)
     {
 
-        $filter         = [ 'user_id' => $request->user_id, 'alert_type' => ["18","19"] , 'vehicle_id' => $request->vehicle_id , 'start_date' => $request->start_date , 'end_date' => $request->end_date ,'limit' => 10000 ]; 
+        $filter         = [ 'user_id' => $request->user_id, 'alert_type' => self::ALERT_TYPE_GEOFENCE , 'vehicle_id' => $request->vehicle_id , 'start_date' => $request->start_date , 'end_date' => $request->end_date ,'limit' => 10000 ]; 
         $client 	    = new \GuzzleHttp\Client();
         $response 	    = $client->request('POST',config('eclipse.urls.ms_alerts').'/alert-report', ['json' => $filter]);
         $responseBody   = $response->getBody();

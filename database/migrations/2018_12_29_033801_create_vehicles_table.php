@@ -29,6 +29,7 @@ class CreateVehiclesTable extends Migration
             $table->integer('emergency_status');
             $table->integer('towing')->default(0);
             $table->integer('is_returned')->nullable()->comment = '0,null-not returned,1-returned';
+            $table->integer('is_reinstallation_job_created')->nullable()->comment = '0-not created,1-reinstallation job created';
             $table->timestamps();
             $table->softDeletes();
         });

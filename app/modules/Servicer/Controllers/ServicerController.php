@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use App\Modules\Gps\Models\Gps;
+use App\Modules\Root\Models\Root;
 use App\Modules\Warehouse\Models\GpsStock;
 use App\Modules\Vehicle\Models\Vehicle;
 use App\Modules\Operations\Models\VehicleModels;
@@ -233,9 +234,7 @@ class ServicerController extends Controller {
         ->where('status',0)
         ->where('type',1)
         ->get();
-        $clients = Client::select('id','name','user_id')
-        ->get();
-        return view('Servicer::assign-servicer',['servicers'=>$servicer,'clients'=>$clients]);
+        return view('Servicer::assign-servicer',['servicers'=>$servicer]);
     }
     public function saveAssignServicer(Request $request)
     {
@@ -276,17 +275,37 @@ class ServicerController extends Controller {
 
         if($request->job_type == 1)
         {
-            $tttle   ="New Insatallation Job"; 
+            $title   ="New Installation Job"; 
             $message = ['job_id'  => $job_id,
-                        'title'   => $tttle,
+                        'title'   => $title,
                         'content' => $request->description,
                         'type'    => "INSTALLATION",
                         'date'    => date('Y-m-d H:i:s')
                          ];
-        }else{
-            $tttle   = "New Service Job"; 
+        }
+        else if($request->job_type == 3)
+        {
+            $title   ="New Reinstallation Job"; 
             $message = ['job_id'  => $job_id,
-                        'title'   => $tttle,
+                        'title'   => $title,
+                        'content' => $request->description,
+                        'type'    => "REINSTALLATION",
+                        'date'    => date('Y-m-d H:i:s')
+                            ];
+            //get any one vehicle from returned device vehicle list of this client
+            $get_device_returned_vehicle    =   (new Vehicle())->getAnyOneReturnedVehicle($request->client);
+            //update reinstallation job created status as 1(job created)
+            if($get_device_returned_vehicle)
+            {
+                $get_device_returned_vehicle->is_reinstallation_job_created =   1;
+                $get_device_returned_vehicle->save();
+            }
+        }
+        else
+        {
+            $title   = "New Service Job"; 
+            $message = ['job_id'  => $job_id,
+                        'title'   => $title,
                         'content' => $request->description,
                         'type'    => "SERVICE",
                         'date'    => date('Y-m-d H:i:s')
@@ -303,7 +322,7 @@ class ServicerController extends Controller {
         $servicer = Servicer::find($request->servicer);      
         $devices  = $servicer->devices;
         foreach ($devices as $device) {
-            $this->fcmPushNotification($device->firebase_token,$tttle,$message);
+            $this->fcmPushNotification($device->firebase_token,$title,$message);
         }
 
      
@@ -369,7 +388,6 @@ class ServicerController extends Controller {
             ->where('status',0)
             ->where('type',2)
             ->get();
-            $clients=Client::where('sub_dealer_id',$sub_dealer_id)->get();
         }
         else{
             $trader_id=\Auth::user()->trader->id;
@@ -378,10 +396,52 @@ class ServicerController extends Controller {
             ->where('status',0)
             ->where('type',3)
             ->get();
-            $clients=Client::where('trader_id',$trader_id)->get();
         }
 
-        return view('Servicer::sub-dealer-assign-servicer',['servicers'=>$servicer,'clients'=>$clients]);
+        return view('Servicer::sub-dealer-assign-servicer',['servicers'=>$servicer]);
+    }
+
+    //get client based on job type
+    public function getClientBasedOnJobType(Request $request)
+    {
+        $job_type           =   $request->job_type;
+        if($request->user()->hasRole('sub_dealer'))
+        {
+            $sub_dealer_id  =   \Auth::user()->subDealer->id;
+            if($job_type == 1 || $job_type == 2)
+            {
+                $clients    =   (new Client())->getDetailsOfClientsUnderSubDealer($sub_dealer_id);
+            }
+            else if($job_type == 3)
+            { 
+                $clients    =   (new Client())->getDetailsOfClientsWithReturnedVehicleGpsUnderSubDealer($sub_dealer_id);
+            }
+            
+        }
+        else if($request->user()->hasRole('trader'))
+        {
+            $trader_id=\Auth::user()->trader->id;
+            if($job_type == 1 || $job_type == 2)
+            {
+                $clients    =   (new Client())->getDetailsOfClientsUnderTrader($trader_id);
+            }
+            else if($job_type == 3)
+            { 
+                $clients    =   (new Client())->getDetailsOfClientsWithReturnedVehicleGpsUnderTrader($trader_id);
+            }
+        }
+        else if($request->user()->hasRole('root'))
+        {
+            if($job_type == 1 || $job_type == 2)
+            {
+                $clients    =   (new Client())->getDetailsOfAllClients();
+            }
+            else if($job_type == 3)
+            { 
+                $clients    =   (new Client())->getDetailsOfClientsWithReturnedVehicleGps();
+            }
+        }
+        return response()->json($clients);
     }
 
 
@@ -418,65 +478,90 @@ class ServicerController extends Controller {
         }
 
         $user_id=\Auth::user()->id;
-                $servicer = ServicerJob::create([
-                'servicer_id' => $request->servicer,
-                'client_id' => $request->client,
-                'job_id' => $job_id,
-                'start_code' => $start_code,
-                'job_type' => $request->job_type,
-                'user_id' => $user_id,
-                'description' => $request->description,
-                'role' => $request->role,
-                'job_date' => $job_date,
-                'gps_id' => $request->gps,
-                'status' => 1, //ASSIGN STATUS
-                'location'=>$location,
-                'job_status'=>0
-                // 'longitude'=>$location_lng
-            ]);
-            if($request->job_type == 1)
+        $servicer   =   ServicerJob::create([
+                            'servicer_id' => $request->servicer,
+                            'client_id' => $request->client,
+                            'job_id' => $job_id,
+                            'start_code' => $start_code,
+                            'job_type' => $request->job_type,
+                            'user_id' => $user_id,
+                            'description' => $request->description,
+                            'role' => $request->role,
+                            'job_date' => $job_date,
+                            'gps_id' => $request->gps,
+                            'status' => 1, //ASSIGN STATUS
+                            'location'=>$location,
+                            'job_status'=>0
+                            // 'longitude'=>$location_lng
+                        ]);
+        if($request->job_type == 1)
+        {
+            $title   ="New Installation Job"; 
+            $message = ['job_id'  => $job_id,
+                        'title'   => $title,
+                        'content' => $request->description,
+                        'type'    => "INSTALLATION",
+                        'date'    => date('Y-m-d H:i:s')
+                            ];
+        }
+        else if($request->job_type == 3)
+        {
+            $title   ="New Reinstallation Job"; 
+            $message = ['job_id'  => $job_id,
+                        'title'   => $title,
+                        'content' => $request->description,
+                        'type'    => "REINSTALLATION",
+                        'date'    => date('Y-m-d H:i:s')
+                            ];
+            //get any one vehicle from returned device vehicle list of this client
+            $get_device_returned_vehicle    =   (new Vehicle())->getAnyOneReturnedVehicle($request->client);
+            //update reinstallation job created status as 1(job created)
+            if($get_device_returned_vehicle)
             {
-                $tttle   ="New Insatallation Job"; 
-                $message = ['job_id'  => $job_id,
-                            'title'   => $tttle,
-                            'content' => $request->description,
-                            'type'    => "INSTALLATION",
-                            'date'    => date('Y-m-d H:i:s')
-                             ];
-            }else{
-                $tttle   = "New Service Job"; 
-                $message = ['job_id'  => $job_id,
-                            'title'   => $tttle,
-                            'content' => $request->description,
-                            'type'    => "SERVICE",
-                            'date'    => date('Y-m-d H:i:s')
-                             ];
+                $get_device_returned_vehicle->is_reinstallation_job_created =   1;
+                $get_device_returned_vehicle->save();
             }
-                  
-            ServicerNotification::create([
-                                        'servicer_id'       => $request->servicer,
-                                        'service_job_id'    =>$service_job->id,
-                                        'title'             => $title,
-                                        'data'              => json_encode($message,true)
-                                    ]);
+        }
+        else
+        {
+            $title   = "New Service Job"; 
+            $message = ['job_id'  => $job_id,
+                        'title'   => $title,
+                        'content' => $request->description,
+                        'type'    => "SERVICE",
+                        'date'    => date('Y-m-d H:i:s')
+                            ];
+        }
+                
+        ServicerNotification::create([
+                                    'servicer_id'       => $request->servicer,
+                                    'service_job_id'    => $servicer->id,
+                                    'title'             => $title,
+                                    'data'              => json_encode($message,true)
+                                ]);
 
-            $servicer = Servicer::find($request->servicer);      
-            $devices  = $servicer->devices;
-            foreach ($devices as $device) {
-                $this->fcmPushNotification($device->firebase_token,$tttle,$message);
-            }
-            $request->session()->flash('message', 'Assigned Job successfully!');
-            $request->session()->flash('alert-class', 'alert-success');
+        $servicer = Servicer::find($request->servicer);      
+        $devices  = $servicer->devices;
+        foreach ($devices as $device) {
+            $this->fcmPushNotification($device->firebase_token,$title,$message);
+        }
+        $request->session()->flash('message', 'Assigned Job successfully!');
+        $request->session()->flash('alert-class', 'alert-success');
 
-            return redirect(route('sub-dealer.assign.servicer'));
+        return redirect(route('sub-dealer.assign.servicer'));
     }
     public function subDealerAssignServicerList()
     {
+        $user_id=\Auth::user()->id;
+       
+
         return view('Servicer::sub-dealer-assign-servicer-list');
     }
     public function getSubDealerAssignServicerList()
     {
+
         $user_id=\Auth::user()->id;
+     
         $servicer_job = ServicerJob::select(
             'id',
             'servicer_id',
@@ -499,6 +584,7 @@ class ServicerController extends Controller {
         ->with('servicer:id,name')
         ->orderBy('id','desc')
         ->get();
+
         return DataTables::of($servicer_job)
         ->addIndexColumn()
          ->addColumn('job_type', function ($servicer_job) {
@@ -682,7 +768,7 @@ public function getVehicleAddPage(Request $request)
     $servicer_jobid=Crypt::decrypt($request->id);
     $pass_servicer_jobid=Crypt::encrypt($servicer_jobid);
     $current_stage=2;
-        $servicer_job = ServicerJob::select(
+    $servicer_job = ServicerJob::select(
                         'id',
                         'servicer_id',
                         'client_id',
@@ -1353,7 +1439,7 @@ public function serviceJobDetails(Request $request)
             $service_job_id=Crypt::encrypt($servicer_job->id);
             $request->session()->flash('message', 'Job  completed successfully!');
             $request->session()->flash('alert-class', 'alert-success');
-            return redirect()->route('servicerjob.history.list');
+            return redirect()->route('completed.service.job.list');
             // return redirect()->route('job.history.details',['id' => encrypt($servicer_job->id)]);
        }else
        {
@@ -1431,12 +1517,17 @@ public function serviceJobDetails(Request $request)
         $user_id=$servicer_job->user_id;
         $dealer=SubDealer::where('user_id',$user_id)->first();
         $trader=Trader::where('user_id',$user_id)->first();
+        $root=Root::where('user_id',$user_id)->first();
         if($dealer){
             $dealer_trader=$dealer;
         }
-        else
+        elseif($trader)
         {
             $dealer_trader=$trader;
+        }
+        else
+        {
+            $dealer_trader=$root;
         }
         $client_id=$servicer_job->client_id;
         $client = Client::find($client_id);
@@ -1603,6 +1694,7 @@ public function serviceJobDetails(Request $request)
         $decrypted = Crypt::decrypt($request->id);
         // dd($decrypted);
         $servicer_job = ServicerJob::withTrashed()->where('id', $decrypted)->first();
+      
         $client_id=$servicer_job->client_id;
 
         $vehicle_device = Vehicle::select(
@@ -1711,63 +1803,66 @@ public function serviceJobDetails(Request $request)
     //device details based on client selection in assign job page
     public function clientGpsList(Request $request)
     {
-        $user = $request->user();
-        $client_id=$request->client_id;
+        $user           =   $request->user();
+        $client_id      =   $request->client_id;
         if($client_id != 0)
         {
-            $job_type=$request->job_type;
-            $client = Client::find($client_id);
-            $latitude=$client->latitude;
-            $longitude=$client->longitude;
-            $address=$client->location;
+            $job_type   =   $request->job_type;
+            $client     =   (new Client())->getClientDetailsWithClientId($client_id);
+            $latitude   =   $client->latitude;
+            $longitude  =   $client->longitude;
+            $address    =   $client->location;
             if(!empty($address))
             {
-            $location=$address;
-
+                $location   =   $address;
             }
             else
             {
-                $location= "No Address";
+                $location   =   "No Address Found";
             }
 
-            $gps_stocks = GpsStock::select('id',
-                'gps_id',
-                'client_id'
-            )
-            ->where('client_id',$client_id)
-            ->get();
+            $gps_stocks     =   GpsStock::select('id',
+                                                'gps_id',
+                                                'client_id'
+                                            )
+                                            ->where('client_id',$client_id)
+                                            ->where(function ($query) {
+                                                $query->where('is_returned', '=', 0)
+                                                ->orWhere('is_returned', '=', NULL);
+                                            })
+                                            ->get();
 
-            $stock_gps_id = [];
+            $stock_gps_id   =   [];
             foreach($gps_stocks as $stock_gps){
-                $stock_gps_id[] = $stock_gps->gps_id;
+                $stock_gps_id[]     =   $stock_gps->gps_id;
             }
 
             if($stock_gps_id)
             {
-                $vehicle_device = Vehicle::select(
-                    'gps_id',
-                    'id',
-                    'register_number',
-                    'name'
-                )
-                ->where('client_id',$client_id)
-                ->get();
-                $single_gps = [];
+                $vehicle_device     =   Vehicle::select(
+                                            'gps_id',
+                                            'id',
+                                            'register_number',
+                                            'name'
+                                        )
+                                        ->where('client_id',$client_id)
+                                        ->get();
+                $single_gps     =   [];
                 foreach($vehicle_device as $device){
-                    $single_gps[] = $device->gps_id;
+                    $single_gps[]   =   $device->gps_id;
                 }
 
-                $servicer_jobs = ServicerJob::select(
-                    'gps_id',
-                    'servicer_id',
-                    'user_id',
-                    'client_id'
-                )
-                ->where('client_id',$client_id)
-                ->get();
-                $servicer_gps = [];
+                $servicer_jobs  =   ServicerJob::select(
+                                        'gps_id',
+                                        'servicer_id',
+                                        'user_id',
+                                        'client_id'
+                                    )
+                                    ->where('client_id',$client_id)
+                                    ->get();
+                $servicer_gps   =   [];
                 foreach($servicer_jobs as $servicer_job){
-                    $servicer_gps[] = $servicer_job->gps_id;
+                    $servicer_gps[]     =   $servicer_job->gps_id;
                 }
                 // dd($servicer_gps);
                 // $devices=Gps::select('id','imei','serial_no')
@@ -1776,7 +1871,7 @@ public function serviceJobDetails(Request $request)
                 // ->whereNotIn('id',$servicer_gps)
                 // ->get();
 
-                if($job_type==1)
+                if($job_type == 1 || $job_type == 3 )
                 {
                     $devices=Gps::select('id','imei','serial_no')
                                 ->whereIn('id',$stock_gps_id)

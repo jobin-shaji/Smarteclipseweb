@@ -1,6 +1,6 @@
 <?php
 namespace App\Modules\Reports\Controllers;
-use App\Exports\ZigZagDrivingReportExport;
+use App\Exports\ExcelDocumentExport;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Maatwebsite\Excel\Facades\Excel;
@@ -13,6 +13,8 @@ use DataTables;
 
 class ZigZagDrivingReportController extends Controller
 {
+    const ALERT_TYPE_ZIGZAG = "15";
+
     public function zigZagDrivingReport()
     {
         $client_id                      =   \Auth::user()->client->id;
@@ -62,11 +64,37 @@ class ZigZagDrivingReportController extends Controller
         // ->rawColumns(['link', 'action'])
         ->make();
     } 
+   
     public function export(Request $request)
     {
         ob_end_clean(); 
         ob_start();
-        return Excel::download(new ZigZagDrivingReportExport($request->id,$request->vehicle_id,$request->fromDate,$request->toDate), 'zigzag-driving-report.xlsx');
-    } 
+        return Excel::download(new ExcelDocumentExport(['SL.No','Vehicle Name','Registration Number','Address','DateTime'],$this->getAlertsFromMicroService($request)), 'zig-zag--driving-report-'.date('Ymdhis').'.xlsx');
+    }
+
+    /**
+     * get report view
+    */
+    public function getAlertsFromMicroService($request)
+    {
+
+        $filter         = [ 'user_id' => $request->user_id, 'alert_type' => self::ALERT_TYPE_ZIGZAG , 'vehicle_id' => $request->vehicle_id , 'start_date' => $request->start_date , 'end_date' => $request->end_date ,'limit' => 10000 ]; 
+        $client 	    = new \GuzzleHttp\Client();
+        $response 	    = $client->request('POST',config('eclipse.urls.ms_alerts').'/alert-report', ['json' => $filter]);
+        $responseBody   = $response->getBody();
+        $responseData   = json_decode($responseBody->getContents(),true);
+        $alerts         = [];   
+        foreach ($responseData['data']['alerts'] as $key => $alert) 
+        {
+        
+            $alerts[$key]['SL.No']              = $key + 1;
+            $alerts[$key]['Vehicle Name']       = $alert['gps']['connected_vehicle_name'];
+            $alerts[$key]['Registration Number']= $alert['gps']['connected_vehicle_registration_number'];
+            $alerts[$key]['Address']            = $alert['address'];
+            $alerts[$key]['DateTime']           = $alert['device_time'];       
+        
+        }
+        return $alerts;
+    }
    
 }

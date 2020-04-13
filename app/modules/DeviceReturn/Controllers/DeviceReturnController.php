@@ -270,7 +270,8 @@ class DeviceReturnController extends Controller
         $gps_data_in_stock->save();
 
         //To update returned status in vehicle table
-        $gps_in_vehicle->is_returned         =    1;
+        $gps_in_vehicle->is_returned                    =    1;
+        $gps_in_vehicle->is_reinstallation_job_created  =    0;
         $gps_in_vehicle->save();         
                 
         //To update imei in vlt data table
