@@ -1,7 +1,20 @@
 $(document).ready(function () {
+    $('input[type=search]').val('');
+    // $('input[type=search]').val('').change();
+   
+    // var table = $('#bs-results').DataTable({
+//     retrieve: true
+// });
+//     table.draw();
+  // });
+   var table = $('#dataTable').DataTable();
+table.search(" ").draw(); 
+     // table.search(this.value).val('');
     callBackDataTable();
-    // var table = $('#dataTable').DataTable();
- $('#dataTable').DataTable().ajax.reload();
+
+
+    //  table.clear();
+ // $('#dataTable').DataTable().ajax.reload();
 // table
 //     .clear()
 //     .draw();
@@ -11,6 +24,7 @@ $(document).ready(function () {
 
 
 function callBackDataTable(){
+     $('input[type=search]').val('');
     var  data = {
     
     }; 
