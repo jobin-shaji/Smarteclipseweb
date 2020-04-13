@@ -38,6 +38,8 @@ function callBackDataTable(){
         ],        
         aLengthMenu: [[25, 50, 100, -1], [25, 50, 100, 'All']]
     });
+    var table = $('#dataTable').DataTable();
+    table.search('').draw();
 }
 function delGeofence(geofence){
     if(confirm('Due to deactivation all the assigned geofence list will be cleared. Do you want to continue ?')){
