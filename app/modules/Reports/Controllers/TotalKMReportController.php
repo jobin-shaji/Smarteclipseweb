@@ -17,6 +17,7 @@ use App\Modules\Vehicle\Models\DailyKm;
 use Illuminate\Support\Facades\DB;
 use App\Http\Traits\VehicleDataProcessorTrait;
 use Carbon\Carbon;
+use DateTime;
 use DataTables;
 
 class TotalKMReportController extends Controller
@@ -92,7 +93,26 @@ class TotalKMReportController extends Controller
         $vehicles           =   (new Vehicle())->getVehicleListBasedOnClient($client_id);  
         return view('Reports::vehicle-report',['vehicles'=>$vehicles]);  
     } 
+    /**
+     * 
+     * 
+     */
+    public function numberOfHoursBetweenDates($from_date, $to_date)
+    {
+        $date1  = new DateTime($from_date);
+        $date2  = new DateTime($to_date);
 
+        $diff   = $date2->diff($date1);
+
+        $hours  = $diff->h;
+        $hours  = $hours + ($diff->days*24);
+
+        return $hours;
+    }
+    /**
+     * 
+     * 
+     */
     public function vehicleReportList(Request $request)
     {
         $vehicle_id         =   $request->vehicle_id;
@@ -101,7 +121,8 @@ class TotalKMReportController extends Controller
         $custom_from_date   =   $request->from_date;
         $custom_to_date     =   $request->to_date;
         $date_and_time      =   $this->getDateFromType($report_type, $custom_from_date, $custom_to_date);
-        $vehicle_profile    =   $this->vehicleProfile($vehicle_id,$date_and_time,$client_id);
+        $max_hours          =   $this->numberOfHoursBetweenDates($date_and_time['from_date'], $date_and_time['to_date']);
+        $vehicle_profile    =   $this->vehicleProfile($vehicle_id, $date_and_time, $client_id, $max_hours);
         return response()->json($vehicle_profile);
     }
 }

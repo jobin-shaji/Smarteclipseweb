@@ -108,7 +108,7 @@ trait VehicleDataProcessorTrait{
         return $durations;
     }
 
-    public function vehicleProfile($vehicle_id,$date_and_time,$client_id)
+    public function vehicleProfile($vehicle_id, $date_and_time, $client_id, $maximum_allowed_time_in_hours)
     {
         $single_vehicle_gps_ids         =   [];     
         //$single_vehicle_gps_id        =   $this->vehicleGps($vehicle_id);
@@ -123,19 +123,65 @@ trait VehicleDataProcessorTrait{
         //getting durations from vehicle daily update table
         $vehicle_daily_updates          =   $this->vehicleDailyUpdates($single_vehicle_gps_ids,$from_date,$to_date);
         
+        // workaround for ignition durations
+        $ignition_on_duration           =   $vehicle_daily_updates['ignition_on_time'];
+        $ignition_off_duration          =   $vehicle_daily_updates['ignition_off_time'];
+        
+        $sum_of_ignition_durations      =   $this->calculateSumOfDurations([$ignition_on_duration, $ignition_off_duration]);
+
+        if( $sum_of_ignition_durations['hours'] > $maximum_allowed_time_in_hours )
+        {
+            if($ignition_on_duration > $ignition_off_duration)
+            {
+                $ignition_on_duration   =   $this->calculateDeviationFromMaximumAllowedDuration($ignition_off_duration, $maximum_allowed_time_in_hours);
+            }
+            else
+            {
+                $ignition_off_duration  =   $this->calculateDeviationFromMaximumAllowedDuration($ignition_on_duration, $maximum_allowed_time_in_hours);
+            }
+        }
+
+        // workaround for vehicle status durations
+        $vehicle_status_durations       =   $this->maskVehicleStatusDurationOverflow([ 
+                                                'm'     =>  $vehicle_daily_updates['moving_time'],
+                                                'h'     =>  $vehicle_daily_updates['halt_time'],
+                                                's'     =>  $vehicle_daily_updates['sleep_time']
+                                            ], $maximum_allowed_time_in_hours);
+
+        // workaround for stop durations
+        $stop_time_parts                =   explode(':', $vehicle_daily_updates['stop_time']);
+        if( $stop_time_parts[0] >  $maximum_allowed_time_in_hours)
+        {
+            $stop_time                  =   $maximum_allowed_time_in_hours.':'.$stop_time_parts[1].':'.$stop_time_parts[2];
+        }
+        else
+        {
+            $stop_time                  =   $vehicle_daily_updates['stop_time'];
+        }
+
         $alerts                         =   (new Alert())->getAlertsDetailsForVehicleReport($single_vehicle_gps_ids,$from_date,$to_date);        
         $route_deviation                =   (new RouteDeviation())->getCountOfRouteDeviatingRecords($vehicle_id,$client_id,$from_date,$to_date);
         $vehicle_profile                =   array();
         $vehicle_profile                =   array(
                                                 'engine_on_duration'        =>  $vehicle_daily_updates['ignition_on_time'],
                                                 'engine_off_duration'       =>  $vehicle_daily_updates['ignition_off_time'],
+                                                'sum_of_ignition_durations' => $sum_of_ignition_durations, // debug purpose
+                                                'maximum_allowed_time_in_hours' => $maximum_allowed_time_in_hours, // debug purpose
+                                                'engine_on_duration1'       =>  $vehicle_daily_updates['ignition_on_time'], // debug purpose
+                                                'engine_off_duration1'      =>  $vehicle_daily_updates['ignition_off_time'], // debug purpose
                                                 'ac_on_duration'            =>  $vehicle_daily_updates['ac_on_time'],
                                                 'ac_off_duration'           =>  $vehicle_daily_updates['ac_off_time'],
                                                 'ac_halt_on_duration'       =>  $vehicle_daily_updates['ac_on_idle_time'],
-                                                'sleep'                     =>  $vehicle_daily_updates['sleep_time'],  
-                                                'motion'                    =>  $vehicle_daily_updates['moving_time'],   
-                                                'halt'                      =>  $vehicle_daily_updates['halt_time'], 
-                                                'stop_duration'             =>  $vehicle_daily_updates['stop_time'], 
+                                                'sleep'                     =>  $vehicle_status_durations['s'],  
+                                                'motion'                    =>  $vehicle_status_durations['m'], 
+                                                'halt'                      =>  $vehicle_status_durations['h'], 
+                                                'vehicle_status_durations_old' => [ 
+                                                    'sleep'                  => $vehicle_daily_updates['sleep_time'],
+                                                    'motion'                 => $vehicle_daily_updates['moving_time'],
+                                                    'halt'                   => $vehicle_daily_updates['halt_time']
+                                                ] , // debug purpose
+                                                'stop_duration'             =>  $stop_time,
+                                                'stop_duration_old'         =>  $vehicle_daily_updates['stop_time'], // debug purpose
                                                 'sudden_acceleration'       =>  $alerts->where('alert_type_id',2)->count(), 
                                                 'harsh_braking'             =>  $alerts->where('alert_type_id',1)->count(),               
                                                 'main_battery_disconnect'   =>  $alerts->where('alert_type_id',11)->count(),               
@@ -153,6 +199,76 @@ trait VehicleDataProcessorTrait{
                                             );
         return $vehicle_profile;
 
+    }
+     /**
+     * 
+     * 
+     */
+    public function calculateSumOfDurations($durations = [])
+    {
+        $seconds        =   0;
+        foreach($durations as $duration)
+        {
+          list($hour,$minute,$second) = explode(':', $duration);
+          $seconds += (($hour * 3600) + ($minute * 60) + $second);
+        }
+        $hours          =   floor($seconds / 3600);
+        $seconds        -=  $hours*3600;
+        $minutes        =   floor($seconds / 60);
+        $seconds        -=  $minutes*60;
+        // return
+        return ['hours' => $hours, 'minutes' => $minutes, 'seconds' => $seconds];
+    }
+    /**
+     * 
+     * 
+     */
+    public function calculateDifferenceOfDurations($time1, $time2)
+    {
+        $start          =   new DateTime($time1);
+        $end            =   new DateTime($time2);
+        $interval       =   $start->diff($end);
+        return $interval->format('%H:%I:%S'); 
+    }
+
+    /**
+     * 
+     * 
+     */
+    public function calculateDeviationFromMaximumAllowedDuration($time, $maximum_allowed_time_in_hours)
+    {
+        $time_parts   = explode(':', $time);     
+        return ($maximum_allowed_time_in_hours - $time_parts[0]).':'.(60 - $time_parts[1]).':'.(60 - $time_parts[2]);
+    }
+
+    /**
+     * 
+     * 
+     */
+    public function maskVehicleStatusDurationOverflow($durations = [], $maximum_allowed_time_in_hours)
+    {
+        asort($durations);
+        $maximum_allowed_time_in_hours  =    $maximum_allowed_time_in_hours.':59:59';
+        $sum_of_durations               =    '00:00:00';
+        foreach($durations as $key => $duration)
+        {
+            $sum_of_iteration           =   $this->calculateSumOfDurations([$sum_of_durations, $durations[$key]]);
+            if( $sum_of_iteration['hours'] <= explode(':', $maximum_allowed_time_in_hours)[0] )
+            {
+                // do nothing;
+            }
+            else
+            {
+                // corrected durations = max allowed time - sum of iterations
+                $durations[$key]        =   $this->calculateDifferenceOfDurations($maximum_allowed_time_in_hours, $sum_of_durations);
+                $sum_of_iteration       =   $this->calculateSumOfDurations([
+                    $sum_of_durations, 
+                    $durations[$key]
+                ]);
+            }
+            $sum_of_durations           =   $sum_of_iteration['hours'].':'.$sum_of_iteration['minutes'].':'.$sum_of_iteration['seconds'];
+        }
+        return $durations;
     }
 
     /**
