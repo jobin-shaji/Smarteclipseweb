@@ -13,6 +13,7 @@ use App\Http\Traits\VehicleDataProcessorTrait;
 use DB;
 use Carbon\Carbon;
 use DataTables;
+use DateTime;
 
 class TrackingReportController extends Controller
 {
@@ -24,13 +25,34 @@ class TrackingReportController extends Controller
         $vehicles           =   (new Vehicle())->getVehicleListBasedOnClient($client_id);
         return view('Reports::tracking-report',['vehicles'=>$vehicles]);  
     }  
+    /**
+     * 
+     * 
+     */
+    public function numberOfHoursBetweenDates($from_date, $to_date)
+    {
+        $date1  = new DateTime($from_date);
+        $date2  = new DateTime($to_date);
+
+        $diff   = $date2->diff($date1);
+
+        $hours  = $diff->h;
+        $hours  = $hours + ($diff->days*24);
+
+        return $hours;
+    }
+    /**
+     * 
+     * 
+     */
     public function trackReportList(Request $request)
     {
         $vehicle_id         =   $request->vehicle;
         $report_type        =   $request->type;
         $client_id          =   \Auth::user()->client->id;  
         $date_and_time      =   $this->getDateFromType($report_type);
-        $vehicle_profile    =   $this->vehicleProfile($vehicle_id,$date_and_time,$client_id);
+        $max_hours          =   $this->numberOfHoursBetweenDates($date_and_time['from_date'], $date_and_time['to_date']);
+        $vehicle_profile    =   $this->vehicleProfile($vehicle_id, $date_and_time, $client_id, $max_hours);
         return response()->json([           
             'sleep'         =>  $vehicle_profile['sleep'],  
             'motion'        =>  $vehicle_profile['motion'],   
