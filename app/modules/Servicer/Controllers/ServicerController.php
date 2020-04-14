@@ -2070,7 +2070,7 @@ public function serviceJobDetails(Request $request)
             }
             else if($servicer_job->job_type == 3)
             {
-                return "Renstallation" ;
+                return "Reinstallation" ;
             }
             else if($servicer_job->job_type == 2)
             {
