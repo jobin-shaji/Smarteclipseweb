@@ -1448,8 +1448,8 @@ class WarehouseController extends Controller {
     public function getDealerListData(Request $request)
     {
         $user_id=\Auth::user()->id;
-        $from_date=$request->data['from_date'];
-        $to_date=$request->data['to_date'];
+        $from_date=$request['from_date'];
+        $to_date=$request['to_date'];
         $gps_transfer = GpsTransfer::select(
             'id',
             'from_user_id',
@@ -1459,8 +1459,8 @@ class WarehouseController extends Controller {
             'deleted_at'
             // \DB::raw('count(id) as count')
         )
-        ->with('fromUser:id,username')
-        ->with('toUser:id,username')
+        ->with('fromuser:id,username')
+        ->with('touser:id,username')
         ->with('gpsTransferItems')
         ->where('from_user_id',$user_id)
         ->orderBy('id','DESC')
