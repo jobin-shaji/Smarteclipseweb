@@ -1646,25 +1646,11 @@ public function serviceJobDetails(Request $request)
         }
         $client_id=$servicer_job->client_id;
         $client = Client::find($client_id);
-         $vehicle = Vehicle::select(
-            'id',
-            'name',
-            'register_number',
-            'vehicle_type_id',
-            'gps_id',
-            'client_id',
-            'servicer_job_id',
-            'chassis_number',
-            'engine_number'
-        )
-        ->with('gps:id,imei')
-        ->where('servicer_job_id',$servicer_job_id)
-        // ->where('id',$vehicle_id)
-        ->first();
+        $vehicle_servicer_job_log    =   (new VehicleGps())->getVehicleGpsLogBasedOnServicerJob($servicer_job_id);
         if($servicer_job == null){
            return view('Servicer::404');
         }
-        $pdf = PDF::loadView('Servicer::installation-certificate-download',['servicer_job' => $servicer_job,'vehicle'=> $vehicle,'client' => $client,'dealer_trader'=>$dealer_trader]);
+        $pdf = PDF::loadView('Servicer::installation-certificate-download',['servicer_job' => $servicer_job,'vehicle_servicer_job_log'=> $vehicle_servicer_job_log,'client' => $client,'dealer_trader'=>$dealer_trader]);
         return $pdf->download('installation-certificate.pdf');
     }
 

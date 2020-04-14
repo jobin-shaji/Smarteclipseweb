@@ -68,7 +68,7 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                                                                                                                                           } else if ($servicer_job['job_type'] == 2) {
                                                                                                                                             echo 'Services';
                                                                                                                                           }else if ($servicer_job['job_type'] == 3) {
-                                                                                                                                            echo 'Services';
+                                                                                                                                            echo 'Reinstallation';
                                                                                                                                           } ?>" required readonly>
                         <span class="glyphicon glyphicon-phone form-control-feedback"></span>
                       </div>
