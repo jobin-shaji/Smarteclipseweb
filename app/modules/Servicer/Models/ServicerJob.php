@@ -48,11 +48,11 @@ class ServicerJob extends Model
     } 
     public function vehicleGps()
     {
-      return $this->hasOne('App\Modules\Vehicle\Models\vehicleGps','servicer_job_id','id');
+      return $this->hasOne('App\Modules\Vehicle\Models\VehicleGps','servicer_job_id','id');
     } 
     public function vehicleGpsWithGpsId()
     {
-      return $this->hasOne('App\Modules\Vehicle\Models\vehicleGps','gps_id','gps_id');
+      return $this->hasOne('App\Modules\Vehicle\Models\VehicleGps','gps_id','gps_id');
     }  
     public function getNewInstallationList($key = null)
     {
