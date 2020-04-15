@@ -3,6 +3,7 @@ namespace App\Modules\Client\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Modules\Client\Models\Client;
+use App\Modules\Gps\Models\Gps;
 use App\Modules\Client\Models\ClientAlertPoint;
 use App\Modules\SubDealer\Models\SubDealer;
 use App\Modules\Geofence\Models\Geofence;
