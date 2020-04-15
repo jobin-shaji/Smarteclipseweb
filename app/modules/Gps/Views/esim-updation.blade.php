@@ -56,7 +56,7 @@ Create Vehicle Type
                                 <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Choose
                                 <span class="caret"></span></button>
                                 <ul class="dropdown-menu">
-                                <li onclick="removeSelectedRows()"> Remove selected rows </li>
+                                <li onclick="removeSelectedRows()" style="cursor:pointer;"> Remove selected rows </li>
                                 </ul>
                                 <!-- /action items -->
                             </div>

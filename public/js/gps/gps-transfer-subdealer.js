@@ -24,9 +24,7 @@ function callBackDataTable(data){
         ajax: {
             url: 'gps-transfer-list-subdealer',
             type: 'POST',
-            data: {
-                'data': data
-            },
+            data:data,
             headers: {
                 'X-CSRF-Token': $('meta[name = "csrf-token"]').attr('content')
             }
