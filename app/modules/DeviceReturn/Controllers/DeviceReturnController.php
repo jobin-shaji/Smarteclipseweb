@@ -238,11 +238,12 @@ class DeviceReturnController extends Controller
      */
     public function acceptDeviceReturn(Request $request)
     {
-        $device_return              =   (new DeviceReturn())->getSingleDeviceReturnDetails($request->id);
-        $device_return->status      =   2;
-        $device_return->save();
-        if($device_return->status      =   2)
+        $device_return                  =   (new DeviceReturn())->getSingleDeviceReturnDetails($request->id);
+        if($device_return->status       ==   0)
         {
+            $device_return->status      =   2;
+            $device_return->save();
+        
             $gps_data                   =   (new Gps())->getGpsDetails($device_return->gps_id);
             $gps_data_in_stock          =   (new GpsStock())->getSingleGpsStockDetails($device_return->gps_id);
             $gps_in_vehicle             =   (new Vehicle())->getSingleVehicleDetailsBasedOnGps($device_return->gps_id);
@@ -250,12 +251,19 @@ class DeviceReturnController extends Controller
             //old data stored in a variable for creating new row
             $imei                       =   $gps_data->imei;
             $serial_no                  =   $gps_data->serial_no;
-            $imei_RET                   =   $gps_data->imei."-RET-" ;
-            $serial_no_RET              =   $gps_data->serial_no."-RET-" ;
-            $gps_find_imei_and_slno     =   (new Gps())->getCountBasedOnImeiAndSerialNo($imei_RET,$serial_no_RET);        
-            $increment_value            =   $gps_find_imei_and_slno +1;
-            $imei_incremented           =   $imei."-RET-"."".$increment_value;
-            $serial_no_incremented      =   $serial_no."-RET-"."". $increment_value;
+            $imei_split_position        =   strpos($imei,"-RET");
+            $serial_no_split_position   =   strpos($serial_no,"-RET");
+            if($imei_split_position)
+            {
+                $imei                   =   substr($imei,0,$imei_split_position);
+            }
+            if($serial_no_split_position)
+            {
+                $serial_no              =   substr($serial_no,0,$serial_no_split_position);
+            }
+            $gps_find_imei_and_slno     =   (new Gps())->getCountBasedOnImeiAndSerialNo($imei,$serial_no); 
+            $imei_incremented           =   $imei."-RET-".$gps_find_imei_and_slno;
+            $serial_no_incremented      =   $serial_no."-RET-". $gps_find_imei_and_slno;
             
             //To update returned status in gps table
             $gps_data->imei             =   $imei_incremented;
