@@ -42,7 +42,7 @@ class RouteController extends Controller {
             
                 return "
                  <a href=".$b_url."/route/".Crypt::encrypt($route->id)."/details class='btn btn-xs btn-info' data-toggle='tooltip' title='View'><i class='fas fa-eye'></i> View</a>                
-                <button onclick=deleteRoute(".$route->id.") class='btn btn-xs btn-danger' data-toggle='tooltip' title='Deactivate'><i class='fas fa-trash'></i> Delete</button>";             
+                <button onclick=deleteRoute(".$route->id.") class='btn btn-xs btn-danger' data-toggle='tooltip' title='Delete'><i class='fas fa-trash'></i> Delete</button>";             
          })
         ->rawColumns(['link', 'action'])
         ->make();
@@ -180,6 +180,7 @@ class RouteController extends Controller {
         ->where('client_id',$client_id)
         ->get();
         $routes=Route::select('id','name','client_id')
+        ->withTrashed()
         ->where('client_id',$client_id)
         ->get();
          return view('Route::assign-route-vehicle-list',['vehicles'=>$vehicles,'routes'=>$routes]); 
