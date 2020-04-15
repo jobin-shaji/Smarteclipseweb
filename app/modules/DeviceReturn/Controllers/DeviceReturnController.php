@@ -16,6 +16,7 @@ use App\Modules\Servicer\Models\Servicer;
 use App\Modules\Trader\Models\Trader;
 use App\Modules\Vehicle\Models\Vehicle;
 use App\Modules\Vehicle\Models\VehicleGps;
+use App\Modules\Vehicle\Models\VehicleGeofence;
 use App\Modules\VltData\Models\VltData;
 use DataTables;
 use DB;
@@ -273,7 +274,10 @@ class DeviceReturnController extends Controller
         $vehicle_gps_log                    =   (new VehicleGps())->getVehicleGpsLog($gps_in_vehicle->id,$device_return->gps_id);
         $vehicle_gps_log->gps_removed_on    =   date('Y-m-d H:i:s');
         $vehicle_gps_log->save();
-        
+
+        //delete all assigned geofences of returned vehicle
+        $is_deleted_assigned_vehicle_geofence   =   (new VehicleGeofence())->getGeofenceAssignedVehicleDatas($gps_in_vehicle->id);
+
         //To update imei in vlt data table
         $vlt_Data                            =    (new VltData())->vltDataImeiUpdation($imei,$imei_incremented);     
         

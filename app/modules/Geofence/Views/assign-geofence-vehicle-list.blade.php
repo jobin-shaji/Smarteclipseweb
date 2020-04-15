@@ -34,7 +34,7 @@
                             <select class="form-control select2" data-live-search="true" title="Select Vehicle" id="vehicle" name="vehicle">
                               <option value="">Select Vehicle</option>
                               @foreach ($vehicles as $vehicles)
-                              <option value="{{$vehicles->id}}">{{$vehicles->register_number}}</option>
+                              <option value="{{$vehicles->id}}" @if($vehicles->is_returned == 1){{"disabled"}} @endif>{{$vehicles->register_number}}@if($vehicles->is_returned == 1){{" -- Returned"}} @endif</option>
                               @endforeach  
                             </select>
                           </div>

@@ -248,7 +248,7 @@ class ComplaintController extends Controller {
     {
         $client_id=\Auth::user()->client->id;
         // $devices=GpsStock::with('gps')->where('client_id',$client_id)->get();
-        $devices=Vehicle::select('id','client_id','gps_id','register_number')
+        $devices=Vehicle::select('id','client_id','gps_id','register_number','is_returned')
                         ->with('gps')
                         ->where('client_id',$client_id)
                         ->get();
