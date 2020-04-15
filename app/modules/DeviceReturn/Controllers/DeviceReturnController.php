@@ -241,62 +241,74 @@ class DeviceReturnController extends Controller
         $device_return              =   (new DeviceReturn())->getSingleDeviceReturnDetails($request->id);
         $device_return->status      =   2;
         $device_return->save();
-        $gps_data                   =   (new Gps())->getGpsDetails($device_return->gps_id);
-        $gps_data_in_stock          =   (new GpsStock())->getSingleGpsStockDetails($device_return->gps_id);
-        $gps_in_vehicle             =   (new Vehicle())->getSingleVehicleDetailsBasedOnGps($device_return->gps_id);
+        if($device_return->status      =   2)
+        {
+            $gps_data                   =   (new Gps())->getGpsDetails($device_return->gps_id);
+            $gps_data_in_stock          =   (new GpsStock())->getSingleGpsStockDetails($device_return->gps_id);
+            $gps_in_vehicle             =   (new Vehicle())->getSingleVehicleDetailsBasedOnGps($device_return->gps_id);
 
-        //old data stored in a variable for creating new row
-        $imei                       =   $gps_data->imei;
-        $serial_no                  =   $gps_data->serial_no;
-        $imei_RET                   =   $gps_data->imei."-RET-" ;
-        $serial_no_RET              =   $gps_data->serial_no."-RET-" ;
-        $gps_find_imei_and_slno     =   (new Gps())->getCountBasedOnImeiAndSerialNo($imei_RET,$serial_no_RET);        
-        $increment_value            =   $gps_find_imei_and_slno +1;
-        $imei_incremented           =   $imei."-RET-"."".$increment_value;
-        $serial_no_incremented      =   $serial_no."-RET-"."". $increment_value;
-        
-        //To update returned status in gps table
-        $gps_data->imei             =   $imei_incremented;
-        $gps_data->serial_no        =   $serial_no_incremented;
-        $gps_data->is_returned      =   1;
-        $gps_data->save();
+            //old data stored in a variable for creating new row
+            $imei                       =   $gps_data->imei;
+            $serial_no                  =   $gps_data->serial_no;
+            $imei_RET                   =   $gps_data->imei."-RET-" ;
+            $serial_no_RET              =   $gps_data->serial_no."-RET-" ;
+            $gps_find_imei_and_slno     =   (new Gps())->getCountBasedOnImeiAndSerialNo($imei_RET,$serial_no_RET);        
+            $increment_value            =   $gps_find_imei_and_slno +1;
+            $imei_incremented           =   $imei."-RET-"."".$increment_value;
+            $serial_no_incremented      =   $serial_no."-RET-"."". $increment_value;
+            
+            //To update returned status in gps table
+            $gps_data->imei             =   $imei_incremented;
+            $gps_data->serial_no        =   $serial_no_incremented;
+            $gps_data->is_returned      =   1;
+            $gps_data->save();
 
-        //To update returned status in gps stock table
-        $gps_data_in_stock->is_returned      =    1;
-        $gps_data_in_stock->save();
+            //To update returned status in gps stock table
+            $gps_data_in_stock->is_returned      =    1;
+            $gps_data_in_stock->save();
 
-        //To update returned status in vehicle table
-        $gps_in_vehicle->is_returned                    =    1;
-        $gps_in_vehicle->is_reinstallation_job_created  =    0;
-        $gps_in_vehicle->save();         
+            //To update returned status in vehicle table
+            $gps_in_vehicle->is_returned                    =    1;
+            $gps_in_vehicle->is_reinstallation_job_created  =    0;
+            $gps_in_vehicle->save();         
 
-        //Update gps removed date on vehicle gps log table
-        $vehicle_gps_log                    =   (new VehicleGps())->getVehicleGpsLog($gps_in_vehicle->id,$device_return->gps_id);
-        $vehicle_gps_log->gps_removed_on    =   date('Y-m-d H:i:s');
-        $vehicle_gps_log->save();
+            //Update gps removed date on vehicle gps log table
+            $vehicle_gps_log                    =   (new VehicleGps())->getVehicleGpsLog($gps_in_vehicle->id,$device_return->gps_id);
+            $vehicle_gps_log->gps_removed_on    =   date('Y-m-d H:i:s');
+            $vehicle_gps_log->save();
 
-        //delete all assigned geofences of returned vehicle
-        $is_deleted_assigned_vehicle_geofence   =   (new VehicleGeofence())->getGeofenceAssignedVehicleDatas($gps_in_vehicle->id);
+            //delete all assigned geofences of returned vehicle
+            $is_deleted_assigned_vehicle_geofence   =   (new VehicleGeofence())->getGeofenceAssignedVehicleDatas($gps_in_vehicle->id);
 
-        //To update imei in vlt data table
-        $vlt_Data                            =    (new VltData())->vltDataImeiUpdation($imei,$imei_incremented);     
-        
-        //To update imei in vlt data archived table
-        DB::table('vlt_data_archived')->where('imei',$imei)->update([
-                'imei' =>  $imei_incremented,
+            //To update imei in vlt data table
+            $vlt_Data                            =    (new VltData())->vltDataImeiUpdation($imei,$imei_incremented);     
+            
+            //To update imei in vlt data archived table
+            DB::table('vlt_data_archived')->where('imei',$imei)->update([
+                    'imei' =>  $imei_incremented,
+                ]);
+
+            //To update returned status in gps transfer items table
+            $gps_in_transfer_items      =   (new GpsTransferItems())->updateReturnStatusInTrasferItem($device_return->gps_id);
+            $manufacturer_details       =   (new Root())->getManufacturerDetails(\Auth::user()->root->id);
+            $activity                   =   'Manufacturer ('.$manufacturer_details->name.') accepted the device return '.$device_return->return_code;
+            (new DeviceReturnHistory())->addHistory($device_return->id, $activity);
+
+            return response()->json([
+                'status' => 1,
+                'title' => 'Success',
+                'message' => 'Device return Accepted successfully'
             ]);
-
-        //To update returned status in gps transfer items table
-        $gps_in_transfer_items      =   (new GpsTransferItems())->updateReturnStatusInTrasferItem($device_return->gps_id);
-        $manufacturer_details       =   (new Root())->getManufacturerDetails(\Auth::user()->root->id);
-        $activity                   =   'Manufacturer ('.$manufacturer_details->name.') accepted the device return '.$device_return->return_code;
-        (new DeviceReturnHistory())->addHistory($device_return->id, $activity);
-
-        return response()->json([
-            'status' => 1,
-            'title' => 'Success',
-            'message' => 'Device return Accepted successfully'
-        ]);
+        }
+        else
+        {
+            return response()->json([
+                'status' => 0,
+                'title' => 'Failed',
+                'message' => 'Device return request is already accepted'
+            ]);
+        }
+        
         
     }
     /**
