@@ -38,10 +38,13 @@ Daily KM Report
                             <div class="col-lg-3 col-md-3">          
                               <div class="form-group">          
                                 <label> Date</label>
-                                <input type="text" class="@if(\Auth::user()->hasRole('fundamental'))datepickerFundamental @elseif(\Auth::user()->hasRole('superior')) datepickerSuperior @elseif(\Auth::user()->hasRole('pro')) datepickerPro @else datepickerFreebies @endif form-control" id="fromDate" name="fromDate"  required autocomplete = 'off' onkeydown="return false">
-                                <span class="input-group-addon" style="z-index: 99;">
-                                    <span class="calender1"  style=""><i class="fa fa-calendar"></i></span>
+                                <div class="input-group date <?php if(\Auth::user()->hasRole('superior')){ echo 'datepickerSuperior'; }else if(\Auth::user()->hasRole('fundamental')){ echo 'datepickerFundamental'; } else if(\Auth::user()->hasRole('pro')){ echo 'datepickerPro'; }else if(\Auth::user()->hasRole('freebies')){ echo 'datepickerFreebies'; } else{ echo 'datepickerFreebies';}?>" id="<?php if(\Auth::user()->hasRole('superior')){ echo 'datepickerSuperior'; }else if(\Auth::user()->hasRole('fundamental')){ echo 'datepickerFundamental'; } else if(\Auth::user()->hasRole('pro')){ echo 'datepickerPro'; }else if(\Auth::user()->hasRole('freebies')){ echo 'datepickerFreebies'; } else{ echo 'datepickerFreebies';}?>">
+                    
+                                <input type="text" class="@if(\Auth::user()->hasRole('fundamental'))datepickerFundamental @elseif(\Auth::user()->hasRole('superior')) datepickerSuperior @elseif(\Auth::user()->hasRole('pro')) datepickerPro @else datepickerFreebies @endif  form-control" id="fromDate" name="fromDate"  required autocomplete = 'off' onkeydown="return false">
+                                <span class="input-group-addon" >
+                                    <span class="calender1  "  style="z-index: 99;"><i class="fa fa-calendar "></i></span>
                                 </span>
+                              </div>
                               </div>
                             </div>
                             <div class="col-lg-3 col-md-3 pt-4">  

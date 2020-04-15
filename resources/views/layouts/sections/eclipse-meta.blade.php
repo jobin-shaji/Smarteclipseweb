@@ -82,17 +82,18 @@
     
     <!-- Custom CSS -->
     <link href="{{ url('/') }}/assets/libs/flot/css/float-chart.css" rel="stylesheet">
-
     <link href="{{ url('/') }}/dist/css/style.min1.css" rel="stylesheet">
-    <!-- <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}"> -->
+    
     <link href="{{ url('/') }}/dist/css/alert.css" rel="stylesheet">
+
+    <!-- <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}"> -->
     
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.css"/>
 
   <link rel="stylesheet" href="{{asset('css/bootstrap-datepicker.min.css')}}">
   
-  <link rel="stylesheet" href="{{asset('css/daterangepicker.css')}}">
-  <link rel="stylesheet" href="{{asset('css/bootstrap-datetimepicker.css')}}">
+  <!-- <link rel="stylesheet" href="{{asset('css/daterangepicker.css')}}"> -->
+  <!-- <link rel="stylesheet" href="{{asset('css/bootstrap-datetimepicker.css')}}"> -->
     <link rel="stylesheet" href="{{asset('css/dash-popup.css')}}">
     <link rel="stylesheet" href="{{asset('css/responsive.css')}}">
     
