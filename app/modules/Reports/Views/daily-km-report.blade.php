@@ -44,10 +44,19 @@ Daily KM Report
                                 </span>
                               </div>
                             </div>
-                            <div class="col-lg-3 col-md-3 pt-4">  
+                             <div class="col-lg-3 col-md-3">
+                              <div class="form-group">                     
+                                <label> To Date</label>
+                                <input type="text" class="@if(\Auth::user()->hasRole('fundamental'))datepickerFundamental @elseif(\Auth::user()->hasRole('superior')) datepickerSuperior @elseif(\Auth::user()->hasRole('pro')) datepickerPro @else datepickerFreebies @endif form-control" id="toDate" name="toDate" autocomplete="off" required onkeydown="return false" required>
+                                <span class="input-group-addon" style="z-index: 99;">
+                                    <span class="calender1"  style=""><i class="fa fa-calendar"></i></span>
+                                </span>
+                              </div>
+                            </div>
+                        <div class="col-lg-3 col-md-3 pt-4">  
                               <div class="form-group">          
                                 <button class="btn btn-sm btn-info btn2 srch" onclick="check()"> <i class="fa fa-search"></i> </button>
-                                <button class="btn btn-sm btn1 btn-primary dwnld" id = 'daily_km_report_download' style = 'display:none;' onclick="downloadDailyKMReport()">
+                                <button class="btn btn-sm btn1 btn-primary dwnld" id = 'daily_km_report_download' style = 'display:none;' onclick="downloadClientDailyKMReport()">
                                   <i class="fa fa-file"></i>Download Excel</button>                   
                               </div>
                             </div>
