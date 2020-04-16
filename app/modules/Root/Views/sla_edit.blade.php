@@ -35,8 +35,14 @@ SLA
                 </div>
                 <div class="form-group" style="padding-top: 15px">
                   <label for="three">Time In Minutes</label>
-                  <input type="text" class="form-control"  name="time" id="three" value="{{$sla->time_in_minutes}}" placeholder="Time In Hours">
+                  <input type="text" class="form-control {{ $errors->has('time') ? ' has-error' : '' }}"  name="time" id="three" value="{{$sla->time_in_minutes}}" placeholder="Time In Hours">
+                  @if ($errors->has('time'))
+                  <span class="help-block">
+                      <strong class="error-text">{{ $errors->first('time') }}</strong>
+                  </span>
+                  @endif
                 </div>
+             
                 <div class="form-group" style="padding-top: 15px">
                   <button type="submit" class="btn btn-primary">Update</button>
                 </div>

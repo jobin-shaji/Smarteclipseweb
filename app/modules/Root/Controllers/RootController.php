@@ -118,6 +118,9 @@ class RootController extends Controller {
 
     public function slaUpdate(Request $request)
     {
+        $rules = $this->sla_update_rules();
+        $this->validate($request,$rules);
+        
         $sla = SLA::find($request->id);
         $sla->time_in_minutes = $request->time;
         $sla->save();
@@ -125,6 +128,14 @@ class RootController extends Controller {
         $request->session()->flash('message','SLA details updated successfully');
         $request->session()->flash('alert-class','alert-success');
         return  redirect(route('root.sla.list'));  
+    }
+
+    public function sla_update_rules()
+    {
+        $rules=[
+        'time' => 'required|integer'
+        ];
+        return $rules;
     }
 
     public function updateRootPasswordRule()
