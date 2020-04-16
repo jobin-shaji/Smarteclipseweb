@@ -17980,6 +17980,18 @@ input:invalid, textarea:invalid, select:invalid {
     right: 26px;
     top: 37px;
 }
+/*.calender1 {
+    position: absolute;
+    right: 6px;
+    top: 6px;
+}
+*/
+.calendern {
+    position: absolute;
+    right: 6px;
+    top: 6px;
+}
+
 
 .km_grid {
     font-size: 15px;
