@@ -33,7 +33,6 @@
                     <th>SL.No</th>
                     <th>Job Code</th>
                     <th>End User</th>  
-                    <th>Registration Number</th>                      
                     <th>Job Type</th>
                     <th>Servicer</th>
                     <th>GPS</th>
