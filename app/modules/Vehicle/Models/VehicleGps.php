@@ -105,6 +105,7 @@ class VehicleGps extends Model
 
     public function getVehicleGpsLogBasedOnGps($gps_id)
     {
-      return self::where('gps_id',$gps_id)->first();
+      return self::where('gps_id',$gps_id)->with('vehicle')->first();
+    
     }
 }
