@@ -39,7 +39,7 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
               <div class="col-md-6">
                 <?php
                 $encript = Crypt::encrypt($servicer_job->id);
-                $vehicle_id = Crypt::encrypt($vehicle_device->vehicle->id);
+                // $vehicle_id = Crypt::encrypt($vehicle_device->vehicle->id);
                 ?>
                 <a href="{{route('job.complete.certificate.download',$encript)}}">
                   <button class="btn btn-xs"><i class='fa fa-download'></i>Download Certificate</button>
