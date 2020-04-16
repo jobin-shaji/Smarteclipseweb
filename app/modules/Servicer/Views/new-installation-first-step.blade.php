@@ -50,7 +50,7 @@ Assign Servicer
 <h4 class="panel-title">Installation check list</h4>
 </div>
 <div class="panel-body">
-<form  method="POST" action="{{route('checkbox.installation.save.p',$pass_servicer_jobid)}}">
+<form  method="POST"   action="{{route('checkbox.installation.save.p',$pass_servicer_jobid)}}">
    {{csrf_field()}}
  
  <div class="row">
@@ -58,14 +58,14 @@ Assign Servicer
     <div class="col-lg-6">
        <div class="funkyradio">
        <div class="funkyradio-success">
-        <input type="checkbox" name="checkbox_first_installation[]" value="{{$list['id']}}" id="checkbox{{$list['id']}}"<?php if($list['checked']== true){ echo "checked"; }?>/>
+        <input type="checkbox"  name="checkbox_first_installation[]" value="{{$list['id']}}" required="true" id="checkbox{{$list['id']}}"<?php if($list['checked']== true){ echo "checked"; }?>/>
        <label for="checkbox{{$list['id']}}">{{$list['label']}}</label>
       </div>
    </div>
   </div>
    <?php } ?>
  <br>
- <button type="submit" class="btn btn-primary btn-md form-btn pull-right">Save</button>
+ <button type="submit"   id="checkboxForm"  class="btn btn-primary btn-md form-btn pull-right">Save</button>
   </div>
   </form>
  </div>
@@ -75,6 +75,32 @@ Assign Servicer
 </div></div>
 @endsection
 @section('script')
+<script>
+
+$(document).ready(function() {
+   
+
+
+
+
+    $("#checkboxForm").on("click", function(){
+     
+      var checkedboxes = $('input[name="checkbox_first_installation[]"]:checked');
+      var checkedboxeslength=  checkedboxes.length;
+      var totalCheckboxes = $('input[name="checkbox_first_installation[]"]').length;
+      var pendingCheckoxes=totalCheckboxes-checkedboxeslength;
+      if(checkedboxeslength < totalCheckboxes)
+      {
+       
+        alert("please select all checkboxes there are unchecked checkboxes"+'  '+pendingCheckoxes);
+      }else
+      { alert("all checked");
+       return true;
+    }
+
+}); 
+});
+</script>
 <link rel="stylesheet" href="{{asset('css/installation-step-servicer.css')}}">
 <script src="{{asset('js/gps/new-installation-step.js')}}"></script>
 <script src="{{asset('js/gps/servicer-driver-create.js')}}"></script>
