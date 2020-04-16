@@ -694,7 +694,8 @@ class ClientController extends Controller {
         foreach ($geofences as $geofence) {
             $vehicle_geofences=VehicleGeofence::select('geofence_id')->where('geofence_id',$geofence->id)->withTrashed()->get();
             foreach ($vehicle_geofences as $vehicle_geofence) {
-                $vehicle_geofence->forceDelete();
+                // $vehicle_geofence->forceDelete();
+                VehicleGeofence::where('geofence_id',$geofence->id)->forceDelete();
             }
             $geofence_cleared = $geofence->forceDelete();
         }
