@@ -52,6 +52,19 @@ class DailyKm extends Model
             ->with('vehicleGps.vehicle')
             ->get();
     }
+     /**
+     * 
+     * 
+     */
+    public function getDailyKmBasedOnFromDateAndToDateGps($gps_ids,$from_date,$to_date)
+    {
+        return self::whereIn('gps_id',$gps_ids)
+            ->where('date', '>=', $from_date)
+            ->where('date', '<=', $to_date)
+            ->with('vehicleGps.vehicle')
+            ->get();
+
+    }
     /**
      * 
      * 
