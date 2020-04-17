@@ -243,7 +243,7 @@ class GeofenceController extends Controller {
     {
         $user_id=\Auth::user()->id;
         $client_id=\Auth::user()->client->id;
-        $vehicles=Vehicle::select('id','name','register_number','client_id')
+        $vehicles=Vehicle::select('id','name','register_number','client_id','is_returned')
         ->where('client_id',$client_id)
         ->get();
         $geofence = Geofence::select('id','user_id','name','cordinates','deleted_at')

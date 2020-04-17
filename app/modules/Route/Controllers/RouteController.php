@@ -176,7 +176,7 @@ class RouteController extends Controller {
     public function AssignRouteList()
     {
         $client_id=\Auth::user()->client->id;
-        $vehicles=Vehicle::select('id','name','register_number','client_id')
+        $vehicles=Vehicle::select('id','name','register_number','client_id','is_returned')
         ->where('client_id',$client_id)
         ->get();
         $routes=Route::select('id','name','client_id')

@@ -24,10 +24,10 @@
                           <div class="col-lg-2 col-md-3"> 
                            <div class="form-group">
                             <label>Vehicle</label>                          
-                            <select class="form-control selectpicker" data-live-search="true" title="Select Vehicle" id="vehicle" name="vehicle">
+                            <select class="form-control select2" data-live-search="true" title="Select Vehicle" id="vehicle" name="vehicle">
                               <option value="">select</option>
                               @foreach ($vehicles as $vehicles)
-                              <option value="{{$vehicles->id}}">{{$vehicles->register_number}}</option>
+                              <option value="{{$vehicles->id}}" @if($vehicles->is_returned == 1){{"disabled"}} @endif>{{$vehicles->register_number}}@if($vehicles->is_returned == 1){{" -- Returned"}} @endif</option>
                               @endforeach  
                             </select>
                           </div>
@@ -35,7 +35,7 @@
                           <div class="col-lg-2 col-md-3"> 
                            <div class="form-group">                      
                             <label>Route</label>                          
-                            <select class="form-control selectpicker" data-live-search="true" title="Select Route" id="vehicle_route" name="vehicle_route" >
+                            <select class="form-control select2" data-live-search="true" title="Select Route" id="vehicle_route" name="vehicle_route" >
                               <option value="">Select</option>
                               @foreach ($routes as $route)
                               <option value="{{$route->id}}">{{$route->name}}</option>
