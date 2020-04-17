@@ -1427,10 +1427,10 @@ public function serviceJobDetails(Request $request)
                     $uploadedVehicleFile            =   'vehicle_photo'.time().'.'.$getVehicleFileExt;
                     $vehicle_photo->move($destinationPath,$uploadedVehicleFile);
                    
-                    $documents = Document::create([
+                      $documents = Document::create([
                         'vehicle_id'        =>  $vehicle_create->id,
                         'document_type_id'  =>  1,
-                        'expiry_date'       =>  "2020-04-05",
+                        'expiry_date'       => $expiry_date,
                         'path'              =>  $uploadedFile,
                     ]);
                    

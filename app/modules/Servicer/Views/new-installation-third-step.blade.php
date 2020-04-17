@@ -94,6 +94,7 @@ $(document).ready(function() {
       {
        
         alert("please select all commands there are unchecked commands of "+'  '+pendingCheckoxes);
+         return false;
       }else
       { 
        return true;

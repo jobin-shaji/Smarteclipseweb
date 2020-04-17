@@ -86,14 +86,13 @@ $(document).ready(function() {
       var pendingCheckoxes=totalCheckboxes-checkedboxeslength;
       if(checkedboxeslength < totalCheckboxes)
       {
-       
-        alert("please select all checkboxes there are unchecked checkboxes of"+'  '+pendingCheckoxes);
+       alert("please select all checkboxes there are unchecked checkboxes of"+'  '+pendingCheckoxes);
+        return false;
       }else
       { 
        return true;
-    }
-
-}); 
+      }
+   }); 
 });
 </script>
 <link rel="stylesheet" href="{{asset('css/installation-step-servicer.css')}}">
