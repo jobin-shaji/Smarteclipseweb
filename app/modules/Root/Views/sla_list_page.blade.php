@@ -29,7 +29,7 @@ SLA
                       <th><b>SL.No</b></th>
                       <th><b>From</b></th>
                       <th><b>To</b></th>
-                      <th><b>Time In Minutes</b></th>
+                      <th><b>Time In Hours</b></th>
                       <th><b>Action</b></th>                                   
                     </tr>
                   </thead>
@@ -39,7 +39,7 @@ SLA
                         <td>{{$loop->iteration}}</td>
                         <td>{{$item->sla_from}}</td>
                         <td>{{$item->sla_to}}</td>
-                        <td>{{$item->time_in_minutes}}</td>
+                        <td>{{($item->time_in_minutes/60)}}</td>
                         <td><a href="{{route('root.sla.edit',encrypt($item->id))}}"><button>Edit</button></a></td>
                         </tr>
                       @endforeach

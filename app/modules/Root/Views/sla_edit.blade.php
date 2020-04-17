@@ -34,8 +34,8 @@ SLA
                   <input type="text" class="form-control" id="two" value="{{$sla->sla_to}}" readonly="true">
                 </div>
                 <div class="form-group" style="padding-top: 15px">
-                  <label for="three">Time In Minutes</label>
-                  <input type="text" class="form-control {{ $errors->has('time') ? ' has-error' : '' }}"  name="time" id="three" value="{{$sla->time_in_minutes}}" placeholder="Time In Hours">
+                  <label for="three">Time In Hours</label>
+                  <input type="text" class="form-control {{ $errors->has('time') ? ' has-error' : '' }}"  name="time" id="three" value="{{($sla->time_in_minutes/60)}}" placeholder="Time In Hours">
                   @if ($errors->has('time'))
                   <span class="help-block">
                       <strong class="error-text">{{ $errors->first('time') }}</strong>

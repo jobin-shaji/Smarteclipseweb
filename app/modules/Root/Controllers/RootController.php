@@ -122,7 +122,7 @@ class RootController extends Controller {
         $this->validate($request,$rules);
         
         $sla = SLA::find($request->id);
-        $sla->time_in_minutes = $request->time;
+        $sla->time_in_minutes = $request->time*60;
         $sla->save();
 
         $request->session()->flash('message','SLA details updated successfully');
