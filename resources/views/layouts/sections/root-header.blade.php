@@ -219,6 +219,15 @@
                 </li>
                 </ul>
             </li>
+            <li class="dropdown-submenu">
+                <a href="#" class="dropdown-item dropdown-toggle"data-toggle="dropdown" > SLA</a>
+                <ul class="dropdown-menu">
+                    <li>
+                       <a class="dropdown-item" href="{{url('/sla')}}"> Service Level Agreements</a>
+                    </li>
+                </ul>
+            </li>
+
 
         </ul>
     </li>
