@@ -1811,15 +1811,19 @@ public function serviceJobDetails(Request $request)
         // dd($decrypted);
         $servicer_job       =   ServicerJob::withTrashed()->where('id', $decrypted)->first();
         $client_id          =   $servicer_job->client_id;
+ 
 
         $vehicle_device     =   (new VehicleGps())->getVehicleGpsLogBasedOnGps($servicer_job->gps_id);
         
+
+
         if($servicer_job == null){
            return view('Servicer::404');
         }
         
         return view('Servicer::job-history-details',['servicer_job' => $servicer_job,'vehicle_device' => $vehicle_device]);
     }
+
 
 
 

@@ -15,13 +15,16 @@ class DailyKMReportExport implements FromView
 {
     protected $dailykmReportExport;
     
-	public function __construct($client_id,$vehicle_id,$date)
+	public function __construct($client_id,$vehicle_id,$from_date,$to_date)
     {  
+     
+    
         $single_vehicle_gps_ids         =   []; 
-        $search_date                    =   date("Y-m-d", strtotime($date)); 
+        $from_date                      =     $from_date;
+        $to_date                        =     $to_date;
         if($vehicle_id != 0)
         {
-            $vehicle_gps_ids            =   (new VehicleGps())->getGpsDetailsBasedOnVehicleWithSingleDate($vehicle_id,$search_date); 
+            $vehicle_gps_ids            =   (new VehicleGps())->getGpsDetailsBasedOnVehicleWithDates($vehicle_id,$from_date,$to_date); 
         }
         else
         {
@@ -31,13 +34,13 @@ class DailyKMReportExport implements FromView
             {
                 $vehicle_ids[]          =   $each_vehicle->id; 
             }  
-            $vehicle_gps_ids            =   (new VehicleGps())->getGpsDetailsBasedOnVehiclesWithSingleDate($vehicle_ids,$search_date);
+            $vehicle_gps_ids            =   (new VehicleGps())->getGpsDetailsBasedOnVehiclesWithDates($vehicle_ids,$from_date,$to_date);
         }
         foreach($vehicle_gps_ids as $vehicle_gps_id)
         {
             $single_vehicle_gps_ids[]   =   $vehicle_gps_id->gps_id;
         }
-        $this->dailykmReportExport      =   (new DailyKm())->getDailyKmBasedOnDateAndGps($single_vehicle_gps_ids,$search_date);          
+        $this->dailykmReportExport      =   (new DailyKm())->getDailyKmBasedOnFromDateAndToDateGps($single_vehicle_gps_ids,$from_date,$to_date);          
     }
     public function view(): View
 	{

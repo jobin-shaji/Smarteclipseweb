@@ -298,6 +298,7 @@ Assign Servicer
         @endif 
     </div> 
 @endif
+
 <!-- <div class="form-group row" style="float:none!important">
 <label for="fname" class="col-md-6 text-right control-label col-form-label">Comment</label>
 <div class="form-group has-feedback">
@@ -310,6 +311,7 @@ Assign Servicer
 </span>
 @endif
 </div> -->
+
 <div class="row">
 <div class="col-md-3 ">
 <button type="submit" class="btn btn-primary btn-md form-btn ">Next</button>

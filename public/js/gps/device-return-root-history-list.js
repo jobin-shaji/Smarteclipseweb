@@ -16,7 +16,14 @@ function acceptDeviceReturn(device_return_id){
               'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
             },
             success:function(res) {
-                toastr.success('Device return request Accepted successfully');
+                if(res.status == 1)
+                {
+                    toastr.success('Device return request Accepted successfully');
+                }
+                else
+                {
+                    toastr.error('Device return request is already accepted');
+                }
                 setTimeout(function() {
                     document.location.reload()
                 }, 2000);

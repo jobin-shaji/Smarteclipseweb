@@ -46,4 +46,9 @@ class Complaint extends Model
       return $this->hasOne('App\Modules\Vehicle\Models\Vehicle','gps_id','gps_id')->withTrashed();
   }
 
+  public function vehicleGps()
+  {
+    return $this->hasOne('App\Modules\Vehicle\Models\VehicleGps','gps_id','gps_id');
+  }
+
 }

@@ -30,7 +30,7 @@
                   <b>Ticket Code:</b> {{ $complaint->ticket->code}}
                 </li>
                  <li class="list-group-item">
-                  <b>Vehicle Number:</b> {{ $complaint->vehicle->register_number}}
+                  <b>Vehicle Number:</b> {{ $complaint->vehicleGps->vehicle->register_number}}
                  </li>   
                  <li class="list-group-item">
                   <b>Serial Number:</b> {{ $complaint->gps->serial_no}}

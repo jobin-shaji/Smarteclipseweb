@@ -21,4 +21,9 @@ class VehicleGeofence extends Model
 	 public function vehicleGeofence(){
 	 return $this->hasOne('App\Modules\Geofence\Models\Geofence','id','geofence_id')->withTrashed();
 	}
+
+	public function getGeofenceAssignedVehicleDatas($vehicle_id)
+	{
+		return self::where('vehicle_id',$vehicle_id)->delete();
+	}
 }

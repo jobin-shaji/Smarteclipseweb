@@ -39,7 +39,7 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
               <div class="col-md-6">
                 <?php
                 $encript = Crypt::encrypt($servicer_job->id);
-                $vehicle_id = Crypt::encrypt($vehicle_device->vehicle->id);
+                // $vehicle_id = Crypt::encrypt($vehicle_device->vehicle->id);
                 ?>
                 <a href="{{route('job.complete.certificate.download',$encript)}}">
                   <button class="btn btn-xs"><i class='fa fa-download'></i>Download Certificate</button>
@@ -127,14 +127,14 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                       @endif
                     </div> -->
                     <div class="form-group row" style="float:none!important">
-                      <label for="fname" class="col-md-6 text-right control-label col-form-label">Registration Number</label>
+                      <label for="fname" class="col-md-6 text-right control-label col-form-label">Comment</label>
                       <div class="form-group has-feedback">
-                        <input type="text" class=" form-control {{ $errors->has('job_completed_date') ? ' has-error' : '' }}" name="job_completed_date" value="{{$vehicle_device->vehicle->register_number}} " required readonly="">
+                        <input type="text" class=" form-control {{ $errors->has('comment') ? ' has-error' : '' }}" name="comment" value="{{$servicer_job->comment}}" required readonly="">
                         <span class="glyphicon glyphicon-phone form-control-feedback"></span>
                       </div>
-                      @if ($errors->has('job_completed_date'))
+                      @if ($errors->has('comment'))
                       <span class="help-block">
-                        <strong class="error-text">{{ $errors->first('job_completed_date') }}</strong>
+                        <strong class="error-text">{{ $errors->first('comment') }}</strong>
                       </span>
                       @endif
                     </div>

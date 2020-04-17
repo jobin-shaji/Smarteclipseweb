@@ -307,7 +307,7 @@
     $(".confirm-btn").click(function()
     {
       if( $('#role_type').val() == 'trader' ){
-        window.location.href ="/sub-dealer-assign-servicer";
+        window.location.href ="/gps-transfer-trader-end-user/create";
       }else{
         window.location.href ="/gps-transfer-sub-dealer/create";
       }
