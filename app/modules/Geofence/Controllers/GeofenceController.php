@@ -13,9 +13,26 @@ use App\Modules\Client\Models\Client;
 use App\Modules\Gps\Models\Gps;
 use App\Modules\Ota\Models\OtaResponse;
 use Illuminate\Support\Facades\Crypt;
+use App\Http\Traits\MqttTrait;
 use DataTables;
 
 class GeofenceController extends Controller {
+
+    /**
+     * 
+     * 
+     *
+     */
+    use MqttTrait;
+    /**
+     * 
+     * 
+     *
+     */
+    public function __construct()
+    {
+        $this->topic    = 'cmd';
+    }
 
     //Display all etms
     public function create(Request $request)
@@ -363,8 +380,13 @@ class GeofenceController extends Controller {
         $geofence_response  =   (new OtaResponse())->saveCommandsToDevice($vehicle->gps_id,$response_string);
         if($geofence_response)
         {
-            $gps_details        =   (new Gps())->getGpsDetails($vehicle->gps_id);
-            (new OtaResponse())->writeCommandToDevice($gps_details->imei,$response_string);
+            $gps_details                        =   (new Gps())->getGpsDetails($vehicle->gps_id);
+            $is_command_write_to_device         =   (new OtaResponse())->writeCommandToDevice($gps_details->imei,$response_string);
+            if($is_command_write_to_device)
+            {
+                $this->topic                    =   $this->topic.'/'.$gps_details->imei;
+                $is_mqtt_publish                =   $this->mqttPublish($this->topic, $response_string);
+            }
         }  
         return $geofence_response;
     }

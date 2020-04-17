@@ -26,9 +26,26 @@ use DataTables;
 use Illuminate\Support\Facades\Hash;
 use Intervention\Image\ImageManagerStatic as Image;
 use App\Jobs\MailJob;
+use App\Http\Traits\MqttTrait;
 
 
 class ClientController extends Controller {
+
+    /**
+     * 
+     * 
+     *
+     */
+    use MqttTrait;
+    /**
+     * 
+     * 
+     *
+     */
+    public function __construct()
+    {
+        $this->topic    = 'cmd';
+    }
 
     //employee creation page
     public function create()
@@ -705,8 +722,13 @@ class ClientController extends Controller {
             $geofence_response  =   (new OtaResponse())->saveCommandsToDevice($vehicle->gps_id,$response_string);  
             if($geofence_response)
             {
-                $gps_details        =   (new Gps())->getGpsDetails($vehicle->gps_id);
-                (new OtaResponse())->writeCommandToDevice($gps_details->imei,$response_string);
+                $gps_details                    =   (new Gps())->getGpsDetails($vehicle->gps_id);
+                $is_command_write_to_device     =   (new OtaResponse())->writeCommandToDevice($gps_details->imei,$response_string);
+                if($is_command_write_to_device)
+                {
+                    $this->topic                    =   $this->topic.'/'.$gps_details->imei;
+                    $is_mqtt_publish                =   $this->mqttPublish($this->topic, $response_string);
+                }
             }
         }
 
@@ -763,8 +785,13 @@ class ClientController extends Controller {
             $geofence_response  =   (new OtaResponse())->saveCommandsToDevice($vehicle->gps_id,$response_string);  
             if($geofence_response)
             {
-                $gps_details        =   (new Gps())->getGpsDetails($vehicle->gps_id);
-                (new OtaResponse())->writeCommandToDevice($gps_details->imei,$response_string);
+                $gps_details                        =   (new Gps())->getGpsDetails($vehicle->gps_id);
+                $is_command_write_to_device         =   (new OtaResponse())->writeCommandToDevice($gps_details->imei,$response_string);
+                if($is_command_write_to_device)
+                {
+                    $this->topic                    =   $this->topic.'/'.$gps_details->imei;
+                    $is_mqtt_publish                =   $this->mqttPublish($this->topic, $response_string);
+                }
             }
         }
 
