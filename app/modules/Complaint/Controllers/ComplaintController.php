@@ -424,7 +424,7 @@ class ComplaintController extends Controller {
         $gps = Gps::select('id')->where('imei', $request->imei)->first();
         $client = Client::select('id','user_id')->where('id', $complaint->client_id)->first();
         $role  = User::select('role')->where('id', $client->user_id)->first();
-        if($role == null)
+        if($role == null || $role == '')
         {
             $role = 1;
         }
@@ -438,7 +438,7 @@ class ComplaintController extends Controller {
             'start_code' => str_pad(mt_rand(100000, 999999), 6, '0', STR_PAD_LEFT),
             'user_id' => $user_id,
             'description' => $request->description,
-            'role' => $role->role,
+            'role' => $request->plan,
             'job_date' => $job_date,
             'gps_id' => $gps->id,
             'status' => 1, //ASSIGN STATUS

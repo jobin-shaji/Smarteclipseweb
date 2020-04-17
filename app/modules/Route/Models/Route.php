@@ -1,13 +1,13 @@
 <?php
 
 namespace App\Modules\Route\Models;
-
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 // use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Route extends Model
 {
-    // use SoftDeletes;
+    use SoftDeletes;
 
     // route fillable data
 	protected $fillable = [

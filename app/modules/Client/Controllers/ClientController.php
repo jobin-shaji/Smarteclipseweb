@@ -3,6 +3,7 @@ namespace App\Modules\Client\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Modules\Client\Models\Client;
+use App\Modules\Gps\Models\Gps;
 use App\Modules\Client\Models\ClientAlertPoint;
 use App\Modules\SubDealer\Models\SubDealer;
 use App\Modules\Geofence\Models\Geofence;
@@ -710,7 +711,8 @@ class ClientController extends Controller {
         foreach ($geofences as $geofence) {
             $vehicle_geofences=VehicleGeofence::select('geofence_id')->where('geofence_id',$geofence->id)->withTrashed()->get();
             foreach ($vehicle_geofences as $vehicle_geofence) {
-                $vehicle_geofence->forceDelete();
+                // $vehicle_geofence->forceDelete();
+                VehicleGeofence::where('geofence_id',$geofence->id)->forceDelete();
             }
             $geofence_cleared = $geofence->forceDelete();
         }

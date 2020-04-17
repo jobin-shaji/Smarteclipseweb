@@ -56,7 +56,8 @@
                             <select class="form-control select2" data-live-search="true" title="Select Alert Type" id="alert_type" name="alert_type">
                               <option value="">Select Alert Type</option>
                               <option value="1">Entry</option> 
-                              <option value="2">Exit</option> 
+                              <option value="2">Exit</option>
+                              <option value="3">Entry & Exit</option>
                             </select>
                           </div>
                           </div>
