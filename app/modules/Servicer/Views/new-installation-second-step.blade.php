@@ -288,18 +288,7 @@ Assign Servicer
         @endif 
     </div> 
 @endif
-<div class="form-group row" style="float:none!important">
-<label for="fname" class="col-md-6 text-right control-label col-form-label">Comment</label>
-<div class="form-group has-feedback">
-<textarea name="comment" id="comment" value="" class=" form-control {{ $errors->has('comment') ? ' has-error' : '' }}" required></textarea>
-<span class="glyphicon glyphicon-phone form-control-feedback"></span>
-</div>
-@if ($errors->has('comment'))
-<span class="help-block">
-<strong class="error-text">{{ $errors->first('comment') }}</strong>
-</span>
-@endif
-</div>
+
 <div class="row">
 <div class="col-md-3 ">
 <button type="submit" class="btn btn-primary btn-md form-btn ">Next</button>
