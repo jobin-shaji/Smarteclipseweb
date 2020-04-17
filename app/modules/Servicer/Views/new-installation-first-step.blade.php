@@ -78,11 +78,6 @@ Assign Servicer
 <script>
 
 $(document).ready(function() {
-   
-
-
-
-
     $("#checkboxForm").on("click", function(){
      
       var checkedboxes = $('input[name="checkbox_first_installation[]"]:checked');
@@ -92,9 +87,9 @@ $(document).ready(function() {
       if(checkedboxeslength < totalCheckboxes)
       {
        
-        alert("please select all checkboxes there are unchecked checkboxes"+'  '+pendingCheckoxes);
+        alert("please select all checkboxes there are unchecked checkboxes of"+'  '+pendingCheckoxes);
       }else
-      { alert("all checked");
+      { 
        return true;
     }
 
