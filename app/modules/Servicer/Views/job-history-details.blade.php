@@ -114,7 +114,7 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                       </span>
                       @endif
                     </div>
-                    <div class="form-group row" style="float:none!important">
+                    <!-- <div class="form-group row" style="float:none!important">
                       <label for="fname" class="col-md-6 text-right control-label col-form-label">Vehicle Name</label>
                       <div class="form-group has-feedback">
                         <input type="text" class=" form-control {{ $errors->has('job_completed_date') ? ' has-error' : '' }}" name="job_completed_date" value="{{$vehicle_device->vehicle->name}} " required readonly="">
@@ -125,7 +125,7 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                         <strong class="error-text">{{ $errors->first('job_completed_date') }}</strong>
                       </span>
                       @endif
-                    </div>
+                    </div> -->
                     <div class="form-group row" style="float:none!important">
                       <label for="fname" class="col-md-6 text-right control-label col-form-label">Registration Number</label>
                       <div class="form-group has-feedback">
