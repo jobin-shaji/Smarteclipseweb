@@ -50,7 +50,7 @@ Assign Servicer
 <h4 class="panel-title">Installation check list</h4>
 </div>
 <div class="panel-body">
-<form  method="POST" action="{{route('checkbox.installation.save.p',$pass_servicer_jobid)}}">
+<form  method="POST"   action="{{route('checkbox.installation.save.p',$pass_servicer_jobid)}}">
    {{csrf_field()}}
  
  <div class="row">
@@ -63,6 +63,7 @@ Assign Servicer
         <input type="checkbox" name="checkbox_first_installation[]" value="{{$list['id']}}" id="checkbox{{$list['id']}}"<?php if($list['checked']== true){ echo "checked"; }?>
         <?php if($list['required']== true)
         {  echo 'required'; }?> />
+
        <label for="checkbox{{$list['id']}}">{{$list['label']}}</label>
       
 
@@ -71,7 +72,9 @@ Assign Servicer
   </div>
    <?php } ?>
  <br>
+
  <button type="submit"  id="checkboxForm"  class="btn btn-primary btn-md form-btn pull-right">Save</button>
+
   </div>
   </form>
  </div>
@@ -82,26 +85,22 @@ Assign Servicer
 @endsection
 @section('script')
 <script>
-  $(document).ready(function() {
-    $("#checkboxForm").on("click", function(){
-     
-   
-      var value = document.getElementsByName("checkbox_first_installation[]").required=true; 
+
+  // $(document).ready(function() {
+  //    $("#checkboxForm").on("click", function(){
+  //      var value = document.getElementsByName("checkbox_first_installation[]").required=true; 
     
-      if (value==true)
-      {  
-     alert(document.getElementsByName("checkbox_first_installation[]").value);
-      return false;
-      }
-    else
-    {
-      
-     alert("entered");
-      return false;
-    }
-});
+  //     if (value==true)
+  //     {  
+  //       return false;
+  //     }
+  //      else
+  //      {
+  //      return false;
+  //     }
+  //   });
   
-  });
+  //   });
 // $(document).ready(function() {
 //     $("#checkboxForm").on("click", function(){
      
@@ -121,6 +120,9 @@ Assign Servicer
 
 // }); 
 // });
+
+
+
 </script>
 <link rel="stylesheet" href="{{asset('css/installation-step-servicer.css')}}">
 <script src="{{asset('js/gps/new-installation-step.js')}}"></script>

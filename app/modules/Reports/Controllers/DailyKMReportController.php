@@ -20,14 +20,18 @@ class DailyKMReportController extends Controller
     }  
     public function dailyKMReportList(Request $request)
     {
-        $single_vehicle_gps_ids         =   []; 
-        $client_id                      =   \Auth::user()->client->id;
-        $date                           =   $request->date;
-        $search_date                    =   date("Y-m-d", strtotime($date));
-        $vehicle_id                     =   $request->vehicle;  
+        $single_vehicle_gps_ids         =    []; 
+        $client_id                      =    \Auth::user()->client->id;
+        $date                           =    $request->date;
+        $from_date                      =    $request->from_date;
+        $to_date                        =    $request->to_date;
+        $vehicle_id                     =    $request->vehicle;  
+        
         if($vehicle_id != 0)
         {
-            $vehicle_gps_ids            =   (new VehicleGps())->getGpsDetailsBasedOnVehicleWithSingleDate($vehicle_id,$search_date); 
+
+            $vehicle_gps_ids            =   (new VehicleGps())->getGpsDetailsBasedOnVehicleWithDates($vehicle_id,$from_date,$to_date); 
+
         }
         else
         {
@@ -36,14 +40,18 @@ class DailyKMReportController extends Controller
             foreach($vehicle_details as $each_vehicle)
             {
                 $vehicle_ids[]          =   $each_vehicle->id; 
-            }  
-            $vehicle_gps_ids            =   (new VehicleGps())->getGpsDetailsBasedOnVehiclesWithSingleDate($vehicle_ids,$search_date);
+            }
+
+            $vehicle_gps_ids            =   (new VehicleGps())->getGpsDetailsBasedOnVehiclesWithDates($vehicle_ids,$from_date,$to_date);
+            
         }
         foreach($vehicle_gps_ids as $vehicle_gps_id)
         {
             $single_vehicle_gps_ids[]   =   $vehicle_gps_id->gps_id;
         }
-        $dailykm_report                 =   (new DailyKm())->getDailyKmBasedOnDateAndGps($single_vehicle_gps_ids,$search_date);    
+
+        $dailykm_report                 =   (new DailyKm())->getDailyKmBasedOnFromDateAndToDateGps($single_vehicle_gps_ids,$from_date,$to_date);   
+
         return DataTables::of($dailykm_report)
         ->addIndexColumn()        
         ->addColumn('totalkm', function ($dailykm_report) {
@@ -57,7 +65,7 @@ class DailyKMReportController extends Controller
     {
         ob_end_clean(); 
         ob_start();
-        return Excel::download(new DailyKMReportExport($request->id,$request->vehicle_id,$request->date), 'Daily-km-report.xlsx');
+        return Excel::download(new DailyKMReportExport($request->id,$request->vehicle_id,$request->from_date,$request->to_date), 'Daily-km-report.xlsx');
     }
    
 }

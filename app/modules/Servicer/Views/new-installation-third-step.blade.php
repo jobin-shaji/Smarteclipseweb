@@ -89,12 +89,14 @@ $(document).ready(function() {
       var checkedboxes = $('input[name="commandcheckbox[]"]:checked');
       var checkedboxeslength=  checkedboxes.length;
       var totalCheckboxes = $('input[name="commandcheckbox[]"]').length;
+
       var pendingCheckboxes=totalCheckboxes-checkedboxeslength;
       if(checkedboxeslength < totalCheckboxes)
       {
        
         alert("please select all commands there are unchecked commands of "+'  '+pendingCheckboxes);
         return false;
+
       }else
       { 
        return true;

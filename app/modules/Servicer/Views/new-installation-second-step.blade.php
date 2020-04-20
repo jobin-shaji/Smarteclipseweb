@@ -224,6 +224,16 @@ Assign Servicer
     </span>
     @endif
     </div>
+
+
+     <div class="form-group row" style="float:none!important">
+                        <label for="fname" class="col-sm-3 text-right control-label col-form-label" id="expiry_heading" > Rc Expiry Date</label> 
+                          <div class="form-group has-feedback">
+                            <input type="text" class="date_expiry form-control {{ $errors->has('expiry_date') ? ' has-error' : '' }}" placeholder="Choose Expiry Date" name="expiry_date" id="expiry_date"  value="{{ old('expiry_date') }}" > 
+                          </div>
+                          <span class="error_expiry_date" style='color:red;'></span>
+                      </div>
+
     <div class="form-group row" style="float:none!important">
     <label for="fname" class="col-sm-5 text-right control-label col-form-label">Vehicle Type</label>
     <div class="form-group has-feedback">
@@ -288,7 +298,8 @@ Assign Servicer
         @endif 
     </div> 
 @endif
-<div class="form-group row" style="float:none!important">
+
+<!-- <div class="form-group row" style="float:none!important">
 <label for="fname" class="col-md-6 text-right control-label col-form-label">Comment</label>
 <div class="form-group has-feedback">
 <textarea name="comment" id="comment" value="" class=" form-control {{ $errors->has('comment') ? ' has-error' : '' }}" required></textarea>
@@ -299,7 +310,8 @@ Assign Servicer
 <strong class="error-text">{{ $errors->first('comment') }}</strong>
 </span>
 @endif
-</div>
+</div> -->
+
 <div class="row">
 <div class="col-md-3 ">
 <button type="submit" class="btn btn-primary btn-md form-btn ">Next</button>

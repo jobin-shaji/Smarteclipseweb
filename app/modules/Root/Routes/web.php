@@ -11,6 +11,11 @@ Route::group(['middleware' => ['web','auth','role:root'] , 'namespace' => 'App\M
   Route::get('/root/{id}/change-password','RootController@changeRootPassword')->name('root.change.password');
   Route::post('/root/{id}/update-password','RootController@updateRootPassword')->name('root.update.password.p');
 
+  Route::get('/sla','RootController@slaListPage')->name('root.sla.list');
+
+  Route::get('/sla-edit/{id}','RootController@slaEditPage')->name('root.sla.edit');
+
+  Route::post('/sla-edit','RootController@slaUpdate')->name('root.sla.update');
 
   });
 
