@@ -97,6 +97,7 @@ $(document).ready(function() {
         alert("please select all commands there are unchecked commands of "+'  '+pendingCheckboxes);
         return false;
 
+
       }else
       { 
        return true;

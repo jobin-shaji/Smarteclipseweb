@@ -58,12 +58,15 @@ Assign Servicer
     <div class="col-lg-6">
        <div class="funkyradio">
        <div class="funkyradio-success">
+
          <?php if($list['required']== true)
         {  echo '<span class="required_span" style="display:none" id="required_id_'.$list["id"].'"> This field is required</span>'; }?> 
         <input type="checkbox" name="checkbox_first_installation[]" value="{{$list['id']}}" id="checkbox{{$list['id']}}"<?php if($list['checked']== true){ echo "checked"; }?>
         <?php if($list['required']== true)
         {  echo 'required'; }?> />
 
+
+        
        <label for="checkbox{{$list['id']}}">{{$list['label']}}</label>
       
 
@@ -73,7 +76,7 @@ Assign Servicer
    <?php } ?>
  <br>
 
- <button type="submit"  id="checkboxForm"  class="btn btn-primary btn-md form-btn pull-right">Save</button>
+ <button type="submit"   id="checkboxForm"  class="btn btn-primary btn-md form-btn pull-right">Save</button>
 
   </div>
   </form>
@@ -85,6 +88,7 @@ Assign Servicer
 @endsection
 @section('script')
 <script>
+
 
   // $(document).ready(function() {
   //    $("#checkboxForm").on("click", function(){
@@ -122,6 +126,25 @@ Assign Servicer
 // });
 
 
+
+
+$(document).ready(function() {
+    $("#checkboxForm").on("click", function(){
+     
+      var checkedboxes = $('input[name="checkbox_first_installation[]"]:checked');
+      var checkedboxeslength=  checkedboxes.length;
+      var totalCheckboxes = $('input[name="checkbox_first_installation[]"]').length;
+      var pendingCheckoxes=totalCheckboxes-checkedboxeslength;
+      if(checkedboxeslength < totalCheckboxes)
+      {
+       alert("please select all checkboxes there are unchecked checkboxes of"+'  '+pendingCheckoxes);
+        return false;
+      }else
+      { 
+       return true;
+      }
+   }); 
+});
 
 </script>
 <link rel="stylesheet" href="{{asset('css/installation-step-servicer.css')}}">
