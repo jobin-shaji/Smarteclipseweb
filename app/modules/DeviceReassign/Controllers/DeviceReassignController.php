@@ -143,9 +143,8 @@ class DeviceReassignController extends Controller
                 {
                     $vehicles_gps = VehicleGps::select('id','vehicle_id','gps_id','servicer_job_id')->where('vehicle_id',$vehicle)->orderBy('gps_fitted_on', 'desc')->first();
                     $vehicles_gps->delete();
-                    $vehiclegps_data = VehicleGps::select('id','vehicle_id','gps_id','servicer_job_id')->where('vehicle_id',$vehicle)->orderBy('gps_fitted_on', 'desc')->get();
-                    DB::table('vehicles')->where('id', $vehiclegps_data->vehicle_id)
-                    ->update(['gps_id' => $vehiclegps_data->gps_id,'servicer_job_id' => $vehiclegps_data->servicer_job_id]);
+                    DB::table('vehicles')->where('id', $vehicles_gps->vehicle_id)
+                    ->update(['gps_id' => $vehicles_gps->gps_id,'servicer_job_id' => $vehicles_gps->servicer_job_id,'is_returned'=>0,'is_reinstallation_job_created'=>1]);
                 }
                 return response()->json([
                     'status' => 1,
@@ -195,9 +194,8 @@ class DeviceReassignController extends Controller
                 {
                     $vehicles_gps = VehicleGps::select('id','vehicle_id','gps_id','servicer_job_id')->where('vehicle_id',$vehicle)->orderBy('gps_fitted_on', 'desc')->first();
                     $vehicles_gps->delete();
-                    $vehiclegps_data = VehicleGps::select('id','vehicle_id','gps_id','servicer_job_id')->where('vehicle_id',$vehicle)->orderBy('gps_fitted_on', 'desc')->get();
-                    DB::table('vehicles')->where('id', $vehiclegps_data->vehicle_id)
-                    ->update(['gps_id' => $vehiclegps_data->gps_id,'servicer_job_id' => $vehiclegps_data->servicer_job_id]);
+                    DB::table('vehicles')->where('id', $vehicles_gps->vehicle_id)
+                    ->update(['gps_id' => $vehicles_gps->gps_id,'servicer_job_id' => $vehicles_gps->servicer_job_id,'is_returned'=>0,'is_reinstallation_job_created'=>1]);
                 }
                 return response()->json([
                     'status' => 1,
