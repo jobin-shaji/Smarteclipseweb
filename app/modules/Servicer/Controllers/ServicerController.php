@@ -996,7 +996,7 @@ public function getDeviceTestAddPage(Request $request)
 {
 
            $servicer_jobid = Crypt::decrypt($request->id);
-
+          
            $device_test_installation_list = (new ServicerJob())->getInstallationJob($servicer_jobid);
 
             $stage=$device_test_installation_list->job_status;
@@ -1361,7 +1361,7 @@ public function serviceJobDetails(Request $request)
             // $servicer_job->job_complete_date = $job_completed_date;
             $driver_id=$request->driver;
             // $driver = Driver::find($driver_id);
-            $servicer_job->comment      =   $request->comment;
+            // $servicer_job->comment      =   $request->comment;
             $servicer_job->status       =   2;
             $servicer_job->job_status   =   2;
             $is_service_job_update      =   $servicer_job->save();
@@ -1460,7 +1460,7 @@ public function serviceJobDetails(Request $request)
             $vehicle_id                 =   $request->vehicle_id;
             $gps_id                     =   $request->gps_id;
             $vehicle_details            =   (new Vehicle())->getSingleVehicleDetailsBasedOnVehicleId($vehicle_id);
-            $servicer_job->comment      =   $request->comment;
+            // $servicer_job->comment      =   $request->comment;
             $servicer_job->status       =   2;
             $servicer_job->job_status   =   2;
             $is_service_job_update      =   $servicer_job->save();
@@ -2522,7 +2522,7 @@ public function servicerProfileUpdateRules($servicer)
             'installation_photo' => 'required|mimes:jpeg,png|max:4096',
             'activation_photo' => 'required|mimes:jpeg,png|max:4096',
             'vehicle_photo' => 'required|mimes:jpeg,png|max:4096',
-            'comment' => 'required',
+            // 'comment' => 'required',
             // 'driver'=>'required',
             'model'=>'required',
             'make'=>'required'
@@ -2540,7 +2540,7 @@ public function servicerProfileUpdateRules($servicer)
             'gps_id' => 'required',
             'client_id' => 'required',
             'servicer_job_id' => 'required',
-            'comment' => 'required',
+            // 'comment' => 'required',
         ];
         return  $rules;
     }

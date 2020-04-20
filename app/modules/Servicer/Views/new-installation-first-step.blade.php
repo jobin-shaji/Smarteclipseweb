@@ -65,7 +65,7 @@ Assign Servicer
   </div>
    <?php } ?>
  <br>
- <button type="submit" class="btn btn-primary btn-md form-btn pull-right">Save</button>
+ <button type="submit"  id="checkboxForm"  class="btn btn-primary btn-md form-btn pull-right">Save</button>
   </div>
   </form>
  </div>
@@ -75,6 +75,27 @@ Assign Servicer
 </div></div>
 @endsection
 @section('script')
+<script>
+$(document).ready(function() {
+    $("#checkboxForm").on("click", function(){
+     
+      var checkedboxes = $('input[name="checkbox_first_installation[]"]:checked');
+      var checkedboxeslength=  checkedboxes.length;
+      var totalCheckboxes = $('input[name="checkbox_first_installation[]"]').length;
+      var pendingCheckboxes=totalCheckboxes-checkedboxeslength;
+      if(checkedboxeslength < totalCheckboxes)
+      {
+       
+        alert("please select all checkboxes there are unchecked checkboxes of"+'  '+pendingCheckboxes);
+        return false;
+      }else
+      { 
+       return true;
+    }
+
+}); 
+});
+</script>
 <link rel="stylesheet" href="{{asset('css/installation-step-servicer.css')}}">
 <script src="{{asset('js/gps/new-installation-step.js')}}"></script>
 <script src="{{asset('js/gps/servicer-driver-create.js')}}"></script>
