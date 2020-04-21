@@ -1344,6 +1344,7 @@ public function serviceJobDetails(Request $request)
     {
      
         $servicer_jobid = Crypt::decrypt($request->id);
+
         $pass_servicer_jobid=Crypt::encrypt($servicer_jobid);
         $servicer_job = ServicerJob::find($servicer_jobid);
         if( $servicer_job->job_type == 1 )
@@ -1399,10 +1400,11 @@ public function serviceJobDetails(Request $request)
                         'from_date' =>  date('Y-m-d')
                     ]);
                 }
-                
                 if($vehicle_create)
                 {
+
                     (new VehicleGps())->createNewVehicleGpsLog($vehicle_create->id,$gps_id,$servicer_jobid);
+
                     $client                         =   Client::find($client_id);
                     $client->latest_vehicle_updates =   date('Y-m-d H:i:s');
                     $client->save();
@@ -1410,7 +1412,11 @@ public function serviceJobDetails(Request $request)
                     $installation_photo             =   $request->installation_photo;
                     $activation_photo               =   $request->activation_photo;
                     $vehicle_photo                  =   $request->vehicle_photo;
+                    $passed_expiry_date                   =   $request->expiry_date;
 
+                    $expiry_date                    =   date("Y-m-d",strtotime($passed_expiry_date));
+                    
+                  
                     $getFileExt                     =   $file->getClientOriginalExtension();
                     $uploadedFile                   =   'rcbook'.time().'.'.$getFileExt;
                     //Move Uploaded File
@@ -1428,13 +1434,14 @@ public function serviceJobDetails(Request $request)
                     $getVehicleFileExt              =   $vehicle_photo->getClientOriginalExtension();
                     $uploadedVehicleFile            =   'vehicle_photo'.time().'.'.$getVehicleFileExt;
                     $vehicle_photo->move($destinationPath,$uploadedVehicleFile);
-
-                    $documents = Document::create([
+                   
+                      $documents = Document::create([
                         'vehicle_id'        =>  $vehicle_create->id,
                         'document_type_id'  =>  1,
-                        'expiry_date'       =>  null,
+                        'expiry_date'       => $expiry_date,
                         'path'              =>  $uploadedFile,
                     ]);
+                   
                     $installation_documents = Document::create([
                         'vehicle_id'        =>  $vehicle_create->id,
                         'document_type_id'  =>  6,
@@ -1812,15 +1819,19 @@ public function serviceJobDetails(Request $request)
         // dd($decrypted);
         $servicer_job       =   ServicerJob::withTrashed()->where('id', $decrypted)->first();
         $client_id          =   $servicer_job->client_id;
+ 
 
         $vehicle_device     =   (new VehicleGps())->getVehicleGpsLogBasedOnGps($servicer_job->gps_id);
         
+
+
         if($servicer_job == null){
            return view('Servicer::404');
         }
         
         return view('Servicer::job-history-details',['servicer_job' => $servicer_job,'vehicle_device' => $vehicle_device]);
     }
+
 
 
 

@@ -107,7 +107,7 @@ Assign Servicer
 <ul class="collection">
 <li class="collection-item avatar email-unread">
 <label>
-<input type="checkbox"<?php if($device_test['test_status']==1){ echo "checked";}?>/> 
+<input disabled type="checkbox"<?php if($device_test['test_status']==1){ echo "checked";}?>/> 
 <span></span>
 </label> 
 

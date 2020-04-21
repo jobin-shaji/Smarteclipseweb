@@ -28,8 +28,8 @@
                   <tr>
                     <th>SL.No</th>
                     <th>Code</th>
-                    <th>imei </th> 
-                    <th>Serial No</th>
+                    <th>IMEI </th> 
+                    <th>Serial Number</th>
                     <th>Returned Service Engineer</th>
                     <th>Sub Dealer</th>
                     <th>Dealer</th>

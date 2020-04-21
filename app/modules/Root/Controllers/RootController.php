@@ -11,6 +11,7 @@ use App\Jobs\MailJob;
 use DataTables;
 use DB;
 use App\Modules\User\Models\User;
+use App\Modules\Root\Models\ServiceLevelAgreement as SLA;
 
 class RootController extends Controller {
 
@@ -101,6 +102,40 @@ class RootController extends Controller {
         $request->session()->flash('message','Password updated successfully');
         $request->session()->flash('alert-class','alert-success');
         return  redirect(route('root.change.password',$did));  
+    }
+
+    public function slaListPage()
+    {
+        $sla = SLA::all();
+        return view('Root::sla_list_page', compact('sla'));
+    }
+
+    public function slaEditPage(Request $request)
+    {
+        $sla = SLA::find(decrypt($request->id));
+        return view('Root::sla_edit', compact('sla'));
+    }
+
+    public function slaUpdate(Request $request)
+    {
+        $rules = $this->sla_update_rules();
+        $this->validate($request,$rules);
+        
+        $sla = SLA::find($request->id);
+        $sla->time_in_minutes = $request->time*60;
+        $sla->save();
+
+        $request->session()->flash('message','SLA details updated successfully');
+        $request->session()->flash('alert-class','alert-success');
+        return  redirect(route('root.sla.list'));  
+    }
+
+    public function sla_update_rules()
+    {
+        $rules=[
+        'time' => 'required|integer'
+        ];
+        return $rules;
     }
 
     public function updateRootPasswordRule()

@@ -31,9 +31,9 @@
                   <div class="form-group has-feedback form-group-1 mrg-rt-5">
                     <label class="srequired">Vehicle</label>
                     <select class="form-control select2" name="gps_id" data-live-search="true" title="Select GPS" required>
-                      <option value="" selected disabled>Vehicle</option>
-                     @foreach($devices as $vehicle)
-                      <option value="{{$vehicle->gps_id}}">{{$vehicle->register_number}} -({{$vehicle->gps->serial_no}})</option>
+                      <option value="" selected disabled>Select Vehicle</option>
+                      @foreach($devices as $vehicle)
+                      <option value="{{$vehicle->id}}" @if($vehicle->is_returned == 1){{"disabled"}} @endif>{{$vehicle->register_number}}@if($vehicle->is_returned == 1){{" -- Returned"}} @endif</option>
                       @endforeach
                     </select>
                     @if ($errors->has('gps_id'))

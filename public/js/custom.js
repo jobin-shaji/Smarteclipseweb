@@ -1029,6 +1029,27 @@ function downloadTotalKMReport(){
     downloadFile(url,data);
 }
 
+
+function downloadClientDailyKMReport()
+{
+    var url             =   'daily-km-report/export';
+    var vehicle_id      =   $('#vehicle').val();
+    var from_date            =   $('#fromDate').val();
+    var to_date            =   $('#toDate').val();
+   
+    if(to_date){
+        var data = {
+        id : $('meta[name = "client"]').attr('content'),'vehicle_id':vehicle_id,'from_date':from_date,
+         'to_date':to_date
+        };
+        downloadFile(url,data);
+    }else{
+        var data = {
+        id : $('meta[name = "client"]').attr('content'),'vehicle_id':vehicle_id
+        };
+        downloadFile(url,data);
+    }
+}
 function downloadDailyKMReport()
 {
     var url             =   'daily-km-report/export';

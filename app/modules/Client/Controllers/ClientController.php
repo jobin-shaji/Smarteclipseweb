@@ -3,6 +3,7 @@ namespace App\Modules\Client\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Modules\Client\Models\Client;
+use App\Modules\Gps\Models\Gps;
 use App\Modules\Client\Models\ClientAlertPoint;
 use App\Modules\SubDealer\Models\SubDealer;
 use App\Modules\Geofence\Models\Geofence;
@@ -26,9 +27,26 @@ use DataTables;
 use Illuminate\Support\Facades\Hash;
 use Intervention\Image\ImageManagerStatic as Image;
 use App\Jobs\MailJob;
+use App\Http\Traits\MqttTrait;
 
 
 class ClientController extends Controller {
+
+    /**
+     * 
+     * 
+     *
+     */
+    use MqttTrait;
+    /**
+     * 
+     * 
+     *
+     */
+    public function __construct()
+    {
+        $this->topic    = 'cmd';
+    }
 
     //employee creation page
     public function create()
@@ -693,7 +711,8 @@ class ClientController extends Controller {
         foreach ($geofences as $geofence) {
             $vehicle_geofences=VehicleGeofence::select('geofence_id')->where('geofence_id',$geofence->id)->withTrashed()->get();
             foreach ($vehicle_geofences as $vehicle_geofence) {
-                $vehicle_geofence->forceDelete();
+                // $vehicle_geofence->forceDelete();
+                VehicleGeofence::where('geofence_id',$geofence->id)->forceDelete();
             }
             $geofence_cleared = $geofence->forceDelete();
         }
@@ -705,8 +724,13 @@ class ClientController extends Controller {
             $geofence_response  =   (new OtaResponse())->saveCommandsToDevice($vehicle->gps_id,$response_string);  
             if($geofence_response)
             {
-                $gps_details        =   (new Gps())->getGpsDetails($vehicle->gps_id);
-                (new OtaResponse())->writeCommandToDevice($gps_details->imei,$response_string);
+                $gps_details                    =   (new Gps())->getGpsDetails($vehicle->gps_id);
+                $is_command_write_to_device     =   (new OtaResponse())->writeCommandToDevice($gps_details->imei,$response_string);
+                if($is_command_write_to_device)
+                {
+                    $this->topic                    =   $this->topic.'/'.$gps_details->imei;
+                    $is_mqtt_publish                =   $this->mqttPublish($this->topic, $response_string);
+                }
             }
         }
 
@@ -763,8 +787,13 @@ class ClientController extends Controller {
             $geofence_response  =   (new OtaResponse())->saveCommandsToDevice($vehicle->gps_id,$response_string);  
             if($geofence_response)
             {
-                $gps_details        =   (new Gps())->getGpsDetails($vehicle->gps_id);
-                (new OtaResponse())->writeCommandToDevice($gps_details->imei,$response_string);
+                $gps_details                        =   (new Gps())->getGpsDetails($vehicle->gps_id);
+                $is_command_write_to_device         =   (new OtaResponse())->writeCommandToDevice($gps_details->imei,$response_string);
+                if($is_command_write_to_device)
+                {
+                    $this->topic                    =   $this->topic.'/'.$gps_details->imei;
+                    $is_mqtt_publish                =   $this->mqttPublish($this->topic, $response_string);
+                }
             }
         }
 
