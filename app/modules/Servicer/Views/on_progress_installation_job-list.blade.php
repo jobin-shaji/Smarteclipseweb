@@ -55,7 +55,7 @@ $key        = (isset($_GET['new_installation_search_key'])) ? $_GET['new_install
               </div>
            </form>
        </div> 
-          <table class="table table-hover table-bordered  table-striped datatable"  style="width:100%;text-align: center" >
+          <table class="table table-hover table-bordered  table-striped datatable"  style="width:90%;margin-left:1.1%!important;text-align: center" >
           <thead class="indigo white-text">
                <tr>
                 <th><b>SL.No</b></th>
@@ -125,12 +125,12 @@ $key        = (isset($_GET['new_installation_search_key'])) ? $_GET['new_install
         </table>
         </div>
         <style>
-        .table td, .table th {
+        /*.table td, .table th {
           padding: 16px 16px;
             vertical-align: top;
             border-top: 0px solid #dee2e6;
              /*overflow: hidden;*/
-        }
+        /*}*/
 
           th {
                 background-color:#778899 ;

@@ -1469,7 +1469,7 @@ public function serviceJobDetails(Request $request)
             $vehicle_id                 =   $request->vehicle_id;
             $gps_id                     =   $request->gps_id;
             $vehicle_details            =   (new Vehicle())->getSingleVehicleDetailsBasedOnVehicleId($vehicle_id);
-            $servicer_job->comment      =   $request->comment;
+            // $servicer_job->comment      =   $request->comment;
             $servicer_job->status       =   2;
             $servicer_job->job_status   =   2;
             $is_service_job_update      =   $servicer_job->save();
@@ -2553,7 +2553,7 @@ public function servicerProfileUpdateRules($servicer)
             'gps_id' => 'required',
             'client_id' => 'required',
             'servicer_job_id' => 'required',
-            'comment' => 'required',
+            // 'comment' => 'required',
         ];
         return  $rules;
     }

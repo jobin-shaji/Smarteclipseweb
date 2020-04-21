@@ -50,7 +50,7 @@ Assign Servicer
 <h4 class="panel-title">Installation check list</h4>
 </div>
 <div class="panel-body">
-<form  method="POST"   action="{{route('checkbox.installation.save.p',$pass_servicer_jobid)}}">
+<form  method="POST"   action="{{route('checkbox.installation.save.p',$pass_servicer_jobid)}}"  id="checkboxForm" novalidate >
    {{csrf_field()}}
  
  <div class="row">
@@ -59,11 +59,15 @@ Assign Servicer
        <div class="funkyradio">
        <div class="funkyradio-success">
 
-         <?php if($list['required']== true)
-        {  echo '<span class="error_message" style="color:red;display:none">This field is Required</span>'; }?> 
+         <?php 
+         if($list['required']== true)
+           {  
+            echo '<span class="error_message" style="color:red;display:none;position: absolute;">This field is Required</span>'; 
+            }
+        ?> 
         <input type="checkbox" name="checkbox_first_installation[]" value="{{$list['id']}}" id="checkbox{{$list['id']}}"<?php if($list['checked']== true){ echo "checked"; }?>
         <?php if($list['required']== true)
-        {  echo 'required'; }?> />
+        {  echo 'required = true'; }?> />
         <label for="checkbox{{$list['id']}}">{{$list['label']}}</label>
       
 
@@ -73,7 +77,7 @@ Assign Servicer
    <?php } ?>
  <br>
 
- <button type="submit"   id="checkboxForm"  class="btn btn-primary btn-md form-btn pull-right">Save</button>
+ <button type="submit"     class="btn btn-primary btn-md form-btn pull-right">Save</button>
 
   </div>
   </form>
@@ -89,14 +93,14 @@ Assign Servicer
 $( "#checkboxForm" ).submit(function( event ) {
   var rqc = 0;
   $(".error_message").css('display','none');  
-  
-  $('input[name="checkbox_first_installation[]"]:notChecked').each(function () {
-      alert("hi");
-         if(this.required == true)
-         {
-            $(this).closest('div').find('span').css('display','block'); 
-            rqc = 1;  
-          }
+    $("input[name='checkbox_first_installation[]']:checkbox").each(function () {
+        if (!this.checked) {
+           if(this.required == true )
+            {
+             $(this).closest('div').find('span').css('display','block'); 
+             rqc = 1;  
+            }
+        }
         });
     if(rqc == 0)
     {
@@ -105,34 +109,9 @@ $( "#checkboxForm" ).submit(function( event ) {
       return false;
     }
   });
-
-// $(document).ready(function() {
-//     $("#checkboxForm").on("click", function(){
-     
-//       var checkedboxes = $('input[name="checkbox_first_installation[]"]:checked');
-//       var checkedboxeslength=  checkedboxes.length;
-//       var totalCheckboxes = $('input[name="checkbox_first_installation[]"]').length;
-//       var pendingCheckboxes=totalCheckboxes-checkedboxeslength;
-//       if(checkedboxeslength < totalCheckboxes)
-//       {
-       
-//         alert("please select all checkboxes there are unchecked checkboxes of"+'  '+pendingCheckoxes);
-//         return false;
-//       }else
-//       { 
-//        return true;
-//     }
-
-// }); 
-// });
-
-
-
-
-
-
 </script>
 <link rel="stylesheet" href="{{asset('css/installation-step-servicer.css')}}">
 <script src="{{asset('js/gps/new-installation-step.js')}}"></script>
 <script src="{{asset('js/gps/servicer-driver-create.js')}}"></script>
 @endsection
+
