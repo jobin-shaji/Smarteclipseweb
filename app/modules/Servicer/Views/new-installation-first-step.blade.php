@@ -60,14 +60,11 @@ Assign Servicer
        <div class="funkyradio-success">
 
          <?php if($list['required']== true)
-        {  echo '<span class="required_span" style="display:none" id="required_id_'.$list["id"].'"> This field is required</span>'; }?> 
+        {  echo '<span class="error_message" style="color:red;display:none">This field is Required</span>'; }?> 
         <input type="checkbox" name="checkbox_first_installation[]" value="{{$list['id']}}" id="checkbox{{$list['id']}}"<?php if($list['checked']== true){ echo "checked"; }?>
         <?php if($list['required']== true)
         {  echo 'required'; }?> />
-
-
-        
-       <label for="checkbox{{$list['id']}}">{{$list['label']}}</label>
+        <label for="checkbox{{$list['id']}}">{{$list['label']}}</label>
       
 
       </div>
@@ -89,22 +86,26 @@ Assign Servicer
 @section('script')
 <script>
 
-
-  // $(document).ready(function() {
-  //    $("#checkboxForm").on("click", function(){
-  //      var value = document.getElementsByName("checkbox_first_installation[]").required=true; 
-    
-  //     if (value==true)
-  //     {  
-  //       return false;
-  //     }
-  //      else
-  //      {
-  //      return false;
-  //     }
-  //   });
+$( "#checkboxForm" ).submit(function( event ) {
+  var rqc = 0;
+  $(".error_message").css('display','none');  
   
-  //   });
+  $('input[name="checkbox_first_installation[]"]:notChecked').each(function () {
+      alert("hi");
+         if(this.required == true)
+         {
+            $(this).closest('div').find('span').css('display','block'); 
+            rqc = 1;  
+          }
+        });
+    if(rqc == 0)
+    {
+    return true;
+    }else{
+      return false;
+    }
+  });
+
 // $(document).ready(function() {
 //     $("#checkboxForm").on("click", function(){
      
@@ -128,23 +129,7 @@ Assign Servicer
 
 
 
-$(document).ready(function() {
-    $("#checkboxForm").on("click", function(){
-     
-      var checkedboxes = $('input[name="checkbox_first_installation[]"]:checked');
-      var checkedboxeslength=  checkedboxes.length;
-      var totalCheckboxes = $('input[name="checkbox_first_installation[]"]').length;
-      var pendingCheckoxes=totalCheckboxes-checkedboxeslength;
-      if(checkedboxeslength < totalCheckboxes)
-      {
-       alert("please select all checkboxes there are unchecked checkboxes of"+'  '+pendingCheckoxes);
-        return false;
-      }else
-      { 
-       return true;
-      }
-   }); 
-});
+
 
 </script>
 <link rel="stylesheet" href="{{asset('css/installation-step-servicer.css')}}">
