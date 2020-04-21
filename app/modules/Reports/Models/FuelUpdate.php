@@ -14,7 +14,9 @@ class FuelUpdate extends Model
     public function vehicleGps(){
 		return $this->hasOne('App\Modules\Vehicle\Models\VehicleGps','gps_id','gps_id');
 	}
-
+     public function kmUpdate(){
+        return $this->hasOne('App\Modules\Vehicle\Models\KmUpdate','gps_id','gps_id');
+    }
     public function getFuelDetailsForReport($gps_ids)
     {
         return self::select(
@@ -23,8 +25,9 @@ class FuelUpdate extends Model
             'percentage',
             'created_at'
         )
-        ->whereIn('gps_id', $gps_ids)
+        ->whereIn('gps_id', $gps_ids)       
         ->orderBy('created_at', 'ASC')
+        ->with('kmUpdate:gps_id,km')
         ->with('vehicleGps.vehicle');
     }
 }

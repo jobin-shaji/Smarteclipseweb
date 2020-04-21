@@ -10,9 +10,15 @@ Route::group(['middleware' => ['web','auth','role:client|school'] , 'namespace' 
 
 	// fuel report
 	Route::get('/fuel-report','FuelReportController@fuelReport')->name('fuel-report');
+	Route::get('/fuel-reports','FuelReportController@fuelReports')->name('fuel-reports');
+	Route::get('/driver-fuel-report','FuelReportController@driverFuelReport')->name('driver.fuel.report');
+	Route::post('/driver-fuel-graph','FuelReportController@getDriverFuelGraphDetails')->name('driver.fuel.graph');
+	
+
 	Route::post('/fuel-report-list','FuelReportController@fuelReportList')->name('fuel-report-list');
 	Route::post('/fuel-graph','FuelReportController@getFuelGraphDetails')->name('fuel.graph');
 	// Route::post('/month-fuel-graph','FuelReportController@getMonthFuelGraphDetails')->name('month.fuel.graph');
+	Route::post('/drivers-vehicle/','FuelReportController@getFromListRoot')->name('drivers.vehicle');
 
 	// alert report
 	Route::get('/alert-report','AlertReportController@alertReport')->name('alert-report');
