@@ -275,7 +275,7 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
         <tr>
       <td style="width: 25%" >{{ (($perPage * ($page - 1)) + $i++) }}</td>
        <td style="width: 25%" ><?php echo $each_scenario->title;?> </td>
-      <td style="width: 25%" > <input type="checkbox" name="gps" id="gps" <?php if ($each_scenario->sos->activate) {
+      <td style="width: 25%" > <input type="checkbox" name="gps" id="gps" <?php if ($each_scenario->test_status==1) {
                                                                         echo 'checked';
                                                                       } ?> readonly> </br>
                         </td>
@@ -295,11 +295,13 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
        $i=1;
        if($servicer_job->device_test_scenario != '')
        {
+
         foreach (json_decode($servicer_job->device_test_scenario)->tests as $each_scenario) { ?>
         <tr>
       <td style="width: 25%" >{{ (($perPage * ($page - 1)) + $i++) }}</td>
        <td style="width: 25%" ><?php echo $each_scenario->title;?> </td>
-      <td style="width: 25%" > <input type="checkbox" name="gps" id="gps" <?php if ($each_scenario->sos->activate) {
+
+      <td style="width: 25%" > <input type="checkbox" name="gps" id="gps" <?php if ($each_scenario->test_status==1) {
                                                                         echo 'checked';
                                                                       } ?> readonly> </br>
                         </td>
