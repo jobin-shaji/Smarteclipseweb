@@ -12,7 +12,7 @@ $key        = (isset($_GET['new_service_search_key'])) ? $_GET['new_service_sear
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
           <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/New Jobs List</li>
-          <b> New  Jobs List</b>
+          <b>Jobs List</b>
       </ol>
         @if(Session::has('message'))
             <div class="pad margin no-print">
@@ -32,11 +32,12 @@ $key        = (isset($_GET['new_service_search_key'])) ? $_GET['new_service_sear
         <div class="row" >
             <div class="col-lg-12" >
                  <div class="row">
-                    <div class="col-lg-8">
+                    <div class="col-lg-7">
                       <div class="form-group" style="width: 100%;">
-                         <input type="text" class="form-control" placeholder="Enter Serial No,Assigne,user name,user email,user mobile,registration number" name="new_service_search_key" id="new_service_search_key" value="{{ $key }}">
+                         <input type="text" class="form-control" placeholder="Enter Serial No,Job Code" name="new_service_search_key" id="new_service_search_key" value="{{ $key }}">
                       </div>
                     </div>
+
 
                     <div class="col-lg-2" style="margin: 0 0px 18px 0;">
                       <div class="form-group" style="width: 100%;">
@@ -106,11 +107,16 @@ $key        = (isset($_GET['new_service_search_key'])) ? $_GET['new_service_sear
                     @else
                     <td>Completed</td>
                     @endif
+
                     @if ($servicer_job->status == 1)
-                  
-                   <td>{{$servicer_job->completion_code}}</td>
-                   @else
-                    <td>{{$servicer_job->comment}}</td>
+                        
+                   <td>JobCode:{{$servicer_job->job_id}} @if(isset($servicer_job->start_code))
+                    StartCode:{{$servicer_job->start_code}}@endif</td>
+                   @elseif($servicer_job->status == 2)
+                    <td>JobCode:{{$servicer_job->job_id}} @if(isset($servicer_job->completion_code))
+                    CompletionCode:{{$servicer_job->completion_code}}@endif</td>
+                    @elseif($servicer_job->status == 3)
+                      <td>{{$servicer_job->comment}}</td>
                     @endif
                 </tr>
                 @endforeach
