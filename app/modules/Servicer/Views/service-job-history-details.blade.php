@@ -104,19 +104,30 @@
                       @endif
                     </div>
 
-                     <div class="form-group row" style="float:none!important">
-                      <label for="fname" class="col-md-6 text-right control-label col-form-label">Vehicle</label>
+                    <div class="form-group row" style="float:none!important">
+                      <label for="name" class="col-md-6 text-right control-label col-form-label">Vehicle Name</label>
                       <div class="form-group has-feedback">
-                        <input type="text" class=" form-control {{ $errors->has('job_completed_date') ? ' has-error' : '' }}"  name="job_completed_date" value="{{$vehicle_device->vehicle->name}} " required readonly="" >
+                        <input type="text" class=" form-control {{ $errors->has('name') ? ' has-error' : '' }}" name="name" value="{{$vehicle_device->vehicle->name}} " required readonly="">
                         <span class="glyphicon glyphicon-phone form-control-feedback"></span>
                       </div>
-                      @if ($errors->has('job_completed_date'))
+                      @if ($errors->has('name'))
                       <span class="help-block">
-                      <strong class="error-text">{{ $errors->first('job_completed_date') }}</strong>
+                        <strong class="error-text">{{ $errors->first('name') }}</strong>
                       </span>
                       @endif
                     </div>
-
+                    <div class="form-group row" style="float:none!important">
+                      <label for="register_number" class="col-md-6 text-right control-label col-form-label">Registration Number</label>
+                      <div class="form-group has-feedback">
+                        <input type="text" class=" form-control {{ $errors->has('register_number') ? ' has-error' : '' }}" name="job_completed_date" value="{{$vehicle_device->vehicle->register_number}} " required readonly="">
+                        <span class="glyphicon glyphicon-phone form-control-feedback"></span>
+                      </div>
+                      @if ($errors->has('register_number'))
+                      <span class="help-block">
+                        <strong class="error-text">{{ $errors->first('register_number') }}</strong>
+                      </span>
+                      @endif
+                    </div>
 
                      <div class="form-group row" style="float:none!important">
                       <label for="fname" class="col-md-6 text-right control-label col-form-label">Comment</label>
