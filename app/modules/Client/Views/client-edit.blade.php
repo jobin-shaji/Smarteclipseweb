@@ -91,7 +91,15 @@
                       </div>
                       <?php } ?>
 
-
+                       <div class="form-group has-feedback">
+                      <label class="srequired">Email</label>
+                        <input type="text" class="form-control {{ $errors->has('email') ? ' has-error' : '' }}" placeholder="Email" maxlength="50" name="email" required value="{{$client->user->email}}"> 
+                        @if ($errors->has('email'))
+                          <span class="help-block">
+                            <strong class="error-text">{{ $errors->first('email') }}</strong>
+                          </span>
+                        @endif
+                    </div>
                       <div class="form-group row" style="float:none!important">
                         <label for="fname" class="col-sm-3 text-right control-label col-form-label">Country</label>
                         <div class="form-group ">
