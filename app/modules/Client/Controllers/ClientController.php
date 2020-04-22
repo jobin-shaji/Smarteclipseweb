@@ -345,6 +345,7 @@ class ClientController extends Controller {
         $client->latest_user_updates = $current_date;
         $client->save();
         // dd($client);
+        $user->email= $request->email;
         $user->mobile = $request->mobile_number;
         $user->save();
 
@@ -1357,7 +1358,7 @@ public function selectTrader(Request $request)
             'city_id' => 'required',
             'state_id' => 'required',
             'country_id' => 'required',
-            
+             'email' => 'nullable|string|email|max:255|unique:users',
             'mobile_number' => 'required|digits:10|unique:users,mobile,'.$client->user_id
               ];
         return  $rules;
@@ -1371,8 +1372,7 @@ public function selectTrader(Request $request)
             'city_id' => 'required',
             'state_id' => 'required',
             'country_id' => 'required',
-
-           
+            'email' => 'nullable|string|email|max:255|unique:users',
             'mobile_number' => 'required|digits:11|unique:users,mobile,'.$client->user_id
               ];
         return  $rules;
