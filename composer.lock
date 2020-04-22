@@ -3386,20 +3386,20 @@
         },
         {
             "name": "salmanzafar/laravel-mqtt",
-            "version": "v1.0.9",
+            "version": "v1.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/salmanzafar949/MQTT-Laravel.git",
-                "reference": "224726cca7083dfe04680266b14a74ac7368ee70"
+                "reference": "4b632094742085250753df2bc8b0bce128c34b60"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/salmanzafar949/MQTT-Laravel/zipball/224726cca7083dfe04680266b14a74ac7368ee70",
-                "reference": "224726cca7083dfe04680266b14a74ac7368ee70",
+                "url": "https://api.github.com/repos/salmanzafar949/MQTT-Laravel/zipball/4b632094742085250753df2bc8b0bce128c34b60",
+                "reference": "4b632094742085250753df2bc8b0bce128c34b60",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.3"
+                "php": ">=7"
             },
             "require-dev": {
                 "laravel/framework": ">=5.8"
@@ -3418,10 +3418,7 @@
             "autoload": {
                 "psr-4": {
                     "Salman\\Mqtt\\": "src/"
-                },
-                "files": [
-                    "src/Helper/Helpers.php"
-                ]
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -3452,7 +3449,7 @@
                 "php 7.3",
                 "php 7.4"
             ],
-            "time": "2020-03-13T10:24:40+00:00"
+            "time": "2019-12-17T12:12:40+00:00"
         },
         {
             "name": "simplesoftwareio/simple-qrcode",

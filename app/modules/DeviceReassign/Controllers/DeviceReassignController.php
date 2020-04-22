@@ -19,6 +19,7 @@ use App\Modules\Servicer\Models\ServicerJob;
 use App\Modules\SubDealer\Models\SubDealer;
 use App\Modules\Trader\Models\Trader;
 use App\Modules\Vehicle\Models\Vehicle;
+use App\Modules\Vehicle\Models\VehicleGps;
 use App\Modules\VltData\Models\VltData;
 use App\Modules\Alert\Models\Alert;
 use App\Modules\Vehicle\Models\VehicleDailyUpdate;
@@ -72,6 +73,7 @@ class DeviceReassignController extends Controller
     public function reassignUpdate(Request $request)
     { 
         $reassign_type_id   =   $request->reassign_type_id;
+        $vehicle            =   $request->vehicle;
         $imei               =   $request->imei;
         $gps                =   $request->gps;
         $dealer_id          =   $request->dealer;
@@ -82,7 +84,6 @@ class DeviceReassignController extends Controller
         $trader             =   Trader::select('user_id')->where('id',$trader_id)->first();
         $subdealer          =   SubDealer::select('user_id')->where('id',$subdealer_id)->first();
         $dealer             =   Dealer::select('user_id')->where('id',$dealer_id)->first();
-        $vehicle            =   $request->vehicle;
         $gps_transfer_items =   GpsTransferItems::select('gps_transfer_id')->where('gps_id',$gps)->get();
         $gps_transfer_id    =   [];
         foreach ($gps_transfer_items as $each_transfer_item)
@@ -96,147 +97,191 @@ class DeviceReassignController extends Controller
         Complaint::where('gps_id',$gps)->delete();
         DailyKm::where('gps_id',$gps)->delete();
         VltData::where('imei',$imei)->delete();
-        VehicleDriverLog::where('vehicle_id',$request->vehicle)->delete();
-        DB::table('vehicles')->where('gps_id',$gps)->delete();
         DB::table('servicer_jobs')->where('gps_id',$gps)->delete();
-        DB::table('vehicle_geofences')->where('vehicle_id',$request->vehicle)->delete();
-        VehicleGeofence::where('vehicle_id',$vehicle)->delete();
-        ServicerJob::where('gps_id',$gps)->delete();
-        Vehicle::where('gps_id',$request->gps)->delete();
-        if($reassign_type_id == 4)
+        if($reassign_type_id == 4 || $reassign_type_id == 3)
         {
             GpsStock::where('gps_id',$gps)->update(['client_id' => null]);
-            $gps_transfer_log =  GpsTransfer::select('id') 
-            ->whereIn('id', $gps_transfer_id)           
-            ->where('from_user_id',$trader->user_id)
-            ->where('to_user_id',$client->user_id)
-            ->first();
-            $gps_transfer_id = $gps_transfer_log->id;             
-            $count_of_transfer_item = GpsTransferItems::select('id')
-                                     ->where('gps_transfer_id',$gps_transfer_id)
-                                     ->count();
-            If($count_of_transfer_item == 1)
+            if($reassign_type_id == 4)
             {
-                // Delete $gps_transfer_log
-                GpsTransfer::where('id',$gps_transfer_log->id)->forceDelete();
-                // Delete  row in gps_transfer_item 
-                GpsTransferItems::where('gps_transfer_id',$gps_transfer_id)
-                ->where('gps_id', $gps)
-                ->delete();
-            }
-            else
-            {
-                // Delete  row in gps_transfer_item 
-                GpsTransferItems::where('gps_transfer_id',$gps_transfer_id)->where('gps_id', $gps)->delete();
-            }
+                $gps_transfer_log =  GpsTransfer::select('id') 
+                ->whereIn('id', $gps_transfer_id)           
+                ->where('from_user_id',$trader->user_id)
+                ->where('to_user_id',$client->user_id)
+                ->first();
+                $gps_transfer_id = $gps_transfer_log->id;             
+                $count_of_transfer_item = GpsTransferItems::select('id')
+                                        ->where('gps_transfer_id',$gps_transfer_id)
+                                        ->count();
+                if($count_of_transfer_item == 1)
+                {
+                    // Delete $gps_transfer_log
+                    GpsTransfer::where('id',$gps_transfer_log->id)->forceDelete();
+                    // Delete  row in gps_transfer_item 
+                    GpsTransferItems::where('gps_transfer_id',$gps_transfer_id)
+                    ->where('gps_id', $gps)
+                    ->delete();
+                }
+                else
+                {
+                    // Delete  row in gps_transfer_item 
+                    GpsTransferItems::where('gps_transfer_id',$gps_transfer_id)->where('gps_id', $gps)->delete();
+                }
+                $vehiclegps_count = VehicleGps::select('id')
+                                    ->where('vehicle_id',$vehicle)
+                                    ->count();
+                if($vehiclegps_count == 1)
+                {
+                    VehicleDriverLog::where('vehicle_id',$request->vehicle)->delete();
+                    DB::table('vehicles')->where('gps_id',$gps)->delete();
+                    DB::table('vehicle_geofences')->where('vehicle_id',$vehicle)->delete();
+                    // VehicleGeofence::where('vehicle_id',$vehicle)->delete();
+                    // ServicerJob::where('gps_id',$gps)->delete();
+                    // Vehicle::where('gps_id',$request->gps)->delete();
+                    DB::table('vehicle_gps')->where('vehicle_id',$request->vehicle)->delete();
+                }
+                else
+                {
+                    $vehicles_gps = VehicleGps::select('id','vehicle_id','gps_id','servicer_job_id')->where('vehicle_id',$vehicle)->orderBy('gps_fitted_on', 'desc')->first();
+                    $vehicles_gps->delete();
+                    DB::table('vehicles')->where('id', $vehicles_gps->vehicle_id)
+                    ->update(['gps_id' => $vehicles_gps->gps_id,'servicer_job_id' => $vehicles_gps->servicer_job_id,'is_returned'=>0,'is_reinstallation_job_created'=>1]);
+                }
+                return response()->json([
+                    'status' => 1,
+                    'title' => 'Success',
+                    'message' => 'Reassigned to Subdealer successfully'
+                ]);
 
-            return response()->json([
-                'status' => 1,
-                'title' => 'Success',
-                'message' => 'Reassigned to Subdealer successfully'
-            ]);
-
-        }
-        elseif($reassign_type_id == 3)
-        {
-            GpsStock::where('gps_id',$gps)->update(['client_id' => null]);
-            $gps_transfer_log =  GpsTransfer::select('id') 
-            ->whereIn('id', $gps_transfer_id)           
-            ->where('from_user_id',$subdealer->user_id)
-            ->where('to_user_id',$client->user_id)
-            ->first();
-            $gps_transfer_id = $gps_transfer_log->id; 
-            
-            $count_of_transfer_item = GpsTransferItems::select('id')
-                                     ->where('gps_transfer_id',$gps_transfer_id)
-                                     ->count();
-            If($count_of_transfer_item == 1)
-            {
-                // Delete $gps_transfer_log
-                GpsTransfer::where('id',$gps_transfer_log->id)->delete();
-                // Delete  row in gps_transfer_item 
-                GpsTransferItems::where('gps_transfer_id',$gps_transfer_id)->where('gps_id', $gps)->delete();
             }
-            else
+            elseif($reassign_type_id == 3)
             {
-                // Delete  row in gps_transfer_item 
-                GpsTransferItems::where('gps_transfer_id',$gps_transfer_id)->where('gps_id', $gps)->delete();
+                $gps_transfer_log =  GpsTransfer::select('id') 
+                ->whereIn('id', $gps_transfer_id)           
+                ->where('from_user_id',$subdealer->user_id)
+                ->where('to_user_id',$client->user_id)
+                ->first();
+                $gps_transfer_id = $gps_transfer_log->id; 
+                
+                $count_of_transfer_item = GpsTransferItems::select('id')
+                                        ->where('gps_transfer_id',$gps_transfer_id)
+                                        ->count();
+                if($count_of_transfer_item == 1)
+                {
+                    // Delete $gps_transfer_log
+                    GpsTransfer::where('id',$gps_transfer_log->id)->delete();
+                    // Delete  row in gps_transfer_item 
+                    GpsTransferItems::where('gps_transfer_id',$gps_transfer_id)->where('gps_id', $gps)->delete();
+                }
+                else
+                {
+                    // Delete  row in gps_transfer_item 
+                    GpsTransferItems::where('gps_transfer_id',$gps_transfer_id)->where('gps_id', $gps)->delete();
+                }
+                $vehiclegps_count = VehicleGps::select('id')
+                                    ->where('vehicle_id',$vehicle)
+                                    ->count();
+                if($vehiclegps_count == 1)
+                {
+                    VehicleDriverLog::where('vehicle_id',$request->vehicle)->delete();
+                    DB::table('vehicles')->where('gps_id',$gps)->delete();
+                    DB::table('vehicle_geofences')->where('vehicle_id',$vehicle)->delete();
+                    // VehicleGeofence::where('vehicle_id',$vehicle)->delete();
+                    // ServicerJob::where('gps_id',$gps)->delete();
+                    // Vehicle::where('gps_id',$request->gps)->delete();
+                    DB::table('vehicle_gps')->where('vehicle_id',$request->vehicle)->delete();
+                }
+                else
+                {
+                    $vehicles_gps = VehicleGps::select('id','vehicle_id','gps_id','servicer_job_id')->where('vehicle_id',$vehicle)->orderBy('gps_fitted_on', 'desc')->first();
+                    $vehicles_gps->delete();
+                    DB::table('vehicles')->where('id', $vehicles_gps->vehicle_id)
+                    ->update(['gps_id' => $vehicles_gps->gps_id,'servicer_job_id' => $vehicles_gps->servicer_job_id,'is_returned'=>0,'is_reinstallation_job_created'=>1]);
+                }
+                return response()->json([
+                    'status' => 1,
+                    'title' => 'Success',
+                    'message' => 'Reassigned to Dealer successfully'
+                ]);
             }
-
-            return response()->json([
-                'status' => 1,
-                'title' => 'Success',
-                'message' => 'Reassigned to Dealer successfully'
-            ]);
-        }
-        elseif($reassign_type_id == 2)
-        {
-            GpsStock::where('gps_id',$gps)->update(['trader_id' => null]);
-            $gps_transfer_log =  GpsTransfer::select('id') 
-            ->whereIn('id', $gps_transfer_id)           
-            ->where('from_user_id',$subdealer->user_id)
-            ->where('to_user_id',$trader->user_id)
-            ->first();
-            $gps_transfer_id = $gps_transfer_log->id;            
-            $count_of_transfer_item = GpsTransferItems::select('id')
-             ->where('gps_transfer_id',$gps_transfer_id)
-             ->count();
-            If($count_of_transfer_item == 1)
-            {
-                // Delete $gps_transfer_log
-                GpsTransfer::where('id',$gps_transfer_log->id)->delete();
-                // Delete  row in gps_transfer_item 
-                GpsTransferItems::where('gps_transfer_id',$gps_transfer_id)->where('gps_id', $gps)->delete();
-            }
-            else
-            {
-                // Delete  row in gps_transfer_item 
-                GpsTransferItems::where('gps_transfer_id',$gps_transfer_id)->where('gps_id', $gps)->delete();
-            }
-            return response()->json([
-                'status' => 1,
-                'title' => 'Success',
-                'message' => 'Reassigned to Dealer successfully'
-            ]);
-        }
-        elseif($reassign_type_id == 1)
-        {
-            GpsStock::where('gps_id',$gps)->update(['subdealer_id' => null]);
-            $gps_transfer_log =  GpsTransfer::select('id') 
-            ->whereIn('id', $gps_transfer_id)           
-            ->where('from_user_id',$dealer->user_id)
-            ->where('to_user_id',$subdealer->user_id)
-            ->first();
-            $gps_transfer_id = $gps_transfer_log->id; 
-            
-            $count_of_transfer_item = GpsTransferItems::select('id')
-                                     ->where('gps_transfer_id',$gps_transfer_id)
-                                     ->count();
-            If($count_of_transfer_item == 1)
-            {
-                // Delete $gps_transfer_log
-                GpsTransfer::where('id',$gps_transfer_log->id)->delete();
-                // Delete  row in gps_transfer_item 
-                GpsTransferItems::where('gps_transfer_id',$gps_transfer_id)->where('gps_id', $gps)->delete();
-            }
-            else
-            {
-                // Delete  row in gps_transfer_item 
-                GpsTransferItems::where('gps_transfer_id',$gps_transfer_id)->where('gps_id', $gps)->delete();
-            }
-            return response()->json([
-                'status' => 1,
-                'title' => 'Success',
-                'message' => 'Reassigned to Distributor successfully'
-            ]);
         }
         else
         {
-            return response()->json([
-                'status' => 1,
-                'title' => 'Success',
-                'message' => 'Something went wrong!!!'
-            ]); 
+            VehicleDriverLog::where('vehicle_id',$request->vehicle)->delete();
+            DB::table('vehicles')->where('gps_id',$gps)->delete();
+            DB::table('vehicle_geofences')->where('vehicle_id',$request->vehicle)->delete();
+            DB::table('vehicle_gps')->where('vehicle_id',$request->vehicle)->delete();
+            // VehicleGeofence::where('vehicle_id',$vehicle)->delete();
+            // ServicerJob::where('gps_id',$gps)->delete();
+            // Vehicle::where('gps_id',$request->gps)->delete();
+            if($reassign_type_id == 2)
+            {
+                GpsStock::where('gps_id',$gps)->update(['trader_id' => null]);
+                $gps_transfer_log =  GpsTransfer::select('id') 
+                ->whereIn('id', $gps_transfer_id)           
+                ->where('from_user_id',$subdealer->user_id)
+                ->where('to_user_id',$trader->user_id)
+                ->first();
+                $gps_transfer_id = $gps_transfer_log->id;            
+                $count_of_transfer_item = GpsTransferItems::select('id')
+                ->where('gps_transfer_id',$gps_transfer_id)
+                ->count();
+                if($count_of_transfer_item == 1)
+                {
+                    // Delete $gps_transfer_log
+                    GpsTransfer::where('id',$gps_transfer_log->id)->delete();
+                    // Delete  row in gps_transfer_item 
+                    GpsTransferItems::where('gps_transfer_id',$gps_transfer_id)->where('gps_id', $gps)->delete();
+                }
+                else
+                {
+                    // Delete  row in gps_transfer_item 
+                    GpsTransferItems::where('gps_transfer_id',$gps_transfer_id)->where('gps_id', $gps)->delete();
+                }
+                return response()->json([
+                    'status' => 1,
+                    'title' => 'Success',
+                    'message' => 'Reassigned to Dealer successfully'
+                ]);
+            }
+            elseif($reassign_type_id == 1)
+            {
+                GpsStock::where('gps_id',$gps)->update(['subdealer_id' => null]);
+                $gps_transfer_log =  GpsTransfer::select('id') 
+                ->whereIn('id', $gps_transfer_id)           
+                ->where('from_user_id',$dealer->user_id)
+                ->where('to_user_id',$subdealer->user_id)
+                ->first();
+                $gps_transfer_id = $gps_transfer_log->id; 
+                
+                $count_of_transfer_item = GpsTransferItems::select('id')
+                                        ->where('gps_transfer_id',$gps_transfer_id)
+                                        ->count();
+                if($count_of_transfer_item == 1)
+                {
+                    // Delete $gps_transfer_log
+                    GpsTransfer::where('id',$gps_transfer_log->id)->delete();
+                    // Delete  row in gps_transfer_item 
+                    GpsTransferItems::where('gps_transfer_id',$gps_transfer_id)->where('gps_id', $gps)->delete();
+                }
+                else
+                {
+                    // Delete  row in gps_transfer_item 
+                    GpsTransferItems::where('gps_transfer_id',$gps_transfer_id)->where('gps_id', $gps)->delete();
+                }
+                return response()->json([
+                    'status' => 1,
+                    'title' => 'Success',
+                    'message' => 'Reassigned to Distributor successfully'
+                ]);
+            }
+            else
+            {
+                return response()->json([
+                    'status' => 1,
+                    'title' => 'Success',
+                    'message' => 'Something went wrong!!!'
+                ]); 
+            }
         }
     }
 
