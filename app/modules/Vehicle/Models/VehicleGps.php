@@ -108,4 +108,21 @@ class VehicleGps extends Model
       return self::where('gps_id',$gps_id)->with('vehicle')->first();
     
     }
+     public function getGpsDetailsBasedVehicleWithDate($vehicle_id,$search_date)
+    {
+      // return $query = DB::table('vehicle_gps')
+      //   ->join('vehicles', 'vehicle_gps.vehicle_id', '=', 'vehicles.id')
+      //   ->select('vehicle_gps.gps_id as gps_id')
+      //   ->where('vehicle_id',$vehicle_id)
+      //   ->whereDate('gps_fitted_on', '<=', $search_date)->whereDate('gps_removed_on', '>=', $search_date)       
+      //   ->get();
+      return DB::select("SELECT gps_id
+      FROM `vehicle_gps`
+      WHERE vehicle_id = '$vehicle_id' AND
+      (
+        ( '$search_date' BETWEEN IF(date(gps_fitted_on) > '$search_date', '$search_date', date(gps_fitted_on)) AND date(gps_removed_on) )
+          OR
+          ( '$search_date' BETWEEN date(gps_fitted_on) AND IF(date(gps_removed_on) IS NULL, CURDATE(), date(gps_removed_on)) )
+      )");
+    }
 }

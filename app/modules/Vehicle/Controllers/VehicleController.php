@@ -28,6 +28,7 @@ use App\Modules\Client\Models\Client;
 use App\Modules\Vehicle\Models\DailyKm;
 use App\Modules\Servicer\Models\ServicerJob;
 use App\Modules\Configuration\Models\Configuration;
+use App\Modules\Driver\Models\DriverVehicleHistory;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -210,6 +211,12 @@ class VehicleController extends Controller
                     'from_driver_id' => $old_driver,
                     'to_driver_id' => $new_driver_id,
                     'client_id' =>$vehicle->client_id
+                ]);
+                $driver_vehicle_history_log = DriverVehicleHistory::where('vehicle_id',$vehicle->id)->where('driver_id',$old_driver)->update(['to_date'=>date('Y-m-d')]);
+                $vehicle_driver_history = DriverVehicleHistory::create([
+                    'vehicle_id' => $vehicle->id,
+                    'driver_id' => $new_driver_id,
+                    'from_date' =>date('Y-m-d')
                 ]);
             }
         }

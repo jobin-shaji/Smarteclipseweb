@@ -23,6 +23,7 @@ use App\Modules\Vehicle\Models\VehicleType;
 use App\Modules\User\Models\User;
 use App\Modules\Client\Models\Client;
 use App\Modules\Driver\Models\Driver;
+use App\Modules\Driver\Models\DriverVehicleHistory;
 use App\Modules\Ota\Models\OtaResponse;
 use App\Modules\Configuration\Models\Configuration;
 use DataTables;
@@ -1391,7 +1392,14 @@ public function serviceJobDetails(Request $request)
                     'driver_id' => $driver_id,
                     'status' => 1
                 ]);
-               
+                if($driver_id)
+                {
+                    $driver_vehicle_history= DriverVehicleHistory::create([
+                        'vehicle_id' => $vehicle_create->id,
+                        'driver_id' => $driver_id,
+                        'from_date' =>  date('Y-m-d')
+                    ]);
+                }
                 if($vehicle_create)
                 {
 

@@ -14,6 +14,17 @@ class KmUpdate extends Model
         'lat' => 'float',
         'lng' => 'float',
     ];
+     public function getKmDetailsForReport($gps_ids,$date)
+    {
+        return self::select(
+            'id',
+            'gps_id',
+            'km',
+            'device_time'
+        )
+        ->whereIn('gps_id', $gps_ids)       
+        ->whereDate('device_time', $date);
+    }
 }
 
 
