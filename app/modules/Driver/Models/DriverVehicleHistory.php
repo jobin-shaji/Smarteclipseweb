@@ -18,7 +18,7 @@ class DriverVehicleHistory extends Model
         ->select('vehicles.gps_id as gps_id')
         ->where('vehicle_id',$vehicle_id)
         // ->where('driver_id',$driver_id)
-        ->whereDate('from_date', '>=', $search_date)->whereDate('to_date', '<=', $search_date)       
+        ->whereDate('from_date', '<=', $search_date)->whereDate('to_date', '>=', $search_date)       
        	->get();
      
     }

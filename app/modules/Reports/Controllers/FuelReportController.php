@@ -8,7 +8,7 @@ use App\Modules\Reports\Models\FuelUpdate;
 use App\Modules\Vehicle\Models\Vehicle;
 use App\Modules\Driver\Models\Driver;
 use App\Modules\Driver\Models\DriverVehicleHistory;
-
+use App\Modules\Vehicle\Models\KmUpdate;
 use App\Modules\Vehicle\Models\VehicleGps;
 use App\Modules\Vehicle\Models\DailyKm;
 use Illuminate\Support\Facades\Crypt;
@@ -155,10 +155,9 @@ class FuelReportController extends Controller
     public function driverFuelReport()
     {
         $client_id                  =   \Auth::user()->client->id;
-        $client_vehicles            =   (new Vehicle())->getVehicleListBasedOnClient($client_id);
         $client_drivers            =   (new Driver())->getDriverListBasedOnClient($client_id);
 
-        return view('Reports::driver-fuel-report',['vehicles' =>$client_vehicles,'drivers' =>$client_drivers]);
+        return view('Reports::driver-fuel-report',['drivers' =>$client_drivers]);
     }
 
     public function getDriverFuelGraphDetails(Request $request)
@@ -166,42 +165,30 @@ class FuelReportController extends Controller
 
         $driver_id                     =   $request->driver_id;
         $vehicle_id                    =   $request->vehicle_id;
-        // dd($driver_id);
-        // $report_type                    =   $request->report_type;
-           $date                       =   date('Y-m-d',strtotime($request->date));
-            // $vehicle_gps_ids            =   (new VehicleGps())->getGpsDetailsBasedOnVehicleWithSingleDate($driver_id,$vehicle_id,$date);
-           
-            $vehicle_gps_ids            =   (new DriverVehicleHistory())->getGpsDetailsBasedOnVehicleWithSingleDate($driver_id,$vehicle_id,$date);
-           $single_vehicle_gps_ids=[];
-            foreach($vehicle_gps_ids as $vehicle_gps_id)
-            {
-                $single_vehicle_gps_ids[]   =   $vehicle_gps_id->gps_id;
-            }
-             // dd($single_vehicle_gps_ids);
-
-       
-        $fuel_details                   =   (new FuelUpdate())->getFuelDetailsForReport($single_vehicle_gps_ids);
-        
-            $date                       =    date('Y-m-d',strtotime($request->date));
-            $fuel_details               =   $fuel_details->whereDate('created_at',$date);
-            $fuel_km                    =   (new DailyKM())->getSumOfKmForFuelReportBasedOnDate($single_vehicle_gps_ids,$date);
-        $fuel_details                   =   $fuel_details->get();
-        $fuel_km                        =   round($fuel_km/1000);
-        if(sizeof($fuel_details) != 0)
+        $date                          =   date('Y-m-d',strtotime($request->date));
+        $vehicle_gps_ids               =   (new DriverVehicleHistory())->getGpsDetailsBasedOnVehicleWithSingleDate($driver_id,$vehicle_id,$date);
+        $single_vehicle_gps_ids=[];
+        foreach($vehicle_gps_ids as $vehicle_gps_id)
         {
+            $single_vehicle_gps_ids[]   =   $vehicle_gps_id->gps_id;
+        }
+        // $single_vehicle_gps_ids        = $vehicle_gps_ids->gps_id;
+        // $date                          =    date('Y-m-d',strtotime($request->date));           
+        $fuel_details                  =   (new FuelUpdate())->getkmFuelDetailsForReport($single_vehicle_gps_ids,$date);  
+        if($fuel_details)
+        {           
             $percentage                 =   [];
-            $date_time                  =   [];
+            $km                         =   [];           
             foreach($fuel_details as $single_details)
             {
                 $percentage[]           =   $single_details->percentage;
-                $km[]            =   $single_details->kmUpdate->km;
+                $km[]           =   $single_details->km;
             }
             $response                   =   array(
                                                 'status'    =>  1,
                                                 'message'   =>  'success',
                                                 "percentage"=>  $percentage,
-                                                "driver_km" =>  $km,
-                                                "fuel_km"   =>  $fuel_km
+                                                "driver_km" =>  $km
                                             );
         }
         else{
@@ -224,5 +211,53 @@ class FuelReportController extends Controller
         }        
         $driver_vehicle_ids=Vehicle::select('id','name')->whereIn('id',$driver_vehicle_single_ids)->withTrashed()->get();       
         return response()->json($driver_vehicle_ids);
+    }
+    /**
+    vehicle fuel graph
+    **/
+     public function vehicleFuelReport()
+    {
+        $client_id                  =   \Auth::user()->client->id;
+        $client_vehicles            =   (new Vehicle())->getVehicleListBasedOnClient($client_id);
+        return view('Reports::vehicle-fuel-report',['vehicles' =>$client_vehicles]);
+    }
+    public function getVehicleFuelGraphDetails(Request $request)
+    {
+
+       $vehicle_id                    =   $request->vehicle_id;
+       $date                       =   date('Y-m-d',strtotime($request->date));
+        $vehicle_gps_ids            =   (new VehicleGps())->getGpsDetailsBasedVehicleWithDate($vehicle_id,$date);
+                 // dd($vehicle_gps_ids); 
+        $single_vehicle_gps_ids=[];
+        foreach($vehicle_gps_ids as $vehicle_gps_id)
+        {
+            $single_vehicle_gps_ids[]   =   $vehicle_gps_id->gps_id;
+        }
+        // dd($single_vehicle_gps_ids);
+        $fuel_details                  =   (new FuelUpdate())->getkmFuelDetailsForReport($single_vehicle_gps_ids,$date);
+        // $fuel_details                   =   (new FuelUpdate())->getFuelDetailsForReport($single_vehicle_gps_ids);
+        if($fuel_details)
+        {
+            $percentage                 =   [];
+            $km                  =   [];
+            foreach($fuel_details as $single_details)
+            {
+                $percentage[]           =   $single_details->percentage;
+                $km[]            =   $single_details->km;
+            }
+            $response                   =   array(
+                                                'status'    =>  1,
+                                                'message'   =>  'success',
+                                                "percentage"=>  $percentage,
+                                                "vehicle_km" =>  $km
+                                            );
+        }
+        else{
+            $response                   =   array(
+                                                'status'    =>  0,
+                                                'message'   =>  'failed'
+                                            );
+        }
+        return response()->json($response);
     }
 }

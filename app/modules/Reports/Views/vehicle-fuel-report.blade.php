@@ -7,7 +7,7 @@
   <div class="page-breadcrumb">
     <div class="row">
       <div class="col-12 d-flex no-block align-items-center">
-        <b> Driver Fuel Report</b>
+        <b> Vehicle Fuel Report</b>
       </div>
     </div>
   </div>
@@ -20,24 +20,16 @@
               <div class="row">
                 <div class="col-lg-3 col-md-3">
                   <div class="form-group">
-                    <label>Drivers</label>
-                    <select class="form-control select2" data-live-search="true" title="Select driver" id="driver" name="driver">
-                      <option value=''>Select Driver</option>
-                      @foreach ($drivers as $driver)
-                      <option value="{{$driver->id}}">{{$driver->name}}</option>
+                    <label>Vehicle</label>
+                    <select class="form-control select2" data-live-search="true" title="Select vehicle" id="vehicle" name="vehicle">
+                      <option value=''>Select vehicle</option>
+                      @foreach ($vehicles as $vehicle)
+                      <option value="{{$vehicle->id}}">{{$vehicle->name}}</option>
                       @endforeach
                     </select>
                   </div>
                 </div>
-                <div class="col-lg-3 col-md-3">
-                  <div class="form-group">
-                    <label>Vehicle</label>
-                    <select class="form-control select2" data-live-search="true" title="Select vehicle" id="vehicle" name="vehicle">
-                      <option value=''>Select Driver first</option>
-                      
-                    </select>
-                  </div>
-                </div>
+               
                 <div class="col-lg-3 col-md-3" id="single_date">
                   <div class="form-group">
                     <label>Date</label>
@@ -56,6 +48,7 @@
             <span id="show_selected_date" class="show_selected_date fuel-report-out">
             </span>
           </div>
+          
           <canvas id="fuel_graph" style = 'display:none;'></canvas>
         </div>
       </div>
@@ -103,7 +96,7 @@
 </style>
 @section('script')
     <script src="{{asset('js/gps/mdb.js')}}"></script>
-    <script src="{{asset('js/gps/driver-fuel-graph-report.js')}}"></script>
+    <script src="{{asset('js/gps/vehicle-fuel-graph-report.js')}}"></script>
 @endsection
 @endsection
 
