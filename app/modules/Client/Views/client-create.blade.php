@@ -251,7 +251,7 @@
       <div class="modal-body">
         <div class="row">
           <div class="col-md-12">
-                Client created successfully!!, Do you want to transfer the device to client?     
+                End User created successfully!!, Do you want to transfer the device to End User?     
           </div>
         </div>
       </div>
