@@ -62,8 +62,9 @@
     <div class="card-body">        
     <input type="hidden" name="imei" value="{{ $complaint->gps->imei}}">
     <input type="hidden" name="complaint_id" value="{{ $complaint->id}}">
-    <div class="form-group row" style="float:none!important">
-      <label  for="fname" class="col-sm-3 text-right control-label col-form-label">Service Engineer</label> 
+    <br>
+    <div class="form-group row box" >
+      <label style="white-space: nowrap;" for="fname" class="col-sm-3 text-right control-label col-form-label">Service Engineer</label> 
       <div class="form-group has-feedback">
         <select class="form-control selectpicker" data-live-search="true" title="Select Servicer" id="servicer" name="servicer" required>
           <option value="">Select Servicer</option>
@@ -79,7 +80,7 @@
       @endif
     </div>
     <div class="form-group row" style="float:none!important">
-      <label  for="fname" class="col-sm-3 text-right control-label col-form-label">User Plan</label> 
+      <label  style="white-space: nowrap;" for="fname" class="col-sm-3 text-right control-label col-form-label">User Plan</label> 
       <div class="form-group has-feedback">
         <select class="form-control selectpicker" data-live-search="true" title="Select Servicer" id="plan" name="plan" required>
           <option value="">Select Plan</option>
@@ -96,7 +97,7 @@
       @endif
     </div>
       <div class="form-group row" style="float:none!important">
-      <label for="fname" class="col-sm-3 text-right control-label col-form-label ">Installation Location</label>
+      <label for="fname" style="white-space: nowrap;" class="col-sm-3 text-right control-label col-form-label ">Installation Location</label>
 
       <div class="form-group has-feedback ">
         <input type="text" class="form-control {{ $errors->has('address') ? ' has-error' : '' }}" placeholder="Location" name="search_place" id="search_place" value="{{ old('search_place') }}" required>
@@ -113,7 +114,7 @@
 
 
 
-    <div class="form-group row" style="float:none!important">               
+    <div class="form-group row "  style="white-space: nowrap;"style="float:none!important">               
       <label for="fname" class="col-sm-3 text-right control-label col-form-label">Description</label> 
       <div class="form-group has-feedback">
         <input type="text" class="form-control {{ $errors->has('description') ? ' has-error' : '' }}" placeholder="description" name="description" value="{{ old('description') }}" maxlength = '200' required>
@@ -127,7 +128,7 @@
     </div>
         
     <div class="form-group row" style="float:none!important">
-      <label for="fname" class="col-sm-3 text-right control-label col-form-label">Job Date</label>
+      <label for="fname" style="white-space: nowrap;" class="col-sm-3 text-right control-label col-form-label">Job Date</label>
       <div class="form-group has-feedback">
         <input type="text" class=" job_date_picker form-control {{ $errors->has('job_date') ? ' has-error' : '' }} " placeholder="Job Date" name="job_date" value="{{ old('job_date') }}" required>
         <span class="glyphicon glyphicon-phone form-control-feedback"></span>
@@ -142,9 +143,11 @@
     
     
     </div>
+    <br>
+
     <div class="row">
       <div class="col-md-3 ">
-        <button type="submit" class="btn btn-primary btn-md form-btn ">Create</button>
+        <button type="submit" class="btn btn-primary btn-md form-btn margin-left">Create</button>
       </div>
     </div>
   </div>
@@ -154,7 +157,23 @@
 </div>
 
  @endsection
+ <style>
+  .label 
+  {
+    display: inline-block;
+  }
+.margin-left
+  {
+    margin-left: 18px !important;
+  }
+  .form-group 
+  {
+    margin-left: 1rem;
+    float: left!important;
+    width: 94%;
+  }
 
+</style>
  <script>
 
   function confirmServiceJob()
