@@ -1816,15 +1816,9 @@ public function serviceJobDetails(Request $request)
     public function jobHistoryDetails(Request $request)
     {
         $decrypted          =   Crypt::decrypt($request->id);
-        // dd($decrypted);
         $servicer_job       =   ServicerJob::withTrashed()->where('id', $decrypted)->first();
         $client_id          =   $servicer_job->client_id;
- 
-
         $vehicle_device     =   (new VehicleGps())->getVehicleGpsLogBasedOnGps($servicer_job->gps_id);
-        
-
-
         if($servicer_job == null){
            return view('Servicer::404');
         }
