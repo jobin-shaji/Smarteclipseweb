@@ -30,8 +30,8 @@
                     <th>Ticket Code</th>
                     <th>Vehicle Number </th>   
                     <th>Serial Number</th>
-                     <th>Complaint Type</th>                      
-                    <th>Complaint Reason</th>                         
+                    <!-- <th>Complaint Type</th>                      
+                    <th>Complaint Reason</th>   -->                       
                     <th>Complaint Title</th>
                     <th>Date</th>
                     <th>Status</th>
