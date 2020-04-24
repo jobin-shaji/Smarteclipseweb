@@ -1,9 +1,10 @@
-
 $(document).ready(function() {
+
+  // intializing form elements
   $("#message").hide();
   $("#user_message").hide();
-  $('#country_id').on('change', function() {
-    var countryID = $(this).val();
+ 
+    var countryID = $('#default_id').val();
     var data={ countryID : countryID };
     if(countryID) {
       $.ajax({
@@ -15,7 +16,7 @@ $(document).ready(function() {
           'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
         },
         success:function(data) {
-        console.log(data);
+      
         if(data){
           $('#state_id').empty();
           $('#state_id').focus;
@@ -23,6 +24,7 @@ $(document).ready(function() {
           $.each(data, function(key, value){
             $('select[name="state_id"]').append('<option value="'+ value.id +'">' + value.name+ '</option>');
           });
+          $("#state_id").select2().val(localStorage.getItem('autofill.enduser.state').toString()).trigger("change");
         }else{
           $('#state_id').empty();
         }
@@ -31,8 +33,18 @@ $(document).ready(function() {
     }else{
       $('#state_id').empty();
     }
+  $("#state_id").change(function(){
+  
+    localStorage.setItem('autofill.enduser.state',$(this).val());
   });
 });
+
+
+
+
+
+
+
 $(document).ready(function() {
   $("#message").hide();
   $("#user_message").hide();
@@ -49,7 +61,7 @@ $(document).ready(function() {
           'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
         },
         success:function(data) {
-        console.log(data);
+       
         if(data){
           $('#city_id').empty();
           $('#city_id').focus;

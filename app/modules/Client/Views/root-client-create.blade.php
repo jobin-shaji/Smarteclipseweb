@@ -35,6 +35,7 @@
                   </div>
                    <h4 class="card-title"><span style="margin:0;padding:0 10px 0 0;line-height:50px"></span>USER INFO</h4>
                 </div>
+                <input type="hidden" id="default_id" value={{$default_country_id}}>
                 <form  method="POST" action="{{route('root.client.create.p')}}">
                 {{csrf_field()}}
                   <div class="card">
@@ -110,6 +111,11 @@
                           </span>
                         @endif
                       </div>
+                        <?php
+                      $url=url()->current();
+                      $rayfleet_key="rayfleet";
+                      $eclipse_key="eclipse";
+                      if (strpos($url, $rayfleet_key) == true) {  ?>
                       <div class="form-group row" style="float:none!important">
                         <label for="fname" class="col-sm-3 text-right control-label col-form-label">Country</label>
                         <div class="form-group has-feedback">
@@ -126,12 +132,52 @@
                           </span>
                         @endif
                       </div>
+                       <?php } 
+                        else if (strpos($url, $eclipse_key) == true) { ?>
                           <div class="form-group row" style="float:none!important">
+                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">Country</label>
+                        <div class="form-group has-feedback">
+                          <select class="form-control  select2 {{ $errors->has('country_id') ? ' has-error' : '' }}" id="country_id" name="country_id" required>
+                          <option selected disabled>Select Country</option>
+                          @foreach($countries as $country)
+                          <option value="{{$country->id}}">{{$country->name}}</option>  
+                          @endforeach
+                          </select>
+                        </div>
+                        @if ($errors->has('country_id'))
+                          <span class="help-block">
+                            <strong class="error-text">{{ $errors->first('country_id') }}</strong>
+                          </span>
+                        @endif
+                      </div>
+                         <?php }
+                      else { ?>
+                          
+                      <div class="form-group row" style="float:none!important">
+                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">Country</label>
+                        <div class="form-group has-feedback">
+                          <select class="form-control  select2 {{ $errors->has('country_id') ? ' has-error' : '' }}" id="country_id" name="country_id" required>
+                          <option selected disabled>Select Country</option> 
+
+                           @foreach($countries as $country) 
+                           <!-- <option value="101">india</option>  -->
+                           <option <?php if($country->id=="101") { echo "selected" ;}?> value="{{$country->id}}">{{$country->name}}</option>
+                           @endforeach
+                          </select>
+                        </div>
+                        @if ($errors->has('country_id'))
+                          <span class="help-block">
+                            <strong class="error-text">{{ $errors->first('country_id') }}</strong>
+                          </span>
+                        @endif
+                      </div>
+                            <?php } ?>
+                    <div class="form-group row" style="float:none!important">
                       <div class="form-group has-feedback">
                       <label class="srequired col-sm-3 text-right control-label col-form-label">State</label>
-                        <select class="form-control select2 {{ $errors->has('state_id') ? ' has-error' : '' }}" id="state_id" name="state_id"  required>
+                        <select class="form-control select2 {{ $errors->has('state_id') ? ' has-error' : '' }}" id="state_id" name="state_id"   required>
                         <option selected disabled>Select Country First</option>
-                        </select>
+                        </select>   
                         @if ($errors->has('state_id'))
                           <span class="help-block">
                               <strong class="error-text">{{ $errors->first('state_id') }}</strong>
@@ -272,7 +318,7 @@
                     </div>
                     <div class="row">
                       <div class="col-md-3 ">
-                        <button type="submit" class="btn btn-primary btn-md form-btn ">Create</button>
+                        <button type="submit" id="submit" class="btn btn-primary btn-md form-btn ">Create</button>
                       </div>
                     </div>
                   </div>

@@ -1028,7 +1028,21 @@ class ClientController extends Controller {
             'name'
         ])
         ->get();
-        return view('Client::root-client-create',['entities' => $entities,'countries'=>$countries]);
+         $url=url()->current();
+        
+         $rayfleet_key="rayfleet";
+         $eclipse_key="eclipse";
+         if (strpos($url, $rayfleet_key) == true) {  
+            $default_country_id="178";
+          }else if (strpos($url, $eclipse_key) == true) {
+            $default_country_id="101";
+          }else
+          {
+         $default_country_id="101";
+          }
+
+        return view('Client::root-client-create',['entities' => $entities,'countries'=>$countries,
+            'default_country_id'=>$default_country_id]);
     }
 
 
@@ -1106,7 +1120,7 @@ public function selectTrader(Request $request)
             $location_lat=$placeLatLng['latitude'];
             $location_lng=$placeLatLng['longitude'];
             $current_date=date('Y-m-d H:i:s');
-
+         
             $user = User::create([
                 'username' => $request->username,
                 'email' => $request->email,
