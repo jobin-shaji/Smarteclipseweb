@@ -1,9 +1,10 @@
 $(document).ready(function() {
+var user_id= $('#user_id').val();
 
   // intializing form elements
   $("#message").hide();
   $("#user_message").hide();
- 
+  
     var countryID = $('#default_id').val();
     var data={ countryID : countryID };
     if(countryID) {
@@ -24,7 +25,8 @@ $(document).ready(function() {
           $.each(data, function(key, value){
             $('select[name="state_id"]').append('<option value="'+ value.id +'">' + value.name+ '</option>');
           });
-          $("#state_id").select2().val(localStorage.getItem('autofill.enduser.state').toString()).trigger("change");
+
+          $("#state_id").select2().val(localStorage.getItem(user_id+'.autofill.enduser.state').toString()).trigger("change");
         }else{
           $('#state_id').empty();
         }
@@ -33,10 +35,18 @@ $(document).ready(function() {
     }else{
       $('#state_id').empty();
     }
-  $("#state_id").change(function(){
-  
-    localStorage.setItem('autofill.enduser.state',$(this).val());
+    //for store item in local storage
+
+   $("#state_id").change(function(){
+   localStorage.setItem(user_id+'.autofill.enduser.state',$(this).val());
+   });
+   $("#city_id").change(function(){
+    localStorage.setItem(user_id+'.autofill.enduser.city',$(this).val());
   });
+   $("#client_category").change(function(){
+    localStorage.setItem(user_id+'.autofill.enduser.client_category',$(this).val());
+  });
+ $("#client_category").val(localStorage.getItem(user_id+'.autofill.enduser.client_category')).trigger("change");
 });
 
 
@@ -46,6 +56,7 @@ $(document).ready(function() {
 
 
 $(document).ready(function() {
+  var user_id= $('#user_id').val();
   $("#message").hide();
   $("#user_message").hide();
   $('#state_id').on('change', function() {
@@ -69,6 +80,7 @@ $(document).ready(function() {
           $.each(data, function(key, value){
             $('select[name="city_id"]').append('<option value="'+ value.id +'">' + value.name+ '</option>');
           });
+           $("#city_id").select2().val(localStorage.getItem(user_id+'.autofill.enduser.city').toString()).trigger("change");
         }else{
           $('#city_id').empty();
         }

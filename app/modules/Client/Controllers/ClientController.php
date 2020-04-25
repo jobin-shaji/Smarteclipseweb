@@ -56,7 +56,20 @@ class ClientController extends Controller {
             'name'
         ])
         ->get();
-        return view('Client::client-create',['countries'=>$countries]);
+         $url=url()->current();
+        
+         $rayfleet_key="rayfleet";
+         $eclipse_key="eclipse";
+         if (strpos($url, $rayfleet_key) == true) {  
+            $default_country_id="178";
+          }else if (strpos($url, $eclipse_key) == true) {
+            $default_country_id="101";
+          }else
+          {
+         $default_country_id="101";
+          }
+        $logged_user_id = \Auth::user()->id;
+        return view('Client::client-create',['countries'=>$countries,'default_country_id'=>$default_country_id,'logged_user_id'=>$logged_user_id]);
     }
     //get state in dependent dropdown
     public function getStateList(Request $request)
@@ -1040,9 +1053,10 @@ class ClientController extends Controller {
           {
          $default_country_id="101";
           }
-
+          //for logged in user
+        $logged_user_id = \Auth::user()->id;
         return view('Client::root-client-create',['entities' => $entities,'countries'=>$countries,
-            'default_country_id'=>$default_country_id]);
+            'default_country_id'=>$default_country_id,'logged_user_id'=>$logged_user_id]);
     }
 
 
