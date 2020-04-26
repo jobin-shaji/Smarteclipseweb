@@ -3,7 +3,6 @@
     GPS: Return List
 @endsection
 @section('content')
-
 <div class="page-wrapper page-wrapper-root page-wrapper_new">
     <div class="page-wrapper-root1">
         <nav aria-label="breadcrumb">
@@ -26,17 +25,27 @@
                     <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">                     
                         <div class="row">
                             <div class="col-sm-12">
-                                <table class="table table-hover table-bordered  table-striped datatable" style="text-align: center;" id="dataTable">
+                                <table class="table table-hover table-bordered  table-striped" style="text-align: center;">
                                     <thead>
                                         <tr>
-                                            <th>SL.No</th>
                                             <th>IMEI</th>
                                             <th>Serial Number</th>
                                             <th>Batch Number</th>
+                                            <th>ICC ID</th>
+                                            <th>IMSI</th>
                                             <th>Version</th>
-                                            <th>Action</th>
                                         </tr>
                                     </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>{{$gps->imei}}</td>
+                                            <td>{{$gps->serial_no}}</td>
+                                            <td>{{$gps->batch_number}}</td>
+                                            <td>{{$gps->icc_id}}</td>
+                                            <td>{{$gps->imsi}}</td>
+                                            <td>01</td>
+                                        </tr>
+                                    </tbody>
                                 </table>
                             </div>
                         </div>
@@ -49,6 +58,3 @@
 
 @endsection
 
-@section('script')
-    <script src="{{asset('js/gps/returned-gps-list.js')}}"></script>
-@endsection
