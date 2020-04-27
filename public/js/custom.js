@@ -1396,59 +1396,9 @@ $('.cover_vehicle_track_list .cover_track_data').click(function(){
 
 });
 
-function selectDealer(dealer)
-{
-
-    var url = 'select/subdealer';
-    var data = {
-        dealer : dealer
-    };
-    backgroundPostData(url,data,'rootSubdealer',{alert:true});
-}
-
-function selectTrader(dealer_id)
-{
-
-    var url = 'select/trader';
-    var data = {
-        dealer_id : dealer_id
-    };
-    backgroundPostData(url,data,'rootTrader',{alert:true});
-
-
-}
-function rootSubdealer(res)
-    {
-        $("#sub_dealer").empty();
-        var length=res.sub_dealers.length
-        sub_dealer_text='<option value="">Choose Dealer from the list</option>';
-        for (var i = 0; i < length; i++)
-        {
-         sub_dealer +='<option value="'+res.sub_dealers[i].id+'"  >'+res.sub_dealers[i].name+'</option>';
-        }
-        $("#sub_dealer").append(sub_dealer_text+sub_dealer);
-    }
 
 
 
-function rootTrader(res)
-   {
-         $("#trader").empty();
-         var length=res.traders.length
-         trader_text='<option value="">Choose Sub Dealer from the list</option>';
-         if(length == 0)
-          {
-              trader='<option value="">No Sub Dealer</option>';
-              $("#trader").append(trader);
-          }else
-          {
-              for (var i = 0; i < length; i++)
-               {
-              trader+='  <option value="'+res.traders[i].id+'"  >'+res.traders[i].name+'</option>';
-               }
-              $("#trader").append(trader_text+trader);
-        }
-   }
    function selectVehicle(client_id)
 {
 
