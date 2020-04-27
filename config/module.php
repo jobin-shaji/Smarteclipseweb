@@ -43,7 +43,7 @@ return  [
        'VltData',
        'DeviceReturn',
        'DeviceReassign',
-       'StockReport'
+       'GpsReport'
 
     ]
 ]

@@ -16,4 +16,10 @@ class Root extends Model
   {
     return self::select('id','name')->where('id',$root_id)->first();
   }
+
+  public function checkUserIdIsInManufacturerTable($user_id)
+  {
+    return self::select('name')->where('user_id',$user_id)->first();
+  }
+
 }

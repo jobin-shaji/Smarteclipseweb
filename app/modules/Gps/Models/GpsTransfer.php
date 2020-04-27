@@ -5,6 +5,7 @@ namespace App\Modules\Gps\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Scopes\DeleteScope;
+use DB;
 
 class GpsTransfer extends Model
 {
@@ -52,4 +53,15 @@ class GpsTransfer extends Model
     {
         return $this->hasOne('App\Modules\User\Models\User','id','to_user_id')->withTrashed();
     }
+
+    public function getTransferredCountBetweenTwoUsers($from_user_ids,$to_user_ids,$from_date,$to_date)
+    {
+        return DB::select("SELECT COUNT(gps_transfer_items.id) as count FROM `gps_transfers` LEFT join gps_transfer_items ON gps_transfers.id = gps_transfer_items.gps_transfer_id WHERE gps_transfers.deleted_at IS NULL AND date(gps_transfers.dispatched_on) >= '$from_date' AND date(gps_transfers.dispatched_on) <= '$to_date' AND gps_transfers.from_user_id IN  ('" . implode("', '", $from_user_ids) . "') AND gps_transfers.to_user_id IN ('" . implode("', '", $to_user_ids) . "')");
+    }
+
+    public function getDetailedReportOfGpsTransfers($from_user_ids,$to_user_ids,$from_date,$to_date)
+    {
+        return DB::select("SELECT gps_transfers.from_user_id,gps_transfers.to_user_id,count(gps_transfer_items.id) as count FROM `gps_transfers` LEFT join gps_transfer_items ON gps_transfers.id = gps_transfer_items.gps_transfer_id WHERE gps_transfers.deleted_at IS NULL AND date(gps_transfers.dispatched_on) >= '$from_date' AND date(gps_transfers.dispatched_on) <= '$to_date' AND gps_transfers.from_user_id IN  ('" . implode("', '", $from_user_ids) . "') AND gps_transfers.to_user_id IN ('" . implode("', '", $to_user_ids) . "') GROUP BY gps_transfers.to_user_id");
+    }
+    
 }

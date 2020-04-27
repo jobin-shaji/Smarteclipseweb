@@ -22,7 +22,17 @@ class Dealer extends Model
 
     public function subDealers(){
       return $this->hasMany('App\Modules\SubDealer\Models\SubDealer');
-    }
+	}
+	
+	public function getDistributorsOfManufacturer($manufacturer_id)
+	{
+		return self::select('id','user_id')->whereIn('root_id',$manufacturer_id)->withTrashed()->get();
+	}
+
+	public function checkUserIdIsInDistributorTable($user_id)
+	{
+		return self::select('name')->where('user_id',$user_id)->first();
+	}
 
     
 }
