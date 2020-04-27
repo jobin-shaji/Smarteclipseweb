@@ -15,6 +15,9 @@ td, th {
 }
 
 </style>
+  <div style="position:absolute;left:520px;top:10px" class="cls_003">
+    <img src="assets/images/smart_eclipse_logo.png" alt="Logo" height="30px" width="150px">
+  </div>
 </head>
 <body>
 @if(count($transfer_summary) != 0)
