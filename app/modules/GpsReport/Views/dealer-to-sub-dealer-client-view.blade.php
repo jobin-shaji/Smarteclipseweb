@@ -30,8 +30,8 @@
                                             <table class="table table-bordered">
                                                 <thead class="thead-color">
                                                     <tr>
-                                                        <th>Distributor Name</th>
                                                         <th>Dealer Name</th>
+                                                        <th>Sub Dealer Name</th>
                                                         <th>Transferred</th>
                                                     </tr>
                                                 </thead>

@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Crypt;
 use App\Http\Traits\UserTrait;
 use DataTables;
 use DB;
+use PDF;
 
 class GpsReportController extends Controller 
 {
@@ -40,6 +41,7 @@ class GpsReportController extends Controller
     {
         $from_date          =   ( isset($request->from_date) ) ? date ('Y-m-d',strtotime($request->from_date)) : null;
         $to_date            =   ( isset($request->to_date) ) ? date ('Y-m-d',strtotime($request->to_date)) : null;
+        $download_type      =   ( isset($request->type) ) ? $request->type : null;
         if(\Auth::user()->hasRole('root'))
         {
             if($from_date == null && $to_date == null)
@@ -48,9 +50,17 @@ class GpsReportController extends Controller
             }
             else
             {
-                $transfer_details           =   $this->TransferSummaryOfManufacturer($from_date,$to_date);
+                $transfer_details       =   $this->TransferSummaryOfManufacturer($from_date,$to_date,$download_type);
             }
-            return view('GpsReport::gps-transfer-report-in-manufacturer',['transfer_details' => $transfer_details, 'from_date' => $from_date, 'to_date' => $to_date ]);
+            if($download_type == 'pdf')
+            {
+                $pdf                    =   PDF::loadView('GpsReport::gps-transfer-report-download',['transfer_summary' => $transfer_details['transfer_summary'], 'manufacturer_to_distributor_details'=> $transfer_details['manufacturer_to_distributor_details'], 'distributor_to_dealer_details' => $transfer_details['distributor_to_dealer_details'], 'dealer_to_sub_dealer_details'=> $transfer_details['dealer_to_sub_dealer_details'],'dealer_to_client_details' => $transfer_details['dealer_to_client_details'], 'sub_dealer_to_client_details' => $transfer_details['sub_dealer_to_client_details'], 'from_date' => $from_date, 'to_date' => $to_date]);
+                return $pdf->download('gps-transfer-report.pdf');
+            }
+            else
+            {
+                return view('GpsReport::gps-transfer-report-in-manufacturer',['transfer_details' => $transfer_details, 'from_date' => $from_date, 'to_date' => $to_date ]);
+            }
         }
         else if(\Auth::user()->hasRole('dealer'))
         {
@@ -60,9 +70,17 @@ class GpsReportController extends Controller
             }
             else
             {
-                $transfer_details           =   $this->TransferSummaryOfDistributor($from_date,$to_date);
+                $transfer_details       =   $this->TransferSummaryOfDistributor($from_date,$to_date,$download_type);
             }
-            return view('GpsReport::gps-transfer-report-in-distributor',['transfer_details' => $transfer_details, 'from_date' => $from_date, 'to_date' => $to_date ]);
+            if($download_type == 'pdf')
+            {
+                $pdf                    =   PDF::loadView('GpsReport::gps-transfer-report-download',['transfer_summary' => $transfer_details['transfer_summary'], 'manufacturer_to_distributor_details'=> $transfer_details['manufacturer_to_distributor_details'], 'distributor_to_dealer_details' => $transfer_details['distributor_to_dealer_details'], 'dealer_to_sub_dealer_details'=> $transfer_details['dealer_to_sub_dealer_details'],'dealer_to_client_details' => $transfer_details['dealer_to_client_details'], 'sub_dealer_to_client_details' => $transfer_details['sub_dealer_to_client_details'], 'from_date' => $from_date, 'to_date' => $to_date]);
+                return $pdf->download('gps-transfer-report.pdf');
+            }
+            else
+            {
+                return view('GpsReport::gps-transfer-report-in-distributor',['transfer_details' => $transfer_details, 'from_date' => $from_date, 'to_date' => $to_date ]);
+            }
         }
         else if(\Auth::user()->hasRole('sub_dealer'))
         {
@@ -72,9 +90,17 @@ class GpsReportController extends Controller
             }
             else
             {
-                $transfer_details           =   $this->TransferSummaryOfDealer($from_date,$to_date);
+                $transfer_details       =   $this->TransferSummaryOfDealer($from_date,$to_date,$download_type);
             }
-            return view('GpsReport::gps-transfer-report-in-dealer',['transfer_details' => $transfer_details, 'from_date' => $from_date, 'to_date' => $to_date ]);
+            if($download_type == 'pdf')
+            {
+                $pdf                    =   PDF::loadView('GpsReport::gps-transfer-report-download',['transfer_summary' => $transfer_details['transfer_summary'], 'manufacturer_to_distributor_details'=> $transfer_details['manufacturer_to_distributor_details'], 'distributor_to_dealer_details' => $transfer_details['distributor_to_dealer_details'], 'dealer_to_sub_dealer_details'=> $transfer_details['dealer_to_sub_dealer_details'],'dealer_to_client_details' => $transfer_details['dealer_to_client_details'], 'sub_dealer_to_client_details' => $transfer_details['sub_dealer_to_client_details'], 'from_date' => $from_date, 'to_date' => $to_date]);
+                return $pdf->download('gps-transfer-report.pdf');
+            }
+            else
+            {
+                return view('GpsReport::gps-transfer-report-in-dealer',['transfer_details' => $transfer_details, 'from_date' => $from_date, 'to_date' => $to_date ]);
+            }
         }
         else if(\Auth::user()->hasRole('trader'))
         {
@@ -84,16 +110,24 @@ class GpsReportController extends Controller
             }
             else
             {
-                $transfer_details           =   $this->TransferSummaryOfSubDealer($from_date,$to_date);
+                $transfer_details       =   $this->TransferSummaryOfSubDealer($from_date,$to_date,$download_type);
             }
-            return view('GpsReport::gps-transfer-report-in-sub-dealer',['transfer_details' => $transfer_details, 'from_date' => $from_date, 'to_date' => $to_date ]);
+            if($download_type == 'pdf')
+            {
+                $pdf                    =   PDF::loadView('GpsReport::gps-transfer-report-download',['transfer_summary' => $transfer_details['transfer_summary'], 'manufacturer_to_distributor_details'=> $transfer_details['manufacturer_to_distributor_details'], 'distributor_to_dealer_details' => $transfer_details['distributor_to_dealer_details'], 'dealer_to_sub_dealer_details'=> $transfer_details['dealer_to_sub_dealer_details'],'dealer_to_client_details' => $transfer_details['dealer_to_client_details'], 'sub_dealer_to_client_details' => $transfer_details['sub_dealer_to_client_details'], 'from_date' => $from_date, 'to_date' => $to_date]);
+                return $pdf->download('gps-transfer-report.pdf');
+            }
+            else
+            {
+                return view('GpsReport::gps-transfer-report-in-sub-dealer',['transfer_details' => $transfer_details, 'from_date' => $from_date, 'to_date' => $to_date ]);
+            }
         }
     }
     /**
      * 
      * 
      */
-    public function TransferSummaryOfManufacturer($from_date,$to_date)
+    public function TransferSummaryOfManufacturer($from_date,$to_date,$download_type)
     {
         $transfer_details           =   [];
         //from manufactures
@@ -117,6 +151,10 @@ class GpsReportController extends Controller
                                             'to_clients'        =>  0,
                                             'total'             =>  $transferred_count_from_manufacturier[0]->count,
                                         ];
+        if($download_type   ==  'pdf')
+        {
+            $manufacturer_to_distributor_details    =   $this->detailedTransferReportBetweenTwoUsers($manufacturer_user_id,$distributor_user_ids,$from_date,$to_date);
+        }
         //from distributers
         $dealer_details             =   (new SubDealer())->getDealersOfDistributers($distributor_ids); 
         $dealer_user_ids            =   [];
@@ -136,6 +174,10 @@ class GpsReportController extends Controller
                                             'to_clients'        =>  0,
                                             'total'             =>  $transferred_count_from_distributor[0]->count,
                                         ];
+        if($download_type   ==  'pdf')
+        {
+            $distributor_to_dealer_details    =   $this->detailedTransferReportBetweenTwoUsers($distributor_user_ids,$dealer_user_ids,$from_date,$to_date);
+        }
         //from dealers to sub dealers
         $sub_dealer_details             =   (new Trader())->getSubDealersOfDealers($dealer_ids); 
         $sub_dealer_user_ids            =   [];
@@ -165,6 +207,11 @@ class GpsReportController extends Controller
                                             'to_clients'        =>  $transferred_count_from_dealer_to_client[0]->count,
                                             'total'             =>  ($transferred_count_from_dealer_to_sub_dealer[0]->count)+($transferred_count_from_dealer_to_client[0]->count),
                                         ];
+        if($download_type   ==  'pdf')
+        {
+            $dealer_to_sub_dealer_details           =   $this->detailedTransferReportBetweenTwoUsers($dealer_user_ids,$sub_dealer_user_ids,$from_date,$to_date);
+            $dealer_to_client_details               =   $this->detailedTransferReportBetweenTwoUsers($dealer_user_ids,$client_of_dealer_user_ids,$from_date,$to_date);
+        }
         //from sub dealers to clients
         $client_details_of_sub_dealer       =   (new Client())->getClientsOfSubDealers($sub_dealer_ids); 
         $client_of_sub_dealer_user_ids      =   [];
@@ -184,13 +231,28 @@ class GpsReportController extends Controller
                                             'to_clients'        =>  $transferred_count_from_sub_dealer_to_client[0]->count,
                                             'total'             =>  $transferred_count_from_sub_dealer_to_client[0]->count,
                                         ];
-        return $transfer_details;
+        if($download_type   ==  'pdf')
+        {
+            $sub_dealer_to_client_details           =   $this->detailedTransferReportBetweenTwoUsers($sub_dealer_user_ids,$client_of_sub_dealer_user_ids,$from_date,$to_date);
+            return [
+                'transfer_summary'                      =>  $transfer_details,
+                'manufacturer_to_distributor_details'   =>  $manufacturer_to_distributor_details,
+                'distributor_to_dealer_details'         =>  $distributor_to_dealer_details,
+                'dealer_to_sub_dealer_details'          =>  $dealer_to_sub_dealer_details,
+                'dealer_to_client_details'              =>  $dealer_to_client_details,
+                'sub_dealer_to_client_details'          =>  $sub_dealer_to_client_details 
+            ];
+        }
+        else
+        {
+            return $transfer_details;
+        }
     }
     /**
      * 
      * 
      */
-    public function TransferSummaryOfDistributor($from_date,$to_date)
+    public function TransferSummaryOfDistributor($from_date,$to_date,$download_type)
     {
         $transfer_details           =   [];
         //from distributers
@@ -214,6 +276,10 @@ class GpsReportController extends Controller
                                             'to_clients'        =>  0,
                                             'total'             =>  $transferred_count_from_distributor[0]->count,
                                         ];
+        if($download_type   ==  'pdf')
+        {
+            $distributor_to_dealer_details    =   $this->detailedTransferReportBetweenTwoUsers($distributor_user_ids,$dealer_user_ids,$from_date,$to_date);
+        }
         //from dealers to sub dealers
         $sub_dealer_details             =   (new Trader())->getSubDealersOfDealers($dealer_ids); 
         $sub_dealer_user_ids            =   [];
@@ -243,6 +309,11 @@ class GpsReportController extends Controller
                                             'to_clients'        =>  $transferred_count_from_dealer_to_client[0]->count,
                                             'total'             =>  ($transferred_count_from_dealer_to_sub_dealer[0]->count)+($transferred_count_from_dealer_to_client[0]->count),
                                         ];
+        if($download_type   ==  'pdf')
+        {
+            $dealer_to_sub_dealer_details           =   $this->detailedTransferReportBetweenTwoUsers($dealer_user_ids,$sub_dealer_user_ids,$from_date,$to_date);
+            $dealer_to_client_details               =   $this->detailedTransferReportBetweenTwoUsers($dealer_user_ids,$client_of_dealer_user_ids,$from_date,$to_date);
+        }
         //from sub dealers to clients
         $client_details_of_sub_dealer       =   (new Client())->getClientsOfSubDealers($sub_dealer_ids); 
         $client_of_sub_dealer_user_ids      =   [];
@@ -262,13 +333,28 @@ class GpsReportController extends Controller
                                             'to_clients'        =>  $transferred_count_from_sub_dealer_to_client[0]->count,
                                             'total'             =>  $transferred_count_from_sub_dealer_to_client[0]->count,
                                         ];
-        return $transfer_details;
+        if($download_type   ==  'pdf')
+        {
+            $sub_dealer_to_client_details           =   $this->detailedTransferReportBetweenTwoUsers($sub_dealer_user_ids,$client_of_sub_dealer_user_ids,$from_date,$to_date);
+            return [
+                'transfer_summary'                      =>  $transfer_details,
+                'manufacturer_to_distributor_details'   =>  [],
+                'distributor_to_dealer_details'         =>  $distributor_to_dealer_details,
+                'dealer_to_sub_dealer_details'          =>  $dealer_to_sub_dealer_details,
+                'dealer_to_client_details'              =>  $dealer_to_client_details,
+                'sub_dealer_to_client_details'          =>  $sub_dealer_to_client_details 
+            ];
+        }
+        else
+        {
+            return $transfer_details;
+        }
     }
     /**
      * 
      * 
      */
-    public function TransferSummaryOfDealer($from_date,$to_date)
+    public function TransferSummaryOfDealer($from_date,$to_date,$download_type)
     {
         $transfer_details               =   [];
         $dealer_user_ids[]              =   \Auth::user()->id;
@@ -304,6 +390,11 @@ class GpsReportController extends Controller
                                             'to_clients'        =>  $transferred_count_from_dealer_to_client[0]->count,
                                             'total'             =>  ($transferred_count_from_dealer_to_sub_dealer[0]->count)+($transferred_count_from_dealer_to_client[0]->count),
                                         ];
+        if($download_type   ==  'pdf')
+        {
+            $dealer_to_sub_dealer_details           =   $this->detailedTransferReportBetweenTwoUsers($dealer_user_ids,$sub_dealer_user_ids,$from_date,$to_date);
+            $dealer_to_client_details               =   $this->detailedTransferReportBetweenTwoUsers($dealer_user_ids,$client_of_dealer_user_ids,$from_date,$to_date);
+        }
         //from sub dealers to clients
         $client_details_of_sub_dealer       =   (new Client())->getClientsOfSubDealers($sub_dealer_ids); 
         $client_of_sub_dealer_user_ids      =   [];
@@ -323,13 +414,28 @@ class GpsReportController extends Controller
                                             'to_clients'        =>  $transferred_count_from_sub_dealer_to_client[0]->count,
                                             'total'             =>  $transferred_count_from_sub_dealer_to_client[0]->count,
                                         ];
-        return $transfer_details;
+        if($download_type   ==  'pdf')
+        {
+            $sub_dealer_to_client_details           =   $this->detailedTransferReportBetweenTwoUsers($sub_dealer_user_ids,$client_of_sub_dealer_user_ids,$from_date,$to_date);
+            return [
+                'transfer_summary'                      =>  $transfer_details,
+                'manufacturer_to_distributor_details'   =>  [],
+                'distributor_to_dealer_details'         =>  [],
+                'dealer_to_sub_dealer_details'          =>  $dealer_to_sub_dealer_details,
+                'dealer_to_client_details'              =>  $dealer_to_client_details,
+                'sub_dealer_to_client_details'          =>  $sub_dealer_to_client_details 
+            ];
+        }
+        else
+        {
+            return $transfer_details;
+        }
     }
     /**
      * 
      * 
      */
-    public function TransferSummaryOfSubDealer($from_date,$to_date)
+    public function TransferSummaryOfSubDealer($from_date,$to_date,$download_type)
     {
         $transfer_details                   =   [];
         $sub_dealer_user_ids[]              =   \Auth::user()->id;
@@ -354,7 +460,22 @@ class GpsReportController extends Controller
                                             'to_clients'        =>  $transferred_count_from_sub_dealer_to_client[0]->count,
                                             'total'             =>  $transferred_count_from_sub_dealer_to_client[0]->count,
                                         ];
-        return $transfer_details;
+        if($download_type   ==  'pdf')
+        {
+            $sub_dealer_to_client_details           =   $this->detailedTransferReportBetweenTwoUsers($sub_dealer_user_ids,$client_of_sub_dealer_user_ids,$from_date,$to_date);
+            return [
+                'transfer_summary'                      =>  $transfer_details,
+                'manufacturer_to_distributor_details'   =>  [],
+                'distributor_to_dealer_details'         =>  [],
+                'dealer_to_sub_dealer_details'          =>  [],
+                'dealer_to_client_details'              =>  [],
+                'sub_dealer_to_client_details'          =>  $sub_dealer_to_client_details 
+            ];
+        }
+        else
+        {
+            return $transfer_details;
+        }
     }
     /**
      * 
