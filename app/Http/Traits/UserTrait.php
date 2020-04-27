@@ -37,27 +37,27 @@ trait UserTrait{
                         }
                         else
                         {
-                            return $client->name;
+                            return ucfirst(strtolower($client->name));
                         }
                     }
                     else
                     {
-                        return $sub_dealer->name;
+                        return ucfirst(strtolower($sub_dealer->name));
                     }
                 }
                 else
                 {
-                    return $dealer->name;
+                    return ucfirst(strtolower($dealer->name));
                 }
             }
             else
             {
-                return $distributor->name;
+                return ucfirst(strtolower($distributor->name));
             }
         }
         else
         {
-            return $manufacturer->name;
+            return ucfirst(strtolower($manufacturer->name));
         }
     }
 
