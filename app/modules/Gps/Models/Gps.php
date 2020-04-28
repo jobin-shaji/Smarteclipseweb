@@ -36,6 +36,10 @@ class Gps extends Model
         return $this->hasMany('App\Modules\Gps\Models\GpsTransfer');
     }
 
+    public function device_return()
+    {
+        return $this->hasOne('App\Modules\DeviceReturn\Models\DeviceReturn','gps_id','id');
+    }
 
     public function gpsdata()
     {
