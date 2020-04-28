@@ -29,6 +29,7 @@
                                     <li><a class="dropdown-item" href="{{url('/gps-transfers-subdealer')}}">DEVICE TRANSFER LIST</a></li>
                                     </ul>
                                 </li>
+                                <a class="dropdown-item" href="{{url('/detailed-device-report')}}">DETAILED DEVICE REPORT  <span class="badge">New</span></a>
                             </ul>
                         </li>
 

@@ -226,6 +226,12 @@ $(function () {
         minDate: moment().millisecond(0).second(0).minute(0).hour(0)
         // minDate: moment().subtract(1,'d')
     });
+    $( ".device_report" ).datetimepicker({
+        format: 'DD-MM-YYYY',
+        minDate: '2019-10-01',
+        maxDate: 'now',
+        useCurrent: false
+    });
 
      $( ".manufacturing_date" ).datetimepicker({
         format: 'DD-MM-YYYY',
