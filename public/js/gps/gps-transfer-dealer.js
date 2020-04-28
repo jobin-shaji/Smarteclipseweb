@@ -7,10 +7,21 @@ $(document).ready(function () {
 
 function getDeviceTransferList()
 {
-    var from_date = document.getElementById('fromDate').value;
-    var to_date = document.getElementById('toDate').value;
-    var data = {'from_date':from_date , 'to_date':to_date};
-    callBackDataTable(data);
+    if(document.getElementById('fromDate').value == '')
+    {
+        alert('Please select From date');
+    }
+    else if(document.getElementById('toDate').value == '')
+    {
+        alert('Please select To date');
+    }
+
+    else{
+        var from_date = document.getElementById('fromDate').value;
+        var to_date = document.getElementById('toDate').value;
+        var data = {'from_date':from_date , 'to_date':to_date};
+        callBackDataTable(data);
+    }
 }
 
 function callBackDataTable(data){

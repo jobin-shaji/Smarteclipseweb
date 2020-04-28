@@ -10,6 +10,7 @@ use App\Modules\Root\Models\Root;
 use App\Modules\Warehouse\Models\GpsStock;
 use App\Modules\Vehicle\Models\Vehicle;
 use App\Modules\Vehicle\Models\VehicleGps;
+use App\Modules\Vehicle\Models\VehicleDailyUpdate;
 use App\Modules\Operations\Models\VehicleModels;
 use App\Modules\Operations\Models\VehicleMake;
 use App\Modules\SubDealer\Models\SubDealer;
@@ -1108,9 +1109,23 @@ public function getDeviceTestAddPage(Request $request)
                 {
                     
                      $gps=Gps::where('id',$gps)->first();
-                    
                      $gps->test_status   = 0;
                      $gps->save();
+                    $vehicle_daily_update = VehicleDailyUpdate::create([
+                        'gps_id'          => $gps,
+                        'km'              => 0,
+                        'ignition_on'     => 0,
+                        'ignition_off'    => 0,
+                        'moving'          => 0,
+                        'sleep'           => 0,
+                        'halt'            => 0,
+                        'stop'            => 0,
+                        'ac_on'           => 0,
+                        'ac_off'          => 0,
+                        'ac_on_idle'      => 0,
+                        'top_speed'       => 0,
+                        'date'            => null,
+                    ]);
                 }
                 if( $servicer_job->job_type == 1 )
                 {
