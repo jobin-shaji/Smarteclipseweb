@@ -42,7 +42,7 @@ $is_root = false;
                                   <div class="panel panel-default">
                                       <div class="table-responsive">
                                       <div class="panel-body"> -->
-                                          <table class="table table-bordered  table-striped " style="text-align: center;overflow: scroll!important;margin-left: 1%!important;">
+                                          <table class="table table-bordered  table-striped " style="text-align: center;overflow: scroll!important;margin-left: 0.5%!important;margin-right: 0.5%!important;width:95%!important">
                                             <thead>
                                               <tr>
                                                 <th><b>SL.No</b></th>
