@@ -32,7 +32,7 @@
                        
                       </div>
                     </div>
-                    <form  method="POST" action="{{route('sub-dealer.assign.servicer.save')}}">
+                    <form  method="POST" action="{{route('sub-dealer.assign.servicer.save')}}" onsubmit="return checkForm(this);">
                     {{csrf_field()}}
                     <div class="card">
                     <div class="card-body">                    
@@ -191,6 +191,16 @@
 @section('script')
 <script async defer
    src="https://maps.googleapis.com/maps/api/js?key={{config('eclipse.keys.googleMap')}}&libraries=places&callback=initMap"></script>
+   <script type="text/javascript">
+
+  function checkForm(form)
+  {
+    
+    form.submit_section.disabled = true;
+    return true;
+  }
+
+</script>
    <script>
      function initMap()
      {

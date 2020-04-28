@@ -540,6 +540,18 @@ function backgroundPostData(url, data, callBack, options) {
                 {
                     reassign_count(res);
                 }
+                else if(callBack=='rootGpsClientSale')
+                {
+                    rootGpsClientSale(res);
+                }
+                else if(callBack=='dealerGpsClientSale')
+                {
+                    dealerGpsClientSale(res);
+                }
+                else if(callBack=='subDealerGpsClientSale')
+                {
+                    subDealerGpsClientSale(res);
+                }
 
 
 
