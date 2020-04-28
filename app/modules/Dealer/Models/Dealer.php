@@ -34,5 +34,10 @@ class Dealer extends Model
 		return self::select('name')->where('user_id',$user_id)->first();
 	}
 
+	public function getDistributorDetails($distributor_id)
+	{
+		return self::select('id','name')->where('id',$distributor_id)->first();
+	}
+
     
 }

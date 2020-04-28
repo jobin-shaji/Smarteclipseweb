@@ -41,6 +41,11 @@ class SubDealer extends Model
   public function checkUserIdIsInDealerTable($user_id)
 	{
 		return self::select('name')->where('user_id',$user_id)->first();
+  }
+  
+  public function getDealerDetails($dealer_id)
+	{
+		return self::select('id','name')->where('id',$dealer_id)->first();
 	}
   
 }
