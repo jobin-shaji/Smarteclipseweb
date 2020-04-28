@@ -3,14 +3,13 @@
 <head>
 <style>
 table {
-  font-family: arial, sans-serif;
+  text-align: center;
   border-collapse: collapse;
   width: 100%;
 }
 
 td, th {
   border: 1px solid #dddddd;
-  text-align: left;
   padding: 8px;
 }
 
@@ -29,7 +28,7 @@ td, th {
 <table>
   <thead>
     <tr>
-      <th>From -> To</th>
+      <th></th>
       <th>Distributors</th>
       <th>Dealers</th>
       <th>Sub Dealers</th>
@@ -51,12 +50,12 @@ td, th {
   </tbody>
 </table>
 @endif
-@if($sub_dealer_to_client_details) != 0)
+@if($sub_dealer_to_client_details != 0)
 <br>
 <h2 style="margin-left:250px;">Report Details</h2>
 @endif
 @if(count($manufacturer_to_distributor_details) != 0)
-<h3>Transferred List - Manufacturers To Distributors</h3>
+<h3 style="text-align: center;">Transferred List - Manufacturers To Distributors</h3>
 <table>
   <thead>
       <tr>
@@ -86,7 +85,7 @@ td, th {
 </table>
 @endif
 @if(count($distributor_to_dealer_details) != 0)
-<h3>Transferred List - Distributors To Dealers</h3>
+<h3 style="text-align: center;">Transferred List - Distributors To Dealers</h3>
 <table>
   <thead>
       <tr>
@@ -116,7 +115,7 @@ td, th {
 </table>
 @endif
 @if(count($dealer_to_sub_dealer_details) != 0)
-<h3>Transferred List - Dealers To Sub Dealers</h3>
+<h3 style="text-align: center;">Transferred List - Dealers To Sub Dealers</h3>
 <table>
   <thead>
       <tr>
@@ -146,7 +145,7 @@ td, th {
 </table>
 @endif
 @if(count($dealer_to_client_details) != 0)
-<h3>Transferred List - Dealers To End Users</h3>
+<h3 style="text-align: center;">Transferred List - Dealers To End Users</h3>
 <table>
   <thead>
       <tr>
@@ -176,7 +175,7 @@ td, th {
 </table>
 @endif
 @if(count($sub_dealer_to_client_details) != 0)
-<h3>Transferred List - Sub Dealers To End Users</h3>
+<h3 style="text-align: center;">Transferred List - Sub Dealers To End Users</h3>
 <table>
   <thead>
       <tr>

@@ -62,7 +62,7 @@
                                             <table class="table table-bordered">
                                                 <thead class="thead-color">
                                                     <tr>
-                                                        <th>From -> To</th>
+                                                        <th></th>
                                                         <th>End Users</th>
                                                         <th>Total</th>
                                                     </tr>
