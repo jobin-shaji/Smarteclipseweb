@@ -1175,6 +1175,9 @@ function downloadSosLabel(id){
 // code
 function jobtypeonchange(job_type)
 {
+     var servicer_id = document.getElementById('servicer');  
+    $("#client").val(localStorage.getItem(user_id+'.29.autofill.root.servicer.client')).trigger("change");
+    
     $('#client_section').hide();
     $('#location_section').hide();
     $('#gps_section').hide();
@@ -1186,6 +1189,7 @@ function jobtypeonchange(job_type)
     $('#vehicle_section').hide();
     $("#client").val("");
     $('#gps').find('option').remove();
+
     $('#vehicle').find('option').remove();
     $.ajax({
         type:'POST',
@@ -1198,7 +1202,8 @@ function jobtypeonchange(job_type)
         success: function (res) {
             $('#client_section').show();
             $('#client').empty();
-            $('#client').focus;
+            // $('#client').focus;
+           
             $('#client').append('<option value="">Select End User</option>');   
             if(res.length == 0)
             {

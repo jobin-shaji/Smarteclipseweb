@@ -163,6 +163,8 @@
                       @endif
                     </div>
                     </div><br>
+    
+                    <input type="hidden" name="user_id" id="user_id" value="{{Auth::user()->id}}">
                     <div class="row">
                       <div class="col-md-6 ">
                         <button type="submit" id = 'submit_section' class="btn btn-primary btn-md form-btn ">Create</button>
@@ -185,10 +187,16 @@
 <script async defer
    src="https://maps.googleapis.com/maps/api/js?key={{config('eclipse.keys.googleMap')}}&libraries=places&callback=initMap"></script>
    <script>
+    $(document).ready(function () {
+      var user_id = document.getElementById('user_id');  
+    $("#servicer").val(localStorage.getItem(user_id+'.autofill.root.servicer')).trigger("change");
+   
+    });
+
      function initMap()
      {
     
-      // var input1 = document.getElementById('search_place');
+      // 
 
       //     autocomplete1 = new google.maps.places.Autocomplete(input1);
       // var searchBox1 = new google.maps.places.SearchBox(autocomplete1);
@@ -199,6 +207,17 @@
         // disable create button
         $("#submit_section").prop('disabled', true); 
       });
+      var user_id = document.getElementById('user_id');  
+      $("#servicer").change(function(){
+       localStorage.setItem(user_id+'.autofill.root.servicer',$(this).val());
+
+       });
+      $("#client").change(function(){
+        var servicer_id = document.getElementById('servicer');
+        // alert(servicer_id);
+       localStorage.setItem(user_id+'.29.autofill.root.servicer.client',$(this).val());
+       });
+
    </script>
 @endsection
 @endsection
