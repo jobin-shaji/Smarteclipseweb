@@ -113,6 +113,18 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                       </span>
                       @endif
                     </div>
+                    <div class="form-group row" style="float:none!important">
+                      <label for="fname" class="col-md-6 text-right control-label col-form-label">Commet</label>
+                      <div class="form-group has-feedback">
+                        <input type="text" class=" form-control {{ $errors->has('comment') ? ' has-error' : '' }}" name="comment" value="{{$servicer_job->comment}} " required readonly="">
+                        <span class="glyphicon glyphicon-phone form-control-feedback"></span>
+                      </div>
+                      @if ($errors->has('comment'))
+                      <span class="help-block">
+                        <strong class="error-text">{{ $errors->first('comment') }}</strong>
+                      </span>
+                      @endif
+                    </div>
                     @if($servicer_job->job_type == 3)
                     <div class="form-group row" style="float:none!important">
                       <label for="name" class="col-md-6 text-right control-label col-form-label">Vehicle Name</label>

@@ -174,6 +174,8 @@ $(function () {
     });
 
     $('.datepickerFundamental').val("");
+    $('.datepicker').val("");
+
     $('.datepickerFreebies').val("");
     $('.datepickerSuperior').val("");
     $('.datepickerPro').val("");
