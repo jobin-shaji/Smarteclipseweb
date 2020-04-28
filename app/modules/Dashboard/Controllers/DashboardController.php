@@ -1472,8 +1472,8 @@ class DashboardController extends Controller
      function getGpsClientSale(){
        $gps = Gps::select(
             'id',
-            \DB::raw('date_format(created_at, "%M") as month'),
-            \DB::raw('count(date_format(created_at, "%M")) as count')
+            \DB::raw('date_format(login_on, "%M") as month'),
+            \DB::raw('count(date_format(login_on, "%M")) as count')
         )
        ->whereNotNull('login_on')
         ->orderBy("month","DESC")
@@ -1523,8 +1523,8 @@ class DashboardController extends Controller
      function getDealerGpsClientSale($single_gps_id){
        $gps = Gps::select(
             'id',
-            \DB::raw('date_format(created_at, "%M") as month'),
-            \DB::raw('count(date_format(created_at, "%M")) as count')
+            \DB::raw('date_format(login_on, "%M") as month'),
+            \DB::raw('count(date_format(login_on, "%M")) as count')
         )
        ->whereIn('id',$single_gps_id)
        ->whereNotNull('login_on')
