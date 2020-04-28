@@ -25,7 +25,7 @@
     
     <div class="card-body">
       <section class="hilite-content">
-        <form  method="POST" action="{{route('gps-transfer-sub-dealer-trader.transfer.p')}}">
+        <form  method="POST" action="{{route('gps-transfer-sub-dealer-trader.transfer.p')}}" class="transfer">
                 {{csrf_field()}}
               <div class="row">
                 <div class="col-md-12 col-lg-6">
@@ -144,6 +144,18 @@
 <div class="clearfix"></div>
 
 @section('script')
+  <script>
+    $(".transfer").on("submit", function(){
+      if(confirm("Are you sure you want to transfer"))
+      {
+        return true;
+      }
+      else
+      {
+        return false;
+      }
+    });
+  </script>
     <script src="{{asset('js/gps/gps-transfer.js')}}"></script>
     <script src="{{asset('js/gps/gps-scanner.js')}}"></script>
 @endsection
