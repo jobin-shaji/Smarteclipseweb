@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use App\Modules\Gps\Models\Gps;
+use App\Modules\Gps\Models\GpsTransferItems;
+
 use App\Modules\Root\Models\Root;
 use App\Modules\Warehouse\Models\GpsStock;
 use App\Modules\Vehicle\Models\Vehicle;
@@ -1107,10 +1109,6 @@ public function getDeviceTestAddPage(Request $request)
                 $servicer_job->status      = self::JOB_STATUS_COMPLETED;
                 if($servicer_job->save())
                 {
-                    
-                     $gps=Gps::where('id',$gps)->first();
-                     $gps->test_status   = 0;
-                     $gps->save();
                     $vehicle_daily_update = VehicleDailyUpdate::create([
                         'gps_id'          => $gps,
                         'km'              => 0,
@@ -1124,8 +1122,13 @@ public function getDeviceTestAddPage(Request $request)
                         'ac_off'          => 0,
                         'ac_on_idle'      => 0,
                         'top_speed'       => 0,
-                        'date'            => null,
+                        'date'            =>  date("Y-m-d"),
                     ]);
+
+                     $gps=Gps::where('id',$gps)->first();
+                     $gps->test_status   = 0;
+                     $gps->save();
+                    
                 }
                 if( $servicer_job->job_type == 1 )
                 {
@@ -1945,7 +1948,21 @@ public function serviceJobDetails(Request $request)
             foreach($gps_stocks as $stock_gps){
                 $stock_gps_id[]     =   $stock_gps->gps_id;
             }
+            
+             $gps_transferItems     =   GpsTransferItems::select('id',
+                                                'gps_id',
+                                                
+                                            )
+                                         ->whereIn('gps_id',$stock_gps_id)
+                                            ->orderBy('id','desc')
+                                            ->groupBy('gps_id')
+                                            ->get();
 
+            $tansfer_items_gps_id   =   [];
+            foreach($gps_transferItems as $gps_transferItem){
+                $tansfer_items_gps_id[]     =   $gps_transferItem->gps_id;
+            }
+// dd($tansfer_items_gps_id);
             if($stock_gps_id)
             {
                 $vehicle_device     =   Vehicle::select(
@@ -2003,7 +2020,7 @@ public function serviceJobDetails(Request $request)
                 else if($job_type==2)
                 {
                     $devices=Gps::select('id','imei','serial_no')
-                                ->whereIn('id',$stock_gps_id)
+                                ->whereIn('id',$tansfer_items_gps_id)
                                 ->whereIn('id',$single_gps)
                                 ->whereIn('id',$servicer_gps)
                                 ->get();

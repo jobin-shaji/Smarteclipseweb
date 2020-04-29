@@ -188,8 +188,12 @@
    src="https://maps.googleapis.com/maps/api/js?key={{config('eclipse.keys.googleMap')}}&libraries=places&callback=initMap"></script>
    <script>
     $(document).ready(function () {
-      var user_id = document.getElementById('user_id');  
+      // var user_id = document.getElementById('user_id'); 
+      var user_id = $("#user_id").val();   
     $("#servicer").val(localStorage.getItem(user_id+'.autofill.root.servicer')).trigger("change");
+    $("#role").val(localStorage.getItem(user_id+'.autofill.root.role')).trigger("change");
+    $("#job_type").val(localStorage.getItem(user_id+'.autofill.root.job_type')).trigger("change");
+
    
     });
 
@@ -207,15 +211,18 @@
         // disable create button
         $("#submit_section").prop('disabled', true); 
       });
-      var user_id = document.getElementById('user_id');  
+
+      var user_id = $("#user_id").val();  
       $("#servicer").change(function(){
        localStorage.setItem(user_id+'.autofill.root.servicer',$(this).val());
 
        });
-      $("#client").change(function(){
-        var servicer_id = document.getElementById('servicer');
-        // alert(servicer_id);
-       localStorage.setItem(user_id+'.29.autofill.root.servicer.client',$(this).val());
+       $("#role").change(function(){
+       localStorage.setItem(user_id+'.autofill.root.role',$(this).val());
+
+       });
+      $("#job_type").change(function(){
+        localStorage.setItem(user_id+'.autofill.root.job_type',$(this).val());
        });
 
    </script>

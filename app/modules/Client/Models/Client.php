@@ -68,7 +68,7 @@ class Client extends Model
 
   public function getDetailsOfClientsUnderSubDealer($sub_dealer_id)
   {
-    return self::select('id','name')->where('sub_dealer_id',$sub_dealer_id)->get();
+    return self::select('id','name')->where('sub_dealer_id',$sub_dealer_id)->orderBy('created_at', 'DESC')->get();
   }
 
   public function getDetailsOfClientsWithReturnedVehicleGpsUnderSubDealer($sub_dealer_id)
@@ -79,7 +79,8 @@ class Client extends Model
 
   public function getDetailsOfClientsUnderTrader($trader_id)
   {
-    return self::select('id','name')->where('trader_id',$trader_id)->get();
+    
+    return self::select('id','name')->where('trader_id',$trader_id)->orderBy('created_at', 'DESC')->get();
   }
 
   public function getDetailsOfClientsWithReturnedVehicleGpsUnderTrader($trader_id)
