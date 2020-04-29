@@ -42,7 +42,7 @@
                     </div>
                     <div class="form-group has-feedback">
                       <label class="srequired">Address</label>
-                        <input type="text" class="form-control {{ $errors->has('address') ? ' has-error' : '' }}" placeholder="address" name="address" maxlength="150" required value="{{ $client->address}}"> 
+                        <input type="text" class="form-control {{ $errors->has('address') ? ' has-error' : '' }}" placeholder="address" name="address" maxlength="150"  value="{{ $client->address}}"> 
                         <span class="glyphicon glyphicon-user form-control-feedback"></span>
                         @if ($errors->has('address'))
                           <span class="help-block">
@@ -93,7 +93,7 @@
 
                        <div class="form-group has-feedback">
                       <label class="srequired">Email</label>
-                        <input type="text" class="form-control {{ $errors->has('email') ? ' has-error' : '' }}" placeholder="Email" maxlength="50" name="email" required value="{{$client->user->email}}"> 
+                        <input type="text" class="form-control {{ $errors->has('email') ? ' has-error' : '' }}" placeholder="Email" maxlength="50" name="email"  value="{{$client->user->email}}"> 
                         @if ($errors->has('email'))
                           <span class="help-block">
                             <strong class="error-text">{{ $errors->first('email') }}</strong>

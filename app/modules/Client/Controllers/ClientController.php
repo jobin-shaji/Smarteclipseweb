@@ -1382,11 +1382,11 @@ public function selectTrader(Request $request)
     {
         $rules = [
             'name' => 'required',
-            'address' => 'required',
+            // 'address' => 'required',
             'city_id' => 'required',
             'state_id' => 'required',
             'country_id' => 'required',
-             'email' => 'nullable|string|email|max:255|unique:users',
+             // 'email' => 'nullable|string|email|max:255|unique:users',
             'mobile_number' => 'required|digits:10|unique:users,mobile,'.$client->user_id
               ];
         return  $rules;
@@ -1396,11 +1396,11 @@ public function selectTrader(Request $request)
     {
         $rules = [
             'name' => 'required',
-            'address' => 'required',
+            // 'address' => 'required',
             'city_id' => 'required',
             'state_id' => 'required',
             'country_id' => 'required',
-            'email' => 'nullable|string|email|max:255|unique:users',
+            // 'email' => 'nullable|string|email|max:255|unique:users',
             'mobile_number' => 'required|digits:11|unique:users,mobile,'.$client->user_id
               ];
         return  $rules;
