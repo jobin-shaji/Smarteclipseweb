@@ -1957,7 +1957,7 @@ public function serviceJobDetails(Request $request)
             }
             
              $gps_transferItems     =   GpsTransferItems::select('id',
-                                                'gps_id',
+                                                'gps_id'
                                                 
                                             )
                                          ->whereIn('gps_id',$stock_gps_id)
