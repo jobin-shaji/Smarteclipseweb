@@ -14,7 +14,7 @@ $(document).ready(function() {
             var special_char            =       ["@","#","$","%","&"];
             var random_char             =       ["$","@","#","&","%"];
             var random_number_generated =       numbers[Math.floor(Math.random()*numbers.length)];
-            var password_generated      =       name_to_lower +special_char[Math.floor(Math.random()*special_char.length)]+last_four_mobile+random_char[Math.floor(Math.random()*random_char.length)]+letters[Math.floor(Math.random()*letters.length)]+special_char[Math.floor(Math.random()*special_char.length)]+numbers[Math.floor(Math.random()*numbers.length)];
+            var password_generated      =       name_to_lower+special_char[Math.floor(Math.random()*special_char.length)]+last_four_mobile+random_char[Math.floor(Math.random()*random_char.length)]+letters[Math.floor(Math.random()*letters.length)]+special_char[Math.floor(Math.random()*special_char.length)]+numbers[Math.floor(Math.random()*numbers.length)];
             $('#password').val(password_generated); 
             $('#confirm_password').val(password_generated);
       });
