@@ -1238,7 +1238,7 @@ function jobtypeonchange(job_type)
 }
 
 function getClientServicerGps(client_id){
-    console.log(client_id);
+    // console.log(client_id);
     $('#location_section').hide();
     $('#gps_section').hide();
     $('#description_section').hide();
@@ -1255,7 +1255,7 @@ function getClientServicerGps(client_id){
             alert('Please select job type!');
             client_id=0;
         }
-        
+
         var url         =   'servicer-client-gps';
         var data        =   {
                                 client_id : client_id,
@@ -1296,7 +1296,7 @@ function clientGps(res)
              var gps='  <option value="'+res.devices[i].id+'"  >'+res.devices[i].serial_no+'</option>';
              $("#gps").append(gps);
             }
-    
+            
               }
         $('#search_place').val(res.location);
         if( res.job_type == 3 )
