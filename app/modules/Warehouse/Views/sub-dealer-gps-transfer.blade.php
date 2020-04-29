@@ -25,7 +25,7 @@
     
     <div class="card-body">
       <section class="hilite-content">
-        <form  method="POST" action="{{route('gps-transfer-sub-dealer.transfer.p')}}">
+        <form  method="POST" action="{{route('gps-transfer-sub-dealer.transfer.p')}}" class="transfer">
                 {{csrf_field()}}
               <div class="row">
                 <div class="col-md-12 col-lg-6">
@@ -70,7 +70,7 @@
 
                   <div class="form-group has-feedback">
                     <label class="srequired">Scanned Employee Code</label>
-                    <input type="text" class="form-control {{ $errors->has('scanned_employee_code') ? ' has-error' : '' }}" placeholder="Scanned Employee Code" name="scanned_employee_code" value="{{ old('scanned_employee_code') }}" autocomplete="off" required> 
+                    <input type="text" id="scan_code" class="form-control {{ $errors->has('scanned_employee_code') ? ' has-error' : '' }}" placeholder="Scanned Employee Code" name="scanned_employee_code" value="{{ old('scanned_employee_code') }}" autocomplete="off" required> 
                     @if ($errors->has('scanned_employee_code'))
                       <span class="help-block">
                         <strong class="error-text">{{ $errors->first('scanned_employee_code') }}</strong>
@@ -81,7 +81,7 @@
 
                   <div class="form-group has-feedback">
                     <label class="srequired">Invoice Number</label>
-                    <input type="text" class="form-control {{ $errors->has('invoice_number') ? ' has-error' : '' }}" placeholder="Invoice Number" name="invoice_number" value="{{ old('invoice_number') }}" pattern="[A-Za-z0-9]+" title="letters and numbers only, no punctuation or special characters" autocomplete="off" required> 
+                    <input type="text" class="form-control {{ $errors->has('invoice_number') ? ' has-error' : '' }}" placeholder="Invoice Number" id="invoice" name="invoice_number" value="{{ old('invoice_number') }}" pattern="[A-Za-z0-9]+" title="letters and numbers only, no punctuation or special characters" autocomplete="off" required> 
                     @if ($errors->has('invoice_number'))
                       <span class="help-block">
                         <strong class="error-text">{{ $errors->first('invoice_number') }}</strong>
@@ -144,6 +144,18 @@
 <div class="clearfix"></div>
 
 @section('script')
+  <script>
+    $(".transfer").on("submit", function(){
+      if(confirm("Are you sure you want to transfer"))
+      {
+        return true;
+      }
+      else
+      {
+        return false;
+      }
+    });
+  </script>
     <script src="{{asset('js/gps/gps-transfer.js')}}"></script>
     <script src="{{asset('js/gps/gps-scanner.js')}}"></script>
 @endsection

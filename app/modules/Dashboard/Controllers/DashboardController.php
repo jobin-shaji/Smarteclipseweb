@@ -1188,6 +1188,7 @@ class DashboardController extends Controller
                 );
         return response()->json($gps_sale);
     }
+    
     function getGpsSale($root_id){
         $gps_transfers = GpsTransfer::select('id',
             'from_user_id',
@@ -1451,4 +1452,131 @@ class DashboardController extends Controller
         }
         return $vehicleTrackData;
     }
+    public function rootGpsClientSale(Request $request)
+    {
+
+        $root_id=\Auth::user()->root->id;
+        $gps=$this->getGpsClientSale();
+        $gps_month = [];
+        $gps_count = [];
+        foreach($gps as $gps_sale){
+            $gps_count[] = $gps_sale->count;
+            $gps_month[] = $gps_sale->month;
+        }
+        $gps_sale=array(
+                    "gps_count"=>$gps_count,
+                    "gps_month"=>$gps_month
+                );
+        return response()->json($gps_sale);
+    }
+     function getGpsClientSale(){
+       $gps = Gps::select(
+            'id',
+            \DB::raw('date_format(login_on, "%M") as month'),
+            \DB::raw('count(date_format(login_on, "%M")) as count')
+        )
+       ->whereNotNull('login_on')
+        ->orderBy("month","DESC")
+        ->groupBy("month")
+        ->get();
+        return $gps;
+    }
+    public function dealerGpsClientSale(Request $request)
+    {
+        $dealer_id                  =   \Auth::user()->dealer->id;
+        $sub_dealers_of_dealers     =   SubDealer::select('id','dealer_id')->where('dealer_id',$dealer_id)->withTrashed()->get();
+        $single_sub_dealers_array   =   [];
+        foreach($sub_dealers_of_dealers as $sub_dealers_array){
+            $single_sub_dealers_array[] = $sub_dealers_array->id;
+        }
+        $single_gps_id=$this->getClientGpsId($single_sub_dealers_array);       
+        $gps=$this->getDealerGpsClientSale($single_gps_id);
+        $gps_month = [];
+        $gps_count = [];
+        foreach($gps as $gps_sale){
+            $gps_count[] = $gps_sale->count;
+            $gps_month[] = $gps_sale->month;
+        }
+        $dealer_gps_sale=array(
+            "gps_count"=>$gps_count,
+            "gps_month"=>$gps_month
+        );
+        return response()->json($dealer_gps_sale);
+    }
+    public function subDealerGpsClientSale(Request $request)
+    {
+        $sub_dealer_id                  =   \Auth::user()->subdealer->id;       
+        $single_gps_id=$this->getClientGpsId($sub_dealer_id);
+        $gps=$this->getDealerGpsClientSale($single_gps_id);
+        $gps_month = [];
+        $gps_count = [];
+        foreach($gps as $gps_sale){
+            $gps_count[] = $gps_sale->count;
+            $gps_month[] = $gps_sale->month;
+        }
+        $dealer_gps_sale=array(
+            "gps_count"=>$gps_count,
+            "gps_month"=>$gps_month
+        );
+        return response()->json($dealer_gps_sale);
+    }
+     function getDealerGpsClientSale($single_gps_id){
+       $gps = Gps::select(
+            'id',
+            \DB::raw('date_format(login_on, "%M") as month'),
+            \DB::raw('count(date_format(login_on, "%M")) as count')
+        )
+       ->whereIn('id',$single_gps_id)
+       ->whereNotNull('login_on')
+        ->orderBy("month","DESC")
+        ->groupBy("month")
+        ->get();
+        return $gps;
+    }
+    function getClientGpsId($sub_dealer_ids){
+       
+        $user = \Auth::user();
+        $traders_of_sub_dealers     = Trader::select(
+            'id','sub_dealer_id'
+            )
+            ->withTrashed();
+        if($user->hasRole('dealer')){
+            $traders_of_sub_dealers     = $traders_of_sub_dealers->whereIn('sub_dealer_id',$sub_dealer_ids);
+         }
+         else{
+            $traders_of_sub_dealers     = $traders_of_sub_dealers->where('sub_dealer_id',$sub_dealer_ids);
+         }
+        $traders_of_sub_dealers     = $traders_of_sub_dealers->get();
+        $single_traders             = [];
+        foreach($traders_of_sub_dealers as $trader){
+            $single_traders[]       = $trader->id;
+        }
+        if($user->hasRole('dealer')){
+        $end_users            =   Client::select('id','trader_id','sub_dealer_id')->where(function ($query) use($single_traders, $sub_dealer_ids) {
+            $query->whereIn('trader_id', $single_traders)
+            ->orWhereIn('sub_dealer_id', $sub_dealer_ids);
+            })->get();
+        }else{
+            $end_users            =   Client::select('id','trader_id','sub_dealer_id')->where(function ($query) use($single_traders, $sub_dealer_ids) {
+            $query->whereIn('trader_id', $single_traders)
+            ->orWhere('sub_dealer_id', $sub_dealer_ids);
+            })->get();
+        }
+            $single_client             = [];
+            foreach($end_users as $end_user){
+                $single_client[]       = $end_user->id;
+            }
+        $vehicles     = Vehicle::select(
+        'id','gps_id','client_id'
+        )
+        ->withTrashed()
+        ->whereIn('client_id',$single_client)
+        ->get();
+        $single_gps_id             = [];
+        foreach($vehicles as $vehicle){
+            $single_gps_id[]       = $vehicle->gps_id;
+        }
+        return $single_gps_id;
+    }
+
 }

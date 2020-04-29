@@ -36,4 +36,19 @@ class Trader extends Model
       return $this->hasMany('App\Modules\Client\Models\Client')->withTrashed();
     }
 
+    public function getSubDealersOfDealers($dealer_ids)
+    {
+      return self::select('id','user_id')->whereIn('sub_dealer_id',$dealer_ids)->withTrashed()->get();
+    }
+
+    public function checkUserIdIsInSubDealerTable($user_id)
+    {
+      return self::select('name')->where('user_id',$user_id)->first();
+    }
+
+    public function getSubDealerDetails($sub_dealer_id)
+    {
+      return self::select('id','name')->where('id',$sub_dealer_id)->first();
+    }
+
 }

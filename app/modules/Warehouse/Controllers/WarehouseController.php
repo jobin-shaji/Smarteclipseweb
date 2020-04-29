@@ -1371,26 +1371,24 @@ class WarehouseController extends Controller {
         $dealer_name=$request->dealer_name;
         $address=$request->address;
         $mobile=$request->mobile;
-        $scanned_employee_code=$request->scanned_employee_code;
-        $invoice_number=$request->invoice_number;
         $gps_array_list = $request->gps_id;
-        $gps_array=explode(",",$gps_array_list[0]);
+        $gps_arrays=explode(",",$gps_array_list[0]);
         $gps_list=[];
-        foreach ($gps_array as $gps_id) {
+        foreach ($gps_arrays as $gps_id) {
             $gps_list[]=$gps_id;
         }
         $devices = Gps::select('id', 'serial_no')
                         ->whereIn('id',$gps_list)
                         ->get();
-        return view('Warehouse::root-gps-transfer_proceed', ['dealer_user_id' => $dealer_user_id,'dealer_name' => $dealer_name, 'address' => $address,'mobile' => $mobile, 'scanned_employee_code' => $scanned_employee_code, 'invoice_number' => $invoice_number,'devices' => $devices]);
-    }
 
-    // save root gps transfer/transfer gps from root to dealer
-    public function proceedConfirmRootGpsTransfer(Request $request)
-    {
+        foreach ($devices as $device) {
+            $gps_array[]=$device->id;
+        }
+
+        // return view('Warehouse::root-gps-transfer_proceed', ['dealer_user_id' => $dealer_user_id,'dealer_name' => $dealer_name, 'address' => $address,'mobile' => $mobile, 'scanned_employee_code' => $scanned_employee_code, 'invoice_number' => $invoice_number,'devices' => $devices]);
+
         $from_user_id = \Auth::user()->id;
-        $gps_array = $request->gps_id;
-        $to_user_id = $request->dealer_user_id;
+        $to_user_id = $dealer_user_id;
         $scanned_employee_code=$request->scanned_employee_code;
         $invoice_number=$request->invoice_number;
         $transferred_devices=[];
@@ -1435,8 +1433,60 @@ class WarehouseController extends Controller {
             $request->session()->flash('alert-class', 'alert-success');
             return redirect(route('gps-transfer.label',$encrypted_gps_transfer_id));
         }
-       
     }
+
+    // save root gps transfer/transfer gps from root to dealer
+    // public function proceedConfirmRootGpsTransfer(Request $request)
+    // {
+    //     $from_user_id = \Auth::user()->id;
+    //     $gps_array = $request->gps_id;
+    //     $to_user_id = $request->dealer_user_id;
+    //     $scanned_employee_code=$request->scanned_employee_code;
+    //     $invoice_number=$request->invoice_number;
+    //     $transferred_devices=[];
+    //     $transfer_inprogress_devices = GpsStock::select('gps_id')->whereNotNull('dealer_id')->whereIn('gps_id',$gps_array)->get();
+    //     foreach ($transfer_inprogress_devices as $devices) {
+    //         $transferred_devices[]=$devices->gps_id;
+    //     }
+    //     if($transferred_devices){
+    //         $request->session()->flash('message', 'Sorry!! This transaction is cancelled, GPS list contains already transferred devices');
+    //         $request->session()->flash('alert-class', 'alert-success');
+    //         return redirect(route('gps.transfer.root'));
+    //     }else{
+    //         $uniqid=uniqid();
+    //         $order_number=$uniqid.date("Y-m-d h:i:s");
+    //         if($gps_array){
+    //             $gps_transfer = GpsTransfer::create([
+    //               "from_user_id" => $from_user_id,
+    //               "to_user_id" => $to_user_id,
+    //               "order_number" => $order_number,
+    //               "scanned_employee_code" => $scanned_employee_code,
+    //               "invoice_number" => $invoice_number,
+    //               "dispatched_on" => date('Y-m-d H:i:s')
+    //             ]);
+    //             $last_id_in_gps_transfer=$gps_transfer->id;
+    //         }
+    //         if($last_id_in_gps_transfer){
+    //             foreach ($gps_array as $gps_id) {
+    //                 $gps_transfer_item = GpsTransferItems::create([
+    //                   "gps_id" => $gps_id,
+    //                   "gps_transfer_id" => $last_id_in_gps_transfer
+    //                 ]);
+    //                 if($gps_transfer_item){
+    //                     //update gps stock table
+    //                     $gps = GpsStock::where('gps_id',$gps_id)->first();
+    //                     $gps->dealer_id =0;
+    //                     $gps->save();
+    //                 }
+    //             }
+    //         }
+    //         $encrypted_gps_transfer_id = encrypt($gps_transfer->id);
+    //         $request->session()->flash('message', 'GPS Transfer successfully completed!');
+    //         $request->session()->flash('alert-class', 'alert-success');
+    //         return redirect(route('gps-transfer.label',$encrypted_gps_transfer_id));
+    //     }
+       
+    // }
 
     // gps transfer list - dealer
     public function getDealerList()
@@ -1554,27 +1604,25 @@ class WarehouseController extends Controller {
         $sub_dealer_name=$request->sub_dealer_name;
         $address=$request->address;
         $mobile=$request->mobile;
-        $scanned_employee_code=$request->scanned_employee_code;
-        $invoice_number=$request->invoice_number;
         $gps_array_list = $request->gps_id;
-        $gps_array=explode(",",$gps_array_list[0]);
+        $gps_arrays=explode(",",$gps_array_list[0]);
         $gps_list=[];
-        foreach ($gps_array as $gps_id) {
+        foreach ($gps_arrays as $gps_id) {
             $gps_list[]=$gps_id;
         }
         $devices = Gps::select('id', 'serial_no')
                         ->whereIn('id',$gps_list)
                         ->get();
-        return view('Warehouse::dealer-gps-transfer_proceed', ['sub_dealer_user_id' => $sub_dealer_user_id,'sub_dealer_name' => $sub_dealer_name, 'address' => $address,'mobile' => $mobile, 'scanned_employee_code' => $scanned_employee_code, 'invoice_number' => $invoice_number,'devices' => $devices]);
-    }
 
-    // save dealer gps transfer/transfer gps from dealer to sub dealer
-    public function proceedConfirmDealerGpsTransfer(Request $request)
-    {
+        foreach ($devices as $device) {
+            $gps_array[]=$device->id;
+        }
+
+        // return view('Warehouse::dealer-gps-transfer_proceed', ['sub_dealer_user_id' => $sub_dealer_user_id,'sub_dealer_name' => $sub_dealer_name, 'address' => $address,'mobile' => $mobile, 'scanned_employee_code' => $scanned_employee_code, 'invoice_number' => $invoice_number,'devices' => $devices]);
+
         $dealer_id=\Auth::user()->dealer->id;
         $from_user_id = \Auth::user()->id;
-        $gps_array = $request->gps_id;
-        $to_user_id = $request->sub_dealer_user_id;
+        $to_user_id = $sub_dealer_user_id;
         $scanned_employee_code=$request->scanned_employee_code;
         $invoice_number=$request->invoice_number;
         $transferred_devices=[];
@@ -1620,6 +1668,59 @@ class WarehouseController extends Controller {
             return redirect(route('gps-transfer-root-distributor-dealer.label',$encrypted_gps_transfer_id));
         }
     }
+
+    // save dealer gps transfer/transfer gps from dealer to sub dealer
+    // public function proceedConfirmDealerGpsTransfer(Request $request)
+    // {
+    //     $dealer_id=\Auth::user()->dealer->id;
+    //     $from_user_id = \Auth::user()->id;
+    //     $gps_array = $request->gps_id;
+    //     $to_user_id = $request->sub_dealer_user_id;
+    //     $scanned_employee_code=$request->scanned_employee_code;
+    //     $invoice_number=$request->invoice_number;
+    //     $transferred_devices=[];
+    //     $transfer_inprogress_devices = GpsStock::select('gps_id')->where('dealer_id',$dealer_id)->whereNotNull('subdealer_id')->whereIn('gps_id',$gps_array)->get();
+    //     foreach ($transfer_inprogress_devices as $devices) {
+    //         $transferred_devices[]=$devices->gps_id;
+    //     }
+    //     if($transferred_devices){
+    //         $request->session()->flash('message', 'Sorry!! This transaction is cancelled, GPS list contains already transferred devices');
+    //         $request->session()->flash('alert-class', 'alert-success');
+    //         return redirect(route('gps-transfer-dealer.create'));
+    //     }else{
+    //         $uniqid=uniqid();
+    //         $order_number=$uniqid.date("Y-m-d h:i:s");
+    //         if($gps_array){
+    //             $gps_transfer = GpsTransfer::create([
+    //               "from_user_id" => $from_user_id,
+    //               "to_user_id" => $to_user_id,
+    //               "order_number" => $order_number,
+    //               "scanned_employee_code" => $scanned_employee_code,
+    //               "invoice_number" => $invoice_number,
+    //               "dispatched_on" => date('Y-m-d H:i:s')
+    //             ]);
+    //             $last_id_in_gps_transfer=$gps_transfer->id;
+    //         }
+    //         if($last_id_in_gps_transfer){
+    //             foreach ($gps_array as $gps_id) {
+    //                 $gps_transfer_item = GpsTransferItems::create([
+    //                   "gps_id" => $gps_id,
+    //                   "gps_transfer_id" => $last_id_in_gps_transfer
+    //                 ]);
+    //                 if($gps_transfer_item){
+    //                     //update gps stock table
+    //                     $gps = GpsStock::where('gps_id',$gps_id)->first();
+    //                     $gps->subdealer_id =0;
+    //                     $gps->save();
+    //                 }
+    //             }
+    //         }
+    //         $encrypted_gps_transfer_id = encrypt($gps_transfer->id);
+    //         $request->session()->flash('message', 'GPS Transfer successfully completed!');
+    //         $request->session()->flash('alert-class', 'alert-success');
+    //         return redirect(route('gps-transfer-root-distributor-dealer.label',$encrypted_gps_transfer_id));
+    //     }
+    // }
 
     // gps transfer list - sub dealer to trader
     public function getSubDealerToTraderTransferredList() 
@@ -1744,31 +1845,31 @@ class WarehouseController extends Controller {
         }
         $this->validate($request, $rules,['gps_id.min' => 'Please scan at least one QR code']);
         $trader_user_id=$request->trader_user_id;
+        $trader_id = Trader::where('user_id',$trader_user_id)->first();
         $trader_name=$request->trader_name;
         $address=$request->address;
         $mobile=$request->mobile;
-        $scanned_employee_code=$request->scanned_employee_code;
-        $invoice_number=$request->invoice_number;
         $gps_array_list = $request->gps_id;
-        $gps_array=explode(",",$gps_array_list[0]);
+        $gps_arrays=explode(",",$gps_array_list[0]);
         $gps_list=[];
-        foreach ($gps_array as $gps_id) {
+        foreach ($gps_arrays as $gps_id) {
             $gps_list[]=$gps_id;
         }
         $devices = Gps::select('id', 'serial_no')
                         ->whereIn('id',$gps_list)
                         ->get();
-        return view('Warehouse::sub-dealer-to-trader-gps-transfer_proceed', ['trader_user_id' => $trader_user_id,'trader_name' => $trader_name, 'address' => $address,'mobile' => $mobile, 'scanned_employee_code' => $scanned_employee_code, 'invoice_number' => $invoice_number,'devices' => $devices]);
-    }
 
-    // save sub dealer gps transfer/transfer gps from dealer(sub dealer) to sub dealer(trader)
-    public function proceedConfirmSubDealerToTraderGpsTransfer(Request $request) 
-    {
+        foreach ($devices as $device) {
+            $gps_array[]=$device->id;
+        }
+
+        // return view('Warehouse::sub-dealer-to-trader-gps-transfer_proceed', ['trader_user_id' => $trader_user_id,'trader_name' => $trader_name, 'address' => $address,'mobile' => $mobile, 'scanned_employee_code' => $scanned_employee_code, 'invoice_number' => $invoice_number,'devices' => $devices]);
+
+
         $subdealer_id=\Auth::user()->subdealer->id;
         $from_user_id = \Auth::user()->id;
-        $gps_array = $request->gps_id;
         $to_user_id = $request->trader_user_id;
-        $trader_id = $request->trader_id;
+        $trader_id = $trader_id->id;
         $scanned_employee_code=$request->scanned_employee_code;
         $invoice_number=$request->invoice_number;
         $transferred_devices=[];
@@ -1821,6 +1922,67 @@ class WarehouseController extends Controller {
             return redirect(route('gps-transfer-root-sub-dealer-trader.label',$encrypted_gps_transfer_id));
         }
     }
+
+    // save sub dealer gps transfer/transfer gps from dealer(sub dealer) to sub dealer(trader)
+    // public function proceedConfirmSubDealerToTraderGpsTransfer(Request $request) 
+    // {
+    //     $subdealer_id=\Auth::user()->subdealer->id;
+    //     $from_user_id = \Auth::user()->id;
+    //     $gps_array = $request->gps_id;
+    //     $to_user_id = $request->trader_user_id;
+    //     $trader_id = $request->trader_id;
+    //     $scanned_employee_code=$request->scanned_employee_code;
+    //     $invoice_number=$request->invoice_number;
+    //     $transferred_devices=[];
+    //     $transfer_inprogress_devices = GpsStock::select('gps_id')
+    //                                     ->where('subdealer_id',$subdealer_id)
+    //                                     ->whereIn('gps_id',$gps_array)
+    //                                     ->where(function ($query) {
+    //                                         $query->whereNotNull('trader_id')
+    //                                         ->orWhereNotNull('client_id');
+    //                                         })
+    //                                     ->get();
+    //     foreach ($transfer_inprogress_devices as $devices) {
+    //         $transferred_devices[]=$devices->gps_id;
+    //     }
+    //     if($transferred_devices){
+    //         $request->session()->flash('message', 'Sorry!! This transaction is cancelled, GPS list contains already transferred devices');
+    //         $request->session()->flash('alert-class', 'alert-success');
+    //         return redirect(route('gps-transfer-sub-dealer-trader.create'));
+    //     }else{
+    //         $uniqid=uniqid();
+    //         $order_number=$uniqid.date("Y-m-d h:i:s");
+    //         if($gps_array){
+    //             $gps_transfer = GpsTransfer::create([
+    //               "from_user_id" => $from_user_id, 
+    //               "to_user_id" => $to_user_id,
+    //               "order_number" => $order_number,
+    //               "scanned_employee_code" => $scanned_employee_code,
+    //               "invoice_number" => $invoice_number,
+    //               "dispatched_on" => date('Y-m-d H:i:s')
+    //             ]);
+    //             $last_id_in_gps_transfer=$gps_transfer->id;
+    //         }
+    //         if($last_id_in_gps_transfer){
+    //             foreach ($gps_array as $gps_id) {
+    //                 $gps_transfer_item = GpsTransferItems::create([
+    //                   "gps_id" => $gps_id, 
+    //                   "gps_transfer_id" => $last_id_in_gps_transfer
+    //                 ]);
+    //                 if($gps_transfer_item){
+    //                     //update gps stock table
+    //                     $gps = GpsStock::where('gps_id',$gps_id)->first();
+    //                     $gps->trader_id =0;
+    //                     $gps->save();
+    //                 }
+    //             }
+    //         }
+    //         $encrypted_gps_transfer_id = encrypt($gps_transfer->id);
+    //         $request->session()->flash('message', 'GPS Transfer successfully completed!');
+    //         $request->session()->flash('alert-class', 'alert-success');
+    //         return redirect(route('gps-transfer-root-sub-dealer-trader.label',$encrypted_gps_transfer_id));
+    //     }
+    // }
 
     // gps transfer list - dealer
     public function getSubDealerList()
@@ -1932,32 +2094,31 @@ class WarehouseController extends Controller {
         $this->validate($request, $rules,['gps_id.min' => 'Please scan at least one QR code']);
         $client_user_id=$request->client_user_id;
         $client = Client::where('user_id',$client_user_id)->first();
-        $client_id=$client->id;
         $client_name=$request->client_name;
         $address=$request->address;
         $mobile=$request->mobile;
-        $scanned_employee_code=$request->scanned_employee_code;
-        $invoice_number=$request->invoice_number;
         $gps_array_list = $request->gps_id;
-        $gps_array=explode(",",$gps_array_list[0]);
+        $gps_arrays=explode(",",$gps_array_list[0]);
         $gps_list=[];
-        foreach ($gps_array as $gps_id) {
+        foreach ($gps_arrays as $gps_id) {
             $gps_list[]=$gps_id;
         }
         $devices = Gps::select('id', 'serial_no')
                         ->whereIn('id',$gps_list)
                         ->get();
-        return view('Warehouse::sub-dealer-gps-transfer_proceed', ['client_user_id' => $client_user_id,'client_id' => $client_id,'client_name' => $client_name, 'address' => $address,'mobile' => $mobile, 'scanned_employee_code' => $scanned_employee_code, 'invoice_number' => $invoice_number,'devices' => $devices]);
-    }
 
-    // save dealer gps transfer/transfer gps from sub dealer to client
-    public function proceedConfirmSubDealerGpsTransfer(Request $request)
-    {
+        foreach ($devices as $device) {
+            $gps_array[]=$device->id;
+        }
+
+
+        // return view('Warehouse::sub-dealer-gps-transfer_proceed', ['client_user_id' => $client_user_id,'client_id' => $client_id,'client_name' => $client_name, 'address' => $address,'mobile' => $mobile, 'scanned_employee_code' => $scanned_employee_code, 'invoice_number' => $invoice_number,'devices' => $devices]);
+
+
         $subdealer_id=\Auth::user()->subdealer->id;
         $from_user_id = \Auth::user()->id;
-        $gps_array = $request->gps_id;
-        $to_user_id = $request->client_user_id;
-        $client_id = $request->client_id;
+        $to_user_id = $client_user_id;
+        $client_id = $client->id;
         $scanned_employee_code=$request->scanned_employee_code;
         $invoice_number=$request->invoice_number;
         $transferred_devices=[];
@@ -2011,6 +2172,68 @@ class WarehouseController extends Controller {
             return redirect(route('gps-transfer-root-dealer-client.label',$encrypted_gps_transfer_id));
         }
     }
+
+    // save dealer gps transfer/transfer gps from sub dealer to client
+    // public function proceedConfirmSubDealerGpsTransfer(Request $request)
+    // {
+    //     $subdealer_id=\Auth::user()->subdealer->id;
+    //     $from_user_id = \Auth::user()->id;
+    //     $gps_array = $request->gps_id;
+    //     $to_user_id = $request->client_user_id;
+    //     $client_id = $request->client_id;
+    //     $scanned_employee_code=$request->scanned_employee_code;
+    //     $invoice_number=$request->invoice_number;
+    //     $transferred_devices=[];
+    //     $transfer_inprogress_devices = GpsStock::select('gps_id')
+    //                                     ->where('subdealer_id',$subdealer_id)
+    //                                     ->whereIn('gps_id',$gps_array)
+    //                                     ->where(function ($query) {
+    //                                         $query->whereNotNull('trader_id')
+    //                                         ->orWhereNotNull('client_id');
+    //                                         })
+    //                                     ->get();
+    //     foreach ($transfer_inprogress_devices as $devices) {
+    //         $transferred_devices[]=$devices->gps_id;
+    //     }
+    //     if($transferred_devices){
+    //         $request->session()->flash('message', 'Sorry!! This transaction is cancelled, GPS list contains already transferred devices');
+    //         $request->session()->flash('alert-class', 'alert-success');
+    //         return redirect(route('gps-transfer-sub-dealer.create'));
+    //     }else{
+    //         $uniqid=uniqid();
+    //         $order_number=$uniqid.date("Y-m-d h:i:s");
+    //         if($gps_array){
+    //             $gps_transfer = GpsTransfer::create([
+    //               "from_user_id" => $from_user_id,
+    //               "to_user_id" => $to_user_id,
+    //               "order_number" => $order_number,
+    //               "scanned_employee_code" => $scanned_employee_code,
+    //               "invoice_number" => $invoice_number,
+    //               "dispatched_on" => date('Y-m-d H:i:s'),
+    //               "accepted_on" => date('Y-m-d H:i:s')
+    //             ]);
+    //             $last_id_in_gps_transfer=$gps_transfer->id;
+    //         }
+    //         if($last_id_in_gps_transfer){
+    //             foreach ($gps_array as $gps_id) {
+    //                 $gps_transfer_item = GpsTransferItems::create([
+    //                   "gps_id" => $gps_id,
+    //                   "gps_transfer_id" => $last_id_in_gps_transfer
+    //                 ]);
+    //                 if($gps_transfer_item){
+    //                     //update gps stock table
+    //                     $gps = GpsStock::where('gps_id',$gps_id)->first();
+    //                     $gps->client_id =$client_id;
+    //                     $gps->save();
+    //                 }
+    //             }
+    //         }
+    //         $encrypted_gps_transfer_id = encrypt($gps_transfer->id);
+    //         $request->session()->flash('message', 'GPS Transfer successfully completed!');
+    //         $request->session()->flash('alert-class', 'alert-success');
+    //         return redirect(route('gps-transfer-root-dealer-client.label',$encrypted_gps_transfer_id));
+    //     }
+    // }
 
     // gps transfer list - dealer
     public function getTraderToClientTransferredList()
@@ -2109,32 +2332,29 @@ class WarehouseController extends Controller {
         $this->validate($request, $rules,['gps_id.min' => 'Please scan at least one QR code']);
         $client_user_id=$request->client_user_id;
         $client = Client::where('user_id',$client_user_id)->first();
-        $client_id=$client->id;
         $client_name=$request->client_name;
         $address=$request->address;
         $mobile=$request->mobile;
-        $scanned_employee_code=$request->scanned_employee_code;
-        $invoice_number=$request->invoice_number;
         $gps_array_list = $request->gps_id;
-        $gps_array=explode(",",$gps_array_list[0]);
+        $gps_arrays=explode(",",$gps_array_list[0]);
         $gps_list=[];
-        foreach ($gps_array as $gps_id) {
+        foreach ($gps_arrays as $gps_id) {
             $gps_list[]=$gps_id;
         }
         $devices = Gps::select('id', 'serial_no')
                         ->whereIn('id',$gps_list)
                         ->get();
-        return view('Warehouse::trader-to-end-user-gps-transfer_proceed', ['client_user_id' => $client_user_id,'client_id' => $client_id,'client_name' => $client_name, 'address' => $address,'mobile' => $mobile, 'scanned_employee_code' => $scanned_employee_code, 'invoice_number' => $invoice_number,'devices' => $devices]);
-    }
 
-    // save trader gps transfer/transfer gps from trader to client
-    public function proceedConfirmTraderToClientGpsTransfer(Request $request)
-    {
+        foreach ($devices as $device) {
+            $gps_array[]=$device->id;
+        }
+
+        // return view('Warehouse::trader-to-end-user-gps-transfer_proceed', ['client_user_id' => $client_user_id,'client_id' => $client_id,'client_name' => $client_name, 'address' => $address,'mobile' => $mobile, 'scanned_employee_code' => $scanned_employee_code, 'invoice_number' => $invoice_number,'devices' => $devices]);
+
         $trader_id=\Auth::user()->trader->id;
         $from_user_id = \Auth::user()->id;
-        $gps_array = $request->gps_id;
-        $to_user_id = $request->client_user_id;
-        $client_id = $request->client_id;
+        $to_user_id = $client_user_id;
+        $client_id = $client->id;
         $scanned_employee_code=$request->scanned_employee_code;
         $invoice_number=$request->invoice_number;
         //to check the device is already transferred or not
@@ -2182,6 +2402,62 @@ class WarehouseController extends Controller {
             return redirect(route('gps-transfer-root-trader-end-user.label',$encrypted_gps_transfer_id));
         }
     }
+
+    // save trader gps transfer/transfer gps from trader to client
+    // public function proceedConfirmTraderToClientGpsTransfer(Request $request)
+    // {
+    //     $trader_id=\Auth::user()->trader->id;
+    //     $from_user_id = \Auth::user()->id;
+    //     $gps_array = $request->gps_id;
+    //     $to_user_id = $request->client_user_id;
+    //     $client_id = $request->client_id;
+    //     $scanned_employee_code=$request->scanned_employee_code;
+    //     $invoice_number=$request->invoice_number;
+    //     //to check the device is already transferred or not
+    //     $transferred_devices = GpsStock::select('gps_id')
+    //                                     ->where('trader_id',$trader_id)
+    //                                     ->whereIn('gps_id',$gps_array)
+    //                                     ->whereNotNull('client_id')
+    //                                     ->count();
+    //     if($transferred_devices >= 1){
+    //         $request->session()->flash('message', 'Sorry!! This transaction is cancelled, GPS list contains already transferred devices');
+    //         $request->session()->flash('alert-class', 'alert-success');
+    //         return redirect(route('gps-transfer-trader-end-user.create'));
+    //     }else{
+    //         $uniqid=uniqid();
+    //         $order_number=$uniqid.date("Y-m-d h:i:s");
+    //         if($gps_array){
+    //             $gps_transfer = GpsTransfer::create([
+    //               "from_user_id" => $from_user_id,
+    //               "to_user_id" => $to_user_id,
+    //               "order_number" => $order_number,
+    //               "scanned_employee_code" => $scanned_employee_code,
+    //               "invoice_number" => $invoice_number,
+    //               "dispatched_on" => date('Y-m-d H:i:s'),
+    //               "accepted_on" => date('Y-m-d H:i:s')
+    //             ]);
+    //             $last_id_in_gps_transfer=$gps_transfer->id;
+    //         }
+    //         if($last_id_in_gps_transfer){
+    //             foreach ($gps_array as $gps_id) {
+    //                 $gps_transfer_item = GpsTransferItems::create([
+    //                   "gps_id" => $gps_id,
+    //                   "gps_transfer_id" => $last_id_in_gps_transfer
+    //                 ]);
+    //                 if($gps_transfer_item){
+    //                     //update gps stock table
+    //                     $gps = GpsStock::where('gps_id',$gps_id)->first();
+    //                     $gps->client_id =$client_id;
+    //                     $gps->save();
+    //                 }
+    //             }
+    //         }
+    //         $encrypted_gps_transfer_id = encrypt($gps_transfer->id);
+    //         $request->session()->flash('message', 'GPS Transfer successfully completed!');
+    //         $request->session()->flash('alert-class', 'alert-success');
+    //         return redirect(route('gps-transfer-root-trader-end-user.label',$encrypted_gps_transfer_id));
+    //     }
+    // }
 
     //view gps transfer list
     public function viewGpsTransfer(Request $request)

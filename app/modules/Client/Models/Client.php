@@ -100,6 +100,21 @@ class Client extends Model
     WHERE vehicles.is_returned = 1 AND vehicles.is_reinstallation_job_created = 0  GROUP BY clients.id");
   }
 
+  public function getClientsOfDealers($dealer_ids)
+	{
+		return self::select('id','user_id')->whereIn('sub_dealer_id',$dealer_ids)->whereNull('trader_id')->withTrashed()->get();
+  }
+
+  public function getClientsOfSubDealers($sub_dealer_ids)
+	{
+		return self::select('id','user_id')->whereIn('trader_id',$sub_dealer_ids)->whereNull('sub_dealer_id')->withTrashed()->get();
+  }
+
+  public function checkUserIdIsInClientTable($user_id)
+  {
+    return self::select('name')->where('user_id',$user_id)->first();
+  }
+
   
 
 

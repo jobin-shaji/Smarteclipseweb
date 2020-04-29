@@ -1661,10 +1661,14 @@ public function serviceJobDetails(Request $request)
     }
 
     public function downloadJobCompleteCertificate(Request $request){
-
+        
         $servicer_job_id = Crypt::decrypt($request->id);
         $servicer_job = ServicerJob::find($servicer_job_id);
         $user_id=$servicer_job->user_id;
+        $gps_id=$servicer_job->gps_id;
+        $vehicle=Vehicle::select('id')->where('gps_id',$gps_id)->first();
+        $fitment_images=Document::select('path')->where('vehicle_id',$vehicle->id)->get();
+        // dd($fitment_images['3']->path);
         $dealer=SubDealer::where('user_id',$user_id)->first();
         $trader=Trader::where('user_id',$user_id)->first();
         $root=Root::where('user_id',$user_id)->first();
@@ -1685,7 +1689,7 @@ public function serviceJobDetails(Request $request)
         if($servicer_job == null){
            return view('Servicer::404');
         }
-        $pdf = PDF::loadView('Servicer::installation-certificate-download',['servicer_job' => $servicer_job,'vehicle_servicer_job_log'=> $vehicle_servicer_job_log,'client' => $client,'dealer_trader'=>$dealer_trader]);
+        $pdf = PDF::loadView('Servicer::installation-certificate-download',['servicer_job' => $servicer_job,'vehicle_servicer_job_log'=> $vehicle_servicer_job_log,'client' => $client,'dealer_trader'=>$dealer_trader,'fitment_images' => $fitment_images]);
         return $pdf->download('installation-certificate.pdf');
     }
 
@@ -1835,10 +1839,12 @@ public function serviceJobDetails(Request $request)
     {
         $decrypted          =   Crypt::decrypt($request->id);
         $servicer_job       =   ServicerJob::withTrashed()->where('id', $decrypted)->first();
-        $vehicle_device     =   (new VehicleGps())->getVehicleGpsLogBasedOnGpsAndServicerJobId($servicer_job->gps_id,$servicer_job->id);
+        $client_id          =   $servicer_job->client_id;
+        $vehicle_device     =   (new VehicleGps())->getVehicleGpsLogBasedOnGps($servicer_job->gps_id);
         if($servicer_job == null){
            return view('Servicer::404');
         }
+        
         return view('Servicer::job-history-details',['servicer_job' => $servicer_job,'vehicle_device' => $vehicle_device]);
     }
 
@@ -1849,6 +1855,7 @@ public function serviceJobDetails(Request $request)
     {
         $decrypted          =   Crypt::decrypt($request->id);
         $servicer_job       =   ServicerJob::withTrashed()->where('id', $decrypted)->first();
+        $client_id          =   $servicer_job->client_id;
         $vehicle_device     =   (new VehicleGps())->getVehicleGpsLogBasedOnGps($servicer_job->gps_id);
         if($servicer_job == null){
            return view('Servicer::404');

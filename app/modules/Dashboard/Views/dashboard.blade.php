@@ -181,6 +181,13 @@
         <div class="col-lg-6 col-xs-6">
           <canvas id="rootChartUser" style="max-width: 100%; height: 200px;"></canvas>
         </div>
+        <div class="col-lg-6 col-xs-6">
+          <canvas id="rootGpsSaleChart" style="max-width: 100%; height: 200px;"></canvas>
+        </div>
+        
+      </div>
+       <div class="row">
+        
       </div>
     </section>
   </div>
@@ -314,12 +321,15 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-lg-6 col-xs-6">
-                <canvas id="rootChart" style="max-width: 100%;"></canvas>
+               <div class="col-lg-6 col-xs-6">
+                <canvas id="rootChart" style="max-width: 100%; height: 200px;"></canvas>
               </div>
               <div class="col-lg-6 col-xs-6">
                 <canvas id="rootChartUser" style="max-width: 100%;"></canvas>
               </div>
+               <div class="col-lg-6 col-xs-6">
+              <canvas id="rootGpsSaleChart" style="max-width: 100%; height: 200px;"></canvas>
+            </div>
             </div>
           </div>
         </div>
@@ -578,6 +588,9 @@
       </div>
       <div class="col-lg-6 col-xs-6">
         <canvas id="rootChartUser" style="max-width: 100%;"></canvas>
+      </div>
+      <div class="col-lg-6 col-xs-6">
+        <canvas id="rootGpsSaleChart" style="max-width: 100%; height: 200px;"></canvas>
       </div>
     </div>
   </div>

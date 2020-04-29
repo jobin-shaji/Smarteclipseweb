@@ -27,8 +27,8 @@
           <div class="row">
             <div class="col-md-12">
               <div class="cover_div_search">
-                <div class="row">    
-                  <div class="col-lg-3 col-md-2"> 
+                <div class="row" style="width: 115%">    
+                  <div class="col-lg-3 col-md-2" style="flex: 0 0 14%!important"> 
                     <div class="form-group">                    
                       <label> Type Of Transfer</label>
                       <select class="form-control select2" data-live-search="true" title="Select Transfer Type" id="transfer_type" name="transfer_type">
@@ -41,23 +41,24 @@
                       </select>
                     </div>
                   </div>                     
-                  <div class="col-lg-3 col-md-2"> 
+                  <div class="col-lg-3 col-md-2" style="flex: 0 0 15%!important"> 
                     <div class="form-group">                    
                       <label id="from_label"> From </label>
                       <select class="form-control select2" id="from_id" name="from_id"  required>
-                      <option value="" selected disabled>Please Select Previous Dropdown</option>
+                      <option value="" selected disabled>Select Previous Menu</option>
                       </select>
                     </div>
-                  </div>
-                  <div class="col-lg-3 col-md-2"> 
+                  </div> 
+                  <div class="col-lg-3 col-md-2" style="flex: 0 0 15%!important"> 
                     <div class="form-group">                    
                       <label id="to_label"> To </label>
                       <select class="form-control select2" id="to_id" name="to_id"  required>
-                      <option value="" selected disabled>Please Select Previous Dropdown</option>
+                      <option value="" selected disabled>Select Previous Menu</option>
                       </select>
                     </div>
                   </div>
-                  <div class="col-lg-3 col-md-2"> 
+                  <br/>
+                  <div class="col-lg-3 col-md-2" style="flex: 0 0 15%!important"> 
                     <div class="form-group">                      
                       <label> From Date</label>
                       <input type="text" class="form-control" id="fromDate" name="fromDate" onkeydown="return false" autocomplete="off"  required>
@@ -66,7 +67,7 @@
                       </span>
                     </div>
                   </div>
-                  <div class="col-lg-3 col-md-2"> 
+                  <div class="col-lg-3 col-md-2" style="flex: 0 0 15%!important"> 
                     <div class="form-group">                     
                       <label> To Date</label>
                       <input type="text" class="form-control" id="toDate" name="toDate" onkeydown="return false" autocomplete="off" required>
@@ -135,4 +136,10 @@
 
   @section('script')
     <script src="{{asset('js/gps/gps-transferred-root-list.js')}}"></script>
+    <style>
+      /*.col-lg-3
+      {
+        flex: 0 0 15%!important;
+      }*/
+    </style>
   @endsection

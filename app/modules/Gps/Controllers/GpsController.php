@@ -2139,6 +2139,40 @@ class GpsController extends Controller {
         return view('Gps::returned-gps-list');
     }
 
+    public function getReturnDeviceList(Request $request)
+    {
+        if(\Auth::user()->hasRole('dealer|root|client'))
+        {
+            $decrypted_id = Crypt::decrypt($request->id);
+            $gps      =   Gps::withTrashed()
+                ->where('id',$decrypted_id)
+                ->first();
+            if($request->ajax())
+            {
+                return ($gps != null) ? Response([ 'links' => $gps->appends(['sort' => 'votes'])]) : Response([ 'links' => null]);
+            }
+            else
+            {
+                return ($gps != null) ? view('Gps::return_device_list',['gps'=>$gps]) : view('Gps::404');
+            }
+        }
+        elseif (\Auth::user()->hasRole('sub_dealer|trader')) {
+            $decrypted_id = Crypt::decrypt($request->id);
+            $gps      =   Gps::withTrashed()
+                ->with('device_return.servicer')
+                ->where('id',$decrypted_id)
+                ->first();
+            if($request->ajax())
+            {
+                return ($gps != null) ? Response([ 'links' => $gps->appends(['sort' => 'votes'])]) : Response([ 'links' => null]);
+            }
+            else
+            {
+                return ($gps != null) ? view('Gps::return_device_list_servicer',['gps'=>$gps]) : view('Gps::404');
+            }
+        }
+    }
+
     public function getReturnedGpsList(Request $request)
     {
         $gps_stock      =   GpsStock::withTrashed()
@@ -2149,31 +2183,63 @@ class GpsController extends Controller {
         if(\Auth::user()->hasRole('root'))
         {
             $gps_stock  =   $gps_stock->get();
+            return DataTables::of($gps_stock)
+            ->addIndexColumn()
+            ->addColumn('action', function ($gps_stock) { 
+            $b_url = \URL::to('/');
+            return "<a href=".$b_url."/device_return_list/".Crypt::encrypt($gps_stock->gps_id)."/view class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>";
+            })
+            ->make();
         }
         else if(\Auth::user()->hasRole('dealer'))
         {
             $dealer_id  =   \Auth::user()->dealer->id;
             $gps_stock  =   $gps_stock->where('dealer_id',$dealer_id)->get();
+            return DataTables::of($gps_stock)
+            ->addIndexColumn()
+            ->addColumn('action', function ($gps_stock) { 
+            $b_url = \URL::to('/');
+            return "<a href=".$b_url."/device_return_list/".Crypt::encrypt($gps_stock->gps_id)."/view class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>";
+            })
+            ->make();
         }
         else if(\Auth::user()->hasRole('sub_dealer'))
         {
             $sub_dealer_id  =   \Auth::user()->subdealer->id;
             $gps_stock      =   $gps_stock->where('subdealer_id',$sub_dealer_id)->get();
+            return DataTables::of($gps_stock)
+            ->addIndexColumn()
+            ->addColumn('action', function ($gps_stock) { 
+            $b_url = \URL::to('/');
+            return "<a href=".$b_url."/device_return_list/".Crypt::encrypt($gps_stock->gps_id)."/view class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>";
+            })
+            ->make();
         }
         else if(\Auth::user()->hasRole('trader'))
         {
             $trader_id  =   \Auth::user()->trader->id;
             $gps_stock      =   $gps_stock->where('trader_id',$trader_id)->get();
+            return DataTables::of($gps_stock)
+            ->addIndexColumn()
+            ->addColumn('action', function ($gps_stock) { 
+            $b_url = \URL::to('/');
+            return "<a href=".$b_url."/device_return_list/".Crypt::encrypt($gps_stock->gps_id)."/view class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>";
+            })
+            ->make();
         }
         else if(\Auth::user()->hasRole('client'))
         {
             $client_id  =   \Auth::user()->client->id;
             $gps_stock      =   $gps_stock->where('client_id',$client_id)->get();
-        }
-
-        return DataTables::of($gps_stock)
+            return DataTables::of($gps_stock)
             ->addIndexColumn()
+            ->addColumn('action', function ($gps_stock) { 
+            $b_url = \URL::to('/');
+            return "<a href=".$b_url."/device_return_list/".Crypt::encrypt($gps_stock->gps_id)."/view class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>";
+            })
             ->make();
+        }
+        
     }
     /**
      * esim updation
