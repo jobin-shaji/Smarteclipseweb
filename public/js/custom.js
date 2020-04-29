@@ -1193,6 +1193,7 @@ function downloadSosLabel(id){
 // code
 function jobtypeonchange(job_type)
 {
+     
     $('#client_section').hide();
     $('#location_section').hide();
     $('#gps_section').hide();
@@ -1204,6 +1205,7 @@ function jobtypeonchange(job_type)
     $('#vehicle_section').hide();
     $("#client").val("");
     $('#gps').find('option').remove();
+
     $('#vehicle').find('option').remove();
     $.ajax({
         type:'POST',
@@ -1217,6 +1219,7 @@ function jobtypeonchange(job_type)
             $('#client_section').show();
             $('#client').empty();
             $('#client').focus;
+           
             $('#client').append('<option value="">Select End User</option>');   
             if(res.length == 0)
             {
@@ -1261,6 +1264,8 @@ function getClientServicerGps(client_id){
 
 function clientGps(res)
 {
+    var user_id = $("#user_id").val();   
+
     $('#location_section').show();
     $('#gps_section').show();
     $('#description_section').show();
@@ -1281,12 +1286,15 @@ function clientGps(res)
                 $("#submit_section").prop('disabled', false); 
                 $("#submit_text").hide();
             }
+            
             $('#gps').append('<option value="">Select GPS</option>'); 
             for (var i = 0; i < length; i++) {
              var gps='  <option value="'+res.devices[i].id+'"  >'+res.devices[i].serial_no+'</option>';
              $("#gps").append(gps);
             }
-        }
+// $("#gps").select2().val(localStorage.getItem(user_id+'.autofill.sbdealer.gps').toString()).trigger("change");
+       
+              }
         $('#search_place').val(res.location);
         if( res.job_type == 3 )
         {
@@ -1328,6 +1336,9 @@ function clientGps(res)
             return this.defaultSelected;
         });
     }
+    // $("#gps").change(function(){
+    //    localStorage.setItem(user_id+'.autofill.subdealer.gps',$(this).val());
+    //    });
 }
 
 
