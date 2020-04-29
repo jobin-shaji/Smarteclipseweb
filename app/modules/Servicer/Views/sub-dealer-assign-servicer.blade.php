@@ -173,6 +173,7 @@
                     </div>
                     </div><br>
                     <input type="hidden" name="user_id" id="user_id" value="{{Auth::user()->id}}">
+                    <input type="hidden" name="client_id" id="client_id" value="{{$client_id}}">
                     
                     <div class="row">
                       <div class="col-md-6 ">
@@ -208,6 +209,9 @@
       $("#servicer").val(localStorage.getItem(user_id+'.autofill.root.servicer')).trigger("change");
       $("#role").val(localStorage.getItem(user_id+'.autofill.root.role')).trigger("change");
       $("#job_type").val(localStorage.getItem(user_id+'.autofill.root.job_type')).trigger("change");
+      
+      var client_id = $("#client_id").val(); 
+      getClientServicerGps(client_id);  
     });
     function initMap()
     {

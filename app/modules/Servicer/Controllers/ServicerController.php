@@ -239,7 +239,10 @@ class ServicerController extends Controller {
         ->where('status',0)
         ->where('type',1)
         ->get();
-        return view('Servicer::assign-servicer',['servicers'=>$servicer]);
+        $cient = Client::select('id')
+        ->orderBy('id','desc')
+        ->first();
+        return view('Servicer::assign-servicer',['servicers'=>$servicer,'client_id'=>$cient->id]);
     }
     public function saveAssignServicer(Request $request)
     {
@@ -424,6 +427,10 @@ class ServicerController extends Controller {
             ->where('status',0)
             ->where('type',2)
             ->get();
+            $client = Client::select('id','sub_dealer_id')
+            ->orderBy('id','desc')
+            ->where('sub_dealer_id',$sub_dealer_id)
+            ->first();
         }
         else{
             $trader_id=\Auth::user()->trader->id;
@@ -432,9 +439,12 @@ class ServicerController extends Controller {
             ->where('status',0)
             ->where('type',3)
             ->get();
+            $client = Client::select('id','trader_id')
+            ->where('trader_id',$trader_id)
+            ->orderBy('id','desc')
+            ->first();
         }
-
-        return view('Servicer::sub-dealer-assign-servicer',['servicers'=>$servicer]);
+        return view('Servicer::sub-dealer-assign-servicer',['servicers'=>$servicer,'client_id'=>$client->id]);
     }
 
     //get client based on job type

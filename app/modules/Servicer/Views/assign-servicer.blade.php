@@ -165,6 +165,8 @@
                     </div><br>
     
                     <input type="hidden" name="user_id" id="user_id" value="{{Auth::user()->id}}">
+                    <input type="hidden" name="client_id" id="client_id" value="{{$client_id}}">
+
                     <div class="row">
                       <div class="col-md-6 ">
                         <button type="submit" id = 'submit_section' class="btn btn-primary btn-md form-btn ">Create</button>
@@ -187,18 +189,15 @@
 <script async defer
    src="https://maps.googleapis.com/maps/api/js?key={{config('eclipse.keys.googleMap')}}&libraries=places&callback=initMap"></script>
    <script>
-    $(document).ready(function () {
-      // var user_id = document.getElementById('user_id'); 
+    $(document).ready(function () { 
       var user_id = $("#user_id").val();   
-    $("#servicer").val(localStorage.getItem(user_id+'.autofill.root.servicer')).trigger("change");
-    $("#role").val(localStorage.getItem(user_id+'.autofill.root.role')).trigger("change");
-    $("#job_type").val(localStorage.getItem(user_id+'.autofill.root.job_type')).trigger("change");
-
-
-   
+      $("#servicer").val(localStorage.getItem(user_id+'.autofill.root.servicer')).trigger("change");
+      $("#role").val(localStorage.getItem(user_id+'.autofill.root.role')).trigger("change");
+      $("#job_type").val(localStorage.getItem(user_id+'.autofill.root.job_type')).trigger("change");
+      var client_id = $("#client_id").val(); 
+      getClientServicerGps(client_id);  
     });
-
-     function initMap()
+    function initMap()
      {
     
       // 
@@ -213,7 +212,8 @@
         $("#submit_section").prop('disabled', true); 
       });
 
-      var user_id = $("#user_id").val();  
+      var user_id = $("#user_id").val(); 
+      
       $("#servicer").change(function(){
        localStorage.setItem(user_id+'.autofill.root.servicer',$(this).val());
 
