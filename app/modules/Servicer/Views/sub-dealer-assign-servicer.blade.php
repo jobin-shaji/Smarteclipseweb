@@ -198,11 +198,9 @@
 
   function checkForm(form)
   {
-    
     form.submit_section.disabled = true;
     return true;
   }
-
 </script>
    <script>
     $(document).ready(function () {

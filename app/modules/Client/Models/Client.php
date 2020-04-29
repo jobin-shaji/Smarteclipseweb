@@ -91,7 +91,7 @@ class Client extends Model
 
   public function getDetailsOfAllClients()
   {
-    return self::select('id','name')->get();
+    return self::select('id','name')->orderBy('created_at', 'DESC')->get();
   }
 
   public function getDetailsOfClientsWithReturnedVehicleGps()

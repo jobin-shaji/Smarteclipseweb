@@ -1231,6 +1231,8 @@ function jobtypeonchange(job_type)
                     var client='  <option value="'+res[i].id+'"  >'+res[i].name+'</option>';
                     $("#client").append(client);
                 }
+    $("#client").val(localStorage.getItem(user_id+'.autofill.root.cient')).trigger("change");
+                
             }
         }
     });

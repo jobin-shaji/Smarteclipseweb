@@ -194,6 +194,7 @@
     $("#role").val(localStorage.getItem(user_id+'.autofill.root.role')).trigger("change");
     $("#job_type").val(localStorage.getItem(user_id+'.autofill.root.job_type')).trigger("change");
 
+
    
     });
 
@@ -223,6 +224,9 @@
        });
       $("#job_type").change(function(){
         localStorage.setItem(user_id+'.autofill.root.job_type',$(this).val());
+       });
+      $("#client").change(function(){
+        localStorage.setItem(user_id+'.autofill.root.cient',$(this).val());
        });
 
    </script>
