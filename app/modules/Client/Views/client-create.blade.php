@@ -22,7 +22,8 @@
           </div>
         @endif  
     </nav>
-
+    <input type="hidden" id="default_id" value={{$default_country_id}}>
+     <input type="hidden" id="user_id" value={{$logged_user_id}}>
     <input type="hidden" id = "role_type"  value={{ \Auth::user()->getRoleNames()[0]}}>
     <form  method="POST" id = "client-creation-form" action="{{route('client.create.p')}}">
       {{csrf_field()}}
@@ -35,7 +36,7 @@
                   <div class="col-md-6">
                     <div class="card-body_vehicle wizard-content">   
                       <div class="form-group row" style="float:none!important">
-                        <label  for="fname" class="col-sm-3 text-right control-label col-form-label">Name</label> 
+                        <label  for="fname" class="col-sm-3 text-right control-label col-form-label">Name&nbsp<font color="red">*</font></label> 
                         <div class="form-group has-feedback">
                           <input type="text" id="name"   class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Name" id="name" name="name" maxlength="50" value="{{ old('name') }}" required autocomplete="off">
                       <p style="color:#FF0000" id="message">only characters are allowed</p>
@@ -48,9 +49,9 @@
                       </div>
 
                       <div class="form-group row" style="float:none!important">
-                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">Address</label>
+                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">Address&nbsp</label>
                         <div class="form-group has-feedback">
-                          <input type="text" class="form-control {{ $errors->has('address') ? ' has-error' : '' }}" placeholder="Address" name="address" maxlength="150" value="{{ old('address') }}" required autocomplete="off">
+                          <input type="text" class="form-control {{ $errors->has('address') ? ' has-error' : '' }}" placeholder="Address" name="address" maxlength="150" value="{{ old('address') }}"  autocomplete="off">
                         </div>
                         @if ($errors->has('address'))
                           <span class="help-block">
@@ -58,13 +59,20 @@
                           </span>
                         @endif
                       </div>
+                       <?php
+                      $url=url()->current();
+                      $rayfleet_key="rayfleet";
+                      $eclipse_key="eclipse";
+                      
+                      if (strpos($url, $rayfleet_key) == true) {  ?>
+
                       <div class="form-group row" style="float:none!important">
-                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">Country</label>
+                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">Country&nbsp<font color="red">*</font></label>
                         <div class="form-group ">
                           <select class="form-control  select2 {{ $errors->has('country_id') ? ' has-error' : '' }}" id="country_id" name="country_id" required>
                           <option  value="" selected disabled>Select Country</option>
                           @foreach($countries as $country)
-                          <option value="{{$country->id}}">{{$country->name}}</option>  
+                            <option <?php if($country->id=="178"){echo "selected";}?> value="{{$country->id}}">{{$country->name}}</option>  
                           @endforeach
                           </select>
                         </div>
@@ -74,8 +82,46 @@
                           </span>
                         @endif
                       </div>
+                         <?php } 
+                        else if (strpos($url, $eclipse_key) == true) { ?>
+
+                       <div class="form-group row" style="float:none!important">
+                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">Country&nbsp<font color="red">*</font></label>
+                        <div class="form-group ">
+                          <select class="form-control  select2 {{ $errors->has('country_id') ? ' has-error' : '' }}" id="country_id" name="country_id" required>
+                          <option  value="" selected disabled>Select Country</option>
+                          @foreach($countries as $country)
+                            <option <?php if($country->id=="101") { echo "selected" ;}?> value="{{$country->id}}">{{$country->name}}</option> 
+                          @endforeach
+                          </select>
+                        </div>
+                        @if ($errors->has('country_id'))
+                          <span class="help-block">
+                            <strong class="error-text">{{ $errors->first('country_id') }}</strong>
+                          </span>
+                        @endif
+                      </div>
+                           <?php }
+                      else { ?>
+                          <div class="form-group row" style="float:none!important">
+                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">Country&nbsp<font color="red">*</font></label>
+                        <div class="form-group ">
+                          <select class="form-control  select2 {{ $errors->has('country_id') ? ' has-error' : '' }}" id="country_id" name="country_id" required>
+                          <option  value="" selected disabled>Select Country</option>
+                          @foreach($countries as $country)
+                          <option <?php if($country->id=="101") { echo "selected" ;}?> value="{{$country->id}}">{{$country->name}}</option> 
+                          @endforeach
+                          </select>
+                        </div>
+                        @if ($errors->has('country_id'))
+                          <span class="help-block">
+                            <strong class="error-text">{{ $errors->first('country_id') }}</strong>
+                          </span>
+                        @endif
+                      </div>
+                        <?php } ?>
                       <div class="form-group row" style="float:none!important">
-                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">State</label>
+                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">State&nbsp<font color="red">*</font></label>
                         <div class="form-group ">
                           <select class="form-control select2 {{ $errors->has('state_id') ? ' has-error' : '' }}" id="state_id" name="state_id"  required>
                           <option value="" selected disabled>Select Country First</option>
@@ -89,7 +135,7 @@
                       </div> 
 
                        <div class="form-group row">
-                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">City</label>
+                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">City&nbsp<font color="red">*</font></label>
                         <div class="form-group ">
                           <select class="form-control select2 {{ $errors->has('city_id') ? ' has-error' : '' }}" id="city_id" name="city_id"  required>
                           <option value="" selected disabled>Select Country and state First</option>
@@ -107,9 +153,9 @@
                       $eclipse_key="eclipse";
                       if (strpos($url, $rayfleet_key) == true) {  ?>
                           <div class="form-group row" style="float:none!important">
-                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">Mobile No</label>
+                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">Mobile No&nbsp<font color="red">*</font></label>
                         <div class="form-group has-feedback">
-                          <input type="text" required pattern="[0-9]{11}" class="form-control {{ $errors->has('mobile_number') ? ' has-error' : '' }}" placeholder="Mobile Number" name="mobile_number" value="{{ old('mobile_number') }}" maxlength="11" title="Mobile number should be exactly 11 digits" />
+                          <input type="text" required pattern="[0-9]{11}" class="form-control {{ $errors->has('mobile_number') ? ' has-error' : '' }}" placeholder="Mobile Number" name="mobile_number" value="{{ old('mobile_number') }}" maxlength="11" id="mobile_number" title="Mobile number should be exactly 11 digits" />
                         </div>
                         @if ($errors->has('mobile_number'))
                           <span class="help-block">
@@ -120,9 +166,9 @@
                       <?php } 
                       else if (strpos($url, $eclipse_key) == true) { ?>
                          <div class="form-group row" style="float:none!important">
-                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">Mobile No</label>
+                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">Mobile No&nbsp<font color="red">*</font></label>
                         <div class="form-group has-feedback">
-                          <input type="text" required pattern="[0-9]{10}" class="form-control {{ $errors->has('mobile_number') ? ' has-error' : '' }}" placeholder="Mobile Number" name="mobile_number" value="{{ old('mobile_number') }}" maxlength="10" title="Mobile number should be exactly 10 digits" />
+                          <input type="text" required pattern="[0-9]{10}" class="form-control {{ $errors->has('mobile_number') ? ' has-error' : '' }}" placeholder="Mobile Number" name="mobile_number" value="{{ old('mobile_number') }}" maxlength="10" id="mobile_number" title="Mobile number should be exactly 10 digits" />
                         </div>
                         @if ($errors->has('mobile_number'))
                           <span class="help-block">
@@ -133,9 +179,9 @@
                       <?php }
                       else { ?>
                            <div class="form-group row" style="float:none!important">
-                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">Mobile No</label>
+                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">Mobile No&nbsp<font color="red">*</font></label>
                         <div class="form-group has-feedback">
-                          <input type="text" required pattern="[0-9]{10}" class="form-control {{ $errors->has('mobile_number') ? ' has-error' : '' }}" placeholder="Mobile Number" name="mobile_number" value="{{ old('mobile_number') }}" maxlength="10" title="Mobile number should be exactly 10 digits" />
+                          <input type="text" required pattern="[0-9]{10}" class="form-control {{ $errors->has('mobile_number') ? ' has-error' : '' }}" placeholder="Mobile Number" name="mobile_number" value="{{ old('mobile_number') }}" maxlength="10" id="mobile_number" title="Mobile number should be exactly 10 digits" />
                         </div>
                         @if ($errors->has('mobile_number'))
                           <span class="help-block">
@@ -171,9 +217,9 @@
                    <div class="col-md-6">
                     <div class="card-body_vehicle wizard-content">   
                       <div class="form-group row" style="float:none!important">
-                        <label for="fname" class="col-sm-3 text-right control-label col-form-label max-width-lb">End User Category</label> 
+                        <label for="fname" class="col-sm-3 text-right control-label col-form-label max-width-lb">End User Category&nbsp<font color="red">*</font></label> 
                         <div class="form-group has-feedback">
-                          <select class="form-control {{ $errors->has('client_category') ? ' has-error' : '' }}" placeholder="Client Category" name="client_category" value="{{ old('client_category') }}"required >
+                          <select class="form-control {{ $errors->has('client_category') ? ' has-error' : '' }}" id="client_category" placeholder="Client Category" name="client_category" value="{{ old('client_category') }}"required >
                             <option value="" selected disabled>Select End User Category</option>
                             <!-- <option value="school">School</option> -->
                             <option value="other">General</option>
@@ -187,9 +233,9 @@
                       </div> 
 
                       <div class="form-group row" style="float:none!important">
-                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">Username</label> 
+                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">Username&nbsp<font color="red">*</font></label> 
                         <div class="form-group has-feedback">
-                          <input type="text" class="form-control {{ $errors->has('username') ? ' has-error' : '' }}" placeholder="Username" title="spaces not allowed" name="username" id="trader_username" required autocomplete="off">
+                          <input type="text" class="form-control {{ $errors->has('username') ? ' has-error' : '' }}" placeholder="Username" id="Username" title="spaces not allowed" name="username" id="trader_username" required autocomplete="off">
                             <p style="color:#FF0000" id="user_message"> Spaces not  allowed for Username</p>
                         </div>
                         @if ($errors->has('username'))
@@ -200,16 +246,16 @@
                       </div>  
 
                       <div class="form-group row" style="float:none!important">
-                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">Password</label>
+                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">Password&nbsp<font color="red">*</font></label>
                         <div class="form-group has-feedback">
-                          <input type="password" class="form-control {{ $errors->has('password') ? ' has-error' : '' }}" placeholder="Password" name="password" required autocomplete="new-password" pattern= '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*)(=+\/\\~`-]).{8,20}$' title='Password must contains minimum 8 characters with at least one uppercase letter, one lowercase letter, one number and one special character' maxlength='20'>
+                          <input type="text" class="form-control {{ $errors->has('password') ? ' has-error' : '' }}" placeholder="Password" name="password" required autocomplete="new-password"  id="password" pattern= '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*)(=+\/\\~`-]).{8,20}$' title='Password must contains minimum 8 characters with at least one uppercase letter, one lowercase letter, one number and one special character'  maxlength='20'>
                         </div>
                       </div>
 
                       <div class="form-group row" style="float:none!important">
-                        <label for="fname" class="col-sm-3 text-right control-label col-form-label font-size-14">Confirm Password</label> 
+                        <label for="fname" class="col-sm-3 text-right control-label col-form-label font-size-14">Confirm Password&nbsp<font color="red">*</font></label> 
                         <div class="form-group has-feedback">
-                          <input type="password" class="form-control {{ $errors->has('password') ? ' has-error' : '' }}" placeholder="Retype password" name="password_confirmation" pattern= '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*)(=+\/\\~`-]).{8,20}$' title='Password must contains minimum 8 characters with at least one uppercase letter, one lowercase letter, one number and one special character' maxlength='20' required>
+                          <input type="text"  id="confirm_password" class="form-control {{ $errors->has('password') ? ' has-error' : '' }}" placeholder="Retype password" name="password_confirmation" pattern= '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*)(=+\/\\~`-]).{8,20}$' title='Password must contains minimum 8 characters with at least one uppercase letter, one lowercase letter, one number and one special character' maxlength='20' required>
                         </div>
                         @if ($errors->has('password'))
                           <span class="help-block">
@@ -251,7 +297,7 @@
       <div class="modal-body">
         <div class="row">
           <div class="col-md-12">
-                Client created successfully!!, Do you want to transfer the device to client?     
+                End User created successfully!!, Do you want to transfer the device to End User?     
           </div>
         </div>
       </div>
@@ -307,7 +353,7 @@
     $(".confirm-btn").click(function()
     {
       if( $('#role_type').val() == 'trader' ){
-        window.location.href ="/sub-dealer-assign-servicer";
+        window.location.href ="/gps-transfer-trader-end-user/create";
       }else{
         window.location.href ="/gps-transfer-sub-dealer/create";
       }

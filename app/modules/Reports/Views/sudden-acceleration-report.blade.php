@@ -40,21 +40,26 @@ Sudden Acceleration Report
                                 </div>
                                 <!-- -->
                                 <div class="col-lg-2 col-md-2"> 
-                                  <div class="form-group">                      
+                                  <div class="form-group">  
+
                                     <label> From Date</label>
+                                    <div class="input-group date <?php if(\Auth::user()->hasRole('superior')){ echo 'datepickerSuperior'; }else if(\Auth::user()->hasRole('fundamental')){ echo 'datepickerFundamental'; } else if(\Auth::user()->hasRole('pro')){ echo 'datepickerPro'; }else if(\Auth::user()->hasRole('freebies')){ echo 'datepickerFreebies'; } else{ echo 'datepickerFreebies';}?>" id="<?php if(\Auth::user()->hasRole('superior')){ echo 'datepickerSuperior'; }else if(\Auth::user()->hasRole('fundamental')){ echo 'datepickerFundamental'; } else if(\Auth::user()->hasRole('pro')){ echo 'datepickerPro'; }else if(\Auth::user()->hasRole('freebies')){ echo 'datepickerFreebies'; } else{ echo 'datepickerFreebies';}?>">
                                     <input type="text" required class="@if(\Auth::user()->hasRole('fundamental'))datepickerFundamental @elseif(\Auth::user()->hasRole('superior')) datepickerSuperior @elseif(\Auth::user()->hasRole('pro')) datepickerPro @else datepickerFreebies @endif form-control"style="width: 100%"  id="fromDate" name="start_date" onkeydown="return false" value="@if(isset($alertReports)) {{$from}} @endif"  autocomplete="off"  required>
                                     <span class="input-group-addon" style="z-index: 99;">
-                                        <span class="calender1"  ><i class="fa fa-calendar"></i></span>
+                                        <span class="calendern"  ><i class="fa fa-calendar"></i></span>
                                     </span>
+                                  </div>
                                   </div>
                                 </div>
                                 <div class="col-lg-2 col-md-2"> 
                                   <div class="form-group">                     
                                     <label> To Date</label>
+                                    <div class="input-group date <?php if(\Auth::user()->hasRole('superior')){ echo 'datepickerSuperior'; }else if(\Auth::user()->hasRole('fundamental')){ echo 'datepickerFundamental'; } else if(\Auth::user()->hasRole('pro')){ echo 'datepickerPro'; }else if(\Auth::user()->hasRole('freebies')){ echo 'datepickerFreebies'; } else{ echo 'datepickerFreebies';}?>" id="<?php if(\Auth::user()->hasRole('superior')){ echo 'datepickerSuperior'; }else if(\Auth::user()->hasRole('fundamental')){ echo 'datepickerFundamental'; } else if(\Auth::user()->hasRole('pro')){ echo 'datepickerPro'; }else if(\Auth::user()->hasRole('freebies')){ echo 'datepickerFreebies'; } else{ echo 'datepickerFreebies';}?>">
                                     <input type="text" required class="@if(\Auth::user()->hasRole('fundamental'))datepickerFundamental @elseif(\Auth::user()->hasRole('superior')) datepickerSuperior @elseif(\Auth::user()->hasRole('pro')) datepickerPro @else datepickerFreebies @endif form-control" style="width: 100%" id="toDate" name="end_date" onkeydown="return false"  value="@if(isset($alertReports)) {{$to}} @endif"  autocomplete="off" required>
                                     <span class="input-group-addon" style="z-index: 99;">
-                                        <span class="calender1"  ><i class="fa fa-calendar"></i></span>
+                                        <span class="calendern"  ><i class="fa fa-calendar"></i></span>
                                     </span>
+                                  </div>
                                   </div>
                                 </div>
                                 <div class="col-lg-3 col-md-3 pt-4">  

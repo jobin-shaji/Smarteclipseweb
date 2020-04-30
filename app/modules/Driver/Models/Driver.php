@@ -18,4 +18,20 @@ class Driver extends Model
 	{
 		return self::where('id',$driver_id)->first();
 	}
+
+	 public function getDriverListBasedOnClient($client_id)
+    {
+      return self::select(
+          'id',
+          'name',
+          'address',
+          'mobile',
+          'client_id',
+          'points',
+          'deleted_at'
+        )
+        ->withTrashed()
+        ->where('client_id',$client_id)
+        ->get();
+    }
 }

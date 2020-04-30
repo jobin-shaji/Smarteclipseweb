@@ -34,6 +34,7 @@ class VehicleGps extends Model
 
     public function getGpsDetailsBasedOnVehicleWithDates($vehicle_id,$from_date,$to_date)
     {
+     
       return DB::select("SELECT gps_id
       FROM `vehicle_gps`
       WHERE vehicle_id = '$vehicle_id' AND
@@ -42,14 +43,14 @@ class VehicleGps extends Model
           OR
           ( '$to_date' BETWEEN date(gps_fitted_on) AND IF(date(gps_removed_on) IS NULL, CURDATE(), date(gps_removed_on)) )
       )");
+
     }
 
     public function getGpsDetailsBasedOnVehiclesWithDates($vehicle_ids,$from_date,$to_date)
     {
-      $vehicle_ids  = implode(',',$vehicle_ids);
       return DB::select("SELECT gps_id
       FROM `vehicle_gps`
-      WHERE vehicle_id IN ('$vehicle_ids') AND
+      WHERE vehicle_id IN ('" . implode("', '", $vehicle_ids) . "') AND
       (
         ( '$from_date' BETWEEN IF(date(gps_fitted_on) > '$from_date', '$from_date', date(gps_fitted_on)) AND date(gps_removed_on) )
           OR
@@ -71,10 +72,9 @@ class VehicleGps extends Model
 
     public function getGpsDetailsBasedOnVehiclesWithSingleDate($vehicle_ids,$search_date)
     {
-      $vehicle_ids  = implode(',',$vehicle_ids);
       return DB::select("SELECT gps_id
       FROM `vehicle_gps`
-      WHERE vehicle_id IN ('$vehicle_ids') AND
+      WHERE vehicle_id IN ('" . implode("', '", $vehicle_ids) . "') AND
       (
         ( '$search_date' BETWEEN IF(date(gps_fitted_on) > '$search_date', '$search_date', date(gps_fitted_on)) AND date(gps_removed_on) )
           OR
@@ -105,6 +105,29 @@ class VehicleGps extends Model
 
     public function getVehicleGpsLogBasedOnGps($gps_id)
     {
-      return self::where('gps_id',$gps_id)->first();
+      return self::where('gps_id',$gps_id)->with('vehicle')->first();
+    }
+
+    public function getVehicleGpsLogBasedOnGpsAndServicerJobId($gps_id,$servicer_job_id)
+    {
+      return self::where('gps_id',$gps_id)->where('servicer_job_id',$servicer_job_id)->with('vehicle')->first();
+    }
+
+     public function getGpsDetailsBasedVehicleWithDate($vehicle_id,$search_date)
+    {
+      // return $query = DB::table('vehicle_gps')
+      //   ->join('vehicles', 'vehicle_gps.vehicle_id', '=', 'vehicles.id')
+      //   ->select('vehicle_gps.gps_id as gps_id')
+      //   ->where('vehicle_id',$vehicle_id)
+      //   ->whereDate('gps_fitted_on', '<=', $search_date)->whereDate('gps_removed_on', '>=', $search_date)       
+      //   ->get();
+      return DB::select("SELECT gps_id
+      FROM `vehicle_gps`
+      WHERE vehicle_id = '$vehicle_id' AND
+      (
+        ( '$search_date' BETWEEN IF(date(gps_fitted_on) > '$search_date', '$search_date', date(gps_fitted_on)) AND date(gps_removed_on) )
+          OR
+          ( '$search_date' BETWEEN date(gps_fitted_on) AND IF(date(gps_removed_on) IS NULL, CURDATE(), date(gps_removed_on)) )
+      )");
     }
 }

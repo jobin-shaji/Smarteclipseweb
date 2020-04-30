@@ -13,9 +13,26 @@ use App\Modules\Client\Models\Client;
 use App\Modules\Gps\Models\Gps;
 use App\Modules\Ota\Models\OtaResponse;
 use Illuminate\Support\Facades\Crypt;
+use App\Http\Traits\MqttTrait;
 use DataTables;
 
 class GeofenceController extends Controller {
+
+    /**
+     * 
+     * 
+     *
+     */
+    use MqttTrait;
+    /**
+     * 
+     * 
+     *
+     */
+    public function __construct()
+    {
+        $this->topic    = 'cmd';
+    }
 
     //Display all etms
     public function create(Request $request)
@@ -243,7 +260,7 @@ class GeofenceController extends Controller {
     {
         $user_id=\Auth::user()->id;
         $client_id=\Auth::user()->client->id;
-        $vehicles=Vehicle::select('id','name','register_number','client_id')
+        $vehicles=Vehicle::select('id','name','register_number','client_id','is_returned')
         ->where('client_id',$client_id)
         ->get();
         $geofence = Geofence::select('id','user_id','name','cordinates','deleted_at')
@@ -268,26 +285,67 @@ class GeofenceController extends Controller {
         // $toDate = date("Y-m-d", strtotime($to_date));
         if($vehicle_id!="")
         {
-            $geofences = VehicleGeofence::select('id','vehicle_id','geofence_id','date_from','date_to','alert_type')
-            ->where('vehicle_id',$vehicle_id)
-            ->where('geofence_id',$geofence)
-            ->where('alert_type',$alert_type)
-            ->where('client_id',$client_id)
-            // ->whereBetween('date_from',array($fromDate,$toDate))
-            // ->WhereBetween('date_to',array($fromDate,$toDate))
-            ->get()
-            ->count();
-            if($geofences==0)
+            if($alert_type == 3)
             {
-                $route_area = VehicleGeofence::create([
+                $geofence1 = VehicleGeofence::select('id','vehicle_id','geofence_id','date_from','date_to','alert_type')
+                ->where('vehicle_id',$vehicle_id)
+                ->where('geofence_id',$geofence)
+                ->where('alert_type',1)
+                ->where('client_id',$client_id)
+                ->get()
+                ->count();
+                $geofence2 = VehicleGeofence::select('id','vehicle_id','geofence_id','date_from','date_to','alert_type')
+                ->where('vehicle_id',$vehicle_id)
+                ->where('geofence_id',$geofence)
+                ->where('alert_type',2)
+                ->where('client_id',$client_id)
+                ->get()
+                ->count();
+                $geofences = $geofence1 + $geofence2;
+                if($geofences == 0)
+                {
+                    $route_area1 = VehicleGeofence::create([
+                        'geofence_id' => $geofence,
+                        'vehicle_id' => $vehicle_id,
+                        'alert_type' => 1,
+                        'client_id' => $client_id,
+                        'status' => 1
+                    ]);
+                    $route_area2 = VehicleGeofence::create([
+                        'geofence_id' => $geofence,
+                        'vehicle_id' => $vehicle_id,
+                        'alert_type' => 2,
+                        'client_id' => $client_id,
+                        'status' => 1
+                    ]);
+                    if($route_area1)  {
+                        $this->geofenceResponse($route_area1->vehicle_id);
+                    }
+                }
+            }
+            else
+            {
+                $geofences = VehicleGeofence::select('id','vehicle_id','geofence_id','date_from','date_to','alert_type')
+                ->where('vehicle_id',$vehicle_id)
+                ->where('geofence_id',$geofence)
+                ->where('alert_type',$alert_type)
+                ->where('client_id',$client_id)
+                // ->whereBetween('date_from',array($fromDate,$toDate))
+                // ->WhereBetween('date_to',array($fromDate,$toDate))
+                ->get()
+                ->count();
+                if($geofences==0)
+                {
+                    $route_area = VehicleGeofence::create([
                         'geofence_id' => $geofence,
                         'vehicle_id' => $vehicle_id,
                         'alert_type' => $alert_type,
                         'client_id' => $client_id,
                         'status' => 1
                     ]);
-                if($route_area)  {
-                    $this->geofenceResponse($route_area->vehicle_id);
+                    if($route_area)  {
+                        $this->geofenceResponse($route_area->vehicle_id);
+                    }
                 }
             }
         }
@@ -363,8 +421,13 @@ class GeofenceController extends Controller {
         $geofence_response  =   (new OtaResponse())->saveCommandsToDevice($vehicle->gps_id,$response_string);
         if($geofence_response)
         {
-            $gps_details        =   (new Gps())->getGpsDetails($vehicle->gps_id);
-            (new OtaResponse())->writeCommandToDevice($gps_details->imei,$response_string);
+            $gps_details                        =   (new Gps())->getGpsDetails($vehicle->gps_id);
+            $is_command_write_to_device         =   (new OtaResponse())->writeCommandToDevice($gps_details->imei,$response_string);
+            if($is_command_write_to_device)
+            {
+                $this->topic                    =   $this->topic.'/'.$gps_details->imei;
+                $is_mqtt_publish                =   $this->mqttPublish($this->topic, $response_string);
+            }
         }  
         return $geofence_response;
     }
@@ -377,13 +440,34 @@ class GeofenceController extends Controller {
         $geofence = $request->geofence_id;
         $alert_type = $request->alert_type;
 
-        $geofences = VehicleGeofence::select('id','vehicle_id','geofence_id','alert_type')
-        ->where('vehicle_id',$vehicle_id)
-        ->where('geofence_id',$geofence)
-        ->where('client_id',$client_id)
-        ->where('alert_type',$alert_type)
-        ->get()
-        ->count();
+        if($alert_type == 3)
+        {
+            $geofence1 = VehicleGeofence::select('id','vehicle_id','geofence_id','date_from','date_to','alert_type')
+            ->where('vehicle_id',$vehicle_id)
+            ->where('geofence_id',$geofence)
+            ->where('alert_type',1)
+            ->where('client_id',$client_id)
+            ->get()
+            ->count();
+            $geofence2 = VehicleGeofence::select('id','vehicle_id','geofence_id','date_from','date_to','alert_type')
+            ->where('vehicle_id',$vehicle_id)
+            ->where('geofence_id',$geofence)
+            ->where('alert_type',2)
+            ->where('client_id',$client_id)
+            ->get()
+            ->count();
+            $geofences = $geofence1 + $geofence2;
+        }
+        else
+        {
+            $geofences = VehicleGeofence::select('id','vehicle_id','geofence_id','alert_type')
+            ->where('vehicle_id',$vehicle_id)
+            ->where('geofence_id',$geofence)
+            ->where('client_id',$client_id)
+            ->where('alert_type',$alert_type)
+            ->get()
+            ->count();
+        }
         return response()->json([
             'assign_geofence_count' => $geofences
         ]);

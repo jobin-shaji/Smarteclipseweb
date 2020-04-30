@@ -6,10 +6,13 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use App\Modules\Gps\Models\Gps;
+use App\Modules\Gps\Models\GpsTransferItems;
+
 use App\Modules\Root\Models\Root;
 use App\Modules\Warehouse\Models\GpsStock;
 use App\Modules\Vehicle\Models\Vehicle;
 use App\Modules\Vehicle\Models\VehicleGps;
+use App\Modules\Vehicle\Models\VehicleDailyUpdate;
 use App\Modules\Operations\Models\VehicleModels;
 use App\Modules\Operations\Models\VehicleMake;
 use App\Modules\SubDealer\Models\SubDealer;
@@ -23,6 +26,7 @@ use App\Modules\Vehicle\Models\VehicleType;
 use App\Modules\User\Models\User;
 use App\Modules\Client\Models\Client;
 use App\Modules\Driver\Models\Driver;
+use App\Modules\Driver\Models\DriverVehicleHistory;
 use App\Modules\Ota\Models\OtaResponse;
 use App\Modules\Configuration\Models\Configuration;
 use DataTables;
@@ -1105,11 +1109,26 @@ public function getDeviceTestAddPage(Request $request)
                 $servicer_job->status      = self::JOB_STATUS_COMPLETED;
                 if($servicer_job->save())
                 {
-                    
+                    $vehicle_daily_update = VehicleDailyUpdate::create([
+                        'gps_id'          => $gps,
+                        'km'              => 0,
+                        'ignition_on'     => 0,
+                        'ignition_off'    => 0,
+                        'moving'          => 0,
+                        'sleep'           => 0,
+                        'halt'            => 0,
+                        'stop'            => 0,
+                        'ac_on'           => 0,
+                        'ac_off'          => 0,
+                        'ac_on_idle'      => 0,
+                        'top_speed'       => 0,
+                        'date'            =>  date("Y-m-d"),
+                    ]);
+
                      $gps=Gps::where('id',$gps)->first();
-                    
                      $gps->test_status   = 0;
                      $gps->save();
+                    
                 }
                 if( $servicer_job->job_type == 1 )
                 {
@@ -1343,6 +1362,7 @@ public function serviceJobDetails(Request $request)
     {
      
         $servicer_jobid = Crypt::decrypt($request->id);
+
         $pass_servicer_jobid=Crypt::encrypt($servicer_jobid);
         $servicer_job = ServicerJob::find($servicer_jobid);
         if( $servicer_job->job_type == 1 )
@@ -1361,7 +1381,7 @@ public function serviceJobDetails(Request $request)
             // $servicer_job->job_complete_date = $job_completed_date;
             $driver_id=$request->driver;
             // $driver = Driver::find($driver_id);
-            $servicer_job->comment      =   $request->comment;
+            // $servicer_job->comment      =   $request->comment;
             $servicer_job->status       =   2;
             $servicer_job->job_status   =   2;
             $is_service_job_update      =   $servicer_job->save();
@@ -1390,9 +1410,19 @@ public function serviceJobDetails(Request $request)
                     'driver_id' => $driver_id,
                     'status' => 1
                 ]);
+                if($driver_id)
+                {
+                    $driver_vehicle_history= DriverVehicleHistory::create([
+                        'vehicle_id' => $vehicle_create->id,
+                        'driver_id' => $driver_id,
+                        'from_date' =>  date('Y-m-d')
+                    ]);
+                }
                 if($vehicle_create)
                 {
+
                     (new VehicleGps())->createNewVehicleGpsLog($vehicle_create->id,$gps_id,$servicer_jobid);
+
                     $client                         =   Client::find($client_id);
                     $client->latest_vehicle_updates =   date('Y-m-d H:i:s');
                     $client->save();
@@ -1400,7 +1430,11 @@ public function serviceJobDetails(Request $request)
                     $installation_photo             =   $request->installation_photo;
                     $activation_photo               =   $request->activation_photo;
                     $vehicle_photo                  =   $request->vehicle_photo;
+                    $passed_expiry_date                   =   $request->expiry_date;
 
+                    $expiry_date                    =   date("Y-m-d",strtotime($passed_expiry_date));
+                    
+                  
                     $getFileExt                     =   $file->getClientOriginalExtension();
                     $uploadedFile                   =   'rcbook'.time().'.'.$getFileExt;
                     //Move Uploaded File
@@ -1418,13 +1452,14 @@ public function serviceJobDetails(Request $request)
                     $getVehicleFileExt              =   $vehicle_photo->getClientOriginalExtension();
                     $uploadedVehicleFile            =   'vehicle_photo'.time().'.'.$getVehicleFileExt;
                     $vehicle_photo->move($destinationPath,$uploadedVehicleFile);
-
-                    $documents = Document::create([
+                   
+                      $documents = Document::create([
                         'vehicle_id'        =>  $vehicle_create->id,
                         'document_type_id'  =>  1,
-                        'expiry_date'       =>  null,
+                        'expiry_date'       => $expiry_date,
                         'path'              =>  $uploadedFile,
                     ]);
+                   
                     $installation_documents = Document::create([
                         'vehicle_id'        =>  $vehicle_create->id,
                         'document_type_id'  =>  6,
@@ -1460,7 +1495,7 @@ public function serviceJobDetails(Request $request)
             $vehicle_id                 =   $request->vehicle_id;
             $gps_id                     =   $request->gps_id;
             $vehicle_details            =   (new Vehicle())->getSingleVehicleDetailsBasedOnVehicleId($vehicle_id);
-            $servicer_job->comment      =   $request->comment;
+            // $servicer_job->comment      =   $request->comment;
             $servicer_job->status       =   2;
             $servicer_job->job_status   =   2;
             $is_service_job_update      =   $servicer_job->save();
@@ -1626,10 +1661,14 @@ public function serviceJobDetails(Request $request)
     }
 
     public function downloadJobCompleteCertificate(Request $request){
-
+        
         $servicer_job_id = Crypt::decrypt($request->id);
         $servicer_job = ServicerJob::find($servicer_job_id);
         $user_id=$servicer_job->user_id;
+        $gps_id=$servicer_job->gps_id;
+        $vehicle=Vehicle::select('id')->where('gps_id',$gps_id)->first();
+        $fitment_images=Document::select('path')->where('vehicle_id',$vehicle->id)->get();
+        // dd($fitment_images['3']->path);
         $dealer=SubDealer::where('user_id',$user_id)->first();
         $trader=Trader::where('user_id',$user_id)->first();
         $root=Root::where('user_id',$user_id)->first();
@@ -1650,7 +1689,7 @@ public function serviceJobDetails(Request $request)
         if($servicer_job == null){
            return view('Servicer::404');
         }
-        $pdf = PDF::loadView('Servicer::installation-certificate-download',['servicer_job' => $servicer_job,'vehicle_servicer_job_log'=> $vehicle_servicer_job_log,'client' => $client,'dealer_trader'=>$dealer_trader]);
+        $pdf = PDF::loadView('Servicer::installation-certificate-download',['servicer_job' => $servicer_job,'vehicle_servicer_job_log'=> $vehicle_servicer_job_log,'client' => $client,'dealer_trader'=>$dealer_trader,'fitment_images' => $fitment_images]);
         return $pdf->download('installation-certificate.pdf');
     }
 
@@ -1799,18 +1838,16 @@ public function serviceJobDetails(Request $request)
     public function jobHistoryDetails(Request $request)
     {
         $decrypted          =   Crypt::decrypt($request->id);
-        // dd($decrypted);
         $servicer_job       =   ServicerJob::withTrashed()->where('id', $decrypted)->first();
         $client_id          =   $servicer_job->client_id;
-
         $vehicle_device     =   (new VehicleGps())->getVehicleGpsLogBasedOnGps($servicer_job->gps_id);
-        
         if($servicer_job == null){
            return view('Servicer::404');
         }
         
         return view('Servicer::job-history-details',['servicer_job' => $servicer_job,'vehicle_device' => $vehicle_device]);
     }
+
 
 
 
@@ -1918,7 +1955,21 @@ public function serviceJobDetails(Request $request)
             foreach($gps_stocks as $stock_gps){
                 $stock_gps_id[]     =   $stock_gps->gps_id;
             }
+            
+             $gps_transferItems     =   GpsTransferItems::select('id',
+                                                'gps_id',
+                                                
+                                            )
+                                         ->whereIn('gps_id',$stock_gps_id)
+                                            ->orderBy('id','desc')
+                                            ->groupBy('gps_id')
+                                            ->get();
 
+            $tansfer_items_gps_id   =   [];
+            foreach($gps_transferItems as $gps_transferItem){
+                $tansfer_items_gps_id[]     =   $gps_transferItem->gps_id;
+            }
+// dd($tansfer_items_gps_id);
             if($stock_gps_id)
             {
                 $vehicle_device     =   Vehicle::select(
@@ -1976,7 +2027,7 @@ public function serviceJobDetails(Request $request)
                 else if($job_type==2)
                 {
                     $devices=Gps::select('id','imei','serial_no')
-                                ->whereIn('id',$stock_gps_id)
+                                ->whereIn('id',$tansfer_items_gps_id)
                                 ->whereIn('id',$single_gps)
                                 ->whereIn('id',$servicer_gps)
                                 ->get();
@@ -2522,7 +2573,7 @@ public function servicerProfileUpdateRules($servicer)
             'installation_photo' => 'required|mimes:jpeg,png|max:4096',
             'activation_photo' => 'required|mimes:jpeg,png|max:4096',
             'vehicle_photo' => 'required|mimes:jpeg,png|max:4096',
-            'comment' => 'required',
+            // 'comment' => 'required',
             // 'driver'=>'required',
             'model'=>'required',
             'make'=>'required'
@@ -2540,7 +2591,7 @@ public function servicerProfileUpdateRules($servicer)
             'gps_id' => 'required',
             'client_id' => 'required',
             'servicer_job_id' => 'required',
-            'comment' => 'required',
+            // 'comment' => 'required',
         ];
         return  $rules;
     }

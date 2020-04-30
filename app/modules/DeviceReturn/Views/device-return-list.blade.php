@@ -28,7 +28,7 @@
                   <tr>
                     <th>SL.No</th>
                     <th>Return ID </th> 
-                    <th>imei </th>   
+                    <th>IMEI </th>   
                     <th>Serial Number</th>
                     <th>Date</th>
                     <th>Type of issues</th>

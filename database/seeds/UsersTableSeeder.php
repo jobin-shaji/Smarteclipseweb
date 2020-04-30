@@ -86,9 +86,6 @@ class UsersTableSeeder extends Seeder
             'root_id' => 1
         ]);
 
-        User::where('username','dealer')->first()->assignRole('dealer');	
-
-
        
         $user = DB::table('users')->insert([
             'username' => 'dealer',
@@ -98,14 +95,15 @@ class UsersTableSeeder extends Seeder
             'status' => 1
         ]);
 
+        User::where('username','dealer')->first()->assignRole('dealer');    
+
+
         DB::table('sub_dealers')->insert([
             'address' => 'vst',
             'name' => 'vst_dealer',
             'user_id'=>3,
             'dealer_id' => 1
         ]);
-
-        User::where('username','sub_dealer')->first()->assignRole('sub_dealer'); 
 
 
         $user = DB::table('users')->insert([
@@ -116,6 +114,7 @@ class UsersTableSeeder extends Seeder
             'status' => 1,
             'role' => 0
         ]);
+
         DB::table('clients')->insert([
             'address' => 'vst',
             'name' => 'client_vst',
@@ -298,7 +297,7 @@ class UsersTableSeeder extends Seeder
 
         ]);
 
-          DB::table('configurations')->insert([
+        DB::table('configurations')->insert([
             'name' => 'vehicle',
             'value' => '{"BUS": {"ideal": "1573802602_ideal_icon.png", "sleep": "1573802602_sleep_icon.png", "online": "1573802602_online_vehicle.png", "offline": "1573802602_offline_vehicle.png"}, "Car": {"ideal": "1575349465_ideal_icon.png", "sleep": "1575349465_sleep_icon.png", "online": "1575349465_online_vehicle.png", "offline": "1575349465_offline_vehicle.png"}, "auto rickshaw": {"ideal": "1573801348_ideal_icon.png", "sleep": "1573801348_sleep_icon.png", "online": "1573801348_online_vehicle.png", "offline": "1573801348_offline_vehicle.png"}}',
             'code' => 'vehicle',
@@ -307,10 +306,36 @@ class UsersTableSeeder extends Seeder
 
         ]);
 
+        DB::table('service_level_agreements')->insert([
+            'sla_from' => 'vst',
+            'sla_to' => 'client',
+            'time_in_minutes' => 24,
+            'created_at' => now()
+        ]);
 
 
+        DB::table('service_level_agreements')->insert([
+            'sla_from' => 'vst',
+            'sla_to' => 'distributor',
+            'time_in_minutes' => 24, 
+            'created_at' => now()
+        ]);
 
 
+        DB::table('service_level_agreements')->insert([
+            'sla_from' => 'vst',
+            'sla_to' => 'dealer',
+            'time_in_minutes' => 24,
+            'created_at' => now()
+        ]);
+
+
+        DB::table('service_level_agreements')->insert([
+            'sla_from' => 'vst',
+            'sla_to' => 'sub_dealer',
+            'time_in_minutes' => 24,
+            'created_at' => now()
+        ]);
 
         
     }

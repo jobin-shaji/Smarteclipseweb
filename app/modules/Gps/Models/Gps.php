@@ -36,6 +36,10 @@ class Gps extends Model
         return $this->hasMany('App\Modules\Gps\Models\GpsTransfer');
     }
 
+    public function device_return()
+    {
+        return $this->hasOne('App\Modules\DeviceReturn\Models\DeviceReturn','gps_id','id');
+    }
 
     public function gpsdata()
     {
@@ -136,11 +140,11 @@ class Gps extends Model
                     ->first();
     }
 
-    public function getCountBasedOnImeiAndSerialNo($imei_RET,$serial_no_RET)
+    public function getCountBasedOnImeiAndSerialNo($imei,$serial_no)
     {
         return self::select('imei','serial_no')
-                    ->where('imei', 'like','%'.$imei_RET.'%')
-                    ->where('serial_no', 'like', '%'.$serial_no_RET.'%')
+                    ->where('imei', 'like','%'.$imei.'%')
+                    ->where('serial_no', 'like', '%'.$serial_no.'%')
                     ->count();
     }
     /**

@@ -351,7 +351,7 @@
 
                             @role('superior|pro')
                             <li class="sys_vapor cover_accident">
-                                <a href="{{url('/fuel-report')}}">
+                                <a href="{{url('/fuel-reports')}}">
                                     <div class="system_icon">
                                         <img src="{{ url('/') }}/Report-icons/report-1.png"  />
                                         <span class="system_info" >Fuel Report</span> 

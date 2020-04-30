@@ -3,6 +3,7 @@ namespace App\Modules\Client\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Modules\Client\Models\Client;
+use App\Modules\Gps\Models\Gps;
 use App\Modules\Client\Models\ClientAlertPoint;
 use App\Modules\SubDealer\Models\SubDealer;
 use App\Modules\Geofence\Models\Geofence;
@@ -26,9 +27,26 @@ use DataTables;
 use Illuminate\Support\Facades\Hash;
 use Intervention\Image\ImageManagerStatic as Image;
 use App\Jobs\MailJob;
+use App\Http\Traits\MqttTrait;
 
 
 class ClientController extends Controller {
+
+    /**
+     * 
+     * 
+     *
+     */
+    use MqttTrait;
+    /**
+     * 
+     * 
+     *
+     */
+    public function __construct()
+    {
+        $this->topic    = 'cmd';
+    }
 
     //employee creation page
     public function create()
@@ -38,7 +56,20 @@ class ClientController extends Controller {
             'name'
         ])
         ->get();
-        return view('Client::client-create',['countries'=>$countries]);
+         $url=url()->current();
+        
+         $rayfleet_key="rayfleet";
+         $eclipse_key="eclipse";
+         if (strpos($url, $rayfleet_key) == true) {  
+            $default_country_id="178";
+          }else if (strpos($url, $eclipse_key) == true) {
+            $default_country_id="101";
+          }else
+          {
+         $default_country_id="101";
+          }
+        $logged_user_id = \Auth::user()->id;
+        return view('Client::client-create',['countries'=>$countries,'default_country_id'=>$default_country_id,'logged_user_id'=>$logged_user_id]);
     }
     //get state in dependent dropdown
     public function getStateList(Request $request)
@@ -327,6 +358,7 @@ class ClientController extends Controller {
         $client->latest_user_updates = $current_date;
         $client->save();
         // dd($client);
+        $user->email= $request->email;
         $user->mobile = $request->mobile_number;
         $user->save();
 
@@ -693,7 +725,8 @@ class ClientController extends Controller {
         foreach ($geofences as $geofence) {
             $vehicle_geofences=VehicleGeofence::select('geofence_id')->where('geofence_id',$geofence->id)->withTrashed()->get();
             foreach ($vehicle_geofences as $vehicle_geofence) {
-                $vehicle_geofence->forceDelete();
+                // $vehicle_geofence->forceDelete();
+                VehicleGeofence::where('geofence_id',$geofence->id)->forceDelete();
             }
             $geofence_cleared = $geofence->forceDelete();
         }
@@ -705,8 +738,13 @@ class ClientController extends Controller {
             $geofence_response  =   (new OtaResponse())->saveCommandsToDevice($vehicle->gps_id,$response_string);  
             if($geofence_response)
             {
-                $gps_details        =   (new Gps())->getGpsDetails($vehicle->gps_id);
-                (new OtaResponse())->writeCommandToDevice($gps_details->imei,$response_string);
+                $gps_details                    =   (new Gps())->getGpsDetails($vehicle->gps_id);
+                $is_command_write_to_device     =   (new OtaResponse())->writeCommandToDevice($gps_details->imei,$response_string);
+                if($is_command_write_to_device)
+                {
+                    $this->topic                    =   $this->topic.'/'.$gps_details->imei;
+                    $is_mqtt_publish                =   $this->mqttPublish($this->topic, $response_string);
+                }
             }
         }
 
@@ -763,8 +801,13 @@ class ClientController extends Controller {
             $geofence_response  =   (new OtaResponse())->saveCommandsToDevice($vehicle->gps_id,$response_string);  
             if($geofence_response)
             {
-                $gps_details        =   (new Gps())->getGpsDetails($vehicle->gps_id);
-                (new OtaResponse())->writeCommandToDevice($gps_details->imei,$response_string);
+                $gps_details                        =   (new Gps())->getGpsDetails($vehicle->gps_id);
+                $is_command_write_to_device         =   (new OtaResponse())->writeCommandToDevice($gps_details->imei,$response_string);
+                if($is_command_write_to_device)
+                {
+                    $this->topic                    =   $this->topic.'/'.$gps_details->imei;
+                    $is_mqtt_publish                =   $this->mqttPublish($this->topic, $response_string);
+                }
             }
         }
 
@@ -998,7 +1041,22 @@ class ClientController extends Controller {
             'name'
         ])
         ->get();
-        return view('Client::root-client-create',['entities' => $entities,'countries'=>$countries]);
+         $url=url()->current();
+        
+         $rayfleet_key="rayfleet";
+         $eclipse_key="eclipse";
+         if (strpos($url, $rayfleet_key) == true) {  
+            $default_country_id="178";
+          }else if (strpos($url, $eclipse_key) == true) {
+            $default_country_id="101";
+          }else
+          {
+         $default_country_id="101";
+          }
+          //for logged in user
+        $logged_user_id = \Auth::user()->id;
+        return view('Client::root-client-create',['entities' => $entities,'countries'=>$countries,
+            'default_country_id'=>$default_country_id,'logged_user_id'=>$logged_user_id]);
     }
 
 
@@ -1076,7 +1134,7 @@ public function selectTrader(Request $request)
             $location_lat=$placeLatLng['latitude'];
             $location_lng=$placeLatLng['longitude'];
             $current_date=date('Y-m-d H:i:s');
-
+         
             $user = User::create([
                 'username' => $request->username,
                 'email' => $request->email,
@@ -1245,7 +1303,7 @@ public function selectTrader(Request $request)
         $rules = [
             'name' => 'required',
             // 'search_place'=>'required',
-            'address' => 'required|string|max:150',
+            // 'address' => 'required|string|max:150',
             'client_category' => 'required',
             'country_id' => 'required',
             'state_id' => 'required',
@@ -1263,7 +1321,7 @@ public function selectTrader(Request $request)
             $rules = [
                 'name' => 'required',
                 // 'search_place'=>'required',
-                'address' => 'required|string|max:150',
+                // 'address' => 'required|string|max:150',
                 'client_category' => 'required',
                 'country_id' => 'required',
                 'state_id' => 'required',
@@ -1286,7 +1344,7 @@ public function selectTrader(Request $request)
              'trader' => 'nullable',
             'sub_dealer' => 'required',
             'name' => 'required',
-            'address' => 'required|string|max:150',
+            // 'address' => 'required|string|max:150',
             'client_category' => 'required',
             'country_id' => 'required',
             'state_id' => 'required',
@@ -1305,7 +1363,7 @@ public function selectTrader(Request $request)
             'trader' => 'nullable',
             'sub_dealer' => 'required',
             'name' => 'required',
-            'address' => 'required',
+            // 'address' => 'required',
             'client_category' => 'required',
             'country_id' => 'required',
             'state_id' => 'required',
@@ -1324,11 +1382,11 @@ public function selectTrader(Request $request)
     {
         $rules = [
             'name' => 'required',
-            'address' => 'required',
+            // 'address' => 'required',
             'city_id' => 'required',
             'state_id' => 'required',
             'country_id' => 'required',
-            
+             // 'email' => 'nullable|string|email|max:255|unique:users',
             'mobile_number' => 'required|digits:10|unique:users,mobile,'.$client->user_id
               ];
         return  $rules;
@@ -1338,12 +1396,11 @@ public function selectTrader(Request $request)
     {
         $rules = [
             'name' => 'required',
-            'address' => 'required',
+            // 'address' => 'required',
             'city_id' => 'required',
             'state_id' => 'required',
             'country_id' => 'required',
-
-           
+            // 'email' => 'nullable|string|email|max:255|unique:users',
             'mobile_number' => 'required|digits:11|unique:users,mobile,'.$client->user_id
               ];
         return  $rules;

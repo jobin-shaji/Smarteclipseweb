@@ -80,6 +80,11 @@ Route::group(['middleware' => ['web','auth','role:sub_dealer|dealer|root|trader|
 	Route::post('/returned-gps-list','GpsController@getReturnedGpsList')->name('returned-gps-list');
 });
 
+Route::group(['middleware' => ['web','auth','role:dealer|root|client|sub_dealer|trader'] , 'namespace' => 'App\Modules\Gps\Controllers' ] , function() {
+
+	Route::get('/device_return_list/{id}/view','GpsController@getReturnDeviceList')->name('device.return.list');
+});
+
 Route::group(['middleware' => ['web','auth','role:operations'] ,'namespace' => 'App\Modules\Gps\Controllers' ] , function() {
 
 	Route::get('/operation-gps-data','GpsController@allgpsListPage')->name('operation-gps-data');

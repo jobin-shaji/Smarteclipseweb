@@ -26,11 +26,28 @@ use Illuminate\Support\Str;
 use Carbon\Carbon;
 use PDF;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Traits\MqttTrait;
 use DataTables;
 use DB;
 use Config;
 
 class GpsController extends Controller {
+
+    /**
+     * 
+     * 
+     *
+     */
+    use MqttTrait;
+    /**
+     * 
+     * 
+     *
+     */
+    public function __construct()
+    {
+        $this->topic    = 'cmd';
+    }
 
     public $cart;
     //Display gps in stock
@@ -1651,13 +1668,29 @@ class GpsController extends Controller {
         $response           =   (new OtaResponse())->saveCommandsToDevice($gps_id,$command);
         if($response)
         {
-            $gps_details    =   (new Gps())->getGpsDetails($gps_id);
-            (new OtaResponse())->writeCommandToDevice($gps_details->imei,$command);
-            return response()->json([
-                'status' => 1,
-                'title' => 'Success',
-                'message' => 'Command send successfully'
-            ]);
+            $gps_details                        =   (new Gps())->getGpsDetails($gps_id);
+            $is_command_write_to_device         =   (new OtaResponse())->writeCommandToDevice($gps_details->imei,$command);
+            if($is_command_write_to_device)
+            {
+                $this->topic                    =   $this->topic.'/'.$gps_details->imei;
+                $is_mqtt_publish                =   $this->mqttPublish($this->topic, $command);
+                if ($is_mqtt_publish === true) 
+                {
+                    return response()->json([
+                        'status' => 1,
+                        'title' => 'Success',
+                        'message' => 'Command send successfully'
+                    ]);
+                }
+                else
+                {
+                    return response()->json([
+                        'status' => 0,
+                        'title' => 'Error',
+                        'message' => 'Try again!!'
+                    ]);
+                }
+            }
         }
         else
         {
@@ -1682,13 +1715,29 @@ class GpsController extends Controller {
         $response       =   (new OtaResponse())->saveCommandsToDevice($gps_id,$ota_response);
         
         if($response){
-            $gps_details    =   (new Gps())->getGpsDetails($gps_id);
-            (new OtaResponse())->writeCommandToDevice($gps_details->imei,$ota_response);
-            return response()->json([
-                'status' => 1,
-                'title' => 'Success',
-                'message' => 'Command send successfully'
-            ]);
+            $gps_details                        =   (new Gps())->getGpsDetails($gps_id);
+            $is_command_write_to_device         =   (new OtaResponse())->writeCommandToDevice($gps_details->imei,$ota_response);
+            if($is_command_write_to_device)
+            {
+                $this->topic                    =   $this->topic.'/'.$gps_details->imei;
+                $is_mqtt_publish                =   $this->mqttPublish($this->topic, $ota_response);
+                if ($is_mqtt_publish === true) 
+                {
+                    return response()->json([
+                        'status' => 1,
+                        'title' => 'Success',
+                        'message' => 'Command send successfully'
+                    ]);
+                }
+                else
+                {
+                    return response()->json([
+                        'status' => 0,
+                        'title' => 'Error',
+                        'message' => 'Try again!!'
+                    ]);
+                }
+            }
         }else{
            return response()->json([
                 'status' => 0,
@@ -2006,12 +2055,28 @@ class GpsController extends Controller {
         $response           =   (new OtaResponse())->saveCommandsToDevice($gps_id,$command);
         
         if($response){
-            (new OtaResponse())->writeCommandToDevice($imei,$command);
-            return response()->json([
-                'status' => 1,
-                'title' => 'Success',
-                'message' => 'Command send successfully'
-            ]);
+            $is_command_write_to_device         =   (new OtaResponse())->writeCommandToDevice($imei,$command);
+            if($is_command_write_to_device)
+            {
+                $this->topic                    =   $this->topic.'/'.$imei;
+                $is_mqtt_publish                =   $this->mqttPublish($this->topic, $command);
+                if ($is_mqtt_publish === true) 
+                {
+                    return response()->json([
+                        'status' => 1,
+                        'title' => 'Success',
+                        'message' => 'Command send successfully'
+                    ]);
+                }
+                else
+                {
+                    return response()->json([
+                        'status' => 0,
+                        'title' => 'Error',
+                        'message' => 'Try again!!'
+                    ]);
+                }
+            }
         }else{
            return response()->json([
                 'status' => 0,
@@ -2033,25 +2098,31 @@ class GpsController extends Controller {
         $command            =   $request->command;
         $operations_id      =   \Auth::user()->operations->id;
         $response           =   (new OtaResponse())->saveCommandsToDevice($gps_id,$command);
-        // dd($response);
-        // $response = OtaResponse::create([
-        //     'gps_id'=>$gps_id,
-        //     'response'=>trim($command),
-        //     'operations_id'=>$operations_id
-        // ]);
         if($response){
-            $gps_details    =   (new Gps())->getGpsDetails($gps_id);
-            (new OtaResponse())->writeCommandToDevice($gps_details->imei,$command);
-        //     $request->session()->flash('message', 'Command send successfully');
-        // $request->session()->flash('alert-class', 'alert-success');
-            return response()->json([
-                'status' => 1,
-                'title' => 'Success',
-                'message' => 'Command send successfully'
-            ]);
+            $gps_details                        =   (new Gps())->getGpsDetails($gps_id);
+            $is_command_write_to_device         =   (new OtaResponse())->writeCommandToDevice($gps_details->imei,$command);
+            if($is_command_write_to_device)
+            {
+                $this->topic                    =   $this->topic.'/'.$gps_details->imei;
+                $is_mqtt_publish                =   $this->mqttPublish($this->topic, $command);
+                if ($is_mqtt_publish === true) 
+                {
+                    return response()->json([
+                        'status' => 1,
+                        'title' => 'Success',
+                        'message' => 'Command send successfully'
+                    ]);
+                }
+                else
+                {
+                    return response()->json([
+                        'status' => 0,
+                        'title' => 'Error',
+                        'message' => 'Try again!!'
+                    ]);
+                }
+            }
         }else{
-        //     $request->session()->flash('message', 'Try again');
-        // $request->session()->flash('alert-class', 'alert-success');
             return response()->json([
                 'status' => 0,
                 'title' => 'Error',
@@ -2068,6 +2139,40 @@ class GpsController extends Controller {
         return view('Gps::returned-gps-list');
     }
 
+    public function getReturnDeviceList(Request $request)
+    {
+        if(\Auth::user()->hasRole('dealer|root|client'))
+        {
+            $decrypted_id = Crypt::decrypt($request->id);
+            $gps      =   Gps::withTrashed()
+                ->where('id',$decrypted_id)
+                ->first();
+            if($request->ajax())
+            {
+                return ($gps != null) ? Response([ 'links' => $gps->appends(['sort' => 'votes'])]) : Response([ 'links' => null]);
+            }
+            else
+            {
+                return ($gps != null) ? view('Gps::return_device_list',['gps'=>$gps]) : view('Gps::404');
+            }
+        }
+        elseif (\Auth::user()->hasRole('sub_dealer|trader')) {
+            $decrypted_id = Crypt::decrypt($request->id);
+            $gps      =   Gps::withTrashed()
+                ->with('device_return.servicer')
+                ->where('id',$decrypted_id)
+                ->first();
+            if($request->ajax())
+            {
+                return ($gps != null) ? Response([ 'links' => $gps->appends(['sort' => 'votes'])]) : Response([ 'links' => null]);
+            }
+            else
+            {
+                return ($gps != null) ? view('Gps::return_device_list_servicer',['gps'=>$gps]) : view('Gps::404');
+            }
+        }
+    }
+
     public function getReturnedGpsList(Request $request)
     {
         $gps_stock      =   GpsStock::withTrashed()
@@ -2078,31 +2183,63 @@ class GpsController extends Controller {
         if(\Auth::user()->hasRole('root'))
         {
             $gps_stock  =   $gps_stock->get();
+            return DataTables::of($gps_stock)
+            ->addIndexColumn()
+            ->addColumn('action', function ($gps_stock) { 
+            $b_url = \URL::to('/');
+            return "<a href=".$b_url."/device_return_list/".Crypt::encrypt($gps_stock->gps_id)."/view class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>";
+            })
+            ->make();
         }
         else if(\Auth::user()->hasRole('dealer'))
         {
             $dealer_id  =   \Auth::user()->dealer->id;
             $gps_stock  =   $gps_stock->where('dealer_id',$dealer_id)->get();
+            return DataTables::of($gps_stock)
+            ->addIndexColumn()
+            ->addColumn('action', function ($gps_stock) { 
+            $b_url = \URL::to('/');
+            return "<a href=".$b_url."/device_return_list/".Crypt::encrypt($gps_stock->gps_id)."/view class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>";
+            })
+            ->make();
         }
         else if(\Auth::user()->hasRole('sub_dealer'))
         {
             $sub_dealer_id  =   \Auth::user()->subdealer->id;
             $gps_stock      =   $gps_stock->where('subdealer_id',$sub_dealer_id)->get();
+            return DataTables::of($gps_stock)
+            ->addIndexColumn()
+            ->addColumn('action', function ($gps_stock) { 
+            $b_url = \URL::to('/');
+            return "<a href=".$b_url."/device_return_list/".Crypt::encrypt($gps_stock->gps_id)."/view class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>";
+            })
+            ->make();
         }
         else if(\Auth::user()->hasRole('trader'))
         {
             $trader_id  =   \Auth::user()->trader->id;
             $gps_stock      =   $gps_stock->where('trader_id',$trader_id)->get();
+            return DataTables::of($gps_stock)
+            ->addIndexColumn()
+            ->addColumn('action', function ($gps_stock) { 
+            $b_url = \URL::to('/');
+            return "<a href=".$b_url."/device_return_list/".Crypt::encrypt($gps_stock->gps_id)."/view class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>";
+            })
+            ->make();
         }
         else if(\Auth::user()->hasRole('client'))
         {
             $client_id  =   \Auth::user()->client->id;
             $gps_stock      =   $gps_stock->where('client_id',$client_id)->get();
-        }
-
-        return DataTables::of($gps_stock)
+            return DataTables::of($gps_stock)
             ->addIndexColumn()
+            ->addColumn('action', function ($gps_stock) { 
+            $b_url = \URL::to('/');
+            return "<a href=".$b_url."/device_return_list/".Crypt::encrypt($gps_stock->gps_id)."/view class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>";
+            })
             ->make();
+        }
+        
     }
     /**
      * esim updation

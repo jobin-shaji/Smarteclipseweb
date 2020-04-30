@@ -58,13 +58,13 @@ $key        = (isset($_GET['new_installation_search_key'])) ? $_GET['new_install
          
   </form>
     </div> 
-       <table class="table table-hover table-bordered   datatable"  style="width:100%;text-align: center">
+      
+         <table class="table table-hover table-bordered  table-striped datatable"  style="width:95%;margin-left:3%!important;text-align: center" >
           <thead class="indigo white-text">
                             <tr>
                             <th><b>SL.No</b></th>
                                 <th><b>Job Code</b></th>
                                 <th><b>End User Details</b></th>
-                                <th><b>Registration Number<b></th>
                                 <th><b>GPS Serial No<b></th>
                                 <th><b>Description<b></th>
                                 <th><b>Location<b></th>
@@ -100,8 +100,7 @@ $key        = (isset($_GET['new_installation_search_key'])) ? $_GET['new_install
                     <td>{{$servicer_job->client_name}} , {{$servicer_job->mobile_number}}
                     <br>{{$servicer_job->user_email}}<br>{{$servicer_job->client_address}}
                     </td>
-                    <td>{{$servicer_job->register_number}}</td>
-                    <td>{{ ($servicer_job->gps_serial_no) ? $servicer_job->gps_serial_no: ''}}</td>
+                     <td>{{ ($servicer_job->gps_serial_no) ? $servicer_job->gps_serial_no: ''}}</td>
                     <td>{{$servicer_job->description}}</td>
                     <td>{{$servicer_job->location}}</td>
 

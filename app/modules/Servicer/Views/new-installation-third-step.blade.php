@@ -69,7 +69,7 @@ Assign Servicer
 
 </div>
 <div class="row">
-<button type="submit"   style="width: 15%; height: 20%;" class="btn btn-primary"> Save And Proceed</button>
+<button type="submit"   id="commandForm"  style="width: 15%; height: 20%;" class="btn btn-primary"> Save And Proceed</button>
 </div>
 </form>
 
@@ -81,6 +81,31 @@ Assign Servicer
 
 @endsection
 @section('script')
+<script>
+
+$(document).ready(function() {
+    $("#commandForm").on("click", function(){
+     
+      var checkedboxes = $('input[name="commandcheckbox[]"]:checked');
+      var checkedboxeslength=  checkedboxes.length;
+      var totalCheckboxes = $('input[name="commandcheckbox[]"]').length;
+
+      var pendingCheckboxes=totalCheckboxes-checkedboxeslength;
+      if(checkedboxeslength < totalCheckboxes)
+      {
+       
+        alert("please select all commands there are unchecked commands of "+'  '+pendingCheckboxes);
+        return false;
+
+
+      }else
+      { 
+       return true;
+    }
+
+}); 
+});
+</script>
 <link rel="stylesheet" href="{{asset('css/installation-step-servicer.css')}}">
 <!-- <script src="{{asset('js/gps/new-installation-step.js')}}"></script> -->
 <script src="{{asset('js/gps/servicer-driver-create.js')}}"></script>

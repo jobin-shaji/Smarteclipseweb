@@ -40,6 +40,7 @@ function callBackDataTable(){
             {data: 'gps.serial_no', name: 'gps.serial_no', orderable: false},
             {data: 'gps.batch_number', name: 'gps.batch_number', orderable: false},
             {data: 'gps.version', name: 'gps.version', orderable: false},
+            {data: 'action', name: 'action', orderable: false, searchable: false}
         ],
         
         aLengthMenu: [[25, 50, 100, -1], [25, 50, 100, 'All']]

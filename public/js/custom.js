@@ -174,6 +174,8 @@ $(function () {
     });
 
     $('.datepickerFundamental').val("");
+    $('.datepicker').val("");
+
     $('.datepickerFreebies').val("");
     $('.datepickerSuperior').val("");
     $('.datepickerPro').val("");
@@ -223,6 +225,12 @@ $(function () {
         format: 'DD-MM-YYYY',
         minDate: moment().millisecond(0).second(0).minute(0).hour(0)
         // minDate: moment().subtract(1,'d')
+    });
+    $( ".device_report" ).datetimepicker({
+        format: 'DD-MM-YYYY',
+        minDate: '2019-10-01',
+        maxDate: 'now',
+        useCurrent: false
     });
 
      $( ".manufacturing_date" ).datetimepicker({
@@ -539,6 +547,18 @@ function backgroundPostData(url, data, callBack, options) {
                 else if(callBack=='reassign_count')
                 {
                     reassign_count(res);
+                }
+                else if(callBack=='rootGpsClientSale')
+                {
+                    rootGpsClientSale(res);
+                }
+                else if(callBack=='dealerGpsClientSale')
+                {
+                    dealerGpsClientSale(res);
+                }
+                else if(callBack=='subDealerGpsClientSale')
+                {
+                    subDealerGpsClientSale(res);
                 }
 
 
@@ -1029,6 +1049,27 @@ function downloadTotalKMReport(){
     downloadFile(url,data);
 }
 
+
+function downloadClientDailyKMReport()
+{
+    var url             =   'daily-km-report/export';
+    var vehicle_id      =   $('#vehicle').val();
+    var from_date            =   $('#fromDate').val();
+    var to_date            =   $('#toDate').val();
+   
+    if(to_date){
+        var data = {
+        id : $('meta[name = "client"]').attr('content'),'vehicle_id':vehicle_id,'from_date':from_date,
+         'to_date':to_date
+        };
+        downloadFile(url,data);
+    }else{
+        var data = {
+        id : $('meta[name = "client"]').attr('content'),'vehicle_id':vehicle_id
+        };
+        downloadFile(url,data);
+    }
+}
 function downloadDailyKMReport()
 {
     var url             =   'daily-km-report/export';
@@ -1152,6 +1193,7 @@ function downloadSosLabel(id){
 // code
 function jobtypeonchange(job_type)
 {
+     
     $('#client_section').hide();
     $('#location_section').hide();
     $('#gps_section').hide();
@@ -1163,6 +1205,7 @@ function jobtypeonchange(job_type)
     $('#vehicle_section').hide();
     $("#client").val("");
     $('#gps').find('option').remove();
+
     $('#vehicle').find('option').remove();
     $.ajax({
         type:'POST',
@@ -1176,6 +1219,7 @@ function jobtypeonchange(job_type)
             $('#client_section').show();
             $('#client').empty();
             $('#client').focus;
+           
             $('#client').append('<option value="">Select End User</option>');   
             if(res.length == 0)
             {
@@ -1220,6 +1264,8 @@ function getClientServicerGps(client_id){
 
 function clientGps(res)
 {
+    var user_id = $("#user_id").val();   
+
     $('#location_section').show();
     $('#gps_section').show();
     $('#description_section').show();
@@ -1240,12 +1286,15 @@ function clientGps(res)
                 $("#submit_section").prop('disabled', false); 
                 $("#submit_text").hide();
             }
+            
             $('#gps').append('<option value="">Select GPS</option>'); 
             for (var i = 0; i < length; i++) {
              var gps='  <option value="'+res.devices[i].id+'"  >'+res.devices[i].serial_no+'</option>';
              $("#gps").append(gps);
             }
-        }
+// $("#gps").select2().val(localStorage.getItem(user_id+'.autofill.sbdealer.gps').toString()).trigger("change");
+       
+              }
         $('#search_place').val(res.location);
         if( res.job_type == 3 )
         {
@@ -1287,6 +1336,9 @@ function clientGps(res)
             return this.defaultSelected;
         });
     }
+    // $("#gps").change(function(){
+    //    localStorage.setItem(user_id+'.autofill.subdealer.gps',$(this).val());
+    //    });
 }
 
 
@@ -1375,59 +1427,9 @@ $('.cover_vehicle_track_list .cover_track_data').click(function(){
 
 });
 
-function selectDealer(dealer)
-{
-
-    var url = 'select/subdealer';
-    var data = {
-        dealer : dealer
-    };
-    backgroundPostData(url,data,'rootSubdealer',{alert:true});
-}
-
-function selectTrader(dealer_id)
-{
-
-    var url = 'select/trader';
-    var data = {
-        dealer_id : dealer_id
-    };
-    backgroundPostData(url,data,'rootTrader',{alert:true});
-
-
-}
-function rootSubdealer(res)
-    {
-        $("#sub_dealer").empty();
-        var length=res.sub_dealers.length
-        sub_dealer_text='<option value="">Choose Dealer from the list</option>';
-        for (var i = 0; i < length; i++)
-        {
-         sub_dealer +='<option value="'+res.sub_dealers[i].id+'"  >'+res.sub_dealers[i].name+'</option>';
-        }
-        $("#sub_dealer").append(sub_dealer_text+sub_dealer);
-    }
 
 
 
-function rootTrader(res)
-   {
-         $("#trader").empty();
-         var length=res.traders.length
-         trader_text='<option value="">Choose Sub Dealer from the list</option>';
-         if(length == 0)
-          {
-              trader='<option value="">No Sub Dealer</option>';
-              $("#trader").append(trader);
-          }else
-          {
-              for (var i = 0; i < length; i++)
-               {
-              trader+='  <option value="'+res.traders[i].id+'"  >'+res.traders[i].name+'</option>';
-               }
-              $("#trader").append(trader_text+trader);
-        }
-   }
    function selectVehicle(client_id)
 {
 

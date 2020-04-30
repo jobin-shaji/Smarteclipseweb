@@ -42,7 +42,8 @@ return  [
        'Monitoring',
        'VltData',
        'DeviceReturn',
-       'DeviceReassign'
+       'DeviceReassign',
+       'GpsReport'
 
     ]
 ]

@@ -50,7 +50,7 @@ Assign Servicer
 <h4 class="panel-title">Installation check list</h4>
 </div>
 <div class="panel-body">
-<form  method="POST" action="{{route('checkbox.installation.save.p',$pass_servicer_jobid)}}">
+<form  method="POST"   action="{{route('checkbox.installation.save.p',$pass_servicer_jobid)}}"  id="checkboxForm" novalidate >
    {{csrf_field()}}
  
  <div class="row">
@@ -58,14 +58,27 @@ Assign Servicer
     <div class="col-lg-6">
        <div class="funkyradio">
        <div class="funkyradio-success">
-        <input type="checkbox" name="checkbox_first_installation[]" value="{{$list['id']}}" id="checkbox{{$list['id']}}"<?php if($list['checked']== true){ echo "checked"; }?>/>
-       <label for="checkbox{{$list['id']}}">{{$list['label']}}</label>
+
+         <?php 
+         if($list['required']== true)
+           {  
+            echo '<span class="error_message" style="color:red;display:none;position: absolute;">This field is Required</span>'; 
+            }
+        ?> 
+        <input type="checkbox" name="checkbox_first_installation[]" value="{{$list['id']}}" id="checkbox{{$list['id']}}"<?php if($list['checked']== true){ echo "checked"; }?>
+        <?php if($list['required']== true)
+        {  echo 'required = true'; }?> />
+        <label for="checkbox{{$list['id']}}">{{$list['label']}}</label>
+      
+
       </div>
    </div>
   </div>
    <?php } ?>
  <br>
- <button type="submit" class="btn btn-primary btn-md form-btn pull-right">Save</button>
+
+ <button type="submit"     class="btn btn-primary btn-md form-btn pull-right">Save</button>
+
   </div>
   </form>
  </div>
@@ -75,7 +88,30 @@ Assign Servicer
 </div></div>
 @endsection
 @section('script')
+<script>
+
+$( "#checkboxForm" ).submit(function( event ) {
+  var rqc = 0;
+  $(".error_message").css('display','none');  
+    $("input[name='checkbox_first_installation[]']:checkbox").each(function () {
+        if (!this.checked) {
+           if(this.required == true )
+            {
+             $(this).closest('div').find('span').css('display','block'); 
+             rqc = 1;  
+            }
+        }
+        });
+    if(rqc == 0)
+    {
+    return true;
+    }else{
+      return false;
+    }
+  });
+</script>
 <link rel="stylesheet" href="{{asset('css/installation-step-servicer.css')}}">
 <script src="{{asset('js/gps/new-installation-step.js')}}"></script>
 <script src="{{asset('js/gps/servicer-driver-create.js')}}"></script>
 @endsection
+

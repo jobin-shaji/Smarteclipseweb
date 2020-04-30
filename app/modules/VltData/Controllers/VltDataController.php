@@ -6,6 +6,7 @@ use App\Modules\Gps\Models\Gps;
 use App\Modules\VltData\Models\VltData;
 use App\Modules\Gps\Models\GpsData;
 use App\Modules\Ota\Models\OtaResponse;
+use App\Http\Traits\MqttTrait;
 
 class VltDataController extends Controller
 {
@@ -19,7 +20,12 @@ class VltDataController extends Controller
     CONST VLT_DTA_HEADER_HEALTH                 =   'HLM';
     CONST VLT_DTA_HEADER_LOGIN                  =   'LGN';
     CONST VLT_DTA_HEADER_ALERT                  =   'ALT';
-
+    /**
+     * 
+     * 
+     *
+     */
+    use MqttTrait;
     /**
      *
      */
@@ -36,6 +42,15 @@ class VltDataController extends Controller
      *
      */
     public $search_key;
+    /**
+     *
+     *
+     */
+
+    public function __construct()
+    {
+        $this->topic    = 'cmd';
+    }
 
     /**
      *
@@ -721,17 +736,34 @@ class VltDataController extends Controller
         $response           =   (new OtaResponse())->saveCommandsToDevice($gps_id,$command);
         if($response)
         {
-            $gps_details    =   (new Gps())->getGpsDetails($gps_id);
-            (new OtaResponse())->writeCommandToDevice($gps_details->imei,$command);
-            return response()->json([
-                'status' => 1,
-                'title' => 'Success',
-                'message' => 'Command send successfully'
-            ]);
+            $gps_details                    =   (new Gps())->getGpsDetails($gps_id);
+            $is_command_write_to_device     =   (new OtaResponse())->writeCommandToDevice($gps_details->imei,$command);
+            if($is_command_write_to_device)
+            {
+                $this->topic                    =   $this->topic.'/'.$gps_details->imei;
+                $is_mqtt_publish                =   $this->mqttPublish($this->topic, $command);
+                if ($is_mqtt_publish === true) 
+                {
+                    return response()->json([
+                        'status' => 1,
+                        'title' => 'Success',
+                        'message' => 'Command send successfully'
+                    ]);
+                }
+                else
+                {
+                    return response()->json([
+                        'status' => 0,
+                        'title' => 'Error',
+                        'message' => 'Try again!!'
+                    ]);
+                }
+            }
+            
         }
         else
         {
-           return response()->json([
+            return response()->json([
                 'status' => 0,
                 'title' => 'Error',
                 'message' => 'Try again!!'

@@ -68,7 +68,7 @@ class Client extends Model
 
   public function getDetailsOfClientsUnderSubDealer($sub_dealer_id)
   {
-    return self::select('id','name')->where('sub_dealer_id',$sub_dealer_id)->get();
+    return self::select('id','name')->where('sub_dealer_id',$sub_dealer_id)->orderBy('created_at', 'DESC')->get();
   }
 
   public function getDetailsOfClientsWithReturnedVehicleGpsUnderSubDealer($sub_dealer_id)
@@ -79,7 +79,8 @@ class Client extends Model
 
   public function getDetailsOfClientsUnderTrader($trader_id)
   {
-    return self::select('id','name')->where('trader_id',$trader_id)->get();
+    
+    return self::select('id','name')->where('trader_id',$trader_id)->orderBy('created_at', 'DESC')->get();
   }
 
   public function getDetailsOfClientsWithReturnedVehicleGpsUnderTrader($trader_id)
@@ -97,6 +98,21 @@ class Client extends Model
   {
     return DB::select("SELECT clients.id,clients.name FROM clients LEFT JOIN vehicles ON vehicles.client_id = clients.id
     WHERE vehicles.is_returned = 1 AND vehicles.is_reinstallation_job_created = 0  GROUP BY clients.id");
+  }
+
+  public function getClientsOfDealers($dealer_ids)
+	{
+		return self::select('id','user_id')->whereIn('sub_dealer_id',$dealer_ids)->whereNull('trader_id')->withTrashed()->get();
+  }
+
+  public function getClientsOfSubDealers($sub_dealer_ids)
+	{
+		return self::select('id','user_id')->whereIn('trader_id',$sub_dealer_ids)->whereNull('sub_dealer_id')->withTrashed()->get();
+  }
+
+  public function checkUserIdIsInClientTable($user_id)
+  {
+    return self::select('name')->where('user_id',$user_id)->first();
   }
 
   

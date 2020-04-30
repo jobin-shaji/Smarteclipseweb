@@ -4,8 +4,11 @@ $(document).ready(function () {
      var data = {
    
      };
-      backgroundPostData(url,data,'dealerGpsSale',{alert:true});
-      
+    backgroundPostData(url,data,'dealerGpsSale',{alert:true});
+    var url = 'dealer-gps-client-sale';
+    var data = {  
+    };
+    backgroundPostData(url,data,'dealerGpsClientSale',{alert:true});
     var url = 'dealer-gps-user';
      var data = {   
      };
@@ -22,7 +25,7 @@ var ctx = document.getElementById("rootChart").getContext('2d');
     data: {
      labels: res.gps_month,
       datasets: [{
-        label: "Gps Sale",
+        label: "Gps Transfer",
         data:res.gps_count,
         backgroundColor:'rgba(245, 186, 110)',
         borderColor:'rgba(242, 143, 16)',
@@ -32,7 +35,7 @@ var ctx = document.getElementById("rootChart").getContext('2d');
     options: {
     title: {
       display: true,
-      text: 'GPS SALE'
+      text: 'GPS TRANSFER'
     },
       scales: {
         yAxes: [{
@@ -84,6 +87,36 @@ function dealerGpsUser(res){
   });
 }
   // });
+function dealerGpsClientSale(res){
+  console.log(res);
+var ctx = document.getElementById("rootGpsSaleChart").getContext('2d');
+  var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: res.gps_month,
+      datasets: [{
+        label: 'Gps Sale',
+        data:res.gps_count,
+        backgroundColor:'rgba(245, 186, 110 )',
+        borderColor:'rgba(242, 143, 16)',
+        borderWidth: 1
+      }]
+    },
+    options: {
+    title: {
+      display: true,
+      text: 'GPS SALE'
+    },
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true
+          }
+        }]
+      }
+    }
+  });
+}
 
 
 // ----------------------------------------------------

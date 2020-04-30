@@ -39,7 +39,7 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
               <div class="col-md-6">
                 <?php
                 $encript = Crypt::encrypt($servicer_job->id);
-                $vehicle_id = Crypt::encrypt($vehicle_device->vehicle->id);
+                // $vehicle_id = Crypt::encrypt($vehicle_device->vehicle->id);
                 ?>
                 <a href="{{route('job.complete.certificate.download',$encript)}}">
                   <button class="btn btn-xs"><i class='fa fa-download'></i>Download Certificate</button>
@@ -68,8 +68,7 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                                                                                                                                           } else if ($servicer_job['job_type'] == 2) {
                                                                                                                                             echo 'Services';
                                                                                                                                           }else if ($servicer_job['job_type'] == 3) {
-                                                                                                                                            echo 'Reinstallation';
-                                                                                                                                          } ?>" required readonly>
+                                                                                                                                            echo 'Reinstallation';} ?>" required readonly>
                         <span class="glyphicon glyphicon-phone form-control-feedback"></span>
                       </div>
                       @if ($errors->has('job_type'))
@@ -115,29 +114,55 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                       @endif
                     </div>
                     <div class="form-group row" style="float:none!important">
-                      <label for="fname" class="col-md-6 text-right control-label col-form-label">Vehicle Name</label>
+                      <label for="fname" class="col-md-6 text-right control-label col-form-label">Commet</label>
                       <div class="form-group has-feedback">
-                        <input type="text" class=" form-control {{ $errors->has('job_completed_date') ? ' has-error' : '' }}" name="job_completed_date" value="{{$vehicle_device->vehicle->name}} " required readonly="">
+                        <input type="text" class=" form-control {{ $errors->has('comment') ? ' has-error' : '' }}" name="comment" value="{{$servicer_job->comment}} " required readonly="">
                         <span class="glyphicon glyphicon-phone form-control-feedback"></span>
                       </div>
-                      @if ($errors->has('job_completed_date'))
+                      @if ($errors->has('comment'))
                       <span class="help-block">
-                        <strong class="error-text">{{ $errors->first('job_completed_date') }}</strong>
+                        <strong class="error-text">{{ $errors->first('comment') }}</strong>
+                      </span>
+                      @endif
+                    </div>
+                    @if($servicer_job->job_type == 3)
+                    <div class="form-group row" style="float:none!important">
+                      <label for="name" class="col-md-6 text-right control-label col-form-label">Vehicle Name</label>
+                      <div class="form-group has-feedback">
+                        <input type="text" class=" form-control {{ $errors->has('name') ? ' has-error' : '' }}" name="name" value="{{$vehicle_device->vehicle->name}} " required readonly="">
+                        <span class="glyphicon glyphicon-phone form-control-feedback"></span>
+                      </div>
+                      @if ($errors->has('name'))
+                      <span class="help-block">
+                        <strong class="error-text">{{ $errors->first('name') }}</strong>
                       </span>
                       @endif
                     </div>
                     <div class="form-group row" style="float:none!important">
-                      <label for="fname" class="col-md-6 text-right control-label col-form-label">Registration Number</label>
+                      <label for="register_number" class="col-md-6 text-right control-label col-form-label">Registration Number</label>
                       <div class="form-group has-feedback">
-                        <input type="text" class=" form-control {{ $errors->has('job_completed_date') ? ' has-error' : '' }}" name="job_completed_date" value="{{$vehicle_device->vehicle->register_number}} " required readonly="">
+                        <input type="text" class=" form-control {{ $errors->has('register_number') ? ' has-error' : '' }}" name="job_completed_date" value="{{$vehicle_device->vehicle->register_number}} " required readonly="">
                         <span class="glyphicon glyphicon-phone form-control-feedback"></span>
                       </div>
-                      @if ($errors->has('job_completed_date'))
+                      @if ($errors->has('register_number'))
                       <span class="help-block">
-                        <strong class="error-text">{{ $errors->first('job_completed_date') }}</strong>
+                        <strong class="error-text">{{ $errors->first('register_number') }}</strong>
                       </span>
                       @endif
                     </div>
+                    @endif
+                    <!-- <div class="form-group row" style="float:none!important">
+                      <label for="fname" class="col-md-6 text-right control-label col-form-label">Comment</label>
+                      <div class="form-group has-feedback">
+                        <input type="text" class=" form-control {{ $errors->has('comment') ? ' has-error' : '' }}" name="comment" value="{{$servicer_job->comment}}" required readonly="">
+                        <span class="glyphicon glyphicon-phone form-control-feedback"></span>
+                      </div>
+                      @if ($errors->has('comment'))
+                      <span class="help-block">
+                        <strong class="error-text">{{ $errors->first('comment') }}</strong>
+                      </span>
+                      @endif
+                    </div> -->
                   </div>
                 </div>
               </div>
@@ -275,7 +300,7 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
         <tr>
       <td style="width: 25%" >{{ (($perPage * ($page - 1)) + $i++) }}</td>
        <td style="width: 25%" ><?php echo $each_scenario->title;?> </td>
-      <td style="width: 25%" > <input type="checkbox" name="gps" id="gps" <?php if ($each_scenario->sos->activate) {
+      <td style="width: 25%" > <input type="checkbox" name="gps" id="gps" <?php if ($each_scenario->test_status==1) {
                                                                         echo 'checked';
                                                                       } ?> readonly> </br>
                         </td>
@@ -295,11 +320,13 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
        $i=1;
        if($servicer_job->device_test_scenario != '')
        {
+
         foreach (json_decode($servicer_job->device_test_scenario)->tests as $each_scenario) { ?>
         <tr>
       <td style="width: 25%" >{{ (($perPage * ($page - 1)) + $i++) }}</td>
        <td style="width: 25%" ><?php echo $each_scenario->title;?> </td>
-      <td style="width: 25%" > <input type="checkbox" name="gps" id="gps" <?php if ($each_scenario->sos->activate) {
+
+      <td style="width: 25%" > <input type="checkbox" name="gps" id="gps" <?php if ($each_scenario->test_status==1) {
                                                                         echo 'checked';
                                                                       } ?> readonly> </br>
                         </td>

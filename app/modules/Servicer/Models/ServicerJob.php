@@ -319,8 +319,8 @@ class ServicerJob extends Model
             'gps.serial_no as gps_serial_no','clients.address as client_address')
             ->where('client_id',$client_id)
             ->where('job_type',2)
-            ->whereNull('job_complete_date')
-            ->where('servicer_jobs.status',1);
+            ->whereNull('job_complete_date');
+            // ->where('servicer_jobs.status',1);
             if( $key != null )
             {
               $query->where(function($query) use($key){
