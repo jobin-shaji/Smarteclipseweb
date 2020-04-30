@@ -22,6 +22,7 @@ class CreateGpsStocksTable extends Migration
             $table->integer('trader_id')->nullable();
             $table->integer('client_id')->nullable();
             $table->integer('is_returned')->nullable()->comment = 'null,0-not returened,1-returned';
+            $table->dateTime('returned_on')->nullable();
             $table->integer('refurbished_status')->default(0)->comment = '0-normal,1-refurbished';
             $table->integer('deleted_by')->nullable();
             $table->timestamps();
