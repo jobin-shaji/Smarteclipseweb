@@ -729,6 +729,97 @@ class GpsReportController extends Controller
         }
         return $transfer_log;
     }
+    /*
+     *
+     * RETURNED DEVICE REPORT
+     * 
+     */
+    public function gpsReturnedReport(Request $request)
+    {
+        $from_date          =   ( isset($request->from_date) ) ? date ('Y-m-d',strtotime($request->from_date)) : null;
+        $to_date            =   ( isset($request->to_date) ) ? date ('Y-m-d',strtotime($request->to_date)) : null;
+        $download_type      =   ( isset($request->type) ) ? $request->type : null;
+        if(\Auth::user()->hasRole('root'))
+        {
+            if($from_date == null && $to_date == null)
+            {
+                $transfer_details       =   [];
+            }
+            else
+            {
+                $transfer_details       =   $this->TransferSummaryOfManufacturer($from_date,$to_date,$download_type);
+            }
+            if($download_type == 'pdf')
+            {
+                $pdf                    =   PDF::loadView('GpsReport::gps-transfer-report-download',['transfer_summary' => $transfer_details['transfer_summary'], 'manufacturer_to_distributor_details'=> $transfer_details['manufacturer_to_distributor_details'], 'distributor_to_dealer_details' => $transfer_details['distributor_to_dealer_details'], 'dealer_to_sub_dealer_details'=> $transfer_details['dealer_to_sub_dealer_details'],'dealer_to_client_details' => $transfer_details['dealer_to_client_details'], 'sub_dealer_to_client_details' => $transfer_details['sub_dealer_to_client_details'], 'generated_by' => $transfer_details['generated_by'].' '.'( Manufacturer )', 'generated_on' => date("d/m/Y h:m:s A"), 'from_date' => date('d/m/Y',strtotime($from_date)), 'to_date' => date('d/m/Y',strtotime($to_date))]);
+                return $pdf->download('gps-transfer-report.pdf');
+            }
+            else
+            {
+                return view('GpsReport::gps-transfer-report-in-manufacturer',['transfer_details' => $transfer_details, 'from_date' => $from_date, 'to_date' => $to_date ]);
+            }
+        }
+        else if(\Auth::user()->hasRole('dealer'))
+        {
+            if($from_date == null && $to_date == null)
+            {
+                $transfer_details       =   [];
+            }
+            else
+            {
+                $transfer_details       =   $this->TransferSummaryOfDistributor($from_date,$to_date,$download_type);
+            }
+            if($download_type == 'pdf')
+            {
+                $pdf                    =   PDF::loadView('GpsReport::gps-transfer-report-download',['transfer_summary' => $transfer_details['transfer_summary'], 'manufacturer_to_distributor_details'=> $transfer_details['manufacturer_to_distributor_details'], 'distributor_to_dealer_details' => $transfer_details['distributor_to_dealer_details'], 'dealer_to_sub_dealer_details'=> $transfer_details['dealer_to_sub_dealer_details'],'dealer_to_client_details' => $transfer_details['dealer_to_client_details'], 'sub_dealer_to_client_details' => $transfer_details['sub_dealer_to_client_details'], 'generated_by' => $transfer_details['generated_by'].' '.'( Distributor )', 'generated_on' => date("d/m/Y h:m:s A"), 'from_date' => date('d/m/Y',strtotime($from_date)), 'to_date' => date('d/m/Y',strtotime($to_date))]);
+                return $pdf->download('gps-transfer-report.pdf');
+            }
+            else
+            {
+                return view('GpsReport::gps-transfer-report-in-distributor',['transfer_details' => $transfer_details, 'from_date' => $from_date, 'to_date' => $to_date ]);
+            }
+        }
+        else if(\Auth::user()->hasRole('sub_dealer'))
+        {
+            if($from_date == null && $to_date == null)
+            {
+                $transfer_details       =   [];
+            }
+            else
+            {
+                $transfer_details       =   $this->TransferSummaryOfDealer($from_date,$to_date,$download_type);
+            }
+            if($download_type == 'pdf')
+            {
+                $pdf                    =   PDF::loadView('GpsReport::gps-transfer-report-download',['transfer_summary' => $transfer_details['transfer_summary'], 'manufacturer_to_distributor_details'=> $transfer_details['manufacturer_to_distributor_details'], 'distributor_to_dealer_details' => $transfer_details['distributor_to_dealer_details'], 'dealer_to_sub_dealer_details'=> $transfer_details['dealer_to_sub_dealer_details'],'dealer_to_client_details' => $transfer_details['dealer_to_client_details'], 'sub_dealer_to_client_details' => $transfer_details['sub_dealer_to_client_details'], 'generated_by' => $transfer_details['generated_by'].' '.'( Dealer )', 'generated_on' => date("d/m/Y h:m:s A"), 'from_date' => date('d/m/Y',strtotime($from_date)), 'to_date' => date('d/m/Y',strtotime($to_date))]);
+                return $pdf->download('gps-transfer-report.pdf');
+            }
+            else
+            {
+                return view('GpsReport::gps-transfer-report-in-dealer',['transfer_details' => $transfer_details, 'from_date' => $from_date, 'to_date' => $to_date ]);
+            }
+        }
+        else if(\Auth::user()->hasRole('trader'))
+        {
+            if($from_date == null && $to_date == null)
+            {
+                $transfer_details       =   [];
+            }
+            else
+            {
+                $transfer_details       =   $this->TransferSummaryOfSubDealer($from_date,$to_date,$download_type);
+            }
+            if($download_type == 'pdf')
+            {
+                $pdf                    =   PDF::loadView('GpsReport::gps-transfer-report-download',['transfer_summary' => $transfer_details['transfer_summary'], 'manufacturer_to_distributor_details'=> $transfer_details['manufacturer_to_distributor_details'], 'distributor_to_dealer_details' => $transfer_details['distributor_to_dealer_details'], 'dealer_to_sub_dealer_details'=> $transfer_details['dealer_to_sub_dealer_details'],'dealer_to_client_details' => $transfer_details['dealer_to_client_details'], 'sub_dealer_to_client_details' => $transfer_details['sub_dealer_to_client_details'], 'generated_by' => $transfer_details['generated_by'].' '.'( Sub Dealer )', 'generated_on' => date("d/m/Y h:m:s A"), 'from_date' => date('d/m/Y',strtotime($from_date)), 'to_date' => date('d/m/Y',strtotime($to_date))]);
+                return $pdf->download('gps-transfer-report.pdf');
+            }
+            else
+            {
+                return view('GpsReport::gps-transfer-report-in-sub-dealer',['transfer_details' => $transfer_details, 'from_date' => $from_date, 'to_date' => $to_date ]);
+            }
+        }
+    }
         
     
 
