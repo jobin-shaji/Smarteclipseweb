@@ -114,6 +114,7 @@ Route::group(['middleware' => ['web','auth','role:root|dealer|sub_dealer|trader|
 	Route::get('/gps-transfer-label-root-trader-end-user/{id}/export','WarehouseController@exportGpsTransferLabelRootTraderToClient')->name('gps-transfer-label-root-trader-end-user.export');
 
 	Route::post('/gps-scan','WarehouseController@getScannedGps')->name('gps-scan');
+	Route::post('/gps-scan-remove','WarehouseController@removeaddlist')->name('gps-scan-remove');
 
 	//gps new arrivals in dealer
 	Route::get('/gps-new','WarehouseController@newGpsListPage')->name('gps-new');
