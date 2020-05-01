@@ -1569,7 +1569,8 @@ class WarehouseController extends Controller {
 
         $entities = $entities->where('user.deleted_at',null);
 
-        return view('Warehouse::dealer-gps-transfer', ['devices' => $devices, 'entities' => $entities]);
+        return view('Warehouse::dealer-gps-transfer', ['devices' => $devices, 'entities' => $entities,
+            'logged_distributer_id' => $dealer_id]);
     }
 
     //get address and mobile details based on subdealer selection
@@ -1813,7 +1814,7 @@ class WarehouseController extends Controller {
         
         $entities = $entities->where('user.deleted_at',null);
 
-        return view('Warehouse::sub-dealer-to-trader-gps-transfer', ['devices' => $devices, 'entities' => $entities]);
+        return view('Warehouse::sub-dealer-to-trader-gps-transfer', ['devices' => $devices, 'entities' => $entities,'subdealer_id'=>$subdealer_id]);
     }
 
     //get address and mobile details based on (trader) selection
@@ -2061,7 +2062,7 @@ class WarehouseController extends Controller {
 
         $entities = $entities->where('user.deleted_at',null);
 
-        return view('Warehouse::sub-dealer-gps-transfer', ['devices' => $devices, 'entities' => $entities]);
+        return view('Warehouse::sub-dealer-gps-transfer', ['devices' => $devices, 'entities' => $entities,'subdealer_id' => $subdealer_id]);
     }
 
     //get address and mobile details based on client selection
@@ -2299,7 +2300,7 @@ class WarehouseController extends Controller {
                         ->get();
         $entities   =   $trader->clients()->with('user')->get();
         $entities   =   $entities->where('user.deleted_at',null);
-        return view('Warehouse::trader-to-end-user-gps-transfer', ['devices' => $devices, 'entities' => $entities]);
+        return view('Warehouse::trader-to-end-user-gps-transfer', ['devices' => $devices, 'entities' => $entities,'trader_id' => $trader_id]);
     }
 
     //get address and mobile details based on client selection in trader transfer page

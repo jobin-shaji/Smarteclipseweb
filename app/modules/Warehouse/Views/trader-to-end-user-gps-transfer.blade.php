@@ -29,6 +29,7 @@
                 {{csrf_field()}}
               <div class="row">
                 <div class="col-md-12 col-lg-6">
+                   <input type="hidden" id="logged_trader_id" value="{{$trader_id}}">
                   <div class="form-group has-feedback">
                       <label class="srequired">Client Name</label>
                       <select class="form-control select2 clientDataInTrader" id="to_user" name="client_user_id" data-live-search="true" title="Select Client" required>
@@ -70,7 +71,7 @@
 
                   <div class="form-group has-feedback">
                     <label class="srequired">Scanned Employee Code</label>
-                    <input type="text" class="form-control {{ $errors->has('scanned_employee_code') ? ' has-error' : '' }}" placeholder="Scanned Employee Code" name="scanned_employee_code" value="{{ old('scanned_employee_code') }}" autocomplete="off" required> 
+                    <input type="text" class="form-control {{ $errors->has('scanned_employee_code') ? ' has-error' : '' }}" placeholder="Scanned Employee Code" name="scanned_employee_code" value="{{ old('scanned_employee_code') }}" id="trader_empcode" autocomplete="off" required> 
                     @if ($errors->has('scanned_employee_code'))
                       <span class="help-block">
                         <strong class="error-text">{{ $errors->first('scanned_employee_code') }}</strong>
