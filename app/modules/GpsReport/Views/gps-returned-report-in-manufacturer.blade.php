@@ -85,6 +85,8 @@
                                         @if(count($return_details) != 0)
                                         <div class="row col-md-6 col-md-offset-2">
                                         <span class="report_summary_title"><b>Report Details</b></span>
+                                        <span class="report_chart_title"><b>Device List - Manufactured On</b></span>
+                                        <canvas id="deviceChart" class="pie_graph"></canvas>
                                         <!-- <span class="search_dates">From Date: {{$from_date}}</span>
                                         <span class="search_dates">To Date: {{$to_date}}</span> -->
                                         <span class="report_details_title"><b>Device List - Transferred Details</b></span>
@@ -208,13 +210,19 @@
         margin-bottom: 15px;
         margin-left: 500px;
     }
-    .report_details_title
+    .report_chart_title
     {
         margin-left: -600px;
         padding: 25px;
         font-size: 17px;
     }
-    .device_details_title
+    .report_chart_title
+    {
+        margin-left: -600px;
+        padding: 25px;
+        font-size: 17px;
+    }
+    .report_details_title
     {
         padding: 21px;
         margin-left: 35px;
@@ -224,6 +232,13 @@
     {
         margin-left: 153px;
         padding: 15px;
+    }
+    .pie_graph
+    {
+        display: block !important;
+        width: 732px !important;
+        height: 359px !important;
+        margin-left: 190px !important;
     }
     
 </style>
@@ -236,7 +251,9 @@
             $("#search_submit").click();
         }
     </script>
+    <script src="{{asset('js/gps/mdb.js')}}"></script>
     <script src="{{asset('js/gps/gps-transfer-report.js')}}"></script>
+    <script src="{{asset('js/gps/gps-return-report-chart.js')}}"></script>
 @endsection
 @endsection
 

@@ -745,22 +745,22 @@ class GpsReportController extends Controller
             $manufacturer_id            =   \Auth::user()->root->id;
             if($from_date == null && $to_date == null)
             {
-                $return_details         =   [];
-                $return_device_details  =   [];
+                $return_details                 =   [];
+                $return_device_details          =   [];
             }
             else
             {
-                $return_details         =   (new GpsStock())->getReturnedDeviceCountOfManufacturer($manufacturer_id,$from_date,$to_date);
-                $return_device_details  =   (new GpsStock())->getReturnedDeviceDetailsOfManufacturer($manufacturer_id,$from_date,$to_date,$search_key);
+                $return_details                 =   (new GpsStock())->getReturnedDeviceCountOfManufacturer($manufacturer_id,$from_date,$to_date);
+                $return_device_details          =   (new GpsStock())->getReturnedDeviceDetailsOfManufacturer($manufacturer_id,$from_date,$to_date,$search_key);
             }
             if($download_type == 'pdf')
             {
-                $pdf                    =   PDF::loadView('GpsReport::gps-transfer-report-download',['transfer_summary' => $transfer_details['transfer_summary'], 'manufacturer_to_distributor_details'=> $transfer_details['manufacturer_to_distributor_details'], 'distributor_to_dealer_details' => $transfer_details['distributor_to_dealer_details'], 'dealer_to_sub_dealer_details'=> $transfer_details['dealer_to_sub_dealer_details'],'dealer_to_client_details' => $transfer_details['dealer_to_client_details'], 'sub_dealer_to_client_details' => $transfer_details['sub_dealer_to_client_details'], 'generated_by' => $transfer_details['generated_by'].' '.'( Manufacturer )', 'generated_on' => date("d/m/Y h:m:s A"), 'from_date' => date('d/m/Y',strtotime($from_date)), 'to_date' => date('d/m/Y',strtotime($to_date))]);
+                $pdf                            =   PDF::loadView('GpsReport::gps-transfer-report-download',['transfer_summary' => $transfer_details['transfer_summary'], 'manufacturer_to_distributor_details'=> $transfer_details['manufacturer_to_distributor_details'], 'distributor_to_dealer_details' => $transfer_details['distributor_to_dealer_details'], 'dealer_to_sub_dealer_details'=> $transfer_details['dealer_to_sub_dealer_details'],'dealer_to_client_details' => $transfer_details['dealer_to_client_details'], 'sub_dealer_to_client_details' => $transfer_details['sub_dealer_to_client_details'], 'generated_by' => $transfer_details['generated_by'].' '.'( Manufacturer )', 'generated_on' => date("d/m/Y h:m:s A"), 'from_date' => date('d/m/Y',strtotime($from_date)), 'to_date' => date('d/m/Y',strtotime($to_date))]);
                 return $pdf->download('gps-transfer-report.pdf');
             }
             else
             {
-                return view('GpsReport::gps-returned-report-in-manufacturer',['return_details' => $return_details,'return_device_details' => $return_device_details, 'from_date' => $from_date, 'to_date' => $to_date, 'search_key' => $search_key ]);
+                return view('GpsReport::gps-returned-report-in-manufacturer',['return_details' => $return_details,'return_device_details' => $return_device_details, 'from_date' => $from_date, 'to_date' => $to_date, 'search_key' => $search_key]);
             }
         }
         else if(\Auth::user()->hasRole('dealer'))
@@ -833,7 +833,25 @@ class GpsReportController extends Controller
             }
         }
     }
-        
-    
+
+    public function returnedGpsManufacturedDateGraph(Request $request)
+    {
+        $manufacturer_id                    =   \Auth::user()->root->id;
+        $from_date                          =   date ('Y-m-d',strtotime($request->from_date));
+        $to_date                            =   date ('Y-m-d',strtotime($request->to_date));
+        $return_device_manufactured         =   (new GpsStock())->getReturnedDeviceManufactureDate($manufacturer_id,$from_date,$to_date);
+        $manufacturing_date                 =   [];
+        $device_count                       =   [];
+        foreach($return_device_manufactured as $each_data)
+        {
+            $manufacturing_date[]           =   $each_data->manufacturing_date;
+            $device_count[]                 =   $each_data->count;
+        }
+        $returned_gps_manufactured_dates    =   array(
+                                                    "manufacturing_date"=>$manufacturing_date,
+                                                    "device_count"=>$device_count
+                                                );
+        return response()->json($returned_gps_manufactured_dates);
+    }
 
 }

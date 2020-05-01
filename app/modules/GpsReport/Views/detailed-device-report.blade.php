@@ -24,7 +24,7 @@
                 <div class="box-part text-center" style="background-color:#ded8ca;">
                     <i class="fa fa-arrows-h icon" aria-hidden="true"></i>
                     <div class="title">
-                       <h4 style="font-size: 17px;">RETURNED DEVICE REPORT</h4>
+                       <h4 style="font-size: 17px;">DEVICE RETURN REPORT</h4>
                     </div><br>
                     <a class='link' href="gps-returned-report">View More</a>
                 </div>

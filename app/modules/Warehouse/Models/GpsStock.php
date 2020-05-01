@@ -312,4 +312,17 @@ class GpsStock extends Model
         return $query->paginate(5);
     }
 
+    public function getReturnedDeviceManufactureDate($manufacturer_id,$from_date,$to_date)
+    {
+        return DB::table('gps_stocks')
+                    ->leftJoin('gps', 'gps.id', '=', 'gps_stocks.gps_id')
+                    ->whereDate('gps_stocks.returned_on', '>=' , $from_date)
+                    ->whereDate('gps_stocks.returned_on', '<=' , $to_date)
+                    ->where('gps_stocks.inserted_by', $manufacturer_id)
+                    ->where('gps_stocks.is_returned', 1)
+                    ->groupBy('gps.manufacturing_date')
+                    ->select('gps.manufacturing_date as manufacturing_date',
+                    DB::raw('COUNT(gps_stocks.gps_id) as count'))->get();
+    }
+
 }
