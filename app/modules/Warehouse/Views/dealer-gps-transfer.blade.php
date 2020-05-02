@@ -28,12 +28,13 @@
       <section class="hilite-content">
         <form  method="POST" action="{{route('gps-transfer-dealer.transfer.p')}}" class="transfer">
                 {{csrf_field()}}
+                <input type="hidden" id="logged_distributor_id" value="{{$logged_distributer_id}}">
               <div class="row">
                 <div class="col-md-12 col-lg-6">
                   <div class="form-group has-feedback">
                       <label class="srequired">Dealer Name</label>
-                      <select class="form-control select2 subDealerData" id="to_user" name="sub_dealer_user_id" data-live-search="true" title="Select Sub Dealer" required>
-                        <option value="">Select Dealer</option>
+                      <select class="form-control select2 subDealerData" id="dealer" name="sub_dealer_user_id" data-live-search="true" title="Select Sub Dealer" required>
+                        <option >Select Dealer</option>
                         @foreach($entities as $entity)
                         <option value="{{$entity->user->id}}">{{$entity->name}}</option>
                         @endforeach
@@ -71,7 +72,7 @@
 
                   <div class="form-group has-feedback">
                     <label class="srequired">Scanned Employee Code</label>
-                    <input type="text" class="form-control {{ $errors->has('scanned_employee_code') ? ' has-error' : '' }}" placeholder="Scanned Employee Code" name="scanned_employee_code" value="{{ old('scanned_employee_code') }}" autocomplete="off" required> 
+                    <input type="text" class="form-control {{ $errors->has('scanned_employee_code') ? ' has-error' : '' }}" placeholder="Scanned Employee Code" name="scanned_employee_code" value="{{ old('scanned_employee_code') }}" id="empcode" autocomplete="off" required> 
                       @if ($errors->has('scanned_employee_code'))
                       <span class="help-block">
                         <strong class="error-text">{{ $errors->first('scanned_employee_code') }}</strong>

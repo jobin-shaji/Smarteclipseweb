@@ -30,8 +30,9 @@
               <div class="row">
                 <div class="col-md-12 col-lg-6">
                   <div class="form-group has-feedback">
+                    <input type="hidden" id="logged_subdealer_id" value="{{$subdealer_id}}">
                       <label class="srequired">Sub Dealer Name</label>
-                      <select class="form-control select2 traderData" id="to_user" name="trader_user_id" data-live-search="true" title="Select Sub Dealer" required>
+                      <select class="form-control select2 traderData" id="dealer" name="trader_user_id" data-live-search="true" title="Select Sub Dealer" required>
                         <option value="">Select Sub Dealer</option>
                         @foreach($entities as $entity)
                         <option value="{{$entity->user->id}}">{{$entity->name}}</option>
@@ -70,7 +71,7 @@
 
                   <div class="form-group has-feedback">
                     <label class="srequired">Scanned Employee Code</label>
-                    <input type="text" class="form-control {{ $errors->has('scanned_employee_code') ? ' has-error' : '' }}" placeholder="Scanned Employee Code" name="scanned_employee_code" value="{{ old('scanned_employee_code') }}" autocomplete="off" required> 
+                    <input type="text" class="form-control {{ $errors->has('scanned_employee_code') ? ' has-error' : '' }}" placeholder="Scanned Employee Code" id="subdealer_empcode" name="scanned_employee_code" value="{{ old('scanned_employee_code') }}" autocomplete="off" required> 
                     @if ($errors->has('scanned_employee_code'))
                       <span class="help-block">
                         <strong class="error-text">{{ $errors->first('scanned_employee_code') }}</strong>
