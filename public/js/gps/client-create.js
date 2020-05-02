@@ -88,10 +88,7 @@ $(document).ready(function() {
     $("#city_id").change(function() {
         localStorage.setItem(user_id + '.autofill.enduser.city', $(this).val());
     });
-    $("#client_category").change(function() {
-        localStorage.setItem(user_id + '.autofill.enduser.client_category', $(this).val());
-    });
-    $("#client_category").val(localStorage.getItem(user_id + '.autofill.enduser.client_category')).trigger("change");
+  
 });
 
 $(document).ready(function() {
