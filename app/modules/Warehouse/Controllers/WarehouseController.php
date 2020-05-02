@@ -1182,6 +1182,119 @@ class WarehouseController extends Controller {
     }
 
     //get scanned gps and check gps status
+     public function removeaddlist(Request $request)
+     {
+        $gps_id= $request->gps_id;
+        $user = \Auth::user();
+        $device = Gps::select('id', 'serial_no','batch_number','employee_code')
+                        ->where('id',$gps_id)
+                        ->first();
+         if($device != null)
+        {
+            GpsStock::where('gps_id',$device->id)->update(['device_to_transfer' => 0]);
+            $device_in_stock = GpsStock::select('id','gps_id')->where('gps_id',$device->id)->first();
+            if($device_in_stock != null)
+            {
+                if($user->hasRole('root'))
+                {
+                    $device_added_to_transfer = GpsStock::select('id','gps_id')->with('gps')->where('device_to_transfer',0)->where('dealer_id',null)->get();
+                    $stock_devices = GpsStock::select('id', 'gps_id','dealer_id','subdealer_id')
+                        ->where('dealer_id',null)->where('gps_id',$device->id)->count();
+                    if($stock_devices != 0){
+                        return response()->json(array(
+                            'status' => 1,
+                            'title' => 'success',
+                            'devices' => $device_added_to_transfer
+                        ));
+                    }
+                    else
+                    {
+                        return response()->json(array(
+                            'status' => 3,
+                            'message' => 'Device already transferred',
+                        ));
+                    }
+                }
+                else if($user->hasRole('dealer'))
+                {
+                    $dealer_id=$user->dealer->id;
+                    $device_added_to_transfer = GpsStock::select('id','gps_id')->with('gps')->where('dealer_id',$dealer_id)->where('device_to_transfer',0)->where('subdealer_id',null)->get();
+                    $stock_devices = GpsStock::select('id', 'gps_id','dealer_id','subdealer_id')
+                        ->where('dealer_id',$dealer_id)->where('subdealer_id',null)->where('gps_id',$device->id)->count();
+                    if($stock_devices != 0){
+                        return response()->json(array(
+                            'status' => 1,
+                            'title' => 'success',
+                            'devices' => $device_added_to_transfer
+                        ));
+                    }
+                    else
+                    {
+                        return response()->json(array(
+                            'status' => 3,
+                            'message' => 'Device already transferred',
+                        ));
+                    }
+                }
+                else if($user->hasRole('sub_dealer'))
+                {
+                    $subdealer_id=$user->subdealer->id;
+                    $device_added_to_transfer = GpsStock::select('id','gps_id')->with('gps')->where('subdealer_id',$subdealer_id)->where('device_to_transfer',0)->where('client_id',null)->where('trader_id',null)->get();
+                    $stock_devices = GpsStock::select('id', 'gps_id','subdealer_id','trader_id','client_id')
+                        ->where('subdealer_id',$subdealer_id)->where('client_id',null)->where('trader_id',null)->where('gps_id',$device->id)->count();
+                    if($stock_devices != 0){
+                        return response()->json(array(
+                            'status' => 1,
+                            'title' => 'success',
+                            'devices' => $device_added_to_transfer
+                        ));
+                    }
+                    else
+                    {
+                        return response()->json(array(
+                            'status' => 3,
+                            'message' => 'Device already transferred',
+                        ));
+                    }
+                }
+                else if($user->hasRole('trader'))
+                {
+                    $trader_id=$user->trader->id;
+                    $device_added_to_transfer = GpsStock::select('id','gps_id')->with('gps')->where('trader_id',$trader_id)->where('device_to_transfer',0)->where('client_id',null)->get();
+                    $stock_devices = GpsStock::select('id', 'gps_id','trader_id','client_id')
+                        ->where('trader_id',$trader_id)->where('client_id',null)->where('gps_id',$device->id)->count();
+                    if($stock_devices != 0){
+                        return response()->json(array(
+                            'status' => 1,
+                            'title' => 'success',
+                            'devices' => $device_added_to_transfer
+                        ));
+                    }
+                    else
+                    {
+                        return response()->json(array(
+                            'status' => 3,
+                            'message' => 'Device already transferred',
+                        ));
+                    }
+                }
+            }
+            else
+            {
+                return response()->json(array(
+                    'status' => 2,
+                    'message' => 'Device not found in stock',
+                ));
+            }
+        }
+        else
+        {
+            return response()->json(array(
+                'status' => 0,
+                'message' => 'Device not found',
+            ));
+        }
+     }
     public function getScannedGps(Request $request)
     {
         $device_serial_no= trim($request->serial_no," ,\0,\n,\x0B,\r");
@@ -1191,11 +1304,13 @@ class WarehouseController extends Controller {
                         ->first();
         if($device != null)
         {
+            GpsStock::where('gps_id',$device->id)->update(['device_to_transfer' => 1]);
             $device_in_stock = GpsStock::select('id','gps_id')->where('gps_id',$device->id)->first();
             if($device_in_stock != null)
             {
                 if($user->hasRole('root'))
                 {
+                    $device_added_to_transfer = GpsStock::select('id','gps_id')->with('gps')->where('device_to_transfer',0)->where('dealer_id',null)->get();
                     $stock_devices = GpsStock::select('id', 'gps_id','dealer_id')
                                     ->where('dealer_id',null)->where('gps_id',$device->id)->count();
                     if($stock_devices != 0){
@@ -1209,7 +1324,8 @@ class WarehouseController extends Controller {
                             'gps_id' => $gps_id,
                             'gps_serial_no' => $gps_serial_no,
                             'gps_batch_number' => $gps_batch_number,
-                            'gps_employee_code' => $gps_employee_code
+                            'gps_employee_code' => $gps_employee_code,
+                            'devices' => $device_added_to_transfer
                         ));
                     }
                     else
@@ -1221,11 +1337,11 @@ class WarehouseController extends Controller {
                     }
                 }else if($user->hasRole('dealer')){
                     $dealer_id=$user->dealer->id;
+                    $device_added_to_transfer = GpsStock::select('id','gps_id')->with('gps')->where('dealer_id',$dealer_id)->where('device_to_transfer',0)->where('subdealer_id',null)->get();
                     $stock_devices = GpsStock::select('id', 'gps_id','dealer_id','subdealer_id')
                         ->where('dealer_id',$dealer_id)->where('subdealer_id',null)->where('gps_id',$device->id)->count();
                     $non_accepted_devices = GpsStock::select('id', 'gps_id','dealer_id','subdealer_id')
                         ->where('dealer_id',0)->where('subdealer_id',null)->where('gps_id',$device->id)->count();
-
                     if($stock_devices != 0){
                         $gps_id=$device->id;
                         $gps_serial_no=$device->serial_no;
@@ -1237,7 +1353,8 @@ class WarehouseController extends Controller {
                             'gps_id' => $gps_id,
                             'gps_serial_no' => $gps_serial_no,
                             'gps_batch_number' => $gps_batch_number,
-                            'gps_employee_code' => $gps_employee_code
+                            'gps_employee_code' => $gps_employee_code,
+                            'devices' => $device_added_to_transfer
                         ));
                     }else if( $non_accepted_devices != 0){
                         return response()->json(array(
@@ -1255,6 +1372,7 @@ class WarehouseController extends Controller {
 
                 }else if($user->hasRole('sub_dealer')){
                     $subdealer_id=$user->subdealer->id;
+                    $device_added_to_transfer = GpsStock::select('id','gps_id')->with('gps')->where('subdealer_id',$subdealer_id)->where('device_to_transfer',0)->where('client_id',null)->where('trader_id',null)->get();
                     $stock_devices = GpsStock::select('id', 'gps_id','subdealer_id','trader_id','client_id')
                         ->where('subdealer_id',$subdealer_id)->where('client_id',null)->where('trader_id',null)->where('gps_id',$device->id)->count();
                     $non_accepted_devices = GpsStock::select('id', 'gps_id','subdealer_id','trader_id','client_id')
@@ -1271,7 +1389,8 @@ class WarehouseController extends Controller {
                             'gps_id' => $gps_id,
                             'gps_serial_no' => $gps_serial_no,
                             'gps_batch_number' => $gps_batch_number,
-                            'gps_employee_code' => $gps_employee_code
+                            'gps_employee_code' => $gps_employee_code,
+                            'devices' => $device_added_to_transfer
                         ));
                     }else if( $non_accepted_devices != 0){
                         return response()->json(array(
@@ -1288,6 +1407,7 @@ class WarehouseController extends Controller {
                     }
                 }else if($user->hasRole('trader')){
                     $trader_id=$user->trader->id;
+                    $device_added_to_transfer = GpsStock::select('id','gps_id')->with('gps')->where('trader_id',$trader_id)->where('device_to_transfer',0)->where('client_id',null)->get();
                     $stock_devices = GpsStock::select('id', 'gps_id','trader_id','client_id')
                         ->where('trader_id',$trader_id)->where('client_id',null)->where('gps_id',$device->id)->count();
                     $non_accepted_devices = GpsStock::select('id', 'gps_id','trader_id','client_id')
@@ -1304,7 +1424,8 @@ class WarehouseController extends Controller {
                             'gps_id' => $gps_id,
                             'gps_serial_no' => $gps_serial_no,
                             'gps_batch_number' => $gps_batch_number,
-                            'gps_employee_code' => $gps_employee_code
+                            'gps_employee_code' => $gps_employee_code,
+                            'devices' => $device_added_to_transfer
                         ));
                     }else if( $non_accepted_devices != 0){
                         return response()->json(array(
