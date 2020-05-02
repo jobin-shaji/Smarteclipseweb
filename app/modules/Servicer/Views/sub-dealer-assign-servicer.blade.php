@@ -58,8 +58,8 @@
                       <div class="form-group has-feedback">
 
                        <select class="form-control selectpicker" data-live-search="true" title="Select role" id="role" name="role" required>
-                         <option value="" selected="selected">select</option>
-                          <option value="1">Freebies</option>
+                         <option value="" disabled="disabled">select</option>
+                          <option value="1"  selected="selected">Freebies</option>
                           <option value="2">Fundamental</option>
                           <option value="3">Superior</option>
                           <option value="4">Pro</option>
@@ -71,8 +71,8 @@
                       <label for="fname" class="col-sm-3 text-right control-label col-form-label">Job Type</label>
                       <div class="form-group has-feedback">
                         <select class="form-control selectpicker" data-live-search="true" title="Select Job Type" id="job_type" name="job_type" onchange="jobtypeonchange(this.value)" required>
-                          <option value="" selected disabled>Select Job Type</option>
-                          <option value="1">Installation</option>
+                          <option value="" disabled>Select Job Type</option>
+                          <option value="1" selected="selected">Installation</option>
                           <option value="2">Service</option> 
                           <option value="3">Reinstallation</option>                         
                         </select>
@@ -205,13 +205,16 @@
 </script>
    <script>
     $(document).ready(function () {
-      var user_id = $("#user_id").val();         
+      var user_id = $("#user_id").val(); 
+
       $("#servicer").val(localStorage.getItem(user_id+'.autofill.root.servicer')).trigger("change");
-      $("#role").val(localStorage.getItem(user_id+'.autofill.root.role')).trigger("change");
-      $("#job_type").val(localStorage.getItem(user_id+'.autofill.root.job_type')).trigger("change");
+      // $("#role").val(localStorage.getItem(user_id+'.autofill.root.role')).trigger("change");
+      // $("#job_type").val(localStorage.getItem(user_id+'.autofill.root.job_type')).trigger("change");
+      var job_type = $("#job_type").val(); 
       
       var client_id = $("#client_id").val(); 
       getClientServicerGps(client_id);  
+      jobtypeonchange(job_type);
     });
     function initMap()
     {
