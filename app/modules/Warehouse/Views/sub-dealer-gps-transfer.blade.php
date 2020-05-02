@@ -35,7 +35,7 @@
                       <select class="form-control select2 clientData" id="to_user" name="client_user_id" data-live-search="true" title="Select Client" required>
                         <option value="">Select End User</option>
                         @foreach($entities as $entity)
-                        <option value="{{$entity->user->id}}">{{$entity->name}}</option>
+                        <option value="{{$entity->user->id}}" selected="selected">{{$entity->name}}</option>
                         @endforeach
                       </select>
                       @if ($errors->has('client_user_id'))
