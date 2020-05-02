@@ -30,6 +30,7 @@
               <div class="row">
                 <div class="col-md-12 col-lg-6">
                   <div class="form-group has-feedback">
+                    <input type="hidden" id="logged_subdealer_transfer_user" value="{{$subdealer_id}}">
                       <label class="srequired">End User Name</label>
                       <select class="form-control select2 clientData" id="to_user" name="client_user_id" data-live-search="true" title="Select Client" required>
                         <option value="">Select End User</option>
