@@ -62,7 +62,7 @@ $(document).ready(function() {
                 'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
             },
             success: function(data) {
-
+            
                 if (data) {
                     $('#state_id').empty();
                     $('#state_id').focus;
@@ -71,8 +71,15 @@ $(document).ready(function() {
                         $('select[name="state_id"]').append('<option value="' + value.id + '">' + value.name + '</option>');
                     });
 
-                    $("#state_id").select2().val(localStorage.getItem(user_id + '.autofill.enduser.state').toString()).trigger("change");
-                } else {
+                   var stateid=localStorage.getItem(user_id + '.autofill.enduser.state');
+
+                   if(stateid){
+                    var stateid_value=stateid;
+                   }else{
+                    var stateid_value=19;
+                    }
+                    $("#state_id").select2().val(stateid_value).trigger("change");
+                    } else {
                     $('#state_id').empty();
                 }
             }
