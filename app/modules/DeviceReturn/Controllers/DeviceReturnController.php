@@ -63,34 +63,41 @@ class DeviceReturnController extends Controller
         $existing_gps_return_count  =   (new DeviceReturn())->gpsReturnedCount($request->gps_id);
         if($existing_gps_return_count > 0)
         {
-            $request->session()->flash('message', 'Device already returned!'); 
+            $request->session()->flash('message', 'Device return request already registered !'); 
             $request->session()->flash('alert-class', 'alert-danger'); 
         }
         else
         {
-            $return_code                    =   'RT'.date('ymdhis');
-            //to check return code is already exists in table
-            $existing_return_code_count     =   (new DeviceReturn())->gpsReturnCodeCount($return_code);
-            if($existing_return_code_count  > 0)
+            $is_vehicle_returned_or_reassigned  =   (new Vehicle())->checkVehicleIsNotReturnedOrReassigned($request->gps_id);
+            if($is_vehicle_returned_or_reassigned > 0)
             {
-                $return_code                =   'RT'.date('ymdhis').($existing_return_code_count+1);
+                $return_code                    =   'RT'.date('ymdhis');
+                //to check return code is already exists in table
+                $existing_return_code_count     =   (new DeviceReturn())->gpsReturnCodeCount($return_code);
+                if($existing_return_code_count  > 0)
+                {
+                    $return_code                =   'RT'.date('ymdhis').($existing_return_code_count+1);
+                }
+                $device_return                  =   (new DeviceReturn())->createNewDeviceForReturn($return_code,$request->gps_id,$request->type_of_issues,$request->comments,$servicer_id,$request->client_id);
+                // add to history
+                if($device_return)
+                {
+                    $servicer_details           =   (new Servicer())->getServicerDetails($servicer_id);
+                    $client_details             =   (new Client())->getClientDetailsWithClientId($request->client_id);
+                    $gps_details                =   (new Gps())->getGpsDetails($request->gps_id);
+                    $servicer_name              =   $servicer_details->name;
+                    $gps_imei                   =   $gps_details->imei;
+                    $gps_serial_number          =   $gps_details->serial_no;
+                    $client_name                =   $client_details->name;
+                    $activity                   =   $servicer_name.' returned the device '.$gps_imei.'(IMEI), '.$gps_serial_number.'(Serial Number)'.' for the client '.$client_name;
+                    (new DeviceReturnHistory())->addHistory($device_return->id, $activity);
+                }
+                $request->session()->flash('message', 'New device return request registered successfully!'); 
+                $request->session()->flash('alert-class', 'alert-success'); 
+            }else{
+                $request->session()->flash('message', 'Selected vehicle is already returned or reassigned!'); 
+                $request->session()->flash('alert-class', 'alert-success'); 
             }
-            $device_return                  =   (new DeviceReturn())->createNewDeviceForReturn($return_code,$request->gps_id,$request->type_of_issues,$request->comments,$servicer_id,$request->client_id);
-            // add to history
-            if($device_return)
-            {
-                $servicer_details           =   (new Servicer())->getServicerDetails($servicer_id);
-                $client_details             =   (new Client())->getClientDetailsWithClientId($request->client_id);
-                $gps_details                =   (new Gps())->getGpsDetails($request->gps_id);
-                $servicer_name              =   $servicer_details->name;
-                $gps_imei                   =   $gps_details->imei;
-                $gps_serial_number          =   $gps_details->serial_no;
-                $client_name                =   $client_details->name;
-                $activity                   =   $servicer_name.' returned the device '.$gps_imei.'(IMEI), '.$gps_serial_number.'(Serial Number)'.' for the client '.$client_name;
-                (new DeviceReturnHistory())->addHistory($device_return->id, $activity);
-            }
-            $request->session()->flash('message', 'New device return request registered successfully!'); 
-            $request->session()->flash('alert-class', 'alert-success'); 
         }         
         return redirect(route('device')); 
     }

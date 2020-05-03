@@ -145,7 +145,6 @@ class ComplaintController extends Controller {
                 'servicer_id'
             )
             ->with('gps:id,imei,serial_no')
-            ->with('vehicle.vehicleType:id,name')
             ->with('vehicleGps.vehicle:id,name,register_number')
             ->with('ticket:id,code')
             ->with('client:id,name,sub_dealer_id')
@@ -177,7 +176,6 @@ class ComplaintController extends Controller {
                 $complaints = $complaints->whereIn('client_id',$client_id);  
             }
             $complaints = $complaints->get();
-            
             return DataTables::of($complaints)
             ->addIndexColumn()
             ->addColumn('action', function ($complaints) {
@@ -268,27 +266,39 @@ class ComplaintController extends Controller {
         $ticket_code='C'.'0'.'0'.$ticket_code_id;
         $rules = $this->complaint_create_rules();
         $this->validate($request, $rules);
-        $ticket = Ticket::create([
-            'code' => $ticket_code,
-            'client_id' => $client_id,
-            'status' => 1
-        ]);
         
-        if($ticket){
-            $complaint = Complaint::create([
-                'ticket_id' => $ticket->id,
-                'gps_id' => $request->gps_id,
-                'complaint_type_id' => $request->complaint_type_id,
-                'title' => $request->title,
-                'description' => $request->description,
+        $is_vehicle_returned_or_reassigned  =   (new Vehicle())->checkVehicleIsNotReturnedOrReassigned($request->gps_id);
+        if($is_vehicle_returned_or_reassigned > 0)
+        {
+            $ticket = Ticket::create([
+                'code' => $ticket_code,
                 'client_id' => $client_id,
-                'created_at'=> date('Y-m-d H:i:s'),
-                'updated_at'=> date('Y-m-d H:i:s')
+                'status' => 1
             ]);
+            
+            if($ticket){
+                $complaint = Complaint::create([
+                    'ticket_id' => $ticket->id,
+                    'gps_id' => $request->gps_id,
+                    'complaint_type_id' => $request->complaint_type_id,
+                    'title' => $request->title,
+                    'description' => $request->description,
+                    'client_id' => $client_id,
+                    'created_at'=> date('Y-m-d H:i:s'),
+                    'updated_at'=> date('Y-m-d H:i:s')
+                ]);
+            }
+            $request->session()->flash('message', 'New Complaint registered successfully!'); 
+            $request->session()->flash('alert-class', 'alert-success'); 
+            return redirect(route('complaint')); 
         }
-        $request->session()->flash('message', 'New Complaint registered successfully!'); 
-        $request->session()->flash('alert-class', 'alert-success'); 
-        return redirect(route('complaint')); 
+        else
+        {
+            $request->session()->flash('message', 'Selected vehicle is already returned or reassigned!'); 
+            $request->session()->flash('alert-class', 'alert-success'); 
+            return redirect(route('complaint.create')); 
+        }
+
     }
 
     // solve complaint
