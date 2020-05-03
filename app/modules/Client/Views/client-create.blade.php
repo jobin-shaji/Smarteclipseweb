@@ -219,10 +219,10 @@
                       <div class="form-group row" style="float:none!important">
                         <label for="fname" class="col-sm-3 text-right control-label col-form-label max-width-lb">End User Category&nbsp<font color="red">*</font></label> 
                         <div class="form-group has-feedback">
-                          <select class="form-control {{ $errors->has('client_category') ? ' has-error' : '' }}" id="client_category" placeholder="Client Category" name="client_category" value="{{ old('client_category') }}"required >
-                            <option value="" selected disabled>Select End User Category</option>
+                          <select class="form-control {{ $errors->has('client_category') ? ' has-error' : '' }}" id="client_category" placeholder="Client Category" name="client_category" value="{{ old('client_category') }}"required>
+                            <!-- <option value="" selected >Select End User Category</option> -->
                             <!-- <option value="school">School</option> -->
-                            <option value="other">General</option>
+                            <option value="other" selected="selected">General</option>
                           </select>
                         </div>
                         @if ($errors->has('client_category'))
