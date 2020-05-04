@@ -36,7 +36,7 @@ function callBackDataTable(){
             {data: 'address', name: 'address', orderable: false,searchable: false},           
             {data: 'user.mobile', name: 'user.mobile', orderable: false},
             {data: 'user.email', name: 'user.email', orderable: false},          
-              {data: 'subdealer', name: 'subdealer', orderable: false}, 
+            {data: 'subdealer', name: 'subdealer', orderable: false}, 
             {data: 'trader', name: 'trader', orderable: false},
             {data: 'working_status', name: 'working_status', orderable: false},       
         ],

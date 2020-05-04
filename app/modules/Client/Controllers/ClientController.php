@@ -542,7 +542,7 @@ class ClientController extends Controller {
             'deleted_at'
         )
         ->withTrashed()
-        // ->with('subdealer:id,user_id,name')
+        ->with('subdealer:id,user_id,name')
         ->with('trader')
         ->with('user:id,email,mobile,deleted_at')
         ->orderBy('created_at','DESC')
