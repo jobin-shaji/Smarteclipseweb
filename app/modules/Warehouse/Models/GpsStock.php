@@ -108,7 +108,7 @@ class GpsStock extends Model
                     DB::raw('COUNT(gps_stocks.gps_id) as count'))->get();
     }
 
-    public function getReturnedDeviceDetailsOfManufacturer($manufacturer_id, $from_date, $to_date, $search_key)
+    public function getReturnedDeviceDetailsOfManufacturer($manufacturer_id, $from_date, $to_date, $search_key,$download_type)
     {
         $query  =   DB::table('gps_stocks')
                         ->leftJoin('roots', 'roots.id', '=', 'gps_stocks.inserted_by')
@@ -124,6 +124,8 @@ class GpsStock extends Model
                         ->whereDate('gps_stocks.returned_on', '<=' , $to_date)
                         ->where('gps_stocks.inserted_by', $manufacturer_id)
                         ->where('gps_stocks.is_returned', 1)
+                        ->groupBy('gps_stocks.gps_id')
+                        ->orderBy('gps_stocks.returned_on','desc')
                         ->select('roots.name as manufacturer_name',
                         'dealers.name as distributor_name',
                         'sub_dealers.name as dealer_name',
@@ -146,8 +148,16 @@ class GpsStock extends Model
                                             ->orWhere('clients.name','like','%'.$search_key.'%')
                                             ->orWhere('servicers.name','like','%'.$search_key.'%');
                             });  
-                        }  
-        return $query->paginate(5);
+                        }
+        if($download_type == null)  
+        {
+            return $query->paginate(5);
+        }
+        else
+        {
+            return $query->get();
+        }
+        
     }
 
     public function getReturnedDeviceCountOfDistributor($distributor_id,$from_date,$to_date)
@@ -170,7 +180,7 @@ class GpsStock extends Model
                     DB::raw('COUNT(gps_stocks.gps_id) as count'))->get();
     }
 
-    public function getReturnedDeviceDetailsOfDistributor($distributor_id, $from_date, $to_date, $search_key)
+    public function getReturnedDeviceDetailsOfDistributor($distributor_id, $from_date, $to_date, $search_key,$download_type)
     {
         $query  =   DB::table('gps_stocks')
                         ->leftJoin('clients', 'clients.id', '=', 'gps_stocks.client_id')
@@ -185,6 +195,8 @@ class GpsStock extends Model
                         ->whereDate('gps_stocks.returned_on', '<=' , $to_date)
                         ->where('gps_stocks.dealer_id', $distributor_id)
                         ->where('gps_stocks.is_returned', 1)
+                        ->groupBy('gps_stocks.gps_id')
+                        ->orderBy('gps_stocks.returned_on','desc')
                         ->select('dealers.name as distributor_name',
                         'sub_dealers.name as dealer_name',
                         'traders.name as sub_dealer_name',
@@ -206,7 +218,14 @@ class GpsStock extends Model
                                             ->orWhere('servicers.name','like','%'.$search_key.'%');
                             });  
                         }  
-        return $query->paginate(5);
+        if($download_type == null)  
+        {
+            return $query->paginate(5);
+        }
+        else
+        {
+            return $query->get();
+        }
     }
 
     public function getReturnedDeviceCountOfDealer($dealer_id,$from_date,$to_date)
@@ -227,7 +246,7 @@ class GpsStock extends Model
                     DB::raw('COUNT(gps_stocks.gps_id) as count'))->get();
     }
 
-    public function getReturnedDeviceDetailsOfDealer($dealer_id, $from_date, $to_date, $search_key)
+    public function getReturnedDeviceDetailsOfDealer($dealer_id, $from_date, $to_date, $search_key,$download_type)
     {
         $query  =   DB::table('gps_stocks')
                         ->leftJoin('clients', 'clients.id', '=', 'gps_stocks.client_id')
@@ -241,6 +260,8 @@ class GpsStock extends Model
                         ->whereDate('gps_stocks.returned_on', '<=' , $to_date)
                         ->where('gps_stocks.subdealer_id', $dealer_id)
                         ->where('gps_stocks.is_returned', 1)
+                        ->groupBy('gps_stocks.gps_id')
+                        ->orderBy('gps_stocks.returned_on','desc')
                         ->select('sub_dealers.name as dealer_name',
                         'traders.name as sub_dealer_name',
                         'clients.name as client_name',
@@ -260,7 +281,14 @@ class GpsStock extends Model
                                             ->orWhere('servicers.name','like','%'.$search_key.'%');
                             });  
                         }  
-        return $query->paginate(5);
+        if($download_type == null)  
+        {
+            return $query->paginate(5);
+        }
+        else
+        {
+            return $query->get();
+        }
     }
 
     public function getReturnedDeviceCountOfSubDealer($trader_id,$from_date,$to_date)
@@ -279,7 +307,7 @@ class GpsStock extends Model
                     DB::raw('COUNT(gps_stocks.gps_id) as count'))->get();
     }
 
-    public function getReturnedDeviceDetailsOfSubDealer($trader_id, $from_date, $to_date, $search_key)
+    public function getReturnedDeviceDetailsOfSubDealer($trader_id, $from_date, $to_date, $search_key,$download_type)
     {
         $query  =   DB::table('gps_stocks')
                         ->leftJoin('clients', 'clients.id', '=', 'gps_stocks.client_id')
@@ -292,6 +320,8 @@ class GpsStock extends Model
                         ->whereDate('gps_stocks.returned_on', '<=' , $to_date)
                         ->where('gps_stocks.trader_id', $trader_id)
                         ->where('gps_stocks.is_returned', 1)
+                        ->groupBy('gps_stocks.gps_id')
+                        ->orderBy('gps_stocks.returned_on','desc')
                         ->select('traders.name as sub_dealer_name',
                         'clients.name as client_name',
                         'gps.imei as imei',
@@ -309,7 +339,14 @@ class GpsStock extends Model
                                             ->orWhere('servicers.name','like','%'.$search_key.'%');
                             });  
                         }  
-        return $query->paginate(5);
+        if($download_type == null)  
+        {
+            return $query->paginate(5);
+        }
+        else
+        {
+            return $query->get();
+        }
     }
 
     public function getReturnedDeviceManufactureDate($manufacturer_id,$from_date,$to_date)
@@ -321,6 +358,7 @@ class GpsStock extends Model
                     ->where('gps_stocks.inserted_by', $manufacturer_id)
                     ->where('gps_stocks.is_returned', 1)
                     ->groupBy('gps.manufacturing_date')
+                    ->orderBy(DB::raw('COUNT(gps_stocks.gps_id)'),'desc')
                     ->select('gps.manufacturing_date as manufacturing_date',
                     DB::raw('COUNT(gps_stocks.gps_id) as count'))->get();
     }

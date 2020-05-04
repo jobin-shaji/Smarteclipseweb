@@ -11,4 +11,5 @@ Route::group(['middleware' => ['web','auth','role:root|dealer|sub_dealer|trader'
     //RETURNED GPS REPORT
     Route::get('/gps-returned-report','GpsReportController@gpsReturnedReport')->name('gps-returned-report');
     Route::post('/root-gps-return-chart','GpsReportController@returnedGpsManufacturedDateGraph')->name('root-gps-return-chart');
+    Route::get('/gps-return-report-downloads','GpsReportController@gpsReturnedReport')->name('gps-return-report-downloads');
 });
