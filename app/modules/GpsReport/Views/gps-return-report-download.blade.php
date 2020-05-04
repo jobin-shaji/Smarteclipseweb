@@ -23,11 +23,11 @@ td, th {
 <h4 style="position:absolute;top:130px;bottom:30px;">Date Range:<br> {{$from_date}} to {{$to_date}}</h4>
 <br><br><br>
 <h2 style="margin-left:250px;">Report Summary</h2>
-<table style="width: 100%;">
+<table style="width: 100%;text-align: left;">
   <thead>
     <tr>
-      <th>End User Name</th>
-      <th>Count</th>
+      <td><b>End User Name</b></td>
+      <td><b>Count</b></td>
     </tr>
   </thead>
   <tbody>
@@ -95,42 +95,42 @@ td, th {
 <?php $i = 1; ?>
 @foreach($return_device_details as $each_data)
 <h4 style="text-align: left;">#{{$i}}</h4>
-<table style="width:100%;">
+<table style="width:100%;text-align: left;">
     <tbody>
       <tr">
-          <th>Returned On</th>
+          <td><b>Returned On</b></td>
           <td>{{date('d/m/Y',strtotime($each_data->returned_on))}}</td>
       </tr>
       <tr">
-          <th>IMEI</th>
+          <td><b>IMEI</b></td>
           <td>{{$each_data->imei}}</td>
       </tr>
       <tr">
-          <th>Serial Number</th>
+          <td><b>Serial Number</b></td>
           <td>{{$each_data->serial_number}}</td>
       </tr>
       <tr">
-          <th>Manufacturer Name</th>
+          <td><b>Manufacturer Name</b></td>
           <td><?php ( isset($each_data->manufacturer_name) ) ? $manufacturer_name = $each_data->manufacturer_name : $manufacturer_name='-NA-' ?>{{$manufacturer_name}}</td>
       </tr>
       <tr">
-          <th>Distributor Name</th>
+          <td><b>Distributor Name/<b></td>
           <td><?php ( isset($each_data->distributor_name) ) ? $distributor_name = $each_data->distributor_name : $distributor_name='-NA-' ?>{{$distributor_name}}</td>
       </tr>
       <tr">
-          <th>Dealer Name</th>
+          <td><b>Dealer Name</b></td>
           <td><?php ( isset($each_data->dealer_name) ) ? $dealer_name = $each_data->dealer_name : $dealer_name='-NA-' ?>{{$dealer_name}}</td>
       </tr>
       <tr">
-          <th>Sub Dealer Name</th>
+          <td><b>Sub Dealer Name</b></td>
           <td><?php ( isset($each_data->sub_dealer_name) ) ? $sub_dealer_name = $each_data->sub_dealer_name : $sub_dealer_name='-NA-' ?>{{$sub_dealer_name}}</td>
       </tr>
       <tr">
-          <th>End User Name</th>
+          <td><b>End User Name</b></td>
           <td><?php ( isset($each_data->client_name) ) ? $client_name = $each_data->client_name : $client_name='-NA-' ?>{{$client_name}}</td>
       </tr>
       <tr">
-          <th>Service Engineer Name</th>
+          <td><b>Service Engineer Name</b></td>
           <td>{{$each_data->servicer_name}}</td>
       </tr>
     </tbody>
