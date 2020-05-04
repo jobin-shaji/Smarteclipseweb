@@ -8,7 +8,6 @@ Route::group(['middleware' => ['web','auth','role:servicer'] , 'namespace' => 'A
     Route::get('/devicereturn','DeviceReturnController@deviceListPage')->name('devicereturn');
     Route::get('/device','DeviceReturnController@DeviceReturnListPage')->name('device');
     Route::post('/device-return-list','DeviceReturnController@getDeviceList')->name('device.return.list');
-    Route::get('/device-return/{id}/view','DeviceReturnController@getdeviceReturnListView')->name('device-return.view');
     Route::post('/select/vehicle','DeviceReturnController@selectVehicle')->name('select.vehicle.list');
     Route::post('/device-return/cancel','DeviceReturnController@cancelDeviceReturn')->name('device.return.cancel');
 });
@@ -22,6 +21,10 @@ Route::group(['middleware' => ['web','auth','role:root'] , 'namespace' => 'App\M
     Route::get('/device-return/{id}/add-to-stock','DeviceReturnController@addToStockInDeviceReturn')->name('device.return.add.to.stock');
     Route::post('/device-return/proceed-to-stock','DeviceReturnController@proceedReturnedDeviceToStock')->name('device.return.proceed.to.stock.p');
 
+});
+
+Route::group(['middleware' => ['web','auth','role:root|servicer'] , 'namespace' => 'App\Modules\DeviceReturn\Controllers' ] , function() {	
+    Route::get('/device-return/{id}/view','DeviceReturnController@getdeviceReturnListView')->name('device-return.view');
 });
 
 

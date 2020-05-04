@@ -7,7 +7,7 @@
 		<div class="card-body">
 			<div class="pad margin no-print">
 			<div class="callout callout-danger" style="margin-bottom: 0!important;">
-			Device does not exist !!!
+				Device return request does not exist !!!
 			</div>
 			</div>
 		</div>
