@@ -272,31 +272,14 @@ class WarehouseController extends Controller {
     //gps transfer list data - root
     public function getRootListData(Request $request)
     {
-        $transfer_type=$request->data['transfer_type'];
-        $from_user_id=$request->data['from_id'];
-        $to_user_id=$request->data['to_id'];
-        $from_date=$request->data['from_date'];
-        $to_date=$request->data['to_date'];
-        $gps_transfer = GpsTransfer::select(
-            'id',
-            'from_user_id',
-            'to_user_id',
-            'dispatched_on',
-            'accepted_on',
-            'deleted_at'
-        )
-        ->with('fromUser:id,username')
-        ->with('toUser:id,username')
-        ->with('gpsTransferItems')
-        ->orderBy('created_at','DESC')
-        ->withTrashed();
-        if($transfer_type == '1')
+        $transfer_type      =   $request->data['transfer_type'];
+        $from_user_id       =   $request->data['from_id'];
+        $to_user_id         =   $request->data['to_id'];
+        $from_date          =   date("Y-m-d", strtotime($request->data['from_date']));
+        $to_date            =   date("Y-m-d", strtotime($request->data['to_date']));
+        $gps_transfer       =   (new GpsTransfer())->getTransferredGpsDetailsWhichIncludesBothAcceptedAndAwaitingConfirmationGps($from_date,$to_date);
+        if($transfer_type   ==  '1')
         {
-            if($from_date){
-                $search_from_date=date("Y-m-d", strtotime($from_date));
-                    $search_to_date=date("Y-m-d", strtotime($to_date));
-                    $gps_transfer = $gps_transfer->whereDate('dispatched_on', '>=', $search_from_date)->whereDate('dispatched_on', '<=', $search_to_date);
-            }
             $gps_transfer = $this->manufacturerToDistributorTransferredListInRoot($gps_transfer,$from_user_id,$to_user_id);
             return DataTables::of($gps_transfer)
             ->addIndexColumn()
@@ -332,11 +315,6 @@ class WarehouseController extends Controller {
 
         }else if($transfer_type == '2')
         {
-            if($from_date){
-                $search_from_date=date("Y-m-d", strtotime($from_date));
-                    $search_to_date=date("Y-m-d", strtotime($to_date));
-                    $gps_transfer = $gps_transfer->whereDate('dispatched_on', '>=', $search_from_date)->whereDate('dispatched_on', '<=', $search_to_date);
-            }
             $gps_transfer = $this->distributorToDealerTransferredListInRoot($gps_transfer,$from_user_id,$to_user_id);
             return DataTables::of($gps_transfer)
             ->addIndexColumn()
@@ -371,11 +349,6 @@ class WarehouseController extends Controller {
         }
         else if($transfer_type == '3')
         {
-            if($from_date){
-                $search_from_date=date("Y-m-d", strtotime($from_date));
-                    $search_to_date=date("Y-m-d", strtotime($to_date));
-                    $gps_transfer = $gps_transfer->whereDate('dispatched_on', '>=', $search_from_date)->whereDate('dispatched_on', '<=', $search_to_date);
-            }
             $gps_transfer = $this->dealerToClientTransferredListInRoot($gps_transfer,$from_user_id,$to_user_id);
             return DataTables::of($gps_transfer)
             ->addIndexColumn()
@@ -410,11 +383,6 @@ class WarehouseController extends Controller {
         }
         else if($transfer_type == '4')
         {
-            if($from_date){
-                $search_from_date=date("Y-m-d", strtotime($from_date));
-                    $search_to_date=date("Y-m-d", strtotime($to_date));
-                    $gps_transfer = $gps_transfer->whereDate('dispatched_on', '>=', $search_from_date)->whereDate('dispatched_on', '<=', $search_to_date);
-            }
             $gps_transfer = $this->dealerToSubDealerTransferredListInRoot($gps_transfer,$from_user_id,$to_user_id);
             return DataTables::of($gps_transfer)
             ->addIndexColumn()
@@ -449,11 +417,6 @@ class WarehouseController extends Controller {
         }
         else if($transfer_type == '5')
         {
-            if($from_date){
-                $search_from_date=date("Y-m-d", strtotime($from_date));
-                    $search_to_date=date("Y-m-d", strtotime($to_date));
-                    $gps_transfer = $gps_transfer->whereDate('dispatched_on', '>=', $search_from_date)->whereDate('dispatched_on', '<=', $search_to_date);
-            }
             $gps_transfer = $this->subDealerToClientTransferredListInRoot($gps_transfer,$from_user_id,$to_user_id);
             return DataTables::of($gps_transfer)
             ->addIndexColumn()
@@ -672,112 +635,100 @@ class WarehouseController extends Controller {
 
     public function getTotalTransferredCount(Request $request)
     {
-        $transfer_type=$request['transfer_type'];
-        $from_user_id=$request['from_id'];
-        $to_user_id=$request['to_id'];
-        $from_date=$request['from_date'];
-        $to_date=$request['to_date'];
+        $transfer_type      =   $request['transfer_type'];
+        $from_user_id       =   $request['from_id'];
+        $to_user_id         =   $request['to_id'];
+        $from_date          =   date("Y-m-d", strtotime($request['from_date']));
+        $to_date            =   date("Y-m-d", strtotime($request['to_date']));
         
-        $gps_transfers = GpsTransfer::select(
-            'id',
-            'from_user_id',
-            'to_user_id',
-            'dispatched_on',
-            'accepted_on',
-            'deleted_at'
-        )
-        ->with('fromUser:id,username')
-        ->with('toUser:id,username')
-        ->whereNotNULL('accepted_on');
-        if($from_date){
-            $search_from_date=date("Y-m-d", strtotime($from_date));
-                $search_to_date=date("Y-m-d", strtotime($to_date));
-                $gps_transfers = $gps_transfers->whereDate('dispatched_on', '>=', $search_from_date)->whereDate('dispatched_on', '<=', $search_to_date);
-        }
-
         if($transfer_type == 1)
         {
-            $transferred_string = $this->manufacturerToDistributorTransferredCountInRoot($gps_transfers,$from_user_id,$to_user_id);
+            $transferred_string = $this->manufacturerToDistributorTransferredCountInRoot($from_user_id,$to_user_id,$from_date,$to_date);
         }
         else if($transfer_type == 2)
         {
-            $transferred_string = $this->distributorToDealerTransferredCountInRoot($gps_transfers,$from_user_id,$to_user_id);
+            $transferred_string = $this->distributorToDealerTransferredCountInRoot($from_user_id,$to_user_id,$from_date,$to_date);
         }
         else if($transfer_type == 3)
         {
-            $transferred_string = $this->dealerToClientTransferredCountInRoot($gps_transfers,$from_user_id,$to_user_id);
+            $transferred_string = $this->dealerToClientTransferredCountInRoot($from_user_id,$to_user_id,$from_date,$to_date);
         }
         else if($transfer_type == 4)
         {
-            $transferred_string = $this->dealerToSubDealerTransferredCountInRoot($gps_transfers,$from_user_id,$to_user_id);
+            $transferred_string = $this->dealerToSubDealerTransferredCountInRoot($from_user_id,$to_user_id,$from_date,$to_date);
         }
         else if($transfer_type == 5)
         {
-            $transferred_string = $this->subDealerToClientTransferredCountInRoot($gps_transfers,$from_user_id,$to_user_id);
+            $transferred_string = $this->subDealerToClientTransferredCountInRoot($from_user_id,$to_user_id,$from_date,$to_date);
         }
         
         return response()->json($transferred_string);
     }
 
-    public function manufacturerToDistributorTransferredCountInRoot($gps_transfers,$from_user_id,$to_user_id)
+    public function manufacturerToDistributorTransferredCountInRoot($from_user_id,$to_user_id,$from_date,$to_date)
     {
-        $from_user_details = Root::where('user_id',$from_user_id)->withTrashed()->first();
+        $from_user_details                  =   Root::where('user_id',$from_user_id)->withTrashed()->first();
         if($to_user_id == '0')
         {
-            $all_distributors = Dealer::withTrashed()->get();
-            $distributors=[];
+            $all_distributors               =   Dealer::withTrashed()->get();
+            $distributors                   =   [];
             foreach ($all_distributors as $distributor) {
-                $distributors[]=$distributor->user_id;
+                $distributors[]             =   $distributor->user_id;
             }
-            $gps_transfers = $gps_transfers->where('from_user_id',$from_user_id)->whereIn('to_user_id',$distributors)->get();
-            $gps_transfer_items=[];
-            foreach ($gps_transfers as $gps_transfer) {
-                $gps_transfer_items[] = $gps_transfer->id;
+            $gps_transfers_awaiting_confirmation    =   (new GpsTransfer())->getTransferredGpsDetailsWhichIncludesAwaitingConfirmationGps([$from_user_id],$distributors,$from_date,$to_date);      
+            if($gps_transfers_awaiting_confirmation > 1) {
+                $awaiting_confirmation_string = 'Devices Waiting For Confirmation';
+            }else{
+                $awaiting_confirmation_string = 'Device Waiting For Confirmation';
             }
-            $transferred_gps_count = GpsTransferItems::whereIn('gps_transfer_id',$gps_transfer_items)->count();
-            if($transferred_gps_count > 1) {
+            $gps_transfers_accepted                 =   (new GpsTransfer())->getTransferredGpsDetailsWhichIncludesTransferAcceptedGps([$from_user_id],$distributors,$from_date,$to_date);      
+            if($gps_transfers_accepted > 1) {
                 $transferred_string = 'Devices Transferred';
             }else{
                 $transferred_string = 'Device Transferred';
             }
             $transferred_data = [
-                'transferred_gps_count' => $transferred_gps_count,
-                'transferred_string' => $transferred_string,
+                'transferred_gps_count'             =>  $gps_transfers_accepted[0]->count,
+                'transferred_string'                =>  $transferred_string,
+                'awaiting_confirmation_gps_count'   =>  $gps_transfers_awaiting_confirmation[0]->count,
+                'awaiting_confirmation_string'      =>  $awaiting_confirmation_string,
                 ];
         }
         else
         {
-            $to_user_details = Dealer::where('user_id',$to_user_id)->withTrashed()->first();
-            $gps_transfers = $gps_transfers->where('from_user_id',$from_user_id)->where('to_user_id',$to_user_id)->get();
-            $gps_transfer_items=[];
-            foreach ($gps_transfers as $gps_transfer) {
-                $gps_transfer_items[] = $gps_transfer->id;
+            $to_user_details                        =    Dealer::where('user_id',$to_user_id)->withTrashed()->first();
+            $gps_transfers_awaiting_confirmation    =   (new GpsTransfer())->getTransferredGpsDetailsWhichIncludesAwaitingConfirmationGps([$from_user_id],[$to_user_id],$from_date,$to_date);      
+            if($gps_transfers_awaiting_confirmation > 1) {
+                $awaiting_confirmation_string = 'Devices Waiting For Confirmation';
+            }else{
+                $awaiting_confirmation_string = 'Device Waiting For Confirmation';
             }
-            $transferred_gps_count = GpsTransferItems::whereIn('gps_transfer_id',$gps_transfer_items)->count();
-            $stock_in_distributor=GpsStock::select('dealer_id','subdealer_id')->where('dealer_id',$to_user_details->id)->whereNull('subdealer_id')->count();
+            $gps_transfers_accepted                 =   (new GpsTransfer())->getTransferredGpsDetailsWhichIncludesTransferAcceptedGps([$from_user_id],[$to_user_id],$from_date,$to_date);      
+            if($gps_transfers_accepted > 1) {
+                $transferred_string = 'Devices Transferred';
+            }else{
+                $transferred_string = 'Device Transferred';
+            }
+            $stock_in_distributor                   =   GpsStock::select('dealer_id','subdealer_id')->where('dealer_id',$to_user_details->id)->whereNull('subdealer_id')->count();
             if($stock_in_distributor > 1) {
                 $stock_string = 'Devices In Stock With <b>'.$to_user_details->name;
             }else{
                 $stock_string = 'Device In Stock With <b>'.$to_user_details->name;
             }
-            $transferred_gps_count = GpsTransferItems::whereIn('gps_transfer_id',$gps_transfer_items)->count();
-            if($transferred_gps_count > 1) {
-                $transferred_string = 'Devices Transferred';
-            }else{
-                $transferred_string = 'Device Transferred';
-            }
            
             $transferred_data = [
-                'transferred_gps_count' => $transferred_gps_count,
-                'instock_gps_count' => $stock_in_distributor,
-                'stock_string' => $stock_string,
-                'transferred_string' => $transferred_string,
+                'transferred_gps_count'             =>  $gps_transfers_accepted[0]->count,
+                'transferred_string'                =>  $transferred_string,
+                'awaiting_confirmation_gps_count'   =>  $gps_transfers_awaiting_confirmation[0]->count,
+                'awaiting_confirmation_string'      =>  $awaiting_confirmation_string,
+                'instock_gps_count'                 =>  $stock_in_distributor,
+                'stock_string'                      =>  $stock_string
                 ];
         }
         return $transferred_data;
     }
 
-    public function distributorToDealerTransferredCountInRoot($gps_transfers,$from_user_id,$to_user_id)
+    public function distributorToDealerTransferredCountInRoot($from_user_id,$to_user_id,$from_date,$to_date)
     {
         if($from_user_id)
         {
@@ -799,20 +750,23 @@ class WarehouseController extends Controller {
             foreach ($all_dealers as $dealer) {
                 $dealers[]=$dealer->user_id;
             }
-            $gps_transfers = $gps_transfers->whereIn('from_user_id',$distributors)->whereIn('to_user_id',$dealers)->get();
-            $gps_transfer_items=[];
-            foreach ($gps_transfers as $gps_transfer) {
-                $gps_transfer_items[] = $gps_transfer->id;
+            $gps_transfers_awaiting_confirmation    =   (new GpsTransfer())->getTransferredGpsDetailsWhichIncludesAwaitingConfirmationGps($distributors,$dealers,$from_date,$to_date);      
+            if($gps_transfers_awaiting_confirmation > 1) {
+                $awaiting_confirmation_string = 'Devices Waiting For Confirmation';
+            }else{
+                $awaiting_confirmation_string = 'Device Waiting For Confirmation';
             }
-            $transferred_gps_count = GpsTransferItems::whereIn('gps_transfer_id',$gps_transfer_items)->count();
-            if($transferred_gps_count > 1) {
+            $gps_transfers_accepted                 =   (new GpsTransfer())->getTransferredGpsDetailsWhichIncludesTransferAcceptedGps($distributors,$dealers,$from_date,$to_date);      
+            if($gps_transfers_accepted > 1) {
                 $transferred_string = 'Devices Transferred';
             }else{
                 $transferred_string = 'Device Transferred';
             }
             $transferred_data = [
-                'transferred_gps_count' => $transferred_gps_count,
-                'transferred_string' => $transferred_string,
+                'transferred_gps_count'             =>  $gps_transfers_accepted[0]->count,
+                'transferred_string'                =>  $transferred_string,
+                'awaiting_confirmation_gps_count'   =>  $gps_transfers_awaiting_confirmation[0]->count,
+                'awaiting_confirmation_string'      =>  $awaiting_confirmation_string,
                 ];
         }
         else if($from_user_id != '0' && $to_user_id == '0')
@@ -822,22 +776,23 @@ class WarehouseController extends Controller {
             foreach ($all_dealers as $dealer) {
                 $dealers[]=$dealer->user_id;
             }
-            $gps_transfers = $gps_transfers->where('from_user_id',$from_user_id)->whereIn('to_user_id',$dealers)->get();
-
-            $gps_transfer_items=[];
-            foreach ($gps_transfers as $gps_transfer) {
-                $gps_transfer_items[] = $gps_transfer->id;
+            $gps_transfers_awaiting_confirmation    =   (new GpsTransfer())->getTransferredGpsDetailsWhichIncludesAwaitingConfirmationGps([$from_user_id],$dealers,$from_date,$to_date);      
+            if($gps_transfers_awaiting_confirmation > 1) {
+                $awaiting_confirmation_string = 'Devices Waiting For Confirmation';
+            }else{
+                $awaiting_confirmation_string = 'Device Waiting For Confirmation';
             }
-            $transferred_gps_count = GpsTransferItems::whereIn('gps_transfer_id',$gps_transfer_items)->count();
-           
-            if($transferred_gps_count > 1) {
+            $gps_transfers_accepted                 =   (new GpsTransfer())->getTransferredGpsDetailsWhichIncludesTransferAcceptedGps([$from_user_id],$dealers,$from_date,$to_date);      
+            if($gps_transfers_accepted > 1) {
                 $transferred_string = 'Devices Transferred';
             }else{
                 $transferred_string = 'Device Transferred';
             }
             $transferred_data = [
-                'transferred_gps_count' => $transferred_gps_count,
-                'transferred_string' => $transferred_string,
+                'transferred_gps_count'             =>  $gps_transfers_accepted[0]->count,
+                'transferred_string'                =>  $transferred_string,
+                'awaiting_confirmation_gps_count'   =>  $gps_transfers_awaiting_confirmation[0]->count,
+                'awaiting_confirmation_string'      =>  $awaiting_confirmation_string,
                 ];
         }
         else if($from_user_id == '0' && $to_user_id != '0')
@@ -847,30 +802,39 @@ class WarehouseController extends Controller {
             foreach ($all_distributors as $distributor) {
                 $distributors[]=$distributor->user_id;
             }
-            $gps_transfers = $gps_transfers->whereIn('from_user_id',$distributors)->where('to_user_id',$to_user_id)->get();
-            $gps_transfer_items=[];
-            foreach ($gps_transfers as $gps_transfer) {
-                $gps_transfer_items[] = $gps_transfer->id;
+            $gps_transfers_awaiting_confirmation    =   (new GpsTransfer())->getTransferredGpsDetailsWhichIncludesAwaitingConfirmationGps($distributors,[$to_user_id],$from_date,$to_date);      
+            if($gps_transfers_awaiting_confirmation > 1) {
+                $awaiting_confirmation_string = 'Devices Waiting For Confirmation';
+            }else{
+                $awaiting_confirmation_string = 'Device Waiting For Confirmation';
             }
-            $transferred_gps_count = GpsTransferItems::whereIn('gps_transfer_id',$gps_transfer_items)->count();
-            if($transferred_gps_count > 1) {
+            $gps_transfers_accepted                 =   (new GpsTransfer())->getTransferredGpsDetailsWhichIncludesTransferAcceptedGps($distributors,[$to_user_id],$from_date,$to_date);      
+            if($gps_transfers_accepted > 1) {
                 $transferred_string = 'Devices Transferred';
             }else{
                 $transferred_string = 'Device Transferred';
             }
             $transferred_data = [
-                'transferred_gps_count' => $transferred_gps_count,
-                'transferred_string' => $transferred_string,
+                'transferred_gps_count'             =>  $gps_transfers_accepted[0]->count,
+                'transferred_string'                =>  $transferred_string,
+                'awaiting_confirmation_gps_count'   =>  $gps_transfers_awaiting_confirmation[0]->count,
+                'awaiting_confirmation_string'      =>  $awaiting_confirmation_string,
                 ];
         }
         else
         {
-            $gps_transfers = $gps_transfers->where('from_user_id',$from_user_id)->where('to_user_id',$to_user_id)->get();
-            $gps_transfer_items=[];
-            foreach ($gps_transfers as $gps_transfer) {
-                $gps_transfer_items[] = $gps_transfer->id;
+            $gps_transfers_awaiting_confirmation    =   (new GpsTransfer())->getTransferredGpsDetailsWhichIncludesAwaitingConfirmationGps([$from_user_id],[$to_user_id],$from_date,$to_date);      
+            if($gps_transfers_awaiting_confirmation > 1) {
+                $awaiting_confirmation_string = 'Devices Waiting For Confirmation';
+            }else{
+                $awaiting_confirmation_string = 'Device Waiting For Confirmation';
             }
-            $transferred_gps_count = GpsTransferItems::whereIn('gps_transfer_id',$gps_transfer_items)->count();
+            $gps_transfers_accepted                 =   (new GpsTransfer())->getTransferredGpsDetailsWhichIncludesTransferAcceptedGps([$from_user_id],[$to_user_id],$from_date,$to_date);      
+            if($gps_transfers_accepted > 1) {
+                $transferred_string = 'Devices Transferred';
+            }else{
+                $transferred_string = 'Device Transferred';
+            }
             $stock_in_dealer=GpsStock::select('subdealer_id','client_id')->where('subdealer_id',$to_user_details->id)->whereNull('client_id')->count();
            
             if($stock_in_dealer > 1) {
@@ -878,23 +842,20 @@ class WarehouseController extends Controller {
             }else{
                 $stock_string = 'Device In Stock With <b>'.$to_user_details->name;
             }
-            if($transferred_gps_count > 1) {
-                $transferred_string = 'Devices Transferred';
-            }else{
-                $transferred_string = 'Device Transferred';
-            }
            
             $transferred_data = [
-                'transferred_gps_count' => $transferred_gps_count,
-                'instock_gps_count' => $stock_in_dealer,
-                'stock_string' => $stock_string,
-                'transferred_string' => $transferred_string,
+                'transferred_gps_count'             =>  $gps_transfers_accepted[0]->count,
+                'transferred_string'                =>  $transferred_string,
+                'awaiting_confirmation_gps_count'   =>  $gps_transfers_awaiting_confirmation[0]->count,
+                'awaiting_confirmation_string'      =>  $awaiting_confirmation_string,
+                'instock_gps_count'                 =>  $stock_in_dealer,
+                'stock_string'                      =>  $stock_string,
                 ];
         }
         return $transferred_data;
     }
 
-    public function dealerToClientTransferredCountInRoot($gps_transfers,$from_user_id,$to_user_id)
+    public function dealerToClientTransferredCountInRoot($from_user_id,$to_user_id,$from_date,$to_date)
     {
         if($from_user_id)
         {
@@ -916,12 +877,8 @@ class WarehouseController extends Controller {
             foreach ($all_clients as $client) {
                 $clients[]=$client->user_id;
             }
-            $gps_transfers = $gps_transfers->whereIn('from_user_id',$dealers)->whereIn('to_user_id',$clients)->get();
-            $gps_transfer_items=[];
-            foreach ($gps_transfers as $gps_transfer) {
-                $gps_transfer_items[] = $gps_transfer->id;
-            }
-            $transferred_gps_count = GpsTransferItems::whereIn('gps_transfer_id',$gps_transfer_items)->count();
+            $gps_transfers_accepted                 =   (new GpsTransfer())->getTransferredGpsDetailsWhichIncludesTransferAcceptedGps($dealers,$clients,$from_date,$to_date);      
+            
         }
         else if($from_user_id != '0' && $to_user_id == '0')
         {
@@ -930,12 +887,7 @@ class WarehouseController extends Controller {
             foreach ($all_clients as $client) {
                 $clients[]=$client->user_id;
             }
-            $gps_transfers = $gps_transfers->where('from_user_id',$from_user_id)->whereIn('to_user_id',$clients)->get();
-            $gps_transfer_items=[];
-            foreach ($gps_transfers as $gps_transfer) {
-                $gps_transfer_items[] = $gps_transfer->id;
-            }
-            $transferred_gps_count = GpsTransferItems::whereIn('gps_transfer_id',$gps_transfer_items)->count();
+            $gps_transfers_accepted                 =   (new GpsTransfer())->getTransferredGpsDetailsWhichIncludesTransferAcceptedGps([$from_user_id],$clients,$from_date,$to_date);
         }
         else if($from_user_id == '0' && $to_user_id != '0')
         {
@@ -944,35 +896,27 @@ class WarehouseController extends Controller {
             foreach ($all_dealers as $dealer) {
                 $dealers[]=$dealer->user_id;
             }
-            $gps_transfers = $gps_transfers->whereIn('from_user_id',$dealers)->where('to_user_id',$to_user_id)->get();
-            $gps_transfer_items=[];
-            foreach ($gps_transfers as $gps_transfer) {
-                $gps_transfer_items[] = $gps_transfer->id;
-            }
-            $transferred_gps_count = GpsTransferItems::whereIn('gps_transfer_id',$gps_transfer_items)->count();
+            $gps_transfers_accepted                 =   (new GpsTransfer())->getTransferredGpsDetailsWhichIncludesTransferAcceptedGps($dealers,[$to_user_id],$from_date,$to_date);
         }
         else
         {
-            $gps_transfers = $gps_transfers->where('from_user_id',$from_user_id)->where('to_user_id',$to_user_id)->get();
-            $gps_transfer_items=[];
-            foreach ($gps_transfers as $gps_transfer) {
-                $gps_transfer_items[] = $gps_transfer->id;
-            }
-            $transferred_gps_count = GpsTransferItems::whereIn('gps_transfer_id',$gps_transfer_items)->count();
+            $gps_transfers_accepted                 =   (new GpsTransfer())->getTransferredGpsDetailsWhichIncludesTransferAcceptedGps([$from_user_id],[$to_user_id],$from_date,$to_date);
         }
-        if($transferred_gps_count > 1) {
-            $transferred_string = 'Devices Transferred';
-        }else{
-            $transferred_string = 'Device Transferred';
+        if($gps_transfers_accepted > 1) 
+        {
+            $transferred_string             = 'Devices Transferred';
+        }else
+        {
+            $transferred_string             = 'Device Transferred';
         }
         $transferred_data = [
-            'transferred_gps_count' => $transferred_gps_count,
-            'transferred_string' => $transferred_string,
+            'transferred_gps_count'             =>  $gps_transfers_accepted[0]->count,
+            'transferred_string'                =>  $transferred_string
             ];
         return $transferred_data;
     }
 
-    public function dealerToSubDealerTransferredCountInRoot($gps_transfers,$from_user_id,$to_user_id)
+    public function dealerToSubDealerTransferredCountInRoot($from_user_id,$to_user_id,$from_date,$to_date)
     {
         if($from_user_id)
         {
@@ -994,20 +938,23 @@ class WarehouseController extends Controller {
             foreach ($all_sub_dealers as $sub_dealer) {
                 $sub_dealers[]=$sub_dealer->user_id;
             }
-            $gps_transfers = $gps_transfers->whereIn('from_user_id',$dealers)->whereIn('to_user_id',$sub_dealers)->get();
-            $gps_transfer_items=[];
-            foreach ($gps_transfers as $gps_transfer) {
-                $gps_transfer_items[] = $gps_transfer->id;
+            $gps_transfers_awaiting_confirmation    =   (new GpsTransfer())->getTransferredGpsDetailsWhichIncludesAwaitingConfirmationGps($dealers,$sub_dealers,$from_date,$to_date);      
+            if($gps_transfers_awaiting_confirmation > 1) {
+                $awaiting_confirmation_string = 'Devices Waiting For Confirmation';
+            }else{
+                $awaiting_confirmation_string = 'Device Waiting For Confirmation';
             }
-            $transferred_gps_count = GpsTransferItems::whereIn('gps_transfer_id',$gps_transfer_items)->count();
-            if($transferred_gps_count > 1) {
+            $gps_transfers_accepted                 =   (new GpsTransfer())->getTransferredGpsDetailsWhichIncludesTransferAcceptedGps($dealers,$sub_dealers,$from_date,$to_date);      
+            if($gps_transfers_accepted > 1) {
                 $transferred_string = 'Devices Transferred';
             }else{
                 $transferred_string = 'Device Transferred';
             }
             $transferred_data = [
-                'transferred_gps_count' => $transferred_gps_count,
-                'transferred_string' => $transferred_string,
+                'transferred_gps_count'             =>  $gps_transfers_accepted[0]->count,
+                'transferred_string'                =>  $transferred_string,
+                'awaiting_confirmation_gps_count'   =>  $gps_transfers_awaiting_confirmation[0]->count,
+                'awaiting_confirmation_string'      =>  $awaiting_confirmation_string,
                 ];
         }
         else if($from_user_id != '0' && $to_user_id == '0')
@@ -1017,22 +964,23 @@ class WarehouseController extends Controller {
             foreach ($all_sub_dealers as $sub_dealer) {
                 $sub_dealers[]=$sub_dealer->user_id;
             }
-            $gps_transfers = $gps_transfers->where('from_user_id',$from_user_id)->whereIn('to_user_id',$sub_dealers)->get();
-
-            $gps_transfer_items=[];
-            foreach ($gps_transfers as $gps_transfer) {
-                $gps_transfer_items[] = $gps_transfer->id;
+            $gps_transfers_awaiting_confirmation    =   (new GpsTransfer())->getTransferredGpsDetailsWhichIncludesAwaitingConfirmationGps([$from_user_id],$sub_dealers,$from_date,$to_date);      
+            if($gps_transfers_awaiting_confirmation > 1) {
+                $awaiting_confirmation_string = 'Devices Waiting For Confirmation';
+            }else{
+                $awaiting_confirmation_string = 'Device Waiting For Confirmation';
             }
-            $transferred_gps_count = GpsTransferItems::whereIn('gps_transfer_id',$gps_transfer_items)->count();
-           
-            if($transferred_gps_count > 1) {
+            $gps_transfers_accepted                 =   (new GpsTransfer())->getTransferredGpsDetailsWhichIncludesTransferAcceptedGps([$from_user_id],$sub_dealers,$from_date,$to_date);      
+            if($gps_transfers_accepted > 1) {
                 $transferred_string = 'Devices Transferred';
             }else{
                 $transferred_string = 'Device Transferred';
             }
             $transferred_data = [
-                'transferred_gps_count' => $transferred_gps_count,
-                'transferred_string' => $transferred_string,
+                'transferred_gps_count'             =>  $gps_transfers_accepted[0]->count,
+                'transferred_string'                =>  $transferred_string,
+                'awaiting_confirmation_gps_count'   =>  $gps_transfers_awaiting_confirmation[0]->count,
+                'awaiting_confirmation_string'      =>  $awaiting_confirmation_string,
                 ];
         }
         else if($from_user_id == '0' && $to_user_id != '0')
@@ -1042,30 +990,39 @@ class WarehouseController extends Controller {
             foreach ($all_dealers as $dealer) {
                 $dealers[]=$dealer->user_id;
             }
-            $gps_transfers = $gps_transfers->whereIn('from_user_id',$dealers)->where('to_user_id',$to_user_id)->get();
-            $gps_transfer_items=[];
-            foreach ($gps_transfers as $gps_transfer) {
-                $gps_transfer_items[] = $gps_transfer->id;
+            $gps_transfers_awaiting_confirmation    =   (new GpsTransfer())->getTransferredGpsDetailsWhichIncludesAwaitingConfirmationGps($dealers,[$to_user_id],$from_date,$to_date);      
+            if($gps_transfers_awaiting_confirmation > 1) {
+                $awaiting_confirmation_string = 'Devices Waiting For Confirmation';
+            }else{
+                $awaiting_confirmation_string = 'Device Waiting For Confirmation';
             }
-            $transferred_gps_count = GpsTransferItems::whereIn('gps_transfer_id',$gps_transfer_items)->count();
-            if($transferred_gps_count > 1) {
+            $gps_transfers_accepted                 =   (new GpsTransfer())->getTransferredGpsDetailsWhichIncludesTransferAcceptedGps($dealers,[$to_user_id],$from_date,$to_date);      
+            if($gps_transfers_accepted > 1) {
                 $transferred_string = 'Devices Transferred';
             }else{
                 $transferred_string = 'Device Transferred';
             }
             $transferred_data = [
-                'transferred_gps_count' => $transferred_gps_count,
-                'transferred_string' => $transferred_string,
+                'transferred_gps_count'             =>  $gps_transfers_accepted[0]->count,
+                'transferred_string'                =>  $transferred_string,
+                'awaiting_confirmation_gps_count'   =>  $gps_transfers_awaiting_confirmation[0]->count,
+                'awaiting_confirmation_string'      =>  $awaiting_confirmation_string,
                 ];
         }
         else
         {
-            $gps_transfers = $gps_transfers->where('from_user_id',$from_user_id)->where('to_user_id',$to_user_id)->get();
-            $gps_transfer_items=[];
-            foreach ($gps_transfers as $gps_transfer) {
-                $gps_transfer_items[] = $gps_transfer->id;
+            $gps_transfers_awaiting_confirmation    =   (new GpsTransfer())->getTransferredGpsDetailsWhichIncludesAwaitingConfirmationGps([$from_user_id],[$to_user_id],$from_date,$to_date);      
+            if($gps_transfers_awaiting_confirmation > 1) {
+                $awaiting_confirmation_string = 'Devices Waiting For Confirmation';
+            }else{
+                $awaiting_confirmation_string = 'Device Waiting For Confirmation';
             }
-            $transferred_gps_count = GpsTransferItems::whereIn('gps_transfer_id',$gps_transfer_items)->count();
+            $gps_transfers_accepted                 =   (new GpsTransfer())->getTransferredGpsDetailsWhichIncludesTransferAcceptedGps([$from_user_id],[$to_user_id],$from_date,$to_date);      
+            if($gps_transfers_accepted > 1) {
+                $transferred_string = 'Devices Transferred';
+            }else{
+                $transferred_string = 'Device Transferred';
+            }
             $stock_in_sub_dealer=GpsStock::select('id','trader_id','client_id')->where('trader_id',$to_user_details->id)->whereNull('client_id')->count();
            
             if($stock_in_sub_dealer > 1) {
@@ -1073,23 +1030,20 @@ class WarehouseController extends Controller {
             }else{
                 $stock_string = 'Device In Stock With <b>'.$to_user_details->name;
             }
-            if($transferred_gps_count > 1) {
-                $transferred_string = 'Devices Transferred';
-            }else{
-                $transferred_string = 'Device Transferred';
-            }
-           
+            
             $transferred_data = [
-                'transferred_gps_count' => $transferred_gps_count,
-                'instock_gps_count' => $stock_in_sub_dealer,
-                'stock_string' => $stock_string,
-                'transferred_string' => $transferred_string,
+                'transferred_gps_count'             =>  $gps_transfers_accepted[0]->count,
+                'transferred_string'                =>  $transferred_string,
+                'awaiting_confirmation_gps_count'   =>  $gps_transfers_awaiting_confirmation[0]->count,
+                'awaiting_confirmation_string'      =>  $awaiting_confirmation_string,
+                'instock_gps_count'                 =>  $stock_in_sub_dealer,
+                'stock_string'                      =>  $stock_string
                 ];
         }
         return $transferred_data;
     }
 
-    public function subDealerToClientTransferredCountInRoot($gps_transfers,$from_user_id,$to_user_id)
+    public function subDealerToClientTransferredCountInRoot($from_user_id,$to_user_id,$from_date,$to_date)
     {
         if($from_user_id)
         {
@@ -1111,12 +1065,7 @@ class WarehouseController extends Controller {
             foreach ($all_clients as $client) {
                 $clients[]=$client->user_id;
             }
-            $gps_transfers = $gps_transfers->whereIn('from_user_id',$sub_dealers)->whereIn('to_user_id',$clients)->get();
-            $gps_transfer_items=[];
-            foreach ($gps_transfers as $gps_transfer) {
-                $gps_transfer_items[] = $gps_transfer->id;
-            }
-            $transferred_gps_count = GpsTransferItems::whereIn('gps_transfer_id',$gps_transfer_items)->count();
+            $gps_transfers_accepted                 =   (new GpsTransfer())->getTransferredGpsDetailsWhichIncludesTransferAcceptedGps($sub_dealers,$clients,$from_date,$to_date);
         }
         else if($from_user_id != '0' && $to_user_id == '0')
         {
@@ -1125,12 +1074,7 @@ class WarehouseController extends Controller {
             foreach ($all_clients as $client) {
                 $clients[]=$client->user_id;
             }
-            $gps_transfers = $gps_transfers->where('from_user_id',$from_user_id)->whereIn('to_user_id',$clients)->get();
-            $gps_transfer_items=[];
-            foreach ($gps_transfers as $gps_transfer) {
-                $gps_transfer_items[] = $gps_transfer->id;
-            }
-            $transferred_gps_count = GpsTransferItems::whereIn('gps_transfer_id',$gps_transfer_items)->count();
+            $gps_transfers_accepted                 =   (new GpsTransfer())->getTransferredGpsDetailsWhichIncludesTransferAcceptedGps([$from_user_id],$clients,$from_date,$to_date);
         }
         else if($from_user_id == '0' && $to_user_id != '0')
         {
@@ -1139,30 +1083,22 @@ class WarehouseController extends Controller {
             foreach ($all_sub_dealers as $sub_dealer) {
                 $sub_dealers[]=$sub_dealer->user_id;
             }
-            $gps_transfers = $gps_transfers->whereIn('from_user_id',$sub_dealers)->where('to_user_id',$to_user_id)->get();
-            $gps_transfer_items=[];
-            foreach ($gps_transfers as $gps_transfer) {
-                $gps_transfer_items[] = $gps_transfer->id;
-            }
-            $transferred_gps_count = GpsTransferItems::whereIn('gps_transfer_id',$gps_transfer_items)->count();
+            $gps_transfers_accepted                 =   (new GpsTransfer())->getTransferredGpsDetailsWhichIncludesTransferAcceptedGps($sub_dealers,[$to_user_id],$from_date,$to_date);
         }
         else
         {
-            $gps_transfers = $gps_transfers->where('from_user_id',$from_user_id)->where('to_user_id',$to_user_id)->get();
-            $gps_transfer_items=[];
-            foreach ($gps_transfers as $gps_transfer) {
-                $gps_transfer_items[] = $gps_transfer->id;
-            }
-            $transferred_gps_count = GpsTransferItems::whereIn('gps_transfer_id',$gps_transfer_items)->count();
+            $gps_transfers_accepted                 =   (new GpsTransfer())->getTransferredGpsDetailsWhichIncludesTransferAcceptedGps([$from_user_id],[$to_user_id],$from_date,$to_date);
         }
-        if($transferred_gps_count > 1) {
-            $transferred_string = 'Devices Transferred';
-        }else{
-            $transferred_string = 'Device Transferred';
+        if($gps_transfers_accepted > 1) 
+        {
+            $transferred_string                     = 'Devices Transferred';
+        }else
+        {
+            $transferred_string                     = 'Device Transferred';
         }
         $transferred_data = [
-            'transferred_gps_count' => $transferred_gps_count,
-            'transferred_string' => $transferred_string,
+            'transferred_gps_count'             =>  $gps_transfers_accepted[0]->count,
+            'transferred_string'                =>  $transferred_string
             ];
         return $transferred_data;
     }
