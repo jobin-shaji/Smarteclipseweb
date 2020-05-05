@@ -1,3 +1,7 @@
+function getUrl(){
+    return $('meta[name = "domain"]').attr('content');
+}
+
 $(document).ready(function () {
     callBackDataTable();
 });
@@ -19,14 +23,18 @@ function acceptDeviceReturn(device_return_id){
                 if(res.status == 1)
                 {
                     toastr.success('Device return request Accepted successfully');
+                    setTimeout(function() {
+                        document.location.reload()
+                    }, 2000);
                 }
                 else
                 {
-                    toastr.error('Device return request is already accepted');
+                    toastr.error(res.message);
+                    setTimeout(function() {
+                        window.location.href = getUrl() + '/'+'device-return-history-list' ;
+                    }, 2000);
                 }
-                setTimeout(function() {
-                    document.location.reload()
-                }, 2000);
+                
             }
           });
     } 
@@ -56,6 +64,9 @@ function callBackDataTable(){
         createdRow: function ( row, data, index ) {
             if ( data['status'] == 'Accepted') {
                 $('td', row).css('background-color', 'rgb(48, 197, 137, 0.22)');
+            }
+            else if ( data['status'] == 'Cancelled') {
+                $('td', row).css('background-color', 'rgb(243, 204, 204)');
             }
         },
         fnDrawCallback: function (oSettings, json) {
@@ -107,7 +118,6 @@ function addNewActivity() {
                 }, 2000);
             }else{
                 toastr.error(res.message);
-                toastr.success(res.message);
                 setTimeout(function() {
                     location.reload();
                 }, 3000);
