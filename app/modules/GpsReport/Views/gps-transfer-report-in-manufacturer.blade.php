@@ -29,13 +29,23 @@
                                                         <div class="col-lg-4 col-md-4"> 
                                                             <div class="form-group">                      
                                                                 <label> From Date</label>
-                                                                <input type="text" class="device_report form-control {{ $errors->has('from_date') ? ' has-error' : '' }}"  name="from_date" id="from_date" onkeydown="return false;" value="{{date('d-m-Y', strtotime($from_date))}}" autocomplete="off" required>
+                                                                <div class="input-group">
+                                                                    <input type="text" class="device_report form-control {{ $errors->has('from_date') ? ' has-error' : '' }}"  name="from_date" id="from_date" onkeydown="return false;" value="{{date('d-m-Y', strtotime($from_date))}}" autocomplete="off" required>
+                                                                    <span class="input-group-addon" style="z-index: 99;">
+                                                                        <span class="calendern"><i class="fa fa-calendar"></i></span>
+                                                                    </span>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-4 col-md-4"> 
-                                                            <div class="form-group">                     
+                                                            <div class="form-group">                   
                                                                 <label> To Date</label>
-                                                                <input type="text" class="device_report form-control {{ $errors->has('to_date') ? ' has-error' : '' }}"  name="to_date" id="to_date" onkeydown="return false;" value="{{date('d-m-Y', strtotime($to_date))}}" autocomplete="off" required>
+                                                                <div class="input-group">  
+                                                                    <input type="text" class="device_report form-control {{ $errors->has('to_date') ? ' has-error' : '' }}"  name="to_date" id="to_date" onkeydown="return false;" value="{{date('d-m-Y', strtotime($to_date))}}" autocomplete="off" required>
+                                                                    <span class="input-group-addon" style="z-index: 99;">
+                                                                        <span class="calendern"><i class="fa fa-calendar"></i></span>
+                                                                    </span>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-3 col-md-3 pt-4">  
