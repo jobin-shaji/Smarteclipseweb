@@ -5,6 +5,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class VehicleDailyUpdate extends Model
 {
+     protected $fillable=[  'gps_id' ,'km','ignition_on','ignition_off','moving','sleep','halt','stop','ac_on','ac_off','ac_on_idle','top_speed','date'];
     public function getVehicleDurationsBasedOnDates($gps_ids,$from_date,$to_date)
     {
         return self::select(
