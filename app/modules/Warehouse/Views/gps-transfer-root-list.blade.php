@@ -61,19 +61,13 @@
                   <div class="col-lg-3 col-md-2" style="flex: 0 0 15%!important"> 
                     <div class="form-group">                      
                       <label> From Date</label>
-                      <input type="text" class="form-control" id="fromDate" name="fromDate" onkeydown="return false" autocomplete="off"  required>
-                      <span class="input-group-addon" style="z-index: 99;">
-                        <span class="calender1"  style=""><i class="fa fa-calendar"></i></span>
-                      </span>
+                      <input type="text" class="device_report form-control {{ $errors->has('from_date') ? ' has-error' : '' }}"  name="from_date" id="from_date" onkeydown="return false;" autocomplete="off" required>
                     </div>
                   </div>
                   <div class="col-lg-3 col-md-2" style="flex: 0 0 15%!important"> 
                     <div class="form-group">                     
                       <label> To Date</label>
-                      <input type="text" class="form-control" id="toDate" name="toDate" onkeydown="return false" autocomplete="off" required>
-                      <span class="input-group-addon" style="z-index: 99;">                 
-                        <span class="calender1"  style=""><i class="fa fa-calendar"></i></span>
-                      </span>
+                      <input type="text" class="device_report form-control {{ $errors->has('to_date') ? ' has-error' : '' }}"  name="to_date" id="to_date" onkeydown="return false;" autocomplete="off" required>
                     </div>
                   </div>
                   <div class="col-lg-3 col-md-2 pt-4">
@@ -94,6 +88,17 @@
                         <div class="loader"></div>
                       </h3>
                       <p id = "transferred_message"></p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-3 col-md-3 awaiting_confirmation_grid in_progress_grid" id = "awaiting_confirmation_section" style="display: none;">
+                  <!-- small box -->
+                  <div class="small-box">
+                    <div class="inner">
+                      <h3 id="awaiting_confirmation_count">
+                        <div class="loader"></div>
+                      </h3>
+                      <p id = "awaiting_confirmation_message"></p>
                     </div>
                   </div>
                 </div>

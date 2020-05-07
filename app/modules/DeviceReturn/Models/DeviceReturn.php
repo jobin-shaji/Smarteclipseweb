@@ -59,11 +59,12 @@ class DeviceReturn extends Model
 					'comments',                                        
 					'created_at',
 					'servicer_id',
-					'status')
+					'status',
+					'deleted_at')
 					->with('gps:id,imei,serial_no')
 					->with('servicer:id,name,sub_dealer_id,trader_id')
-					->where('status', '!=' , 1)
 					->orderBy('id','desc')
+					->withTrashed()
 					->get();
 	}
 
@@ -99,6 +100,23 @@ class DeviceReturn extends Model
 					'client_id',
 					'servicer_id',
 					'created_at')
+					->where('id',$device_return_id)
+					->first();
+	}
+
+	public function getSingleDeviceReturnDetailsWithTrashedItem($device_return_id)
+	{
+		return self::select(
+					'id', 
+					'return_code',
+					'gps_id',                      
+					'type_of_issues',
+					'status',
+					'comments',                                        
+					'client_id',
+					'servicer_id',
+					'created_at')
+					->withTrashed()
 					->where('id',$device_return_id)
 					->first();
 	}

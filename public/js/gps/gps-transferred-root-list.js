@@ -1,8 +1,13 @@
+function getUrl(){
+  return $('meta[name = "domain"]').attr('content');
+}
 window.onload = function()
 {
-    document.getElementById('transfer_type').value = "";
-    document.getElementById('from_id').value = "";
-    document.getElementById('to_id').value = "";
+    document.getElementById('transfer_type').value    =   "";
+    document.getElementById('from_id').value          =   "";
+    document.getElementById('to_id').value            =   "";
+    document.getElementById('from_date').value        =   "";
+    document.getElementById('to_date').value          =   "";
   $('#dataTable').DataTable().search( this.value ).draw();
 
 }
@@ -19,15 +24,44 @@ function getDeviceTransferList()
     }
     else if(document.getElementById('to_id').value == ''){
         alert('Please select To user');
+    }
+    else if(document.getElementById('from_date').value == ''){
+      alert('Please select From date');
+    }
+    else if(document.getElementById('to_date').value == ''){
+      alert('Please select To date');
     }else{
-        var transfer_type = document.getElementById('transfer_type').value;
-        var from_id = document.getElementById('from_id').value;
-        var to_id = document.getElementById('to_id').value;
-        var from_date = document.getElementById('fromDate').value;
-        var to_date = document.getElementById('toDate').value;
-        var data = {'transfer_type':transfer_type , 'from_id':from_id , 'to_id':to_id, 'from_date':from_date, 'to_date':to_date};
-        callBackDataTable(data);
-        countSection(data);
+        var transfer_type   =   document.getElementById('transfer_type').value;
+        var from_id         =   document.getElementById('from_id').value;
+        var to_id           =   document.getElementById('to_id').value;
+        var from_date       =   document.getElementById('from_date').value;
+        var to_date         =   document.getElementById('to_date').value;
+        var from_d          =   new Date(from_date.split("-").reverse().join("-"));
+        var from_day        =   from_d.getDate();
+        var from_month      =   from_d.getMonth()+1;
+        var from_year       =   from_d.getFullYear();
+        var search_from_date=   from_year+""+from_month+""+from_day;
+        var to_d            =   new Date(to_date.split("-").reverse().join("-"));
+        var to_day          =   to_d.getDate();
+        var to_month        =   to_d.getMonth()+1;
+        var to_year         =   to_d.getFullYear();
+        var search_to_date  =   to_year+""+to_month+""+to_day;
+        if(search_from_date > search_to_date)
+        {
+            document.getElementById('transfer_type').value  =   "";
+            document.getElementById('from_id').value        =   "";
+            document.getElementById('to_id').value          =   "";
+            document.getElementById('from_date').value      =   "";
+            document.getElementById('to_date').value        =   "";
+            alert('From date should be less than To date');
+            window.location.href = getUrl() + '/'+'gps-transferred-root' ;
+        }
+        else
+        {
+          var data = {'transfer_type':transfer_type , 'from_id':from_id , 'to_id':to_id, 'from_date':from_date, 'to_date':to_date};
+          callBackDataTable(data);
+          countSection(data);
+        }
     }
        
 }
@@ -36,6 +70,7 @@ function countSection(data)
 {
     $('#stock_section').hide();
     $('#transferred_section').hide();
+    $('#awaiting_confirmation_section').hide();
     var url = 'gps-transferred-count-root';
     var purl = getUrl() + '/' + url;
     $.ajax({
@@ -47,16 +82,19 @@ function countSection(data)
             'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
         },
         success: function(res) {
-            console.log(res);
             if(res.instock_gps_count != undefined)
             {
-                $('#stock_section').show();
-                $('#stock_count').html(res.instock_gps_count);
-                $('#stock_message').html(res.stock_string);
+              $('#stock_section').show();
+              $('#stock_count').html(res.instock_gps_count);
+              $('#stock_message').html(res.stock_string);
+            }
+            if(res.awaiting_confirmation_gps_count != undefined)
+            {
+              $('#awaiting_confirmation_section').show();
+              $('#awaiting_confirmation_count').html(res.awaiting_confirmation_gps_count);
+              $('#awaiting_confirmation_message').html(res.awaiting_confirmation_string);
             }
             $('#transferred_section').show();
-            // $('#from_date').show();
-            // $('#to_date').show();
             $('#transferred_count').html(res.transferred_gps_count);
             $('#transferred_message').html(res.transferred_string);
         },

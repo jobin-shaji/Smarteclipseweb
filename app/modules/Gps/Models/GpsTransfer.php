@@ -63,5 +63,34 @@ class GpsTransfer extends Model
     {
         return DB::select("SELECT gps_transfers.from_user_id,gps_transfers.to_user_id,count(gps_transfer_items.id) as count FROM `gps_transfers` LEFT join gps_transfer_items ON gps_transfers.id = gps_transfer_items.gps_transfer_id WHERE gps_transfers.deleted_at IS NULL AND date(gps_transfers.dispatched_on) >= '$from_date' AND date(gps_transfers.dispatched_on) <= '$to_date' AND gps_transfers.from_user_id IN  ('" . implode("', '", $from_user_ids) . "') AND gps_transfers.to_user_id IN ('" . implode("', '", $to_user_ids) . "') GROUP BY gps_transfers.to_user_id");
     }
+
+    public function getTransferredGpsDetailsWhichIncludesTransferAcceptedGps($from_user_ids,$to_user_ids,$from_date,$to_date)
+    {
+        return DB::select("SELECT COUNT(gps_transfer_items.id) as count FROM `gps_transfers` LEFT join gps_transfer_items ON gps_transfers.id = gps_transfer_items.gps_transfer_id WHERE gps_transfers.deleted_at IS NULL AND gps_transfers.accepted_on IS NOT NULL AND date(gps_transfers.dispatched_on) >= '$from_date' AND date(gps_transfers.dispatched_on) <= '$to_date' AND gps_transfers.from_user_id IN  ('" . implode("', '", $from_user_ids) . "') AND gps_transfers.to_user_id IN ('" . implode("', '", $to_user_ids) . "')");
+    }
+
+    public function getTransferredGpsDetailsWhichIncludesAwaitingConfirmationGps($from_user_ids,$to_user_ids,$from_date,$to_date)
+    {
+        return DB::select("SELECT COUNT(gps_transfer_items.id) as count FROM `gps_transfers` LEFT join gps_transfer_items ON gps_transfers.id = gps_transfer_items.gps_transfer_id WHERE gps_transfers.deleted_at IS NULL AND gps_transfers.accepted_on IS  NULL AND date(gps_transfers.dispatched_on) >= '$from_date' AND date(gps_transfers.dispatched_on) <= '$to_date' AND gps_transfers.from_user_id IN  ('" . implode("', '", $from_user_ids) . "') AND gps_transfers.to_user_id IN ('" . implode("', '", $to_user_ids) . "')");
+    }
+
+    public function getTransferredGpsDetailsWhichIncludesBothAcceptedAndAwaitingConfirmationGps($from_date,$to_date)
+    {
+        return self::select(
+            'id',
+            'from_user_id',
+            'to_user_id',
+            'dispatched_on',
+            'accepted_on',
+            'deleted_at'
+        )
+        ->with('fromUser:id,username')
+        ->with('toUser:id,username')
+        ->with('gpsTransferItems')
+        ->orderBy('created_at','DESC')
+        ->whereDate('dispatched_on', '>=', $from_date)
+        ->whereDate('dispatched_on', '<=', $to_date)
+        ->withTrashed();
+    }
     
 }

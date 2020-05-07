@@ -58,7 +58,8 @@
                       <div class="form-group has-feedback">
 
                        <select class="form-control selectpicker" data-live-search="true" title="Select role" id="role" name="role" required>
-                          <option value="1">Freebies</option>
+                         <option value="" disabled="disabled">select</option>
+                          <option value="1" selected="selected">Freebies</option>
                           <option value="2">Fundamental</option>
                           <option value="3">Superior</option>
                           <option value="4">Pro</option>
@@ -71,7 +72,7 @@
                       <div class="form-group has-feedback">
                         <select class="form-control selectpicker" data-live-search="true" title="Select Job Type" id="job_type" name="job_type" onchange="jobtypeonchange(this.value)" required>
                           <option value="">Select Job Type</option>
-                          <option value="1">Installation</option>
+                          <option value="1" selected="selected">Installation</option>
                           <option value="2">Service</option> 
                           <option value="3">Reinstallation</option>                        
                         </select>
@@ -165,6 +166,8 @@
                     </div><br>
     
                     <input type="hidden" name="user_id" id="user_id" value="{{Auth::user()->id}}">
+                    <input type="hidden" name="client_id" id="client_id" value="{{$client_id}}">
+
                     <div class="row">
                       <div class="col-md-6 ">
                         <button type="submit" id = 'submit_section' class="btn btn-primary btn-md form-btn ">Create</button>
@@ -187,17 +190,17 @@
 <script async defer
    src="https://maps.googleapis.com/maps/api/js?key={{config('eclipse.keys.googleMap')}}&libraries=places&callback=initMap"></script>
    <script>
-    $(document).ready(function () {
-      // var user_id = document.getElementById('user_id'); 
+    $(document).ready(function () { 
       var user_id = $("#user_id").val();   
-    $("#servicer").val(localStorage.getItem(user_id+'.autofill.root.servicer')).trigger("change");
-    $("#role").val(localStorage.getItem(user_id+'.autofill.root.role')).trigger("change");
-    $("#job_type").val(localStorage.getItem(user_id+'.autofill.root.job_type')).trigger("change");
+      $("#servicer").val(localStorage.getItem(user_id+'.autofill.root.servicer')).trigger("change");
+      // $("#role").val(localStorage.getItem(user_id+'.autofill.root.role')).trigger("change");
+      var client_id = $("#client_id").val(); 
+      getClientServicerGps(client_id); 
+      var job_type = $("#job_type").val(); 
+      jobtypeonchange(job_type);
 
-   
     });
-
-     function initMap()
+    function initMap()
      {
     
       // 
@@ -212,7 +215,8 @@
         $("#submit_section").prop('disabled', true); 
       });
 
-      var user_id = $("#user_id").val();  
+      var user_id = $("#user_id").val(); 
+      
       $("#servicer").change(function(){
        localStorage.setItem(user_id+'.autofill.root.servicer',$(this).val());
 
@@ -223,6 +227,9 @@
        });
       $("#job_type").change(function(){
         localStorage.setItem(user_id+'.autofill.root.job_type',$(this).val());
+       });
+      $("#client").change(function(){
+        localStorage.setItem(user_id+'.autofill.root.cient',$(this).val());
        });
 
    </script>

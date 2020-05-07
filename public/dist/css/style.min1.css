@@ -17133,6 +17133,19 @@ padding: 15px 10px;
     max-width: 18%;
 }
 
+.in_progress_grid{
+    font-size: 15px;
+    color:#fff;
+    border-radius: 2px;
+    position: relative;
+    display: block;
+    margin-bottom: 13px;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+    margin-left:30px !important;
+    border-radius: 5px;
+    max-width: 18%;
+}
+
 .stock_grid{
     font-size: 15px;
     color:#fff;
@@ -17224,6 +17237,10 @@ padding: 15px 10px;
 
 .transferred_device_grid {
     background: #CE447B;
+}
+
+.awaiting_confirmation_grid {
+    background: #9185dc;
 }
 
 .instock_device_grid {

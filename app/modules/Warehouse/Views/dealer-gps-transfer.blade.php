@@ -28,12 +28,13 @@
       <section class="hilite-content">
         <form  method="POST" action="{{route('gps-transfer-dealer.transfer.p')}}" class="transfer">
                 {{csrf_field()}}
+                <input type="hidden" id="logged_distributor_id" value="{{$logged_distributer_id}}">
               <div class="row">
                 <div class="col-md-12 col-lg-6">
                   <div class="form-group has-feedback">
                       <label class="srequired">Dealer Name</label>
-                      <select class="form-control select2 subDealerData" id="to_user" name="sub_dealer_user_id" data-live-search="true" title="Select Sub Dealer" required>
-                        <option value="">Select Dealer</option>
+                      <select class="form-control select2 subDealerData" id="dealer" name="sub_dealer_user_id" data-live-search="true" title="Select Sub Dealer" required>
+                        <option >Select Dealer</option>
                         @foreach($entities as $entity)
                         <option value="{{$entity->user->id}}">{{$entity->name}}</option>
                         @endforeach
@@ -71,7 +72,7 @@
 
                   <div class="form-group has-feedback">
                     <label class="srequired">Scanned Employee Code</label>
-                    <input type="text" class="form-control {{ $errors->has('scanned_employee_code') ? ' has-error' : '' }}" placeholder="Scanned Employee Code" name="scanned_employee_code" value="{{ old('scanned_employee_code') }}" autocomplete="off" required> 
+                    <input type="text" class="form-control {{ $errors->has('scanned_employee_code') ? ' has-error' : '' }}" placeholder="Scanned Employee Code" name="scanned_employee_code" value="{{ old('scanned_employee_code') }}" id="empcode" autocomplete="off" required> 
                       @if ($errors->has('scanned_employee_code'))
                       <span class="help-block">
                         <strong class="error-text">{{ $errors->first('scanned_employee_code') }}</strong>
@@ -116,17 +117,28 @@
                       @endif
                   </div>
                 </div>
-                <div class="col-md-12 col-lg-6">
+                <div class="col-md-6 col-lg-6">
                   <!-- <input type="checkbox" name="type" value="camera"> Camera enable/disable
                   <div id="camera_enable" style="display: none">
                     <div id="warn">Please connect your camera to scan QR code.</div>
                     <video id="preview" style="height:100%; width: 100%;"></video>
                   </div>
                 </div> -->
+                <div>
+                  <div>
+                     <label class="srequired">Devices in Stock</label>
+                      <select class="form-control select2" id="stock_add_transfer" name="devicestock_list">
+                        <option value="" selected disabled>Select Device</option>
+                        @foreach($devices as $device)
+                        <option value="{{$device->gps->imei}}{{$device->gps->serial_no}}">IMEI:- {{$device->gps->imei}} , Serial Number:- {{$device->gps->serial_no}}</option>
+                        @endforeach
+                      </select>
+                  </div>
+                </div>
                 <div style="position: absolute; bottom: 0;">
                   <textarea id="scanner" autofocus="autofocus" style="height:150px!important; width: 100%;" placeholder="Please click here for scanning.."></textarea>
                   <input type="hidden" id="role"name="role" value="{{\Auth::user()->roles->first()->name}}">
-                  <button type="button" class="btn btn-primary" id="add_qr_button">ADD</button>
+                  <button type="button" class="btn btn-primary" onclick="addcode()" id="add_qr_button">ADD</button>
                   <button type="button" class="btn btn-primary" id="reset_qr_button">RESET</button>
                 </div>
               </div>
@@ -155,6 +167,21 @@
       {
         return false;
       }
+    });
+
+    $("#stock_add_transfer").change(function() {
+      $('textarea[id="scanner"]').text(null);
+      var content = "";
+       content = this.value;
+      
+      var imei    = content.slice(0, 15);
+      var serial_no = content.slice(15, 34);
+      var code = "Serial No.: "+serial_no+
+                "IMEI: "+imei+
+                "Website: https://vstmobility.com" +
+                "Playstore Link: https://play.google.com/store/apps/details?id=vehiclest.vst.gps&hl=en_US";
+        $('textarea[id="scanner"]').val(code);
+        addcode();
     });
   </script>
     <script src="{{asset('js/gps/gps-transfer.js')}}"></script>

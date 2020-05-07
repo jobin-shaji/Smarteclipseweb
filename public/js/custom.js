@@ -1231,15 +1231,17 @@ function jobtypeonchange(job_type)
             else
             {
                 for (var i = 0; i < res.length; i++) {
-                    var client='  <option value="'+res[i].id+'"  >'+res[i].name+'</option>';
+                    var client='  <option value="'+res[i].id+'" selected="selected" >'+res[i].name+'</option>';
                     $("#client").append(client);
                 }
+
             }
         }
     });
 }
 
 function getClientServicerGps(client_id){
+    // console.log(client_id);
     $('#location_section').hide();
     $('#gps_section').hide();
     $('#description_section').hide();
@@ -1256,6 +1258,7 @@ function getClientServicerGps(client_id){
             alert('Please select job type!');
             client_id=0;
         }
+
         var url         =   'servicer-client-gps';
         var data        =   {
                                 client_id : client_id,
@@ -1268,7 +1271,7 @@ function getClientServicerGps(client_id){
 function clientGps(res)
 {
     var user_id = $("#user_id").val();   
-
+           // console.log(res);
     $('#location_section').show();
     $('#gps_section').show();
     $('#description_section').show();
@@ -1289,14 +1292,14 @@ function clientGps(res)
                 $("#submit_section").prop('disabled', false); 
                 $("#submit_text").hide();
             }
+                 // $("#client_id").val(client);
             
             $('#gps').append('<option value="">Select GPS</option>'); 
             for (var i = 0; i < length; i++) {
              var gps='  <option value="'+res.devices[i].id+'"  >'+res.devices[i].serial_no+'</option>';
              $("#gps").append(gps);
             }
-// $("#gps").select2().val(localStorage.getItem(user_id+'.autofill.sbdealer.gps').toString()).trigger("change");
-       
+            
               }
         $('#search_place').val(res.location);
         if( res.job_type == 3 )
@@ -1339,9 +1342,7 @@ function clientGps(res)
             return this.defaultSelected;
         });
     }
-    // $("#gps").change(function(){
-    //    localStorage.setItem(user_id+'.autofill.subdealer.gps',$(this).val());
-    //    });
+   
 }
 
 

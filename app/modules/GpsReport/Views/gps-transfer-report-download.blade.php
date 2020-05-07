@@ -12,6 +12,10 @@ td, th {
   border: 1px solid #dddddd;
   padding: 8px;
 }
+.from_to
+{
+  text-align: left;
+}
 
 </style>
 <h1>Device Transfer Report</h1>
@@ -39,7 +43,7 @@ td, th {
   <tbody>
     @foreach($transfer_summary as $each_data)
       <tr>
-        <td>{{$each_data['from']}}</td>
+        <td class = 'from_to'>{{$each_data['from']}}</td>
         <td>{{$each_data['to_distributers']}}</td>
         <td>{{$each_data['to_dealers']}}</td>
         <td>{{$each_data['to_sub_dealers']}}</td>

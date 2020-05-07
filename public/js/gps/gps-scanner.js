@@ -38,7 +38,7 @@ scanner.addListener('scan', function (content) {
                 var gps_employee_code=res.gps_employee_code;
                 $("#gps_id").val(items); 
                 var markup = "<tr class='cover_imei_"+gps_imei_id+"'><td>" + gps_serial_no + "</td><td>" + gps_batch_number + "</td><td>" + gps_employee_code + "</td><td><button class='btn btn-xs btn-danger' onclick='return deleteValueArray("+gps_imei_id+");'>Remove</button></td></tr>";
-                $("table tbody").append(markup);
+                $("tbody").append(markup);
                 var value = $('#gps_id').val();
                 if (value) {
                   $("#transfer_button").show();
@@ -53,8 +53,8 @@ scanner.addListener('scan', function (content) {
   
 });
 
-$(function(){
-    $('#add_qr_button').click(function() {
+
+    function addcode(){
 
         var content = $('#scanner').val();
         if(content){
@@ -75,8 +75,16 @@ $(function(){
                       
                   },
                   success: function (res) {
-
                     if(res.status == 1){
+                      $("#stock_add_transfer").empty();
+                      var devices = res.devices;
+                      var select = document.getElementById('stock_add_transfer');
+                      devices.forEach(device => {
+                      var option = document.createElement('option');
+                      option.value = device.gps.imei+device.gps.serial_no;
+                      option.innerHTML = "IMEI:- "+device.gps.imei+" , Serial Number:- "+device.gps.serial_no;
+                      select.appendChild(option);
+                      });
                       var position = jQuery.inArray(res.gps_id, items);
                         if(position !='-1'){
                             toastr.info('Item Exists');
@@ -125,8 +133,7 @@ $(function(){
         }else{
           alert('Please scan QR code ');
         }
-    });
-});
+    }
 
 $(function(){
   $('#reset_qr_button').click(function() {
@@ -160,6 +167,28 @@ function deleteValueArray(gps_id)
         $("#transfer_button").hide();
       }
     }
+
+    $.ajax({
+      type:'POST',
+      url: '/gps-scan-remove',
+      data:{gps_id : gps_id} ,
+      async: true,
+      headers: {
+          'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+          
+      },
+      success: function (res) {
+        $("#stock_add_transfer").empty();
+        var devices = res.devices;
+        var select = document.getElementById('stock_add_transfer');
+        devices.forEach(device => {
+        var option = document.createElement('option');
+        option.value = device.gps.imei+device.gps.serial_no;
+        option.innerHTML = "IMEI:- "+device.gps.imei+" , Serial Number:- "+device.gps.serial_no;
+        select.appendChild(option);
+        });
+      } 
+    });
   }
   else
   {

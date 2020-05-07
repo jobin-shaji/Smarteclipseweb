@@ -275,9 +275,9 @@
                         <label for="fname" class="col-sm-3 text-right control-label col-form-label">End User Category&nbsp<font color="red">*</font></label> 
                         <div class="form-group has-feedback">
                           <select class="form-control {{ $errors->has('client_category') ? ' has-error' : '' }}" placeholder="Client Category" name="client_category" value="{{ old('client_category') }}" id="client_category" required>
-                            <option value="" selected disabled>Select End User Category</option>
+                            <!-- <option value="" selected disabled>Select End User Category</option> -->
                             <!-- <option value="school">School</option> -->
-                            <option value="other">General</option>
+                            <option value="other" selected="selected">General</option>
                           </select>
                         </div>
                         @if ($errors->has('client_category'))

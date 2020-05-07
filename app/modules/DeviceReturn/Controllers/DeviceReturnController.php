@@ -63,34 +63,41 @@ class DeviceReturnController extends Controller
         $existing_gps_return_count  =   (new DeviceReturn())->gpsReturnedCount($request->gps_id);
         if($existing_gps_return_count > 0)
         {
-            $request->session()->flash('message', 'Device already returned!'); 
+            $request->session()->flash('message', 'Device return request already registered !'); 
             $request->session()->flash('alert-class', 'alert-danger'); 
         }
         else
         {
-            $return_code                    =   'RT'.date('ymdhis');
-            //to check return code is already exists in table
-            $existing_return_code_count     =   (new DeviceReturn())->gpsReturnCodeCount($return_code);
-            if($existing_return_code_count  > 0)
+            $is_vehicle_returned_or_reassigned  =   (new Vehicle())->checkVehicleIsNotReturnedOrReassigned($request->gps_id);
+            if($is_vehicle_returned_or_reassigned > 0)
             {
-                $return_code                =   'RT'.date('ymdhis').($existing_return_code_count+1);
+                $return_code                    =   'RT'.date('ymdhis');
+                //to check return code is already exists in table
+                $existing_return_code_count     =   (new DeviceReturn())->gpsReturnCodeCount($return_code);
+                if($existing_return_code_count  > 0)
+                {
+                    $return_code                =   'RT'.date('ymdhis').($existing_return_code_count+1);
+                }
+                $device_return                  =   (new DeviceReturn())->createNewDeviceForReturn($return_code,$request->gps_id,$request->type_of_issues,$request->comments,$servicer_id,$request->client_id);
+                // add to history
+                if($device_return)
+                {
+                    $servicer_details           =   (new Servicer())->getServicerDetails($servicer_id);
+                    $client_details             =   (new Client())->getClientDetailsWithClientId($request->client_id);
+                    $gps_details                =   (new Gps())->getGpsDetails($request->gps_id);
+                    $servicer_name              =   $servicer_details->name;
+                    $gps_imei                   =   $gps_details->imei;
+                    $gps_serial_number          =   $gps_details->serial_no;
+                    $client_name                =   $client_details->name;
+                    $activity                   =   $servicer_name.' returned the device '.$gps_imei.'(IMEI), '.$gps_serial_number.'(Serial Number)'.' for the client '.$client_name;
+                    (new DeviceReturnHistory())->addHistory($device_return->id, $activity);
+                }
+                $request->session()->flash('message', 'New device return request registered successfully!'); 
+                $request->session()->flash('alert-class', 'alert-success'); 
+            }else{
+                $request->session()->flash('message', 'Selected vehicle is already returned or reassigned!'); 
+                $request->session()->flash('alert-class', 'alert-success'); 
             }
-            $device_return                  =   (new DeviceReturn())->createNewDeviceForReturn($return_code,$request->gps_id,$request->type_of_issues,$request->comments,$servicer_id,$request->client_id);
-            // add to history
-            if($device_return)
-            {
-                $servicer_details           =   (new Servicer())->getServicerDetails($servicer_id);
-                $client_details             =   (new Client())->getClientDetailsWithClientId($request->client_id);
-                $gps_details                =   (new Gps())->getGpsDetails($request->gps_id);
-                $servicer_name              =   $servicer_details->name;
-                $gps_imei                   =   $gps_details->imei;
-                $gps_serial_number          =   $gps_details->serial_no;
-                $client_name                =   $client_details->name;
-                $activity                   =   $servicer_name.' returned the device '.$gps_imei.'(IMEI), '.$gps_serial_number.'(Serial Number)'.' for the client '.$client_name;
-                (new DeviceReturnHistory())->addHistory($device_return->id, $activity);
-            }
-            $request->session()->flash('message', 'New device return request registered successfully!'); 
-            $request->session()->flash('alert-class', 'alert-success'); 
         }         
         return redirect(route('device')); 
     }
@@ -169,7 +176,7 @@ class DeviceReturnController extends Controller
     public function getdeviceReturnListView(Request $request)
     {
         $decrypted_device_return_id     =   Crypt::decrypt($request->id); 
-        $device_return_details          =   (new DeviceReturn())->getSingleDeviceReturnDetails($decrypted_device_return_id); 
+        $device_return_details          =   (new DeviceReturn())->getSingleDeviceReturnDetailsWithTrashedItem($decrypted_device_return_id); 
         if($device_return_details == null)
         {
             return view('DeviceReturn::404');
@@ -217,10 +224,18 @@ class DeviceReturnController extends Controller
             return response()->json([
                 'status' => 0,
                 'title' => 'Error',
-                'message' => 'not a logged in servicer'
+                'message' => 'not a logged in service engineer'
             ]);
         }
-        else
+        else if($device_return->status  == 2)
+        {
+            return response()->json([
+                'status' => 0,
+                'title' => 'Error',
+                'message' => 'Device return request is already accepted'
+            ]);
+        }
+        else if($device_return->status  == 0)
         {
             $device_return->status=1;
             $device_return->save();
@@ -228,7 +243,15 @@ class DeviceReturnController extends Controller
             return response()->json([
                 'status' => 1,
                 'title' => 'Success',
-                'message' => 'Device return Cancelled successfully'
+                'message' => 'Device return request Cancelled successfully'
+            ]);
+        }
+        else
+        {
+            return response()->json([
+                'status' => 0,
+                'title' => 'Error',
+                'message' => 'Something went wrong!'
             ]);
         }
     }
@@ -239,84 +262,112 @@ class DeviceReturnController extends Controller
     public function acceptDeviceReturn(Request $request)
     {
         $device_return                  =   (new DeviceReturn())->getSingleDeviceReturnDetails($request->id);
-        if($device_return->status       ==   0)
+        if($device_return)
         {
-            $device_return->status      =   2;
-            $device_return->save();
-        
-            $gps_data                   =   (new Gps())->getGpsDetails($device_return->gps_id);
-            $gps_data_in_stock          =   (new GpsStock())->getSingleGpsStockDetails($device_return->gps_id);
-            $gps_in_vehicle             =   (new Vehicle())->getSingleVehicleDetailsBasedOnGps($device_return->gps_id);
-
-            //old data stored in a variable for creating new row
-            $imei                       =   $gps_data->imei;
-            $serial_no                  =   $gps_data->serial_no;
-            $imei_split_position        =   strpos($imei,"-RET");
-            $serial_no_split_position   =   strpos($serial_no,"-RET");
-            if($imei_split_position)
+            if($device_return->status       ==   0)
             {
-                $imei                   =   substr($imei,0,$imei_split_position);
-            }
-            if($serial_no_split_position)
-            {
-                $serial_no              =   substr($serial_no,0,$serial_no_split_position);
-            }
-            $gps_find_imei_and_slno     =   (new Gps())->getCountBasedOnImeiAndSerialNo($imei,$serial_no); 
-            $imei_incremented           =   $imei."-RET-".$gps_find_imei_and_slno;
-            $serial_no_incremented      =   $serial_no."-RET-". $gps_find_imei_and_slno;
+                $device_return->status      =   2;
+                $device_return->save();
             
-            //To update returned status in gps table
-            $gps_data->imei             =   $imei_incremented;
-            $gps_data->serial_no        =   $serial_no_incremented;
-            $gps_data->is_returned      =   1;
-            $gps_data->save();
+                $gps_data                   =   (new Gps())->getGpsDetails($device_return->gps_id);
+                $gps_data_in_stock          =   (new GpsStock())->getSingleGpsStockDetails($device_return->gps_id);
+                $gps_in_vehicle             =   (new Vehicle())->getSingleVehicleDetailsBasedOnGps($device_return->gps_id);
 
-            //To update returned status in gps stock table
-            $gps_data_in_stock->is_returned      =    1;
-            $gps_data_in_stock->returned_on      =    date('Y-m-d H:i:s');
-            $gps_data_in_stock->save();
+                //old data stored in a variable for creating new row
+                $imei                       =   $gps_data->imei;
+                $serial_no                  =   $gps_data->serial_no;
+                $imei_split_position        =   strpos($imei,"-RET");
+                $serial_no_split_position   =   strpos($serial_no,"-RET");
+                if($imei_split_position)
+                {
+                    $imei                   =   substr($imei,0,$imei_split_position);
+                }
+                if($serial_no_split_position)
+                {
+                    $serial_no              =   substr($serial_no,0,$serial_no_split_position);
+                }
+                $gps_find_imei_and_slno     =   (new Gps())->getCountBasedOnImeiAndSerialNo($imei,$serial_no); 
+                $imei_incremented           =   $imei."-RET-".$gps_find_imei_and_slno;
+                $serial_no_incremented      =   $serial_no."-RET-". $gps_find_imei_and_slno;
+                
+                //To update returned status in gps table
+                $gps_data->imei             =   $imei_incremented;
+                $gps_data->serial_no        =   $serial_no_incremented;
+                $gps_data->is_returned      =   1;
+                $gps_data->save();
 
-            //To update returned status in vehicle table
-            $gps_in_vehicle->is_returned                    =    1;
-            $gps_in_vehicle->is_reinstallation_job_created  =    0;
-            $gps_in_vehicle->save();         
+                //To update returned status in gps stock table
+                $gps_data_in_stock->is_returned      =    1;
+                $gps_data_in_stock->returned_on      =    date('Y-m-d H:i:s');
+                $gps_data_in_stock->save();
 
-            //Update gps removed date on vehicle gps log table
-            $vehicle_gps_log                    =   (new VehicleGps())->getVehicleGpsLog($gps_in_vehicle->id,$device_return->gps_id);
-            $vehicle_gps_log->gps_removed_on    =   date('Y-m-d H:i:s');
-            $vehicle_gps_log->save();
+                //To update returned status in vehicle table
+                $gps_in_vehicle->is_returned                    =    1;
+                $gps_in_vehicle->is_reinstallation_job_created  =    0;
+                $gps_in_vehicle->save();         
 
-            //delete all assigned geofences of returned vehicle
-            $is_deleted_assigned_vehicle_geofence   =   (new VehicleGeofence())->getGeofenceAssignedVehicleDatas($gps_in_vehicle->id);
+                //Update gps removed date on vehicle gps log table
+                $vehicle_gps_log                    =   (new VehicleGps())->getVehicleGpsLog($gps_in_vehicle->id,$device_return->gps_id);
+                $vehicle_gps_log->gps_removed_on    =   date('Y-m-d H:i:s');
+                $vehicle_gps_log->save();
 
-            //To update imei in vlt data table
-            $vlt_Data                            =    (new VltData())->vltDataImeiUpdation($imei,$imei_incremented);     
-            
-            //To update imei in vlt data archived table
-            DB::table('vlt_data_archived')->where('imei',$imei)->update([
-                    'imei' =>  $imei_incremented,
+                //delete all assigned geofences of returned vehicle
+                $is_deleted_assigned_vehicle_geofence   =   (new VehicleGeofence())->getGeofenceAssignedVehicleDatas($gps_in_vehicle->id);
+
+                //To update imei in vlt data table
+                $vlt_Data                            =    (new VltData())->vltDataImeiUpdation($imei,$imei_incremented);     
+                
+                //To update imei in vlt data archived table
+                DB::table('vlt_data_archived')->where('imei',$imei)->update([
+                        'imei' =>  $imei_incremented,
+                    ]);
+
+                //To update returned status in gps transfer items table
+                $gps_in_transfer_items      =   (new GpsTransferItems())->updateReturnStatusInTrasferItem($device_return->gps_id);
+                $manufacturer_details       =   (new Root())->getManufacturerDetails(\Auth::user()->root->id);
+                $activity                   =   'Manufacturer ('.$manufacturer_details->name.') accepted the device return '.$device_return->return_code;
+                (new DeviceReturnHistory())->addHistory($device_return->id, $activity);
+
+                return response()->json([
+                    'status' => 1,
+                    'title' => 'Success',
+                    'message' => 'Device return request accepted successfully'
                 ]);
-
-            //To update returned status in gps transfer items table
-            $gps_in_transfer_items      =   (new GpsTransferItems())->updateReturnStatusInTrasferItem($device_return->gps_id);
-            $manufacturer_details       =   (new Root())->getManufacturerDetails(\Auth::user()->root->id);
-            $activity                   =   'Manufacturer ('.$manufacturer_details->name.') accepted the device return '.$device_return->return_code;
-            (new DeviceReturnHistory())->addHistory($device_return->id, $activity);
-
-            return response()->json([
-                'status' => 1,
-                'title' => 'Success',
-                'message' => 'Device return Accepted successfully'
-            ]);
+            }
+            else if($device_return->status       ==   2)
+            {
+                return response()->json([
+                    'status' => 2,
+                    'title' => 'Failed',
+                    'message' => 'Device return request is already accepted'
+                ]);
+            }
+            else if($device_return->status       ==   1)
+            {
+                return response()->json([
+                    'status' => 3,
+                    'title' => 'Failed',
+                    'message' => 'Device return request is already cancelled'
+                ]);
+            }
+            else
+            {
+                return response()->json([
+                    'status' => 0,
+                    'title' => 'Failed',
+                    'message' => 'Something went wrong!'
+                ]);
+            }
         }
         else
         {
             return response()->json([
-                'status' => 0,
+                'status' => 3,
                 'title' => 'Failed',
-                'message' => 'Device return request is already accepted'
+                'message' => 'Device return request is already cancelled'
             ]);
         }
+        
         
         
     }
@@ -372,17 +423,30 @@ class DeviceReturnController extends Controller
             }        
         })
         ->addColumn('status', function ($device_return) { 
-            if($device_return->status==0)
+            if($device_return->status == 0)
             {
                 return "Submitted";
             }
-            else{
+            else if($device_return->status == 1)
+            {
+                return "Cancelled";
+            } 
+            else if($device_return->status == 2)
+            {
                 return "Accepted";
             }        
         })
         ->addColumn('action', function ($device_return) { 
-            return "
-            <a href=/device-return-detail-view/".Crypt::encrypt($device_return->id)."/view class='btn btn-xs btn-success'><i class='glyphicon glyphicon-eye-open'></i> View </a>";
+            if($device_return->status == 1)
+            {
+                return "
+                <a href=/device-return/".Crypt::encrypt($device_return->id)."/view class='btn btn-xs btn-success'><i class='glyphicon glyphicon-eye-open'></i> View </a>";
+            }
+            else
+            {
+                return "
+                <a href=/device-return-detail-view/".Crypt::encrypt($device_return->id)."/view class='btn btn-xs btn-success'><i class='glyphicon glyphicon-eye-open'></i> View </a>";
+            }
         })
         ->rawColumns(['link', 'action'])
         ->make();

@@ -264,4 +264,16 @@ class Vehicle extends Model
                   ->whereNotIn('gps_id',$device_returned_with_submitted_status)
                   ->get();
     }
+
+    public function checkVehicleIsNotReturnedOrReassigned($gps_id)
+    {
+      //check vehicle reassigned or returned
+      $is_vehicle_exists      =   self::select('id')
+                                        ->where('gps_id',$gps_id)
+                                        ->where(function ($query) {
+                                          $query->where('is_returned', '=', 0)
+                                          ->orWhere('is_returned', '=', NULL);
+                                          })->count();
+      return $is_vehicle_exists;
+    }
 }
