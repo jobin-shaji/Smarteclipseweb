@@ -54,7 +54,7 @@ td, th {
   </tbody>
 </table>
 @endif
-@if($sub_dealer_to_client_details != 0)
+@if(count($manufacturer_to_distributor_details) != 0 || count($distributor_to_dealer_details) != 0 || count($dealer_to_sub_dealer_details) || count($dealer_to_client_details) != 0 || count($sub_dealer_to_client_details) != 0)
 <br>
 <h2 style="margin-left:250px;">Report Details</h2>
 @endif

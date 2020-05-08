@@ -298,6 +298,7 @@ class DeviceReturnController extends Controller
 
                 //To update returned status in gps stock table
                 $gps_data_in_stock->is_returned      =    1;
+                $gps_data_in_stock->returned_on      =    date('Y-m-d H:i:s');
                 $gps_data_in_stock->save();
 
                 //To update returned status in vehicle table

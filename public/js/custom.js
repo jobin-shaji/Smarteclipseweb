@@ -380,7 +380,10 @@ function backgroundPostData(url, data, callBack, options) {
 
                     dealerGpsUser(res);
                 }
+                else if(callBack =='returnedGpsManufacturedChart'){
 
+                    returnedGpsManufacturedChart(res);
+                }
                 else if(callBack =='subDealerGpsSale'){
 
                     subDealerGpsSale(res);
