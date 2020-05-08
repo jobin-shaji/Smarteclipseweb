@@ -228,7 +228,7 @@ $(function () {
     });
     $( ".device_report" ).datetimepicker({
         format: 'DD-MM-YYYY',
-        minDate: '2019-10-01',
+        minDate: '2019-01-01',
         maxDate: 'now',
         useCurrent: false
     });
