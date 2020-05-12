@@ -15,7 +15,7 @@ function DateCheck()
     var to_month        =   to_d.getMonth()+1;
     var to_year         =   to_d.getFullYear();
     to_date             =   to_year+""+to_month+""+to_day;
-    if(from_date > to_date)
+    if(parseInt(from_date) > parseInt(to_date))
     {
         document.getElementById('from_date').value  =   "";
         document.getElementById('to_date').value    =   "";

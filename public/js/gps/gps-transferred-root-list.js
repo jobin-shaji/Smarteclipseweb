@@ -46,7 +46,7 @@ function getDeviceTransferList()
         var to_month        =   to_d.getMonth()+1;
         var to_year         =   to_d.getFullYear();
         var search_to_date  =   to_year+""+to_month+""+to_day;
-        if(search_from_date > search_to_date)
+        if(parseInt(search_from_date) > parseInt(search_to_date))
         {
             document.getElementById('transfer_type').value  =   "";
             document.getElementById('from_id').value        =   "";
