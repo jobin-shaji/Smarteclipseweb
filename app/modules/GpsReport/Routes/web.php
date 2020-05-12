@@ -15,4 +15,6 @@ Route::group(['middleware' => ['web','auth','role:root|dealer|sub_dealer|trader'
 
     //GPS STOCK REPORT
     Route::get('/gps-stock-report','GpsReportController@gpsStockReport')->name('gps-stock-report');
+    Route::get('/gps-stock-report-downloads','GpsReportController@gpsStockReport')->name('gps-stock-report-downloads');
+
 });
