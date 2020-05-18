@@ -35,7 +35,7 @@ class SubDealer extends Model
 
   public function getDealersOfDistributers($distributor_ids)
 	{
-		return self::select('id','user_id')->whereIn('dealer_id',$distributor_ids)->withTrashed()->get();
+		return self::select('id','user_id','name','dealer_id')->whereIn('dealer_id',$distributor_ids)->with('dealer')->withTrashed()->get();
   }
 
   public function checkUserIdIsInDealerTable($user_id)
@@ -45,7 +45,7 @@ class SubDealer extends Model
   
   public function getDealerDetails($dealer_id)
 	{
-		return self::select('id','name')->where('id',$dealer_id)->first();
+		return self::select('id','name','dealer_id')->where('id',$dealer_id)->with('dealer')->first();
 	}
   
 }
