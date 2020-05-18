@@ -65,7 +65,8 @@ class VltData extends Model
     public function getProcessedVltData($imei,$date=null)
     {
         $table = "vlt_data_".date('Ymd');
-        $query  =   DB::table($table);
+        
+        $query  =   DB::table($table)
                         ->select('id','imei','vltdata','created_at')
                         ->where('is_processed', '1')
                         ->orderBy('created_at','DESC');
