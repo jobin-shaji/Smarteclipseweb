@@ -17,7 +17,9 @@ class VltData extends Model
      */
     public function getUnprocessedVltData($imei, $header, $search_key)
     {
-        $query  =   DB::table('vlt_data')
+        $table = "vlt_data_".date('Ymd');
+
+        $query  =   DB::table($table)
                         // ->where('is_processed', '0')
                         ->select('vltdata','created_at')
                         ->orderBy('created_at','DESC');
@@ -38,7 +40,9 @@ class VltData extends Model
 
     public function getUnprocessedData($imei,$date=null)
     {
-        $query  =   DB::table('vlt_data')
+        $table = "vlt_data_".date('Ymd');
+
+        $query  =   DB::table($table)
                         ->select('id','imei','vltdata','created_at')
                         ->where('is_processed', '0')
                         ->orderBy('created_at','DESC');
@@ -60,7 +64,8 @@ class VltData extends Model
      */
     public function getProcessedVltData($imei,$date=null)
     {
-        $query  =   DB::table('vlt_data')
+        $table = "vlt_data_".date('Ymd');
+        $query  =   DB::table($table);
                         ->select('id','imei','vltdata','created_at')
                         ->where('is_processed', '1')
                         ->orderBy('created_at','DESC');
@@ -81,7 +86,9 @@ class VltData extends Model
      */
     public function getProcessedVltDataDownload($imei,$date=null)
     {
-        $query  =   DB::table('vlt_data')
+        $table = "vlt_data_".date('Ymd');
+
+        $query  =   DB::table($table)
                         ->select('id','imei','vltdata','created_at')
                         ->where('is_processed', '1')
                         ->orderBy('created_at','DESC');
@@ -98,7 +105,9 @@ class VltData extends Model
 
     public function getUnprocessedVltDataDownload($imei,$date=null)
     {
-        $query  =   DB::table('vlt_data')
+        $table = "vlt_data_".date('Ymd');
+
+        $query  =   DB::table($table)
                         ->select('id','imei','vltdata','created_at')
                         ->where('is_processed', '0')
                         ->orderBy('created_at','DESC');
