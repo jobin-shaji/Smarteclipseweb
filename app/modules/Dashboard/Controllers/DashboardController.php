@@ -631,18 +631,21 @@ class DashboardController extends Controller
         return $address;
     }
 
-    public function getLocation(Request $request)
-    {
-        $gps_data=GpsData::select([
-            'latitude as latitude',
-            'longitude as longitude'
-        ])
-        ->where('vehicle_id',$request->id)
-        ->orderBy('id','desc')
-        ->get();
-        return response()->json($gps_data);
-    }
-
+    // hide for remove 
+    // 2020-05-18
+    // public function getLocation(Request $request)
+    // {
+    //     $gps_data=GpsData::select([
+    //         'latitude as latitude',
+    //         'longitude as longitude'
+    //     ])
+    //     ->where('vehicle_id',$request->id)
+    //     ->orderBy('id','desc')
+    //     ->get();
+    //     return response()->json($gps_data);
+    // }
+    // hide for remove 
+    // 2020-05-18
     public function vehicleDetails(Request $request)
     {
         $user = $request->user();
