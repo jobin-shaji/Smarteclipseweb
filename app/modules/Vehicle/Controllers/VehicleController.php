@@ -1495,6 +1495,9 @@ class VehicleController extends Controller
         return view('Vehicle::invoice',['vehicles'=>$vehicles] );
     }
 
+    /*
+    #HIDE
+
     public function export(Request $request){
         $from = $request->fromDate;
         $to = $request->toDate;
@@ -1573,6 +1576,8 @@ class VehicleController extends Controller
         $pdf = PDF::loadView('Vehicle::invoice-pdf-download',['vehicle_invoices'=> $vehicle_invoice]);
         return $pdf->download('Invoice.pdf');
     }
+
+    */
 
     // public function locationPlayback(Request $request){
     //     $gpsdata=GpsData::Select(
@@ -1861,8 +1866,8 @@ class VehicleController extends Controller
    }
 
     public function playBackForMark_Route($vehicleID,$fromDate,$toDate){
-        $playBackDataList=array();
-        $playback = array();
+        $playBackDataList  = array();
+        $playback          = array();
         $gpsdata=GpsData::Select(
             'latitude as lat',
             'longitude as lng',
