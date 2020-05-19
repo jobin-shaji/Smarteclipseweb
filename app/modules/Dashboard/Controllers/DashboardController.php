@@ -76,9 +76,9 @@ class DashboardController extends Controller
     }
     function clientDashboardIndex()
     {
-        $client_id=\Auth::user()->client->id;
-        $alerts =  $this->getAlerts($client_id);
-        $gps_stocks = GpsStock::select('id','gps_id','client_id')->where('client_id',$client_id)->get();
+        $client_id           =  \Auth::user()->client->id;
+        $alerts              =  $this->getAlerts($client_id);
+        $gps_stocks          =  GpsStock::select('id','gps_id','client_id')->where('client_id',$client_id)->get();
         $single_gps_in_stocks=[];
         foreach ($gps_stocks as $gps) {
             $single_gps_in_stocks[]=$gps->gps_id;
@@ -171,11 +171,11 @@ class DashboardController extends Controller
     }
     public function dashCount(Request $request)
     {
-        $user = $request->user();
-        $dealers=Dealer::where('user_id',$user->id)->first();
-        $subdealers=SubDealer::where('user_id',$user->id)->first();
-        $client=Client::where('user_id',$user->id)->first();
-        $oneMinut_currentDateTime=date('Y-m-d H:i:s',strtotime("".Config::get('eclipse.offline_time').""));
+        $user                       = $request->user();
+        $dealers                    = Dealer::where('user_id',$user->id)->first();
+        $subdealers                 = SubDealer::where('user_id',$user->id)->first();
+        $client                     = Client::where('user_id',$user->id)->first();
+        $oneMinut_currentDateTime   = date('Y-m-d H:i:s',strtotime("".Config::get('eclipse.offline_time').""));
         if($user->hasRole('root')){
             return $this->rootDashboardView();
         }
@@ -207,15 +207,12 @@ class DashboardController extends Controller
             ]);
         }else if($user->hasRole('operations')){
             return response()->json([
-                'gps' => Gps::select('id')->count(),
-                'gps_stock' => GpsStock::select('id')->count(),
-                'gps_to_verify' => Gps::select('id')->count()-GpsStock::select('id')->count(),
-
-                'gps_today' => Gps::select('manufacturing_date')->WhereDate('manufacturing_date',date("Y-m-d"))->count(),
+                'gps'               => Gps::select('id')->count(),
+                'gps_stock'         => GpsStock::select('id')->count(),
+                'gps_to_verify'     => Gps::select('id')->count()-GpsStock::select('id')->count(),
+                'gps_today'         => Gps::select('manufacturing_date')->WhereDate('manufacturing_date',date("Y-m-d"))->count(),
                 // 'gps_add_to_stock' => GpsStock::WhereDate('created_at',date("Y-m-d"))->count(),
-
-
-                'status' => 'dbcount'
+                'status'            => 'dbcount'
             ]);
         }
     }
@@ -840,6 +837,10 @@ class DashboardController extends Controller
                 'mode',
                 'device_time'
             )
+            ->where(function ($query) {
+                    $query->where('is_returned', '=', 0)
+                    ->orWhere('is_returned', '=', NULL);
+                    })
             ->whereNotNull('mode')
             ->whereNotNull('lat')
             ->whereNotNull('lon')
@@ -870,7 +871,11 @@ class DashboardController extends Controller
         $clients_gps=Client:: select('id')->where('id',$client_id)
                                     ->with(['vehicles'=>function($vehicle)
                                      {$vehicle->with(['gps'=>function($item){
-                                      $item->where('status',1);
+                                      $item->where('status',1)
+                                           ->where(function ($query) {
+                                                $query->where('is_returned', '=', 0)
+                                                ->orWhere('is_returned', '=', NULL);
+                                            });
                                      }]);
                                     }])->get();
         foreach ($clients_gps as $item)
@@ -985,6 +990,7 @@ class DashboardController extends Controller
     }
     public function vehicleMode(Request $request)
     {
+
         $vehicle_mode=$request->vehicle_mode;
         $user = $request->user();
         $oneMinute_currentDateTime=date('Y-m-d H:i:s',strtotime("".Config::get('eclipse.offline_time').""));
@@ -1004,6 +1010,10 @@ class DashboardController extends Controller
                     'mode',
                     'device_time'
                   )
+                ->where(function ($query) {
+                                                $query->where('is_returned', '=', 0)
+                                                ->orWhere('is_returned', '=', NULL);
+                                                })
                 ->with('vehicle:gps_id,id,name,register_number')
                 ->where('device_time','<',$oneMinute_currentDateTime)
                 ->whereIn('id',$gps_id)
@@ -1024,6 +1034,10 @@ class DashboardController extends Controller
                     'mode',
                     'device_time'
                 )
+                ->where(function ($query) {
+                                                $query->where('is_returned', '=', 0)
+                                                ->orWhere('is_returned', '=', NULL);
+                                                })
                 ->with('vehicle:gps_id,id,name,register_number')
                 ->where('device_time','>=',$oneMinute_currentDateTime)
                 ->where('mode',$vehicle_mode)
@@ -1049,6 +1063,10 @@ class DashboardController extends Controller
                     'mode',
                     'device_time'
                   )
+                ->where(function ($query) {
+                                                $query->where('is_returned', '=', 0)
+                                                ->orWhere('is_returned', '=', NULL);
+                                                })
                 ->where('device_time','<',$oneMinute_currentDateTime)
                 ->whereNotNull('lat')
                 ->whereNotNull('lon')
@@ -1066,6 +1084,10 @@ class DashboardController extends Controller
                     'mode',
                     'device_time'
                 )
+                ->where(function ($query) {
+                                                $query->where('is_returned', '=', 0)
+                                                ->orWhere('is_returned', '=', NULL);
+                                                })
                 ->where('mode',$vehicle_mode)
                 ->where('device_time','>=',$oneMinute_currentDateTime)
                 ->whereNotNull('lat')
@@ -1106,6 +1128,10 @@ class DashboardController extends Controller
         ->groupBy("gps.id")
         ->having('distance','<=',$radius)
         ->with('vehicle:gps_id,id,name,register_number')
+        ->where(function ($query) {
+                $query->where('is_returned', '=', 0)
+                ->orWhere('is_returned', '=', NULL);
+                })
         ->whereIn('id',$gps_id)
         ->get();
         $response_track_data=$this->vehicleDataList($vehicle_by_search);
@@ -1369,35 +1395,50 @@ class DashboardController extends Controller
     }
 
 
-    public function vehicleRunningStatus($client_id){
+    public function vehicleRunningStatus($client_id)
+    {
         $date_before_eleven_minutes = date('Y-m-d H:i:s',strtotime("".Config::get('eclipse.offline_time').""));
-        $sleep=0;
-        $online=0;
-        $halt=0;
-        $offline=0;
-        $count=0;
-        $clients_gps=Client::where('id',$client_id)->with(['vehicles'=>function($vehicle)
-          {$vehicle->with(['gps'=>function($item){
-                          $item->where('status',1);
-                         }]);
-          }])->get();
+        $sleep              = 0;
+        $online             = 0;
+        $halt               = 0;
+        $offline            = 0;
+        $count              = 0;
+        $clients_gps        = Client::where('id',$client_id)
+                              ->with(['vehicles'=>function($vehicle)
+                                    {
+
+                                        $vehicle->with(['gps'=>function($item){
+                                        $item->where('status',1)
+                                             ->where(function ($query) {
+                                                $query->where('is_returned', '=', 0)
+                                                ->orWhere('is_returned', '=', NULL);
+                                                });
+                                    }]);
+                                }])->get();
+
         foreach ($clients_gps as $item)
         {
-            foreach($item->vehicles as $vehicle){
-                if($vehicle->gps && $vehicle->gps->lat != null){
+            foreach($item->vehicles as $vehicle)
+            {
+                if($vehicle->gps && $vehicle->gps->lat != null)
+                {
                     if($vehicle->gps->mode=="M"){
-                        if($vehicle->gps->device_time  >= $date_before_eleven_minutes){
+                        if($vehicle->gps->device_time  >= $date_before_eleven_minutes)
+                        {
                             $online=$online+1;
-                        }else{
+                        }else
+                        {
                             $offline=$offline+1;
                         }
-                    }else if($vehicle->gps->mode=="H"){
+                    }else if($vehicle->gps->mode=="H")
+                    {
                         if($vehicle->gps->device_time  >= $date_before_eleven_minutes){
                             $halt=$halt+1;
                         }else{
                             $offline=$offline+1;
                         }
-                    }else if($vehicle->gps->mode=="S"){
+                    }else if($vehicle->gps->mode=="S")
+                    {
                         if($vehicle->gps->device_time >= $date_before_eleven_minutes){
                             $sleep=$sleep+1;
                         }else{
@@ -1408,12 +1449,13 @@ class DashboardController extends Controller
                 }
             }
         }
-        $vehicle_status=["moving"=>$online,
-                          "idle"=>$halt,
-                          "stop"=>$sleep,
-                          "offline"=>$offline,
-                          "total_vehicles"=>$count,
-                          'status' => 'dbcount'
+  
+        $vehicle_status=["moving"           => $online,
+                          "idle"            => $halt,
+                          "stop"            => $sleep,
+                          "offline"         => $offline,
+                          "total_vehicles"  => $count,
+                          'status'          => 'dbcount'
                         ];
         return $vehicle_status;
     }

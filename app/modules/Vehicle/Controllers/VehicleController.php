@@ -1495,6 +1495,9 @@ class VehicleController extends Controller
         return view('Vehicle::invoice',['vehicles'=>$vehicles] );
     }
 
+    /*
+    #HIDE
+
     public function export(Request $request){
         $from = $request->fromDate;
         $to = $request->toDate;
@@ -1574,6 +1577,8 @@ class VehicleController extends Controller
         return $pdf->download('Invoice.pdf');
     }
 
+    */
+
     // public function locationPlayback(Request $request){
     //     $gpsdata=GpsData::Select(
     //         'latitude as lat',
@@ -1614,6 +1619,9 @@ class VehicleController extends Controller
     //     }
     //     return response()->json($response_data);
     // }
+
+    /*
+    #HIDE
 
 
     public function locationPlayback(Request $request){
@@ -1713,7 +1721,10 @@ class VehicleController extends Controller
 
     return response()->json($response_data);
 }
+*/
 
+    /*
+    #HIDE
 
     public function hmapLocationPlayback(Request $request)
     {
@@ -1818,6 +1829,7 @@ class VehicleController extends Controller
         }
         return response()->json($response_data);
     }
+    */
   public function playBackForLine($vehicleID,$fromDate,$toDate){
     $playBackDataList=array();
     $playback=array();
@@ -1861,8 +1873,8 @@ class VehicleController extends Controller
    }
 
     public function playBackForMark_Route($vehicleID,$fromDate,$toDate){
-        $playBackDataList=array();
-        $playback = array();
+        $playBackDataList  = array();
+        $playback          = array();
         $gpsdata=GpsData::Select(
             'latitude as lat',
             'longitude as lng',
@@ -2075,9 +2087,14 @@ class VehicleController extends Controller
 
 
     // --------------playback page-------------------------------------
+   /*
+   #HIDE
     public function playbackPage(){
        return view('Vehicle::vehicle-playback-window');
     }
+    */
+    /*
+   #HIDE
      public function playbackPageData(Request $request){
       $vehicle_id=$request->vehicle_id;
       $start_date=$request->start_date;
@@ -2118,6 +2135,7 @@ class VehicleController extends Controller
 
         return response()->json($response_data);
     }
+    */
 
     //////////////////////////////////////RULES/////////////////////////////
     // vehicle create rules
