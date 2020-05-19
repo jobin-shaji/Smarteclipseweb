@@ -1620,6 +1620,9 @@ class VehicleController extends Controller
     //     return response()->json($response_data);
     // }
 
+    /*
+    #HIDE
+
 
     public function locationPlayback(Request $request){
 
@@ -1718,7 +1721,10 @@ class VehicleController extends Controller
 
     return response()->json($response_data);
 }
+*/
 
+    /*
+    #HIDE
 
     public function hmapLocationPlayback(Request $request)
     {
@@ -1823,6 +1829,7 @@ class VehicleController extends Controller
         }
         return response()->json($response_data);
     }
+    */
   public function playBackForLine($vehicleID,$fromDate,$toDate){
     $playBackDataList=array();
     $playback=array();
@@ -2080,9 +2087,14 @@ class VehicleController extends Controller
 
 
     // --------------playback page-------------------------------------
+   /*
+   #HIDE
     public function playbackPage(){
        return view('Vehicle::vehicle-playback-window');
     }
+    */
+    /*
+   #HIDE
      public function playbackPageData(Request $request){
       $vehicle_id=$request->vehicle_id;
       $start_date=$request->start_date;
@@ -2123,6 +2135,7 @@ class VehicleController extends Controller
 
         return response()->json($response_data);
     }
+    */
 
     //////////////////////////////////////RULES/////////////////////////////
     // vehicle create rules
