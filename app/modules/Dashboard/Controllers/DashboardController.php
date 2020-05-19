@@ -837,7 +837,10 @@ class DashboardController extends Controller
                 'mode',
                 'device_time'
             )
-            ->whereNull('is_returned')
+            ->where(function ($query) {
+                    $query->where('is_returned', '=', 0)
+                    ->orWhere('is_returned', '=', NULL);
+                    })
             ->whereNotNull('mode')
             ->whereNotNull('lat')
             ->whereNotNull('lon')
@@ -869,7 +872,10 @@ class DashboardController extends Controller
                                     ->with(['vehicles'=>function($vehicle)
                                      {$vehicle->with(['gps'=>function($item){
                                       $item->where('status',1)
-                                            ->whereNull('is_returned');
+                                           ->where(function ($query) {
+                                                $query->where('is_returned', '=', 0)
+                                                ->orWhere('is_returned', '=', NULL);
+                                            });
                                      }]);
                                     }])->get();
         foreach ($clients_gps as $item)
@@ -1004,7 +1010,10 @@ class DashboardController extends Controller
                     'mode',
                     'device_time'
                   )
-                ->whereNull('is_returned')
+                ->where(function ($query) {
+                                                $query->where('is_returned', '=', 0)
+                                                ->orWhere('is_returned', '=', NULL);
+                                                })
                 ->with('vehicle:gps_id,id,name,register_number')
                 ->where('device_time','<',$oneMinute_currentDateTime)
                 ->whereIn('id',$gps_id)
@@ -1025,7 +1034,10 @@ class DashboardController extends Controller
                     'mode',
                     'device_time'
                 )
-                ->whereNull('is_returned')
+                ->where(function ($query) {
+                                                $query->where('is_returned', '=', 0)
+                                                ->orWhere('is_returned', '=', NULL);
+                                                })
                 ->with('vehicle:gps_id,id,name,register_number')
                 ->where('device_time','>=',$oneMinute_currentDateTime)
                 ->where('mode',$vehicle_mode)
@@ -1051,7 +1063,10 @@ class DashboardController extends Controller
                     'mode',
                     'device_time'
                   )
-                ->whereNull('is_returned')
+                ->where(function ($query) {
+                                                $query->where('is_returned', '=', 0)
+                                                ->orWhere('is_returned', '=', NULL);
+                                                })
                 ->where('device_time','<',$oneMinute_currentDateTime)
                 ->whereNotNull('lat')
                 ->whereNotNull('lon')
@@ -1069,7 +1084,10 @@ class DashboardController extends Controller
                     'mode',
                     'device_time'
                 )
-                ->whereNull('is_returned')
+                ->where(function ($query) {
+                                                $query->where('is_returned', '=', 0)
+                                                ->orWhere('is_returned', '=', NULL);
+                                                })
                 ->where('mode',$vehicle_mode)
                 ->where('device_time','>=',$oneMinute_currentDateTime)
                 ->whereNotNull('lat')
@@ -1110,7 +1128,10 @@ class DashboardController extends Controller
         ->groupBy("gps.id")
         ->having('distance','<=',$radius)
         ->with('vehicle:gps_id,id,name,register_number')
-        ->whereNull('is_returned')
+        ->where(function ($query) {
+                $query->where('is_returned', '=', 0)
+                ->orWhere('is_returned', '=', NULL);
+                })
         ->whereIn('id',$gps_id)
         ->get();
         $response_track_data=$this->vehicleDataList($vehicle_by_search);
@@ -1388,7 +1409,10 @@ class DashboardController extends Controller
 
                                         $vehicle->with(['gps'=>function($item){
                                         $item->where('status',1)
-                                             ->whereNull('is_returned');
+                                             ->where(function ($query) {
+                                                $query->where('is_returned', '=', 0)
+                                                ->orWhere('is_returned', '=', NULL);
+                                                });
                                     }]);
                                 }])->get();
 
