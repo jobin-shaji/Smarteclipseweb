@@ -106,11 +106,11 @@ $key        = (isset($_GET['new_service_search_key'])) ? $_GET['new_service_sear
                    <td>
                     @if ($servicer_job->status == 1)
                           @if(isset($servicer_job->start_code))
-                            StartCode:{{$servicer_job->start_code}}
+                            Start Code:{{$servicer_job->start_code}}
                           @endif
                       @elseif($servicer_job->status == 2)
                           @if(isset($servicer_job->completion_code))
-                            CompletionCode:{{$servicer_job->completion_code}}
+                            Completion Code:{{$servicer_job->completion_code}}
                           @endif
                       @elseif($servicer_job->status == 3)
                           {{$servicer_job->comment}}
