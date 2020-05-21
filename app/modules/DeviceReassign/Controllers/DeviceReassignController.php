@@ -226,8 +226,8 @@ class DeviceReassignController extends Controller
             if($reassign_type_id == 2)
             {
 
-                $client_transfer    =   GpsStock::select('client_id')->where('gps_id',$gps);
-                if($client_transfer == null)
+                $client_transfer    =   GpsStock::select('client_id')->where('gps_id',$gps)->first();
+                if($client_transfer->client_id == null)
                 {    
                     GpsStock::where('gps_id',$gps)->update(['trader_id' => null]);
                     $gps_transfer_log =  GpsTransfer::select('id') 
@@ -268,8 +268,8 @@ class DeviceReassignController extends Controller
             }
             elseif($reassign_type_id == 1)
             {
-                $trader_transfer    =   GpsStock::select('trader_id')->where('gps_id',$gps);
-                if($trader_transfer == null)
+                $trader_transfer    =   GpsStock::select('trader_id')->where('gps_id',$gps)->first();
+                if($trader_transfer->trader_id == null)
                 {
                     GpsStock::where('gps_id',$gps)->update(['subdealer_id' => null]);
                     $gps_transfer_log =  GpsTransfer::select('id') 
