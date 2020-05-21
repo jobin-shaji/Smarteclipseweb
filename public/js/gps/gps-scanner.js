@@ -59,6 +59,9 @@ scanner.addListener('scan', function (content) {
         var content = $('#scanner').val();
         if(content){
           if(confirm('Do you want to add this?')){
+            $('textarea[id="scanner"]').hide();
+            $("#add_qr_button").hide();
+            $("#reset_qr_button").hide();
             var content_length = content.length;
             if(content_length >= 170 && content_length <= 180)
             {
@@ -79,12 +82,20 @@ scanner.addListener('scan', function (content) {
                       $("#stock_add_transfer").empty();
                       var devices = res.devices;
                       var select = document.getElementById('stock_add_transfer');
+                      var option1 = document.createElement('option');
+                      option1.value = "";
+                      option1.innerHTML = "Select Device";
+                      select.appendChild(option1);
                       devices.forEach(device => {
                       var option = document.createElement('option');
                       option.value = device.gps.imei+device.gps.serial_no;
                       option.innerHTML = "IMEI:- "+device.gps.imei+" , Serial Number:- "+device.gps.serial_no;
                       select.appendChild(option);
-                      });
+                     });
+                      $('textarea[id="scanner"]').show();
+                      $("#add_qr_button").show();
+                      $("#reset_qr_button").show();
+                      $('textarea[id="scanner"]').val(null); 
                       var position = jQuery.inArray(res.gps_id, items);
                         if(position !='-1'){
                             toastr.info('Item Exists');
@@ -129,6 +140,13 @@ scanner.addListener('scan', function (content) {
             }else{
               alert('Invalid record! Please scan one item at a time');
             }
+          }
+          else
+          {
+            $("#stock_add_transfer").val("");
+            $("#add_qr_button").show();
+            $("#reset_qr_button").show();
+            $('textarea[id="scanner"]').val(null);
           }
         }else{
           alert('Please scan QR code ');
@@ -181,11 +199,15 @@ function deleteValueArray(gps_id)
         $("#stock_add_transfer").empty();
         var devices = res.devices;
         var select = document.getElementById('stock_add_transfer');
-        devices.forEach(device => {
         var option = document.createElement('option');
-        option.value = device.gps.imei+device.gps.serial_no;
-        option.innerHTML = "IMEI:- "+device.gps.imei+" , Serial Number:- "+device.gps.serial_no;
+        option.value = "";
+        option.innerHTML = "Select Device";
         select.appendChild(option);
+        devices.forEach(device => {
+        var option1 = document.createElement('option');
+        option1.value = device.gps.imei+device.gps.serial_no;
+        option1.innerHTML = "IMEI:- "+device.gps.imei+" , Serial Number:- "+device.gps.serial_no;
+        select.appendChild(option1);
         });
       } 
     });
