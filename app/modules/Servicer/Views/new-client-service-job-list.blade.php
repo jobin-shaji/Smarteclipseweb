@@ -67,22 +67,15 @@ $key        = (isset($_GET['new_service_search_key'])) ? $_GET['new_service_sear
                 <th><b>Location<b></th>
                 <th><b>Job Date<b></th>
                 <th><b>Status<b></th>  
-                <th><b>Action</b></th>  
+                <th><b>Comments/Action code</b></th>  
                  </tr>
                 </thead>
                      <tbody>                        
-                              @if($servicer_jobs->count() == 0)
-                                    <tr>
-                                      <td></td>
-                                      <td></td>
-                                      <td><b style="float: right;margin-right: -13px">No data</b></td>
-                                      <td><b style="float: left;margin-left: -15px">Available</b></td>
-                                      <td></td>
-                                      <td></td>
-                                      <td></td>
-                                      <td></td>
-                                       </tr>
-                                    @endif
+                      @if($servicer_jobs->count() == 0)
+                        <tr>
+                          <td colspan="9"><b>No Data Available</b></td>
+                        </tr>
+                      @endif
                               
               @foreach($servicer_jobs  as $key => $servicer_job)
                 <tr>
@@ -108,16 +101,23 @@ $key        = (isset($_GET['new_service_search_key'])) ? $_GET['new_service_sear
                     <td>Completed</td>
                     @endif
 
-                    @if ($servicer_job->status == 1)
+                    
                         
-                   <td>JobCode:{{$servicer_job->job_id}} @if(isset($servicer_job->start_code))
-                    StartCode:{{$servicer_job->start_code}}@endif</td>
-                   @elseif($servicer_job->status == 2)
-                    <td>JobCode:{{$servicer_job->job_id}} @if(isset($servicer_job->completion_code))
-                    CompletionCode:{{$servicer_job->completion_code}}@endif</td>
-                    @elseif($servicer_job->status == 3)
-                      <td>{{$servicer_job->comment}}</td>
-                    @endif
+                   <td>
+                    @if ($servicer_job->status == 1)
+                        @if(isset($servicer_job->start_code))
+                          StartCode:{{$servicer_job->start_code}}
+                        @endif
+                      @elseif($servicer_job->status == 2)
+                          @if(isset($servicer_job->completion_code))
+                            CompletionCode:{{$servicer_job->completion_code}}
+                          @endif
+                      @elseif($servicer_job->status == 3)
+                          {{$servicer_job->comment}}
+                      @else
+                          -
+                      @endif
+                  </td> 
                 </tr>
                 @endforeach
             </tbody>
