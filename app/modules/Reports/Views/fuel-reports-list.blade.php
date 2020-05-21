@@ -43,7 +43,7 @@
             <div class="icon">
               <i class="fa fa-tablet"></i>
             </div>
-            <a href="" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="/vehicle-fuel-report" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>      
       </div>
