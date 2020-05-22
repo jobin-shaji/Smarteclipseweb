@@ -154,6 +154,10 @@ scanner.addListener('scan', function (content) {
                   }
               });
             }else{
+              $('textarea[id="scanner"]').show();
+              $("#add_qr_button").show();
+              $("#reset_qr_button").show();
+              $('textarea[id="scanner"]').val(null);
               alert('Invalid record! Please scan one item at a time');
             }
           }
