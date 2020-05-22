@@ -68,7 +68,7 @@
                      {{'Closed'}}
                   @endif
                 </li>
-                @role('root|sub_dealer')
+                @role('root|sub_dealer|trader')
                 <li class="list-group-item">
                   <b>Assigned To:</b> 
                   @if($complaint->status==null||$complaint->status==0)
