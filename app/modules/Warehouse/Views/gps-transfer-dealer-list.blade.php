@@ -33,7 +33,7 @@
                         <label> From Date</label>
                          <div class="input-group date datepicker">
                         <input type="text" class="form-control datepicker" id="fromDate" name="fromDate" onkeydown="return false" autocomplete="off"  required>
-                        <span class="input-group-addon" style="z-index: 99;">
+                        <span class="input-group-addon" style="z-index: auto;">
                           <span class="calendern"  style=""><i class="fa fa-calendar"></i></span>
                         </span>
                       </div>
@@ -44,7 +44,7 @@
                         <label> To Date</label>
                         <div class="input-group date datepicker">
                         <input type="text" class="form-control datepicker" id="toDate" name="toDate" onkeydown="return false" autocomplete="off" required>
-                        <span class="input-group-addon" style="z-index: 99;">                 
+                        <span class="input-group-addon" style="z-index: auto;">                 
                           <span class="calendern"  style=""><i class="fa fa-calendar"></i></span>
                         </span>
                       </div>
