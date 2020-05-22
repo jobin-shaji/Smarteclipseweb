@@ -127,12 +127,28 @@ scanner.addListener('scan', function (content) {
                             toastr.success('Scanned Successfully');
                         }
                     }else if(res.status == 0){
+                      $('textarea[id="scanner"]').show();
+                      $("#add_qr_button").show();
+                      $("#reset_qr_button").show();
+                      $('textarea[id="scanner"]').val(null);
                       toastr.error('Could not find this device');
                     }else if(res.status == 2){
+                      $('textarea[id="scanner"]').show();
+                      $("#add_qr_button").show();
+                      $("#reset_qr_button").show();
+                      $('textarea[id="scanner"]').val(null);
                       toastr.error('Device not found in stock');
                     }else if(res.status == 3){
+                      $('textarea[id="scanner"]').show();
+                      $("#add_qr_button").show();
+                      $("#reset_qr_button").show();
+                      $('textarea[id="scanner"]').val(null);
                       toastr.error('Device already transferred');
                     }else if(res.status == 4){
+                      $('textarea[id="scanner"]').show();
+                      $("#add_qr_button").show();
+                      $("#reset_qr_button").show();
+                      $('textarea[id="scanner"]').val(null);
                       toastr.error('Please accept this device for transaction');
                     }
                   }
