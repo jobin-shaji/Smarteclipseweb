@@ -38,22 +38,26 @@ function getDriverFuelDetails()
     if(driver_id.length == 0)
     {
         $("#driver").siblings('.error').remove();
-        $("#driver").after("<span class='error text-danger'>Please Select Driver</span>")
+        // $("#driver").after("<span class='error text-danger'>Please Select Driver</span>");
+        $("#driver_span").text("Please Select Driver");
         hasError        =   true;
     }
     else
     {
         $("#driver").siblings('.error').remove();
+        $("#driver_span").text("");
     } 
      if(vehicle_id.length == 0)
     {
-        $("#driver").siblings('.error').remove();
-        $("#driver").after("<span class='error text-danger'>Please Select Vehicle</span>")
+        $("#vehicle").siblings('.error').remove();
+        // $("#vehicle").after("<span class='error text-danger'>Please Select Vehicle</span>");
+        $("#vehicle_span").text("Please Select Vehicle");
         hasError        =   true;
     }
     else
     {
-        $("#driver").siblings('.error').remove();
+        $("#vehicle").siblings('.error').remove();
+        $("#vehicle_span").text("");
     } 
    
     
@@ -61,9 +65,13 @@ function getDriverFuelDetails()
     if(date == '')
     {
         $("#date").siblings('.error').remove();
-        $("#date").after("<span class='error text-danger'>Please Select Month From Calender</span>")
+        $("#date").after("<span class='error text-danger'>Please Select Date From Calendar</span>")
         hasError    =   true;
     }
+    else
+    {
+        $("#date").siblings('.error').remove();
+    } 
     
     if(hasError == false)
     {

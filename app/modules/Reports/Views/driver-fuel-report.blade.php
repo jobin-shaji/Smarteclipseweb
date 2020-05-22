@@ -27,6 +27,7 @@
                       <option value="{{$driver->id}}">{{$driver->name}}</option>
                       @endforeach
                     </select>
+                    <span class="text-danger" id="driver_span"></span>
                   </div>
                 </div>
                 <div class="col-lg-3 col-md-3">
@@ -34,8 +35,8 @@
                     <label>Vehicle</label>
                     <select class="form-control select2" data-live-search="true" title="Select vehicle" id="vehicle" name="vehicle">
                       <option value=''>Select Driver first</option>
-                      
                     </select>
+                    <span class="text-danger" id="vehicle_span"></span>
                   </div>
                 </div>
                 <div class="col-lg-3 col-md-3" id="single_date">

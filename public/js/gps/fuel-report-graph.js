@@ -28,8 +28,11 @@ function getFuelGraphDetails()
         if(date == '')
         {
             $("#date").siblings('.error').remove();
-            $("#date").after("<span class='error text-danger'>Please Select Month From Calender</span>")
+            $("#date").after("<span class='error text-danger'>Please Select Date From Calendar</span>")
             hasError    =   true;
+        }
+        else{
+            $("#date").siblings('.error').remove();
         }
     }
     else if(report_type == 2)
@@ -39,8 +42,11 @@ function getFuelGraphDetails()
         if(date == '')
         {
             $("#month").siblings('.error').remove();
-            $("#month").after("<span class='error text-danger'>Please Select  Calender</span>")
+            $("#month").after("<span class='error text-danger'>Please Select  Month From Calendar</span>")
             hasError    =   true;
+        }
+        else{
+            $("#month").siblings('.error').remove();
         }
     }
 
