@@ -51,7 +51,7 @@ Create Device Reassign
                   <div class="table-responsive ">
                     <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
                       <div class="row">
-                        <div class="col-sm-12" style="overflow: scroll">
+                        <div class="col-sm-12">
                           <table class="table table-hover table-bordered  table-striped" style="width:100%!important;text-align: center" id="preview_table">
                             <thead>
                               <tr>

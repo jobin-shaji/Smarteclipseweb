@@ -28,6 +28,7 @@ class FuelReportController extends Controller
     {
         $vehicle_id                     =   $request->vehicle_id;
         $report_type                    =   $request->report_type;
+        $single_vehicle_gps_ids         =   [];
         if($report_type==1)
         {
             $date                       =   date('Y-m-d',strtotime($request->date));
@@ -80,6 +81,7 @@ class FuelReportController extends Controller
 
         $vehicle_id                     =   $request->vehicle_id;
         $report_type                    =   $request->report_type;
+        $single_vehicle_gps_ids         =   [];
         if($report_type==1)
         {
             $date                       =   date('Y-m-d',strtotime($request->date));

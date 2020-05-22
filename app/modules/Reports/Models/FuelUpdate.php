@@ -20,7 +20,7 @@ class FuelUpdate extends Model
          return $this->hasMany('App\Modules\Vehicle\Models\KmUpdate','gps_id','gps_id');
       // ->whereIn('alert_type_id',[1,12,13,14,15,16]);
     }
-    public function getFuelDetailsForReport($gps_ids,$date)
+    public function getFuelDetailsForReport($gps_ids)
     {
         return self::select(
             'id',

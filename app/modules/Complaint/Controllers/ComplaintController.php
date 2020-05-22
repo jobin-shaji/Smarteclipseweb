@@ -598,7 +598,7 @@ class ComplaintController extends Controller {
         ->with('ticket:id,code')
         ->with('client:id,name,sub_dealer_id')
         ->with('servicer:id,name')
-         ->with('assignedBy:id,username')
+        ->with('assignedBy:id,username')
         ->with('complaintType:id,name')
         ->where('status',2);
         if(\Auth::user()->hasRole('servicer'))
@@ -606,10 +606,10 @@ class ComplaintController extends Controller {
             $servicer_id=\Auth::user()->servicer->id;
             $complaints=$complaints->where('servicer_id',$servicer_id);
         }
-        else if(\Auth::user()->hasRole('sub_dealer|root'))
+        else if(\Auth::user()->hasRole('sub_dealer|trader|root'))
         {
-            $sub_dealer_id=\Auth::user()->id;
-            $complaints=$complaints->where('assigned_by',$sub_dealer_id);
+            $logged_user_id=\Auth::user()->id;
+            $complaints=$complaints->where('assigned_by',$logged_user_id);
         }
         $complaints=$complaints->get();
         return DataTables::of($complaints)

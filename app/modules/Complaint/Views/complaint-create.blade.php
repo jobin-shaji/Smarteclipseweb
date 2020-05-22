@@ -43,18 +43,18 @@
                     @endif
                   </div>
                   <div class="form-group has-feedback form-group-1 ">
-                  <label class="srequired">Complaint Reason</label>
-                  <select class="form-control" placeholder="Complaint" name="complaint_type_id" id="complaint_type_id" required>
-                    <option >Select  a Complaint Type</option>
-                  </select>
-                </div>
-                  
-                  <div class="form-group has-feedback form-group-1 mrg-rt-5">
                     <label class="srequired">Complaint Type</label>
                     <select class="form-control" name="complaint_category" id="complaint_category" required>
                     <option value="">Select Complaint Type</option>
                       <option value="0">Hardware</option>
                       <option value="1">Software</option>
+                    </select>
+                  </div>
+                  
+                  <div class="form-group has-feedback form-group-1 mrg-rt-5">
+                    <label class="srequired">Complaint Reason</label>
+                    <select class="form-control" placeholder="Complaint" name="complaint_type_id" id="complaint_type_id" required>
+                      <option >Select  a Complaint Type</option>
                     </select>
                   </div>     
                    <div class="form-group has-feedback form-group-1">
