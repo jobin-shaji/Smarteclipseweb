@@ -1481,6 +1481,7 @@ class WarehouseController extends Controller {
                         //update gps stock table
                         $gps = GpsStock::where('gps_id',$gps_id)->first();
                         $gps->dealer_id =0;
+                        $gps->device_to_transfer =0;
                         $gps->save();
                     }
                 }
@@ -1716,6 +1717,7 @@ class WarehouseController extends Controller {
                         //update gps stock table
                         $gps = GpsStock::where('gps_id',$gps_id)->first();
                         $gps->subdealer_id =0;
+                        $gps->device_to_transfer = 0;
                         $gps->save();
                     }
                 }
@@ -1970,6 +1972,7 @@ class WarehouseController extends Controller {
                         //update gps stock table
                         $gps = GpsStock::where('gps_id',$gps_id)->first();
                         $gps->trader_id =0;
+                        $gps->device_to_transfer =0;
                         $gps->save();
                     }
                 }
@@ -2220,6 +2223,7 @@ class WarehouseController extends Controller {
                         //update gps stock table
                         $gps = GpsStock::where('gps_id',$gps_id)->first();
                         $gps->client_id =$client_id;
+                        $gps->device_to_transfer =0;
                         $gps->save();
                     }
                 }
@@ -2450,6 +2454,7 @@ class WarehouseController extends Controller {
                         //update gps stock table
                         $gps = GpsStock::where('gps_id',$gps_id)->first();
                         $gps->client_id =$client_id;
+                        $gps->device_to_transfer =0;
                         $gps->save();
                     }
                 }
