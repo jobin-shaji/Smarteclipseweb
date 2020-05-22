@@ -99,10 +99,7 @@ $key        = (isset($_GET['new_service_search_key'])) ? $_GET['new_service_sear
                     <td>Pending</td>
                     @else
                     <td>Completed</td>
-                    @endif
-
-                    
-                        
+                    @endif       
                    <td>
                     @if ($servicer_job->status == 1)
                           @if(isset($servicer_job->start_code))
