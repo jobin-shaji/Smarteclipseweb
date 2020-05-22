@@ -10,10 +10,7 @@
               <h3 id="gps_manufactured">
                 <div class="loader"></div>
               </h3>
-              <p>fuel vs Datetime</p>
-            </div>
-            <div class="icon">
-              <i class="fa fa-tablet"></i>
+              <p>Fuel vs Date & Month</p>
             </div>
             <a href="/fuel-report" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
           </div>
@@ -26,9 +23,6 @@
               </h3>
               <p>Fuel vs Driver</p>
             </div>
-            <div class="icon">
-              <i class="fa fa-tablet"></i>
-            </div>
             <a href="/driver-fuel-report" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
@@ -38,10 +32,7 @@
               <h3 id="gps_manufactured">
                 <div class="loader"></div>
               </h3>
-              <p>fuel vs vehicle</p>
-            </div>
-            <div class="icon">
-              <i class="fa fa-tablet"></i>
+              <p>Fuel vs Vehicle</p>
             </div>
             <a href="/vehicle-fuel-report" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
           </div>

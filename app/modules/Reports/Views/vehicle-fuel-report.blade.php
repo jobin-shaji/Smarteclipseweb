@@ -27,6 +27,7 @@
                       <option value="{{$vehicle->id}}">{{$vehicle->name}}</option>
                       @endforeach
                     </select>
+                    <span class="text-danger" id="vehicle_span"></span>
                   </div>
                 </div>
                
