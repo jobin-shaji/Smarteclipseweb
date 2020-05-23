@@ -1196,7 +1196,6 @@ function downloadSosLabel(id){
 // code
 function jobtypeonchange(job_type)
 {
-     
     $('#client_section').hide();
     $('#location_section').hide();
     $('#gps_section').hide();
@@ -1208,11 +1207,11 @@ function jobtypeonchange(job_type)
     $('#vehicle_section').hide();
     $("#client").val("");
     $('#gps').find('option').remove();
-
     $('#vehicle').find('option').remove();
+    var default_client_id   =   $("#client_id").val();
     $.ajax({
         type:'POST',
-        url: "jobtype-enduser",
+        url: getUrl() + '/'+'jobtype-enduser',
         data: { job_type:job_type} ,
         async: true,
         headers: {
@@ -1231,17 +1230,24 @@ function jobtypeonchange(job_type)
             else
             {
                 for (var i = 0; i < res.length; i++) {
-                    var client='  <option value="'+res[i].id+'" selected="selected" >'+res[i].name+'</option>';
+                    if(default_client_id == res[i].id)
+                    {
+                        var default_client_id_in_array  =   "true";
+                    }
+                    var client='  <option value="'+res[i].id+'">'+res[i].name+'</option>';
                     $("#client").append(client);
                 }
-
+                
+                if(default_client_id_in_array == "true"){
+                    $("#client").select2().val(default_client_id).trigger("change");
+                    getClientServicerGps(default_client_id);
+                }
             }
         }
     });
 }
 
 function getClientServicerGps(client_id){
-    // console.log(client_id);
     $('#location_section').hide();
     $('#gps_section').hide();
     $('#description_section').hide();
@@ -1270,13 +1276,12 @@ function getClientServicerGps(client_id){
 
 function clientGps(res)
 {
-    var user_id = $("#user_id").val();   
-           // console.log(res);
     $('#location_section').show();
     $('#gps_section').show();
     $('#description_section').show();
     $('#date_section').show();
     $("#gps").empty(); 
+    $("#vehicle").empty(); 
     if(res.code == 1)
     {
         length=res.devices.length;
@@ -1292,15 +1297,12 @@ function clientGps(res)
                 $("#submit_section").prop('disabled', false); 
                 $("#submit_text").hide();
             }
-                 // $("#client_id").val(client);
-            
             $('#gps').append('<option value="">Select GPS</option>'); 
             for (var i = 0; i < length; i++) {
              var gps='  <option value="'+res.devices[i].id+'"  >'+res.devices[i].serial_no+'</option>';
              $("#gps").append(gps);
             }
-            
-              }
+        }
         $('#search_place').val(res.location);
         if( res.job_type == 3 )
         {
@@ -1342,9 +1344,7 @@ function clientGps(res)
             return this.defaultSelected;
         });
     }
-   
 }
-
 
 function getvehicleModel(res){
     if(res)

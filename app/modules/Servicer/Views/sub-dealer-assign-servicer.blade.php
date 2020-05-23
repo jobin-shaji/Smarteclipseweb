@@ -40,7 +40,7 @@
                       <label  for="fname" class="col-sm-3 text-right control-label col-form-label">Service Engineer</label> 
                       <div class="form-group has-feedback">
                        <select class="form-control selectpicker" data-live-search="true" title="Select Servicer" id="servicer" name="servicer" required>
-                          <option value="">Select Servicer</option>
+                          <option value="">Select Service Engineer</option>
                           @foreach ($servicers as $servicer)
                           <option value="{{$servicer->id}}">{{$servicer->name}}</option>
                           @endforeach  
@@ -58,7 +58,7 @@
                       <div class="form-group has-feedback">
 
                        <select class="form-control selectpicker" data-live-search="true" title="Select role" id="role" name="role" required>
-                         <option value="" disabled="disabled">select</option>
+                         <option value="" disabled="disabled">Select Plan</option>
                           <option value="1"  selected="selected">Freebies</option>
                           <option value="2">Fundamental</option>
                           <option value="3">Superior</option>
@@ -72,7 +72,7 @@
                       <div class="form-group has-feedback">
                         <select class="form-control selectpicker" data-live-search="true" title="Select Job Type" id="job_type" name="job_type" onchange="jobtypeonchange(this.value)" required>
                           <option value="" disabled>Select Job Type</option>
-                          <option value="1" selected="selected">Installation</option>
+                          <option value="1">Installation</option>
                           <option value="2">Service</option> 
                           <option value="3">Reinstallation</option>                         
                         </select>
@@ -87,7 +87,7 @@
                     <div class="form-group row" id='client_section' style="float:none!important;display:none;">
                       <label for="fname" class="col-sm-3 text-right control-label col-form-label">End User</label>
                       <div class="form-group has-feedback">
-                        <select class="form-control selectpicker" data-live-search="true" title="Select End User" id="client" name="client"  onclick="getClientServicerGps(this.value)" required>
+                        <select class="form-control selectpicker" data-live-search="true" title="Select End User" id="client" name="client" onchange="getClientServicerGps(this.value)" required>
                       <!--   <select class="form-control selectpicker" data-live-search="true" title="Select Client" id="client" name="client"> -->
                           <option value="" selected disabled>Select End User</option>
                           
@@ -123,7 +123,6 @@
                         <select class="form-control selectpicker" data-live-search="true" title="Select Gps" id="gps" name="gps" required>
                       <!--   <select class="form-control selectpicker" data-live-search="true" title="Select Client" id="client" name="client"> -->
                           <option value="">Select GPS</option>
-                         
                         </select>
                       </div>
                       @if ($errors->has('gps'))
@@ -193,41 +192,25 @@
 </div>
 <div class="clearfix"></div>
 @section('script')
-<script async defer
-   src="https://maps.googleapis.com/maps/api/js?key={{config('eclipse.keys.googleMap')}}&libraries=places&callback=initMap"></script>
-   <script type="text/javascript">
+<!-- <script async defer src="https://maps.googleapis.com/maps/api/js?key={{config('eclipse.keys.googleMap')}}&libraries=places&callback=initMap"></script>  -->
+   <!-- <script type="text/javascript">
 
   function checkForm(form)
   {
     form.submit_section.disabled = true;
     return true;
   }
-</script>
-   <script>
-    $(document).ready(function () {
-      var user_id = $("#user_id").val(); 
-
-      $("#servicer").val(localStorage.getItem(user_id+'.autofill.root.servicer')).trigger("change");
-      // $("#role").val(localStorage.getItem(user_id+'.autofill.root.role')).trigger("change");
-      // $("#job_type").val(localStorage.getItem(user_id+'.autofill.root.job_type')).trigger("change");
-      var job_type = $("#job_type").val(); 
-      
-      var client_id = $("#client_id").val(); 
-      getClientServicerGps(client_id);  
-      jobtypeonchange(job_type);
-    });
-    function initMap()
+</script> -->
+  <script>
+    $(document).ready(function () 
     {
-      // var input1 = document.getElementById('search_place');
-      //     autocomplete1 = new google.maps.places.Autocomplete(input1);
-      // var searchBox1 = new google.maps.places.SearchBox(autocomplete1);
-    }
-     $(function() { 
-        // disable create button
-        $("#submit_section").prop('disabled', true); 
-      });
-       // var user_id = document.getElementById('user_id'); 
-      var user_id = $("#user_id").val();   
+      // disable create button
+      $("#submit_section").prop('disabled', true); 
+      //for local storage
+      var user_id     =   $("#user_id").val(); 
+      $("#servicer").val(localStorage.getItem(user_id+'.autofill.root.servicer')).trigger("change");
+      $("#role").val(localStorage.getItem(user_id+'.autofill.root.role')).trigger("change");
+      $("#job_type").val(localStorage.getItem(user_id+'.autofill.root.job_type')).trigger("change");
       $("#servicer").change(function(){
         localStorage.setItem(user_id+'.autofill.root.servicer',$(this).val());
       });
@@ -236,7 +219,22 @@
       });
       $("#job_type").change(function(){
         localStorage.setItem(user_id+'.autofill.root.job_type',$(this).val());
-      }); 
-   </script>
+      });
+
+      // var job_type    =   $("#job_type").val(); 
+      // var client_id   =   $("#client_id").val(); 
+
+      // getClientServicerGps(client_id);  
+      // jobtypeonchange(job_type);
+    });
+    // function initMap()
+    // {
+      // var input1 = document.getElementById('search_place');
+      //     autocomplete1 = new google.maps.places.Autocomplete(input1);
+      // var searchBox1 = new google.maps.places.SearchBox(autocomplete1);
+    // }
+     
+       
+  </script>
 @endsection
 @endsection

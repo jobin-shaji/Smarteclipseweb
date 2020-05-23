@@ -233,16 +233,16 @@ class ServicerController extends Controller {
 
     public function assignServicer()
     {
-        $user_id=\Auth::user()->id;
-        $servicer = Servicer::select('id','name','type','status','user_id','deleted_by')
-        // ->where('user_id',$user_id)
-        ->where('status',0)
-        ->where('type',1)
-        ->get();
-        $cient = Client::select('id')
-        ->orderBy('id','desc')
-        ->first();
-        return view('Servicer::assign-servicer',['servicers'=>$servicer,'client_id'=>$cient->id]);
+        $user_id        =   \Auth::user()->id;
+        $servicers      =   Servicer::select('id','name','type','status','user_id','deleted_by')
+                            // ->where('user_id',$user_id)
+                            ->where('status',0)
+                            ->where('type',1)
+                            ->get();
+        $client         =   Client::select('id')
+                            ->orderBy('id','desc')
+                            ->first();
+        return view('Servicer::assign-servicer',['servicers'=>$servicers,'client_id'=>$client->id]);
     }
     public function saveAssignServicer(Request $request)
     {
@@ -420,6 +420,7 @@ class ServicerController extends Controller {
     }
     public function subDealerAssignServicer(Request $request)
     {
+        $end_user_id    =   ( isset($request->id) ) ? Crypt::decrypt($request->id) : null;
         if($request->user()->hasRole('sub_dealer')){
             $sub_dealer_id=\Auth::user()->subDealer->id;
             $servicer = Servicer::select('id','name','type','status','user_id','deleted_by','sub_dealer_id')
@@ -427,10 +428,15 @@ class ServicerController extends Controller {
             ->where('status',0)
             ->where('type',2)
             ->get();
-            $client = Client::select('id','sub_dealer_id')
-            ->orderBy('id','desc')
-            ->where('sub_dealer_id',$sub_dealer_id)
-            ->first();
+            if($end_user_id == null)
+            {
+                $client         =   Client::select('id','sub_dealer_id')
+                                    ->orderBy('id','desc')
+                                    ->where('sub_dealer_id',$sub_dealer_id)
+                                    ->first();
+                $end_user_id    =   $client->id;
+            }
+            
         }
         else{
             $trader_id=\Auth::user()->trader->id;
@@ -439,12 +445,16 @@ class ServicerController extends Controller {
             ->where('status',0)
             ->where('type',3)
             ->get();
-            $client = Client::select('id','trader_id')
-            ->where('trader_id',$trader_id)
-            ->orderBy('id','desc')
-            ->first();
+            if($end_user_id == null)
+            {
+                $client         =   Client::select('id','trader_id')
+                                    ->where('trader_id',$trader_id)
+                                    ->orderBy('id','desc')
+                                    ->first();
+                $end_user_id    =   $client->id;
+            }
         }
-        return view('Servicer::sub-dealer-assign-servicer',['servicers'=>$servicer,'client_id'=>$client->id]);
+        return view('Servicer::sub-dealer-assign-servicer',['servicers'=>$servicer,'client_id'=>$end_user_id]);
     }
 
     //get client based on job type
@@ -1965,21 +1975,7 @@ public function serviceJobDetails(Request $request)
             foreach($gps_stocks as $stock_gps){
                 $stock_gps_id[]     =   $stock_gps->gps_id;
             }
-            
-             $gps_transferItems     =   GpsTransferItems::select('id',
-                                                'gps_id'
-                                                
-                                            )
-                                         ->whereIn('gps_id',$stock_gps_id)
-                                            ->orderBy('id','desc')
-                                            ->groupBy('gps_id')
-                                            ->get();
 
-            $tansfer_items_gps_id   =   [];
-            foreach($gps_transferItems as $gps_transferItem){
-                $tansfer_items_gps_id[]     =   $gps_transferItem->gps_id;
-            }
-// dd($tansfer_items_gps_id);
             if($stock_gps_id)
             {
                 $vehicle_device     =   Vehicle::select(
@@ -1989,12 +1985,17 @@ public function serviceJobDetails(Request $request)
                                             'name'
                                         )
                                         ->where('client_id',$client_id)
+                                        ->where(function ($query) {
+                                            $query->where('is_returned', '=', 0)
+                                            ->orWhere('is_returned', '=', NULL);
+                                        })
                                         ->get();
-                $single_gps     =   [];
-                foreach($vehicle_device as $device){
-                    $single_gps[]   =   $device->gps_id;
+                $vehicle_gps        =   [];
+                foreach($vehicle_device as $device)
+                {
+                    $vehicle_gps[]  =   $device->gps_id;
                 }
-
+                
                 $servicer_jobs  =   ServicerJob::select(
                                         'gps_id',
                                         'servicer_id',
@@ -2007,28 +2008,22 @@ public function serviceJobDetails(Request $request)
                 foreach($servicer_jobs as $servicer_job){
                     $servicer_gps[]     =   $servicer_job->gps_id;
                 }
-                // dd($servicer_gps);
-                // $devices=Gps::select('id','imei','serial_no')
-                // ->whereIn('id',$stock_gps_id)
-                // ->whereNotIn('id',$single_gps)
-                // ->whereNotIn('id',$servicer_gps)
-                // ->get();
-
+                
                 $reinstallation_needed_vehicles =   [];
                 if($job_type == 1 )
                 {
-                    $devices=Gps::select('id','imei','serial_no')
-                                ->whereIn('id',$stock_gps_id)
-                                ->whereNotIn('id',$single_gps)
-                                ->whereNotIn('id',$servicer_gps)
-                                ->get();
+                    $devices    =   Gps::select('id','imei','serial_no')
+                                        ->whereIn('id',$stock_gps_id)
+                                        ->whereNotIn('id',$vehicle_gps)
+                                        ->whereNotIn('id',$servicer_gps)
+                                        ->get();
 
                 }
                 else if($job_type == 3 )
                 {
                     $devices    =   Gps::select('id','imei','serial_no')
                                         ->whereIn('id',$stock_gps_id)
-                                        ->whereNotIn('id',$single_gps)
+                                        ->whereNotIn('id',$vehicle_gps)
                                         ->whereNotIn('id',$servicer_gps)
                                         ->get();
                     $reinstallation_needed_vehicles    =   (new Vehicle())->getReinstallationNeededVehiclesBasedOnClient($client_id); 
@@ -2036,13 +2031,13 @@ public function serviceJobDetails(Request $request)
                 }
                 else if($job_type==2)
                 {
-                    $devices=Gps::select('id','imei','serial_no')
-                                ->whereIn('id',$tansfer_items_gps_id)
-                                ->whereIn('id',$single_gps)
-                                ->whereIn('id',$servicer_gps)
-                                ->get();
+                    $devices    =   Gps::select('id','imei','serial_no')
+                                        ->whereIn('id',$stock_gps_id)
+                                        ->whereIn('id',$vehicle_gps)
+                                        ->whereIn('id',$servicer_gps)
+                                        ->get();
                 }else{
-                 $devices=[];
+                    $devices    =   [];
                 }
                 // if($user->hasRole('sub_dealer')){
                 if($devices)
@@ -2087,6 +2082,168 @@ public function serviceJobDetails(Request $request)
         return response()->json($response_data);
 
     }
+
+
+
+//     public function clientGpsList(Request $request)   OLD  CODE
+//     {
+//         $user           =   $request->user();
+//         $client_id      =   $request->client_id;
+//         if($client_id != 0)
+//         {
+//             $job_type   =   $request->job_type;
+//             $client     =   (new Client())->getClientDetailsWithClientId($client_id);
+//             $latitude   =   $client->latitude;
+//             $longitude  =   $client->longitude;
+//             $address    =   $client->location;
+//             if(!empty($address))
+//             {
+//                 $location   =   $address;
+//             }
+//             else
+//             {
+//                 $location   =   "No Address Found";
+//             }
+
+//             $gps_stocks     =   GpsStock::select('id',
+//                                                 'gps_id',
+//                                                 'client_id'
+//                                             )
+//                                             ->where('client_id',$client_id)
+//                                             ->where(function ($query) {
+//                                                 $query->where('is_returned', '=', 0)
+//                                                 ->orWhere('is_returned', '=', NULL);
+//                                             })
+//                                             ->get();
+
+//             $stock_gps_id   =   [];
+//             foreach($gps_stocks as $stock_gps){
+//                 $stock_gps_id[]     =   $stock_gps->gps_id;
+//             }
+            
+//             //  $gps_transferItems     =   GpsTransferItems::select('id',
+//             //                                     'gps_id'
+                                                
+//             //                                 )
+//             //                              ->whereIn('gps_id',$stock_gps_id)
+//             //                                 ->orderBy('id','desc')
+//             //                                 ->groupBy('gps_id')
+//             //                                 ->get();
+
+//             // $tansfer_items_gps_id   =   [];
+//             // foreach($gps_transferItems as $gps_transferItem){
+//             //     $tansfer_items_gps_id[]     =   $gps_transferItem->gps_id;
+//             // }
+// // dd($tansfer_items_gps_id);
+//             if($stock_gps_id)
+//             {
+//                 $vehicle_device     =   Vehicle::select(
+//                                             'gps_id',
+//                                             'id',
+//                                             'register_number',
+//                                             'name'
+//                                         )
+//                                         ->where('client_id',$client_id)
+//                                         ->where(function ($query) {
+//                                             $query->where('is_returned', '=', 0)
+//                                             ->orWhere('is_returned', '=', NULL);
+//                                         })
+//                                         ->get();
+//                 $vehicle_gps     =   [];
+//                 foreach($vehicle_device as $device){
+//                     $vehicle_gps[]   =   $device->gps_id;
+//                 }
+
+//                 $servicer_jobs  =   ServicerJob::select(
+//                                         'gps_id',
+//                                         'servicer_id',
+//                                         'user_id',
+//                                         'client_id'
+//                                     )
+//                                     ->where('client_id',$client_id)
+//                                     ->get();
+//                 $servicer_gps   =   [];
+//                 foreach($servicer_jobs as $servicer_job){
+//                     $servicer_gps[]     =   $servicer_job->gps_id;
+//                 }
+//                 // dd($servicer_gps);
+//                 // $devices=Gps::select('id','imei','serial_no')
+//                 // ->whereIn('id',$stock_gps_id)
+//                 // ->whereNotIn('id',$single_gps)
+//                 // ->whereNotIn('id',$servicer_gps)
+//                 // ->get();
+
+//                 $reinstallation_needed_vehicles =   [];
+//                 if($job_type == 1 )
+//                 {
+//                     $devices=Gps::select('id','imei','serial_no')
+//                                 ->whereIn('id',$stock_gps_id)
+//                                 ->whereNotIn('id',$servicer_gps)
+//                                 ->get();
+
+//                 }
+//                 else if($job_type == 3 )
+//                 {
+//                     $devices    =   Gps::select('id','imei','serial_no')
+//                                         ->whereIn('id',$stock_gps_id)
+//                                         ->whereNotIn('id',$servicer_gps)
+//                                         ->get();
+//                     $reinstallation_needed_vehicles    =   (new Vehicle())->getReinstallationNeededVehiclesBasedOnClient($client_id); 
+
+//                 }
+//                 else if($job_type==2)
+//                 {
+//                     $devices=Gps::select('id','imei','serial_no')
+//                                 // ->whereIn('id',$tansfer_items_gps_id)
+//                                 ->whereIn('id',$vehicle_gps)
+//                                 ->get();
+//                 }else{
+//                  $devices=[];
+//                 }
+//                 // if($user->hasRole('sub_dealer')){
+//                 if($devices)
+//                 {
+//                     $response_data = array(
+//                         'status'    => 'client-gps',
+//                         'devices'   => $devices,
+//                         'location'  => $location,
+//                         'vehicles'  => $reinstallation_needed_vehicles,
+//                         'job_type'  => $job_type,
+//                         'code'      => 1
+//                     );
+//                 }
+//                 else{
+//                     $response_data = array(
+//                         'status'  => 'failed',
+//                         'message' => 'no devices are waiting for installation',
+//                         'location'  => $location,
+//                         'job_type'  => $job_type,
+//                         'code'    =>2
+//                     );
+//                 }
+//             }
+//             else
+//             {
+//                 $response_data = array(
+//                         'status'  => 'failed',
+//                         'message' => 'no gps transferred to this client',
+//                         'location'  => $location,
+//                         'job_type'  => $job_type,
+//                         'code'    =>2
+//                     );
+//             }
+//         }else
+//         {
+//             $response_data = array(
+//                         'status'  => 'failed',
+//                         'message' => 'failed',
+//                         'code'    =>0
+//                         );
+//         }
+//         return response()->json($response_data);
+
+//     }
+
     ##############################################
 
     public function servicerJobHistoryList()
