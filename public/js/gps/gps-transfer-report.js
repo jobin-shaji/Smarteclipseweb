@@ -3,19 +3,19 @@ function getUrl(){
 }
 function DateCheck()
 {
-    var from_date       =   document.getElementById('from_date').value;
-    var to_date         =   document.getElementById('to_date').value;
-    var from_d          =   new Date(from_date.split("-").reverse().join("-"));
+    var from_date_v       =   document.getElementById('from_date').value;
+    var to_date_v         =   document.getElementById('to_date').value;
+    var from_d          =   new Date(from_date_v.split("-").reverse().join("-"));
     var from_day        =   from_d.getDate();
     var from_month      =   from_d.getMonth()+1;
     var from_year       =   from_d.getFullYear();
     from_date           =   from_year+""+from_month+""+from_day;
-    var to_d            =   new Date(to_date.split("-").reverse().join("-"));
+    var to_d            =   new Date(to_date_v.split("-").reverse().join("-"));
     var to_day          =   to_d.getDate();
     var to_month        =   to_d.getMonth()+1;
     var to_year         =   to_d.getFullYear();
     to_date             =   to_year+""+to_month+""+to_day;
-    if(from_date > to_date)
+    if(from_date_v > to_date_v)
     {
         document.getElementById('from_date').value  =   "";
         document.getElementById('to_date').value    =   "";
