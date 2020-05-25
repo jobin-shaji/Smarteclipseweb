@@ -55,13 +55,13 @@ Create Device Reassign
                           <table class="table table-hover table-bordered  table-striped" style="width:100%!important;text-align: center" id="preview_table">
                             <thead>
                               <tr>
-                                <th>imei </th> 
+                                <th>IMEI</th> 
                                 <th>Serial No</th>
                                 <th>Manufacturer</th>
                                 <th>Distributor</th>
                                 <th>Dealer</th>
                                 <th>Sub Dealer</th>
-                                <th>Client</th>
+                                <th>End User</th>
                               </tr>
                             </thead>
                           <tbody>

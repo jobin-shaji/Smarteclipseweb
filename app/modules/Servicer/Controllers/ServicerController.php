@@ -401,6 +401,7 @@ class ServicerController extends Controller {
         ->with('gps:id,imei,serial_no')
         ->with('clients:id,name')
         ->with('servicer:id,name')
+        ->orderBy('job_date','desc')
         ->get();
         return DataTables::of($servicer_job)
         ->addIndexColumn()
