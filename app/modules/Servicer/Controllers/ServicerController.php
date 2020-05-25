@@ -9,6 +9,7 @@ use App\Modules\Gps\Models\Gps;
 use App\Modules\Gps\Models\GpsTransferItems;
 
 use App\Modules\Root\Models\Root;
+use App\Modules\Complaint\Models\Complaint;
 use App\Modules\Warehouse\Models\GpsStock;
 use App\Modules\Vehicle\Models\Vehicle;
 use App\Modules\Vehicle\Models\VehicleGps;
