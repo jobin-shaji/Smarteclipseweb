@@ -41,7 +41,7 @@ class Driver extends Model
         ->get();
     }
 
-    public function getDriverListBasedOnClient($client_id)
+    public function getDriverHasVehicleListBasedOnClient($client_id)
     {
       return self::select(
           'id',
