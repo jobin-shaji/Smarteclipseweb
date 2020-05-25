@@ -17,7 +17,7 @@ class Driver extends Model
 
   public function vehicle()
   {
-    return $this->belongsTo('App\Modules\Vehicle\Models\Vehicle');
+    return $this->hasMany('App\Modules\Vehicle\Models\Vehicle');
   }
 
 	public function validateDriver($driver_id)
