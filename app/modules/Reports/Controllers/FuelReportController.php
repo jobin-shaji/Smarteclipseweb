@@ -157,7 +157,7 @@ class FuelReportController extends Controller
     public function driverFuelReport()
     {
         $client_id                  =   \Auth::user()->client->id;
-        $client_drivers            =   (new Driver())->getDriverHasVehicleListBasedOnClient($client_id);
+        $client_drivers            =   (new Driver())->getDriverListBasedOnClient($client_id);
 
         return view('Reports::driver-fuel-report',['drivers' =>$client_drivers]);
     }
