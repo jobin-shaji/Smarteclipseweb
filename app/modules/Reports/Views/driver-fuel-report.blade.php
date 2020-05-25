@@ -24,9 +24,7 @@
                     <select class="form-control select2" data-live-search="true" title="Select driver" id="driver" name="driver">
                       <option value=''>Select Driver</option>
                       @foreach ($drivers as $driver)
-                        @if($driver->vehicle->count() > 0)
-                        <option value="{{$driver->id}}">{{$driver->name}}</option>
-                        @endif
+                      <option value="{{$driver->id}}">{{$driver->name}}</option>
                       @endforeach
                     </select>
                     <span class="text-danger" id="driver_span"></span>

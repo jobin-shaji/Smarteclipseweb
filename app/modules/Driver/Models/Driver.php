@@ -10,15 +10,9 @@ class Driver extends Model
 		'name','address','mobile','client_id','points','deleted_at'
 	];
 
-	public function alerts()
-  {
+	public function alerts(){
 		return $this->hasMany('App\Modules\Driver\Models\DriverBehaviour');
 	}
-
-  public function vehicle()
-  {
-    return $this->hasMany('App\Modules\Vehicle\Models\Vehicle');
-  }
 
 	public function validateDriver($driver_id)
 	{
@@ -26,22 +20,6 @@ class Driver extends Model
 	}
 
 	 public function getDriverListBasedOnClient($client_id)
-   {
-      return self::select(
-          'id',
-          'name',
-          'address',
-          'mobile',
-          'client_id',
-          'points',
-          'deleted_at'
-        )
-        ->withTrashed()
-        ->where('client_id',$client_id)
-        ->get();
-    }
-
-    public function getDriverHasVehicleListBasedOnClient($client_id)
     {
       return self::select(
           'id',
@@ -52,7 +30,6 @@ class Driver extends Model
           'points',
           'deleted_at'
         )
-        ->with('vehicle')
         ->withTrashed()
         ->where('client_id',$client_id)
         ->get();
