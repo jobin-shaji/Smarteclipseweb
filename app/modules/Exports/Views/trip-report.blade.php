@@ -86,7 +86,7 @@
     </tr>
     @endforeach
   </table>
-  Note: Note: Since running duration is calculated based on the vehicle movement, it can be less than or equal to trip duration.
+  Note: Since running duration is calculated based on the vehicle movement, it can be less than or equal to trip duration.
   <br>
   <?php
     if($gps->refurbished_status == 1)
