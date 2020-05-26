@@ -56,7 +56,7 @@ Alert Report
                                   <div class="form-group">                      
                                     <label> From Date</label>
                                     <input type="text" required class="@if(\Auth::user()->hasRole('fundamental'))datepickerFundamental @elseif(\Auth::user()->hasRole('superior')) datepickerSuperior @elseif(\Auth::user()->hasRole('pro')) datepickerPro @else datepickerFreebies @endif form-control"style="width: 100%"  id="fromDate" name="start_date" onkeydown="return false" value="@if(isset($alertReports)) {{$from}} @endif"  autocomplete="off"  required>
-                                    <span class="input-group-addon" style="z-index: 99;">
+                                    <span class="input-group-addon" style="z-index: auto;">
                                 <span class="calender1"  style=""><i class="fa fa-calendar"></i></span>
                             </span>
                                   </div>
@@ -65,7 +65,7 @@ Alert Report
                                   <div class="form-group">                     
                                     <label> To Date</label>
                                     <input type="text" required class="@if(\Auth::user()->hasRole('fundamental'))datepickerFundamental @elseif(\Auth::user()->hasRole('superior')) datepickerSuperior @elseif(\Auth::user()->hasRole('pro')) datepickerPro @else datepickerFreebies @endif form-control" style="width: 100%" id="toDate" name="end_date" onkeydown="return false"  value="@if(isset($alertReports)) {{$to}} @endif"  autocomplete="off" required>
-                                    <span class="input-group-addon" style="z-index: 99;">
+                                    <span class="input-group-addon" style="z-index: auto;">
                                         <span class="calender1"  style=""><i class="fa fa-calendar"></i></span>
                                     </span>
                                   </div>
