@@ -40,13 +40,15 @@ function getDeviceTransferList()
         var from_day        =   from_d.getDate();
         var from_month      =   from_d.getMonth()+1;
         var from_year       =   from_d.getFullYear();
-        var search_from_date=   from_year+""+from_month+""+from_day;
+        //var search_from_date=   from_year+""+from_month+""+from_day;
         var to_d            =   new Date(to_date.split("-").reverse().join("-"));
         var to_day          =   to_d.getDate();
         var to_month        =   to_d.getMonth()+1;
         var to_year         =   to_d.getFullYear();
-        var search_to_date  =   to_year+""+to_month+""+to_day;
-        if(parseInt(search_from_date) > parseInt(search_to_date))
+        //var search_to_date  =   to_year+""+to_month+""+to_day;
+        var search_from_date=   new Date(from_year, from_month, from_day); //Year, Month, Date    
+        var search_to_date  =   new Date(to_year, to_month, to_day); //Year, Month, Date
+        if(search_from_date > search_to_date)
         {
             document.getElementById('transfer_type').value  =   "";
             document.getElementById('from_id').value        =   "";
