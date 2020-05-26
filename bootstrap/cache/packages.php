@@ -110,17 +110,6 @@
       'Toastr' => 'Kamaln7\\Toastr\\Facades\\Toastr',
     ),
   ),
-  'salmanzafar/laravel-mqtt' => 
-  array (
-    'providers' => 
-    array (
-      0 => 'Salman\\Mqtt\\MqttServiceProvider',
-    ),
-    'aliases' => 
-    array (
-      'Mqtt' => 'Salman\\Mqtt\\Facades\\Mqtt',
-    ),
-  ),
   'simplesoftwareio/simple-qrcode' => 
   array (
     'providers' => 
