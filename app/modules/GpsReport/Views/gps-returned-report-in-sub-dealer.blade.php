@@ -31,7 +31,7 @@
                                                                 <label> From Date</label>
                                                                 <div class="input-group">  
                                                                     <input type="text" class="device_report form-control {{ $errors->has('from_date') ? ' has-error' : '' }}"  name="from_date" id="from_date" onkeydown="return false;" value="{{date('d-m-Y', strtotime($from_date))}}" autocomplete="off" required>
-                                                                    <span class="input-group-addon" style="z-index: 99;">
+                                                                    <span class="input-group-addon" style="z-index: auto;">
                                                                         <span class="calendern"><i class="fa fa-calendar"></i></span>
                                                                     </span>
                                                                 </div>
@@ -42,7 +42,7 @@
                                                                 <label> To Date</label>
                                                                 <div class="input-group">  
                                                                     <input type="text" class="device_report form-control {{ $errors->has('to_date') ? ' has-error' : '' }}"  name="to_date" id="to_date" onkeydown="return false;" value="{{date('d-m-Y', strtotime($to_date))}}" autocomplete="off" required>
-                                                                    <span class="input-group-addon" style="z-index: 99;">
+                                                                    <span class="input-group-addon" style="z-index: auto;">
                                                                         <span class="calendern"><i class="fa fa-calendar"></i></span>
                                                                     </span>
                                                                 </div>
@@ -61,9 +61,9 @@
                                             </form> 
                                         </div> 
                                         @if(count($return_details) != 0)
-                                            <a href="gps-return-report-downloads?type=pdf&from_date={{$from_date}}&to_date={{$to_date}}">
-                                                <button class="btn btn-xs" style='margin-left: 1000px;'><i class='fa fa-download'></i>Download Report</button>
-                                            </a>
+                                            <button class="btn btn-xs" style='margin-left: 1000px;'><i class='fa fa-download'></i>
+                                            <a href="gps-return-report-downloads?type=pdf&from_date={{$from_date}}&to_date={{$to_date}}" style="color:white">Download Report</a>
+                                            </button>
                                         @endif 
                                         <div class="row col-md-6 col-md-offset-2">
                                         <span class="report_summary_title"><b>Report Summary</b></span>

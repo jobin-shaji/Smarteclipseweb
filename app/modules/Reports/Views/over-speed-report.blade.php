@@ -43,7 +43,7 @@ Over Speed Report
                                   <div class="form-group">                      
                                     <label> From Date</label>
                                     <input type="text" required class="@if(\Auth::user()->hasRole('fundamental'))datepickerFundamental @elseif(\Auth::user()->hasRole('superior')) datepickerSuperior @elseif(\Auth::user()->hasRole('pro')) datepickerPro @else datepickerFreebies @endif form-control"style="width: 100%"  id="fromDate" name="start_date" onkeydown="return false" value="@if(isset($alertReports)) {{$from}} @endif"  autocomplete="off"  required>
-                                    <span class="input-group-addon" style="z-index: 99;">
+                                    <span class="input-group-addon" style="z-index: auto;">
                                         <span class="calender1"  ><i class="fa fa-calendar"></i></span>
                                     </span>
                                   </div>
@@ -52,14 +52,14 @@ Over Speed Report
                                   <div class="form-group">                     
                                     <label> To Date</label>
                                     <input type="text" required class="@if(\Auth::user()->hasRole('fundamental'))datepickerFundamental @elseif(\Auth::user()->hasRole('superior')) datepickerSuperior @elseif(\Auth::user()->hasRole('pro')) datepickerPro @else datepickerFreebies @endif form-control" style="width: 100%" id="toDate" name="end_date" onkeydown="return false"  value="@if(isset($alertReports)) {{$to}} @endif"  autocomplete="off" required>
-                                    <span class="input-group-addon" style="z-index: 99;">
+                                    <span class="input-group-addon" style="z-index: auto;">
                                         <span class="calender1"  ><i class="fa fa-calendar"></i></span>
                                     </span>
                                   </div>
                                 </div>
                                 <div class="col-lg-3 col-md-3 pt-4">  
                                 <label> &nbsp;</label>
-                                  <div class="form-group">                           
+                                  <div class="form-group" style="margin-top:19px">                           
                                       <button type="submit" class="btn btn-sm btn-info btn2 srch search-btn " > <i class="fa fa-search"></i> </button>
                                       <button type="button" class="btn btn-sm btn1 btn-primary download-btn " onclick="downloadAlertMsReport()" style="display: none" ><i class="fa fa-file download-icon" ></i>Download Excel</button>
                                    </div>

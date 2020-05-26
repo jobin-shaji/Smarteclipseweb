@@ -32,7 +32,7 @@
                                             <thead>
                                               <tr>
                                                 <th><b>SL.No</b></th>
-                                                <th><b>Imei</b></th>
+                                                <th><b>IMEI</b></th>
                                                 <th><b>Status</b></th>
                                                 <th><b>Updated By</b></th>
                                                 <th><b>Date & Time</b></th>
