@@ -1390,10 +1390,11 @@ public function serviceJobDetails(Request $request)
         {
             $custom_messages = [
                 'file.required' => 'Rc Book cannot be blank',
+                'file.mimes' => 'Rc Book must be a file of type:jpeg,png.',
                  // 'file.uploaded' => 'Failed to upload an image. The image maximum size is 4kb.'
-                'installation_photo.required' => 'File cannot be blank',
-                'activation_photo.required' => 'File cannot be blank',
-                'vehicle_photo.required' => 'File cannot be blank'
+                'installation_photo.required' => 'Installation photo cannot be blank',
+                'activation_photo.required' => 'Activation photo cannot be blank',
+                'vehicle_photo.required' => 'Vehicle photo cannot be blank'
             ];
           
             $rules = $this->servicercompleteJobRules();
