@@ -1605,8 +1605,6 @@ public function serviceJobDetails(Request $request)
             $servicer_job->comment = $request->comment;
             $servicer_job->status = 3;
             $servicer_job->save();
-            Complaint::where('client_id',$servicer_job->client_id)
-            ->update(['status'=>2]);
             $service_job_id=Crypt::encrypt($servicer_job->id);
             $request->session()->flash('message', 'Job  completed successfully!');
             $request->session()->flash('alert-class', 'alert-success');
