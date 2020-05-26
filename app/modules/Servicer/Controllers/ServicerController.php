@@ -1956,7 +1956,7 @@ public function serviceJobDetails(Request $request)
             }
             else
             {
-                $location   =   "No Address Found";
+                $location   =   "";
             }
 
             $gps_stocks     =   GpsStock::select('id',
