@@ -63,7 +63,7 @@
                       <label> From Date</label>
                         <div class="input-group">
                           <input type="text" class="device_report form-control {{ $errors->has('from_date') ? ' has-error' : '' }}"  name="from_date" id="from_date" onkeydown="return false;" autocomplete="off" required>
-                          <span class="input-group-addon" style="z-index: auto9;">
+                          <span class="input-group-addon" style="z-index: auto;">
                             <span class="calendern"><i class="fa fa-calendar"></i></span>
                           </span>
                         </div>
@@ -74,7 +74,7 @@
                       <label> To Date</label>
                         <div class="input-group">
                           <input type="text" class="device_report form-control {{ $errors->has('to_date') ? ' has-error' : '' }}"  name="to_date" id="to_date" onkeydown="return false;" autocomplete="off" required>
-                          <span class="input-group-addon" style="z-index: auto9;">
+                          <span class="input-group-addon" style="z-index: auto;">
                             <span class="calendern"><i class="fa fa-calendar"></i></span>
                           </span>
                         </div>
