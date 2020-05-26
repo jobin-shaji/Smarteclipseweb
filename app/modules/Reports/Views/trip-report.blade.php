@@ -47,7 +47,7 @@
                             <label> Date</label>
                             <div class="input-group date <?php if(\Auth::user()->hasRole('superior')){ echo 'datepickerSuperior'; }else if(\Auth::user()->hasRole('fundamental')){ echo 'datepickerFundamental'; } else if(\Auth::user()->hasRole('pro')){ echo 'datepickerPro'; }else if(\Auth::user()->hasRole('freebies')){ echo 'datepickerFreebies'; } else{ echo 'datepickerFreebies';}?>" id="<?php if(\Auth::user()->hasRole('superior')){ echo 'datepickerSuperior'; }else if(\Auth::user()->hasRole('fundamental')){ echo 'datepickerFundamental'; } else if(\Auth::user()->hasRole('pro')){ echo 'datepickerPro'; }else if(\Auth::user()->hasRole('freebies')){ echo 'datepickerFreebies'; } else{ echo 'datepickerFreebies';}?>">
                             <input type="text" class="@if(\Auth::user()->hasRole('fundamental'))datepickerFundamental @elseif(\Auth::user()->hasRole('superior')) datepickerSuperior @elseif(\Auth::user()->hasRole('pro')) datepickerPro @else datepickerFreebies @endif form-control" id="fromDate" name="date" onkeydown="return false">
-                            <span class="input-group-addon" style="z-index: 99;">
+                            <span class="input-group-addon" style="z-index: auto9;">
                                 <span class="calendern"  style=""><i class="fa fa-calendar"></i></span>
                             </span>
                                 @if ($errors->has('date'))
