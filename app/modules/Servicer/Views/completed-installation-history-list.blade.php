@@ -59,7 +59,7 @@ $key        = (isset($_GET['new_installation_search_key'])) ? $_GET['new_install
   </form>
     </div> 
       
-         <table class="table table-hover table-bordered  table-striped datatable"  style="width:95%;margin-left:3%!important;text-align: center" >
+         <table class="table table-hover table-bordered  table-striped datatable"  style="width:95%;margin-left:3%!important;text-align: center;table-layout: fixed;" >
           <thead class="indigo white-text">
                             <tr>
                             <th><b>SL.No</b></th>
@@ -69,12 +69,12 @@ $key        = (isset($_GET['new_installation_search_key'])) ? $_GET['new_install
                                 <th><b>Description<b></th>
                                 <th><b>Location<b></th>
                                 <th><b>Job Date<b></th>
-                                <th>Job Completed Date</th> 
+                                <th><b>Job Completed Date</b></th> 
                                <!--  <th><b>Job Type<b></th>  --> 
                                 <th><b>Action</b></th>  
                               </tr>
                             </thead>
-                            <tbody>
+                            <tbody style="word-break: break-all;">
                               @if($servicer_jobs->count() == 0)
                                     <tr>
                                       <td></td>
