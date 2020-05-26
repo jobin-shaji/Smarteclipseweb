@@ -199,7 +199,8 @@ class Vehicle extends Model
                       'client_id',
                       'driver_id',
                       'vehicle_type_id',
-                      'deleted_at'
+                      'deleted_at',
+                      'is_returned'
                       )
                     ->withTrashed()
                     ->where('client_id',$client_id)
