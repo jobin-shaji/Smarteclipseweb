@@ -62,7 +62,7 @@
                               </div>
                               <div class="col-lg-3 col-md-3 pt-4">  
                               <label> &nbsp;</label>
-                                <div class="form-group">                           
+                                <div class="form-group" style="margin-top:19px">                           
                                     <button type="submit" class="btn btn-sm btn-info btn2 srch search-btn " > <i class="fa fa-search"></i> </button>
                                     <button type="button" class="btn btn-sm btn1 btn-primary download-btn " onclick="downloadAlertMsReport()" style="display: none" ><i class="fa fa-file download-icon" ></i>Download Excel</button>
                                   </div>
