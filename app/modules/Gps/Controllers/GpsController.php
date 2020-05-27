@@ -331,10 +331,12 @@ class GpsController extends Controller {
         ]);
     }
 ////////////////////////////////////////////////////////////////////////////
-
+    /*
+     This Function not used in any route
+     #HIDE
+    
     public function gpsDataCount(Request $request)
     {
-
         $user = $request->user();
         if($user->hasRole('root')){
             return response()->json([
@@ -344,8 +346,13 @@ class GpsController extends Controller {
             ]);
         }
     }
+    */
 
     //returns gps as json
+    /*
+    This Function not used in any route
+     #HIDE
+    
     public function getGpsData(Request $request)
     {
         $gps_id=$request->gps_id;
@@ -414,6 +421,7 @@ class GpsController extends Controller {
         ->addIndexColumn()
         ->make();
     }
+     */
     //////////////////////////GPS DEALER///////////////////////////////////
 
     //Display all dealer gps
@@ -813,20 +821,28 @@ class GpsController extends Controller {
         return response()->json(array('response' => 'success', 'gps' => $gps , 'user' => $user));
     }
 
-    public function allGpsDatas(Request $request){
+    /*
+     This Function not used in any route
+     #HIDE
+    public function allGpsDatas(Request $request)
+    {
         $items = GpsData::all()->sortByDesc('id');
         return view('Gps::alldata',['items' => $items]);
     }
+    */
 
-
+    /*
+    #HIDE
     public function allgpsListPage()
     {
-        $ota = OtaType::all();
-        $gps = Gps::select('id','imei')->get();
+        $ota      = OtaType::all();
+        $gps      = Gps::select('id','imei')->get();
         $gps_data = GpsData::select('id','header')->groupBy('header')->get();
-
         return view('Gps::alldata-list',['gps' => $gps,'ota' => $ota,'gpsDatas' => $gps_data]);
     }
+    */
+    /*
+    #HIDE
     public function getAllData(Request $request)
     {
 
@@ -883,6 +899,7 @@ class GpsController extends Controller {
         ->rawColumns(['link', 'action'])
         ->make();
     }
+    */
 
 
     public function vltdataListPage()
@@ -1003,6 +1020,9 @@ class GpsController extends Controller {
         return $pdf->download('GpsData.pdf');
 
     }
+
+    /*
+     #HIDE
     public function getGpsAllData(Request $request)
     {
         $items = GpsData::find($request->id);
@@ -1011,6 +1031,7 @@ class GpsController extends Controller {
         ]);
 
     }
+    */
 
     public function getGpsAllDataBth(Request $request){
       $items = GpsData::find($request->id);
@@ -1141,6 +1162,8 @@ class GpsController extends Controller {
     {
         return view('Gps::subscription-success');
     }
+    /*
+    #HIDE
     public function allBthData()
     {
         return view('Gps::all-bth-data-list');
@@ -1174,6 +1197,7 @@ class GpsController extends Controller {
         ->rawColumns(['link', 'action'])
         ->make();
     }
+    */
     public function pasedData(Request $request)
     {
         $decrypted_id = Crypt::decrypt($request->id);
@@ -1597,7 +1621,8 @@ class GpsController extends Controller {
     }
 
 
-
+    /*
+    #HIDE
     public function allgpsDataListPage()
     {
         $ota = OtaType::all();
@@ -1607,7 +1632,11 @@ class GpsController extends Controller {
         // dd($gps_data);
         return view('Gps::allgpsdata-list',['gps' => $gps,'ota' => $ota]);
     }
-     public function allPublicgpsDataListPage()
+
+    */
+    /*
+    #HIDE
+    public function allPublicgpsDataListPage()
     {
         $ota = OtaType::all();
         $gps = Gps::select('id','imei','serial_no')->get();
@@ -1617,6 +1646,9 @@ class GpsController extends Controller {
         // dd($gps_data);
         return view('Gps::allgpsdata-list-public',['gps' => $gps,'ota' => $ota]);
     }
+    */
+    /*
+    #HIDE
     public function getAllGpsData(Request $request)
     {
          $forhuman=0;
@@ -1635,6 +1667,9 @@ class GpsController extends Controller {
             ]);
         }
     }
+    */
+    /*
+    #HIDE
     public function getPublicAllGpsData(Request $request)
     {
          $forhuman=0;
@@ -1653,6 +1688,7 @@ class GpsController extends Controller {
             ]);
         }
     }
+    */
     public function getGpsAllDataHlm(Request $request)
     {
         $items = GpsData::find($request->id);
@@ -1817,6 +1853,7 @@ class GpsController extends Controller {
         ->rawColumns(['link', 'action'])
         ->make();
     }
+   
     public function allpublicgpsListPage(Request $request)
     {
         $gps = Gps::select('id','imei','serial_no')->get();
@@ -1825,6 +1862,7 @@ class GpsController extends Controller {
         // dd($header);
         return view('Gps::public-alldata-list',['gps' => $gps,'ota' => $ota,'gpsDatas' => $gps_data]);
     }
+  
     public function getPublicAllData(Request $request)
     {
         if($request->gps && $request->header){
@@ -1880,6 +1918,7 @@ class GpsController extends Controller {
         ->rawColumns(['link', 'action'])
         ->make();
     }
+    
 
     public function gpsReport()
     {

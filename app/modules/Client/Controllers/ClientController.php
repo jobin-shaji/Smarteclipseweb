@@ -28,6 +28,8 @@ use Illuminate\Support\Facades\Hash;
 use Intervention\Image\ImageManagerStatic as Image;
 use App\Jobs\MailJob;
 use App\Http\Traits\MqttTrait;
+use App\Mail\UserCreated;
+use Illuminate\Support\Facades\Mail;
 
 
 class ClientController extends Controller {
@@ -147,6 +149,12 @@ class ClientController extends Controller {
                 'city_id'=>$request->city_id,
                 'latest_user_updates'=>$current_date
             ]);
+
+            if($client)
+            {
+                Mail::to($user)->send(new UserCreated($user, $request->name, $request->password));
+            }
+
             // dd($user);
             if($request->client_category=="school"){
                 User::select('id','username')->where('username', $request->username)->first()->assignRole('school');
@@ -212,6 +220,12 @@ class ClientController extends Controller {
                 'city_id'=>$request->city_id ,
                 'latest_user_updates'=>$current_date
             ]);
+
+            if($client)
+            {
+                Mail::to($user)->send(new UserCreated($user, $request->name, $request->password));
+            }
+
             if($request->client_category=="school"){
                 User::select('id','username')->where('username', $request->username)->first()->assignRole('school');
             }else{

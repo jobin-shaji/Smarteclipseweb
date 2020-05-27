@@ -12,5 +12,6 @@ return array(
    ),
    'urls' => [
       'ms_alerts' => env("URL_MS_ALERTS")
-   ]
+   ],
+   'database_name' => env("DB_DATABASE")
 );
