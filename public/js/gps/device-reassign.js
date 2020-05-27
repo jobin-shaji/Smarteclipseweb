@@ -10,7 +10,7 @@ function searchData()
 {   
   if(document.getElementById('return_to').value == '')
   {
-    alert('please select any user to reassign');
+    alert('Please select any user to reassign');
   }
   else
   {
