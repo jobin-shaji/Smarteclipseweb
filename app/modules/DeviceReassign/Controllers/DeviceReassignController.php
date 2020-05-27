@@ -40,17 +40,28 @@ class DeviceReassignController extends Controller
     {
         return view('DeviceReassign::device-reassign-create');
     }
-    /**
+    /*
+     *
      * 
      */
-
     public function hierarchylist(Request $request)
-    {   
-        $imei  =   Gps::select('id')->where('imei',$request->imei)->count();
-        if($imei == 1)
+    { 
+        $imei                       =   $request->imei;  
+        $is_imei_exists             =   Gps::select('id')->where('imei',$imei)->count();
+        if($is_imei_exists == 1)
         {
-            $data  =   (new Gps())->getDeviceHierarchyDetails($request->imei);
-            return view('DeviceReassign::device-reassign-create',['data'=>$data]);
+            $device_details         =   (new Gps())->getDeviceHierarchyDetails($imei);
+            $is_device_returned     =   (new DeviceReturn())->isDeviceReturnRequested($device_details->id); 
+            if($is_device_returned  ==  0)
+            {
+                return view('DeviceReassign::device-reassign-create',['data'=>$device_details]);
+            }
+            else
+            {
+                $request->session()->flash('message', 'Device return request already placed for this GPS !');
+                $request->session()->flash('alert-class', 'alert-success');
+                return redirect(route('devicereassign.create'));
+            }
         } 
         else
         {
@@ -62,7 +73,32 @@ class DeviceReassignController extends Controller
      * 
      * 
      */
-
+    public function checkGpsIsReturned(Request $request)
+    {
+        $gps_id                 =   $request->gps_id;
+        $is_device_returned     =   (new DeviceReturn())->isDeviceReturnRequested($gps_id); 
+        if($is_device_returned  ==  0)
+        {
+            return response()->json([
+                'code'      =>  1,
+                'status'    =>  "success",
+                'message'   =>  "success",
+            ]);
+        }
+        else
+        {
+            return response()->json([
+                'code'      =>  0,
+                'status'    =>  "failed",
+                'message'   =>  "Sorry...GPS reassign is failed due to the request of device return !",
+            ]);
+        }
+    }
+    /**
+     * 
+     * 
+     * 
+     */
     public function getGpsCount(Request $request)
     {     
         return response()->json([
