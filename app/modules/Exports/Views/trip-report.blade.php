@@ -36,7 +36,7 @@
   <div style="margin-top:18%!important;floar:left">
     <span style="float:left"><p><b>Driver Name</b></p>{{$gps->vehicle->driver?$gps->vehicle->driver->name:'Driver'}} </span>
     <?php $dt = (isset($gps->vehicleGps->gps_fitted_on))?date('Y-m-d',strtotime($gps->vehicleGps->gps_fitted_on)):''; ?>
-    <span style="float:right;margin-right: 13%"><p><b>Device Installed Date</b></p>{{$dt}}2020-05-06</span>
+    <span style="float:right;margin-right: 13%"><p><b>Device Installed Date</b></p>{{$dt}}</span>
   </div>
   <br/>
 </div>
