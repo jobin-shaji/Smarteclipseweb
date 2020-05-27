@@ -73,7 +73,32 @@ class DeviceReassignController extends Controller
      * 
      * 
      */
-
+    public function checkGpsIsReturned(Request $request)
+    {
+        $gps_id                 =   $request->gps_id;
+        $is_device_returned     =   (new DeviceReturn())->isDeviceReturnRequested($gps_id); 
+        if($is_device_returned  ==  0)
+        {
+            return response()->json([
+                'code'      =>  1,
+                'status'    =>  "success",
+                'message'   =>  "success",
+            ]);
+        }
+        else
+        {
+            return response()->json([
+                'code'      =>  0,
+                'status'    =>  "failed",
+                'message'   =>  "Sorry...GPS reassign is failed due to the request of device return !",
+            ]);
+        }
+    }
+    /**
+     * 
+     * 
+     * 
+     */
     public function getGpsCount(Request $request)
     {     
         return response()->json([

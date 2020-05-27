@@ -2,6 +2,7 @@
 
 Route::group(['middleware' => ['web','auth','role:root'] , 'namespace' => 'App\Modules\DeviceReassign\Controllers' ] , function() {	
     Route::get('/devicereassign/create','DeviceReassignController@create')->name('devicereassign.create');
+    Route::post('/devicereassign-gps-validation','DeviceReassignController@checkGpsIsReturned')->name('devicereassign-gps-validation');
     Route::post('/device-reassign-list','DeviceReassignController@getDeviceList')->name('device.reassign.list.p');
     Route::post('/devicereassign/create','DeviceReassignController@hierarchylist')->name('devicehierarchy');
     Route::post('/get-gps-count','DeviceReassignController@getGpsCount')->name('get-gps-count');
