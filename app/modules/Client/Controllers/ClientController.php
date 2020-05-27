@@ -57,6 +57,7 @@ class ClientController extends Controller {
             'id',
             'name'
         ])
+        ->where('id',101)
         ->get();
          $url=url()->current();
         
@@ -1054,6 +1055,7 @@ class ClientController extends Controller {
             'id',
             'name'
         ])
+        ->where('id',101)
         ->get();
          $url=url()->current();
         

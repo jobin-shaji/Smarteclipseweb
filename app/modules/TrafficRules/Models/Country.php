@@ -12,6 +12,6 @@ class Country extends Model
      * 
      */
     public function getCountryDetails(){
-        return self::select('id','name')->get();
+        return self::select('id','name')->where('id',101)->get();
     }
 }
