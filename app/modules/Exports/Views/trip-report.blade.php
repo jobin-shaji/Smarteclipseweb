@@ -26,18 +26,17 @@
   </div>
   <br/>
 </div>
-<div><br/>
+<div>
   <div style="margin-top:10%!important;floar:left">
     <span style="margin-left:0%;float:left"><p><b>Vehicle Registration Number</b></p>{{$gps->vehicle->register_number}}</span>
     <span style="float:left;margin-left:37%"><p><b>Device Serial Number</b></p>{{maskPartsOfString($gps->serial_no,4,15)}}</span>
   </div>
-  <br/>
 </div>
-<div><br/>
-  <div style="margin-top:15%!important;floar:left">
-    <span style="margin-left:0%;float:left"><p><b>Driver Name</b></p>{{$gps->vehicle->driver?$gps->vehicle->driver->name:'Driver Not Assigned'}} </span>
+<div>
+  <div style="margin-top:18%!important;floar:left">
+    <span style="float:left"><p><b>Driver Name</b></p>{{$gps->vehicle->driver?$gps->vehicle->driver->name:'Driver'}} </span>
     <?php $dt = (isset($gps->vehicleGps->gps_fitted_on))?date('Y-m-d',strtotime($gps->vehicleGps->gps_fitted_on)):''; ?>
-    <span style="float:left;margin-left:53%"><p><b>Device Installed Date</b></p>{{$dt}}</span>
+    <span style="float:right;margin-right: 13%"><p><b>Device Installed Date</b></p>{{$dt}}2020-05-06</span>
   </div>
   <br/>
 </div>
@@ -86,7 +85,7 @@
     </tr>
     @endforeach
   </table>
-  Note: Note: Since running duration is calculated based on the vehicle movement, it can be less than or equal to trip duration.
+  Note: Since running duration is calculated based on the vehicle movement, it can be less than or equal to trip duration.
   <br>
   <?php
     if($gps->refurbished_status == 1)
