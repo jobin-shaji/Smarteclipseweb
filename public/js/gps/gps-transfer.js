@@ -24,6 +24,8 @@ $('.dealerData').on('change', function() {
 });
 
 $(document).ready(function() {
+    $(".clientData").select2().trigger("change");
+    $(".clientDataInTrader").select2().trigger("change");
     user_id = $('#logged_distributor_id').val();
     $('.selectedCheckBox').click(function(e) {
         e.preventDefault();

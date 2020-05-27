@@ -130,11 +130,12 @@ class ServicerJob extends Model
             ->join('vehicle_gps', 'servicer_jobs.id', '=', 'vehicle_gps.servicer_job_id')
             ->join('vehicles', 'vehicle_gps.vehicle_id', '=', 'vehicles.id')
             ->where('servicer_jobs.servicer_id',$user_id)
-             ->where('servicer_jobs.status',3)
+            ->where('servicer_jobs.status',3)
+            ->whereNull('servicer_jobs.deleted_at')
             ->whereNotNull('servicer_jobs.job_complete_date')
             ->orderBy('servicer_jobs.job_complete_date','desc')
-             ->where('servicer_jobs.job_type',1)
-             ->select('servicer_jobs.id','servicer_jobs.job_complete_date','servicer_jobs.status','servicer_jobs.job_id','clients.name as client_name',
+            ->where('servicer_jobs.job_type',1)
+            ->select('servicer_jobs.id','servicer_jobs.job_complete_date','servicer_jobs.status','servicer_jobs.job_id','clients.name as client_name',
             'servicer_users.username as user_name','users.email as user_email','users.mobile as mobile_number', 
             'servicer_jobs.description','servicer_jobs.job_type','servicer_jobs.location','servicer_jobs.status',
             'servicer_jobs.job_date',
@@ -272,9 +273,11 @@ class ServicerJob extends Model
                     'job_complete_date',
                     'servicer_id',
                     'job_type',
-                    'status'
+                    'status',
+                    'deleted_at'
                 )
                 ->whereNotNull('job_complete_date')
+                ->whereNull('deleted_at')
                 ->where('servicer_id',$servicer_id)
                 ->where('job_type',1)
                 ->where('status',3)
@@ -312,7 +315,7 @@ class ServicerJob extends Model
             ->join('users as servicer_users', 'servicer_users.id', '=', 'servicer_jobs.user_id')
             ->join('servicers', 'servicer_jobs.servicer_id', '=','servicers.id')
             ->join('gps', 'servicer_jobs.gps_id', '=', 'gps.id')
-            ->select('servicer_jobs.id','servicer_jobs.status','servicer_jobs.job_id','clients.name as client_name','servicer_jobs.completion_code','servicer_jobs.comment',
+            ->select('servicer_jobs.id','servicer_jobs.status','servicer_jobs.job_id','clients.name as client_name','servicer_jobs.start_code','servicer_jobs.completion_code','servicer_jobs.comment',
             'servicer_users.username as user_name','users.email as user_email','users.mobile as mobile_number','servicers.name as servicer_name' ,
             'servicer_jobs.description','servicer_jobs.location','servicer_jobs.status',
             'servicer_jobs.job_date','servicer_jobs.status','servicer_jobs.job_type',

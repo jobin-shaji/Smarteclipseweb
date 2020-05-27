@@ -14,7 +14,7 @@ function DateCheck()
     var to_day          =   to_d.getDate();
     var to_month        =   to_d.getMonth()+1;
     var to_year         =   to_d.getFullYear();
-    //to_date             =   to_year+""+to_month+""+to_day;
+    // to_date             =   to_year+""+to_month+""+to_day;
     var dateFrom        =   new Date(from_year, from_month, from_day); //Year, Month, Date    
     var dateTo          =   new Date(to_year, to_month, to_day); //Year, Month, Date    
     if(dateFrom > dateTo)

@@ -59,6 +59,7 @@ class TotalKMReportController extends Controller
             {
                 $vehicle_id             =   $each_vehicle->id; 
                 $vehicle_gps_details    =   (new VehicleGps())->getGpsDetailsBasedOnVehicle($vehicle_id);
+                $vehicle_gps_ids        = []; 
                 foreach($vehicle_gps_details as $each_vehicle_gps)
                 {
                     $vehicle_gps_ids[]  =   $each_vehicle_gps->gps_id;

@@ -61,9 +61,11 @@
                                             </form> 
                                         </div> 
                                         @if(count($return_details) != 0)
+                                            
                                             <button class="btn btn-xs" style='margin-left: 1000px;'><i class='fa fa-download'></i>
-                                            <a href="gps-return-report-downloads?type=pdf&from_date={{$from_date}}&to_date={{$to_date}}" style="color:white">Download Report</a>
+                                                <a href="gps-return-report-downloads?type=pdf&from_date={{$from_date}}&to_date={{$to_date}}" style="color:white">Download Report</a>
                                             </button>
+                                            
                                         @endif 
                                         <div class="row col-md-6 col-md-offset-2">
                                         <span class="report_summary_title"><b>Report Summary</b></span>

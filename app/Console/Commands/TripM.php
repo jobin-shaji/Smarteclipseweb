@@ -17,6 +17,7 @@ use App\Modules\Gps\Models\Gps;
 use App\TripLog;
 
 use PDF;
+use \DB;
 
 use Illuminate\Console\Command;
 
@@ -52,7 +53,13 @@ class TripM extends Command
 
         $imei = $this->ask('Enter IMEI number');
 
-        $date = $this->ask('enter date (yyyy-mm-dd)');
+        $date = $this->ask('Enter date (yyyy-mm-dd)');
+
+        $user_selected_table = $this->ask('Enter source table');
+
+        if (!file_exists("public/documents/tripreports/".$imei."/".$date."/trips/")) {
+            mkdir("public/documents/tripreports/".$imei."/".$date."/trips/", 0777, true);
+        }
 
         $gps = Gps::where('imei',$imei)->first();
 
@@ -70,13 +77,11 @@ class TripM extends Command
             }
         }
 
-        TripLog::query()->truncate();
+        $vlt_data_table = (New VltData);
+        $vlt_data_table->selectTable($user_selected_table);
 
-        // $query = VltData::where("imei","869247045501563")->whereDate('created_at',$date);
 
-        $query = VltData::where("imei",$imei)->whereDate('created_at',$date);
-
-        $packets = $query->orderBy('created_at','asc')->get();
+        $query = $vlt_data_table->distinct()->where("imei",$imei)->whereDate('created_at',$date);
 
         if($query->count() == 0)
         {
@@ -84,7 +89,16 @@ class TripM extends Command
             exit;
         }
 
-        echo "creating triplog from vltdata...."."\n";
+        echo "fetching data from ".$vlt_data_table->getTable()."\n";
+        $packets = $query->orderBy('created_at','asc')->get();
+
+        $trips_table = (New TripLog);
+        $trips_table->createTable($imei);
+        $trips_table->query()->truncate();
+
+        // $query = VltData::where("imei","869247045501563")->whereDate('created_at',$date);
+
+        echo "moving data from ".$vlt_data_table->getTable()." to ".$trips_table->getTable()."\n";
 
         foreach ($packets as $item) {
 
@@ -95,30 +109,32 @@ class TripM extends Command
             if($header == "BTH"){
                 $processor = New BatchProcessor;
                 $packets = $processor->processBth($vlt_data);
-                $this->splitBth($packets);
+                $this->splitBth($packets, $trips_table);
             }elseif($header == "NRM"){
                 $processor = New NrmProcessor($vlt_data);
-                $this->saveToLog($processor->lat, $processor->lng, $processor->vehicle_mode, $processor->ignition, $processor->device_time, $processor->speed);
+                $this->saveToLog($processor->lat, $processor->lng, $processor->vehicle_mode, $processor->ignition, $processor->device_time, $processor->speed, $trips_table);
             }elseif($header == "ACK" || $header == "AVK"){
                 $processor = New AckProcessor($vlt_data);
-                $this->saveToLog($processor->lat, $processor->lng, $processor->vehicle_mode, $processor->ignition, $processor->device_time, $processor->speed);
+                $this->saveToLog($processor->lat, $processor->lng, $processor->vehicle_mode, $processor->ignition, $processor->device_time, $processor->speed, $trips_table);
             }elseif($header == "ALT"){
                 $processor = New AltProcessor($vlt_data);
-                $this->saveToLog($processor->lat, $processor->lng, $processor->vehicle_mode, $processor->ignition, $processor->device_time, $processor->speed);
+                $this->saveToLog($processor->lat, $processor->lng, $processor->vehicle_mode, $processor->ignition, $processor->device_time, $processor->speed, $trips_table);
             }elseif($header == "CRT"){
                 $processor = New CrtProcessor($vlt_data);
-                $this->saveToLog($processor->lat, $processor->lng, $processor->vehicle_mode, $processor->ignition, $processor->device_time, $processor->speed);
+                $this->saveToLog($processor->lat, $processor->lng, $processor->vehicle_mode, $processor->ignition, $processor->device_time, $processor->speed, $trips_table);
             }elseif($header == "EPB"){
                 $processor = New EpbProcessor($vlt_data);
-                $this->saveToLog($processor->lat, $processor->lng, $processor->vehicle_mode, $processor->ignition, $processor->device_time, $processor->speed);
+                $this->saveToLog($processor->lat, $processor->lng, $processor->vehicle_mode, $processor->ignition, $processor->device_time, $processor->speed, $trips_table);
             }elseif($header == "FUL"){
                 $processor = New FulProcessor($vlt_data);
-                $this->saveToLog($processor->lat, $processor->lng, $processor->vehicle_mode, $processor->ignition, $processor->device_time, $processor->speed);
+                $this->saveToLog($processor->lat, $processor->lng, $processor->vehicle_mode, $processor->ignition, $processor->device_time, $processor->speed, $trips_table);
             }
             
         }
 
-        $data = TripLog::whereDate('device_time',$date)->orderBy('device_time','asc')->get();
+        // DB::select("UPDATE trip_logs SET device_time = concat('2020-04-09 ', time(device_time))");
+
+        $data = $trips_table->whereDate('device_time',$date)->orderBy('device_time','asc')->get();
 
         $geo_locations = [];
         $trips = [];
@@ -143,7 +159,7 @@ class TripM extends Command
                 $stop_lng   = $end['longitude'];
                 $stop_time  = $end['device_time'];
 
-                $result = $this->getDistanceOfTrip($geo_locations, count($trips));
+                $result = $this->getDistanceOfTrip($geo_locations, count($trips), $imei, $date);
                 $distance = m2Km($result);
 
                 $total_distance = $total_distance + $result;
@@ -184,6 +200,7 @@ class TripM extends Command
         else
         {
             echo "no trips found.."."\n";
+            $trips_table->dropTable();
             exit;
         }
 
@@ -215,18 +232,19 @@ class TripM extends Command
         view()->share(['trips' => $trips, 'date' => $date, 'summary' => $summary, 'gps' => $gps]);
 
         $file_name = $gps->imei.'-'.$date.'.pdf';
+
         $pdf = PDF::loadView('Exports::trip-report');
 
+        $pdf->save("public/documents/tripreports/".$imei."/".$date."/".$file_name);
 
-        $pdf->save("public/documents/tripreports/".$file_name);
-
-        echo "PDF saved to public folder !!"."\n";
-
+        echo "Trip report saved Successfully (public/documents/tripreports/".$imei."/".$date."/".$file_name.")!!"."\n";
         
+        $trips_table->dropTable();
+
     }
 
     //slicing batch to packets 
-    public function splitBth($packets)
+    public function splitBth($packets, $trips_table)
     {   
         foreach ($packets as $item) 
         {
@@ -236,29 +254,29 @@ class TripM extends Command
 
             if($header == "NRM"){
                 $processor = New NrmProcessor($vlt_data);
-                $this->saveToLog($processor->lat, $processor->lng, $processor->vehicle_mode, $processor->ignition, $processor->device_time, $processor->speed);
+                $this->saveToLog($processor->lat, $processor->lng, $processor->vehicle_mode, $processor->ignition, $processor->device_time, $processor->speed, $trips_table);
             }elseif($header == "ACK" || $header == "AVK"){
                 $processor = New AckProcessor($vlt_data);
-                $this->saveToLog($processor->lat, $processor->lng, $processor->vehicle_mode, $processor->ignition, $processor->device_time, $processor->speed);
+                $this->saveToLog($processor->lat, $processor->lng, $processor->vehicle_mode, $processor->ignition, $processor->device_time, $processor->speed, $trips_table);
             }elseif($header == "ALT"){
                 $processor = New AltProcessor($vlt_data);
-                $this->saveToLog($processor->lat, $processor->lng, $processor->vehicle_mode, $processor->ignition, $processor->device_time, $processor->speed);
+                $this->saveToLog($processor->lat, $processor->lng, $processor->vehicle_mode, $processor->ignition, $processor->device_time, $processor->speed, $trips_table);
             }elseif($header == "CRT"){
                 $processor = New CrtProcessor($vlt_data);
-                $this->saveToLog($processor->lat, $processor->lng, $processor->vehicle_mode, $processor->ignition, $processor->device_time, $processor->speed);
+                $this->saveToLog($processor->lat, $processor->lng, $processor->vehicle_mode, $processor->ignition, $processor->device_time, $processor->speed, $trips_table);
             }elseif($header == "EPB"){
                 $processor = New EpbProcessor($vlt_data);
-                $this->saveToLog($processor->lat, $processor->lng, $processor->vehicle_mode, $processor->ignition, $processor->device_time, $processor->speed);
+                $this->saveToLog($processor->lat, $processor->lng, $processor->vehicle_mode, $processor->ignition, $processor->device_time, $processor->speed, $trips_table);
             }elseif($header == "FUL"){
                 $processor = New FulProcessor($vlt_data);
-                $this->saveToLog($processor->lat, $processor->lng, $processor->vehicle_mode, $processor->ignition, $processor->device_time, $processor->speed);
+                $this->saveToLog($processor->lat, $processor->lng, $processor->vehicle_mode, $processor->ignition, $processor->device_time, $processor->speed, $trips_table);
             }
         }
     }
 
-    public function saveToLog($lat, $lng, $vehicle_mode, $ignition, $device_time, $speed)
+    public function saveToLog($lat, $lng, $vehicle_mode, $ignition, $device_time, $speed, $trips_table)
     {
-        TripLog::create([
+        $trips_table->create([
             'lat' => $lat,
             'lng' => $lng,
             'mode' => $vehicle_mode,
@@ -268,7 +286,7 @@ class TripM extends Command
         ]);
     }
 
-    public function getDistanceOfTrip($geo_locations, $count)
+    public function getDistanceOfTrip($geo_locations, $count, $imei, $date)
     {
 
         $xml = '<?xml version="1.0"?>
@@ -305,7 +323,7 @@ class TripM extends Command
 
         $count = $count+1;
 
-        $path = "public/documents/tripreports/trip".$count.".gpx";
+        $path = "public/documents/tripreports/".$imei."/".$date."/trips/".$count.".gpx";
 
         $trip_file = fopen($path, "w");
 

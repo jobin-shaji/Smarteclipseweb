@@ -14,12 +14,12 @@
      </ol>
   </nav>
    @if(Session::has('message'))
-        <div class="pad margin no-print">
-          <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
-              {{ Session::get('message') }}  
-          </div>
-        </div>
-      @endif 
+    <div class="pad margin no-print">
+      <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
+          {{ Session::get('message') }}  
+      </div>
+    </div>
+  @endif 
   <div class="container-fluid">
     <div class="card-body">
       <div class="table-responsive">
@@ -41,13 +41,13 @@
                         <button type="button" class="btn btn-primary btn-md form-btn">Download</button>
                       </a>
 
-                      <a href="{{route('sub-dealer.assign.servicer')}}">
+                      <a href="{{route('sub-dealer-assign-servicer-after-device-transfer',Crypt::encrypt($role_details->id))}}">
                         <button type="button" class="btn btn-primary btn-md form-btn">Create Job</button>
                       </a>
 
                     </div>
                     <div class="col-md-7">
-                        <div class="card-body">
+                        <div class="card-body" style="margin-left: 30px;">
                           <p></p>
                             <p class="card-text"><b>Order Number : </b> {{$gps_transfer->order_number}} </p>
                             <p class="card-text"><b>Invoice Number : </b> {{$gps_transfer->invoice_number}} </p>

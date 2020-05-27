@@ -41,7 +41,7 @@
                       <div class="form-group has-feedback">
 
                        <select class="form-control selectpicker" data-live-search="true" title="Select Servicer" id="servicer" name="servicer" required>
-                          <option value="">Select Servicer</option>
+                          <option value="">Select Service Engineer</option>
                           @foreach ($servicers as $servicer)
                           <option value="{{$servicer->id}}">{{$servicer->name}}</option>
                           @endforeach  
@@ -58,7 +58,7 @@
                       <div class="form-group has-feedback">
 
                        <select class="form-control selectpicker" data-live-search="true" title="Select role" id="role" name="role" required>
-                         <option value="" disabled="disabled">select</option>
+                         <option value="" disabled="disabled">Select Plan</option>
                           <option value="1" selected="selected">Freebies</option>
                           <option value="2">Fundamental</option>
                           <option value="3">Superior</option>
@@ -71,8 +71,8 @@
                       <label for="fname" class="col-sm-3 text-right control-label col-form-label">Job Type</label>
                       <div class="form-group has-feedback">
                         <select class="form-control selectpicker" data-live-search="true" title="Select Job Type" id="job_type" name="job_type" onchange="jobtypeonchange(this.value)" required>
-                          <option value="">Select Job Type</option>
-                          <option value="1" selected="selected">Installation</option>
+                          <option value="" disabled>Select Job Type</option>
+                          <option value="1">Installation</option>
                           <option value="2">Service</option> 
                           <option value="3">Reinstallation</option>                        
                         </select>
@@ -86,19 +86,20 @@
                     <div class="form-group row" id='client_section' style="float:none!important;display:none;">
                       <label for="fname" class="col-sm-3 text-right control-label col-form-label">End User</label>
                       <div class="form-group has-feedback">
-                        <select class="form-control selectpicker" data-live-search="true" title="Select End User" id="client" name="client"  onchange="getClientServicerGps(this.value)" required>
-                          <option value="" selected="selected">Select End User</option>
+                        <select class="form-control selectpicker" data-live-search="true" title="Select End User" id="client" name="client" onchange="getClientServicerGps(this.value)" required>
+                      <!--   <select class="form-control selectpicker" data-live-search="true" title="Select Client" id="client" name="client"> -->
+                          <option value="" selected disabled>Select End User</option>
                           
                         </select>
-                      </div>
-                      @if ($errors->has('client'))
+                    </div>
+                    @if ($errors->has('client'))
                       <span class="help-block">
                       <strong class="error-text">{{ $errors->first('client') }}</strong>
                       </span>
-                      @endif
+                    @endif
                     </div>
                     <div class="form-group row"  id='location_section' style="float:none!important;display:none;">
-                      <label for="fname" class="col-sm-3 text-right control-label col-form-label">Installation Location</label>
+                      <label for="fname" class="col-sm-3 text-right control-label col-form-label">End User Location</label>
                       <div class="form-group has-feedback">
                         <input type="text" class="form-control {{ $errors->has('address') ? ' has-error' : '' }}" placeholder="Location" name="search_place" id="search_place" value="{{ old('search_place') }}" required>
                         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
@@ -187,51 +188,44 @@
 
 <div class="clearfix"></div>
 @section('script')
-<script async defer
-   src="https://maps.googleapis.com/maps/api/js?key={{config('eclipse.keys.googleMap')}}&libraries=places&callback=initMap"></script>
-   <script>
-    $(document).ready(function () { 
-      var user_id = $("#user_id").val();   
+<!-- <script async defer src="https://maps.googleapis.com/maps/api/js?key={{config('eclipse.keys.googleMap')}}&libraries=places&callback=initMap"></script> -->
+ <script>
+    $(document).ready(function () 
+    { 
+      // disable create button
+      $("#submit_section").prop('disabled', true); 
+      //for local storage
+      var user_id     =   $("#user_id").val(); 
       $("#servicer").val(localStorage.getItem(user_id+'.autofill.root.servicer')).trigger("change");
-      // $("#role").val(localStorage.getItem(user_id+'.autofill.root.role')).trigger("change");
-      var client_id = $("#client_id").val(); 
-      getClientServicerGps(client_id); 
-      var job_type = $("#job_type").val(); 
-      jobtypeonchange(job_type);
-
-    });
-    function initMap()
-     {
-    
-      // 
-
-      //     autocomplete1 = new google.maps.places.Autocomplete(input1);
-      // var searchBox1 = new google.maps.places.SearchBox(autocomplete1);
-
-  
-     }
-      $(function() { 
-        // disable create button
-        $("#submit_section").prop('disabled', true); 
-      });
-
-      var user_id = $("#user_id").val(); 
-      
+      $("#role").val(localStorage.getItem(user_id+'.autofill.root.role')).trigger("change");
+      $("#job_type").val(localStorage.getItem(user_id+'.autofill.root.job_type')).trigger("change");
       $("#servicer").change(function(){
-       localStorage.setItem(user_id+'.autofill.root.servicer',$(this).val());
-
-       });
-       $("#role").change(function(){
-       localStorage.setItem(user_id+'.autofill.root.role',$(this).val());
-
-       });
+        localStorage.setItem(user_id+'.autofill.root.servicer',$(this).val());
+      });
+      $("#role").change(function(){
+        localStorage.setItem(user_id+'.autofill.root.role',$(this).val());
+      });
       $("#job_type").change(function(){
         localStorage.setItem(user_id+'.autofill.root.job_type',$(this).val());
-       });
-      $("#client").change(function(){
-        localStorage.setItem(user_id+'.autofill.root.cient',$(this).val());
-       });
+      });
+      var role    =   $("#role").val(); 
+      if(role == null)
+      {
+        $('#role').val('1');
+      }
 
+      // var job_type    =   $("#job_type").val(); 
+      // var client_id   =   $("#client_id").val(); 
+
+      // getClientServicerGps(client_id);  
+      // jobtypeonchange(job_type);
+
+    });
+    // function initMap()
+    //  {
+      //     autocomplete1 = new google.maps.places.Autocomplete(input1);
+      // var searchBox1 = new google.maps.places.SearchBox(autocomplete1);
+    //  }
    </script>
 @endsection
 @endsection

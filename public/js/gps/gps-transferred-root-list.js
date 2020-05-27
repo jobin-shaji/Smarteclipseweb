@@ -47,7 +47,7 @@ function getDeviceTransferList()
         var to_year         =   to_d.getFullYear();
         //var search_to_date  =   to_year+""+to_month+""+to_day;
         var search_from_date=   new Date(from_year, from_month, from_day); //Year, Month, Date    
-        var search_to_date  =   new Date(to_year, to_month, to_day); //Year, Month, Date
+        var search_to_date  =   new Date(to_year, to_month, to_day); //Year, Month, Date   
         if(search_from_date > search_to_date)
         {
             document.getElementById('transfer_type').value  =   "";

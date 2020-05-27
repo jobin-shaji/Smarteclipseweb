@@ -40,8 +40,8 @@ class GeofenceController extends Controller {
         $user_id=\Auth::user()->id;
         $client=\Auth::user()->client;
         // $client = $request->user()->client;
-        $lat=(float)$client->latitude;
-        $lng=(float)$client->longitude;
+        $lat=(float)$client->city->latitude;
+        $lng=(float)$client->city->longitude;
         $geofence = Geofence::select(
             'id',
             'user_id'
