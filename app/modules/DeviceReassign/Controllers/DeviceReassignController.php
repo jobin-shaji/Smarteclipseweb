@@ -44,21 +44,24 @@ class DeviceReassignController extends Controller
      *
      * 
      */
-    // public function imeiValidation(Request $request)
-    // {
-    //     dd($request->imei);
-    // }
-    /*
-     *
-     * 
-     */
     public function hierarchylist(Request $request)
-    {   
-        $imei  =   Gps::select('id')->where('imei',$request->imei)->count();
-        if($imei == 1)
+    { 
+        $imei                       =   $request->imei;  
+        $is_imei_exists             =   Gps::select('id')->where('imei',$imei)->count();
+        if($is_imei_exists == 1)
         {
-            $data  =   (new Gps())->getDeviceHierarchyDetails($request->imei);
-            return view('DeviceReassign::device-reassign-create',['data'=>$data]);
+            $device_details         =   (new Gps())->getDeviceHierarchyDetails($imei);
+            $is_device_returned     =   (new DeviceReturn())->isDeviceReturnReguested($device_details->id); 
+            if($is_device_returned  ==  0)
+            {
+                return view('DeviceReassign::device-reassign-create',['data'=>$device_details]);
+            }
+            else
+            {
+                $request->session()->flash('message', 'Device return request already placed for this GPS !');
+                $request->session()->flash('alert-class', 'alert-success');
+                return redirect(route('devicereassign.create'));
+            }
         } 
         else
         {

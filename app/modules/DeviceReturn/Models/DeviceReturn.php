@@ -139,6 +139,14 @@ class DeviceReturn extends Model
 					->orderBy('id','desc')
 					->get();
 	}
+
+	public function isDeviceReturnReguested($gps_id)
+	{
+		return self::select('gps_id')
+			->where('gps_id',$gps_id)
+			->where('status', '!=' , 1)
+			->count();
+	}
     
 }
 

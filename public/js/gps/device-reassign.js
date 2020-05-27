@@ -2,34 +2,6 @@ $(document).ready(function () {
   $('#count_data').hide();
 });
 
-// function imeiValidation()
-// {
-//   var imei  = document.getElementById('imei').value;
-//   $.ajax({
-//     type:'POST',
-//     url: '/devicereassign-imei-validation',
-//     data: imei ,
-//     async: true,
-//     headers: {
-//       'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-//     },
-//     success:function(data) {
-//     if(data.vehicle.length != 0){
-//       $('#gps_id').empty();
-//       $('#gps_id').focus;
-//       $('#gps_id').append('<option value="">  Select Device </option>'); 
-//       $.each(data.vehicle, function(key, value){
-//         $('select[name="gps_id"]').append('<option value="'+ value.gps.id +'">' + value.gps.imei+' || '+ value.gps.serial_no+ '</option>');
-//       });
-//     }else{
-//       $('#gps_id').empty();
-//       $('#gps_id').focus;
-//       $('#gps_id').append('<option value="">  No Device </option>'); 
-//     }
-//     }
-//   });
-// }
-
 function searchData()
 {   
   if(document.getElementById('return_to').value == '')
