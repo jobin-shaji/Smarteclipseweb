@@ -78,7 +78,7 @@
           <li><img src="{{url('/')}}/assets/images/geofence.png" style="margin:0 2%">Geofence(8 Geofences)</li>
           <li><i class="far fa-file-alt"></i>Invoice</li>
           <li><img src="{{url('/')}}/assets/images/fuel.png" style="margin:0 2%">Fuel</li>
-          <li><img src="{{url('/')}}/assets/images/logo.png" style="margin:0 2%">Client Logo</li> 
+          <li><img src="{{url('/')}}/assets/images/client-logo.png" style="margin:0 2%">Client Logo</li> 
           <li><img src="{{url('/')}}/assets/images/immobilizer.png" style="margin:0 2%">Immobilizer</li>
           <li><i class="far fa-comment-dots"></i>Daily report as SMS </li>
           <li><i class="far fa-envelope"></i>Daily report summary to reg. mail</li>
