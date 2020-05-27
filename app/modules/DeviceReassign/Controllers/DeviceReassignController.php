@@ -74,7 +74,7 @@ class DeviceReassignController extends Controller
     public function getGpsCount(Request $request)
     {     
         return response()->json([
-        'gps_data'                      =>  GpsData::select('id')->where('gps_id',$request->gps)->count(),
+        'gps_data'                      =>  $this->getGpsDataCount($request->gps),
         'vlt_data'                      =>  VltData::select('id')->where('imei',$request->imei)->count(),
         'alert'                         =>  Alert::select('id')->where('gps_id',$request->gps)->count(),
         'vehicle_daily_updates'         =>  VehicleDailyUpdate::select('id')->where('gps_id',$request->gps)->count(),
@@ -108,11 +108,13 @@ class DeviceReassignController extends Controller
         }
         Gps::where('imei',$imei)->update(['mode' => null, 'lat' => null, 'lat_dir' => null, 'lon' => null, 'lon_dir' => null, 'network_status' => null, 'fuel_status' => null, 'speed' => null, 'odometer' => null, 'no_of_satellites' => null, 'battery_status' => null, 'heading' => null, 'device_time' => null, 'main_power_status' => null, 'ignition' => null, 'gsm_signal_strength' => null, 'emergency_status' => null, 'ac_status' => null, 'gps_fix_on' => null, 'calibrated_on' => null, 'login_on' => null, 'batch_status' => null, 'queue_status' => null, 'stop_status' => null, 'is_returned' => null, 'tilt_status'=> 0, 'overspeed_status'=> 0, 'km'=> 0, 'test_status'=> 0]);
         Alert::where('gps_id',$gps)->delete();
-        GpsData::where('gps_id',$gps)->delete();
         VehicleDailyUpdate::where('gps_id',$gps)->delete();
         Complaint::where('gps_id',$gps)->delete();
         DailyKm::where('gps_id',$gps)->delete();
         VltData::where('imei',$imei)->delete();
+        //check gps data in dynamic table and delete
+        $this->deleteGpsData($gps);
+        //check gps data in dynamic table and delete
         DB::table('servicer_jobs')->where('gps_id',$gps)->delete();
         if($reassign_type_id == 4 || $reassign_type_id == 3)
         {
@@ -325,6 +327,31 @@ class DeviceReassignController extends Controller
             }
         }
     }
-
-   
+    /*
+    *
+    *   
+    */
+    private function deleteGpsData($gps_id)
+    {
+         $tables    = (new GpsData())->getGpsDataTable();
+         foreach($tables as $table_name)
+         {
+            (new GpsData())->deleteGpsData($gps_id,$table_name->table_name);
+         }
+         return true;      
+    }
+    /*
+    *
+    *   
+    */
+    private function getGpsDataCount($gps_id)
+    {   
+         $gps_data_count    = 0;
+         $tables            = (new GpsData())->getGpsDataTable();
+         foreach($tables as $table_name)
+         {
+            $gps_data_count = $gps_data_count + (new GpsData())->getCountGpsDataByGpsId($gps_id,$table_name->table_name);
+         }
+         return $gps_data_count;
+    }
 }

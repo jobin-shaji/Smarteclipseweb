@@ -92,5 +92,10 @@ class GpsTransfer extends Model
         ->whereDate('dispatched_on', '<=', $to_date)
         ->withTrashed();
     }
+
+    public function getStockToAcceptCount($to_user_ids)
+    {
+        return DB::select("SELECT COUNT(gps_transfer_items.id) as count FROM `gps_transfers` LEFT join gps_transfer_items ON gps_transfers.id = gps_transfer_items.gps_transfer_id WHERE gps_transfers.deleted_at IS NULL AND gps_transfers.accepted_on IS  NULL  AND gps_transfers.to_user_id IN ('" . implode("', '", $to_user_ids) . "')");
+    }
     
 }

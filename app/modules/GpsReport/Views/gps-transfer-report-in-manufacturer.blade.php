@@ -117,8 +117,8 @@
 <style>
     .table .thead-color th {
         color: #FDFEFE;
-        background-color: #805b96;
-        border-color: #805b96;
+        background-color: #59607b;
+        border-color: #59607b;
     }
     .report_summary_title
     {

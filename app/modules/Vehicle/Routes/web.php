@@ -20,9 +20,14 @@ Route::get('/vehicles/{id}/ota','VehicleController@vehicleOta')->name('vehicle.o
 Route::post('/vehicle/{id}/ota-update','VehicleController@updateOta')->name('vehicles.ota.update.p');
 
 Route::get('/vehicles/{id}/playback-page','VehicleController@playbackPageInTrack')->name('vehicles.playback.page');
+/*
+#HIDE
 Route::get('/vehicles/{id}/playback','VehicleController@playbackHMap')->name('vehicles.playback');
-
+*/
+/*
+#HIDE
 Route::post('/vehicles/location-playback','VehicleController@hmapLocationPlayback')->name('vehicles.location-playback');
+*/
 
 Route::get('/vehicle-driver-log','VehicleController@vehicleDriverLogList')->name('vehicle-driver-log');
 
@@ -128,24 +133,25 @@ Route::post('/edit-already-existing','VehicleController@saveEditUploads')->name(
 	});
 
 Route::group(['middleware' => ['web'] ,'namespace' => 'App\Modules\Vehicle\Controllers' ] , function () {
-  // new playback
+ /*
+ #HIDE
   Route::get('/vehicle_playback','VehicleController@playbackPage')->name('vehicle_playback');
   Route::post('/vehicle_playback_data','VehicleController@playbackPageData')->name('vehicle_playback_data');
-
+ */
 });
 
 Route::group(['middleware' => ['web','auth','role:operations'] , 'namespace' => 'App\Modules\Vehicle\Controllers' ] , function () {
 
  	Route::post('/vehicle_replay','VehicleController@playbackPageData')->name('vehicle_playback_data');
 
-
+ 	/*
+ 	#HIDE
  	Route::get('/gps-map-public','MapLocationController@gpsMapLocationPublic')->name('gps.map.public');
 	Route::post('/gps-map/location-track-public','MapLocationController@gpsMapLocationTrackPublic')->name('gps.map.location.track.public');
-
-
+	*/
+	
 	// Route::get('/gps-km-map','MapLocationController@gpsKmMapLocation')->name('gps.km.map');
 	// Route::post('/gps-km-map/location-track','MapLocationController@gpsKmMapLocationTrack')->name('gps.km.map.location.track')
-
 });
 Route::group(['middleware' => ['web','auth','role:operations'] ,'namespace' => 'App\Modules\Vehicle\Controllers' ] , function () 
 {

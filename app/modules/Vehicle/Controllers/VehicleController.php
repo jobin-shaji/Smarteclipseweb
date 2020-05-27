@@ -1465,7 +1465,6 @@ class VehicleController extends Controller
          $get_vehicle=Vehicle::find($decrypted_id);
         $vehicle_type=VehicleType::find($get_vehicle->vehicle_type_id);
         return view('Vehicle::vehicle-playback-in-track',['vehicle_id' => $decrypted_id,'vehicle_type' =>$vehicle_type,'vehicle'=>$get_vehicle] );
-
     }
     public function playbackHMap(Request $request){
         $decrypted_id = Crypt::decrypt($request->id);
@@ -1501,6 +1500,9 @@ class VehicleController extends Controller
 
         return view('Vehicle::invoice',['vehicles'=>$vehicles] );
     }
+
+    /*
+    #HIDE
 
     public function export(Request $request){
         $from = $request->fromDate;
@@ -1581,6 +1583,8 @@ class VehicleController extends Controller
         return $pdf->download('Invoice.pdf');
     }
 
+    */
+
     // public function locationPlayback(Request $request){
     //     $gpsdata=GpsData::Select(
     //         'latitude as lat',
@@ -1621,6 +1625,9 @@ class VehicleController extends Controller
     //     }
     //     return response()->json($response_data);
     // }
+
+    /*
+    #HIDE
 
 
     public function locationPlayback(Request $request){
@@ -1720,7 +1727,10 @@ class VehicleController extends Controller
 
     return response()->json($response_data);
 }
+*/
 
+    /*
+    #HIDE
 
     public function hmapLocationPlayback(Request $request)
     {
@@ -1825,6 +1835,7 @@ class VehicleController extends Controller
         }
         return response()->json($response_data);
     }
+    */
   public function playBackForLine($vehicleID,$fromDate,$toDate){
     $playBackDataList=array();
     $playback=array();
@@ -1868,8 +1879,8 @@ class VehicleController extends Controller
    }
 
     public function playBackForMark_Route($vehicleID,$fromDate,$toDate){
-        $playBackDataList=array();
-        $playback = array();
+        $playBackDataList  = array();
+        $playback          = array();
         $gpsdata=GpsData::Select(
             'latitude as lat',
             'longitude as lng',
@@ -2082,9 +2093,14 @@ class VehicleController extends Controller
 
 
     // --------------playback page-------------------------------------
+   /*
+   #HIDE
     public function playbackPage(){
        return view('Vehicle::vehicle-playback-window');
     }
+    */
+    /*
+   #HIDE
      public function playbackPageData(Request $request){
       $vehicle_id=$request->vehicle_id;
       $start_date=$request->start_date;
@@ -2125,6 +2141,7 @@ class VehicleController extends Controller
 
         return response()->json($response_data);
     }
+    */
 
     //////////////////////////////////////RULES/////////////////////////////
     // vehicle create rules
@@ -2380,20 +2397,18 @@ class VehicleController extends Controller
 
     public function vehiclePlayback(Request $request)
     {
-
-        $vehicleid = $request->vehicleid;
-        $from_date =  date("Y-m-d H:i:s", strtotime($request->fromDateTime));
-        $to_date   =  date("Y-m-d H:i:s", strtotime($request->toDateTime));
-        $get_vehicle = Vehicle::find($vehicleid);
-        $offset = $request->offset;
+        $vehicleid          =  $request->vehicleid;
+        $from_date          =  date("Y-m-d H:i:s", strtotime($request->fromDateTime));
+        $to_date            =  date("Y-m-d H:i:s", strtotime($request->toDateTime));
+        $get_vehicle        =  Vehicle::find($vehicleid);
+        $offset             =  $request->offset;
         if ($get_vehicle == null)
         {
-            $response_data = array(
+            return response()->json([
                 'status' => 'failed',
                 'message' => 'vehicle is not activated',
                 'code' => 0
-            );
-            return response()->json($response_data);
+            ]);
         }
         if ($offset == 0 || $offset == null)
         {
@@ -2405,87 +2420,39 @@ class VehicleController extends Controller
             $limit = 30;
             $start_offset = $offset * $limit;
         }
-
-        $gps_id = $get_vehicle->gps_id;
-
-        $count_of_gpsdata = GpsData::where('device_time', '>=', $from_date)
-                            ->where('device_time', '<=', $to_date)
-                            ->where('gps_id', $gps_id)
-                            ->whereNotNull('latitude')
-                            ->whereNotNull('longitude')
-                            ->where('gps_fix',1)
-                            ->orderBy('device_time', 'asc')
-                            ->count();
-        $total_index = ceil($count_of_gpsdata / 30);
-
-        $track_data = GpsData::select('id',
-                                      'latitude as latitude',
-                                      'longitude as longitude',
-                                      'lat_dir as latitude_dir',
-                                      'lon_dir as longitude_dir',
-                                      'heading as angle',
-                                      'vehicle_mode as vehicleStatus',
-                                      'speed',
-                                      'device_time as dateTime')
-                                      ->where('device_time', '>=', $from_date)
-                                      ->where('device_time', '<=', $to_date)
-                                      ->where('gps_id', $gps_id)
-                                      ->offset($start_offset)
-                                      ->limit($limit)
-                                      ->whereNotNull('latitude')
-                                      ->whereNotNull('longitude')
-                                      ->where('gps_fix',1)
-                                      ->orderBy('device_time', 'asc')
-                                      ->get();
-        $km_data = GpsData::select('id','device_time as dateTime')
-                                      ->where('device_time', '>=', $request->fromDateTime)
-                                      ->where('device_time', '<=', $request->toDateTime)
-                                      ->where('gps_id', $gps_id)
-                                      ->where('gps_fix',1)
-                                      ->offset($start_offset)
-                                      ->limit($limit)
-                                      ->orderBy('device_time', 'asc')
-                                      ->get();
-
-        $alerts_list    =   [];
-
+        $gps_id           = $get_vehicle->gps_id;
+        $gps_data_table   = "gps_data_".date("Ymd",strtotime($from_date));
+        $count_of_gpsdata = (new GpsData())->getCountGpsData($from_date,$to_date,$gps_id,$gps_data_table);                  
+        $total_index      = ceil($count_of_gpsdata / 30);
+        $track_data       = (new GpsData())->getTrackData($from_date,$to_date,$gps_id,$start_offset,$limit,$gps_data_table);
+ 
+        
+        $alerts_list            =   [];
         if($track_data->count() > 0)
         {
-          $from_date_time   = $track_data->first()->dateTime;
-          $last_date_time   = $track_data[$track_data->count()-1]->dateTime;
-          $alerts_list      = Alert::select('device_time','gps_id','alert_type_id')->where('device_time', '>=' ,$from_date_time)
-                                    ->where('device_time', '<=' ,$last_date_time)
-                                    ->where('gps_id',$gps_id)
-                                    ->whereNotIn('alert_type_id',[17,18,23,24])
-                                    ->with('alertType')
-                                    ->get();
-        //  $from_date =  date("Y-m-d H:i:s", strtotime($request->fromDateTime));
-        // $to_date   =  date("Y-m-d H:i:s", strtotime($request->toDateTime));
-        }
-
-        if($km_data->count() > 0)
-        {
-            $from_date_time   = $km_data->first()->dateTime;
-            $last_date_time   = $km_data[$km_data->count()-1]->dateTime;
-            $km_updates      = KmUpdate::select('device_time','gps_id','km')
-            ->where('device_time', '>=' ,$from_date_time)
-            ->where('device_time', '<=' ,$last_date_time)
-            ->where('gps_id',$gps_id)
-            ->get();
-        }
-
-        if ($track_data->count() > 0)
-        {
+            $from_date_time   = $track_data->first()->dateTime;
+            $last_date_time   = $track_data[$track_data->count()-1]->dateTime;
+            $alerts_list      = Alert::select('device_time','gps_id','alert_type_id','latitude','longitude')->where('device_time', '>=' ,$from_date_time)
+                                        ->where('device_time', '<=' ,$last_date_time)
+                                        ->where('gps_id',$gps_id)
+                                        ->whereNotIn('alert_type_id',[17,18,23,24])
+                                        ->with('alertType')
+                                        ->get();
+            $km_updates       = KmUpdate::select('device_time','gps_id','km')
+                                         ->where('device_time', '>=' ,$from_date_time)
+                                         ->where('device_time', '<=' ,$last_date_time)
+                                         ->where('gps_id',$gps_id)
+                                         ->get();
             $response_data = array(
-                'status'       => 'success',
-                'message'      => 'success',
-                'code'         => 1,
-                'vehicle_type' => $get_vehicle->vehicleType->name,
-                'total_offset' => $total_index,
-                'playback'     => $track_data,
-                'km_updates'   => $km_updates,
-                'alerts'       => $alerts_list
-            );
+                                'status'       => 'success',
+                                'message'      => 'success',
+                                'code'         => 1,
+                                'vehicle_type' => $get_vehicle->vehicleType->name,
+                                'total_offset' => $total_index,
+                                'playback'     => $track_data,
+                                'km_updates'   => $km_updates,
+                                'alerts'       => $alerts_list
+                                );
         }
         else
         {
