@@ -140,7 +140,7 @@ class DeviceReturn extends Model
 					->get();
 	}
 
-	public function isDeviceReturnReguested($gps_id)
+	public function isDeviceReturnRequested($gps_id)
 	{
 		return self::select('gps_id')
 			->where('gps_id',$gps_id)

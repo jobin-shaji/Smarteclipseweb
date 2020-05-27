@@ -51,7 +51,7 @@ class DeviceReassignController extends Controller
         if($is_imei_exists == 1)
         {
             $device_details         =   (new Gps())->getDeviceHierarchyDetails($imei);
-            $is_device_returned     =   (new DeviceReturn())->isDeviceReturnReguested($device_details->id); 
+            $is_device_returned     =   (new DeviceReturn())->isDeviceReturnRequested($device_details->id); 
             if($is_device_returned  ==  0)
             {
                 return view('DeviceReassign::device-reassign-create',['data'=>$device_details]);
