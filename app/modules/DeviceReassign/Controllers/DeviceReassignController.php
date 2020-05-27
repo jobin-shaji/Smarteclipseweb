@@ -40,10 +40,18 @@ class DeviceReassignController extends Controller
     {
         return view('DeviceReassign::device-reassign-create');
     }
-    /**
+    /*
+     *
      * 
      */
-
+    // public function imeiValidation(Request $request)
+    // {
+    //     dd($request->imei);
+    // }
+    /*
+     *
+     * 
+     */
     public function hierarchylist(Request $request)
     {   
         $imei  =   Gps::select('id')->where('imei',$request->imei)->count();

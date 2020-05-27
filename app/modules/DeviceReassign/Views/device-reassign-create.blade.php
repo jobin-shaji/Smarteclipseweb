@@ -40,7 +40,7 @@ Create Device Reassign
                   </div>
                   <div class="row">
                     <div class="col-md-3 ">
-                      <button type="submit" class="btn btn-primary btn-md form-btn ">SUBMIT</button>
+                      <button type="submit" class="btn btn-primary btn-md form-btn" onclick="imeiValidation()">SUBMIT</button>
                     </div>
                   </div>
                 </div>
