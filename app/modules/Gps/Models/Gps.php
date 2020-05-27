@@ -25,6 +25,11 @@ class Gps extends Model
 
     protected $fillable=[ 'serial_no','icc_id','imsi','imei','manufacturing_date','e_sim_number','batch_number','model_name','version','user_id','status','device_time','employee_code','refurbished_status'];
 
+    public function vehicleGps()
+    {
+        return $this->hasOne('App\Modules\Vehicle\Models\VehicleGps');
+    }
+
     //join user table with gps table
     public function user()
     {
@@ -36,10 +41,6 @@ class Gps extends Model
         return $this->hasMany('App\Modules\Gps\Models\GpsTransfer');
     }
 
-    public function device_return()
-    {
-        return $this->hasOne('App\Modules\DeviceReturn\Models\DeviceReturn','gps_id','id');
-    }
 
     public function gpsdata()
     {
