@@ -182,7 +182,7 @@ Assign Servicer
     <div class="form-group row" style="float:none!important">
     <label for="fname" class="col-md-6 text-right control-label col-form-label">RC Book</label>
     <div class="form-group has-feedback">
-    <input type="file" class="form-control {{ $errors->has('file') ? ' has-error' : '' }}" placeholder="Choose File" name="file" id="file" value="{{ old('file') }}" required> 
+    <input type="file" class="form-control {{ $errors->has('file') ? ' has-error' : '' }}" placeholder="Choose File" name="file" id="file" value="{{ old('file') }}" required accept="image/png, image/jpeg"> 
     </div>
     @if ($errors->has('file'))
     <span class="help-block">
@@ -193,7 +193,7 @@ Assign Servicer
     <div class="form-group row" style="float:none!important">
     <label for="fname" class="col-md-6 text-right control-label col-form-label">Installation Photo</label>
     <div class="form-group has-feedback">
-    <input type="file" class="form-control {{ $errors->has('installation_photo') ? ' has-error' : '' }}" placeholder="Choose File" name="installation_photo" id="installation_photo" value="{{ old('installation_photo') }}" required> 
+    <input type="file" class="form-control {{ $errors->has('installation_photo') ? ' has-error' : '' }}" placeholder="Choose File" name="installation_photo" id="installation_photo" value="{{ old('installation_photo') }}" required accept="image/png, image/jpeg"> 
     </div>
     @if ($errors->has('installation_photo'))
     <span class="help-block">
@@ -205,7 +205,7 @@ Assign Servicer
     <div class="form-group row" style="float:none!important">
     <label for="fname" class="col-md-6 text-right control-label col-form-label">Activation Photo</label>
     <div class="form-group has-feedback">
-    <input type="file" class="form-control {{ $errors->has('activation_photo') ? ' has-error' : '' }}" placeholder="Choose File" name="activation_photo" id="activation_photo" value="{{ old('activation_photo') }}" required> 
+    <input type="file" class="form-control {{ $errors->has('activation_photo') ? ' has-error' : '' }}" placeholder="Choose File" name="activation_photo" id="activation_photo" value="{{ old('activation_photo') }}" required accept="image/png, image/jpeg"> 
     </div>
     @if ($errors->has('activation_photo'))
     <span class="help-block">
@@ -216,7 +216,7 @@ Assign Servicer
     <div class="form-group row" style="float:none!important">
     <label for="fname" class="col-md-6 text-right control-label col-form-label">Vehicle Photo</label>
     <div class="form-group has-feedback">
-    <input type="file" class="form-control {{ $errors->has('vehicle_photo') ? ' has-error' : '' }}" placeholder="Choose File" name="vehicle_photo" id="vehicle_photo" value="{{ old('vehicle_photo') }}" required> 
+    <input type="file" class="form-control {{ $errors->has('vehicle_photo') ? ' has-error' : '' }}" placeholder="Choose File" name="vehicle_photo" id="vehicle_photo" value="{{ old('vehicle_photo') }}" required accept="image/png, image/jpeg"> 
     </div>
     @if ($errors->has('vehicle_photo'))
     <span class="help-block">

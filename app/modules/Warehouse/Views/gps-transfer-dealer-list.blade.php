@@ -31,9 +31,9 @@
                     <div class="col-lg-3 col-md-2"> 
                       <div class="form-group">                      
                         <label> From Date</label>
-                         <div class="input-group date datepicker">
-                        <input type="text" class="form-control datepicker" id="fromDate" name="fromDate" onkeydown="return false" autocomplete="off"  required>
-                        <span class="input-group-addon" style="z-index: auto;">
+                         <div class="input-group">
+                          <input type="text" class="device_report form-control" id="from_date" name="from_date" onkeydown="return false" autocomplete="off"  required>
+                          <span class="input-group-addon" style="z-index: auto;">
                           <span class="calendern"  style=""><i class="fa fa-calendar"></i></span>
                         </span>
                       </div>
@@ -42,8 +42,8 @@
                     <div class="col-lg-3 col-md-2"> 
                       <div class="form-group">                     
                         <label> To Date</label>
-                        <div class="input-group date datepicker">
-                        <input type="text" class="form-control datepicker" id="toDate" name="toDate" onkeydown="return false" autocomplete="off" required>
+                        <div class="input-group">
+                        <input type="text" class="device_report form-control " id="to_date" name="to_date" onkeydown="return false" autocomplete="off" required>
                         <span class="input-group-addon" style="z-index: auto;">                 
                           <span class="calendern"  style=""><i class="fa fa-calendar"></i></span>
                         </span>

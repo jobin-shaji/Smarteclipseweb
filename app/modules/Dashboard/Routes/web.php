@@ -2,8 +2,11 @@
 Route::group(['middleware' => ['web','auth'] ,'namespace' => 'App\Modules\Dashboard\Controllers' ] , function () {
      Route::get('/home', 'DashboardController@index')->name('dashboard');
         Route::post('/dash-count','DashboardController@dashCount')->name('dash.count');
-       
-        Route::post('/dashboard/getlocation','DashboardController@getLocation')->name('dashboard.getlocation');
+        // hide for remove 
+        // 2020-05-18
+        // Route::post('/dashboard/getlocation','DashboardController@getLocation')->name('dashboard.getlocation');
+        // hide for remove 
+        // 2020-05-18
         Route::post('/dashboard-vehicle-list','DashboardController@vehicleList')->name('dashboard-vehicle-list');
         Route::post('/vehicle-detail','DashboardController@vehicleDetails')->name('vehicle.detail');
         Route::post('/dash-vehicle-track','DashboardController@dashVehicleTrack')->name('dash.vehicle.track');

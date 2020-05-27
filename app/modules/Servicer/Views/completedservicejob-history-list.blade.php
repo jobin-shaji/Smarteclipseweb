@@ -58,7 +58,7 @@ $key        = (isset($_GET['completed_search_key'])) ? $_GET['completed_search_k
          
   </form>
     </div> 
-          <table class="table table-hover table-bordered  table-striped datatable"  style="width:100%;text-align: center" >
+          <table class="table table-hover table-bordered  table-striped datatable"  style="width:97%;text-align: center;table-layout: fixed;margin-left: 18px !important;" >
           <thead class="indigo white-text">
                             <tr>
                             <th><b>SL.No</b></th>
@@ -69,27 +69,17 @@ $key        = (isset($_GET['completed_search_key'])) ? $_GET['completed_search_k
                                 <th><b>Description<b></th>
                                 <th><b>Location<b></th>
                                 <th><b>Job Date<b></th>
-                                <th>Job Completed Date</th> 
+                                <th><b>Job Completed Date</b></th> 
                                 <!-- <th><b>Job Type<b></th>   -->
                                 <th><b>Action</b></th>  
                               </tr>
                             </thead>
-                            <tbody>
+                            <tbody style="word-break: break-all;">
                               @if($servicer_jobs->count() == 0)
-                                    <tr>
-                                      <td></td>
-                                      <td></td>
-                                      <td></td>
-                                      <td></td>
-                                      <td><b style="float: right;margin-right: -13px">No Data Available</b></td>
-                                      <td></td>
-                                      <td></td>
-                                      <td></td>
-                                      <td></td>
-                                      <td></td>
-                                      
+                                <tr>
+                                  <td colspan="10"><b>No Data Available</b></td>    
                                 </tr>
-                                    @endif
+                              @endif
                               
               @foreach($servicer_jobs  as $key => $servicer_job)
                             

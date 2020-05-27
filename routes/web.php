@@ -43,6 +43,9 @@ Route::get('/privacy-policy', function () {
          }
 });
 
+Route::get('/testmail','TestController@testMail')->name('test-mail');
+
+
 Route::get('/logout', function(){
   Auth::logout();
   return Redirect::to('login');

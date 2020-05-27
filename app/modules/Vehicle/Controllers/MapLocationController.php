@@ -31,13 +31,17 @@ use Config;
 
 class MapLocationController extends Controller {
 
+    /*
+    #HIDE
     public function gpsMapLocation(Request $request)
     {
        
         $gps = Gps::select('id','imei','serial_no')->get();
         return view('Vehicle::gps-location-tracker',['gps' => $gps]);
     }
-
+    */
+    /*
+    #HIDE
     public function gpsMapLocationTrack(Request $request)
     {
         $gps_id=$request->gps_id;
@@ -62,6 +66,7 @@ class MapLocationController extends Controller {
                         );
         return response()->json($response_data); 
     }
+    */
 
     public function gpsKmMapLocation(Request $request)
     {
@@ -90,14 +95,17 @@ class MapLocationController extends Controller {
 
 
 
-
+    /*
+    #HIDE
     public function gpsMapLocationPublic(Request $request)
     {
        
         $gps = Gps::select('id','imei','serial_no')->get();
         return view('Vehicle::gps-location-tracker-public',['gps' => $gps]);
     }
-
+    */
+    /*
+    #HIDE
     public function gpsMapLocationTrackPublic(Request $request)
     {
         $gps_id=$request->gps_id;
@@ -122,18 +130,7 @@ class MapLocationController extends Controller {
                         );
         return response()->json($response_data); 
     }
+    */
 
  
-
-
-
-
-
-
-
-
-
-
-
-
 }

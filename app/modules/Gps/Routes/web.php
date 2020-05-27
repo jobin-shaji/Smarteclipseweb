@@ -86,10 +86,11 @@ Route::group(['middleware' => ['web','auth','role:dealer|root|client|sub_dealer|
 });
 
 Route::group(['middleware' => ['web','auth','role:operations'] ,'namespace' => 'App\Modules\Gps\Controllers' ] , function() {
-
+	/*
+	#HIDE
 	Route::get('/operation-gps-data','GpsController@allgpsListPage')->name('operation-gps-data');
 	Route::post('/operators-alldata-list','GpsController@getAllData')->name('operators-alldata-list');
-
+	*/
 	Route::get('/vltdata','GpsController@vltdataListPage')->name('vlt-data');
 	Route::get('/test','GpsController@testKm')->name('testkm');
 	Route::post('/vltdata-list','GpsController@getVltData')->name('vltdata-list');
@@ -98,13 +99,19 @@ Route::group(['middleware' => ['web','auth','role:operations'] ,'namespace' => '
 	Route::post('/get-gps-data-hlm','GpsController@getGpsAllDataHlm')->name('get-gps-data-hlm');
 
 	Route::get('/privacy-policy','GpsController@privacyPolicy')->name('privacy-policy');
+	/*
+	#HIDE
 	Route::get('/bth-data','GpsController@allBthData')->name('bth-data');
 	Route::post('/allbthdata-list','GpsController@getAllBthData')->name('allbthdata-list');
+	*/
 	Route::get('/id/{id}/pased','GpsController@pasedData')->name('id-pased');
 	// Route::post('/alldata-list','GpsController@getAllData')->name('alldata-list');
 	Route::get('/gps-data-summary','GpsController@travelSummery')->name('gps-data-summery');
 	Route::post('/gps.search-travel-summary','GpsController@travelSummeryData')->name('gps.search-travel-summary.p');
+	/*
+	#HIDE
 	Route::get('/all-gps-data','GpsController@allgpsDataListPage')->name('all-gps-data');
+	*/
 	Route::post('/allgpsdata-list','GpsController@getAllGpsData')->name('allgpsdata-list');
 	Route::post('/operations-setota','GpsController@operationsSetOtaInConsole')->name('operations-setota');
 
@@ -141,16 +148,27 @@ Route::group(['middleware' => ['web','auth','role:operations'] ,'namespace' => '
 
 
 Route::group(['middleware' => ['web','auth','role:operations'] , 'namespace' => 'App\Modules\Gps\Controllers' ] , function() {
+	
 
 	Route::get('/gps-data','GpsController@allpublicgpsListPage')->name('gps-data');
-	// Route::post('/alldata-list','GpsController@getPublicAllData')->name('alldata-list');
+	Route::post('/alldata-list','GpsController@getPublicAllData')->name('alldata-list');
+	
+	/*
+	#HIDE
 	Route::post('/get-gps-data','GpsController@getGpsAllData')->name('get-gps-data');
+	*/
+	/*
+	#HIDE
 	Route::get('/all-gps-data-public','GpsController@allPublicgpsDataListPage')->name('all-gps-data-public');
 	Route::post('/allgpsdata-list-public','GpsController@getPublicAllGpsData')->name('allgpsdata-list-public');
+	*/
 	Route::post('/setota','GpsController@setOtaInConsole')->name('setota');
 	Route::post('/get-gps-data-bth','GpsController@getGpsAllDataBth')->name('get-gps-data-bth');
 	Route::post('/get-gps-data-hlm','GpsController@getGpsAllDataHlm')->name('get-gps-data-hlm');
+	/*
+	#HIDE
 	Route::post('/alldata-list','GpsController@getPublicAllData')->name('alldata-list');
+	*/
 	Route::get('/public-vltdata','GpsController@publicVltdataListPage')->name('public-vlt-data');
 	Route::post('/public-vltdata-list','GpsController@getPublicVltData')->name('public-vltdata-list');
 	Route::post('/unprocessed-setota','GpsController@setOtaInUnprocessed')->name('unprocessed.setota');
