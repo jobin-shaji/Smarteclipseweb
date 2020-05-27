@@ -8,6 +8,7 @@
         <div class="row">
             <div class="col-12 d-flex no-block align-items-center">
                 <b> Transferred List - Distributors To Dealers</b>
+                <span id='close' onclick='window.history.go(-1); return false;'>x</span>
             </div>
         </div>
     </div>
@@ -73,16 +74,32 @@
 <style>
     .table .thead-color th {
         color: #FDFEFE;
-        background-color: #805b96;
-        border-color: #805b96;
+        background-color: #59607b;
+        border-color: #59607b;
     }
     .search_dates
     {
         margin-left: 260px;
         padding: 25px;
     }
+    #close {
+        float:right;
+        display:inline-block;
+        padding:2px 5px;
+        background:#b0b6ce;
+        margin-left: 790px;
+    }
+    #close:hover {
+        float:right;
+        display:inline-block;
+        padding:2px 5px;
+        background:#b0b6ce;
+        color:#fff;
+    }
     
 </style>
-
+@section('script')
+    <script>$('#close').on('click', function () { $('#close').hide(); }); </script>
+@endsection
 @endsection
 

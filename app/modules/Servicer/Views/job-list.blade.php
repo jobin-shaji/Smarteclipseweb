@@ -55,12 +55,12 @@ $key        = (isset($_GET['new_installation_search_key'])) ? $_GET['new_install
          
   </form>
     </div> 
-    <table class="table table-hover table-bordered  table-striped datatable"  style="width:95%;margin-left:3%!important;text-align: center" >
+    <table class="table table-hover table-bordered  table-striped datatable"  style="width:95%;margin-left:3%!important;text-align: center;table-layout: fixed;" >
          
             <!-- <table class="table table-hover table-bordered  table-striped datatable"  style="width:70%;text-align: center" > -->
           <thead class="indigo white-text">
                             <tr>
-                            <th><b>SL.No</b></th>
+                                <th><b>SL.No</b></th>
                                 <th><b>Job Code</b></th>
                                 <th><b>End User Details</b></th>
                                 <!-- <th><b>Assignee<b></th> it shows username of dealer/subdealer.The assignee
@@ -73,7 +73,7 @@ $key        = (isset($_GET['new_installation_search_key'])) ? $_GET['new_install
                                 <th><b>Action</b></th>  
                               </tr>
                             </thead>
-                            <tbody>
+                            <tbody style="word-break: break-all;">
                               @if($servicer_jobs->count() == 0)
                                     <tr>
                                       <td></td>

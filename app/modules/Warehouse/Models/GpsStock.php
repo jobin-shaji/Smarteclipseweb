@@ -363,4 +363,50 @@ class GpsStock extends Model
                     DB::raw('COUNT(gps_stocks.gps_id) as count'))->get();
     }
 
+    public function getInStockCountOfManufacturer($manufacturer_id)
+    {
+        return self::whereIn('inserted_by', $manufacturer_id)
+                    ->whereNull('dealer_id')
+                    ->whereNull('subdealer_id')
+                    ->whereNull('trader_id')
+                    ->whereNull('client_id')
+                    ->where(function ($query) {
+                    $query->where('is_returned', '=', 0)
+                    ->orWhere('is_returned', '=', NULL);
+                    })->count();
+    }
+
+    public function getInStockCountOfDistributor($distributor_ids)
+    {
+        return self::whereIn('dealer_id',$distributor_ids)
+                    ->whereNull('subdealer_id')
+                    ->whereNull('trader_id')
+                    ->whereNull('client_id')
+                    ->where(function ($query) {
+                    $query->where('is_returned', '=', 0)
+                    ->orWhere('is_returned', '=', NULL);
+                    })->count();
+    }
+
+    public function getInStockCountOfDealer($dealer_ids)
+    {
+        return self::whereIn('subdealer_id',$dealer_ids)
+                    ->whereNull('trader_id')
+                    ->whereNull('client_id')
+                    ->where(function ($query) {
+                    $query->where('is_returned', '=', 0)
+                    ->orWhere('is_returned', '=', NULL);
+                    })->count();
+    }
+
+    public function getInStockCountOfSubDealer($sub_dealer_ids)
+    {
+        return self::whereIn('trader_id',$sub_dealer_ids)
+                    ->whereNull('client_id')
+                    ->where(function ($query) {
+                    $query->where('is_returned', '=', 0)
+                    ->orWhere('is_returned', '=', NULL);
+                    })->count();
+    }
+
 }

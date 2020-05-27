@@ -36,7 +36,7 @@
                           <div class="form-group">                    
                             <label> From Date</label>
                             <input type="text" class="datepicker form-control" id="fromDate" name="fromDate" onkeydown="return false">  
-                            <span class="input-group-addon" style="z-index: 99;">
+                            <span class="input-group-addon" style="z-index: auto;">
                                 <span class="calender1"  style=""><i class="fa fa-calendar"></i></span>
                               </span>
                           </div>
@@ -46,7 +46,7 @@
                           <div class="form-group">                    
                             <label> To Date</label>
                             <input type="text" class="datepicker form-control" id="toDate" name="toDate" onkeydown="return false">
-                            <span class="input-group-addon" style="z-index: 99;">
+                            <span class="input-group-addon" style="z-index: auto;">
                                 <span class="calender1"  style=""><i class="fa fa-calendar"></i></span>
                               </span>
                           </div>

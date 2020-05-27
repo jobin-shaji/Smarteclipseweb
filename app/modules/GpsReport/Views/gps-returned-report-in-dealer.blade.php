@@ -31,7 +31,7 @@
                                                                 <label> From Date</label>
                                                                 <div class="input-group">  
                                                                     <input type="text" class="device_report form-control {{ $errors->has('from_date') ? ' has-error' : '' }}"  name="from_date" id="from_date" onkeydown="return false;" value="{{date('d-m-Y', strtotime($from_date))}}" autocomplete="off" required>
-                                                                    <span class="input-group-addon" style="z-index: 99;">
+                                                                    <span class="input-group-addon" style="z-index: auto;">
                                                                         <span class="calendern"><i class="fa fa-calendar"></i></span>
                                                                     </span>
                                                                 </div>
@@ -42,7 +42,7 @@
                                                                 <label> To Date</label>
                                                                 <div class="input-group">  
                                                                     <input type="text" class="device_report form-control {{ $errors->has('to_date') ? ' has-error' : '' }}"  name="to_date" id="to_date" onkeydown="return false;" value="{{date('d-m-Y', strtotime($to_date))}}" autocomplete="off" required>
-                                                                    <span class="input-group-addon" style="z-index: 99;">
+                                                                    <span class="input-group-addon" style="z-index: auto;">
                                                                         <span class="calendern"><i class="fa fa-calendar"></i></span>
                                                                     </span>
                                                                 </div>
@@ -203,8 +203,8 @@
 <style>
     .table .thead-color th {
         color: #FDFEFE;
-        background-color: #805b96;
-        border-color: #805b96;
+        background-color: #59607b;
+        border-color: #59607b;
     }
     .report_summary_title
     {
