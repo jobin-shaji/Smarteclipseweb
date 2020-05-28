@@ -44,7 +44,8 @@ Create Device Reassign
                     </div>
                   </div>
                 </div>
-              </form>   
+              </form>  
+              <div class="loader_reassign" id="loader"></div> 
               @if(isset($data)) 
               <div class="container-fluid">
                 <div class="card-body">
@@ -211,5 +212,28 @@ Create Device Reassign
 </section>
 @section('script')
 <script src="{{asset('js/gps/device-reassign.js')}}"></script> 
+<style>
+.loader_reassign {
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  width: 120px;
+  height: 120px;
+  margin-left: 45%;
+  margin-top: 3%;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+}
+
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+</style>
 @endsection
 @endsection

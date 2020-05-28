@@ -4,6 +4,7 @@ function getUrl(){
 
 $(document).ready(function () {
   $('#count_data').hide();
+  $('#loader').hide();
 });
 
 function searchData()
@@ -78,6 +79,7 @@ function reassigndevice()
                 'client':client,
                 'vehicle':vehicle
               };
+              $('#loader').show();
               backgroundPostData(url,data,'deviceReassign',{alert:true});
               Reassignredirect();
           }
@@ -101,4 +103,5 @@ function Reassignredirect()
   $('#preview').hide();
   $('#count_data').hide();
   $('#dropdown_menu').hide();
+  $('#loader').hide();
 }
