@@ -93,8 +93,6 @@
           </div>
           </div>
 
-
-
          <div class='col-sm-3' style="margin-top: 24px;">
 
            <button class="btn btn-primary btn-sm start_button buton-new-cl" onclick="startPlayBack()" id="btnPlay">Play</button>
@@ -103,13 +101,11 @@
 
               <button class="btn btn-primary btn-sm buton-new-c2" onclick="stopPlayback()" id="btnPlay">Reset</button>
         </div>
-
-
-
-
       </div>
-
-
+      <div class="alert alert-danger alert-dismissible text-block" style="margin-left: 297px;width: 650px;">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <span><b>This feature is currently in maintenance. Data prior to 28/05/2020 will not be available.</b></span>
+      </div>
   </div>
 
 
