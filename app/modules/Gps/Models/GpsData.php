@@ -110,6 +110,10 @@ class GpsData extends Model
         'lng' => 'float',
     ];
 
+    public function checkIfTableExistInDataBase($gps_data_table)
+    {
+        return DB::select("SELECT TABLE_NAME AS table_name FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = '".config('eclipse.database_name')."' and TABLE_NAME like '$gps_data_table'");
+    }
     
     public function getCountGpsData($from_date = null,$to_date = null,$gps_id =null,$gps_data_table = null)
     {

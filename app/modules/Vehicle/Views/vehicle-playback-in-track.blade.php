@@ -459,7 +459,7 @@
                         $(".start_button").css("display","none");
                         $('.left-alert-box').css('display','none');
                         $("#lorder-cover-bg-image").css("display","none");
-                        alertify.alert('There is no data');
+                        alertify.alert('There is no data').setHeader('<em> PLAYBACK</em>');
                         return false;
                        }
                      }
@@ -493,13 +493,13 @@
                          {
          
          
-                              alertify.alert('Something went wrong');
+                              alertify.alert('Something went wrong').setHeader('<em> PLAYBACK</em>');
                               return false;
                              // console.log('something went wrong with the server data');
                          }
                          else
                          {
-                              alertify.alert('There is no data');
+                              alertify.alert('There is no data').setHeader('<em> PLAYBACK</em>');
                               return false;
                              // console.log('No more data to display');
                          }
