@@ -142,7 +142,7 @@
                           <select class="form-control  select2 {{ $errors->has('country_id') ? ' has-error' : '' }}" id="country_id" name="country_id" required>
                           <option selected disabled>Select Country</option>
                           @foreach($countries as $country)
-                          <option<?php if($country->id=="101"){echo "selected";}?>value="{{$country->id}}">{{$country->name}}</option>  
+                          <option <?php if($country->id=="101") { echo "selected" ;}?> value="{{$country->id}}">{{$country->name}}</option>  
                           @endforeach
                           </select>
                         </div>
