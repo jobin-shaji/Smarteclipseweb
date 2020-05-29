@@ -18,6 +18,7 @@ yarn-error.log
 /public/storage/log
 /public/documents/
 /public/service_engineer_application/
-
+/public/alerts/
+/public/logo/
 
 
