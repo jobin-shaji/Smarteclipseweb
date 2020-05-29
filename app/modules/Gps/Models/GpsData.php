@@ -115,19 +115,19 @@ class GpsData extends Model
         return DB::select("SELECT TABLE_NAME AS table_name FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = '".config('eclipse.database_name')."' and TABLE_NAME like '$gps_data_table'");
     }
     
-    public function getCountGpsData($from_date = null,$to_date = null,$gps_id =null,$gps_data_table = null)
+    public function getCountGpsData($from_date = null,$to_date = null,$gps_ids =null,$gps_data_table = null)
     {
         return DB::table($gps_data_table)
                 ->where('device_time', '>=', $from_date)
                 ->where('device_time', '<=', $to_date)
-                ->where('gps_id', $gps_id)
+                ->whereIn('gps_id', $gps_ids)
                 ->whereNotNull('latitude')
                 ->whereNotNull('longitude')
                 ->where('gps_fix',1)
                 ->orderBy('device_time', 'asc')
                 ->count(); 
     }
-    public function getTrackData($from_date = null,$to_date = null,$gps_id = null,$start_offset = null,$limit = null,$gps_data_table = null)
+    public function getTrackData($from_date = null,$to_date = null,$gps_ids = null,$start_offset = null,$limit = null,$gps_data_table = null)
     {
         return DB::table($gps_data_table)
                     ->select('id',
@@ -141,7 +141,7 @@ class GpsData extends Model
                             'device_time as dateTime')
                     ->where('device_time', '>=', $from_date)
                     ->where('device_time', '<=', $to_date)
-                    ->where('gps_id', $gps_id)
+                    ->whereIn('gps_id', $gps_ids)
                     ->offset($start_offset)
                     ->limit($limit)
                     ->whereNotNull('latitude')
