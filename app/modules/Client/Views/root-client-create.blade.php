@@ -124,7 +124,7 @@
                           <select class="form-control  select2 {{ $errors->has('country_id') ? ' has-error' : '' }}" id="country_id" name="country_id" required>
                           <option selected disabled>Select Country</option>
                           @foreach($countries as $country)
-                          <option <?php if($country->id=="178"){echo "selected";}?> value="{{$country->id}}">{{$country->name}}</option>  
+                          <option value="{{$country->id}}" @if($country->id==178){{"selected"}} @endif>{{$country->name}}</option>  
                           @endforeach
                           </select>
                         </div>
@@ -142,7 +142,7 @@
                           <select class="form-control  select2 {{ $errors->has('country_id') ? ' has-error' : '' }}" id="country_id" name="country_id" required>
                           <option selected disabled>Select Country</option>
                           @foreach($countries as $country)
-                          <option<?php if($country->id=="101"){echo "selected";}?>value="{{$country->id}}">{{$country->name}}</option>  
+                          <option value="{{$country->id}}" @if($country->id==101){{"selected"}} @endif>{{$country->name}}</option>  
                           @endforeach
                           </select>
                         </div>
@@ -163,7 +163,7 @@
 
                            @foreach($countries as $country) 
                            <!-- <option value="101">india</option>  -->
-                           <option <?php if($country->id=="101") { echo "selected" ;}?> value="{{$country->id}}">{{$country->name}}</option>
+                           <option value="{{$country->id}}" @if($country->id==101){{"selected"}} @endif>{{$country->name}}</option>
                            @endforeach
                           </select>
                         </div>
@@ -177,7 +177,7 @@
                     <div class="form-group row" style="float:none!important">
                       <div class="form-group has-feedback">
                       <label class="srequired col-sm-3 text-right control-label col-form-label">
-                        State&nbsp<font color="red">*</font></label>
+                        State & Ut's&nbsp<font color="red">*</font></label>
                         <select class="form-control select2 {{ $errors->has('state_id') ? ' has-error' : '' }}" id="state_id" name="state_id"   required>
                         <option selected disabled>Select Country First</option>
                         </select>   
