@@ -16,6 +16,7 @@ use App\Modules\Vehicle\Models\KmUpdate;
 use App\Modules\Route\Models\RouteArea;
 use App\Modules\Vehicle\Models\DocumentType;
 use App\Modules\Vehicle\Models\VehicleDriverLog;
+use App\Modules\Vehicle\Models\VehicleGps;
 use App\Modules\Ota\Models\OtaType;
 use App\Modules\Ota\Models\GpsOta;
 use App\Modules\Vehicle\Models\Document;
@@ -2397,11 +2398,17 @@ class VehicleController extends Controller
 
     public function vehiclePlayback(Request $request)
     {
-        $vehicleid          =  $request->vehicleid;
-        $from_date          =  date("Y-m-d H:i:s", strtotime($request->fromDateTime));
-        $to_date            =  date("Y-m-d H:i:s", strtotime($request->toDateTime));
-        $get_vehicle        =  Vehicle::find($vehicleid);
-        $offset             =  $request->offset;
+        $vehicleid           =   $request->vehicleid;
+        $from_date           =   date("Y-m-d H:i:s", strtotime($request->fromDateTime));
+        $to_date             =   date("Y-m-d H:i:s", strtotime($request->toDateTime));
+        $get_vehicle         =   Vehicle::find($vehicleid);
+        $gps_in_vehicle      =   [];
+        $get_gps_in_vehicle  =   (new VehicleGps())->getGpsDetailsBasedOnVehicleWithSingleDate($vehicleid,date("Y-m-d", strtotime($request->fromDateTime)));
+        foreach($get_gps_in_vehicle as $each_data)
+        {
+            $gps_in_vehicle[]   =   $each_data->gps_id;
+        }
+        $offset              =   $request->offset;
         if ($get_vehicle == null)
         {
             return response()->json([
@@ -2420,39 +2427,50 @@ class VehicleController extends Controller
             $limit = 30;
             $start_offset = $offset * $limit;
         }
-        $gps_id           = $get_vehicle->gps_id;
-        $gps_data_table   = "gps_data_".date("Ymd",strtotime($from_date));
-        $count_of_gpsdata = (new GpsData())->getCountGpsData($from_date,$to_date,$gps_id,$gps_data_table);                  
-        $total_index      = ceil($count_of_gpsdata / 30);
-        $track_data       = (new GpsData())->getTrackData($from_date,$to_date,$gps_id,$start_offset,$limit,$gps_data_table);
- 
-        
-        $alerts_list            =   [];
-        if($track_data->count() > 0)
+        $gps_data_table                 =   "gps_data_".date("Ymd",strtotime($from_date));
+        $is_table_exist_in_database     =   (new GpsData())->checkIfTableExistInDataBase($gps_data_table);
+        if($is_table_exist_in_database)
         {
-            $from_date_time   = $track_data->first()->dateTime;
-            $last_date_time   = $track_data[$track_data->count()-1]->dateTime;
-            $alerts_list      = Alert::select('device_time','gps_id','alert_type_id','latitude','longitude')->where('device_time', '>=' ,$from_date_time)
-                                        ->where('device_time', '<=' ,$last_date_time)
-                                        ->where('gps_id',$gps_id)
-                                        ->whereNotIn('alert_type_id',[17,18,23,24])
-                                        ->with('alertType')
-                                        ->get();
-            $km_updates       = KmUpdate::select('device_time','gps_id','km')
-                                         ->where('device_time', '>=' ,$from_date_time)
-                                         ->where('device_time', '<=' ,$last_date_time)
-                                         ->where('gps_id',$gps_id)
-                                         ->get();
-            $response_data = array(
-                                'status'       => 'success',
-                                'message'      => 'success',
-                                'code'         => 1,
-                                'vehicle_type' => $get_vehicle->vehicleType->name,
-                                'total_offset' => $total_index,
-                                'playback'     => $track_data,
-                                'km_updates'   => $km_updates,
-                                'alerts'       => $alerts_list
-                                );
+            $count_of_gpsdata               =   (new GpsData())->getCountGpsData($from_date,$to_date,$gps_in_vehicle,$gps_data_table);                  
+            $total_index                    =   ceil($count_of_gpsdata / 30);
+            $track_data                     =   (new GpsData())->getTrackData($from_date,$to_date,$gps_in_vehicle,$start_offset,$limit,$gps_data_table);
+    
+            
+            $alerts_list            =   [];
+            if($track_data->count() > 0)
+            {
+                $from_date_time   = $track_data->first()->dateTime;
+                $last_date_time   = $track_data[$track_data->count()-1]->dateTime;
+                $alerts_list      = Alert::select('device_time','gps_id','alert_type_id','latitude','longitude')->where('device_time', '>=' ,$from_date_time)
+                                            ->where('device_time', '<=' ,$last_date_time)
+                                            ->whereIn('gps_id',$gps_in_vehicle)
+                                            ->whereNotIn('alert_type_id',[17,18,23,24])
+                                            ->with('alertType')
+                                            ->get();
+                $km_updates       = KmUpdate::select('device_time','gps_id','km')
+                                            ->where('device_time', '>=' ,$from_date_time)
+                                            ->where('device_time', '<=' ,$last_date_time)
+                                            ->whereIn('gps_id',$gps_in_vehicle)
+                                            ->get();
+                $response_data = array(
+                                    'status'       => 'success',
+                                    'message'      => 'success',
+                                    'code'         => 1,
+                                    'vehicle_type' => $get_vehicle->vehicleType->name,
+                                    'total_offset' => $total_index,
+                                    'playback'     => $track_data,
+                                    'km_updates'   => $km_updates,
+                                    'alerts'       => $alerts_list
+                                    );
+            }
+            else
+            {
+                $response_data = array(
+                    'status'    => 'failed',
+                    'message'   => 'failed',
+                    'code'      => 0
+                );
+            }
         }
         else
         {
@@ -2462,6 +2480,7 @@ class VehicleController extends Controller
                 'code'      => 0
             );
         }
+        
         return response()->json($response_data);
     }
 
