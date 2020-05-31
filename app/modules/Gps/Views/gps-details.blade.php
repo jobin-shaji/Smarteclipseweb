@@ -11,7 +11,7 @@
         <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Device Details</li>
         <b>Device Details</b>
          @if(Session::has('message'))
-        <div class="pad margin no-print">
+        <div class="pad margin no-print" style="margin-top:-1%;margin-left:1%">
           <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
               {{ Session::get('message') }}  
           </div>

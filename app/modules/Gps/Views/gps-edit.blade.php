@@ -43,7 +43,7 @@
 
                       <div class="form-group has-feedback">
                         <label class="srequired">IMEI</label>
-                        <input type="number" class="form-control {{ $errors->has('imei') ? ' has-error' : '' }}" placeholder="IMEI" name="imei" value="{{ $gps->imei}}" min="0"> 
+                        <input type="text" class="form-control {{ $errors->has('imei') ? ' has-error' : '' }}" placeholder="IMEI" name="imei" value="{{ $gps->imei}}" maxlength="15"> 
                           @if ($errors->has('imei'))
                             <span class="help-block">
                               <strong class="error-text">{{ $errors->first('imei') }}</strong>
@@ -96,7 +96,7 @@
                     <div class="card-body_vehicle wizard-content">   
                       <div class="form-group has-feedback">
                         <label class="srequired">E-SIM Number</label>
-                        <input type="number" class="form-control {{ $errors->has('e_sim_number') ? ' has-error' : '' }}" placeholder="E-SIM Number" name="e_sim_number" value="{{ $gps->e_sim_number}}" min="0"> 
+                        <input type="text" required pattern="[0-9]{11}" class="form-control {{ $errors->has('e_sim_number') ? ' has-error' : '' }}" placeholder="E-SIM Number" name="e_sim_number" value="{{ $gps->e_sim_number}}" maxlength="11"> 
                          @if ($errors->has('e_sim_number'))
                           <span class="help-block">
                             <strong class="error-text">{{ $errors->first('e_sim_number') }}</strong>
