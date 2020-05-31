@@ -188,7 +188,7 @@
            <li><b>Everything in Fundamental +</b></li>
            <li><i class="far fa-caret-square-left"></i>Route playback history(4 Months)</li>
           <li><img src="{{url('/')}}/assets/images/geofence.png" style="margin:0 2%">Geofence(4 Geofences)</li>
-          <li><img src="{{url('/')}}/assets/images/logo.png" style="margin:0 2%">Client Logo</li>
+          <li><img src="{{url('/')}}/assets/images/client-logo.png" style="margin:0 2%">Client Logo</li>
           
           <li><img src="{{url('/')}}/assets/images/immobilizer.png" style="margin:0 2%">Immobilizer</li>
           <li><img src="{{url('/')}}/assets/images/ubi.png" style="margin:0 2%">UBI(upto 4)*</li>
