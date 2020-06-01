@@ -285,7 +285,7 @@ class Client extends Model
    */
   public function getCountOfClientsUnderSubDealer($trader_id)
   {
-    return self::select('trader_id')->where('trader_id',$trader_id)->count()
+    return self::select('trader_id')->where('trader_id',$trader_id)->count();
   }
 
 
