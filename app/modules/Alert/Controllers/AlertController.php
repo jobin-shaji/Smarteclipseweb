@@ -78,7 +78,7 @@ class AlertController extends Controller {
         $flag=$request->flag;
         // dd($flag);
         $user = $request->user();
-        $client=Client::where('user_id',$user->id)->first();
+        $client =   (new Client())->checkUserIdIsInClientTable($user->id);
         $client_id=$client->id;
         $VehicleGpss=Vehicle::select(
             'id',
@@ -313,7 +313,7 @@ class AlertController extends Controller {
     {
         $flag=$request->flag;
         $user = $request->user();
-        $client     =   Client::select('id','user_id')->where('user_id',$user->id)->first();
+        $client     =   (new Client())->checkUserIdIsInClientTable($user->id);
         $client_id  =   $client->id;
         $VehicleGpss=Vehicle::select(
             'id',
@@ -427,9 +427,7 @@ class AlertController extends Controller {
     public function gpsAlerts()
     {
         $client_id      =   \Auth::user()->client->id;
-            $client     =    Client::select('id','latitude','longitude')
-                            ->where('id',$client_id)
-                            ->first();
+        $client         =    (new Client())->getClientDetailsWithClientId($client_id);
         return view('Alert::gps-alert-list',['client'=>$client]);
     }
     public function gpsAlertList(Request $request)
@@ -527,8 +525,8 @@ class AlertController extends Controller {
 
     public function allAlerts(Request $request)
     {
-        $client_id=\Auth::user()->client->id;
-        $client=Client::find($client_id);
+        $client_id  =   \Auth::user()->client->id;
+        $client     =   (new Client())->getClientDetailsWithClientId($client_id);
         return view('Alert::notification-list',['client'=>$client]);
     }
     public function notificationAlertList(Request $request)
@@ -618,8 +616,8 @@ class AlertController extends Controller {
     public function allGpsAlerts(Request $request)
     {
        
-        $client_id=\Auth::user()->client->id;
-        $client=Client::find($client_id);
+        $client_id      =   \Auth::user()->client->id;
+        $client         =   (new Client())->getClientDetailsWithClientId($client_id);
         return view('Alert::alert-notification-list',['client'=>$client]);
     }
     public function alertNotificationList(Request $request)
