@@ -51,6 +51,16 @@ class DeviceReassignController extends Controller
         if($is_imei_exists == 1)
         {
             $device_details         =   (new Gps())->getDeviceHierarchyDetails($imei);
+            if(\Auth::user()->hasRole('dealer'))
+            {
+                $distributor_id     =   \Auth::user()->dealer->id;
+                if( ($device_details->gpsStock->dealer == null) || ($distributor_id != $device_details->gpsStock->dealer->id) )
+                {
+                    $request->session()->flash('message', 'This GPS is not found in your stock !');
+                    $request->session()->flash('alert-class', 'alert-success');
+                    return redirect(route('devicereassign.create'));
+                }
+            }
             $is_device_returned     =   (new DeviceReturn())->isDeviceReturnRequested($device_details->id); 
             if($is_device_returned  ==  0)
             {

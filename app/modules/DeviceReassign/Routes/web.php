@@ -1,6 +1,6 @@
 <?php
 
-Route::group(['middleware' => ['web','auth','role:root'] , 'namespace' => 'App\Modules\DeviceReassign\Controllers' ] , function() {	
+Route::group(['middleware' => ['web','auth','role:root|dealer'] , 'namespace' => 'App\Modules\DeviceReassign\Controllers' ] , function() {	
     Route::get('/devicereassign/create','DeviceReassignController@create')->name('devicereassign.create');
     Route::post('/devicereassign-gps-validation','DeviceReassignController@checkGpsIsReturned')->name('devicereassign-gps-validation');
     Route::post('/device-reassign-list','DeviceReassignController@getDeviceList')->name('device.reassign.list.p');
