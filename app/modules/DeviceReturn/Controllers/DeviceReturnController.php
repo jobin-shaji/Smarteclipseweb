@@ -323,7 +323,7 @@ class DeviceReturnController extends Controller
                     ]);
 
                 //To update imei in gps data table
-                $gps_data_tables                    =   (new GpsData())->getGpsDataAndGpsDataArchivedTable();
+                $gps_data_tables                    =   (new GpsData())->getGpsDataTable();
                 foreach($gps_data_tables as $table_name)
                 {
                     DB::table($table_name->table_name)->where('imei',$imei)->update([

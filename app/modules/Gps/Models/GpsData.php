@@ -165,13 +165,6 @@ class GpsData extends Model
         return DB::select("SELECT TABLE_NAME AS table_name FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = '".config('eclipse.database_name')."' and TABLE_NAME like 'gps_data_20%'");
     }
 
-    // get both gps data and gps data archived Table
-    public function getGpsDataAndGpsDataArchivedTable()
-    {
-
-        return DB::select("SELECT TABLE_NAME AS table_name FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = '".config('eclipse.database_name')."' and TABLE_NAME like 'gps_data%'");
-    }
-
     // delete gps data
     public function deleteGpsData($gps_id = null,$table_name = null)
     {
