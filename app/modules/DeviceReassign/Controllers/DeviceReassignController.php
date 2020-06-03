@@ -14,6 +14,7 @@ use App\Modules\Root\Models\Root;
 use Illuminate\Support\Facades\Crypt;
 use App\Modules\DeviceReturn\Models\DeviceReturn;
 use App\Modules\DeviceReturn\Models\DeviceReturnHistory;
+use App\Modules\DeviceReassign\Models\DeviceReassignHistory;
 use App\Modules\Servicer\Models\Servicer;
 use App\Modules\Servicer\Models\ServicerJob;
 use App\Modules\SubDealer\Models\SubDealer;
@@ -206,6 +207,7 @@ class DeviceReassignController extends Controller
                     DB::table('vehicles')->where('id', $vehicles_gps->vehicle_id)
                     ->update(['gps_id' => $vehicles_gps->gps_id,'servicer_job_id' => $vehicles_gps->servicer_job_id,'is_returned'=>0,'is_reinstallation_job_created'=>1]);
                 }
+                (new DeviceReassignHistory())->insertReassignedHistory($gps, $imei, $reassign_type_id, $client->user_id, $trader->user_id, date('Y-m-d H:i:s'));
                 return response()->json([
                     'status' => 1,
                     'title' => 'Success',
@@ -272,6 +274,7 @@ class DeviceReassignController extends Controller
                     DB::table('vehicles')->where('id', $vehicles_gps->vehicle_id)
                     ->update(['gps_id' => $vehicles_gps->gps_id,'servicer_job_id' => $vehicles_gps->servicer_job_id,'is_returned'=>0,'is_reinstallation_job_created'=>1]);
                 }
+                (new DeviceReassignHistory())->insertReassignedHistory($gps, $imei, $reassign_type_id, $client->user_id, $subdealer->user_id, date('Y-m-d H:i:s'));
                 return response()->json([
                     'status' => 1,
                     'title' => 'Success',
@@ -331,6 +334,7 @@ class DeviceReassignController extends Controller
                         // Delete  row in gps_transfer_item 
                         GpsTransferItems::where('gps_transfer_id',$gps_transfer_id)->where('gps_id', $gps)->delete();
                     }
+                    (new DeviceReassignHistory())->insertReassignedHistory($gps, $imei, $reassign_type_id, $trader->user_id, $subdealer->user_id, date('Y-m-d H:i:s'));
                     return response()->json([
                         'status' => 1,
                         'title' => 'Success',
@@ -389,6 +393,7 @@ class DeviceReassignController extends Controller
                         // Delete  row in gps_transfer_item 
                         GpsTransferItems::where('gps_transfer_id',$gps_transfer_id)->where('gps_id', $gps)->delete();
                     }
+                    (new DeviceReassignHistory())->insertReassignedHistory($gps, $imei, $reassign_type_id, $subdealer->user_id, $dealer->user_id, date('Y-m-d H:i:s'));
                     return response()->json([
                         'status' => 1,
                         'title' => 'Success',
