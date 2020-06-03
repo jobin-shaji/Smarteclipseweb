@@ -32,8 +32,18 @@
                                             <th>SL.No</th>
                                             <th>IMEI</th>
                                             <th>Serial Number</th>
-                                            <th>Batch Number</th>
-                                            <th>Version</th>
+                                            @role('root')
+                                            <th>Distributor</th>
+                                            @endrole
+                                            @role('root|dealer')
+                                            <th>Dealer</th>
+                                            @endrole
+                                            @role('root|dealer|sub_dealer')
+                                            <th>Sub Dealer</th>
+                                            @endrole
+                                            @role('root|dealer|sub_dealer|trader')
+                                            <th>End User</th>
+                                            @endrole
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -48,7 +58,23 @@
 </div>
 
 @endsection
-
-@section('script')
-    <script src="{{asset('js/gps/returned-gps-list.js')}}"></script>
-@endsection
+@role('root')
+    @section('script')
+        <script src="{{asset('js/gps/returned-gps-list-in-manufacturer.js')}}"></script>
+    @endsection
+@endrole
+@role('dealer')
+    @section('script')
+        <script src="{{asset('js/gps/returned-gps-list-in-distributor.js')}}"></script>
+    @endsection
+@endrole
+@role('sub_dealer')
+    @section('script')
+        <script src="{{asset('js/gps/returned-gps-list-in-dealer.js')}}"></script>
+    @endsection
+@endrole
+@role('trader')
+    @section('script')
+        <script src="{{asset('js/gps/returned-gps-list-in-sub_dealer.js')}}"></script>
+    @endsection
+@endrole
