@@ -373,10 +373,11 @@ class ClientController extends Controller {
     {
         $decrypted  =   Crypt::decrypt($request->id);
         $client     =   (new Client())->checkUserIdIsInClientTable($decrypted);
+        $user       =   User::select('username')->where('id',$client->user_id)->first();
         if($client == null){
            return view('Client::404');
         }
-        return view('Client::subdealer-client-change-password',['client' => $client]);
+        return view('Client::subdealer-client-change-password',['client' => $client,'user' => $user]);
     }
 
     //update password
@@ -391,8 +392,9 @@ class ClientController extends Controller {
         $rules=$this->updateUserPasswordBySubdealer();
         $this->validate($request,$rules);
         $client->password=bcrypt($request->password);
+        $client->username=$request->username;
         $client->save();
-        $request->session()->flash('message','Password updated successfully');
+        $request->session()->flash('message','Username & Password updated successfully');
         $request->session()->flash('alert-class','alert-success');
         return  redirect(route('client.change-password-subdealer',$did));
     }
@@ -461,6 +463,7 @@ class ClientController extends Controller {
     public function updateUserPasswordBySubdealer()
     {
         $rules=[
+            'username' => 'required|unique:users',
             'password' => 'required|string|min:8|confirmed|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*)(=+\/\\~`-]).{8,20}$/'
         ];
         return $rules;

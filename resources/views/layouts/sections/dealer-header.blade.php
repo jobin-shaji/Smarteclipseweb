@@ -16,7 +16,8 @@
                                 <a class="dropdown-item" href="{{url('/gps-dealer-new')}}"> NEW ARRIVALS</a>
                                 <a class="dropdown-item" href="{{url('/gps-dealer')}}"> IN STOCK </a>  
                                 <a class="dropdown-item" href="{{url('/gps-transfer-dealer/create')}}">TRANSFER DEVICE</a>
-                                <a class="dropdown-item" href="{{url('/gps-transfers-dealer')}}"> DEVICE TRANSFER LIST</a>     
+                                <a class="dropdown-item" href="{{url('/gps-transfers-dealer')}}"> DEVICE TRANSFER LIST</a>   
+                                <a class="dropdown-item" href="{{url('/devicereassign/create')}}">DEVICE REASSIGN  </a>  
                                 <a class="dropdown-item" href="{{url('/detailed-device-report')}}">DETAILED DEVICE REPORT  <span class="badge">New</span></a>                      
                             </div>
                         </li>

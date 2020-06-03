@@ -409,4 +409,17 @@ class GpsStock extends Model
                     })->count();
     }
 
+    public function returnedGpsListFromStock()
+    {
+        return self::withTrashed()
+                    ->orderBy('updated_at','DESC')
+                    ->with('gps')
+                    ->with('dealer')
+                    ->with('subdealer')
+                    ->with('trader')
+                    ->with('client')
+                    //->whereNotNull('client_id')
+                    ->where('is_returned',1);
+    }
+
 }

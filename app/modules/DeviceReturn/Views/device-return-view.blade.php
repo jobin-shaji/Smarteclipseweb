@@ -113,6 +113,9 @@
         <a href="/device-return/{{Crypt::encrypt($device_return_details->id)}}/add-to-stock" class="btn btn-sm btn-info" style ="margin-left: 1000px;margin-top: 6px;background-color:#048e20;">Add To Stock </a>
         <button class="btn btn-sm btn-info" style = 'margin-top: -65px;margin-left: 870px;background-color:#e65555;' data-toggle="modal" data-target="#addNoteModal">Add Note</button>
       @endif
+      <div class="loader-wrapper" id="load-6">
+        <div id="load6"></div>
+      </div> 
       <!-- activity section -->
       <div class="card">
         <div class="card-body wizard-content">
@@ -207,6 +210,7 @@ ul.timeline > li:before {
 </style>
 @section('script')
   @role('root')
+    <link rel="stylesheet" href="{{asset('css/loader-1.css')}}">
     <script src="{{asset('js/gps/device-return-root-history-list.js')}}"></script>
   @endrole
   
