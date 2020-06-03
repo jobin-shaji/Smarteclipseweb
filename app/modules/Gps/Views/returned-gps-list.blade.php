@@ -78,3 +78,8 @@
         <script src="{{asset('js/gps/returned-gps-list-in-sub_dealer.js')}}"></script>
     @endsection
 @endrole
+@role('client')
+    @section('script')
+        <script src="{{asset('js/gps/returned-gps-list-in-client.js')}}"></script>
+    @endsection
+@endrole
