@@ -3,11 +3,15 @@ function getUrl(){
 }
 
 $(document).ready(function () {
+    $("#load6").css("display","none");
+    $("#load-6").css("display","none");
     callBackDataTable();
 });
 
 function acceptDeviceReturn(device_return_id){
     if(confirm('Are you sure to accept this?')){
+        $("#load6").css("display","show");
+        $("#load-6").css("display","show");
         var data = {
             id : device_return_id
         };
@@ -20,6 +24,8 @@ function acceptDeviceReturn(device_return_id){
               'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
             },
             success:function(res) {
+                $("#load6").css("display","none");
+                $("#load-6").css("display","none");
                 if(res.status == 1)
                 {
                     toastr.success('Device return request Accepted successfully');
