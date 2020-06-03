@@ -29,6 +29,16 @@
                 <div class="col-md-6">
                   <input type="hidden" name="id" value="{{$client->user_id}}">
                   <div class="form-group has-feedback">
+                    <label class="srequired">New Username</label>
+                    <input type="text" class="form-control {{ $errors->has('username') ? ' has-error' : '' }}" placeholder="New Username" name="username" id="username" value="{{$user->username}}" title='spaces not allowed' required>
+                    <p style="color:#FF0000" id="user_message"> Spaces not  allowed for Username</p>
+                    @if ($errors->has('username'))
+                      <span class="help-block">
+                        <strong class="error-text">{{ $errors->first('username') }}</strong>
+                      </span>
+                    @endif
+                  </div>
+                  <div class="form-group has-feedback">
                     <label class="srequired">New Password</label>
                     <input type="password" class="form-control {{ $errors->has('password') ? ' has-error' : '' }}" placeholder="New Password" name="password" pattern= '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*)(=+\/\\~`-]).{8,20}$' title='Password must contains minimum 8 characters with at least one uppercase letter, one lowercase letter, one number and one special character' maxlength='20' required>
                   </div>
@@ -59,4 +69,19 @@
 <div class="clearfix"></div>
 
 
+@endsection
+@section('script')
+<script>
+$(document).ready(function() {
+  $("#user_message").hide();
+});
+$('#username').keypress(function(e) {
+  $("#user_message").hide();
+
+  if (e.which === 32) {
+      $("#user_message").show();
+      e.preventDefault();
+  }
+});
+</script>
 @endsection
