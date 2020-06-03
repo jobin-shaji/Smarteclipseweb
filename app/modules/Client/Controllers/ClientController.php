@@ -137,20 +137,9 @@ class ClientController extends Controller {
                 'password' => bcrypt($request->password),
                 'role' => 0,
             ]);
-
-            $client = Client::create([
-                'user_id' => $user->id,
-                'sub_dealer_id' => $subdealer_id,
-                'name' => strtoupper($request->name),
-                'address' => $request->address,
-                'latitude'=>$location_lat,
-                'longitude'=>$location_lng,
-                'country_id'=>$request->country_id,
-                'state_id'=>$request->state_id,
-                'city_id'=>$request->city_id,
-                'latest_user_updates'=>$current_date
-            ]);
-
+            
+            $client     =   (new Client())->createNewClientFromDealer($user->id, $subdealer_id, strtoupper($request->name), $request->address, $location_lat, $location_lng, $request->country_id, $request->state_id, $request->city_id, $current_date);
+            
             if($client)
             {
                 Mail::to($user)->send(new UserCreated($user, $request->name, $request->password));
@@ -208,20 +197,8 @@ class ClientController extends Controller {
                 'password' => bcrypt($request->password),
                 'role' => 0,
             ]);
-            $client = Client::create([
-                'user_id' => $user->id,
-                'trader_id' => $trader_id,
-                'name' => strtoupper($request->name),
-                'address' => $request->address,
-                'latitude'=>$location_lat,
-                'longitude'=>$location_lng,
-                // 'location'=>$location,
-                'country_id'=>$request->country_id,
-                'state_id'=>$request->state_id,
-                'city_id'=>$request->city_id ,
-                'latest_user_updates'=>$current_date
-            ]);
 
+            $client     =   (new Client())->createNewClientFromSubDealer($user->id, $trader_id, strtoupper($request->name), $request->address, $location_lat, $location_lng, $request->country_id, $request->state_id, $request->city_id, $current_date); 
             if($client)
             {
                 Mail::to($user)->send(new UserCreated($user, $request->name, $request->password));
@@ -274,37 +251,12 @@ class ClientController extends Controller {
     public function getClientlist(Request $request)
     {
         if($request->user()->hasRole('trader')){
-            $trader=$request->user()->trader->id;
-            $client = Client::select(
-            'id',
-            'user_id',
-            'sub_dealer_id',
-            'name',
-            'address',
-            'created_at',
-            'deleted_at'
-            )
-            ->withTrashed()
-            ->with('user:id,email,mobile,deleted_at')
-            ->where('trader_id',$trader)
-            ->orderBy('created_at','DESC')
-            ->get();
+            $trader     =   $request->user()->trader->id;
+            $client     =   (new Client())->getDetailsOfClientsUnderSubDealerWithTrashedItems($trader);
+            
         }else{
-            $subdealer=$request->user()->subdealer->id;
-            $client = Client::select(
-            'id',
-            'user_id',
-            'sub_dealer_id',
-            'name',
-            'address',
-            'created_at',
-            'deleted_at'
-            )
-            ->withTrashed()
-            ->with('user:id,email,mobile,deleted_at')
-            ->where('sub_dealer_id',$subdealer)
-            ->orderBy('created_at','DESC')
-            ->get();
+            $subdealer  =   $request->user()->subdealer->id;
+            $client     =   (new Client())->getDetailsOfClientsUnderDealerWithTrashedItems($subdealer);
         }
 
         return DataTables::of($client)
@@ -342,7 +294,7 @@ class ClientController extends Controller {
     //update dealers details
     public function update(Request $request)
     {
-        $client = Client::where('user_id', $request->id)->first();
+        $client     =   (new Client())->checkUserIdIsInClientTable($request->id);
         if($client == null){
             return view('Client::404');
         }
@@ -385,8 +337,8 @@ class ClientController extends Controller {
     //for edit page of subdealer password
     public function changePassword(Request $request)
     {
-        $decrypted = Crypt::decrypt($request->id);
-        $client = Client::select('user_id')->where('user_id', $decrypted)->first();
+        $decrypted  =   Crypt::decrypt($request->id);
+        $client     =   (new Client())->checkUserIdIsInClientTable($decrypted);
         if($client == null){
            return view('Client::404');
         }
@@ -397,11 +349,10 @@ class ClientController extends Controller {
     //update password
     public function updatePassword(Request $request)
     {
-
-        $client=\Auth::user()->sub_dealer;
-        $user=User::find($request->id);
-        $client=Client::where('user_id',$user->id)->first();
-        $current_date=date('Y-m-d H:i:s');
+        $client         =   \Auth::user()->sub_dealer;
+        $user           =   User::find($request->id);
+        $client         =   (new Client())->checkUserIdIsInClientTable($user->id);
+        $current_date   =   date('Y-m-d H:i:s');
         $client->latest_user_updates = $current_date;
         $client->save();
         if($user== null){
@@ -420,9 +371,9 @@ class ClientController extends Controller {
 
     public function changeClientPassword(Request $request)
     {
-        $decrypted = Crypt::decrypt($request->id);
-        $client = Client::select('user_id')->where('user_id', $decrypted)->first();
-        $user   = User::select('username')->where('id',$client->user_id)->first();
+        $decrypted  =   Crypt::decrypt($request->id);
+        $client     =   (new Client())->checkUserIdIsInClientTable($decrypted);
+        $user       =   User::select('username')->where('id',$client->user_id)->first();
         if($client == null){
            return view('Client::404');
         }
@@ -549,22 +500,7 @@ class ClientController extends Controller {
     //returns employees as json
     public function getRootClient()
     {
-        $client = Client::select(
-            'id',
-            'user_id',
-            'sub_dealer_id',
-            'trader_id',
-            'name',
-            'address',
-            'created_at',
-            'deleted_at'
-        )
-        ->withTrashed()
-        ->with('subdealer:id,user_id,name')
-        ->with('trader')
-        ->with('user:id,email,mobile,deleted_at')
-        ->orderBy('created_at','DESC')
-        ->get();
+        $client     =   (new Client())->getAllClientDetails();
         return DataTables::of($client)
         ->addIndexColumn()
         ->addColumn('working_status', function ($client) {
@@ -614,11 +550,8 @@ class ClientController extends Controller {
     //delete client details from table
     public function disableClient(Request $request)
     {
-        $client_user = User::find($request->id);
-        $client = Client::select('user_id')
-                         ->where('user_id',$request->id)
-                         ->first();
-
+        $client_user    =   User::find($request->id);
+        $client         =   (new Client())->checkUserIdIsInClientTable($request->id); 
         if($client_user == null){
             return response()->json([
                 'status' => 0,
@@ -638,10 +571,8 @@ class ClientController extends Controller {
     // restore emplopyee
     public function enableClient(Request $request)
     {
-        $client_user = User::withTrashed()->find($request->id);
-        $client = Client::select('user_id')
-                             ->where('user_id',$request->id)
-                             ->first();
+        $client_user    =   User::withTrashed()->find($request->id);
+        $client         =   (new Client())->checkUserIdIsInClientTable($request->id); 
         if($client_user==null){
             return response()->json([
                 'status' => 0,
@@ -688,23 +619,7 @@ class ClientController extends Controller {
             $single_traders[] = $trader->id;
         }
 
-        $client = Client::select(
-            'id',
-            'user_id',
-            'sub_dealer_id',
-            'trader_id',
-            'name',
-            'address',
-            'deleted_at'
-        )
-        ->with('subdealer:id,user_id,name')
-        ->with('trader')
-        ->with('user:id,email,mobile')
-        ->where(function ($query) use($single_traders, $single_sub_dealers) {
-            $query->whereIn('trader_id', $single_traders)
-            ->orWhereIn('sub_dealer_id', $single_sub_dealers);
-        })
-        ->get();
+        $client     =   (new Client())->getClientDetailsUnderDealersAndSubDealers($single_traders, $single_sub_dealers);
         return DataTables::of($client)
         ->addColumn('dealer', function ($client) {
             if($client->trader_id)
@@ -786,8 +701,8 @@ class ClientController extends Controller {
             $user->removeRole($request->role_name);
         }
 
-        $current_date=date('Y-m-d H:i:s');
-        $client = Client::select('user_id','latest_user_updates')->withTrashed()->where('user_id',$client_user_id)->first();
+        $current_date   =   date('Y-m-d H:i:s');
+        $client         =   (new Client())->getClientDetailsBasedOnUserIdWithTrashedItems($client_user_id);
         $client->latest_user_updates = $current_date;
         $client->save();
         $user->assignRole($request->client_role);
@@ -831,8 +746,8 @@ class ClientController extends Controller {
 
         $user->role = 0;
         $user->save();
-        $current_date=date('Y-m-d H:i:s');
-        $client = Client::select('user_id','latest_user_updates')->withTrashed()->where('user_id',$decrypted_user_id)->first();
+        $current_date   =   date('Y-m-d H:i:s');
+        $client         =   (new Client())->getClientDetailsBasedOnUserIdWithTrashedItems($decrypted_user_id);
         $client->latest_user_updates = $current_date;
         $client->save();
         $user->removeRole($decrypted_role_id);
@@ -846,7 +761,7 @@ class ClientController extends Controller {
     //delete Sub Dealer details from table
     public function deleteClient(Request $request)
     {
-        $client = Client::find($request->uid);
+        $client     =   (new Client())->getClientDetailsWithClientId($request->uid); 
         if($client == null){
             return response()->json([
                 'status' => 0,
@@ -866,7 +781,7 @@ class ClientController extends Controller {
     // restore emplopyee
     public function activateClient(Request $request)
     {
-        $client = Client::withTrashed()->find($request->id);
+        $client     =   (new Client())->getClientDetailsUnderClientIdWithTrashedItems($request->id); 
         if($client==null){
             return response()->json([
                 'status' => 0,
@@ -889,10 +804,10 @@ class ClientController extends Controller {
     //user profile view
     public function userProfile()
     {
-        $client_id = \Auth::user()->client->id;
-        $client_user_id = \Auth::user()->id;
-        $client = Client::select('id','name','address','logo')->withTrashed()->where('id', $client_id)->first();
-        $user=User::find($client_user_id);
+        $client_id      =   \Auth::user()->client->id;
+        $client_user_id =   \Auth::user()->id;
+        $client         =   (new Client())->getClientDetailsUnderClientIdWithTrashedItems($client_id);
+        $user           =   User::find($client_user_id);
         if($client == null)
         {
            return view('Client::404');
@@ -903,7 +818,7 @@ class ClientController extends Controller {
     // update user logo
     public function saveUserLogo(Request $request)
     {
-        $client = Client::find($request->id);
+        $client     =   (new Client())->getClientDetailsWithClientId($request->id);
         if($client == null){
            return view('Client::404');
         }
@@ -939,10 +854,10 @@ class ClientController extends Controller {
 
     public function userProfileEdit()
     {
-        $client_id = \Auth::user()->client->id;
-        $client_user_id = \Auth::user()->id;
-        $client = Client::select('id','latitude','longitude','name','address')->withTrashed()->where('id', $client_id)->first();
-        $user=User::find($client_user_id);
+        $client_id      =   \Auth::user()->client->id;
+        $client_user_id =   \Auth::user()->id;
+        $client         =   (new Client())->getClientDetailsUnderClientIdWithTrashedItems($client_id); 
+        $user           =   User::find($client_user_id);
 
         // $client=\Auth::user()->client;
         $lat=(float)$client->latitude;
@@ -959,7 +874,7 @@ class ClientController extends Controller {
      //update dealers details
     public function profileUpdate(Request $request)
     {
-        $client = Client::where('user_id', $request->id)->first();
+        $client     =   (new Client())->checkUserIdIsInClientTable($request->id);
         if($client == null){
            return view('Client::404');
         }
@@ -999,10 +914,10 @@ class ClientController extends Controller {
     //user change password view
     public function userPasswordChange()
     {
-        $client_id = \Auth::user()->client->id;
-        $client_user_id = \Auth::user()->id;
-        $client = Client::withTrashed()->where('id', $client_id)->first();
-        $user=User::find($client_user_id);
+        $client_id      =   \Auth::user()->client->id;
+        $client_user_id =   \Auth::user()->id;
+        $client         =   (new Client())->getClientDetailsUnderClientIdWithTrashedItems($client_id);
+        $user           =   User::find($client_user_id);
         if($client == null)
         {
            return view('Client::404');
@@ -1013,7 +928,7 @@ class ClientController extends Controller {
     // update change password
     public function saveUserNewPassword(Request $request)
     {
-        $client = Client::find($request->id);
+        $client     =   (new Client())->getClientDetailsWithClientId($request->id);
         if($client == null){
            return view('Client::404');
         }
@@ -1161,26 +1076,15 @@ public function selectTrader(Request $request)
                 'status' => 1,
                 'password' => bcrypt($request->password),
             ]);
-            $client_data=['user_id' => $user->id,
-                        'name' => $request->name,
-                        'address' => $request->address,
-                        'latitude'=>$location_lat,
-                        'longitude'=>$location_lng,
-                        // 'location'=>$location,
-                        'country_id'=>$request->country_id,
-                        'state_id'=>$request->state_id,
-                        'city_id'=>$request->city_id,
-                        'latest_user_updates'=>$current_date];
 
-                        if($trader_id == null)
-                        {
-                            $client_data['sub_dealer_id']=$subdealer_id;
-                        }else
-                        {
-                            $client_data['trader_id']=$trader_id;
-                        }
-                        $client = Client::create($client_data);
+            if($trader_id == null)
+            {
+                $client     =   (new Client())->createNewClientFromDealer($user->id, $subdealer_id, strtoupper($request->name), $request->address, $location_lat, $location_lng, $request->country_id, $request->state_id, $request->city_id, $current_date);
 
+            }else
+            {
+                $client     =   (new Client())->createNewClientFromSubDealer($user->id, $trader_id, strtoupper($request->name), $request->address, $location_lat, $location_lng, $request->country_id, $request->state_id, $request->city_id, $current_date);
+            }
 
             if($request->client_category=="school"){
                 User::where('username', $request->username)->first()->assignRole('school');

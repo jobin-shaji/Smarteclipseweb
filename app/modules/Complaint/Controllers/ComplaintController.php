@@ -159,17 +159,17 @@ class ComplaintController extends Controller {
             }
             else if(\Auth::user()->hasRole('sub_dealer'))
             {
-                $sub_dealer_id=\Auth::user()->subDealer->id;
-                $clients= Client::select('id', 'name','sub_dealer_id')->where('sub_dealer_id',$sub_dealer_id)->get();
+                $sub_dealer_id      =   \Auth::user()->subDealer->id;
+                $clients            =   (new Client())->getDetailsOfClientsUnderSubDealer($sub_dealer_id); 
                 $client_id = [];
                 foreach($clients as $client){
                     $client_id[] = $client->id;
                 }
                 $complaints = $complaints->whereIn('client_id',$client_id);
             }else if(\Auth::user()->hasRole('trader')){
-                $trader_id=\Auth::user()->trader->id;
-                $clients= Client::select('id', 'name','trader_id')->where('trader_id',$trader_id)->get();
-                $client_id = [];
+                $trader_id      =   \Auth::user()->trader->id;
+                $clients        =   (new Client())->getDetailsOfClientsUnderTrader($trader_id);
+                $client_id      =   [];
                 foreach($clients as $client){
                     $client_id[] = $client->id;
                 }
@@ -382,9 +382,9 @@ class ComplaintController extends Controller {
         ->where('status',0);
         if(\Auth::user()->hasRole('sub_dealer'))
         {
-            $sub_dealer_id=\Auth::user()->SubDealer->id;
-            $clients= Client::select('id', 'name','sub_dealer_id')->where('sub_dealer_id',$sub_dealer_id)->get();
-            $client_id = [];
+            $sub_dealer_id      =   \Auth::user()->SubDealer->id;
+            $clients            =   (new Client())->getDetailsOfClientsUnderSubDealer($sub_dealer_id);
+            $client_id          =   [];
             foreach($clients as $client){
                 $client_id[] = $client->id;
             }
@@ -393,14 +393,13 @@ class ComplaintController extends Controller {
         }
         else  if(\Auth::user()->hasRole('root'))
         {
-             $clients= Client::select('id', 'name','trader_id')->get();
-            
-            $servicer =$servicer->where('type',1);
+            $clients            =  (new Client())->getDetailsOfAllClients();            
+            $servicer           =   $servicer->where('type',1);
         }else
         {
-            $trader_id=\Auth::user()->trader->id;
-            $clients= Client::select('id', 'name','trader_id')->where('trader_id',$trader_id)->get();
-            $client_id = [];
+            $trader_id          =   \Auth::user()->trader->id;
+            $clients            =   (new Client())->getDetailsOfClientsUnderTrader($trader_id);  
+            $client_id          =   [];
             foreach($clients as $client){
                 $client_id[] = $client->id;
             }
@@ -431,9 +430,9 @@ class ComplaintController extends Controller {
         $complaint->status=1;
         $complaint->save();  
 
-        $gps = Gps::select('id')->where('imei', $request->imei)->first();
-        $client = Client::select('id','user_id')->where('id', $complaint->client_id)->first();
-        $role  = User::select('role')->where('id', $client->user_id)->first();
+        $gps        =   Gps::select('id')->where('imei', $request->imei)->first();
+        $client     =   (new Client())->getClientDetailsWithClientId($client_id);
+        $role       =   User::select('role')->where('id', $client->user_id)->first();
         if($role == null || $role == '')
         {
             $role = 1;
