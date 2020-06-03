@@ -13,7 +13,8 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        Commands\TripM::class
+        Commands\TripM::class,
+        Commands\VehicleTrips::class
     ];
 
     /**

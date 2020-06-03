@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 class GpsData extends Model
 {
 
-	 protected $table = 'gps_data';
+	protected $table = 'gps_data';
 
     protected $fillable=[
     	'client_id',
@@ -116,5 +116,12 @@ class GpsData extends Model
 		return self::select('gps_id','header', 'imei', 'alert_id', 'packet_status', 'device_time', 'latitude', 'lat_dir', 'longitude', 'lon_dir', 'mcc', 'mnc', 'lac', 'cell_id', 'heading', 'speed', 'no_of_satelites', 'hdop', 'gsm_signal_strength', 'ignition', 'main_power_status', 'vehicle_mode')
 					->where('vlt_data',$vlt_data_id)
 					->first();
+    }
+
+    public function fetchYesterdaysRecordsOfVehicleDevice($imei)
+    {
+        $this->setTable('gps_data_'.date('Ymd',strtotime("-1 days")));
+
+        return self::select('imei', 'latitude', 'longitude', 'vehicle_mode', 'device_time')->where('imei', $imei)->orderBy('device_time','asc')->get();
     }
 }

@@ -34,20 +34,49 @@ function getPlacenameFromLatLng($latitude,$longitude)
     // return $data['Response']['View'][0]['Result'][0]['Location']['Address']['Label'];
     if(!empty($latitude) && !empty($longitude)){
         //Send request and receive json data by address
-        
-        $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key='.config('eclipse.keys.googleMap'));
-        $output = json_decode($geocodeFromLatLong);
-        $status = $output->status;
-        $address = ($status=="OK")?$output->results[0]->formatted_address:'';
-        if(!empty($address)){
-            return $address;
-        }else{
-            return false;
+        try
+        {
+                $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key='.config('eclipse.keys.googleMap'));
+                $output = json_decode($geocodeFromLatLong);
+                $status = $output->status;
+                $address = ($status=="OK")?$output->results[0]->formatted_address:'';
+                if(!empty($address)){
+                    $address = removeUrlFromString($address);
+                    return $address;
+                }else{
+                    return false;
+                }
         }
+        catch(Exception $e)
+        {
+            report($e);
+        }
+   
     }else{
         return false;
     }
 }  
+
+function removeUrlFromString($string)
+{
+    $string = cleaner($string);
+    $string = preg_replace('/[\x00-\x1F\x7F-\xFF]/', '', $string);
+    $string = str_replace("?","",$string);
+    return $string;
+}   
+
+function cleaner($url) {
+  $U = explode(' ',$url);
+
+  $W =array();
+  foreach ($U as $k => $u) {
+    if (stristr($u,'http') || (count(explode('.',$u)) > 1)) {
+      unset($U[$k]);
+      return cleaner( implode(' ',$U));
+    }
+  }
+  return implode(' ',$U);
+}
 
 function m2Km($meter)
 {
