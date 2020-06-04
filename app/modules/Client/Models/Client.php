@@ -56,11 +56,6 @@ class Client extends Model
     return $this->hasOne('App\Modules\TrafficRules\Models\City','id','city_id');
   }
 
-  public function getClientDetailsWithClientId($client_id)
-	{
-		return self::where('id',$client_id)->first();
-	}
-
   public function getClientDetails($user_id)
   {
     return self::select('user_id','latitude','longitude','location','name','address','city_id')->with('user:id,mobile,email')->with('city.state.country')->withTrashed()->where('user_id', $user_id)->first();
@@ -68,36 +63,35 @@ class Client extends Model
 
   public function getDetailsOfClientsUnderSubDealer($sub_dealer_id)
   {
-    return self::select('id','name')->where('sub_dealer_id',$sub_dealer_id)->get();
+    return self::select('id','name','sub_dealer_id','user_id')->with('user:id,mobile')->where('sub_dealer_id',$sub_dealer_id)->get();
   }
 
   public function getDetailsOfClientsWithReturnedVehicleGpsUnderSubDealer($sub_dealer_id)
   {
-    return DB::select("SELECT clients.id,clients.name FROM clients LEFT JOIN vehicles ON vehicles.client_id = clients.id
+    return DB::select("SELECT clients.id,clients.name,users.mobile FROM clients LEFT JOIN vehicles ON vehicles.client_id = clients.id LEFT JOIN users ON users.id = clients.user_id
     WHERE vehicles.is_returned = 1 AND vehicles.is_reinstallation_job_created = 0 AND clients.sub_dealer_id = '$sub_dealer_id' GROUP BY clients.id");
   }
 
   public function getDetailsOfClientsUnderTrader($trader_id)
   {
     
-    return self::select('id','name')->where('trader_id',$trader_id)->get();
+    return self::select('id','name','trader_id','user_id')->with('user:id,mobile')->where('trader_id',$trader_id)->get();
   }
 
   public function getDetailsOfClientsWithReturnedVehicleGpsUnderTrader($trader_id)
   {
-    return DB::select("SELECT clients.id,clients.name FROM clients LEFT JOIN vehicles ON vehicles.client_id = clients.id
+    return DB::select("SELECT clients.id,clients.name,users.mobile FROM clients LEFT JOIN vehicles ON vehicles.client_id = clients.id LEFT JOIN users ON users.id = clients.user_id
     WHERE vehicles.is_returned = 1 AND vehicles.is_reinstallation_job_created = 0 AND clients.trader_id = '$trader_id' GROUP BY clients.id");
   }
 
   public function getDetailsOfAllClients()
   {
-    return self::select('id','name')->get();
+    return self::select('id','name','trader_id','user_id')->with('user:id,mobile')->get();
   }
 
   public function getDetailsOfClientsWithReturnedVehicleGps()
   {
-    return DB::select("SELECT clients.id,clients.name FROM clients LEFT JOIN vehicles ON vehicles.client_id = clients.id
-    WHERE vehicles.is_returned = 1 AND vehicles.is_reinstallation_job_created = 0  GROUP BY clients.id");
+    return DB::select("SELECT clients.id,clients.name,users.mobile FROM clients LEFT JOIN vehicles ON vehicles.client_id = clients.id LEFT JOIN users ON users.id = clients.user_id WHERE vehicles.is_returned = 1 AND vehicles.is_reinstallation_job_created = 0  GROUP BY clients.id");
   }
 
   public function getClientsOfDealers($dealer_ids)
@@ -109,13 +103,189 @@ class Client extends Model
 	{
 		return self::select('id','user_id')->whereIn('trader_id',$sub_dealer_ids)->whereNull('sub_dealer_id')->withTrashed()->get();
   }
-
+  /**
+   * 
+   */
   public function checkUserIdIsInClientTable($user_id)
   {
-    return self::select('name')->where('user_id',$user_id)->first();
+    return self::where('user_id',$user_id)->first();
   }
-
-  
+  /**
+   * 
+   */
+  public function getClientDetailsWithClientId($client_id)
+	{
+		return self::where('id',$client_id)->first();
+	}
+  /**
+   * 
+   */
+  public function createNewClientFromDealer($user_id, $subdealer_id, $name, $address, $location_lat, $location_lng, $country_id, $state_id, $city_id, $current_date)
+  {
+    return self::create([
+      'user_id' => $user_id,
+      'sub_dealer_id' => $subdealer_id,
+      'name' => $name,
+      'address' => $address,
+      'latitude'=>$location_lat,
+      'longitude'=>$location_lng,
+      'country_id'=>$country_id,
+      'state_id'=>$state_id,
+      'city_id'=>$city_id,
+      'latest_user_updates'=>$current_date
+    ]);
+  }
+  /**
+   * 
+   */
+  public function createNewClientFromSubDealer($user_id, $trader_id, $name, $address, $location_lat, $location_lng, $country_id, $state_id, $city_id, $current_date)
+  {
+    return self::create([
+      'user_id' => $user_id,
+      'trader_id' => $trader_id,
+      'name' => $name,
+      'address' => $address,
+      'latitude'=>$location_lat,
+      'longitude'=>$location_lng,
+      'country_id'=>$country_id,
+      'state_id'=>$state_id,
+      'city_id'=>$city_id,
+      'latest_user_updates'=>$current_date
+    ]);
+  }
+  /**
+   * 
+   */
+  public function getDetailsOfClientsUnderSubDealerWithTrashedItems($trader_id)
+  {
+    return self::select(
+                  'id',
+                  'user_id',
+                  'sub_dealer_id',
+                  'name',
+                  'address',
+                  'created_at',
+                  'deleted_at'
+                )
+                ->withTrashed()
+                ->with('user:id,email,mobile,deleted_at')
+                ->where('trader_id',$trader_id)
+                ->orderBy('created_at','DESC')
+                ->get();
+  }
+  /**
+   * 
+   */
+  public function getDetailsOfClientsUnderDealerWithTrashedItems($subdealer_id)
+  {
+    return self::select(
+                  'id',
+                  'user_id',
+                  'sub_dealer_id',
+                  'name',
+                  'address',
+                  'created_at',
+                  'deleted_at'
+                )
+                ->withTrashed()
+                ->with('user:id,email,mobile,deleted_at')
+                ->where('sub_dealer_id',$subdealer_id)
+                ->orderBy('created_at','DESC')
+                ->get();
+  }
+  /**
+   * 
+   */
+  public function getAllClientDetails()
+  {
+    return self::select(
+                    'id',
+                    'user_id',
+                    'sub_dealer_id',
+                    'trader_id',
+                    'name',
+                    'address',
+                    'created_at',
+                    'deleted_at'
+                )
+                ->withTrashed()
+                ->with('subdealer:id,user_id,name')
+                ->with('trader')
+                ->with('user:id,email,mobile,deleted_at')
+                ->orderBy('created_at','DESC')
+                ->get();
+  }
+  /**
+   * 
+   */
+  public function getClientDetailsUnderDealersAndSubDealers($single_traders, $single_sub_dealers)
+  {
+    return self::select(
+                    'id',
+                    'user_id',
+                    'sub_dealer_id',
+                    'trader_id',
+                    'name',
+                    'address',
+                    'deleted_at'
+                  )
+                  ->with('subdealer:id,user_id,name')
+                  ->with('trader')
+                  ->with('user:id,email,mobile')
+                  ->where(function ($query) use($single_traders, $single_sub_dealers) {
+                      $query->whereIn('trader_id', $single_traders)
+                      ->orWhereIn('sub_dealer_id', $single_sub_dealers);
+                  })
+                  ->get();
+  }
+  /**
+   * 
+   */
+  public function getClientDetailsBasedOnUserIdWithTrashedItems($user_id)
+  {
+    return self::select('user_id','latest_user_updates')
+                ->withTrashed()
+                ->where('user_id',$user_id)
+                ->first();
+  }
+  /**
+   * 
+   */
+  public function getClientDetailsUnderClientIdWithTrashedItems($client_id)
+  {
+    return self::where('id',$client_id)->withTrashed()->first();
+  }
+  /**
+   * 
+   */
+  public function getCountOfAllClients()
+  {
+    return self::select('id')->count();
+  }
+  /**
+   * 
+   */
+  public function getCountOfClientsUnderDistributor($single_traders, $single_sub_dealers_array)
+  {
+    return self::select('trader_id','sub_dealer_id')->where(function ($query) use($single_traders, $single_sub_dealers_array) {
+                  $query->whereIn('trader_id', $single_traders)
+                  ->orWhereIn('sub_dealer_id', $single_sub_dealers_array);
+                  })->count();
+  }
+  /**
+   * 
+   */
+  public function getCountOfClientsUnderDealer($sub_dealer_id)
+  {
+    return self::select('sub_dealer_id')->where('sub_dealer_id',$sub_dealer_id)->count();
+  }
+  /**
+   * 
+   */
+  public function getCountOfClientsUnderSubDealer($trader_id)
+  {
+    return self::select('trader_id')->where('trader_id',$trader_id)->count();
+  }
 
 
 

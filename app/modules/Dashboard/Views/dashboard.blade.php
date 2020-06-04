@@ -632,6 +632,23 @@
           <a href="/gps-trader-all-devices" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
         </div>
       </div>
+      <div class="col-lg-3 col-xs-6 dealer_dashboard_grid dash_grid">
+        <!-- small box -->
+        <div class="small-box bg-green bxs">
+          <div class="inner inner-left">
+            <h3 id="gps_in_stock_trader">
+              <div class="loader"></div>
+            </h3>
+            <p>GPS In Stock</p>
+          </div>
+          <div class="icon">
+            <i class="fa fa-tablet"></i>
+          </div>
+          <div class="a-tag">
+            <a href="/gps-trader-instock" class="small-box-footer1 view-last">View <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+      </div>
       <div class="col-lg-3 col-xs-6 transferred_gps_dashboard_grid dash_grid">
         <!-- small box -->
         <div class="small-box bg-green bxs">

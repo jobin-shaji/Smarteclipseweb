@@ -31,7 +31,7 @@
         <input type="checkbox" id="new_device" name="new_device" onChange=callBackDataTable(); checked>New Devices <br>
         <input type="checkbox" id="refurbished_device" name="refurbished_device" onChange=callBackDataTable(); checked>Refurbished Devices
       </div>
-      <div class="table-responsive scrollmenu">
+      <div class="table-responsive" style="width:102%!important;">
         <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">                     
           <div class="row">
             <div class="col-sm-12">

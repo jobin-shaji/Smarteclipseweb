@@ -1230,11 +1230,19 @@ function jobtypeonchange(job_type)
             else
             {
                 for (var i = 0; i < res.length; i++) {
+                    if((res[i].mobile) == undefined)
+                    {
+                        var mobile = res[i].user.mobile;
+                    }
+                    else
+                    {
+                        var mobile = res[i].mobile;
+                    }
                     if(default_client_id == res[i].id)
                     {
                         var default_client_id_in_array  =   "true";
                     }
-                    var client='  <option value="'+res[i].id+'">'+res[i].name+'</option>';
+                    var client='  <option value="'+res[i].id+'">'+res[i].name+' ('+mobile+')</option>';
                     $("#client").append(client);
                 }
                 

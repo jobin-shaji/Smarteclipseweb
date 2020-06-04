@@ -1,12 +1,17 @@
+function getUrl(){
+  return $('meta[name = "domain"]').attr('content');
+}
+
 $(document).ready(function () {
   $('#count_data').hide();
+  $('#loader').hide();
 });
 
 function searchData()
 {   
   if(document.getElementById('return_to').value == '')
   {
-    alert('please select any user to reassign');
+    alert('Please select any user to reassign');
   }
   else
   {
@@ -74,6 +79,7 @@ function reassigndevice()
                 'client':client,
                 'vehicle':vehicle
               };
+              $('#loader').show();
               backgroundPostData(url,data,'deviceReassign',{alert:true});
               Reassignredirect();
           }
@@ -97,4 +103,5 @@ function Reassignredirect()
   $('#preview').hide();
   $('#count_data').hide();
   $('#dropdown_menu').hide();
+  $('#loader').hide();
 }

@@ -143,9 +143,9 @@
 
     </head>
     <body >
-        <div class="page">
-            <div style="position:absolute;left:75px;">
-                <img style="position:absolute;left:430px" class="cls_003" src="assets/images/smart_eclipse_logo.png" alt="Logo" height="30px" width="150px">
+        <div >
+            <div style="position:absolute;left:23px;">
+                <img style="position:absolute;left:530px" class="cls_003" src="assets/images/smart_eclipse_logo.png" alt="Logo" height="30px" width="150px">
                 <p style="font-size: 20px;font-weight: 900px;color: black;margin-bottom: 50px!important;margin-top:-5px"><b>Installation Certificate</b>
                 </p>
             </div>
@@ -158,105 +158,95 @@
             ?>
             <div style="position:fixed;margin:1%;overflow:auto">
 
-                <div style="position:absolute;left:73px;top:60px;width: 65%" class="cls_002">
+                <div style="position:absolute;left:20px;top:10px;width: 65%" class="cls_002">
                     <div class="cls_002 lineheight">
-                        {{$dealer_trader->name}}
+                        <b>Name:</b> {{$dealer_trader->name}}
                     </div>
                     <div class="cls_002 lineheight">
-                        {{$dealer_trader->address}}
+                        <b>Address:</b> {{$dealer_trader->address}}
                     </div>
                     <div class="cls_002 lineheight">
-
-                        {{$servicer_job->user->email}}
-                    </div>
-                    <div class="cls_002 lineheight">
-                        {{$servicer_job->user->mobile}}
+                       <span> <b>Email:</b> {{$servicer_job->user->email}}</span>
+                       <span> <b>Ph:</b> {{$servicer_job->user->mobile}}</span>
                     </div>
                 </div>
                 <?php 
                    $qr ='IMEI: '.$servicer_job->gps->imei.' MODEL: VST0507C MANUFACTURER: VST Mobility Solutions Private Limited, B2,Kerala Technology Innovation Zone Kinfra Hi Tech Park, Kalamassery FROM: '.$dealer_trader->name.''.$dealer_trader->address;
                 ?>
-                <div style="position:absolute;left: 500px!important;margin-top: 40px!important">
+                <div style="position:absolute;left: 560px!important;margin-top: 20px!important">
                     <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(150)->generate($qr)) !!} ">
                 </div>
 
-                <div style="position:absolute;left:70px;top:240px; line-height: 21px;" class="cls_002">
+                <div style="position:absolute;left:20px;top:170px; line-height: 21px;" class="cls_002">
                     <span class="cls_002">This is to certify that, this vehicle is equipped with the AIS 140 compliant device, approved by <b>CDAC</b> and <b>ARAI</b>.</span>
                 </div>
-
-                <p style="margin-top: 30%;margin-left: 70px"><b>Details of AIS 140 Device</b></p>
-                <table border="1" cellspacing="0" cellpadding="5px" style="margin-left: 53px;width:100%;margin-top:-10%;">
+                <div style="position:absolute;top:210px">
+                <p><b style="margin-top: 250px;margin-left: 255px">Details of AIS 140 Device</b></p>
+                <table border="1" cellspacing="0" cellpadding="5px" style="margin-left: 20px;width:100%">
                      <tr>
-                        <td class="cls_002 yellow">Device IMEI</td>
+                        <td class="cls_002 grey" style="width:10%">Device IMEI</td>
                         <td>{{$servicer_job->gps->imei}}</td>
+                        <td class="cls_002 grey" style="width: 10%">Model</td>
+                        <td style="width: 15%">VST0507C</td>
                     </tr>
                     <tr>
-                        <td class="cls_002 grey">Model</td>
-                        <td>VST0507C</td>
-                    </tr>
-                    <tr>
-                        <td class="cls_002 yellow">Manufacturer</td>
-                        <td>
+                        <td class="cls_002 grey" style="width:10%">Manufacturer</td>
+                        <td style="width:30%">
                            VST Mobility Solutions Private Limited,<br> B2,Kerala Technology Innovation Zone <br>Kinfra Hi Tech Park, Kalamassery <br>Ernakulam
                         </td>
-                    </tr>
-                    <tr>
-                        <td class="cls_002 grey" style="width: 30%">CDAC Certification No</td>
-                        <td>CDAC-CR045</td>
+                        <td class="cls_002 grey" style="width: 10%">CDAC Certification No</td>
+                        <td style="width: 15%">CDAC-CR045</td>
                     </tr>
                 </table>
-                <p style="margin-left: 70px"><b>Details of the Vehicle</b></p>
-                <table border="1" cellspacing="0" cellpadding="5px" style="margin-left: 53px;width: 100%">
+                <p><b style="margin-left: 255px;align:center">Details of the Vehicle</b></p>
+                <table border="1" cellspacing="0" cellpadding="5px" style="margin-left: 22px;width: 100%">
                     <tr>
-                        <td class="cls_002 yellow">Registration Number</td>
+                        <td class="cls_002 grey">Registration Number</td>
                         <td>{{$vehicle_servicer_job_log->vehicle->register_number}}</td>
-                    </tr>
-                    <tr>
                         <td class="cls_002 grey">Chassis Number</td>
                         <td>{{$vehicle_servicer_job_log->vehicle->chassis_number}}</td>
                     </tr>
                     <tr>
-                        <td class="cls_002 yellow">Registered Owner Name</td>
+                        <td class="cls_002 grey">Registered Owner Name</td>
                         <td>{{$client->name}}</td>
-                    </tr>
-                    <tr>
                         <td class="cls_002 grey" style="width: 30%">Registered Owner Address</td>
                         <td>{{$client->address}}</td>
                     </tr>
                     <tr>
-                        <td class="cls_002 yellow">Engine Number</td>
+                        <td class="cls_002 grey">Engine Number</td>
                         <td>{{$vehicle_servicer_job_log->vehicle->engine_number}}</td>
-                    </tr>
-                    <tr>
                         <td class="cls_002 grey">Date of Installation</td>
                         <td>{{$date}}</td>
                     </tr>
                 </table>
-                <p style="margin-left: 70px"><b>Fitment Images</b></p>
-                <span class="cls_002" style="position:absolute;left:90px;text-align: center;">RC Book</span>
+                </div>
+                <div style="position:absolute;margin-top:560px">
+                <p style="margin-left: 270px"><b>Fitment Images</b></p>
+                <span class="cls_002" style="position:absolute;left:77px;text-align: center;">RC Book</span>
                 <span class="cls_002" style="position:absolute;left:240px;text-align: center;">Installation</span>
-                <span class="cls_002" style="position:absolute;left:380px;text-align: center;">Activation</span>
-                <span class="cls_002" style="position:absolute;left:520px;text-align: center;">Vehicle</span>
-                <div style="position:absolute;left:70px;top:860px;line-height: 21px" class="cls_002">
-                    <span><img style="position:absolute;left:5px" class="cls_003" src="documents/vehicledocs/{{$fitment_images['0']['path']}}" alt="Logo" height="100px" width="100px"></span>
-                    <span><img style="position:absolute;left:150px" class="cls_003" src="documents/vehicledocs/{{$fitment_images['1']['path']}}" alt="Logo" height="100px" width="100px"></span>
-                    <span><img style="position:absolute;left:290px" class="cls_003" src="documents/vehicledocs/{{$fitment_images['2']['path']}}" alt="Logo" height="100px" width="100px"></span>
-                    <span><img style="position:absolute;left:430px" class="cls_003" src="documents/vehicledocs/{{$fitment_images['3']['path']}}" alt="Logo" height="100px" width="100px"></span>
+                <span class="cls_002" style="position:absolute;left:415px;text-align: center;">Activation</span>
+                <span class="cls_002" style="position:absolute;left:565px;text-align: center;">Vehicle</span>
+                <div style="position:absolute;left:52px;top:70px" class="cls_002">
+                    <span><img style="position:absolute" class="cls_003" src="documents/vehicledocs/{{$fitment_images['0']['path']}}" alt="Logo" height="100px" width="100px"></span>
+                    <span><img style="position:absolute;left:170px" class="cls_003" src="documents/vehicledocs/{{$fitment_images['1']['path']}}" alt="Logo" height="100px" width="100px"></span>
+                    <span><img style="position:absolute;left:350px" class="cls_003" src="documents/vehicledocs/{{$fitment_images['2']['path']}}" alt="Logo" height="100px" width="100px"></span>
+                    <span><img style="position:absolute;left:490px" class="cls_003" src="documents/vehicledocs/{{$fitment_images['3']['path']}}" alt="Logo" height="100px" width="100px"></span>
+                </div>
                 </div>
             </div>
         </div>
         
         <div style="position:fixed;margin:1%;overflow:auto">
-            <div style="position:absolute;left:70px;top:10px;line-height: 21px" class="cls_002">
+            <div style="position:absolute;left:20px;top:760px;line-height: 21px" class="cls_002">
                 <span class="cls_002">This letter has been issued on <b>{{$date}}</b> upon the specific request from the customer as a proof of installation</span>
             </div>
-            <div style="position:absolute;left:70px;top:90px" class="cls_002">
+            <div style="position:absolute;left:20px;top:800px" class="cls_002">
                 <span class="cls_002">Yours Sincerly,</span>
             </div>
-             <div style="position:absolute;left:70px;top:120px" class="cls_002">
+             <div style="position:absolute;left:20px;top:830px" class="cls_002">
                 <span class="cls_002">{{$dealer_trader->name}}</span>
             </div>
-            <div style="position:absolute;left:70px;top:210px" class="cls_002">
+            <div style="position:absolute;top:830px;float:right" class="cls_002">
                 <span class="cls_002">Authorised Signatory</span>
             </div>
         </div>

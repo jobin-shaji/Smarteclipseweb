@@ -26,7 +26,7 @@ class Dealer extends Model
 	
 	public function getDistributorsOfManufacturer($manufacturer_id)
 	{
-		return self::select('id','user_id')->whereIn('root_id',$manufacturer_id)->withTrashed()->get();
+		return self::select('id','user_id','name')->whereIn('root_id',$manufacturer_id)->withTrashed()->get();
 	}
 
 	public function checkUserIdIsInDistributorTable($user_id)
@@ -36,7 +36,7 @@ class Dealer extends Model
 
 	public function getDistributorDetails($distributor_id)
 	{
-		return self::select('id','name')->where('id',$distributor_id)->first();
+		return self::select('id','name','root_id')->where('id',$distributor_id)->with('root')->first();
 	}
 
     

@@ -315,12 +315,21 @@ class DeviceReturnController extends Controller
                 $is_deleted_assigned_vehicle_geofence   =   (new VehicleGeofence())->getGeofenceAssignedVehicleDatas($gps_in_vehicle->id);
 
                 //To update imei in vlt data table
-                $vlt_Data                            =    (new VltData())->vltDataImeiUpdation($imei,$imei_incremented);     
+                $vlt_Data                               =    (new VltData())->vltDataImeiUpdation($imei,$imei_incremented);     
                 
                 //To update imei in vlt data archived table
                 DB::table('vlt_data_archived')->where('imei',$imei)->update([
                         'imei' =>  $imei_incremented,
                     ]);
+
+                //To update imei in gps data table
+                $gps_data_tables                    =   (new GpsData())->getGpsDataTable();
+                foreach($gps_data_tables as $table_name)
+                {
+                    DB::table($table_name->table_name)->where('imei',$imei)->update([
+                        'imei' =>  $imei_incremented,
+                    ]);
+                }
 
                 //To update returned status in gps transfer items table
                 $gps_in_transfer_items      =   (new GpsTransferItems())->updateReturnStatusInTrasferItem($device_return->gps_id);

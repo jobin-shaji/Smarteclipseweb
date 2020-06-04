@@ -331,10 +331,12 @@ class GpsController extends Controller {
         ]);
     }
 ////////////////////////////////////////////////////////////////////////////
-
+    /*
+     This Function not used in any route
+     #HIDE
+    
     public function gpsDataCount(Request $request)
     {
-
         $user = $request->user();
         if($user->hasRole('root')){
             return response()->json([
@@ -344,8 +346,13 @@ class GpsController extends Controller {
             ]);
         }
     }
+    */
 
     //returns gps as json
+    /*
+    This Function not used in any route
+     #HIDE
+    
     public function getGpsData(Request $request)
     {
         $gps_id=$request->gps_id;
@@ -414,6 +421,7 @@ class GpsController extends Controller {
         ->addIndexColumn()
         ->make();
     }
+     */
     //////////////////////////GPS DEALER///////////////////////////////////
 
     //Display all dealer gps
@@ -546,6 +554,40 @@ class GpsController extends Controller {
                 ->whereNull('trader_id')
                 ->whereNull('client_id')
                 ->where('subdealer_id',$sub_dealer_id)
+                ->get();
+        return DataTables::of($gps_stock)
+            ->addIndexColumn()
+            ->addColumn('action', function ($gps_stock) {
+                $b_url = \URL::to('/');
+                if($gps_stock->deleted_at == null){
+                    return "
+                        <a href=".$b_url."/gps/".Crypt::encrypt($gps_stock->gps_id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>";
+                }else{
+                    return "";
+                }
+            })
+            ->rawColumns(['link', 'action'])
+            ->make();
+    }
+
+    //Display gps in stock of trader
+    public function gpsInStockTraderPage()
+    {
+        return view('Gps::gps-in-stock-trader-list');
+    }
+
+    //returns gps in stock of trader as json
+    public function getTraderGpsInStock()
+    {
+        $trader_id=\Auth::user()->trader->id;
+        $gps_stock = GpsStock::select(
+                'id',
+                'gps_id'
+                )
+                ->withTrashed()
+                ->with('gps')
+                ->whereNull('client_id')
+                ->where('trader_id',$trader_id)
                 ->get();
         return DataTables::of($gps_stock)
             ->addIndexColumn()
@@ -813,20 +855,28 @@ class GpsController extends Controller {
         return response()->json(array('response' => 'success', 'gps' => $gps , 'user' => $user));
     }
 
-    public function allGpsDatas(Request $request){
+    /*
+     This Function not used in any route
+     #HIDE
+    public function allGpsDatas(Request $request)
+    {
         $items = GpsData::all()->sortByDesc('id');
         return view('Gps::alldata',['items' => $items]);
     }
+    */
 
-
+    /*
+    #HIDE
     public function allgpsListPage()
     {
-        $ota = OtaType::all();
-        $gps = Gps::select('id','imei')->get();
+        $ota      = OtaType::all();
+        $gps      = Gps::select('id','imei')->get();
         $gps_data = GpsData::select('id','header')->groupBy('header')->get();
-
         return view('Gps::alldata-list',['gps' => $gps,'ota' => $ota,'gpsDatas' => $gps_data]);
     }
+    */
+    /*
+    #HIDE
     public function getAllData(Request $request)
     {
 
@@ -883,6 +933,7 @@ class GpsController extends Controller {
         ->rawColumns(['link', 'action'])
         ->make();
     }
+    */
 
 
     public function vltdataListPage()
@@ -1003,6 +1054,9 @@ class GpsController extends Controller {
         return $pdf->download('GpsData.pdf');
 
     }
+
+    /*
+     #HIDE
     public function getGpsAllData(Request $request)
     {
         $items = GpsData::find($request->id);
@@ -1011,6 +1065,7 @@ class GpsController extends Controller {
         ]);
 
     }
+    */
 
     public function getGpsAllDataBth(Request $request){
       $items = GpsData::find($request->id);
@@ -1141,6 +1196,8 @@ class GpsController extends Controller {
     {
         return view('Gps::subscription-success');
     }
+    /*
+    #HIDE
     public function allBthData()
     {
         return view('Gps::all-bth-data-list');
@@ -1174,6 +1231,7 @@ class GpsController extends Controller {
         ->rawColumns(['link', 'action'])
         ->make();
     }
+    */
     public function pasedData(Request $request)
     {
         $decrypted_id = Crypt::decrypt($request->id);
@@ -1597,7 +1655,8 @@ class GpsController extends Controller {
     }
 
 
-
+    /*
+    #HIDE
     public function allgpsDataListPage()
     {
         $ota = OtaType::all();
@@ -1607,7 +1666,11 @@ class GpsController extends Controller {
         // dd($gps_data);
         return view('Gps::allgpsdata-list',['gps' => $gps,'ota' => $ota]);
     }
-     public function allPublicgpsDataListPage()
+
+    */
+    /*
+    #HIDE
+    public function allPublicgpsDataListPage()
     {
         $ota = OtaType::all();
         $gps = Gps::select('id','imei','serial_no')->get();
@@ -1617,6 +1680,9 @@ class GpsController extends Controller {
         // dd($gps_data);
         return view('Gps::allgpsdata-list-public',['gps' => $gps,'ota' => $ota]);
     }
+    */
+    /*
+    #HIDE
     public function getAllGpsData(Request $request)
     {
          $forhuman=0;
@@ -1635,6 +1701,9 @@ class GpsController extends Controller {
             ]);
         }
     }
+    */
+    /*
+    #HIDE
     public function getPublicAllGpsData(Request $request)
     {
          $forhuman=0;
@@ -1653,6 +1722,7 @@ class GpsController extends Controller {
             ]);
         }
     }
+    */
     public function getGpsAllDataHlm(Request $request)
     {
         $items = GpsData::find($request->id);
@@ -1817,6 +1887,7 @@ class GpsController extends Controller {
         ->rawColumns(['link', 'action'])
         ->make();
     }
+   
     public function allpublicgpsListPage(Request $request)
     {
         $gps = Gps::select('id','imei','serial_no')->get();
@@ -1825,6 +1896,7 @@ class GpsController extends Controller {
         // dd($header);
         return view('Gps::public-alldata-list',['gps' => $gps,'ota' => $ota,'gpsDatas' => $gps_data]);
     }
+  
     public function getPublicAllData(Request $request)
     {
         if($request->gps && $request->header){
@@ -1880,6 +1952,7 @@ class GpsController extends Controller {
         ->rawColumns(['link', 'action'])
         ->make();
     }
+    
 
     public function gpsReport()
     {
@@ -2175,16 +2248,33 @@ class GpsController extends Controller {
 
     public function getReturnedGpsList(Request $request)
     {
-        $gps_stock      =   GpsStock::withTrashed()
-            ->orderBy('updated_at','DESC')
-            ->with('gps')
-            ->whereNotNull('client_id')
-            ->where('is_returned',1);
+        $gps_stock      =   (new GpsStock())->returnedGpsListFromStock();
+
         if(\Auth::user()->hasRole('root'))
         {
             $gps_stock  =   $gps_stock->get();
             return DataTables::of($gps_stock)
             ->addIndexColumn()
+            ->addColumn('distributor', function ($gps_stock) { 
+                $distributor    =   $gps_stock->dealer;
+                (isset($distributor)) ? $distributor_name = $distributor->name: $distributor_name = '-NA-';
+                return $distributor_name;
+            })
+            ->addColumn('dealer', function ($gps_stock) { 
+                $dealer         =   $gps_stock->subdealer;
+                (isset($dealer)) ? $dealer_name = $dealer->name: $dealer_name = '-NA-';
+                return $dealer_name;
+            })
+            ->addColumn('sub_dealer', function ($gps_stock) { 
+                $sub_dealer     =   $gps_stock->trader;
+                (isset($sub_dealer)) ? $sub_dealer_name = $sub_dealer->name: $sub_dealer_name = '-NA-';
+                return $sub_dealer_name;
+            })
+            ->addColumn('client', function ($gps_stock) { 
+                $client         =   $gps_stock->client;
+                (isset($client)) ? $client_name = $client->name: $client_name = '-NA-';
+                return $client_name;
+            })
             ->addColumn('action', function ($gps_stock) { 
             $b_url = \URL::to('/');
             return "<a href=".$b_url."/device_return_list/".Crypt::encrypt($gps_stock->gps_id)."/view class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>";
@@ -2197,6 +2287,21 @@ class GpsController extends Controller {
             $gps_stock  =   $gps_stock->where('dealer_id',$dealer_id)->get();
             return DataTables::of($gps_stock)
             ->addIndexColumn()
+            ->addColumn('dealer', function ($gps_stock) { 
+                $dealer         =   $gps_stock->subdealer;
+                (isset($dealer)) ? $dealer_name = $dealer->name: $dealer_name = '-NA-';
+                return $dealer_name;
+            })
+            ->addColumn('sub_dealer', function ($gps_stock) { 
+                $sub_dealer     =   $gps_stock->trader;
+                (isset($sub_dealer)) ? $sub_dealer_name = $sub_dealer->name: $sub_dealer_name = '-NA-';
+                return $sub_dealer_name;
+            })
+            ->addColumn('client', function ($gps_stock) { 
+                $client         =   $gps_stock->client;
+                (isset($client)) ? $client_name = $client->name: $client_name = '-NA-';
+                return $client_name;
+            })
             ->addColumn('action', function ($gps_stock) { 
             $b_url = \URL::to('/');
             return "<a href=".$b_url."/device_return_list/".Crypt::encrypt($gps_stock->gps_id)."/view class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>";
@@ -2209,6 +2314,16 @@ class GpsController extends Controller {
             $gps_stock      =   $gps_stock->where('subdealer_id',$sub_dealer_id)->get();
             return DataTables::of($gps_stock)
             ->addIndexColumn()
+            ->addColumn('sub_dealer', function ($gps_stock) { 
+                $sub_dealer     =   $gps_stock->trader;
+                (isset($sub_dealer)) ? $sub_dealer_name = $sub_dealer->name: $sub_dealer_name = '-NA-';
+                return $sub_dealer_name;
+            })
+            ->addColumn('client', function ($gps_stock) { 
+                $client         =   $gps_stock->client;
+                (isset($client)) ? $client_name = $client->name: $client_name = '-NA-';
+                return $client_name;
+            })
             ->addColumn('action', function ($gps_stock) { 
             $b_url = \URL::to('/');
             return "<a href=".$b_url."/device_return_list/".Crypt::encrypt($gps_stock->gps_id)."/view class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>";
@@ -2221,6 +2336,11 @@ class GpsController extends Controller {
             $gps_stock      =   $gps_stock->where('trader_id',$trader_id)->get();
             return DataTables::of($gps_stock)
             ->addIndexColumn()
+            ->addColumn('client', function ($gps_stock) { 
+                $client         =   $gps_stock->client;
+                (isset($client)) ? $client_name = $client->name: $client_name = '-NA-';
+                return $client_name;
+            })
             ->addColumn('action', function ($gps_stock) { 
             $b_url = \URL::to('/');
             return "<a href=".$b_url."/device_return_list/".Crypt::encrypt($gps_stock->gps_id)."/view class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>";
