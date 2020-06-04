@@ -63,36 +63,35 @@ class Client extends Model
 
   public function getDetailsOfClientsUnderSubDealer($sub_dealer_id)
   {
-    return self::select('id','name','sub_dealer_id')->where('sub_dealer_id',$sub_dealer_id)->get();
+    return self::select('id','name','sub_dealer_id','user_id')->with('user:id,mobile')->where('sub_dealer_id',$sub_dealer_id)->get();
   }
 
   public function getDetailsOfClientsWithReturnedVehicleGpsUnderSubDealer($sub_dealer_id)
   {
-    return DB::select("SELECT clients.id,clients.name FROM clients LEFT JOIN vehicles ON vehicles.client_id = clients.id
+    return DB::select("SELECT clients.id,clients.name,users.mobile FROM clients LEFT JOIN vehicles ON vehicles.client_id = clients.id LEFT JOIN users ON users.id = clients.user_id
     WHERE vehicles.is_returned = 1 AND vehicles.is_reinstallation_job_created = 0 AND clients.sub_dealer_id = '$sub_dealer_id' GROUP BY clients.id");
   }
 
   public function getDetailsOfClientsUnderTrader($trader_id)
   {
     
-    return self::select('id','name','trader_id')->where('trader_id',$trader_id)->get();
+    return self::select('id','name','trader_id','user_id')->with('user:id,mobile')->where('trader_id',$trader_id)->get();
   }
 
   public function getDetailsOfClientsWithReturnedVehicleGpsUnderTrader($trader_id)
   {
-    return DB::select("SELECT clients.id,clients.name FROM clients LEFT JOIN vehicles ON vehicles.client_id = clients.id
+    return DB::select("SELECT clients.id,clients.name,users.mobile FROM clients LEFT JOIN vehicles ON vehicles.client_id = clients.id LEFT JOIN users ON users.id = clients.user_id
     WHERE vehicles.is_returned = 1 AND vehicles.is_reinstallation_job_created = 0 AND clients.trader_id = '$trader_id' GROUP BY clients.id");
   }
 
   public function getDetailsOfAllClients()
   {
-    return self::select('id','name','trader_id')->get();
+    return self::select('id','name','trader_id','user_id')->with('user:id,mobile')->get();
   }
 
   public function getDetailsOfClientsWithReturnedVehicleGps()
   {
-    return DB::select("SELECT clients.id,clients.name FROM clients LEFT JOIN vehicles ON vehicles.client_id = clients.id
-    WHERE vehicles.is_returned = 1 AND vehicles.is_reinstallation_job_created = 0  GROUP BY clients.id");
+    return DB::select("SELECT clients.id,clients.name,users.mobile FROM clients LEFT JOIN vehicles ON vehicles.client_id = clients.id LEFT JOIN users ON users.id = clients.user_id WHERE vehicles.is_returned = 1 AND vehicles.is_reinstallation_job_created = 0  GROUP BY clients.id");
   }
 
   public function getClientsOfDealers($dealer_ids)
