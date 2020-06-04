@@ -31,14 +31,16 @@ class ParkingReportController extends Controller
      */
     public function numberOfHoursBetweenDates($from_date, $to_date)
     {
-        $date1  = new DateTime($from_date);
-        $date2  = new DateTime($to_date);
+        // $date1  = new DateTime($from_date);
+        // $date2  = new DateTime($to_date);
 
-        $diff   = $date2->diff($date1);
+        // $diff   = $date2->diff($date1);
 
-        $hours  = $diff->h;
-        $hours  = $hours + ($diff->days*24);
-
+        // $hours  = $diff->h;
+        // $hours  = $hours + ($diff->days*24);
+        $timestamp1 = strtotime($from_date);
+        $timestamp2 = strtotime($to_date);
+        $hours      = abs($timestamp2 - $timestamp1)/(60*60);
         return $hours;
     }
     /**
