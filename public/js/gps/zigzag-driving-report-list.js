@@ -73,7 +73,7 @@ function getFilterData()
     var form = $("#form-zig-zag-report")[0];
     filterData = new FormData(form);
     filterData.append("user_id",user_id); 
-    filterData.append("alert_type","03"); 
+    filterData.append("alert_type","15"); 
 }
 
 function downloadAlertMsReport() 
