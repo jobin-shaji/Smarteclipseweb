@@ -48,6 +48,7 @@ function dbcount(res){
 
       $('#gps_new_arrival_trader').text(res.new_arrivals);
       $('#total_gps_trader').text(res.total_gps);
+      $('#gps_in_stock_trader').text(res.gps_in_stock_trader);
       $('#transferred_gps_trader').text(res.trader_to_client_transferred_gps_count);
       $('#clients_under_traders').text(res.clients);
 
