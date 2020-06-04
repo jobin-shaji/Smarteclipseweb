@@ -122,10 +122,10 @@
                <span class="play-back-icon1"><img src="{{asset('playback/assets/img/user.png')}}"/></span>
                <span class="play-back-span"><span style="padding: 15px;">:</span>@if($vehicle->driver){{ $vehicle->driver->name}}@endif</span>
             </div>
-            <div class="row row-last">
+            <!-- <div class="row row-last">
                <span class="play-back-icon1"><img src="{{asset('playback/assets/img/dash-board.png')}}"/></span>
                <span class="play-back-span"><span style="padding: 15px;">:</span><span id="km_data">0.0</span> KM
-            </div>
+            </div> -->
             <input type="hidden" name="gps_id" id="gps_id" value="{{$vehicle->gps_id}}">
          </div>
          <input type="hidden" name="online_icon" id="online_icon" value="{{$vehicle_type->web_online_icon}}">
@@ -919,9 +919,8 @@
                               '<span class="place_data"><i class="fa fa-map-marker" aria-hidden="true"></i></span>'+location_name+'</p>'+
                                '<p><span class="place_data"><i class="fa fa-car" aria-hidden="true"></i></span>'+status+'</p>'+
                                '<p><span class="place_data">'+
-                              //  '<i class="fa fa-tachometer" aria-hidden="true"></i></span>'+ Number(speed).toString()+
-                                //  ' km/h'
-                                ' <p class="datetime_cover datetime_cover1" id="date">'+date+'</p>'+
+                               '<i class="fa fa-tachometer" aria-hidden="true"></i></span>'+ Number(speed).toString()+
+                               'km/h <p class="datetime_cover datetime_cover1" id="date">'+date+'</p>'+
                                  '<div class="left-alert-time "></div>'+
                              '</div>';
               $('#location_details').remove()
