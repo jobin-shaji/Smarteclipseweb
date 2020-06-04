@@ -1230,19 +1230,23 @@ function jobtypeonchange(job_type)
             else
             {
                 for (var i = 0; i < res.length; i++) {
-                    if((res[i].mobile) == undefined)
+                    if(res[i].user.mobile)
                     {
-                        var mobile = res[i].user.mobile;
+                        var client_identifier = "Mobile: "+res[i].user.mobile;
+                    }
+                    else if(res[i].mobile)
+                    {
+                        var client_identifier = "Mobile: "+res[i].mobile;
                     }
                     else
                     {
-                        var mobile = res[i].mobile;
+                        var client_identifier = "Address: "+res[i].address;
                     }
                     if(default_client_id == res[i].id)
                     {
                         var default_client_id_in_array  =   "true";
                     }
-                    var client='  <option value="'+res[i].id+'">'+res[i].name+' ('+mobile+')</option>';
+                    var client='  <option value="'+res[i].id+'">'+res[i].name+' ('+client_identifier+')</option>';
                     $("#client").append(client);
                 }
                 
