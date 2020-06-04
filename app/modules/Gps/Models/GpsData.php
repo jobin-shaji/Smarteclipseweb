@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\DB;
 class GpsData extends Model
 {
 
-     protected $table = 'gps_data';
+	protected $table = 'gps_data';
 
     protected $fillable=[
         'client_id',
@@ -171,5 +171,12 @@ class GpsData extends Model
         return DB::table($table_name)
                 ->where('gps_id', $gps_id)
                 ->delete(); 
+    }
+
+    public function fetchYesterdaysRecordsOfVehicleDevice($imei)
+    {
+        $this->setTable('gps_data_'.date('Ymd',strtotime("-1 days")));
+
+        return self::select('imei', 'latitude', 'longitude', 'vehicle_mode', 'device_time')->where('imei', $imei)->orderBy('device_time','asc')->get();
     }
 }
