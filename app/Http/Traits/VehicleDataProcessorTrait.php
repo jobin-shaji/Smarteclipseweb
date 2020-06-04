@@ -225,10 +225,14 @@ trait VehicleDataProcessorTrait{
      */
     public function calculateDifferenceOfDurations($time1, $time2)
     {
-        $start          =   new DateTime($time1);
-        $end            =   new DateTime($time2);
-        $interval       =   $start->diff($end);
-        return $interval->format('%H:%I:%S'); 
+        // $start          =   new DateTime($time1);
+        // $end            =   new DateTime($time2);
+        // $interval       =   $start->diff($end);
+        // return $interval->format('%H:%I:%S'); 
+        $start      = strtotime($time1);
+        $end        = strtotime($time2);
+        $diff       = abs($end - $start) / 3600;
+        return gmdate("H:i:s", $diff);
     }
 
     /**
