@@ -56,6 +56,10 @@ Route::group(['middleware' => ['web','auth','role:trader'] , 'namespace' => 'App
 	Route::get('/gps-trader-all-devices','GpsController@gpsTraderListPage')->name('gps-trader-all-devices');
 	Route::post('/gps-trader-list','GpsController@getTraderGps')->name('gps-trader-list');
 
+	//gps trader in stock list
+	Route::get('/gps-trader-instock','GpsController@gpsInStockTraderPage')->name('gps-trader-instock');
+	Route::post('/gps-trader-instock-list','GpsController@getTraderGpsInStock')->name('gps-trader-instock-list');
+
 	//gps activate-deactivate
 	Route::post('/gps-trader-status/deactivate','GpsController@gpsInTraderStatusDeactivate')->name('gps-trader-status.deactivate');
 	Route::post('/gps-trader-status/activate','GpsController@gpsInTraderStatusActivate')->name('gps-trader-status.activate');

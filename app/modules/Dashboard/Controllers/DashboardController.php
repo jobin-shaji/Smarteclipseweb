@@ -375,6 +375,7 @@ class DashboardController extends Controller
         $trader_user_id                             =   $user->id;
         $trader_id                                  =   $user->trader->id;
         $total_gps                                  =   GpsStock::select('id','trader_id')->where('trader_id',$trader_id)->count();
+        $gps_in_stock_trader                        =   GpsStock::select('id','trader_id','client_id')->where('trader_id',$trader_id)->whereNull('client_id')->count();
         $clients_of_traders                         =   (new Client())->getDetailsOfClientsUnderSubDealerWithTrashedItems($trader_id);
         $single_clients_array                       =   [];
         foreach($clients_of_traders as $clients_array){
@@ -397,6 +398,7 @@ class DashboardController extends Controller
             'clients'                                   =>  (new Client())->getCountOfClientsUnderSubDealer($trader_id),
             'new_arrivals'                              =>  $new_arrival_gps_count,
             'total_gps'                                 =>  $total_gps,
+            'gps_in_stock_trader'                       =>  $gps_in_stock_trader,
             'gps_returned'                              =>  $gps_returned,
             'trader_to_client_transferred_gps_count'    =>  $trader_to_client_transferred_gps_count,
             'status'                                    =>  'dbcount'           
