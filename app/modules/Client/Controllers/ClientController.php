@@ -142,17 +142,17 @@ class ClientController extends Controller {
             
             if($client)
             {
-                Mail::to($user)->send(new UserCreated($user, $request->name, $request->password));
+                if($request->client_category=="school"){
+                    User::select('id','username')->where('username', $request->username)->first()->assignRole('school');
+                }else{
+                    User::select('id','username')->where('username', $request->username)->first()->assignRole('client');
+                }
+                if($user->email != null)
+                {
+                    Mail::to($user)->send(new UserCreated($user, $request->name, $request->password));
+                }
             }
 
-            // dd($user);
-            if($request->client_category=="school"){
-                User::select('id','username')->where('username', $request->username)->first()->assignRole('school');
-
-            }else{
-                User::select('id','username')->where('username', $request->username)->first()->assignRole('client');
-
-            }
             $alert_types = AlertType::select('id','driver_point')->get();
             
             if($client){
@@ -201,13 +201,15 @@ class ClientController extends Controller {
             $client     =   (new Client())->createNewClientFromSubDealer($user->id, $trader_id, strtoupper($request->name), $request->address, $location_lat, $location_lng, $request->country_id, $request->state_id, $request->city_id, $current_date); 
             if($client)
             {
-                Mail::to($user)->send(new UserCreated($user, $request->name, $request->password));
-            }
-
-            if($request->client_category=="school"){
-                User::select('id','username')->where('username', $request->username)->first()->assignRole('school');
-            }else{
-                User::select('id','username')->where('username', $request->username)->first()->assignRole('client');
+                if($request->client_category=="school"){
+                    User::select('id','username')->where('username', $request->username)->first()->assignRole('school');
+                }else{
+                    User::select('id','username')->where('username', $request->username)->first()->assignRole('client');
+                }
+                if($user->email != null)
+                {
+                    Mail::to($user)->send(new UserCreated($user, $request->name, $request->password));
+                }
             }
            
             $alert_types = AlertType::select(
