@@ -76,7 +76,9 @@ class DeviceReassignController extends Controller
         } 
         else
         {
-            return view('DeviceReassign::404');
+            $request->session()->flash('message', 'Invalid IMEI');
+            $request->session()->flash('alert-class', 'alert-success');
+            return redirect(route('devicereassign.create'));
         }
     }
     /**
