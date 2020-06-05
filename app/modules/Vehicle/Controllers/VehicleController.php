@@ -1187,29 +1187,35 @@ class VehicleController extends Controller
             ->addIndexColumn()
             ->addColumn('dealer',function($vehicles){
                 $vehicle = Vehicle::find($vehicles->id);
-                return ( isset($vehicle->client->subdealer) ) ? $vehicle->client->subdealer->dealer->name : '';
-               // return $vehicle->client->subdealer->dealer->name;
+                if($vehicle->client->trader_id)
+                {
+                    return ( isset($vehicle->client->trader->subDealer) ) ? $vehicle->client->trader->subDealer->dealer->name : '-NA-';
+                }
+                else
+                {
+                    return ( isset($vehicle->client->subdealer) ) ? $vehicle->client->subdealer->dealer->name : '-NA-';
+                }
 
             })
             ->addColumn('sub_dealer',function($vehicles){
-               $vehicle = Vehicle::find($vehicles->id);
-                  if($vehicle->client->trader_id)
-                 {
+                $vehicle = Vehicle::find($vehicles->id);
+                if($vehicle->client->trader_id)
+                {
                      return $vehicle->client->trader->subDealer->name;
-                 }
-                 else{
+                }
+                else{
                     return $vehicle->client->subdealer->name;
-                 }
+                }
             })
-             ->addColumn('trader',function($vehicles){
+            ->addColumn('trader',function($vehicles){
                $vehicle = Vehicle::find($vehicles->id);
-               return ( isset($vehicle->client->trader) ) ? $vehicle->client->trader->name : '';
-             })
-             ->addColumn('serial_no',function($vehicles){
-                return    $vehicles->gps->serial_no ?? '' ;
+               return ( isset($vehicle->client->trader) ) ? $vehicle->client->trader->name : '-NA-';
+            })
+            ->addColumn('serial_no',function($vehicles){
+                return    $vehicles->gps->serial_no ?? '-NA-' ;
             })
             ->addColumn('vehicle_type_name',function($vehicles){
-                return    $vehicles->vehicleType->name ?? '' ;
+                return    $vehicles->vehicleType->name ?? '-NA-' ;
             })
             ->addColumn('action', function ($vehicles) {
                 $b_url = \URL::to('/');
