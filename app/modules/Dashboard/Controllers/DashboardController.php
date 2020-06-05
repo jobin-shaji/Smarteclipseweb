@@ -76,22 +76,32 @@ class DashboardController extends Controller
     }
     function clientDashboardIndex()
     {
-        $client_id           =  \Auth::user()->client->id;
-        $alerts              =  $this->getAlerts($client_id);
-        $gps_stocks          =  GpsStock::select('id','gps_id','client_id')->where('client_id',$client_id)->get();
-        $single_gps_in_stocks=[];
+        $client_id              =   \Auth::user()->client->id;
+        $alerts                 =   $this->getAlerts($client_id);
+        $gps_stocks             =   GpsStock::select('id','gps_id','client_id')
+                                            ->where('client_id',$client_id)
+                                            ->where(function ($query) {
+                                                $query->where('is_returned', '=', 0)
+                                                ->orWhere('is_returned', '=', NULL);
+                                            })
+                                            ->get();
+        $single_gps_in_stocks   =   [];
         foreach ($gps_stocks as $gps) {
-            $single_gps_in_stocks[]=$gps->gps_id;
+            $single_gps_in_stocks[] =   $gps->gps_id;
         }
-        $gpss = Gps::select('id')->whereNotNull('lat')->whereNotNull('lon')->get();
+        $gpss = Gps::select('id')->whereNotNull('lat')->whereNotNull('lon')->whereIn('id',$single_gps_in_stocks)->get();
         $single_gps=[];
         foreach ($gpss as $gps) {
             $single_gps[]=$gps->id;
         }
         $vehicles = Vehicle::select('id','register_number','name','gps_id')
-        ->where('client_id',$client_id)
-        ->whereIn('gps_id',$single_gps)
-        ->get();
+                            ->where('client_id',$client_id)
+                            ->whereIn('gps_id',$single_gps)
+                            ->where(function ($query) {
+                                $query->where('is_returned', '=', 0)
+                                ->orWhere('is_returned', '=', NULL);
+                            })
+                            ->get();
         $single_vehicle     =   $this->getSingleVehicle($client_id);
         $expired_documents  =   $this->getExpiredDocuments($single_vehicle);
         $expire_documents   =   $this->getExpireDocuments($single_vehicle);
@@ -984,6 +994,10 @@ class DashboardController extends Controller
         $gps_id=$request->gps_id;
         $user_data=Gps::Select('id','lat','lat_dir','lon','lon_dir')
         ->where('id',$gps_id)
+        ->where(function ($query) {
+            $query->where('is_returned', '=', 0)
+            ->orWhere('is_returned', '=', NULL);
+        })
         ->first();
         return response()->json($user_data);
     }
