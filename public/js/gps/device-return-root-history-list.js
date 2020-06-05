@@ -88,13 +88,14 @@ function callBackDataTable(){
             {data: 'sub_dealer', name: 'sub_dealer', orderable: false},
             {data: 'dealer', name: 'dealer', orderable: false},
             {data: 'distributor', name: 'distributor', orderable: false},
-            {data: 'status', name: 'status', orderable: false, searchable: false},
+            {data: 'status', name: 'status', orderable: false},
             {data: 'action', name: 'action', orderable: false, searchable: false},
         ],
         
         aLengthMenu: [[25, 50, 100, -1], [25, 50, 100, 'All']]
     });
-
+    var table = $('#dataTable').DataTable();
+    table.search('').draw();
 }
 
 function addNewActivity() {
