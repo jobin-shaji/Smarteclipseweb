@@ -994,10 +994,6 @@ class DashboardController extends Controller
         $gps_id=$request->gps_id;
         $user_data=Gps::Select('id','lat','lat_dir','lon','lon_dir')
         ->where('id',$gps_id)
-        ->where(function ($query) {
-            $query->where('is_returned', '=', 0)
-            ->orWhere('is_returned', '=', NULL);
-        })
         ->first();
         return response()->json($user_data);
     }
