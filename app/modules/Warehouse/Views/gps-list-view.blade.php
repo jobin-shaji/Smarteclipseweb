@@ -28,7 +28,7 @@ $is_root = false;
     <div class="card-body">
         <div class="table-responsive">
             <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
-                <div class="row">
+                <div class="row" style="margin-left:3%!important">
                     <div class="col-sm-12">
                       <section class="content">
                         <div class="row">
