@@ -22,6 +22,11 @@ Route::post('/sub-dealer/activate','SubDealerController@activateSubDealer')->nam
 
 Route::group(['middleware' => ['web','auth','role:sub_dealer'] , 'namespace' => 'App\Modules\SubDealer\Controllers' ] , function() {
 	Route::get('/sub-dealer/profile','SubDealerController@subDealerProfile')->name('sub-dealer.profile');
+	Route::get('/temporary-certificate-sub-dealer','SubDealerController@temporaryCertificate')->name('temporary-certificate-sub-dealer');
+	Route::post('/temporary-certificate-create','SubDealerController@temporaryCertificatecreate')->name('temporary.create.p');
+	Route::post('/temporary-certificate-list','SubDealerController@temporaryCertificatelist')->name('temporary.list');
+	Route::post('/temporary-certificate-save','SubDealerController@temporaryCertificatesave')->name('temporary.certificate.save.p');
+	Route::post('/get-owner','SubDealerController@getOwner')->name('get.owner.p');
 });
 
 Route::group(['middleware' => ['web','auth','role:dealer|sub_dealer'] , 'namespace' => 'App\Modules\SubDealer\Controllers' ] , function() {
