@@ -18,7 +18,7 @@ class VehicleTrips extends Migration
             $table->integer('client_id');
             $table->integer('vehicle_id');
             $table->string('report_url');
-            $table->integer('distance');
+            $table->float('distance');
             $table->date('trip_date');
             $table->timestamps();
         });
