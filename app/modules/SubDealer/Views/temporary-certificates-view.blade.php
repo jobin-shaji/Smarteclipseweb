@@ -24,10 +24,9 @@
           <div class="box box-success">
             <div class="box-header ui-sortable-handle" style="cursor: move;">
             </div>
-            <form  method="POST" action="#">
-            {{csrf_field()}}
                 <?php 
                 $datas = json_decode($data['details'],true);
+                $encript = Crypt::encrypt($data->id);
                 ?>
               <div class="box-body">
                 <ul class="list-group">
@@ -68,13 +67,12 @@
                     <b>Date of Installation:</b> {{$datas['device_expected_date_of_installation']}}
                   </li>
                   <li class="list-group-item">
-                    <button type="submit" class="btn btn-primary btn-md form-btn "><i class="fa fa-download"></i>
-                        <a href="temporary-certificate-downloads?type=pdf&id={{$data->id}}" style="color:white">Download Certificate</a>
+                    <button class="btn btn-primary btn-md form-btn "><i class="fa fa-download"></i>
+                        <a href="{{route('temporary.certificate.downloads',$encript)}}" style="color:white">Download Certificate</a>
                     </button>
                   </li>
                 </ul>                   
               </div>
-            </form>
           </div>
         </div>
       </div>

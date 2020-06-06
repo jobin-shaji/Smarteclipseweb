@@ -9,6 +9,7 @@ use App\Modules\User\Models\User;
 use App\Modules\Warehouse\Models\TemporaryCertificate;
 use Illuminate\Support\Facades\Crypt;
 use DataTables;
+use PDF;
 class SubDealerController extends Controller {
     //Display employee details 
     public function subdealerListPage()
@@ -424,6 +425,23 @@ class SubDealerController extends Controller {
         $decrypted = Crypt::decrypt($request->id);
         $data = TemporaryCertificate::select('id','details')->where('id',$decrypted)->first();
         return view('SubDealer::temporary-certificates-view',['data' => $data]);
+    }
+
+    public function temporaryCertificatedownload(Request $request)
+    {
+        $decrypted = Crypt::decrypt($request->id);
+        if($decrypted != null)
+        {
+            $data = TemporaryCertificate::select('id','details')->where('id',$decrypted)->first();
+            $pdf  =   PDF::loadView('SubDealer::temporary-certificate-download',['data' => $data]);
+            return $pdf->download('temporary-certificate.pdf');
+        }
+        else
+        {
+            $request->session()->flash('message','Something went wrong');
+            $request->session()->flash('alert-class','alert-success');
+            return redirect(route('temporary-certificate-sub-dealer'));
+        }
     }
 
     public function temporaryCertificatesave(Request $request)
