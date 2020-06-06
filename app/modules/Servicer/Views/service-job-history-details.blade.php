@@ -39,7 +39,7 @@
                     <div class="card-body">                    
                  
                     <div class="form-group row" style="float:none!important">
-                      <label for="fname" class="col-sm-3 text-right control-label col-form-label">En User</label>
+                      <label for="fname" class="col-sm-3 text-right control-label col-form-label">End User</label>
                       <div class="form-group has-feedback">
                        <input type="text" class="form-control {{ $errors->has('client') ? ' has-error' : '' }}"  name="client" value="{{$servicer_job->clients->name}}" required readonly>
                         <input type="hidden" name="servicer_job_id" id="servicer_job_id" value="{{$servicer_job->id}}" >
