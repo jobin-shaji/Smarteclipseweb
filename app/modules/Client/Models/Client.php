@@ -286,6 +286,13 @@ class Client extends Model
   {
     return self::select('trader_id')->where('trader_id',$trader_id)->count();
   }
+  /**
+   * 
+   */
+  public function getIdAndNameOfAllClients()
+  {
+    return self::select('id','name')->get();
+  }
 
 
 
