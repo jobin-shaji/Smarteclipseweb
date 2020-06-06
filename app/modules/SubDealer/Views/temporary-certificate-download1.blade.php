@@ -147,8 +147,6 @@
             $datas = json_decode($data['details'],true);
             $date = new DateTime($datas['device_expected_date_of_installation']);
             $date = $date->format('d/m/Y');
-            $now = new DateTime('now');
-            $now =  $now->format('d/m/Y');
         ?>
         <div >
             <div style="position:absolute;left:23px;">
@@ -161,10 +159,10 @@
 
                 <div style="position:absolute;left:20px;top:10px;width: 65%" class="cls_002">
                     <div class="cls_002 lineheight">
-                        <b>Name:</b> {{$subdealer_trader->name}}
+                        <b>Name:</b> {{$subdealer->name}}
                     </div>
                     <div class="cls_002 lineheight">
-                        <b>Address:</b> {{$subdealer_trader->address}}
+                        <b>Address:</b> {{$subdealer->address}}
                     </div>
                     <div class="cls_002 lineheight">
                        <span> <b>Email:</b> {{$mail->email}}</span>
@@ -172,18 +170,18 @@
                     </div>
                 </div>
                 <?php 
-                   $qr ='IMEI: '.$datas['imei'].' MODEL: VST0507C MANUFACTURER: VST Mobility Solutions Private Limited, B2,Kerala Technology Innovation Zone Kinfra Hi Tech Park, Kalamassery FROM: '.$subdealer_trader->name.''.$subdealer_trader->address;
+                   $qr ='IMEI: '.$datas['imei'].' MODEL: VST0507C MANUFACTURER: VST Mobility Solutions Private Limited, B2,Kerala Technology Innovation Zone Kinfra Hi Tech Park, Kalamassery FROM: '.$subdealer->name.''.$subdealer->address;
                 ?>
                 <div style="position:absolute;left: 560px!important;margin-top: 20px!important">
                     <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(150)->generate($qr)) !!} ">
                 </div>
-                <div class="cls_002 lineheight" style="position:absolute;left: 540px!important;margin-top: 156px!important">
-                    <b>Valid Till:</b> {{$validity}}
+                <div class="cls_002 lineheight" style="position:absolute;left: 560px!important;margin-top: 5px!important">
+                    <b>Valid Till:</b> {{$date}}
                 </div>
-                <div style="position:absolute;left:20px;top:200px; line-height: 21px;" class="cls_002">
+                <div style="position:absolute;left:20px;top:170px; line-height: 21px;" class="cls_002">
                     <span class="cls_002">This is to certify that, this vehicle will be equipped with the AIS 140 compliant device, approved by <b>CDAC</b> and <b>ARAI</b>.</span>
                 </div>
-                <div style="position:absolute;top:240px">
+                <div style="position:absolute;top:210px">
                 <p><b style="margin-top: 250px;margin-left: 255px">Details of AIS 140 Device</b></p>
                 <table border="1" cellspacing="0" cellpadding="5px" style="margin-left: 20px;width:100%">
                      <tr>
@@ -227,16 +225,16 @@
         </div>
         
         <div style="position:fixed;margin:1%;overflow:auto">
-            <div style="position:absolute;left:20px;top:670px;line-height: 21px" class="cls_002">
-                <span class="cls_002">This letter has been issued on <b>{{$now}}</b> upon the specific request from the customer as a proof of installation</span>
+            <div style="position:absolute;left:20px;top:760px;line-height: 21px" class="cls_002">
+                <span class="cls_002">This letter has been issued on <b>{{$date}}</b> upon the specific request from the customer as a proof of installation</span>
             </div>
-            <div style="position:absolute;left:20px;top:720px" class="cls_002">
+            <div style="position:absolute;left:20px;top:800px" class="cls_002">
                 <span class="cls_002">Yours Sincerly,</span>
             </div>
-             <div style="position:absolute;left:20px;top:750px" class="cls_002">
-                <span class="cls_002">{{$subdealer_trader->name}}</span>
+             <div style="position:absolute;left:20px;top:830px" class="cls_002">
+                <span class="cls_002">{{$subdealer->name}}</span>
             </div>
-            <div style="position:absolute;top:750px;float:right" class="cls_002">
+            <div style="position:absolute;top:830px;float:right" class="cls_002">
                 <span class="cls_002">Authorised Signatory</span>
             </div>
         </div>
