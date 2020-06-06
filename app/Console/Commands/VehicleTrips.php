@@ -5,6 +5,7 @@ use \Carbon\Carbon;
 use App\Modules\Vehicle\Models\Vehicle;
 use App\Modules\Gps\Models\GpsData;
 use App\Modules\Vehicle\Models\DailyKm;
+use App\Modules\Vehicle\Models\VehicleTripSummary;
 use PDF;
 use \DB;
 
@@ -167,10 +168,16 @@ class VehicleTrips extends Command
      */
     public function generatePdfReport($trips, $summary, $gps)
     {
+
+        $client_id  = $gps->vehicle->client->id;
+        $vehicle_id = $gps->vehicle->id;
         view()->share(['trips' => $trips, 'date' => $this->trip_date, 'summary' => $summary, 'gps' => $gps]);
         $file_name = $gps->imei.'-'.$this->trip_date.'.pdf';
         $pdf       = PDF::loadView('Exports::trip-report');
-        $pdf->save("public/documents/tripreports/".$gps->vehicle->client->id."/".$gps->vehicle->id."/".$this->trip_date."/".$file_name);
+        $file = "public/documents/tripreports/".$client_id."/".$vehicle_id."/".$this->trip_date."/".$file_name;
+        $pdf->save($file);
+
+        (new VehicleTripSummary)->addNewReport($client_id, $vehicle_id, $file, $summary["km"], $this->trip_date);
     }
 
 }
