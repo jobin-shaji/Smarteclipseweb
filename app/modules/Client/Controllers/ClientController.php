@@ -397,7 +397,7 @@ class ClientController extends Controller {
         $client->password=bcrypt($request->password);
         $client->username=$request->username;
         $client->save();
-        if($user->email != null)
+        if($client->email != null)
         {
             Mail::to($client)->send(new UserUpdated($client, $client->client->name, $request->password));
         }
