@@ -174,8 +174,8 @@ class VehicleTrips extends Command
         view()->share(['trips' => $trips, 'date' => $this->trip_date, 'summary' => $summary, 'gps' => $gps]);
         $file_name = $gps->imei.'-'.$this->trip_date.'.pdf';
         $pdf       = PDF::loadView('Exports::trip-report');
-        $file = "public/documents/tripreports/".$client_id."/".$vehicle_id."/".$this->trip_date."/".$file_name;
-        $pdf->save($file);
+        $file = "documents/tripreports/".$client_id."/".$vehicle_id."/".$this->trip_date."/".$file_name;
+        $pdf->save("public/".$file);
 
         (new VehicleTripSummary)->addNewReport($client_id, $vehicle_id, $file, $summary["km"], $this->trip_date);
     }
