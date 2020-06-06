@@ -27,7 +27,8 @@ function getVehicles(client_id)
                 if(data.vehicles.length != 0){
                     $('#vehicle_id').empty();
                     $('#vehicle_id').focus;
-                    $('#vehicle_id').append('<option value="">  Select Vehicle </option>'); 
+                    $('#vehicle_id').append('<option value="">  Select Vehicle </option>');
+                    $('#vehicle_id').append('<option value="0">  All </option>'); 
                     $.each(data.vehicles, function(key, value){
                     $('select[name="vehicle_id"]').append('<option value="'+ value.id +'">' + value.name+' || '+ value.register_number+ '</option>');
                     });
