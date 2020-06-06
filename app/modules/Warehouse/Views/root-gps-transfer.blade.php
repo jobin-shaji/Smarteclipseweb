@@ -132,6 +132,7 @@
                       </select>
                   </div>
                 </div>
+                <div class="loader_transfer" id="loader"></div>
                 <div style="position: absolute; bottom: 0;">
                   <textarea id="scanner" autofocus="autofocus" style="height:150px!important; width: 100%;" placeholder="Please click here for scanning.."></textarea>
                   <input type="hidden" id="role"name="role" value="{{\Auth::user()->roles->first()->name}}">
@@ -154,6 +155,29 @@
 <div class="clearfix"></div>
 
 @section('script')
+<style>
+.loader_transfer {
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  width: 120px;
+  height: 120px;
+  margin-left: 45%;
+  margin-top: 6%;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+}
+
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+</style>
   <script>
     $(".transfer").on("submit", function(){
       if(confirm("Are you sure you want to transfer"))

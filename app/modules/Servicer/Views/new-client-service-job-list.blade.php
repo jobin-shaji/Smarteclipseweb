@@ -56,7 +56,7 @@ $key        = (isset($_GET['new_service_search_key'])) ? $_GET['new_service_sear
               </div>
            </form>
        </div> 
-          <table class="table table-hover table-bordered  table-striped datatable"  style="width:100%;text-align: center" >
+          <table class="table table-hover table-bordered  table-striped datatable"  style="width:95%;text-align: center;margin-left:3%!important" >
           <thead class="indigo white-text">
                <tr>
                 <th><b>SL.No</b></th>

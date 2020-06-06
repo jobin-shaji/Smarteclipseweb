@@ -76,7 +76,9 @@ class DeviceReassignController extends Controller
         } 
         else
         {
-            return view('DeviceReassign::404');
+            $request->session()->flash('message', 'Invalid IMEI');
+            $request->session()->flash('alert-class', 'alert-success');
+            return redirect(route('devicereassign.create'));
         }
     }
     /**
@@ -247,7 +249,7 @@ class DeviceReassignController extends Controller
                 if($count_of_transfer_item == 1)
                 {
                     // Delete $gps_transfer_log
-                    GpsTransfer::where('id',$gps_transfer_log->id)->forceDelete();
+                    GpsTransfer::where('id',$gps_transfer_log->id)->delete();
                     // Delete  row in gps_transfer_item 
                     GpsTransferItems::where('gps_transfer_id',$gps_transfer_id)->where('gps_id', $gps)->delete();
                 }
@@ -327,7 +329,7 @@ class DeviceReassignController extends Controller
                     if($count_of_transfer_item == 1)
                     {
                         // Delete $gps_transfer_log
-                        GpsTransfer::where('id',$gps_transfer_log->id)->forceDelete();
+                        GpsTransfer::where('id',$gps_transfer_log->id)->delete();
                         // Delete  row in gps_transfer_item 
                         GpsTransferItems::where('gps_transfer_id',$gps_transfer_id)->where('gps_id', $gps)->delete();
                     }
@@ -386,7 +388,7 @@ class DeviceReassignController extends Controller
                     if($count_of_transfer_item == 1)
                     {
                         // Delete $gps_transfer_log
-                        GpsTransfer::where('id',$gps_transfer_log->id)->forceDelete();
+                        GpsTransfer::where('id',$gps_transfer_log->id)->delete();
                         // Delete  row in gps_transfer_item 
                         GpsTransferItems::where('gps_transfer_id',$gps_transfer_id)->where('gps_id', $gps)->delete();
                     }
