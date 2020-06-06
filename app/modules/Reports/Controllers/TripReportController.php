@@ -4,7 +4,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Modules\Vehicle\Models\Vehicle;
-use App\Modules\Vehicle\Models\VehicleGps;
+use App\Modules\Vehicle\Models\VehicleTripSummary;
 use App\Modules\Client\Models\Client;
 use App\Http\Traits\VehicleDataProcessorTrait;
 use App\Modules\Alert\Models\Alert;
@@ -139,9 +139,16 @@ class TripReportController extends Controller
      */
     public function getVehiclesBasedOnClient(Request $request)
     {
-        $client_id                              =   $request->client_id;
-        $vehicles_based_on_client               =   (new Vehicle())->getVehiclesOfSelectedClient($client_id);
-        if($vehicles_based_on_client == null)
+        $client_id              =   $request->client_id;
+        if($client_id == "0")
+        {
+            $vehicles           =   (new Vehicle())->getAllVehiclesOfAllClients();
+        }
+        else
+        {
+            $vehicles           =   (new Vehicle())->getVehiclesOfSelectedClient($client_id);
+        }
+        if($vehicles == null)
         {
             return response()->json([
                 'vehicles' => '',
@@ -150,7 +157,7 @@ class TripReportController extends Controller
         }else
         {
             return response()->json([
-                    'vehicles' => $vehicles_based_on_client,
+                    'vehicles' => $vehicles,
                     'message' => 'success'
             ]);
         }
@@ -165,26 +172,65 @@ class TripReportController extends Controller
         $vehicle_id         =   $request->vehicle_id;
         $from_date          =   date("Y-m-d", strtotime($request->from_date));
         $to_date            =   date("Y-m-d", strtotime($request->to_date));
+        
+        // $trip_report_dates  =   $this->createDatesInBetween($from_date, $to_date);
+        // $trip_reports       =   [];
 
-        $trip_report_dates  =   $this->createDatesInBetween($from_date, $to_date);
-        $trip_reports       =   [];
-
-        foreach($trip_report_dates as $each_date)
+        // foreach($trip_report_dates as $each_date)
+        // {
+        //     $directory = 'tripreports/'.$client_id.'/'.$vehicle_id.'/'.$each_date;
+        //     if( is_dir($directory) )
+        //     {
+        //         foreach (glob($directory."/*.pdf") as $each_trip_report_file)
+        //         {
+        //             array_push($trip_reports, [
+        //                 'path'      => $directory.'/'.basename($each_trip_report_file),
+        //                 'filename'  => basename($each_trip_report_file),
+        //                 'date'      => $each_date
+        //             ]);
+        //         }
+        //     }
+        // }
+        
+        if($client_id == "0" && $vehicle_id == "0")
         {
-            $directory = 'tripreports/'.$client_id.'/'.$vehicle_id.'/'.$each_date;
-            if( is_dir($directory) )
+            $clients            =   (new Client())->getIdAndNameOfAllClients();
+            $client_ids         =   [];
+            foreach($clients as $each_client)
             {
-                foreach (glob($directory."/*.pdf") as $each_trip_report_file)
-                {
-                    array_push($trip_reports, [
-                        'path'      => $directory.'/'.basename($each_trip_report_file),
-                        'filename'  => basename($each_trip_report_file),
-                        'date'      => $each_date
-                    ]);
-                }
+                $client_ids[]   =   $each_client->id;
+            }
+            $vehicles           =   (new Vehicle())->getAllVehiclesOfAllClients();
+            foreach($vehicles as $each_vehicle)
+            {
+                $vehicle_ids[]  =   $each_vehicle->id;
             }
         }
-        //dd($trip_reports);
+        else if($client_id == "0" && $vehicle_id != "0")
+        {
+            $clients            =   (new Client())->getIdAndNameOfAllClients();
+            $client_ids         =   [];
+            foreach($clients as $each_client)
+            {
+                $client_ids[]   =   $each_client->id;
+            }
+            $vehicle_ids        =   [$vehicle_id];
+        }
+        else if($client_id != "0" && $vehicle_id == "0")
+        {
+            $client_ids         =   [$client_id];
+            $vehicles           =   (new Vehicle())->getAllVehiclesOfAllClients();
+            foreach($vehicles as $each_vehicle)
+            {
+                $vehicle_ids[]  =   $each_vehicle->id;
+            }
+        }
+        else
+        {
+            $client_ids         =   [$client_id];
+            $vehicle_ids        =   [$vehicle_id];
+        }
+        $trip_reports       =   (new VehicleTripSummary())->getTripDetailsBetweenTwoDates($client_ids, $vehicle_ids, $from_date, $to_date);
         $get_all_clients    =   (new Client())->getIdAndNameOfAllClients();
         return view('Reports::trip-report-view-in-manufacturer',['clients'=>$get_all_clients, 'client_id'=>$client_id, 'vehicle_id'=>$vehicle_id, 'from_date'=>$from_date, 'to_date'=>$to_date,'trip_reports'=>$trip_reports ]);
     }
@@ -192,22 +238,22 @@ class TripReportController extends Controller
      * 
      * 
      */
-    private function createDatesInBetween($from, $to)
-    {
-        $dates = [];
-        if($from != null && $to != null )
-        {
-            $begin      =   new DateTime($from);
-            $end        =   new DateTime($to);
-            $end        =   $end->modify('+1 day');
-            $interval   =   DateInterval::createFromDateString('1 day');
-            $period     =   new DatePeriod($begin, $interval, $end);
-            foreach ($period as $dt)
-            {
-                array_push($dates, $dt->format("Y-m-d"));
-            }
-        }
-        return $dates;
-    }
+    // private function createDatesInBetween($from, $to)
+    // {
+    //     $dates = [];
+    //     if($from != null && $to != null )
+    //     {
+    //         $begin      =   new DateTime($from);
+    //         $end        =   new DateTime($to);
+    //         $end        =   $end->modify('+1 day');
+    //         $interval   =   DateInterval::createFromDateString('1 day');
+    //         $period     =   new DatePeriod($begin, $interval, $end);
+    //         foreach ($period as $dt)
+    //         {
+    //             array_push($dates, $dt->format("Y-m-d"));
+    //         }
+    //     }
+    //     return $dates;
+    // }
 
 }
