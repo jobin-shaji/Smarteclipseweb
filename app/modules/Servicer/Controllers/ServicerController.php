@@ -1394,7 +1394,15 @@ public function serviceJobDetails(Request $request)
                  // 'file.uploaded' => 'Failed to upload an image. The image maximum size is 4kb.'
                 'installation_photo.required' => 'Installation photo cannot be blank',
                 'activation_photo.required' => 'Activation photo cannot be blank',
-                'vehicle_photo.required' => 'Vehicle photo cannot be blank'
+                'vehicle_photo.required' => 'Vehicle photo cannot be blank',
+                'file.uploaded' => "The rc book photo may not be greater than 4MB.",
+                'file.max' => 'The rc book photo may not be greater than 4MB.',
+                'installation_photo.uploaded' => "The installation photo may not be greater than 4MB.",
+                'installation_photo.max' => 'The installation photo may not be greater than 4MB.',
+                'activation_photo.uploaded' => "The activation photo may not be greater than 4MB.",
+                'activation_photo.max' => 'The activation photo may not be greater than 4MB.',
+                'vehicle_photo.uploaded' => "The vehicle photo may not be greater than 4MB.",
+                'vehicle_photo.max' => 'The vehicle photo may not be greater than 4MB.',
             ];
           
             $rules = $this->servicercompleteJobRules();
