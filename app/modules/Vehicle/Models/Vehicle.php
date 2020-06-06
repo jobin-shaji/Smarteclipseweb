@@ -287,4 +287,13 @@ class Vehicle extends Model
                   ->where('client_id',$client_id)
                   ->get();
     }
+    /**
+     * 
+     */
+    public function getAllVehiclesOfAllClients()
+    {
+      return self::select('id','name','register_number','client_id')
+                  ->withTrashed()
+                  ->get();
+    }
 }

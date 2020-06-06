@@ -21,7 +21,34 @@ class VehicleTripSummary extends Model
         ]);
 
     }
-
+    /*
+    *
+    * 
+    */
+    public function client(){
+        return $this->hasOne('App\Modules\Client\Models\Client','id','client_id')->withTrashed();
+    }
+    /*
+    *
+    * 
+    */
+    public function vehicle(){
+        return $this->hasOne('App\Modules\Vehicle\Models\Vehicle','id','vehicle_id')->withTrashed();
+    }
+    /*
+    *
+    * 
+    */
+    public function getTripDetailsBetweenTwoDates($client_ids, $vehicle_ids, $from_date, $to_date)
+    {
+        return self::whereIn('client_id',$client_ids)
+                    ->whereIn('vehicle_id',$vehicle_ids)
+                    ->with('client:id,name')
+                    ->with('vehicle:id,name,register_number')
+                    ->where('trip_date', '>=' , $from_date)
+                    ->where('trip_date', '<=' , $to_date)
+                    ->get();
+    }
 }
 
 
