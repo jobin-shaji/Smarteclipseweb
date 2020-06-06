@@ -391,7 +391,7 @@ class ClientController extends Controller {
         }
         $did=encrypt($client->id);
         // dd($request->password);
-        $rules=$this->updateUserPasswordBySubdealer();
+        $rules=$this->updateUserPasswordBySubdealer($client);
         $this->validate($request,$rules);
         $client->password=bcrypt($request->password);
         $client->username=$request->username;
@@ -462,10 +462,10 @@ class ClientController extends Controller {
         ];
         return $rules;
     }
-    public function updateUserPasswordBySubdealer()
+    public function updateUserPasswordBySubdealer($client)
     {
         $rules=[
-            'username' => 'required|unique:users',
+            'username' => 'required|unique:users,username,'.$client->id,
             'password' => 'required|string|min:8|confirmed|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*)(=+\/\\~`-]).{8,20}$/'
         ];
         return $rules;
