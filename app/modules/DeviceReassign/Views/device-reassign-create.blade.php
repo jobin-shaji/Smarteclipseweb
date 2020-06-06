@@ -30,7 +30,7 @@ Create Device Reassign
                   <div class="col-md-6">
                     <div class="form-group has-feedback form-group-1 mrg-rt-5">
                       <label class="srequired">IMEI</label>
-                      <input type="text" name="imei" id="imei" class="form-control" value="@if(isset($data)){{$data->imei}}@endif" required>
+                      <input type="text" name="imei" id="imei" class="form-control" title="IMEI should be a number of length 15" value="@if(isset($data)){{$data->imei}}@endif" maxlength="15" pattern="[0-9]{15}" required>
                       @if ($errors->has('imei'))
                       <span class="help-block">
                         <strong class="error-text">{{ $errors->first('imei') }}</strong>
