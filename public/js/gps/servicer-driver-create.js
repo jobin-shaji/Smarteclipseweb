@@ -2,21 +2,21 @@ function createDriver(res){
     var mobile = document.getElementById("mobile").value;
     var phoneno = /^\d{10}$/;
     if(document.getElementById('driver_name').value == ''){
-         alert("please enter name");
+         alert("Please enter name");
         // alertify.confirm('please enter name', function(){ alertify.success('Ok') });
         // var closable = alertify.alert().setting('closable');
         // alertify.alert()
         // .setting({'label':'OK','message': 'Please enter name'}).show();
     }
     else if(document.getElementById('mobile').value == '' ){
-        alert("please enter mobile number");
+        alert("Please enter mobile number");
         //  var closable = alertify.alert().setting('closable');
         // alertify.alert()
         // .setting({'label':'OK','message': 'Please enter mobile number'}).show();
         
     }
     else if(document.getElementById('address').value == ''){
-         alert("please enter Address ");
+         alert("Please enter Address ");
         // var closable = alertify.alert().setting('closable');
         // alertify.alert()
         // .setting({'label':'OK','message': 'please enter address'}).show();    

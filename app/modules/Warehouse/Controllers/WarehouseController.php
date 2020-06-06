@@ -2663,13 +2663,13 @@ class WarehouseController extends Controller {
 
     //cancel root gps transfer
     public function cancelRootGpsTransfer(Request $request){
-        $user_id = \Auth::user()->id;
-        $gps_transfer = GpsTransfer::find($request->id);
+        $user_id        =   \Auth::user()->id;
+        $gps_transfer   =   (new GpsTransfer())->checkGpsTransferLogExistAndNotAccepted($request->id);
         if($gps_transfer == null){
             return response()->json([
                 'status' => 0,
                 'title' => 'Error',
-                'message' => 'Transferred gps does not exist'
+                'message' => 'This transaction is already accepted'
             ]);
         }
         $cancel_transfer=$gps_transfer->delete();
@@ -2698,13 +2698,13 @@ class WarehouseController extends Controller {
 
     //cancel dealer gps transfer
     public function cancelDealerGpsTransfer(Request $request){
-        $user_id = \Auth::user()->id;
-        $gps_transfer = GpsTransfer::find($request->id);
+        $user_id        =   \Auth::user()->id;
+        $gps_transfer   =   (new GpsTransfer())->checkGpsTransferLogExistAndNotAccepted($request->id);
         if($gps_transfer == null){
             return response()->json([
                 'status' => 0,
                 'title' => 'Error',
-                'message' => 'Transferred gps does not exist'
+                'message' => 'This transaction is already accepted'
             ]);
         }
         $cancel_transfer=$gps_transfer->delete();
@@ -2733,13 +2733,13 @@ class WarehouseController extends Controller {
 
     //cancel sub dealer to trader gps transfer
     public function cancelSubDealerToTraderGpsTransfer(Request $request){
-        $user_id = \Auth::user()->id;
-        $gps_transfer = GpsTransfer::find($request->id);
+        $user_id        =   \Auth::user()->id;
+        $gps_transfer   =   (new GpsTransfer())->checkGpsTransferLogExistAndNotAccepted($request->id);
         if($gps_transfer == null){
             return response()->json([
                 'status' => 0,
                 'title' => 'Error',
-                'message' => 'Transferred gps does not exist'
+                'message' => 'This transaction is already accepted'
             ]);
         }
         $cancel_transfer=$gps_transfer->delete();

@@ -35,13 +35,13 @@ function callBackDataTable(){
         fnDrawCallback: function (oSettings, json) {
         },
         columns: [
-            {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
-            {data: 'client.name', name: 'client.name'},
-            {data: 'name', name: 'name'},
-            {data: 'register_number', name: 'register_number'},
-            {data: 'gps.imei', name: 'gps.imei'},
-            {data: 'driver', name: 'driver'},
-            {data: 'vehicle_type.name', name: 'vehicle_type.name'},
+            {data: 'DT_RowIndex', name: 'DT_RowIndex', searchable: false},
+            {data: 'client.name', name: 'client.name', orderable: false},
+            {data: 'name', name: 'name', orderable: false},
+            {data: 'register_number', name: 'register_number', orderable: false},
+            {data: 'gps.imei', name: 'gps.imei', orderable: false},
+            {data: 'driver', name: 'driver', orderable: false},
+            {data: 'vehicle_type.name', name: 'vehicle_type.name', orderable: false},
             {data: 'action', name: 'action', orderable: false, searchable: false}
         ],        
         aLengthMenu: [[25, 50, 100, -1], [25, 50, 100, 'All']]
