@@ -29,6 +29,7 @@ use Intervention\Image\ImageManagerStatic as Image;
 use App\Jobs\MailJob;
 use App\Http\Traits\MqttTrait;
 use App\Mail\UserCreated;
+use App\Mail\UserUpdated;
 use Illuminate\Support\Facades\Mail;
 
 
@@ -396,6 +397,10 @@ class ClientController extends Controller {
         $client->password=bcrypt($request->password);
         $client->username=$request->username;
         $client->save();
+        if($client->email != null)
+        {
+            Mail::to($client)->send(new UserUpdated($client, $client->client->name, $request->password));
+        }
         $request->session()->flash('message','Username & Password updated successfully');
         $request->session()->flash('alert-class','alert-success');
         return  redirect(route('client.change-password-subdealer',$did));
