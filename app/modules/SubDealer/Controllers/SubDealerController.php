@@ -2,11 +2,16 @@
 namespace App\Modules\SubDealer\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Modules\Client\Models\Client;
 use App\Modules\SubDealer\Models\SubDealer;
 use App\Modules\Dealer\Models\Dealer;
 use App\Modules\User\Models\User;
+use App\Modules\Trader\Models\Trader;
+use App\Modules\Warehouse\Models\TemporaryCertificate;
 use Illuminate\Support\Facades\Crypt;
 use DataTables;
+use PDF;
+use Carbon\Carbon;
 class SubDealerController extends Controller {
     //Display employee details 
     public function subdealerListPage()
@@ -395,5 +400,117 @@ class SubDealerController extends Controller {
             'password' => 'required|string|min:8|confirmed|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*)(=+\/\\~`-]).{8,20}$/'
         ];
         return $rules;
+    }
+
+    public function temporaryCertificate()
+    {
+        if(\Auth::user()->hasRole('sub_dealer'))
+        {
+            $subdealer_trader_id  =   \Auth::user()->subdealer->id;
+        }
+        elseif(\Auth::user()->hasRole('trader'))
+        {
+            $subdealer_trader_id  =   \Auth::user()->trader->id;
+        }
+        $data = TemporaryCertificate::select('id','details')->where('user_id',$subdealer_trader_id)->get();
+        return view('SubDealer::temporary-certificates',['details' => $data]);
+    }
+
+    public function temporaryCertificatecreate()
+    {
+        if(\Auth::user()->hasRole('sub_dealer'))
+        {
+            $subdealer_trader_id  =   \Auth::user()->subdealer->id;
+            $clients        =   Client::select('id','name')->where('sub_dealer_id',$subdealer_trader_id)->get();
+        }
+        elseif(\Auth::user()->hasRole('trader'))
+        {
+            $subdealer_trader_id  =   \Auth::user()->trader->id;
+            $clients        =   Client::select('id','name')->where('trader_id',$subdealer_trader_id)->get();
+        }
+        return view('SubDealer::temporary-certificate-create',['user_id' => $subdealer_trader_id,'clients' => $clients]);
+    }
+
+    public function getOwner(Request $request)
+    {
+        $client_name  =   $request->id;
+        return Client::select('id','name','address')->where('name',$client_name)->first();
+    }
+
+    public function certificateDetailedview(Request $request)
+    {
+        $decrypted = Crypt::decrypt($request->id);
+        $data = TemporaryCertificate::select('id','details')->where('id',$decrypted)->first();
+        return view('SubDealer::temporary-certificates-view',['data' => $data]);
+    }
+
+    public function temporaryCertificatedownload(Request $request)
+    {
+        $decrypted = Crypt::decrypt($request->id);
+        if($decrypted != null)
+        {
+            $data = TemporaryCertificate::select('id','user_id','details')->where('id',$decrypted)->first();
+            if(\Auth::user()->hasRole('sub_dealer'))
+            {
+                $subdealer_trader = SubDealer::select('id','name','user_id','address')->where('id',$data->user_id)->first();
+            }
+            elseif(\Auth::user()->hasRole('trader'))
+            {
+                $subdealer_trader = Trader::select('id','name','user_id','address')->where('id',$data->user_id)->first();
+            }
+            
+            $mail_ph   = User::select('email','mobile')->where('id',$subdealer_trader->user_id)->first();
+            // get the current time
+            $current = Carbon::now();
+            $current->toDateString();
+            $expires = $current->addDays(60);
+            $expires = $expires->format('d/m/Y');
+            $pdf  =   PDF::loadView('SubDealer::temporary-certificate-download',['validity' => $expires, 'data' => $data, 'subdealer_trader' => $subdealer_trader, 'mail' => $mail_ph]);
+            return $pdf->download('temporary-certificate.pdf');
+        }
+        else
+        {
+            $request->session()->flash('message','Something went wrong');
+            $request->session()->flash('alert-class','alert-success');
+            return redirect(route('temporary-certificate-sub-dealer'));
+        }
+    }
+
+    public function temporaryCertificatesave(Request $request)
+    {
+        $current = Carbon::now();
+        $current->toDateString();
+        $expires = $current->addDays(60);
+        $expires = $expires->format('Y-m-d H:i:s');
+        $install_date = date($request->job_date);
+        if($install_date <= $expires)
+        {
+            $detail['plan_name']                                =   $request->plan;
+            $detail['client_name']                              =   $request->client;
+            $detail['imei']                                     =   $request->imei;
+            $detail['device_model']                             =   $request->model;
+            $detail['manufacturer_name']                        =   $request->manufacturer;
+            $detail['cdac_certification_number']                =   $request->cdac;
+            $detail['vehicle_registration_number']              =   $request->register_number;
+            $detail['vehicle_engine_number']                    =   $request->engine_number;
+            $detail['vehicle_chasis_number']                    =   $request->chassis_number;
+            $detail['owner_name']                               =   $request->owner_name;
+            $detail['owner_address']                            =   $request->owner_address;
+            $detail['device_expected_date_of_installation']     =   $request->job_date;
+            $json_details                                       =   json_encode($detail);
+            $details                                            =   TemporaryCertificate::create([
+                                                                        'user_id' => $request->user_id,
+                                                                        'details' => $json_details,
+                                                                    ]);
+            $request->session()->flash('message','Temporary installation certificate created successfully!');
+            $request->session()->flash('alert-class','alert-success');
+            return redirect(route('temporary-certificate-sub-dealer'));
+        }
+        else
+        {
+            $request->session()->flash('message','Date of installation should be less than '.$expires.'');
+            $request->session()->flash('alert-class','alert-success');
+            return redirect(route('temporary-certificate-sub-dealer'));
+        }
     }
 }

@@ -30,6 +30,7 @@
                                     </ul>
                                 </li>
                                 <a class="dropdown-item" href="{{url('/detailed-device-report')}}">DETAILED DEVICE REPORT  <span class="badge">New</span></a>
+                                <a class="dropdown-item" href="{{url('/temporary-certificate-sub-dealer')}}">TEMPORARY INSTALLATION CERTIFICATE<span></span></a>
                             </ul>
                         </li>
 
