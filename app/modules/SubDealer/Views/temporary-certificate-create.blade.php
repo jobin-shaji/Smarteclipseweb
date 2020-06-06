@@ -55,7 +55,7 @@ Create Dealer
                 </div><br/>
                 <h3><u>Device Details</u></h3>
                 <div class="form-group row" style="float:none!important">
-                  <label for="fname" class="col-sm-3 text-right control-label col-form-label">IMEI 953972977926121</label>
+                  <label for="fname" class="col-sm-3 text-right control-label col-form-label">IMEI</label>
                   <div class="form-group has-feedback">
                     <input type="text" required maxlength='15' title="IMEI should be a number of length 15" class="form-control {{ $errors->has('imei') ? ' has-error' : '' }}" placeholder="IMEI" name="imei" pattern="[0-9]{15}">
                   </div>
@@ -139,7 +139,19 @@ Create Dealer
                     </span>
                     @endif
                 </div>
-                <div class="form-group row" id='date_section' style="float:none!important;display:none;">
+                <div class="form-group row" id='date_section' style="float:none!important">
+                    <label for="fname" class="col-md-6 text-right control-label col-form-label">Date of Installation</label>
+                    <div class="form-group has-feedback">
+                    <input type="text" class=" job_date_picker  form-control {{ $errors->has('job_date') ? ' has-error' : '' }}" placeholder="Select Date" name="job_date" onkeydown="return false" autocomplete="off" required>
+                    <span class="glyphicon glyphicon-phone form-control-feedback"></span>
+                    </div>
+                    @if ($errors->has('job_date'))
+                    <span class="help-block">
+                        <strong class="error-text">{{ $errors->first('job_date') }}</strong>
+                    </span>
+                    @endif
+                </div>
+                <!-- <div class="form-group row" id='date_section' style="float:none!important;display:none;">
                   <label for="fname" class="col-sm-3 text-right control-label col-form-label">Date of Installation</label>
                   <div class="form-group has-feedback">
                     <input type="text" class=" job_date_picker  form-control {{ $errors->has('job_date') ? ' has-error' : '' }}" placeholder="Select Date" name="job_date" onkeydown="return false" autocomplete="off" required>
@@ -150,7 +162,7 @@ Create Dealer
                   <strong class="error-text">{{ $errors->first('job_date') }}</strong>
                   </span>
                   @endif
-                </div>
+                </div> -->
 
                 <div class="row">
                     <div class="col-md-1 ">

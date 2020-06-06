@@ -37,18 +37,32 @@
             </form>                   
           <div class="row">
             <div class="col-sm-12">
-              <table class="table table-hover table-bordered  table-striped datatable" style="width:100%;text-align: center;" id="dataTable">
+              <table class="table table-hover table-bordered  table-striped" style="width:100%;text-align: center;">
                 <thead>
                   <tr>
                       <th>SL.No</th>
-                      <th>Plan</th>
                       <th>End User</th>
                       <th>IMEI</th>
-                      <th>Vehicle Register Number</th>
+                      <th>Registration Number</th>
                       <th>Date of Installation</th>
                       <th>Action</th>
                   </tr>
                 </thead>
+                <tbody>
+                  @foreach($details as $data)
+                  <?php 
+                    $datas = json_decode($data['details'],true);
+                  ?>
+                  <tr>
+                    <td>{{$loop->iteration}}</td>
+                    <td>{{$datas['client_name']}}</td>
+                    <td>{{$datas['imei']}}</td>
+                    <td>{{$datas['vehicle_registration_number']}}</td>
+                    <td>{{$datas['device_expected_date_of_installation']}}</td>
+                    <td><a href="/temporary-certificate/{{encrypt($data->id)}}" class="btn btn-xs btn-info"><i class="glyphicon glyphicon-eye-open"></i> View </a></td>
+                  </tr>
+                  @endforeach
+                </tbody>
               </table>
             </div>
           </div>
@@ -60,7 +74,4 @@
 </div>
 </div>
 
-@endsection
-@section('script')
-<script src="{{asset('js/gps/temporary-certificate.js')}}"></script>
 @endsection

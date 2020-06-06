@@ -401,7 +401,9 @@ class SubDealerController extends Controller {
 
     public function temporaryCertificate()
     {
-        return view('SubDealer::temporary-certificates');
+        $sub_dealer_id  =   \Auth::user()->subdealer->id;
+        $data = TemporaryCertificate::select('id','details')->where('user_id',$sub_dealer_id)->get();
+        return view('SubDealer::temporary-certificates',['details' => $data]);
     }
 
     public function temporaryCertificatecreate()
@@ -417,62 +419,32 @@ class SubDealerController extends Controller {
         return Client::select('id','name','address')->where('name',$client_name)->first();
     }
 
-    public function temporaryCertificatelist()
+    public function certificateDetailedview(Request $request)
     {
-        $sub_dealer_id  =   \Auth::user()->subdealer->id;
-        $data           =   TemporaryCertificate::select('id','user_id','details')->where('user_id',$sub_dealer_id)->get();
-        foreach($data as $datas)
-        {
-            $detail = json_decode($datas->details,true);
-        }
-        return DataTables::of($detail)
-        ->addIndexColumn()           
-        ->make();
+        $decrypted = Crypt::decrypt($request->id);
+        $data = TemporaryCertificate::select('id','details')->where('id',$decrypted)->first();
+        return view('SubDealer::temporary-certificates-view',['data' => $data]);
     }
 
     public function temporaryCertificatesave(Request $request)
     {
-        $plan['Plan']                           =   $request->plan;
-        $client['Client']                       =   $request->client;
-        $imei['IMEI']                           =   $request->imei;
-        $model['Model']                         =   $request->model;
-        $manufacturer['Manufacturer']           =   $request->manufacturer;
-        $cdac['CDAC']                           =   $request->cdac;
-        $register_number['Registe_number']      =   $request->register_number;
-        $engine_number['Engine_number']         =   $request->engine_number;
-        $chassis_number['Chasis_number']        =   $request->chassis_number;
-        $owner_name['Owner']                    =   $request->owner_name;
-        $owner_address['Address']               =   $request->owner_address;
-        $job_date['Date']                       =   $request->job_date;
-        $plan                                   =   json_encode($plan);
-        $client                                 =   json_encode($client);
-        $imei                                   =   json_encode($imei);
-        $model                                  =   json_encode($model);
-        $manufacturer                           =   json_encode($manufacturer);
-        $cdac                                   =   json_encode($cdac);
-        $register_number                        =   json_encode($register_number);
-        $engine_number                          =   json_encode($engine_number);
-        $chassis_number                         =   json_encode($chassis_number);
-        $owner_name                             =   json_encode($owner_name);
-        $owner_address                          =   json_encode($owner_address);
-        $job_date                               =   json_encode($job_date);
-        $detail[]                               =   json_decode($plan,true);
-        $detail[]                               =   json_decode($client,true);
-        $detail[]                               =   json_decode($imei,true);
-        $detail[]                               =   json_decode($model,true);
-        $detail[]                               =   json_decode($manufacturer,true);
-        $detail[]                               =   json_decode($cdac,true);
-        $detail[]                               =   json_decode($register_number,true);
-        $detail[]                               =   json_decode($engine_number,true);
-        $detail[]                               =   json_decode($chassis_number,true);
-        $detail[]                               =   json_decode($owner_name,true);
-        $detail[]                               =   json_decode($owner_address,true);
-        $detail[]                               =   json_decode($job_date,true);
-        $json                                   =   json_encode($detail);
-        $details                                =   TemporaryCertificate::create([
-                                                        'user_id' => $request->user_id,
-                                                        'details' => $json,
-                                                    ]);
+        $detail['plan_name']                                =   $request->plan;
+        $detail['client_name']                              =   $request->client;
+        $detail['imei']                                     =   $request->imei;
+        $detail['device_model']                             =   $request->model;
+        $detail['manufacturer_name']                        =   $request->manufacturer;
+        $detail['cdac_certification_number']                =   $request->cdac;
+        $detail['vehicle_registration_number']              =   $request->register_number;
+        $detail['vehicle_engine_number']                    =   $request->engine_number;
+        $detail['vehicle_chasis_number']                    =   $request->chassis_number;
+        $detail['owner_name']                               =   $request->owner_name;
+        $detail['owner_address']                            =   $request->owner_address;
+        $detail['device_expected_date_of_installation']     =   $request->job_date;
+        $json_details                                       =   json_encode($detail);
+        $details                                            =   TemporaryCertificate::create([
+                                                                    'user_id' => $request->user_id,
+                                                                    'details' => $json_details,
+                                                                ]);
         $request->session()->flash('message','Temporary installation certificate created successfully!');
         $request->session()->flash('alert-class','alert-success');
         return redirect(route('temporary-certificate-sub-dealer'));
