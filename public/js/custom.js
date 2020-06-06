@@ -1230,11 +1230,7 @@ function jobtypeonchange(job_type)
             else
             {
                 for (var i = 0; i < res.length; i++) {
-                    if(res[i].user.mobile)
-                    {
-                        var client_identifier = "Mobile: "+res[i].user.mobile;
-                    }
-                    else if(res[i].mobile)
+                    if(res[i].mobile != undefined)
                     {
                         var client_identifier = "Mobile: "+res[i].mobile;
                     }

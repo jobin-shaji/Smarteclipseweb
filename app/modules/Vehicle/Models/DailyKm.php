@@ -2,34 +2,60 @@
 
 namespace App\Modules\Vehicle\Models;
 use Illuminate\Database\Eloquent\Model;
+
 class DailyKm extends Model
 {
-  public $timestamps = false;
+   
+    public $timestamps = false;
 
-   protected $fillable = [
+    protected $fillable = [
         'gps_id','km','date'
     ];
+
+   /**
+     * 
+     * 
+     */
     public function gps()
     {
         return $this->hasOne('App\Modules\Gps\Models\Gps','id','gps_id');
     }
+
+   /**
+     * 
+     * 
+     */
     public function vehicle()
     {
         return $this->hasOne('App\Modules\Vehicle\Models\Vehicle','gps_id','gps_id')->withTrashed();
     }
-     public function alert()
+
+   /**
+     * 
+     * 
+     */
+    public function alert()
     {
         return $this->hasMany('App\Modules\Alert\Models\Alert','gps_id','gps_id');
     }
 
+   /**
+     * 
+     * 
+     */
     public function updateDailyKilometre($gps_id, $value)
     {
        return self::where('gps_id',$gps_id)->where('date',date("Y-m-d"))->update(['km'=> $value]);
     }
 
+   /**
+     * 
+     * 
+     */
     public function vehicleGps(){
 		return $this->hasOne('App\Modules\Vehicle\Models\VehicleGps','gps_id','gps_id');
 	}
+
     /**
      * 
      * 
@@ -41,6 +67,7 @@ class DailyKm extends Model
             ->where('date', '<=', $to_date)
             ->sum('km');
     }
+
     /**
      * 
      * 
@@ -52,6 +79,7 @@ class DailyKm extends Model
             ->with('vehicleGps.vehicle')
             ->get();
     }
+
      /**
      * 
      * 
@@ -69,6 +97,7 @@ class DailyKm extends Model
      * 
      * 
      */
+
     public function getSumOfKmForFuelReportBasedOnDate($gps_ids,$date)
     {
         return self::select(
@@ -79,6 +108,7 @@ class DailyKm extends Model
         ->whereDate('date',$date)
         ->sum('km');
     }
+
      /**
      * 
      * 
@@ -92,6 +122,17 @@ class DailyKm extends Model
         ->whereIn('gps_id', $gps_ids)
         ->whereRaw('MONTH(date) = ?',[$month])
         ->sum('km');
+    }
+
+     /**
+     * 
+     * 
+     */
+    public function updateDailyKm($total_distance, $gps_id, $trip_date)
+    {
+        $daily_km = self::firstOrNew(array('gps_id' => $gps_id, 'date' => $trip_date));
+        $daily_km->km = $total_distance;
+        $daily_km->save();
     }
 }
 

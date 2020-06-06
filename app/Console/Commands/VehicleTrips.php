@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 use \Carbon\Carbon;
 use App\Modules\Vehicle\Models\Vehicle;
 use App\Modules\Gps\Models\GpsData;
+use App\Modules\Vehicle\Models\DailyKm;
 use PDF;
 use \DB;
 
@@ -47,7 +48,7 @@ class VehicleTrips extends Command
 
     public function handle()
     {
-        $vehicles = Vehicle::all();
+        $vehicles = Vehicle::select('id','gps_id','client_id')->get();
 
         foreach ($vehicles as $vehicle) 
         {
@@ -126,7 +127,10 @@ class VehicleTrips extends Command
             $summary["km"]           = m2Km($total_distance);
             $summary["duration"]     = dateTimediff($summary["on"], $summary["off"]);
 
+            // generate pdf report of vehicle 
             $this->generatePdfReport($trips, $summary, $gps);
+            // update daily km calculation of vehicle based on new calculation 
+            (new DailyKm)->updateDailyKm($total_distance, $gps->id, $this->trip_date);
         }
 
     }
