@@ -2069,7 +2069,7 @@ class VehicleController extends Controller
         ->make();
     }
 
-     public function servicerVehicleDetails(Request $request)
+    public function servicerVehicleDetails(Request $request)
     {
         $decrypted_id = Crypt::decrypt($request->id);
         $vehicle = Vehicle::find($decrypted_id);
