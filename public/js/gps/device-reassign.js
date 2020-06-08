@@ -103,5 +103,5 @@ function Reassignredirect()
   $('#preview').hide();
   $('#count_data').hide();
   $('#dropdown_menu').hide();
-  $('#loader').hide();
+  // $('#loader').hide();
 }
