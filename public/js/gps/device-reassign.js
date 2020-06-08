@@ -4,7 +4,7 @@ function getUrl(){
 
 $(document).ready(function () {
   $('#count_data').hide();
-  $('#loader').show();
+  $('#loader').hide();
 });
 
 function searchData()
@@ -59,6 +59,7 @@ function reassigndevice()
           'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
         },
         success:function(res) {
+          $('#loader').show();
           if(res.code ==  1)
           {
               var reassign_type_id = document.getElementById('return_to').value;
@@ -79,7 +80,6 @@ function reassigndevice()
                 'client':client,
                 'vehicle':vehicle
               };
-              $('#loader').show();
               backgroundPostData(url,data,'deviceReassign',{alert:true});
               Reassignredirect();
           }
