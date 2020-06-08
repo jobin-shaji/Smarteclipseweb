@@ -412,7 +412,7 @@ class SubDealerController extends Controller {
         {
             $subdealer_trader_id  =   \Auth::user()->trader->id;
         }
-        $data = TemporaryCertificate::select('id','details')->where('user_id',$subdealer_trader_id)->get();
+        $data = TemporaryCertificate::select('id','details')->where('user_id',$subdealer_trader_id)->orderBy('created_at','DESC')->get();
         return view('SubDealer::temporary-certificates',['details' => $data]);
     }
 
