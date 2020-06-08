@@ -16,7 +16,7 @@ function callBackDataTable(){
         bProcessing: true,
         serverSide: true,
         deferRender: true,
-        order: [[1, 'desc']],
+        // order: [[1, 'desc']],
         ajax: {
             url: 'complaint-list',
             type: 'POST',
@@ -33,15 +33,15 @@ function callBackDataTable(){
         },
         
         columns: [
-            {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
+            {data: 'DT_RowIndex', name: 'DT_RowIndex', searchable: false},
             {data: 'ticket.code', name: 'ticket.code', orderable: false},
             {data: 'vehicle_gps.vehicle.register_number', name: 'vehicle_gps.vehicle.register_number', orderable: false},
             {data: 'gps.serial_no', name: 'gps.serial_no', orderable: false},
             // {data: 'complaint_category', name: 'complaint_category' , orderable: false},
             // {data: 'complaint_type.name', name: 'complaint_type.name' , orderable: false},
             {data: 'title', name: 'title', orderable: false, searchable: false},
-            {data: 'created_at', name: 'created_at', orderable: false, searchable: false},
-            {data: 'status', name: 'status', orderable: false, searchable: false},
+            {data: 'created_at', name: 'created_at'},
+            {data: 'status', name: 'status', orderable: false},
             {data: 'assigned_to', name: 'assigned_to', orderable: false},
             {data: 'action', name: 'action', orderable: false, searchable: false},        
         ],
