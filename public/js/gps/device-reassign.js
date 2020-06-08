@@ -59,9 +59,9 @@ function reassigndevice()
           'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
         },
         success:function(res) {
-          $('#loader').show();
           if(res.code ==  1)
           {
+            $('#loader').show();
               var reassign_type_id = document.getElementById('return_to').value;
               var imei = document.getElementById('imei').value;
               var vehicle = document.getElementById('vehicle_id').value;
@@ -103,5 +103,5 @@ function Reassignredirect()
   $('#preview').hide();
   $('#count_data').hide();
   $('#dropdown_menu').hide();
-  // $('#loader').hide();
+  $('#loader').hide();
 }
