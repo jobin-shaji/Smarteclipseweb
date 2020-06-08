@@ -2461,7 +2461,7 @@
             "time": "2020-06-03T07:24:19+00:00"
         },
         {
-            "name": "opis/closure",
+            "name": "opis/closure"
             "version": "3.5.4",
             "source": {
                 "type": "git",

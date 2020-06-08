@@ -226,7 +226,7 @@
             </div>
         </div>
         
-        <div style="position:fixed;margin:1%;overflow:auto">
+        <div style="position:absolute;margin:1%;overflow:auto">
             <div style="position:absolute;left:20px;top:670px;line-height: 21px" class="cls_002">
                 <span class="cls_002">This letter has been issued on <b>{{$now}}</b> upon the specific request from the customer as a proof of installation</span>
             </div>
