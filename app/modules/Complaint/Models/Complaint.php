@@ -50,5 +50,15 @@ class Complaint extends Model
   {
     return $this->hasOne('App\Modules\Vehicle\Models\VehicleGps','gps_id','gps_id');
   }
+  /**
+   * 
+   */
+  public function getCountOfComplaintsWithOpenStatus($client_ids)
+  {
+    return self::select('id')
+                ->whereIn('client_id',$client_ids)
+                ->where('status',0)
+                ->count();
+  }
 
 }

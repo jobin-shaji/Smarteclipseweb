@@ -39,7 +39,7 @@
                   <button style="float:left" type="button" class="btn btn-primary btn-md form-btn">Create Job</button>
                 </a>
               </span>
-              <span style="float:left">
+              <span>
                 <p></p>
                 <p class="card-text"><b>Order Number : </b> {{$gps_transfer->order_number}} </p>
                 <p class="card-text"><b>Invoice Number : </b> {{$gps_transfer->invoice_number}} </p>

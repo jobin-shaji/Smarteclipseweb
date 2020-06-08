@@ -142,7 +142,7 @@ Create Dealer
                 <div class="form-group row" id='date_section' style="float:none!important">
                     <label for="fname" class="col-md-6 text-right control-label col-form-label">Date of Installation</label>
                     <div class="form-group has-feedback">
-                    <input type="text" class=" job_date_picker  form-control {{ $errors->has('job_date') ? ' has-error' : '' }}" placeholder="Select Date" name="job_date" onkeydown="return false" autocomplete="off" required>
+                    <input type="text" class="datepicker_temp form-control {{ $errors->has('job_date') ? ' has-error' : '' }}" placeholder="Select Date" name="job_date" onkeydown="return false" autocomplete="off" required>
                     <span class="glyphicon glyphicon-phone form-control-feedback"></span>
                     </div>
                     @if ($errors->has('job_date'))
