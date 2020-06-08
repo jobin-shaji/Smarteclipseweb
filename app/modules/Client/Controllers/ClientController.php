@@ -1316,9 +1316,8 @@ public function selectTrader(Request $request)
             'city_id' => 'required',
             'state_id' => 'required',
             'country_id' => 'required',
-             // 'email' => 'nullable|string|email|max:255|unique:users',
+            'email' => 'nullable|string|email|max:255|unique:users',
             'mobile_number' => 'required|digits:10|unique:users,mobile,'.$client->user_id,
-            'email' => 'required|email'
               ];
         return  $rules;
     }
@@ -1331,7 +1330,7 @@ public function selectTrader(Request $request)
             'city_id' => 'required',
             'state_id' => 'required',
             'country_id' => 'required',
-            // 'email' => 'nullable|string|email|max:255|unique:users',
+            'email' => 'nullable|string|email|max:255|unique:users',
             'mobile_number' => 'required|digits:11|unique:users,mobile,'.$client->user_id
               ];
         return  $rules;
