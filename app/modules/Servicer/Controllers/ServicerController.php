@@ -1389,14 +1389,14 @@ public function serviceJobDetails(Request $request)
         if( $servicer_job->job_type == 1 )
         {
             $custom_messages = [
-                'file.required' => 'Rc Book cannot be blank',
-                'file.mimes' => 'Rc Book must be a file of type:jpeg,png.',
+                'file.required' => 'RC Book cannot be blank',
+                'file.mimes' => 'RC Book must be a file of type:jpeg,png.',
                  // 'file.uploaded' => 'Failed to upload an image. The image maximum size is 4kb.'
                 'installation_photo.required' => 'Installation photo cannot be blank',
                 'activation_photo.required' => 'Activation photo cannot be blank',
                 'vehicle_photo.required' => 'Vehicle photo cannot be blank',
-                'file.uploaded' => "The rc book photo may not be greater than 4MB.",
-                'file.max' => 'The rc book photo may not be greater than 4MB.',
+                'file.uploaded' => "The RC Book photo may not be greater than 4MB.",
+                'file.max' => 'The RC Book photo may not be greater than 4MB.',
                 'installation_photo.uploaded' => "The installation photo may not be greater than 4MB.",
                 'installation_photo.max' => 'The installation photo may not be greater than 4MB.',
                 'activation_photo.uploaded' => "The activation photo may not be greater than 4MB.",
