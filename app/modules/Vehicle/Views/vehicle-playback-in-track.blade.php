@@ -1,33 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
    <head>
-      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-      <title>Playback</title>
-      <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
-      <meta name="csrf-token" content="{{ csrf_token() }}">
-      <link rel="icon" href="{{asset('assets/images/favicon.ico')}}" type="image/x-icon" />
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-      <link rel="stylesheet" type="text/css" href="https://js.api.here.com/v3/3.0/mapsjs-ui.css?dp-version=1549984893" />
-      <link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap-combined.min.css" rel="stylesheet">
-      <link href="{{ url('/') }}/dist/css/playback_style.css" rel="stylesheet">
-      <link rel="stylesheet" href="{{asset('alertify/css/alertify.min.css')}}" />
-      <link rel="stylesheet" href="{{asset('alertify/css/themes/default.min.css')}}" />
-      <script src="{{asset('playback/assets/Scripts/jquery-3.3.1.js')}}"></script>
-      <script src="{{asset('playback/assets/Scripts/jquery-3.3.1.min.js')}}"></script>
-      <script src="{{asset('playback_assets/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js')}}"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.4.0/jszip.min.js"></script>
-      <script src="{{asset('alertify/alertify.min.js')}}"></script>
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/css/bootstrap-datetimepicker.min.css">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Smart Eclipse Playback</title>
+    <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="icon" href="{{asset('assets/images/favicon.ico')}}" type="image/x-icon" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="https://js.api.here.com/v3/3.0/mapsjs-ui.css?dp-version=1549984893" />
+    <link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap-combined.min.css" rel="stylesheet">
+    <link href="{{ url('/') }}/dist/css/playback_style.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{asset('alertify/css/alertify.min.css')}}" />
+    <link rel="stylesheet" href="{{asset('alertify/css/themes/default.min.css')}}" />
+    <script src="{{asset('playback/assets/Scripts/jquery-3.3.1.js')}}"></script>
+    <script src="{{asset('playback/assets/Scripts/jquery-3.3.1.min.js')}}"></script>
+    <script src="{{asset('playback_assets/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js')}}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.4.0/jszip.min.js"></script>
+    <script src="{{asset('alertify/alertify.min.js')}}"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/css/bootstrap-datetimepicker.min.css">
+    <link rel="stylesheet" href="{{asset('playback/assets/css/style_new_playback.css')}}">
    </head>
    <body>
-      <div class="lorder-bg-playback" id="preloader">
-         <div class="lds-dual-ring" id="status"></div>
-      </div>
-      <div class="wrapper overlay-sidebar">
-         <input type="hidden" name="vid" id="vehicle_id" value="{{$vehicle_id}}">
-         <div id="markers" style="width:100%px;height:100vh; position: relative;"></div>
-         <div class='col-lg-12 cover_date cover-date1'>
+   <!-- Playback Loader --->
+    <div class="lorder-bg-playback" id="preloader">
+      <div class="lds-dual-ring" id="status"></div>
+    </div>
+   <!-- Playback Loader --->
+
+    <div class="wrapper overlay-sidebar">
+      <input type="hidden" name="vid" id="vehicle_id" value="{{$vehicle_id}}">
+      <div id="markers" style="width:100%px;height:100vh; position: relative;"></div>
+        <div class='col-lg-12 cover_date cover-date1'>
             <div class="back_button_image back_button_image-1">
                <a onclick="closePlayback()" >
                <img src="{{asset('playback/assets/img/back-button.png')}}">
@@ -93,9 +97,6 @@
                               <option value="3">3X</option>
                               <option value="4">4X</option>
                               <option value="5">5X</option>
-                              <option value="20">20X</option>
-
-
                            </select>
                         </div>
                      </div>
@@ -155,6 +156,7 @@
          </div>
       </div>
       <!-- Style -->
+
       <!--   Core JS Files   -->
       <script src="{{asset('playback/assets/js/core/jquery.3.2.1.min.js')}}"></script>
       <script src="{{asset('playback/assets/js/core/bootstrap.min.js')}}"></script>
@@ -1104,23 +1106,56 @@
       <script type="text/javascript">
          $(function() {
          
-           var d = new Date();
-           free_date=d.setMonth(d.getMonth() - 1);
-           fundamental_date=d.setMonth(d.getMonth() - 1);
-           superior_date=d.setMonth(d.getMonth() - 2);
-           pro_date=d.setMonth(d.getMonth() - 2);
-           var date = new Date();
+           var d            = new Date();
+           free_date        = d.setMonth(d.getMonth() - 1);
+           fundamental_date = d.setMonth(d.getMonth() - 1);
+           superior_date    = d.setMonth(d.getMonth() - 2);
+           pro_date         = d.setMonth(d.getMonth() - 2);
+           var date         = new Date();
            var currentMonth = date.getMonth();
-           var currentDate = date.getDate();
-           var currentYear = date.getFullYear();
-          
+           var currentDate  = date.getDate();
+           var currentYear  = date.getFullYear();
+
            $('.start_time').datetimepicker({
-             format: 'HH:mm:ss' 
+             format: 'HH:mm:ss',
+             useCurrent: false
            });
          
            $('.stop_time').datetimepicker({
-             format: 'HH:mm:ss' 
+             format: 'HH:mm:ss',
+             useCurrent: false
            });
+
+
+           $('.start_time').datetimepicker().on('dp.change', function (e) {
+            $('.stop_time').data("DateTimePicker").clear();
+            $('.stop_time').data("DateTimePicker").minDate(false);
+            var start_time      = $(this).data('.start_time');
+            var incrementDay    = moment(new Date(e.date));
+              incrementDay.add(1, 'minutes');  
+            $('.stop_time').data('DateTimePicker').defaultDate(incrementDay);
+            $('.stop_time').data('DateTimePicker').minDate(incrementDay);
+            // $('.stop_time').sdate()
+          });
+
+
+          $('.stop_time').datetimepicker().on('dp.change', function (e) {
+            if($('#start_time_val').val() == "")
+            {
+            $('.stop_time').data("DateTimePicker").clear();
+            var lessMinut    = moment(new Date(e.date));
+            lessMinut.add(-1, 'minutes');  
+            $('.start_time').data('DateTimePicker').defaultDate(lessMinut);
+            }
+          });
+
+
+          // $('#alert_toDate').datetimepicker().on('dp.change', function (e) {
+          //   var decrementDay = moment(new Date(e.date));
+          //   decrementDay.subtract(1, 'days');
+          //   $('#alert_fromDate').data('DateTimePicker').maxDate(decrementDay);
+          //   $(this).data("DateTimePicker").hide();
+          // });
          
            $('#datepickerFreebies').datetimepicker({
              format: 'Y-MM-DD',
@@ -1205,455 +1240,7 @@
          });
       </script>
       <style type="text/css">
-         .col-date-outer{
-         margin-top: 23px;
-         background: #dab604;
-         padding: 3px 4px 3px 10px;
-         color: #fff;
-         text-align: center;
-         margin-left: 15px;
-         font-weight: bold;
-         font-size: 1.1em;
-         width: 45%;
-         border: 1px solid #c5a505;
-         border-radius: 8px;
-         }
-         .row-mrg-1{
-         margin-bottom: 15px;
-         }
-         .close-span-rt {
-         float: right;
-         background: #fff;
-         padding: 1px 5px;
-         border-radius: 50%;
-         color: #dab604;
-         font-weight: normal;
-         font-size: 13px;
-         margin-top: 0.5px;
-         }
-         .close-span-rt:hover {
-         background: #af9308;
-         color: #ffffff;
-         }
-         .col-lg-12.cover_date.cover-date1{
-         width: 100%;
-         margin: 0px auto;
-         padding: 0 3%;
-         background: #c7c7c7bf;
-         box-shadow: 0 2px 2px rgba(0,0,0,.15);
-         position: absolute;
-         top: 0;
-         max-height: 10vh;
-         }
-         .back_button_image-1 {
-         margin-top: 2%;
-         position: absolute;
-         margin-left: -2%;
-         }
-         .speed-label{
-         font-weight: bold;
-         width: 100%;
-         }
-         button, input, select, textarea {
-         font-family: inherit;
-         font-size: inherit;
-         line-height: inherit;
-         }
-         .vehicle_details_list-1{
-         width: 228px;
-         float: left;
-         margin-bottom: 0;
-         display: block;
-         padding: 10px 0% 0;
-         background: #ffde7a;
-         color: #000;
-         right: 2%;
-         position: absolute;
-         bottom: 32px;
-         border-radius: 10px;
-         }
-         .vehicle_details_list-1 .row{
-         width: 100%;
-         margin: 0;
-         padding: 5px 6%;
-         text-transform: uppercase;
-         }
-         .vehicle_details_list-1 .row-last{
-         background: #a98004;
-         padding-top: 7px;
-         color: #fff;
-         border-bottom-left-radius: 10px;
-         border-bottom-right-radius: 10px;
-         padding-bottom: 7px;
-         font-size: 16px;
-         }
-         .left-alert-box-1{
-         display: block;
-         top: 11.5vh;
-         max-height: 85vh;
-         left: 15px;
-         box-shadow: 0 2px 2px rgba(66, 66, 66, 0.28);
-         background-color: #fff;
-         overflow-y: inherit;
-         border-radius: 8px;
-         }
-         .left-alert-inner-1 {
-         background: #fff;
-         padding: 10px 0;
-         box-shadow: none ;
-         border-radius: 4px;
-         }
-         .left-alert-text p.datetime_cover1{
-         background: #ce9c06;
-         width: auto;
-         padding: 5px;
-         float: right;
-         border-radius: 5px;
-         color: #fff;
-         }
-         .left-inner-1bg{
-         overflow-y: scroll;
-         width: 100%;
-         max-height: 83vh;
-         margin-top: 1vh;
-         margin-bottom: 1vh;}
-         /* width */
-         .left-alert-box-1 ::-webkit-scrollbar {
-         width: 10px;
-         }
-         /* Track */
-         .left-alert-box-1 ::-webkit-scrollbar-track {
-         background: #f1f1f1;
-         }
-         /* Handle */
-         .left-alert-box-1 ::-webkit-scrollbar-thumb {
-         background: #a98004;
-         border-radius: 10px;
-         }
-         /* Handle on hover */
-         .left-alert-box-1 ::-webkit-scrollbar-thumb:hover {
-         background: #a98004;
-         border-radius: 10px;
-         }
-         select.speed-select-bx{
-         width: 100%;
-         }
-         .selce-bg-out{
-         float: left;
-         margin-left: 2%;
-         width: 100%;
-         }
-         .buton-new-cl{
-         width: 80px;
-         background: #28a745;
-         box-shadow: none;
-         border: 0;
-         color: #fff;
-         font-size: 1em;
-         border-radius: 6px;
-         text-shadow: none;
-         outline: 0;
-         }
-         .buton-new-cl:hover{
-         background: #28a745;
-         }
-         .buton-new-cl::focus{
-         background: #28a745;
-         }
-         .buton-new-c2{
-         width: 80px;
-         background: #ffc107;
-         box-shadow: none;
-         border: 0;
-         color: #fff;
-         font-size: 1em;
-         border-radius: 6px;
-         text-shadow: none;
-         outline: 0;
-         }
-         .buton-new-c2:hover{
-         background: #ffc107;
-         }
-         .buton-new-c2:focus{
-         background: #ffc107;
-         }
-         .buton-new-cl:active:hover{
-         background: #28a745;
-         }
-         .buton-new-c3{
-         width: 80px;
-         background:#dc3545;
-         box-shadow: none;
-         border: 0;
-         color: #fff;
-         font-size: 1em;
-         border-radius: 6px;
-         text-shadow: none;
-         outline: 0;
-         }
-         .buton-new-c3:hover{
-         background: #dc3545;
-         }
-         .buton-new-c3:focus{
-         background: #dc3545;
-         }
-         .lorder-bg-playback{
-         width: 100%;
-         float: left;
-         height: 100%;
-         background: #0000006b;
-         z-index: 9;
-         position: absolute
-         }
-         .lds-dual-ring {
-         display: inline-block;
-         width: 80px;
-         height: 80px;
-         z-index: 9999;
-         position: absolute;
-         margin-top: 23%;
-         left: 49%;
-         }
-         .lds-dual-ring:after {
-         content: " ";
-         display: block;
-         width: 64px;
-         height: 64px;
-         margin: 8px;
-         border-radius: 50%;
-         border: 6px solid #fff;
-         border-color: #fff transparent #fff transparent;
-         animation: lds-dual-ring 1.2s linear infinite;
-         }
-         @keyframes lds-dual-ring {
-         0% {
-         transform: rotate(0deg);
-         }
-         100% {
-         transform: rotate(360deg);
-         }
-         }
-         .play-back-icon1{
-         width: 30px;
-         float: left;
-         }
-         .play-back-span{
-         font-size: 1em;
-         font-weight: bold;
-         padding-top: 8px;
-         float: left;
-         margin-left: 0;
-         }
-         .dropdownContainer {
-         position: relative;
-         float: right;
-         margin-left: 15px;
-         }
-         .dropdown-toggle {
-         cursor: pointer;
-         color:red;
-         }
-         .notification-icon {
-         position: absolute;
-         top: 20%;
-         right: 3%;
-         text-align: center;
-         }
-         .noti-alert-count{
-         position: absolute;
-         right: -11px;
-         top: -13px;
-         border: 2px #fff solid;
-         border-radius: 60px;
-         background: #ffc108;
-         padding: 5px 8px;
-         border-radius: 60px;
-         color: #fff;
-         line-height: 100%;
-         z-index: 9;
-         font-size: 0.7em;}
-         .dropdown {
-         display: none;
-         position: absolute;
-         top: 100%;
-         right: 0;
-         min-width: 274px;
-         padding: 0;
-         border: 1px solid rgb(243, 243, 243);
-         border-radius: 7px;
-         box-shadow: 0 1px 1px rgba(50,50,50,0.1);
-         z-index: 9;
-         background: #ffffff;
-         }
-         /* up arrow*/
-         .dropdown:before {
-         content: "";
-         width: 0;
-         height: 0;
-         position: absolute;
-         bottom: 100%;
-         right: 10px;
-         border-width: 0 10px 10px 10px;
-         border-style: solid;
-         border-color: #fff transparent;
-         }
-         .dropdown:after {
-         content: "";
-         width: 0;
-         height: 0;
-         position: absolute;
-         bottom: 100%;
-         right: 10px;
-         border-width: 0 8px 7px 7px;
-         border-style: solid;
-         border-color: #fff transparent;
-         }
-         .dropdown li {
-         list-style-type: none;
-         border-top: 1px solid #f1eee1;
-         }
-         .dropdown li:hover{
-         background-color:#fffbee;
-         }
-         .dropdown li:first-child {
-         list-style-type: none;
-         border-top: none;
-         margin-top: -10px;
-         padding-top: 4px;
-         }
-         .dropdown .fa-circle{
-         font-size: 15px;
-         color: rgba(115, 187, 22, 1);
-         }
-         .dropdown ul{
-         margin: 0px;
-         padding: 0px;
-         width: 100%;
-         float: left;
-         overflow-y: scroll;
-         max-height: 165px;
-         }
-         .dropdown li a {
-         text-decoration: none;
-         padding: 10px 1em;
-         display: block;
-         font-size:1em;
-         width: 100%;
-         font-weight: 600;
-         color: #f0b100;
-         float: left;
-         border-bottom: 1px solid #f1f0ed;
-         }
-         .dropdown li a span{
-         width: 100%;
-         float: left;
-         font-weight: normal;
-         display: block;
-         color: black;
-         }
-         /*View All Notification*/
-         .dropdown .fa-list{
-         font-size: 15px;
-         padding:5px;
-         color: rgba(115, 187, 22, 1);
-         border: 2px solid rgba(115, 187, 22, 1);
-         border-radius: 100%;
-         }
-         .notification-list-name{
-         margin: 0px;
-         padding: 6px 0;
-         float: left;
-         width: 100%;
-         background: #f0b100;
-         font-size: 16px;
-         font-weight: bold;
-         border-top-right-radius: 7px;
-         border-top-left-radius: 7px;
-         color: #fff;
-         }
-         .view-all-notification{
-         margin: 0px;
-         padding: 7px 0;
-         float: left;
-         width: 100%;
-         background:#f0b100;
-         font-size: 16px;
-         border-bottom-right-radius: 7px;
-         border-bottom-left-radius: 7px;}
-         .view-all-notification a{
-         color:#fff;
-         float:left;
-         text-decoration:none;
-         text-align:center;
-         width:100%;
-         }
-         .notification {
-         display: inline-block;
-         position: relative;
-         padding: 0.6em;
-         background: #3498db;
-         border-radius: 0.2em;
-         font-size: 1.3em;
-         box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-         }
-         .notification::before,
-         .notification::after {
-         color: #fff;
-         text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-         }
-         .notification::before {
-         display: block;
-         content: "\f0f3";
-         font-family: "FontAwesome";
-         transform-origin: top center;
-         }
-         .dropdown ul ::-webkit-scrollbar {
-         width: 10px;
-         }
-         /* Track */
-         .dropdown ul ::-webkit-scrollbar-track {
-         background: #f1f1f1;
-         }
-         /* Handle */
-         .dropdown ul ::-webkit-scrollbar-thumb {
-         background: #a98004;
-         border-radius: 10px;
-         }
-         /* Handle on hover */
-         .dropdown ul ::-webkit-scrollbar-thumb:hover {
-         background: #a98004;
-         border-radius: 10px;
-         }
-         .time-dis{
-         width: 100%;
-         float: left;
-         border-radius: 7px;
-         font-size: 0.8em;
-         padding-top: 1px;
-         color: #000;
-         }
-         @media only screen and (max-width: 1600px) {
-         .col-lg-12.cover_date.cover-date1 {
-         max-height: 14vh;
-         }
-         .left-alert-box-1 {
-         top: 14.5vh;
-         max-height: 84vh;
-         }
-         .row-mrg-1 {
-         margin-left: 0px;
-         }
-         .back_button_image-1 {
-         margin-top: 3%;
-         }
-         .play-back-icon1 {
-         width: 24px;
-         }
-         .play-back-span {
-         font-size: 0.96em;
-         padding-top: 2px;
-         }
-         }
+       
       </style>
    </body>
 </html>
