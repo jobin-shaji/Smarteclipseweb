@@ -4,7 +4,7 @@ function getUrl(){
 
 $(document).ready(function () {
   $('#count_data').hide();
-  $('#loader').hide();
+  $('#loader').show();
 });
 
 function searchData()
