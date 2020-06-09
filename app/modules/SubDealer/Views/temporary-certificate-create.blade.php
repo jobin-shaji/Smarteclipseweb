@@ -87,7 +87,8 @@ Create Dealer
                 <div class="form-group row" style="float:none!important">
                   <label for="fname" class="col-sm-3 text-right control-label col-form-label">Registration Number</label>
                   <div class="form-group has-feedback">
-                    <input type="text" required class="form-control {{ $errors->has('register_number') ? ' has-error' : '' }}" placeholder="Registration Number" name="register_number">
+                    <input type="text" required class="form-control {{ $errors->has('register_number') ? ' has-error' : '' }}" placeholder="Registration Number" maxlength="20" name="register_number" id="registration_number">
+                    <p style="color:#FF0000" id="message1"> Spaces not  allowed for registration number</p>
                   </div>
                   @if ($errors->has('register_number'))
                   <span class="help-block">
@@ -98,7 +99,8 @@ Create Dealer
                 <div class="form-group row" style="float:none!important">
                     <label for="fname" class="col-md-6 text-right control-label col-form-label">Engine Number</label>
                     <div class="form-group has-feedback">
-                        <input type="text" class="form-control {{ $errors->has('engine_number') ? ' has-error' : '' }}" placeholder="Engine Number" name="engine_number" required>
+                        <input type="text" class="form-control {{ $errors->has('engine_number') ? ' has-error' : '' }}" placeholder="Engine Number" maxlength="20" name="engine_number" id="engine_number" required>
+                        <p style="color:#FF0000" id="message2"> Spaces not  allowed for engine number</p>
                     </div>
                     @if ($errors->has('engine_number'))
                     <span class="help-block">
@@ -109,7 +111,8 @@ Create Dealer
                 <div class="form-group row" style="float:none!important">
                     <label for="fname" class="col-md-6 text-right control-label col-form-label">Chassis Number</label>
                     <div class="form-group has-feedback">
-                        <input type="text" class="form-control {{ $errors->has('chassis_number') ? ' has-error' : '' }}" placeholder="Chassis Number" name="chassis_number" required>
+                        <input type="text" class="form-control {{ $errors->has('chassis_number') ? ' has-error' : '' }}" placeholder="Chassis Number" maxlength="20" name="chassis_number" id="chasis_number" required>
+                        <p style="color:#FF0000" id="message3"> Spaces not  allowed for chassis number</p>
                     </div>
                     @if ($errors->has('chassis_number'))
                     <span class="help-block">
@@ -151,18 +154,6 @@ Create Dealer
                     </span>
                     @endif
                 </div>
-                <!-- <div class="form-group row" id='date_section' style="float:none!important;display:none;">
-                  <label for="fname" class="col-sm-3 text-right control-label col-form-label">Date of Installation</label>
-                  <div class="form-group has-feedback">
-                    <input type="text" class=" job_date_picker  form-control {{ $errors->has('job_date') ? ' has-error' : '' }}" placeholder="Select Date" name="job_date" onkeydown="return false" autocomplete="off" required>
-                    <span class="glyphicon glyphicon-phone form-control-feedback"></span>
-                  </div>
-                  @if ($errors->has('job_date'))
-                  <span class="help-block">
-                  <strong class="error-text">{{ $errors->first('job_date') }}</strong>
-                  </span>
-                  @endif
-                </div> -->
 
                 <div class="row">
                     <div class="col-md-1 ">
@@ -197,5 +188,34 @@ Create Dealer
             }
         });
     }
+$(document).ready(function() {
+  $("#message1").hide();
+  $("#message2").hide();
+  $("#message3").hide();
+});
+$('#engine_number').keypress(function(e) {
+  $("#message2").hide();
+
+  if (e.which === 32) {
+      $("#message2").show();
+      e.preventDefault();
+  }
+});
+$('#chasis_number').keypress(function(e) {
+  $("#message3").hide();
+
+  if (e.which === 32) {
+      $("#message3").show();
+      e.preventDefault();
+  }
+});
+$('#registration_number').keypress(function(e) {
+  $("#message1").hide();
+
+  if (e.which === 32) {
+      $("#message1").show();
+      e.preventDefault();
+  }
+});
 </script>
 @endsection
