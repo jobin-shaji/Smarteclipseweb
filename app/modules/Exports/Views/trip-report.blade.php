@@ -14,7 +14,7 @@
 <div>
   <div style="margin-top:5%!important;floar:left">
     <p>{{$gps->vehicle->client->name}}</p>
-    <span style="width:50%;float:left"><p>{{$gps->vehicle->client->address}}Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 150</p></span>
+    <span style="width:50%;float:left"><p>{{$gps->vehicle->client->address}}</p></span>
     <span style="float:right;width:35%"><p><b>Trip Date</b></p>{{$date}}</span>
   </div>
   <br/>

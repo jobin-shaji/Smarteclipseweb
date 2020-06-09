@@ -288,9 +288,9 @@ class Client extends Model
   /**
    * 
    */
-  public function getIdAndNameOfAllClients()
+  public function getIdNameAndMobileNoOfAllClients()
   {
-    return self::select('id','name')->get();
+    return self::select('id','name','user_id')->with('user:id,email,mobile')->get();
   }
 
 
