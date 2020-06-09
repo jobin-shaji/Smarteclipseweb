@@ -59,8 +59,10 @@ function reassigndevice()
           'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
         },
         success:function(res) {
+          
           if(res.code ==  1)
           {
+            $('#loader').show();
               var reassign_type_id = document.getElementById('return_to').value;
               var imei = document.getElementById('imei').value;
               var vehicle = document.getElementById('vehicle_id').value;
@@ -79,7 +81,6 @@ function reassigndevice()
                 'client':client,
                 'vehicle':vehicle
               };
-              $('#loader').show();
               backgroundPostData(url,data,'deviceReassign',{alert:true});
               Reassignredirect();
           }
