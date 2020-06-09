@@ -39,7 +39,7 @@ class VehicleGps extends Model
       FROM `vehicle_gps`
       WHERE vehicle_id = '$vehicle_id' AND
       (
-        ( '$from_date' BETWEEN IF(date(gps_fitted_on) > '$from_date', '$from_date', date(gps_fitted_on)) AND date(gps_removed_on) )
+        ( '$from_date' BETWEEN IF(date(gps_fitted_on) < '$from_date', '$from_date', date(gps_fitted_on)) AND date(gps_removed_on) )
           OR
           ( '$to_date' BETWEEN date(gps_fitted_on) AND IF(date(gps_removed_on) IS NULL, CURDATE(), date(gps_removed_on)) )
       )");
@@ -52,7 +52,7 @@ class VehicleGps extends Model
       FROM `vehicle_gps`
       WHERE vehicle_id IN ('" . implode("', '", $vehicle_ids) . "') AND
       (
-        ( '$from_date' BETWEEN IF(date(gps_fitted_on) > '$from_date', '$from_date', date(gps_fitted_on)) AND date(gps_removed_on) )
+        ( '$from_date' BETWEEN IF(date(gps_fitted_on) < '$from_date', '$from_date', date(gps_fitted_on)) AND date(gps_removed_on) )
           OR
           ( '$to_date' BETWEEN date(gps_fitted_on) AND IF(date(gps_removed_on) IS NULL, CURDATE(), date(gps_removed_on)) )
       )");
@@ -64,7 +64,7 @@ class VehicleGps extends Model
       FROM `vehicle_gps`
       WHERE vehicle_id = '$vehicle_id' AND
       (
-        ( '$search_date' BETWEEN IF(date(gps_fitted_on) > '$search_date', '$search_date', date(gps_fitted_on)) AND date(gps_removed_on) )
+        ( '$search_date' BETWEEN IF(date(gps_fitted_on) < '$search_date', '$search_date', date(gps_fitted_on)) AND date(gps_removed_on) )
           OR
           ( '$search_date' BETWEEN date(gps_fitted_on) AND IF(date(gps_removed_on) IS NULL, CURDATE(), date(gps_removed_on)) )
       )");
@@ -76,7 +76,7 @@ class VehicleGps extends Model
       FROM `vehicle_gps`
       WHERE vehicle_id IN ('" . implode("', '", $vehicle_ids) . "') AND
       (
-        ( '$search_date' BETWEEN IF(date(gps_fitted_on) > '$search_date', '$search_date', date(gps_fitted_on)) AND date(gps_removed_on) )
+        ( '$search_date' BETWEEN IF(date(gps_fitted_on) < '$search_date', '$search_date', date(gps_fitted_on)) AND date(gps_removed_on) )
           OR
           ( '$search_date' BETWEEN date(gps_fitted_on) AND IF(date(gps_removed_on) IS NULL, CURDATE(), date(gps_removed_on)) )
       )");
@@ -125,7 +125,7 @@ class VehicleGps extends Model
       FROM `vehicle_gps`
       WHERE vehicle_id = '$vehicle_id' AND
       (
-        ( '$search_date' BETWEEN IF(date(gps_fitted_on) > '$search_date', '$search_date', date(gps_fitted_on)) AND date(gps_removed_on) )
+        ( '$search_date' BETWEEN IF(date(gps_fitted_on) < '$search_date', '$search_date', date(gps_fitted_on)) AND date(gps_removed_on) )
           OR
           ( '$search_date' BETWEEN date(gps_fitted_on) AND IF(date(gps_removed_on) IS NULL, CURDATE(), date(gps_removed_on)) )
       )");
