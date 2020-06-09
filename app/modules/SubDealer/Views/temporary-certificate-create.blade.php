@@ -87,7 +87,7 @@ Create Dealer
                 <div class="form-group row" style="float:none!important">
                   <label for="fname" class="col-sm-3 text-right control-label col-form-label">Registration Number</label>
                   <div class="form-group has-feedback">
-                    <input type="text" required class="form-control {{ $errors->has('register_number') ? ' has-error' : '' }}" placeholder="Registration Number" name="register_number">
+                    <input type="text" required class="form-control {{ $errors->has('register_number') ? ' has-error' : '' }}" placeholder="Registration Number" maxlength="20" name="register_number">
                   </div>
                   @if ($errors->has('register_number'))
                   <span class="help-block">
@@ -98,7 +98,7 @@ Create Dealer
                 <div class="form-group row" style="float:none!important">
                     <label for="fname" class="col-md-6 text-right control-label col-form-label">Engine Number</label>
                     <div class="form-group has-feedback">
-                        <input type="text" class="form-control {{ $errors->has('engine_number') ? ' has-error' : '' }}" placeholder="Engine Number" name="engine_number" required>
+                        <input type="text" class="form-control {{ $errors->has('engine_number') ? ' has-error' : '' }}" placeholder="Engine Number" maxlength="20" name="engine_number" required>
                     </div>
                     @if ($errors->has('engine_number'))
                     <span class="help-block">
@@ -109,7 +109,7 @@ Create Dealer
                 <div class="form-group row" style="float:none!important">
                     <label for="fname" class="col-md-6 text-right control-label col-form-label">Chassis Number</label>
                     <div class="form-group has-feedback">
-                        <input type="text" class="form-control {{ $errors->has('chassis_number') ? ' has-error' : '' }}" placeholder="Chassis Number" name="chassis_number" required>
+                        <input type="text" class="form-control {{ $errors->has('chassis_number') ? ' has-error' : '' }}" placeholder="Chassis Number" maxlength="20" name="chassis_number" required>
                     </div>
                     @if ($errors->has('chassis_number'))
                     <span class="help-block">
