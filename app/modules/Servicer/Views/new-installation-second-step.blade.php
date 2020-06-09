@@ -359,7 +359,7 @@ $rayfleet_key="rayfleet";
 $eclipse_key="eclipse";
 if (strpos($url, $rayfleet_key) == true) {  ?>
     <div class="form-group row form-group-driver">
-    <label for="fname" class="col-sm-6 text-right control-label col-form-label label-form-drive">Mobile Number</label>
+    <label for="fname" class="col-sm-9 text-right control-label col-form-label label-form-drive">Mobile Number</label>
     <div class="form-group has-feedback form-drive-outer">
         <input type="text" id="mobile" required pattern="[0-9]{11}" class="form-control {{ $errors->has('mobile') ? ' has-error' : '' }}" placeholder="Mobile Number" name="mobile" value="{{ old('mobile') }}" maxlength="11" title="Mobile number should be exactly 11 digits" /> 
     </div>
