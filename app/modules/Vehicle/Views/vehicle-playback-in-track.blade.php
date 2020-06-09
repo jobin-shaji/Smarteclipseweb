@@ -169,8 +169,9 @@
       <script src="{{asset('playback_assets/assets/js/plugin/chart.js/chart.min.js')}}"></script>
       <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&libraries=geometry"></script>
       <script>
-         var km_data           = 0;
-         var pauseMapRendering = false;
+         var km_data                  = 0;
+         var playback_start           = false;     
+         var pauseMapRendering        = false;
          var bearsMarkeronStartPoint;
          var bearsMarker;
          var startPointLatitude       = null;
@@ -373,9 +374,19 @@
                     alertify.alert('Time is required').setHeader('<em> PLAYBACK</em>');
                     return false;
                  }
+
+
+                 
                  var play_back_date         = $("#playback_date").val();
                  var start_time             = $('#start_time_val').val();
                  var stop_time              = $('#stop_time_val').val();
+                 
+                 if(new Date(play_back_date+' '+start_time) >= new Date( play_back_date+' '+stop_time))
+                  {
+                    alertify.alert('End Time Should not be Less than or Equal to Start Time').setHeader('<em> PLAYBACK</em>');
+                    return false;
+                  }
+           
                  var start_date_time        = play_back_date+' '+start_time;
                  var end_date_time          = play_back_date+' '+stop_time;
             
@@ -403,10 +414,13 @@
           playback_speed_base    = 1000/speed;
           playback_speed         = playback_speed_base/playback_speed_rate;
           playback_speed_changed = true;
-
-          // clear map update interval
-          clearInterval(mapUpdateInterval_location);
-          getLocationData();
+          if(playback_start == true)
+          {
+            // clear map update interval
+            clearInterval(mapUpdateInterval_location);
+            getLocationData();
+          }
+         
         
          }
          
@@ -486,6 +500,7 @@
          
                            }
                          }
+                         playback_start = true;
                      }
                      else
                      {
