@@ -249,7 +249,7 @@ class DeviceReassignController extends Controller
                 if($count_of_transfer_item == 1)
                 {
                     // Delete $gps_transfer_log
-                    GpsTransfer::where('id',$gps_transfer_log->id)->delete();
+                    GpsTransfer::where('id',$gps_transfer_log->id)->forceDelete();
                     // Delete  row in gps_transfer_item 
                     GpsTransferItems::where('gps_transfer_id',$gps_transfer_id)->where('gps_id', $gps)->delete();
                 }
@@ -329,7 +329,7 @@ class DeviceReassignController extends Controller
                     if($count_of_transfer_item == 1)
                     {
                         // Delete $gps_transfer_log
-                        GpsTransfer::where('id',$gps_transfer_log->id)->delete();
+                        GpsTransfer::where('id',$gps_transfer_log->id)->forceDelete();
                         // Delete  row in gps_transfer_item 
                         GpsTransferItems::where('gps_transfer_id',$gps_transfer_id)->where('gps_id', $gps)->delete();
                     }
@@ -388,7 +388,7 @@ class DeviceReassignController extends Controller
                     if($count_of_transfer_item == 1)
                     {
                         // Delete $gps_transfer_log
-                        GpsTransfer::where('id',$gps_transfer_log->id)->delete();
+                        GpsTransfer::where('id',$gps_transfer_log->id)->forceDelete();
                         // Delete  row in gps_transfer_item 
                         GpsTransferItems::where('gps_transfer_id',$gps_transfer_id)->where('gps_id', $gps)->delete();
                     }
