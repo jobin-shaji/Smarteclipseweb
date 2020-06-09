@@ -28,7 +28,7 @@ $key        = (isset($_GET['completed_search_key'])) ? $_GET['completed_search_k
     <div align="right" class="search-1">
       <form method="GET" action="{{route('completed.service.job.list')}}" class="search-top">
         {{csrf_field()}}
-        <div class="pull-right cover_list_search">
+        <div class="pull-right cover_list_search" style="width:41%">
         <div class="row" >
             <div class="col-lg-12" >
                  <div class="row">
