@@ -34,7 +34,7 @@
                                                                     <option value="">Select End User</option>
                                                                     <option value="0" @if($client_id==0){{"selected"}} @endif>All</option>
                                                                     @foreach($clients as $each_client)
-                                                                        <option value="{{$each_client->id}}" @if($client_id==$each_client->id){{"selected"}} @endif>{{$each_client->name}}</option>  
+                                                                        <option value="{{$each_client->id}}" @if($client_id==$each_client->id){{"selected"}} @endif>{{$each_client->name}}( {{$each_client->user->mobile}} )</option>  
                                                                     @endforeach
                                                                 </select>
                                                                 @if ($errors->has('client_id'))

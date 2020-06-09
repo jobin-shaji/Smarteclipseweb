@@ -129,7 +129,7 @@ class TripReportController extends Controller
      */
     public function tripReportInManufacturer()
     {
-        $get_all_clients    =   (new Client())->getIdAndNameOfAllClients();
+        $get_all_clients    =   (new Client())->getIdNameAndMobileNoOfAllClients();
         return view('Reports::trip-report-view-in-manufacturer',['clients'=>$get_all_clients, 'client_id'=>'', 'vehicle_id'=>'', 'from_date'=>'', 'to_date'=>'', 'trip_reports'=>[]]);
     }
     /**
@@ -194,7 +194,7 @@ class TripReportController extends Controller
         
         if($client_id == "0" && $vehicle_id == "0")
         {
-            $clients            =   (new Client())->getIdAndNameOfAllClients();
+            $clients            =   (new Client())->getIdNameAndMobileNoOfAllClients();
             $client_ids         =   [];
             foreach($clients as $each_client)
             {
@@ -208,7 +208,7 @@ class TripReportController extends Controller
         }
         else if($client_id == "0" && $vehicle_id != "0")
         {
-            $clients            =   (new Client())->getIdAndNameOfAllClients();
+            $clients            =   (new Client())->getIdNameAndMobileNoOfAllClients();
             $client_ids         =   [];
             foreach($clients as $each_client)
             {
@@ -231,7 +231,7 @@ class TripReportController extends Controller
             $vehicle_ids        =   [$vehicle_id];
         }
         $trip_reports       =   (new VehicleTripSummary())->getTripDetailsBetweenTwoDates($client_ids, $vehicle_ids, $from_date, $to_date);
-        $get_all_clients    =   (new Client())->getIdAndNameOfAllClients();
+        $get_all_clients    =   (new Client())->getIdNameAndMobileNoOfAllClients();
         return view('Reports::trip-report-view-in-manufacturer',['clients'=>$get_all_clients, 'client_id'=>$client_id, 'vehicle_id'=>$vehicle_id, 'from_date'=>$from_date, 'to_date'=>$to_date,'trip_reports'=>$trip_reports ]);
     }
     /**
