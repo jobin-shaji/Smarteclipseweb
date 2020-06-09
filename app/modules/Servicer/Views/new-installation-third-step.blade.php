@@ -94,7 +94,7 @@ $(document).ready(function() {
       if(checkedboxeslength < totalCheckboxes)
       {
        
-        alert("please select all commands there are unchecked commands of "+'  '+pendingCheckboxes);
+        alert('Please select all commands, there are unchecked commands of '+'  '+pendingCheckboxes);
         return false;
 
 
