@@ -431,7 +431,7 @@ class ComplaintController extends Controller {
         $complaint->save();  
 
         $gps        =   Gps::select('id')->where('imei', $request->imei)->first();
-        $client     =   (new Client())->getClientDetailsWithClientId($client_id);
+        $client     =   (new Client())->getClientDetailsWithClientId($request->client_id);
         $role       =   User::select('role')->where('id', $client->user_id)->first();
         if($role == null || $role == '')
         {

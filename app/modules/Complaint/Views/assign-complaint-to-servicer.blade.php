@@ -62,6 +62,7 @@
     <div class="card-body">        
     <input type="hidden" name="imei" value="{{ $complaint->gps->imei}}">
     <input type="hidden" name="complaint_id" value="{{ $complaint->id}}">
+    <input type="hidden" name="client_id" value="{{ $complaint->client_id}}">
     <br>
     <div class="form-group row box" >
       <label style="white-space: nowrap;" for="fname" class="col-sm-3 text-right control-label col-form-label">Service Engineer</label> 
