@@ -227,16 +227,16 @@
         </div>
         
         <div style="position:absolute;margin:1%;overflow:auto">
-            <div style="position:absolute;left:20px;top:680px;line-height: 21px" class="cls_002">
+            <div style="position:absolute;left:20px;top:730px;line-height: 21px" class="cls_002">
                 <span class="cls_002">This letter has been issued on <b>{{$now}}</b> upon the specific request from the customer as a proof of installation</span>
             </div>
-            <div style="position:absolute;left:20px;top:730px" class="cls_002">
+            <div style="position:absolute;left:20px;top:780px" class="cls_002">
                 <span class="cls_002">Yours Sincerly,</span>
             </div>
-             <div style="position:absolute;left:20px;top:760px" class="cls_002">
+             <div style="position:absolute;left:20px;top:810px" class="cls_002">
                 <span class="cls_002">{{$subdealer_trader->name}}</span>
             </div>
-            <div style="position:absolute;top:760px;float:right" class="cls_002">
+            <div style="position:absolute;top:810px;float:right" class="cls_002">
                 <span class="cls_002">Authorised Signatory</span>
             </div>
         </div>
