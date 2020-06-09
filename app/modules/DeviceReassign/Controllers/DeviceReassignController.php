@@ -328,7 +328,7 @@ class DeviceReassignController extends Controller
                 return response()->json([
                     'status' => 0,
                     'title' => 'Error',
-                    'message' => 'Client is deactivated'
+                    'message' => 'End User is deactivated'
                 ]);
             }
         }
