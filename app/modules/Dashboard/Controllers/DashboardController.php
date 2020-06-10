@@ -10,6 +10,7 @@ use App\Modules\Gps\Models\Gps;
 use App\Modules\Gps\Models\GpsData;
 use App\Modules\Gps\Models\GpsTransfer;
 use App\Modules\Geofence\Models\Geofence;
+use App\Modules\Complaint\Models\Complaint;
 use Illuminate\Support\Facades\Crypt;
 use App\Modules\Vehicle\Models\Vehicle;
 use App\Modules\Trader\Models\Trader;
@@ -76,22 +77,32 @@ class DashboardController extends Controller
     }
     function clientDashboardIndex()
     {
-        $client_id           =  \Auth::user()->client->id;
-        $alerts              =  $this->getAlerts($client_id);
-        $gps_stocks          =  GpsStock::select('id','gps_id','client_id')->where('client_id',$client_id)->get();
-        $single_gps_in_stocks=[];
+        $client_id              =   \Auth::user()->client->id;
+        $alerts                 =   $this->getAlerts($client_id);
+        $gps_stocks             =   GpsStock::select('id','gps_id','client_id')
+                                            ->where('client_id',$client_id)
+                                            ->where(function ($query) {
+                                                $query->where('is_returned', '=', 0)
+                                                ->orWhere('is_returned', '=', NULL);
+                                            })
+                                            ->get();
+        $single_gps_in_stocks   =   [];
         foreach ($gps_stocks as $gps) {
-            $single_gps_in_stocks[]=$gps->gps_id;
+            $single_gps_in_stocks[] =   $gps->gps_id;
         }
-        $gpss = Gps::select('id')->whereNotNull('lat')->whereNotNull('lon')->get();
+        $gpss = Gps::select('id')->whereNotNull('lat')->whereNotNull('lon')->whereIn('id',$single_gps_in_stocks)->get();
         $single_gps=[];
         foreach ($gpss as $gps) {
             $single_gps[]=$gps->id;
         }
         $vehicles = Vehicle::select('id','register_number','name','gps_id')
-        ->where('client_id',$client_id)
-        ->whereIn('gps_id',$single_gps)
-        ->get();
+                            ->where('client_id',$client_id)
+                            ->whereIn('gps_id',$single_gps)
+                            ->where(function ($query) {
+                                $query->where('is_returned', '=', 0)
+                                ->orWhere('is_returned', '=', NULL);
+                            })
+                            ->get();
         $single_vehicle     =   $this->getSingleVehicle($client_id);
         $expired_documents  =   $this->getExpiredDocuments($single_vehicle);
         $expire_documents   =   $this->getExpireDocuments($single_vehicle);
@@ -356,6 +367,8 @@ class DashboardController extends Controller
 
         $gps_returned                           =   GpsStock::select('id','subdealer_id','is_returned')->where('subdealer_id',$sub_dealer_id)->where('is_returned',1)->count();
 
+        $new_complaints_count_of_sub_dealer     =   (new Complaint())->getCountOfComplaintsWithOpenStatus($single_clients_array);
+
         return response()->json([
             'clients'                                   =>  (new Client())->getCountOfClientsUnderDealer($sub_dealer_id),
             'traders'                                   =>  Trader::select('sub_dealer_id')->where('sub_dealer_id',$sub_dealer_id)->count(),
@@ -363,6 +376,7 @@ class DashboardController extends Controller
             'total_gps'                                 =>  $total_gps,
             'gps_in_stock'                              =>  $gps_in_stock,
             'gps_returned'                              =>  $gps_returned,
+            'subdealer_complaints'                      =>  $new_complaints_count_of_sub_dealer,
             'gps_awaiting_confirmation_from_trader'     =>  $gps_awaiting_confirmation_from_trader,
             'dealer_to_trader_transferred_gps_count'    =>  $dealer_to_trader_transferred_gps_count,
             'dealer_to_client_transferred_gps_count'    =>  $dealer_to_client_transferred_gps_count,
@@ -393,6 +407,7 @@ class DashboardController extends Controller
             $new_arrival_gps_count                  =   GpsTransferItems::select('gps_transfer_id')->whereIn('gps_transfer_id',$single_new_transfer_ids)->count();
         }
         $gps_returned                               =   GpsStock::select('id','trader_id','is_returned')->where('trader_id',$trader_id)->where('is_returned',1)->count();
+        $new_complaints_count_of_trader             =   (new Complaint())->getCountOfComplaintsWithOpenStatus($single_clients_array);
 
         return response()->json([
             'clients'                                   =>  (new Client())->getCountOfClientsUnderSubDealer($trader_id),
@@ -400,6 +415,7 @@ class DashboardController extends Controller
             'total_gps'                                 =>  $total_gps,
             'gps_in_stock_trader'                       =>  $gps_in_stock_trader,
             'gps_returned'                              =>  $gps_returned,
+            'trader_complaints'                         =>  $new_complaints_count_of_trader,
             'trader_to_client_transferred_gps_count'    =>  $trader_to_client_transferred_gps_count,
             'status'                                    =>  'dbcount'           
         ]);

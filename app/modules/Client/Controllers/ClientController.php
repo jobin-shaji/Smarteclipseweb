@@ -29,6 +29,7 @@ use Intervention\Image\ImageManagerStatic as Image;
 use App\Jobs\MailJob;
 use App\Http\Traits\MqttTrait;
 use App\Mail\UserCreated;
+use App\Mail\UserUpdated;
 use Illuminate\Support\Facades\Mail;
 
 
@@ -142,17 +143,17 @@ class ClientController extends Controller {
             
             if($client)
             {
-                Mail::to($user)->send(new UserCreated($user, $request->name, $request->password));
+                if($request->client_category=="school"){
+                    User::select('id','username')->where('username', $request->username)->first()->assignRole('school');
+                }else{
+                    User::select('id','username')->where('username', $request->username)->first()->assignRole('client');
+                }
+                if($user->email != null)
+                {
+                    Mail::to($user)->send(new UserCreated($user, $request->name, $request->password));
+                }
             }
 
-            // dd($user);
-            if($request->client_category=="school"){
-                User::select('id','username')->where('username', $request->username)->first()->assignRole('school');
-
-            }else{
-                User::select('id','username')->where('username', $request->username)->first()->assignRole('client');
-
-            }
             $alert_types = AlertType::select('id','driver_point')->get();
             
             if($client){
@@ -201,13 +202,15 @@ class ClientController extends Controller {
             $client     =   (new Client())->createNewClientFromSubDealer($user->id, $trader_id, strtoupper($request->name), $request->address, $location_lat, $location_lng, $request->country_id, $request->state_id, $request->city_id, $current_date); 
             if($client)
             {
-                Mail::to($user)->send(new UserCreated($user, $request->name, $request->password));
-            }
-
-            if($request->client_category=="school"){
-                User::select('id','username')->where('username', $request->username)->first()->assignRole('school');
-            }else{
-                User::select('id','username')->where('username', $request->username)->first()->assignRole('client');
+                if($request->client_category=="school"){
+                    User::select('id','username')->where('username', $request->username)->first()->assignRole('school');
+                }else{
+                    User::select('id','username')->where('username', $request->username)->first()->assignRole('client');
+                }
+                if($user->email != null)
+                {
+                    Mail::to($user)->send(new UserCreated($user, $request->name, $request->password));
+                }
             }
            
             $alert_types = AlertType::select(
@@ -389,11 +392,15 @@ class ClientController extends Controller {
         }
         $did=encrypt($client->id);
         // dd($request->password);
-        $rules=$this->updateUserPasswordBySubdealer();
+        $rules=$this->updateUserPasswordBySubdealer($client);
         $this->validate($request,$rules);
         $client->password=bcrypt($request->password);
         $client->username=$request->username;
         $client->save();
+        if($client->email != null)
+        {
+            Mail::to($client)->send(new UserUpdated($client, $client->client->name, $request->password));
+        }
         $request->session()->flash('message','Username & Password updated successfully');
         $request->session()->flash('alert-class','alert-success');
         return  redirect(route('client.change-password-subdealer',$did));
@@ -460,10 +467,10 @@ class ClientController extends Controller {
         ];
         return $rules;
     }
-    public function updateUserPasswordBySubdealer()
+    public function updateUserPasswordBySubdealer($client)
     {
         $rules=[
-            'username' => 'required|unique:users',
+            'username' => 'required|unique:users,username,'.$client->id,
             'password' => 'required|string|min:8|confirmed|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*)(=+\/\\~`-]).{8,20}$/'
         ];
         return $rules;
@@ -1309,9 +1316,8 @@ public function selectTrader(Request $request)
             'city_id' => 'required',
             'state_id' => 'required',
             'country_id' => 'required',
-             // 'email' => 'nullable|string|email|max:255|unique:users',
+            'email' => 'nullable|string|email|max:255|unique:users,email,'.$client->user_id,
             'mobile_number' => 'required|digits:10|unique:users,mobile,'.$client->user_id,
-            'email' => 'required|email'
               ];
         return  $rules;
     }
@@ -1324,7 +1330,7 @@ public function selectTrader(Request $request)
             'city_id' => 'required',
             'state_id' => 'required',
             'country_id' => 'required',
-            // 'email' => 'nullable|string|email|max:255|unique:users',
+            'email' => 'nullable|string|email|max:255|unique:users,email,'.$client->user_id,
             'mobile_number' => 'required|digits:11|unique:users,mobile,'.$client->user_id
               ];
         return  $rules;

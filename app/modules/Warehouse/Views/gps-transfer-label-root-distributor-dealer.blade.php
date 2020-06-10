@@ -35,7 +35,7 @@
                   <button style="float:left;margin-left:23%;" type="button" class="btn btn-primary btn-md form-btn">Download</button>
                 </a>
               </span>
-              <span style="float:left">
+              <span>
                 <p></p>
                 <p class="card-text"><b>Order Number : </b> {{$gps_transfer->order_number}} </p>
                 <p class="card-text"><b>Invoice Number : </b> {{$gps_transfer->invoice_number}} </p>

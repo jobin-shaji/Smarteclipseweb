@@ -412,7 +412,7 @@ class SubDealerController extends Controller {
         {
             $subdealer_trader_id  =   \Auth::user()->trader->id;
         }
-        $data = TemporaryCertificate::select('id','details')->where('user_id',$subdealer_trader_id)->get();
+        $data = TemporaryCertificate::select('id','details')->where('user_id',$subdealer_trader_id)->orderBy('created_at','DESC')->get();
         return view('SubDealer::temporary-certificates',['details' => $data]);
     }
 
@@ -480,10 +480,9 @@ class SubDealerController extends Controller {
     {
         $current = Carbon::now();
         $current->toDateString();
-        $expires = $current->addDays(60);
-        $expires = $expires->format('Y-m-d H:i:s');
-        $install_date = date($request->job_date);
-        if($install_date <= $expires)
+        $expires = $current->addDays(60)->format('Y-m-d');
+        $install_date = date("Y-m-d", strtotime($request->job_date));
+        if($install_date < $expires)
         {
             $detail['plan_name']                                =   $request->plan;
             $detail['client_name']                              =   $request->client;

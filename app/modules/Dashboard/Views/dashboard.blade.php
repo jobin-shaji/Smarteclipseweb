@@ -551,33 +551,38 @@
         </div>
       </div>
       <div class="col-lg-3 col-xs-6 sub_dealer_dashboard_grid dash_grid">
-        <!-- small box -->
-        <div class="small-box bg-blue bxs">
-          <div class="inner">
-            <h3 id="subdealer_trader">
-              <div class="loader"></div>
-            </h3>
-            <p>Active Sub Dealers</p>
+          <!-- small box -->
+          <div class="small-box bg-green bxs">
+
+            <div class="inner inner-left">
+              <div class="box-2">
+                <div style="float:left; width:50%">
+                  <h3 id="subdealer_trader"></h3>
+                  <p class="mrg-bt-0">Active Sub Dealers</p>
+                </div>
+                <div style="float:left; width:50%">
+                  <h3 id="subdealer_client"></h3>
+                  <p class="mrg-bt-0">Active End Users</p>
+                </div>
+              </div>
+            </div>
+            <a href="/trader" class="small-box-footer" style='float: left;width: 50%;'>View <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="/clients" class="small-box-footer" style='float: left;width: 50%;'>View <i class="fa fa-arrow-circle-right"></i></a>
           </div>
-          <div class="icon">
-            <i class="ion ion-person-add"></i>
-          </div>
-          <a href="/trader" class="small-box-footer small-box-footer2">View <i class="fa fa-arrow-circle-right"></i></a>
-        </div>
-      </div>
+        </div>   
       <div class="col-lg-3 col-xs-6 client_dashboard_grid dash_grid">
         <!-- small box -->
         <div class="small-box bg-blue bxs">
           <div class="inner">
-            <h3 id="subdealer_client">
+            <h3 id="subdealer_complaints">
               <div class="loader"></div>
             </h3>
-            <p>Active End Users</p>
+            <p>New Complaints</p>
           </div>
           <div class="icon">
             <i class="ion ion-person-add"></i>
           </div>
-          <a href="/clients" class="small-box-footer small-box-footer2">View <i class="fa fa-arrow-circle-right"></i></a>
+          <a href="/complaint" class="small-box-footer small-box-footer2">View <i class="fa fa-arrow-circle-right"></i></a>
         </div>
       </div>
     </div>
@@ -679,7 +684,7 @@
         </div>
       </div>
       <!-- ./col -->
-      <div class="col-lg-3 col-xs-6 client_dashboard_grid dash_grid">
+      <div class="col-lg-3 col-xs-6 sub_dealer_dashboard_grid dash_grid">
         <!-- small box -->
         <div class="small-box bg-blue bxs">
           <div class="inner">
@@ -692,6 +697,21 @@
             <i class="ion ion-person-add"></i>
           </div>
           <a href="/clients" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+      </div>
+      <div class="col-lg-3 col-xs-6 client_dashboard_grid dash_grid">
+        <!-- small box -->
+        <div class="small-box bg-blue bxs">
+          <div class="inner">
+            <h3 id="trader_complaints">
+              <div class="loader"></div>
+            </h3>
+            <p>New Complaints</p>
+          </div>
+          <div class="icon">
+            <i class="ion ion-person-add"></i>
+          </div>
+          <a href="/complaint" class="small-box-footer small-box-footer2">View <i class="fa fa-arrow-circle-right"></i></a>
         </div>
       </div>
     </div>

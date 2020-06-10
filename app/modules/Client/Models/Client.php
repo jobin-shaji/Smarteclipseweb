@@ -63,7 +63,7 @@ class Client extends Model
 
   public function getDetailsOfClientsUnderSubDealer($sub_dealer_id)
   {
-    return self::select('id','name','sub_dealer_id','user_id','address')->with('user:id,mobile')->where('sub_dealer_id',$sub_dealer_id)->get();
+    return DB::select("SELECT clients.id,clients.name,clients.address,users.mobile FROM clients  LEFT JOIN users ON users.id = clients.user_id WHERE clients.sub_dealer_id = '$sub_dealer_id'");
   }
 
   public function getDetailsOfClientsWithReturnedVehicleGpsUnderSubDealer($sub_dealer_id)
@@ -74,8 +74,7 @@ class Client extends Model
 
   public function getDetailsOfClientsUnderTrader($trader_id)
   {
-    
-    return self::select('id','name','trader_id','user_id','address')->with('user:id,mobile')->where('trader_id',$trader_id)->get();
+    return DB::select("SELECT clients.id,clients.name,clients.address,users.mobile FROM clients  LEFT JOIN users ON users.id = clients.user_id WHERE clients.trader_id = '$trader_id'");
   }
 
   public function getDetailsOfClientsWithReturnedVehicleGpsUnderTrader($trader_id)
@@ -86,7 +85,7 @@ class Client extends Model
 
   public function getDetailsOfAllClients()
   {
-    return self::select('id','name','trader_id','user_id','address')->with('user:id,mobile')->get();
+    return DB::select("SELECT clients.id,clients.name,clients.trader_id,clients.user_id,clients.address,users.mobile FROM clients  LEFT JOIN users ON users.id = clients.user_id");
   }
 
   public function getDetailsOfClientsWithReturnedVehicleGps()
@@ -284,7 +283,14 @@ class Client extends Model
    */
   public function getCountOfClientsUnderSubDealer($trader_id)
   {
-    return self::select('trader_id')->where('trader_id',$trader_id)->count();
+    return self::select('id')->where('trader_id',$trader_id)->count();
+  }
+  /**
+   * 
+   */
+  public function getIdNameAndMobileNoOfAllClients()
+  {
+    return self::select('id','name','user_id')->with('user:id,email,mobile')->get();
   }
 
 

@@ -37,7 +37,7 @@
               </div>
               <div class="form-group has-feedback">
                 <label>Address</label>
-                <input type="text" class="form-control {{ $errors->has('address') ? ' has-error' : '' }}" placeholder="Address" name="address" value="{{$client->address}}" disabled>
+                <input type="text" class="form-control {{ $errors->has('address') ? ' has-error' : '' }}" placeholder="Address" maxlength="150" name="address" value="{{$client->address}}" disabled>
               </div>
               <div class="form-group has-feedback">
                 <label>Mobile No.</label>

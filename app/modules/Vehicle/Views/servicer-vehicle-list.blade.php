@@ -32,7 +32,7 @@
                         <thead>
                         <tr>
                             <th>Sl.No</th>
-                            <th>Client</th>
+                            <th>End User</th>
                             <th>Vehicle Name</th>
                             <th>Registration Number</th>
                             <th>IMEI</th>

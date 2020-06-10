@@ -74,16 +74,14 @@
           <div class="row">
             <div class="col-sm-12">
               <div class="row">
-                <div class="col-lg-6 col-md-12">
+                <!-- <div class="col-lg-6 col-md-12">
                   <section class="hilite-content">
-                  <!-- title row -->
                     <div class="row">
                       <div class="col-xs-12">
                         <h3 class="page-header">
                           <i class="fa fa-file"> Add Document</i> 
                         </h3>
                       </div>
-                      <!-- /.col -->
                     </div>
                      <form  method="POST" id="upload_form" enctype="multipart/form-data">
                     {{csrf_field()}}
@@ -118,15 +116,13 @@
                       </div>
           
                       <div class="row">
-                        <!-- /.col -->
                         <div class="col-md-3 ">
                           <button type="submit" class="btn btn-primary btn-md form-btn ">Save</button>
                         </div>
-                        <!-- /.col -->
                       </div>
                     </form>
                   </section>
-                </div>
+                </div> -->
 
                 <div class="col-lg-6 col-md-12">    
                   <section class="hilite-content">
@@ -157,13 +153,13 @@
                                     @if($doc->expiry_date)
                                       <td>
                                         <a href="/documents/vehicledocs/{{$doc->path}}" download="{{$doc->path}}" class='btn btn-xs btn-success'  data-toggle='tooltip' title='Download'><i class='fa fa-download'></i> </a>
-                                        <a href="/vehicle-doc/{{Crypt::encrypt($doc->id)}}/edit" class='btn btn-xs btn-primary'  data-toggle='tooltip' title='Edit'><i class='fa fa-edit'></i> </a>
-                                        <a href="/vehicle-doc/{{Crypt::encrypt($doc->id)}}/delete" class='btn btn-xs btn-danger' onclick="return confirm('Are you sure to delete this document?')" data-toggle='tooltip' title='Delete'><i class='fas fa-trash'></i></a>
+                             <!--            <a href="/vehicle-doc/{{Crypt::encrypt($doc->id)}}/edit" class='btn btn-xs btn-primary'  data-toggle='tooltip' title='Edit'><i class='fa fa-edit'></i> </a>
+                                        <a href="/vehicle-doc/{{Crypt::encrypt($doc->id)}}/delete" class='btn btn-xs btn-danger' onclick="return confirm('Are you sure to delete this document?')" data-toggle='tooltip' title='Delete'><i class='fas fa-trash'></i></a> -->
                                       </td>
                                     @else
                                       <td>
                                         <a href="/documents/vehicledocs/{{$doc->path}}" download="{{$doc->path}}" class='btn btn-xs btn-success' data-toggle='tooltip' title='Download'><i class='fa fa-download'></i></a>
-                                        <a href="/vehicle-doc/{{Crypt::encrypt($doc->id)}}/delete" class='btn btn-xs btn-danger' onclick="return confirm('Are you sure to delete this document?')"  data-toggle='tooltip' title='Delete'><i class='fas fa-trash'></i></a>
+                       <!--                  <a href="/vehicle-doc/{{Crypt::encrypt($doc->id)}}/delete" class='btn btn-xs btn-danger' onclick="return confirm('Are you sure to delete this document?')"  data-toggle='tooltip' title='Delete'><i class='fas fa-trash'></i></a> -->
                                       </td>
                                     @endif
                                   </tr>

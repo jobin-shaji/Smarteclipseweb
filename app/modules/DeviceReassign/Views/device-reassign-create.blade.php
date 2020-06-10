@@ -45,7 +45,9 @@ Create Device Reassign
                   </div>
                 </div>
               </form>  
-              <div class="loader_reassign" id="loader"></div> 
+              <div class="loader-wrapper" id="load-6">
+                <div id="load6"></div>
+              </div> 
               @if(isset($data)) 
               <div class="container-fluid">
                 <div class="card-body">
@@ -210,6 +212,7 @@ Create Device Reassign
  </div>
 </div>
 </section>
+<link rel="stylesheet" href="{{asset('css/loader-1.css')}}">
 @section('script')
 <script src="{{asset('js/gps/device-reassign.js')}}"></script> 
 <style>

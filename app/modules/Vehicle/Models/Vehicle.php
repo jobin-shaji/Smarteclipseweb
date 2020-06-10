@@ -277,4 +277,23 @@ class Vehicle extends Model
                                           })->count();
       return $is_vehicle_exists;
     }
+    /**
+     * 
+     */
+    public function getVehiclesOfSelectedClient($client_id)
+    {
+      return self::select('id','name','register_number','client_id')
+                  ->withTrashed()
+                  ->where('client_id',$client_id)
+                  ->get();
+    }
+    /**
+     * 
+     */
+    public function getAllVehiclesOfAllClients()
+    {
+      return self::select('id','name','register_number','client_id')
+                  ->withTrashed()
+                  ->get();
+    }
 }

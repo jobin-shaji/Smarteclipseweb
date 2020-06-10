@@ -108,6 +108,13 @@ $(function () {
         useCurrent: true,
         maxDate: new Date()
      });
+     $(".datepicker_temp" ).datetimepicker({
+        format: 'DD-MM-YYYY',
+        defaultDate: null,
+        useCurrent: true,
+        minDate: new Date(),
+        maxDate: new Date(currentYear, currentMonth+2, currentDate)
+    });
     $( ".datepicker_operations" ).datetimepicker({
         format: 'DD-MM-YYYY',
         defaultDate: null,
@@ -1230,11 +1237,7 @@ function jobtypeonchange(job_type)
             else
             {
                 for (var i = 0; i < res.length; i++) {
-                    if(res[i].user.mobile)
-                    {
-                        var client_identifier = "Mobile: "+res[i].user.mobile;
-                    }
-                    else if(res[i].mobile)
+                    if(res[i].mobile != undefined)
                     {
                         var client_identifier = "Mobile: "+res[i].mobile;
                     }
