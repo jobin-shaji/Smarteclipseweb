@@ -31,36 +31,25 @@
         <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
           <div class="row"> 
             <div class="col-md-12"> 
-            <div class="row">
-              <div class="col-md-10 ">
-              </div>
-            </div>                   
-              <div class="card" style="max-width: 700px;">
-                <div class="row no-gutters">
-                    <div class="col-md-5">
-                        <?php 
-                           $qr='Dealer:'.$role_details->name.'Address:'.$role_details->address.'Mobile:'.$user_details->mobile.'ScannedEmployee:'.$gps_transfer->scanned_employee_code.'OrderNumber:'.$gps_transfer->order_number.'InvoiceNumber:'.$gps_transfer->invoice_number;
-                        ?>
-                        {!! QrCode::size(300)->encoding('UTF-8')->generate($qr); !!}
-                      <a href="{{route('gps-transfer-label.export',$gps_transfer->id)}}">
-                        <button type="button" class="btn btn-primary btn-md form-btn">Download</button>
-                      </a>
-                    </div>
-                    <div class="col-md-7">
-                        <div class="card-body">
-                          <p></p>
-                            <p class="card-text"><b>Order Number : </b> {{$gps_transfer->order_number}} </p>
-                            <p class="card-text"><b>Invoice Number : </b> {{$gps_transfer->invoice_number}} </p>
-                            <p class="card-text"><b>Scanned Employee Code : </b> {{$gps_transfer->scanned_employee_code}} </p>
-                            <p class="card-text"><b>Shipped : </b> {{$gps_transfer->dispatched_on}} </p>
-                            <h5 class="card-title" style="text-align: inherit!important">Shipping To,</h5>
-                            <p class="card-text">{{$role_details->name}} <br>{{$role_details->address}}</p>
-                            <p class="card-text"><b>Mobile Number : </b> {{$user_details->mobile}} </p>
-                        </div>
-                    </div>
-                </div>
-              </div>
-              
+            <span style="float:left;width:28%"> 
+              <?php 
+                  $qr='Dealer:'.$role_details->name.'Address:'.$role_details->address.'Mobile:'.$user_details->mobile.'ScannedEmployee:'.$gps_transfer->scanned_employee_code.'OrderNumber:'.$gps_transfer->order_number.'InvoiceNumber:'.$gps_transfer->invoice_number;
+              ?>
+                {!! QrCode::size(300)->encoding('UTF-8')->generate($qr); !!}
+              <a href="{{route('gps-transfer-label.export',$gps_transfer->id)}}">
+                <button style="float:left;margin-left:23%;" type="button" class="btn btn-primary btn-md form-btn">Download</button>
+              </a>
+            </span>
+            <span>
+              <p></P>
+              <p class="card-text"><b>Order Number : </b> {{$gps_transfer->order_number}} </p>
+              <p class="card-text"><b>Invoice Number : </b> {{$gps_transfer->invoice_number}} </p>
+              <p class="card-text"><b>Scanned Employee Code : </b> {{$gps_transfer->scanned_employee_code}} </p>
+              <p class="card-text"><b>Shipped : </b> {{$gps_transfer->dispatched_on}} </p>
+              <h5 class="card-title" style="text-align: inherit!important">Shipping To,</h5>
+              <p class="card-text">{{$role_details->name}} <br>{{$role_details->address}}</p>
+              <p class="card-text"><b>Mobile Number : </b> {{$user_details->mobile}} </p>
+            </span>
             </div>
           </div>
         </div>

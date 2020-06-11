@@ -1,5 +1,5 @@
-
-<table border="1" cellpadding="0" style="margin:0 auto;width:720px">
+<div style="margin-left:-21px!important">
+<table border="1" cellpadding="0" style="margin:0 0;width:720px;margin-right:10px">
   <tbody>
     <tr style="width:700px;border:solid 1px #222;border-width:0 0 1px 0; position:absolute;">
       <td style="margin:12px 0 0 12px;border:none;width:150px">
@@ -57,4 +57,5 @@
 
   </tbody>
 </table>
+</div>
 

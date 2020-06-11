@@ -30,7 +30,7 @@ Create Device Reassign
                   <div class="col-md-6">
                     <div class="form-group has-feedback form-group-1 mrg-rt-5">
                       <label class="srequired">IMEI</label>
-                      <input type="text" name="imei" id="imei" class="form-control" value="@if(isset($data)){{$data->imei}}@endif" required>
+                      <input type="text" name="imei" id="imei" class="form-control" title="IMEI should be a number of length 15" value="@if(isset($data)){{$data->imei}}@endif" maxlength="15" pattern="[0-9]{15}" required>
                       @if ($errors->has('imei'))
                       <span class="help-block">
                         <strong class="error-text">{{ $errors->first('imei') }}</strong>
@@ -45,7 +45,9 @@ Create Device Reassign
                   </div>
                 </div>
               </form>  
-              <div class="loader_reassign" id="loader"></div> 
+              <div class="loader-wrapper" id="load-6">
+                <div id="load6"></div>
+              </div> 
               @if(isset($data)) 
               <div class="container-fluid">
                 <div class="card-body">
@@ -210,6 +212,7 @@ Create Device Reassign
  </div>
 </div>
 </section>
+<link rel="stylesheet" href="{{asset('css/loader-1.css')}}">
 @section('script')
 <script src="{{asset('js/gps/device-reassign.js')}}"></script> 
 <style>

@@ -28,7 +28,7 @@ $key        = (isset($_GET['new_service_search_key'])) ? $_GET['new_service_sear
     <div align="right" class="search-1">
       <form method="GET" action="{{route('new.service.job.list')}}" class="search-top">
         {{csrf_field()}}
-        <div class="pull-right cover_list_search">
+        <div class="pull-right cover_list_search" style="width:41%">
         <div class="row" >
             <div class="col-lg-12" >
                  <div class="row">
@@ -55,7 +55,7 @@ $key        = (isset($_GET['new_service_search_key'])) ? $_GET['new_service_sear
               </div>
            </form>
        </div> 
-          <table class="table table-hover table-bordered  table-striped datatable"  style="width:97%;text-align: center;table-layout: fixed;margin-left: 18px !important;" >
+          <table class="table table-hover table-bordered  table-striped datatable"  style="width:97%;text-align: center;table-layout: fixed;margin-left: 25px !important;" >
           <thead class="indigo white-text">
                <tr>
                 <th><b>SL.No</b></th>

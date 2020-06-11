@@ -3,8 +3,9 @@ function getUrl(){
 }
 
 $(document).ready(function () {
+  $("#load6").css("display","none");
+  $("#load-6").css("display","none");
   $('#count_data').hide();
-  $('#loader').hide();
 });
 
 function searchData()
@@ -46,6 +47,8 @@ function reassigndevice()
 {
   if(confirm('Are you sure you want to reassign?')){
     var gps = document.getElementById('gps_id').value;
+    $("#load6").css("display","show");
+    $("#load-6").css("display","show");
     if(gps) {
       var data = {
           gps_id : gps
@@ -59,6 +62,8 @@ function reassigndevice()
           'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
         },
         success:function(res) {
+          $("#load6").css("display","none");
+          $("#load-6").css("display","none");
           if(res.code ==  1)
           {
               var reassign_type_id = document.getElementById('return_to').value;
@@ -79,7 +84,6 @@ function reassigndevice()
                 'client':client,
                 'vehicle':vehicle
               };
-              $('#loader').show();
               backgroundPostData(url,data,'deviceReassign',{alert:true});
               Reassignredirect();
           }
@@ -103,5 +107,4 @@ function Reassignredirect()
   $('#preview').hide();
   $('#count_data').hide();
   $('#dropdown_menu').hide();
-  $('#loader').hide();
 }

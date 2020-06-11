@@ -1,3 +1,6 @@
+$(document).ready(function () {
+  $(".loader_transfer").hide();
+});
 function getUrl(){
   return $('meta[name = "domain"]').attr('content');
 }
@@ -62,6 +65,7 @@ scanner.addListener('scan', function (content) {
             $('textarea[id="scanner"]').hide();
             $("#add_qr_button").hide();
             $("#reset_qr_button").hide();
+            $(".loader_transfer").show();
             var content_length = content.length;
             if(content_length >= 170 && content_length <= 180)
             {
@@ -92,6 +96,7 @@ scanner.addListener('scan', function (content) {
                       option.innerHTML = "IMEI:- "+device.gps.imei+" , Serial Number:- "+device.gps.serial_no;
                       select.appendChild(option);
                      });
+                      $(".loader_transfer").hide();
                       $('textarea[id="scanner"]').show();
                       $("#add_qr_button").show();
                       $("#reset_qr_button").show();
@@ -127,24 +132,28 @@ scanner.addListener('scan', function (content) {
                             toastr.success('Scanned Successfully');
                         }
                     }else if(res.status == 0){
+                      $(".loader_transfer").hide();
                       $('textarea[id="scanner"]').show();
                       $("#add_qr_button").show();
                       $("#reset_qr_button").show();
                       $('textarea[id="scanner"]').val(null);
                       toastr.error('Could not find this device');
                     }else if(res.status == 2){
+                      $(".loader_transfer").hide();
                       $('textarea[id="scanner"]').show();
                       $("#add_qr_button").show();
                       $("#reset_qr_button").show();
                       $('textarea[id="scanner"]').val(null);
                       toastr.error('Device not found in stock');
                     }else if(res.status == 3){
+                      $(".loader_transfer").hide();
                       $('textarea[id="scanner"]').show();
                       $("#add_qr_button").show();
                       $("#reset_qr_button").show();
                       $('textarea[id="scanner"]').val(null);
                       toastr.error('Device already transferred');
                     }else if(res.status == 4){
+                      $(".loader_transfer").hide();
                       $('textarea[id="scanner"]').show();
                       $("#add_qr_button").show();
                       $("#reset_qr_button").show();
@@ -154,6 +163,7 @@ scanner.addListener('scan', function (content) {
                   }
               });
             }else{
+              $(".loader_transfer").hide();
               $('textarea[id="scanner"]').show();
               $("#add_qr_button").show();
               $("#reset_qr_button").show();
@@ -164,8 +174,6 @@ scanner.addListener('scan', function (content) {
           else
           {
             $("#stock_add_transfer").val("");
-            $("#add_qr_button").show();
-            $("#reset_qr_button").show();
             $('textarea[id="scanner"]').val(null);
           }
         }else{

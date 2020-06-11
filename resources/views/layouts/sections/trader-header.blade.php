@@ -18,7 +18,7 @@
                                 <a class="dropdown-item" href="{{url('/gps-transfer-trader-end-user/create')}}">TRANSFER DEVICE</a> 
                                 <a class="dropdown-item" href="{{url('/gps-transferred-trader-to-end-user')}}">DEVICE TRANSFER LIST </a>  
                                 <a class="dropdown-item" href="{{url('/detailed-device-report')}}">DETAILED DEVICE REPORT  <span class="badge">New</span></a> 
-                                <a class="dropdown-item" href="{{url('/temporary-certificate-sub-dealer')}}">TEMPORARY INSTALLATION CERTIFICATE<span></span></a>                       
+                                <a class="dropdown-item" href="{{url('/temporary-certificate-sub-dealer')}}">TEMPORARY INSTALLATION CERTIFICATE<span class="badge">New</span></a>                       
                             </div>
                         </li>
                     

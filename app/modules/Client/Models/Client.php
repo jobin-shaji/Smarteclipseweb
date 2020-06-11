@@ -283,14 +283,14 @@ class Client extends Model
    */
   public function getCountOfClientsUnderSubDealer($trader_id)
   {
-    return self::select('trader_id')->where('trader_id',$trader_id)->count();
+    return self::select('id')->where('trader_id',$trader_id)->count();
   }
   /**
    * 
    */
-  public function getIdAndNameOfAllClients()
+  public function getIdNameAndMobileNoOfAllClients()
   {
-    return self::select('id','name')->get();
+    return self::select('id','name','user_id')->with('user:id,email,mobile')->get();
   }
 
 

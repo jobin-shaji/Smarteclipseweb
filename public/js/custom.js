@@ -108,6 +108,13 @@ $(function () {
         useCurrent: true,
         maxDate: new Date()
      });
+     $(".datepicker_temp" ).datetimepicker({
+        format: 'DD-MM-YYYY',
+        defaultDate: null,
+        useCurrent: true,
+        minDate: new Date(),
+        maxDate: new Date(currentYear, currentMonth+2, currentDate)
+    });
     $( ".datepicker_operations" ).datetimepicker({
         format: 'DD-MM-YYYY',
         defaultDate: null,
