@@ -49,7 +49,7 @@ class VehicleTrips extends Command
 
     public function handle()
     {
-        $vehicles = Vehicle::select('id','gps_id','client_id')->whereIn('id',[962,988,989,1016,1033])->get();
+        $vehicles = Vehicle::select('id','gps_id','client_id')->whereIn('id',[847,848,846,537])->get();
 
         foreach ($vehicles as $vehicle) 
         {
