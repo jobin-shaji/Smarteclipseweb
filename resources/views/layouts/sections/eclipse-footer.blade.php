@@ -10,31 +10,21 @@ RAYFLEET &nbsp;Version 0.1
 </div>
 </footer>
 <?php } 
-else if (strpos($url, $eclipse_key) == true) { ?>
-<footer class="footer"> 
-Developed by&nbsp; <a href="http://vstmobility.com" target="blank">VST Mobility Solutions pvt ltd</a>
-<div class="footer-bottom">
-ECLIPSE &nbsp;Version 0.1
-</div>
-</footer>
-<?php }
 else { ?>
-
 <footer class="footer"> 
 Developed by&nbsp; <a href="http://vstmobility.com" target="blank">VST Mobility Solutions pvt ltd</a>
 <div class="footer-bottom">
-<span id ="versionclick">Eclipse Version 
+<span id ="versionClick">Eclipse Version 
 <?php 
 if( file_exists('storage/releasenotes/latest.txt') )
-{
-  
-echo substr(file_get_contents('storage/releasenotes/latest.txt'),0,6);
-}
+    {
+  echo substr(file_get_contents('storage/releasenotes/latest.txt'),0,6);
+    }
 ?></span>
 </div>
 </footer>
-
 <?php } ?>
+
 
 <div class="modal fade" id="versionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 <div class="modal-dialog" role="document">
@@ -46,20 +36,21 @@ echo substr(file_get_contents('storage/releasenotes/latest.txt'),0,6);
 </button>
 </div>
 <div class="modal-body">
-<?php 
-
-$release_note_file_name = substr(file_get_contents('storage/releasenotes/latest.txt'), 0, 4).'.txt';
-if( file_exists('storage/releasenotes/'.$release_note_file_name) )
-{
-$file_contents = file_get_contents('storage/releasenotes/'.$release_note_file_name);
-echo '<h1>Version '.substr(file_get_contents('storage/releasenotes/latest.txt'), 0, 6).'</h1>';
-foreach( explode(',', $file_contents) as $each_features)
-{
-echo $each_features.'<br>';
-}
-}
-
-?>
+    <?php 
+    $release_note_file_name = substr(file_get_contents('storage/releasenotes/latest.txt'), 0, 6).'.txt';
+    //After removing white spaces
+    $release_note_name = preg_replace("/\s+/", "", $release_note_file_name);
+    
+    if( file_exists('storage/releasenotes/'.$release_note_name) )
+    {
+    $file_contents = file_get_contents('storage/releasenotes/'.$release_note_name);
+    echo '<h1>Version '.substr(file_get_contents('storage/releasenotes/latest.txt'), 0, 6).'</h1>';
+    foreach( explode(',', $file_contents) as $each_features)
+    {
+    echo $each_features.'<br>';
+    }
+    }
+    ?>
 </div>
 <div class="modal-footer">
 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

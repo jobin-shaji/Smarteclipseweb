@@ -1,5 +1,4 @@
-$("#versionclick").click(function(){
-
-    $('#versionModal').modal('show');
-    });
+$("#versionClick").click(function(){
+$('#versionModal').modal('show');
+});
     
