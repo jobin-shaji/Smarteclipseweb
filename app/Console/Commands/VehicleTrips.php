@@ -49,9 +49,9 @@ class VehicleTrips extends Command
 
     public function handle()
     {
-        // fetch vehicles based on priority and generate trip report 
+        //fetch vehicles based on priority and generate trip report 
         $vehicles = Vehicle::select('id','gps_id','client_id')
-                            ->whereIn('id',[854,693,694,919,680,682,672,956,974,979,996,1005,1017])
+                            ->whereIn('id',[962,988,989,1016,1033,847,848,846,537,854,693,694,919,680,682,672,956,974,979,996,1005,1017])
                             ->get();
         foreach ($vehicles as $vehicle) 
         {
@@ -69,24 +69,26 @@ class VehicleTrips extends Command
             }
         }
 
-        // generate trip report of rest of the vehicles 
-        // $vehicles = Vehicle::select('id','gps_id','client_id')->whereNotIn('id',[847,848,846,537])->get();
+        //generate trip report of rest of the vehicles 
+        $vehicles = Vehicle::select('id','gps_id','client_id')
+                            ->whereNotIn('id',[962,988,989,1016,1033,847,848,846,537,854,693,694,919,680,682,672,956,974,979,996,1005,1017])
+                            ->get();
 
-        // foreach ($vehicles as $vehicle) 
-        // {
-        //     if($vehicle->gps)
-        //     {               
-        //         try 
-        //         {
-        //             $this->processTripsofVehicle($vehicle->gps);
-        //         } 
-        //         catch (Exception $e) 
-        //         {
-        //             report($e);
-        //             continue;     
-        //         } 
-        //     }
-        // }
+        foreach ($vehicles as $vehicle) 
+        {
+            if($vehicle->gps)
+            {               
+                try 
+                {
+                    $this->processTripsofVehicle($vehicle->gps);
+                } 
+                catch (Exception $e) 
+                {
+                    report($e);
+                    continue;     
+                } 
+            }
+        }
     }
 
     /**
