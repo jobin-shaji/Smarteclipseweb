@@ -29,13 +29,13 @@ if( file_exists('storage/releasenotes/latest.txt') )
 <div class="modal fade" id="versionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 <div class="modal-dialog" role="document">
 <div class="modal-content">
-<div class="modal-header">
+<div class="modal-header modal-hed-new">
 <h5 class="modal-title" id="exampleModalLabel">What's new ?</h5>
 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 <span aria-hidden="true">&times;</span>
 </button>
 </div>
-<div class="modal-body">
+<div class="modal-body modal-body-subhead">
     <?php 
     $release_note_file_name = substr(file_get_contents('storage/releasenotes/latest.txt'), 0, 6).'.txt';
     //After removing white spaces
@@ -69,14 +69,26 @@ color: #444242;
 text-transform: uppercase;
 font-size: 13px;
 }
-
+.modal-hed-new{    
+  background: #daa102;
+  color: #fff;
+  padding: 10px 1rem;
+  }
+.modal-hed-new h5 {
+  font-size: 21px;
+  font-weight: 600;
+  }
 .footer-bottom{
-width: 13%;
-float: right;
+  width: 13%;
+  float: right;
 /*margin-left: 10%;*/
-color: #444242;
-text-transform: uppercase;
-font-size: 13px;
+  color: #444242;
+  text-transform: uppercase;
+  font-size: 13px;
+}
+.modal-body-subhead h1{
+  font-size: 19px;
+  font-weight: normal;
 }
 </style>
 
