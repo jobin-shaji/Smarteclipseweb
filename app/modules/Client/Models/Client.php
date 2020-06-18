@@ -293,6 +293,14 @@ class Client extends Model
     return self::select('id','name','user_id')->with('user:id,email,mobile')->get();
   }
 
+  /**
+   * 
+   * get user id of all clients
+   */
+  public function getUserIdOfAllClientsWithTrashedItems()
+  {
+    return self::withTrashed()->pluck('user_id');
+  }
 
 
   
