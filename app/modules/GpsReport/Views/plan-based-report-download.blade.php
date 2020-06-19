@@ -21,7 +21,7 @@ td, th {
 <body>
 @if(count($plan_based_details) != 0)
     <?php $plan_names = array_column(config('eclipse.PLANS'), 'NAME', 'ID'); ?>
-    <h4 style="position:absolute;top:130px;bottom:30px;">Plan Type:<br> <?php ( $plan_type == null ) ? $plan_type = 'All' : $plan_type = ucfirst(strtolower($plan_names[$plan_type])) ?>{{$plan_type}}</h4>
+    <h4 style="position:absolute;top:130px;bottom:30px;">Plan Type:<br> <?php ( $plan_type == null ) ? $plan_type = 'Freebies, Fundamental, Superior, Pro' : $plan_type = ucfirst(strtolower($plan_names[$plan_type])) ?>{{$plan_type}}</h4>
     <br><br><br>
     <h2 style="margin-left:250px;">Report Summary</h2>
     <table style="width: 100%;text-align: left;">
