@@ -24,5 +24,8 @@ return array(
       [ 'ID'=> 1, 'NAME' => 'FUNDAMENTAL'],
       [ 'ID'=> 2, 'NAME' => 'SUPERIOR'],
       [ 'ID'=> 3, 'NAME' => 'PRO']
-   ]
+   ],
+
+   //OFF LINE DURATION FOR DEVICE STATUS REPORT
+   'OFFLINE_DURATION'   => env("OFFLINE_DURATION")
 );

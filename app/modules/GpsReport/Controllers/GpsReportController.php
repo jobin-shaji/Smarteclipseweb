@@ -1246,4 +1246,15 @@ class GpsReportController extends Controller
         return view('GpsReport::device-status-report');
     }
 
+    /**
+     * 
+     * GPS Offline Report
+     */
+    public function deviceOfflineReport()
+    {
+        $offline_date_time = date('Y-m-d H:i:s',strtotime("".config('eclipse.OFFLINE_DURATION').""));
+        $offline_devices   = (new Gps())->getAllOfflineDevices($offline_date_time);
+        return view('GpsReport::device-offline-status-report', [ 'offline_devices' => $offline_devices ]);
+    }
+
 }

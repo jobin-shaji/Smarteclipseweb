@@ -244,4 +244,23 @@ class Gps extends Model
             'e_sim_number'  => $msisdn
         ]);
     }
+
+    /**
+     * 
+     * 
+     */
+    public function getAllOfflineDevices($offline_date_time)
+    {
+        return self::select('id','imei','serial_no')
+                    ->with('vehicleGps')
+                    ->where(function ($query) {
+                        $query->where('is_returned', '=', 0)
+                        ->orWhere('is_returned', '=', NULL);
+                    })
+                    ->where(function ($query) use($offline_date_time) {
+                        $query->where('device_time', '=' ,NULL)
+                        ->orWhere('device_time', '<=' ,$offline_date_time);
+                    })
+                    ->paginate(10);        
+    }
 }
