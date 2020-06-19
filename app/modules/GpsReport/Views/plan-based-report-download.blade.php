@@ -20,7 +20,8 @@ td, th {
 </head>
 <body>
 @if(count($plan_based_details) != 0)
-    <h4 style="position:absolute;top:130px;bottom:30px;">Plan Type:<br> {{$plan_type}}</h4>
+    <?php $plan_names = array_column(config('eclipse.PLANS'), 'NAME', 'ID'); ?>
+    <h4 style="position:absolute;top:130px;bottom:30px;">Plan Type:<br> <?php ( $plan_type == null ) ? $plan_type = 'All' : $plan_type = ucfirst(strtolower($plan_names[$plan_type])) ?>{{$plan_type}}</h4>
     <br><br><br>
     <h2 style="margin-left:250px;">Report Summary</h2>
     <table style="width: 100%;text-align: left;">
@@ -42,7 +43,7 @@ td, th {
 
     <br>
     <h2 style="margin-left:250px;">Report Details</h2>
-    <h3 style="text-align: center;">End User Details</h3>
+    <h3 style="text-align: left;">End User Details</h3>
 
     <?php $i = 1; ?>
     @foreach($plan_based_details as $each_data)

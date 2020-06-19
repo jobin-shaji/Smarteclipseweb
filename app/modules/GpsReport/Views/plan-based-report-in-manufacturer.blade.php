@@ -63,8 +63,10 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                                         <button class="btn btn-xs" style='margin-left: 1000px;'><i class='fa fa-download'></i>
                                             <a href="plan-based-report-downloads?type=pdf&plan={{$plan_type}}" style="color:white">Download Report</a>
                                         </button>
+
                                         <div class="row col-md-6 col-md-offset-2">
                                         <canvas id="pieChart"></canvas>
+                                            <span class = 'client_details_title'><b>End User Details</b></span>
                                             <table class="table table-bordered">
                                                 <thead class="thead-color">
                                                     <tr>
@@ -117,6 +119,13 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
         background-color: #59607b;
         border-color: #59607b;
     } 
+    .client_details_title
+    {
+        margin-top: 336px;
+        margin-left: -928px;
+        padding: 18px;
+        font-size: 18px;
+    }
     #pieChart
     {
         display: block !important;
