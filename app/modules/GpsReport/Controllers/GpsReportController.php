@@ -1155,5 +1155,86 @@ class GpsReportController extends Controller
         return $stock_details_of_sub_dealer;
         
     }
+    /**
+     * 
+     * PLAN BASED REPORT
+     */
+    public function planBasedReport(Request $request)
+    {
+        $plan_type                      = ( isset($request->plan) ) ? $request->plan : null;
+        $download_type                  = ( isset($request->type) ) ? $request->type : null;
+        $count_of_clients_under_plan    = [];
+        $client_user_ids                = (new Client())->getUserIdOfAllClientsWithTrashedItems();
+        $manufacturer_details           = (new Root())->getManufacturerDetails(\Auth::user()->root->id);
+        if($plan_type == '')
+        { 
+            $plan_based_details         = (new User())->getUserRoleDetailsOfAllClients($client_user_ids, $download_type);
+            if($download_type == 'pdf')
+            {
+                $all_plans                  = config('eclipse.PLANS');
+                foreach($all_plans as $each_plan)
+                {
+                    $get_count_of_clients_under_plan    = (new User())->getCountOfClientsUnderPlan($client_user_ids, $each_plan['ID']);
+                    $count_of_clients_under_plan[]      = [
+                        'name'  => $each_plan['NAME'],
+                        'count' => $get_count_of_clients_under_plan
+                    ];
+                }
+            }
+        }
+        else
+        {
+            $plan_based_details = (new User())->getUserRoleDetailsOfAllClients($client_user_ids, $download_type, $plan_type);
+            if($download_type == 'pdf')
+            {
+                $plan_names                         = array_column(config('eclipse.PLANS'), 'NAME', 'ID');
+                $get_count_of_clients_under_plan    = (new User())->getCountOfClientsUnderPlan($client_user_ids, $plan_type);
+                $count_of_clients_under_plan[]      = [
+                    'name'  => $plan_names[$plan_type],
+                    'count' => $get_count_of_clients_under_plan
+                ];
+            }
+        }
+        if($download_type == 'pdf')
+        {
+            $pdf                    =   PDF::loadView('GpsReport::plan-based-report-download',[ 'plan_based_details' => $plan_based_details, 'plan_type' => $plan_type, 'count_of_clients_under_plan' => $count_of_clients_under_plan, 'generated_by' => ucfirst(strtolower($manufacturer_details->name)).' '.'( Manufacturer )', 'generated_on' => date("d/m/Y h:m:s A") ]);
+            return $pdf->download('plan-based-report.pdf');
+        }
+        else
+        {
+            return view('GpsReport::plan-based-report-in-manufacturer',[ 'plan_based_details' => $plan_based_details, 'plan_type' => $plan_type] );
+        }
+    }
+
+    /**
+     * 
+     * 
+     */
+    public function planBasedReportGraph(Request $request)
+    {
+        $plan_type                      = ( isset($request->plan_type) ) ? $request->plan_type : null;
+        $download_type                  = ( isset($request->type) ) ? $request->type : null;
+        $plan_name                      = [];
+        $client_count                   = [];
+        $client_user_ids                = (new Client())->getUserIdOfAllClientsWithTrashedItems();
+        if($plan_type == '')
+        { 
+            $all_plans  = config('eclipse.PLANS');
+            foreach($all_plans as $each_plan)
+            {
+                $count_of_clients_under_plan    = (new User())->getCountOfClientsUnderPlan($client_user_ids, $each_plan['ID']);
+                $plan_name[]                    = $each_plan['NAME'];
+                $client_count[]                 = $count_of_clients_under_plan;
+            }
+        }
+        else
+        {
+            $plan_names                         = array_column(config('eclipse.PLANS'), 'NAME', 'ID');
+            $count_of_clients_under_plan        = (new User())->getCountOfClientsUnderPlan($client_user_ids,$plan_type);
+            $plan_name                          = [$plan_names[$plan_type]];
+            $client_count                       = [$count_of_clients_under_plan];
+        }
+        return response()->json(array('plan_name' =>$plan_name, 'client_count' =>$client_count ));
+    }
 
 }

@@ -1,6 +1,6 @@
 @extends('layouts.eclipse')
 @section('title')
-  Detailed Device Report
+    Detailed Device Report
 @endsection
 @section('content')  
 <section class="hilite-content">
@@ -15,7 +15,7 @@
                 <div class="box-part text-center" style="background-color:#ded8ca;">
                     <i class="fa fa-arrows-h icon" aria-hidden="true"></i>
                     <div class="title">
-                       <h4 style="font-size: 17px;">DEVICE TRANSFER REPORT</h4>
+                        <h4 style="font-size: 17px;">DEVICE TRANSFER REPORT</h4>
                     </div><br>
                     <a class='link' href="gps-transfer-report">View More</a>
                 </div>
@@ -24,7 +24,7 @@
                 <div class="box-part text-center" style="background-color:#ded8ca;">
                     <i class="fa fa-arrows-h icon" aria-hidden="true"></i>
                     <div class="title">
-                       <h4 style="font-size: 17px;">DEVICE RETURN REPORT</h4>
+                        <h4 style="font-size: 17px;">DEVICE RETURN REPORT</h4>
                     </div><br>
                     <a class='link' href="gps-returned-report">View More</a>
                 </div>
@@ -33,9 +33,18 @@
                 <div class="box-part text-center" style="background-color:#ded8ca;">
                     <i class="fa fa-arrows-h icon" aria-hidden="true"></i>
                     <div class="title">
-                       <h4 style="font-size: 17px;">DEVICE STOCK REPORT</h4>
+                        <h4 style="font-size: 17px;">DEVICE STOCK REPORT</h4>
                     </div><br>
                     <a class='link' href="gps-stock-report">View More</a>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12" style="padding-left: 10px;">
+                <div class="box-part text-center" style="background-color:#ded8ca;">
+                    <i class="fa fa-arrows-h icon" aria-hidden="true"></i>
+                    <div class="title">
+                        <h4 style="font-size: 17px;">PLAN BASED REPORT</h4>
+                    </div><br>
+                    <a class='link' href="plan-based-report">View More</a>
                 </div>
             </div>
         </div>

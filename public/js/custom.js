@@ -391,6 +391,10 @@ function backgroundPostData(url, data, callBack, options) {
 
                     returnedGpsManufacturedChart(res);
                 }
+                else if(callBack =='planBasedChart'){
+
+                    planBasedChart(res);
+                }
                 else if(callBack =='subDealerGpsSale'){
 
                     subDealerGpsSale(res);

@@ -78,5 +78,34 @@ class User extends Authenticatable
     public function operations()
     {
         return $this->hasone('App\Modules\Operations\Models\Operations','user_id','id');
-    } 
+    }
+    
+    /**
+     * 
+     * 
+     */
+    public function getUserRoleDetailsOfAllClients($client_user_ids, $download_type = null, $plan_type = null)
+    {
+        $query = self::select('id','role')
+                ->whereIn('id', $client_user_ids)
+                ->with('client');
+        ( $plan_type == null ) ? $query : $query->where('role', $plan_type);
+        if( $download_type == null)
+        {
+            return $query->paginate(10);
+        }
+        else
+        {
+            return $query->get();
+        }
+    }
+
+    /**
+     * 
+     * 
+     */
+    public function getCountOfClientsUnderPlan($client_user_ids, $plan_type)
+    {
+        return $query = self::select('id')->whereIn('id', $client_user_ids)->where('role', $plan_type)->count();
+    }
 }

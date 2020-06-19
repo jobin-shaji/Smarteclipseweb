@@ -1082,6 +1082,7 @@ public function selectTrader(Request $request)
                 'mobile' => $request->mobile_number,
                 'status' => 1,
                 'password' => bcrypt($request->password),
+                'role' => 0,
             ]);
 
             if($trader_id == null)
