@@ -23,3 +23,15 @@ Route::group(['middleware' => ['web','auth','role:root|dealer|sub_dealer|trader'
     Route::get('/plan-based-report-downloads','GpsReportController@planBasedReport')->name('plan-based-report-downloads');
 
 });
+
+Route::group(['middleware' => ['web','auth','role:operations'] , 'namespace' => 'App\Modules\GpsReport\Controllers' ] , function() {	
+    Route::get('/device-status-report','GpsReportController@deviceStatusReport')->name('device-status-report');
+
+    //online reports
+    Route::get('/device-online-report','GpsReportController@deviceOnlineReport')->name('device-online-report');
+
+
+    //offline reports
+    Route::get('/device-offline-report','GpsReportController@deviceOfflineReport')->name('device-offline-report');
+    
+});

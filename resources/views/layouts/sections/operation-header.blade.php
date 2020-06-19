@@ -31,6 +31,7 @@
                 <a class="dropdown-item" href="{{url('/gps/stock')}}">ADD STOCK</a> 
                 <a class="dropdown-item" href="{{url('/gps-records')}}">DEVICE PROCESSED DAILY RECORDS</a>
                 <a class="dropdown-item" href="{{url('/gps-unprocessed-records')}}">DEVICE UNPROCESSED DAILY RECORDS</a>
+                <a class="dropdown-item" href="{{url('/device-status-report')}}"> DEVICE STATUS REPORT  <span class="badge">New</span></a>
             </div>
         </li>      
         <li class="nav-item dropdown">
