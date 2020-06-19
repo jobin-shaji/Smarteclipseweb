@@ -1237,4 +1237,13 @@ class GpsReportController extends Controller
         return response()->json(array('plan_name' =>$plan_name, 'client_count' =>$client_count ));
     }
 
+    /**
+     * 
+     * DEVICE STATUS REPORT
+     */
+    public function deviceStatusReport()
+    {
+        return view('GpsReport::device-status-report');
+    }
+
 }
