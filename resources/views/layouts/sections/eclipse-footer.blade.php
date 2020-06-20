@@ -36,8 +36,10 @@ if( file_exists('storage/releasenotes/latest.txt') )
 </button>
 </div>
 <div class="modal-body modal-body-subhead">
-    <?php 
+    <?php
+    if(file_exists('storage/releasenotes/latest.txt')) {
     $release_note_file_name = substr(file_get_contents('storage/releasenotes/latest.txt'), 0, 6).'.txt';
+    
     //After removing white spaces
     $release_note_name = preg_replace("/\s+/", "", $release_note_file_name);
     
@@ -50,6 +52,8 @@ if( file_exists('storage/releasenotes/latest.txt') )
     echo $each_features.'<br>';
     }
     }
+    }
+
     ?>
 </div>
 <div class="modal-footer">
