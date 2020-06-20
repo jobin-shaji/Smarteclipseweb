@@ -25,7 +25,7 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                                 <div class="panel panel-default">
                                     <div >
                                         <div class="panel-body">
-                                            <form method="get" action="{{route('plan-based-report')}}">
+                                            <form method="get" action="{{route('device-offline-report')}}">
                                             {{csrf_field()}}
                                                 <div class="panel-heading">
                                                 <div class="cover_div_search">
@@ -35,10 +35,10 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                                                                 <label> Device Type</label>
                                                                 <select class="form-control select2"  name="device_type" data-live-search="true" title="Select Device Type" id='device_type'  required>
                                                                     <option disabled>Select Device Type</option>
-                                                                    <option value = '0'>All</option>
-                                                                    <option value = '1'>Tagged Devices</option>
-                                                                    <option value = '2'>Untagged Devices</option>
-                                                                    <option value = '3'>Not Yet Activated</option>
+                                                                    <option value = ''  @if($device_type==''){{"selected"}} @endif>All</option>
+                                                                    <option value = '1' @if($device_type=='1'){{"selected"}} @endif>Tagged Devices</option>
+                                                                    <option value = '2' @if($device_type=='2'){{"selected"}} @endif>Untagged Devices</option>
+                                                                    <option value = '3' @if($device_type=='3'){{"selected"}} @endif>Not Yet Activated</option>
                                                                 </select>
                                                                 @if ($errors->has('device_type'))
                                                                     <span class="help-block">
@@ -49,11 +49,11 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                                                         </div>
                                                         <div class="col-lg-3 col-md-3"> 
                                                             <div class="form-group">                      
-                                                                <label> Offline Duration In Hours</label>
-                                                                <input type = 'text' name ='' id = '' >
-                                                                @if ($errors->has('plan'))
+                                                                <label> Offline Duration (In hours)</label>
+                                                                <input type = 'number' min='1' max='720' style='width: 255px;' value = "{{$offline_duration}}" name ='offline_duration' id = 'offline_duration'>
+                                                                @if ($errors->has('offline_duration'))
                                                                     <span class="help-block">
-                                                                        <strong class="error-text">{{ $errors->first('plan') }}</strong>
+                                                                        <strong class="error-text">{{ $errors->first('offline_duration') }}</strong>
                                                                     </span>
                                                                 @endif
                                                             </div>
@@ -70,6 +70,10 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                                             </form> 
                                         </div> 
                                         @if(count($offline_devices) != 0)
+                                            <button class="btn btn-xs" style='margin-left: 1000px;margin-bottom: 20px;'><i class='fa fa-download'></i>
+                                                <a href="device-offline-report-downloads?type=pdf&device_type={{$device_type}}&offline_duration={{$offline_duration}}" style="color:white">Download Report</a>
+                                            </button>
+                                        @endif
                                         <div class="row col-md-6 col-md-offset-2">
                                             <table class="table table-bordered">
                                                 <thead class="thead-color">
@@ -80,10 +84,16 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                                                         <th>End User Name</th>
                                                         <th>Vehicle Name</th>
                                                         <th>Registration Number</th>
+                                                        <th>Last Packet Received On</th>
                                                         <th></th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
+                                                    @if(count($offline_devices) == 0)
+                                                        <tr>
+                                                            <td colspan='8' style='text-align: center;'><b>No Data Available</b></td>
+                                                        </tr>
+                                                    @endif
                                                     @foreach($offline_devices as $each_data)
                                                     <tr>
                                                         <td>{{ (($perPage * ($page - 1)) + $loop->iteration) }}</td>
@@ -92,14 +102,14 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                                                         <td><?php ( isset($each_data->vehicleGps->vehicle->client->name) ) ? $client_name = $each_data->vehicleGps->vehicle->client->name : $client_name='-NA-' ?>{{$client_name}}</td>
                                                         <td><?php ( isset($each_data->vehicleGps->vehicle->name) ) ? $vehicle_name = $each_data->vehicleGps->vehicle->name : $vehicle_name='-NA-' ?>{{$vehicle_name}}</td>
                                                         <td><?php ( isset($each_data->vehicleGps->vehicle->register_number) ) ? $register_number = $each_data->vehicleGps->vehicle->register_number : $register_number='-NA-' ?>{{$register_number}}</td>
-                                                        <td></td>
+                                                        <td><?php ( isset($each_data->device_time) ) ? $device_time = $each_data->device_time : $device_time='-Not Yet Activated-' ?>{{$device_time}}</td>
+                                                        <td><a href="{{route('device-offline-report-view', Crypt::encrypt($each_data->id))}}" class='btn btn-xs btn-success' data-toggle='tooltip' title='View More Details'><i class='fa fa-eye'></i> View</a></td>
                                                     </tr>
                                                     @endforeach
                                                 </tbody>
                                             </table>
                                             {{ $offline_devices->appends(Request::all())->links() }}
                                         </div>
-                                        @endif
                                     </div>
                                 </div>
                             </div>

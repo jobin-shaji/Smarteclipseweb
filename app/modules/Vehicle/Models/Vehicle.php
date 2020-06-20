@@ -296,4 +296,17 @@ class Vehicle extends Model
                   ->withTrashed()
                   ->get();
     }
+
+    /**
+     * 
+     * 
+     */
+    public function getAllVehiclesWithUnreturnedGps()
+    {
+      return self::where(function ($query) {
+                      $query->where('is_returned', '=', 0)
+                      ->orWhere('is_returned', '=', NULL);
+                  })
+                  ->pluck('gps_id');
+    }
 }

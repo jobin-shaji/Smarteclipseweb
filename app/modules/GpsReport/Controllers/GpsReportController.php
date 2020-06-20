@@ -12,6 +12,9 @@ use App\Modules\Root\Models\Root;
 use App\Modules\Dealer\Models\Dealer;
 use App\Modules\SubDealer\Models\SubDealer;
 use App\Modules\Trader\Models\Trader;
+use App\Modules\Operations\Models\Operations;
+use App\Modules\Vehicle\Models\Vehicle;
+use App\Modules\Vehicle\Models\VehicleGps;
 use Illuminate\Support\Facades\Crypt;
 use App\Http\Traits\UserTrait;
 use DataTables;
@@ -25,6 +28,16 @@ class GpsReportController extends Controller
      * 
      */
     use UserTrait;
+
+    /**
+     * 
+     * 
+     */
+    public function __construct()
+    {
+        //ini_set('max_execution_time', '300'); //300 seconds = 5 minutes
+    }
+
     /**
      * 
      * 
@@ -1250,11 +1263,55 @@ class GpsReportController extends Controller
      * 
      * GPS Offline Report
      */
-    public function deviceOfflineReport()
+    public function deviceOfflineReport(Request $request)
     {
-        $offline_date_time = date('Y-m-d H:i:s',strtotime("".config('eclipse.OFFLINE_DURATION').""));
-        $offline_devices   = (new Gps())->getAllOfflineDevices($offline_date_time);
-        return view('GpsReport::device-offline-status-report', [ 'offline_devices' => $offline_devices ]);
+        $device_type            = ( isset($request->device_type) ) ? $request->device_type : null;
+        $offline_duration       = ( isset($request->offline_duration) ) ? $request->offline_duration : null;
+        $download_type          = ( isset($request->type) ) ? $request->type : null;
+        $logged_user_details    = (new Operations())->getOperatorDetails(\Auth::user()->operations->id);
+
+        if($offline_duration == null )
+        {
+            $offline_duration_in_minutes = '-'. config('eclipse.OFFLINE_DURATION');
+        }
+        else
+        {
+            $offline_duration_in_minutes = '-'. $offline_duration * 60 .' minutes';
+        }
+        $offline_date_time = date('Y-m-d H:i:s',strtotime("".$offline_duration_in_minutes.""));
+        if($device_type == null)
+        {
+            $offline_devices   = (new Gps())->getAllOfflineDevices($offline_date_time, $device_type, $download_type);
+        }
+        else
+        {
+            $gps_id_of_active_vehicles = null;
+            if( $device_type == '1' || $device_type == '2')
+            {
+                $gps_id_of_active_vehicles = (new Vehicle())->getAllVehiclesWithUnreturnedGps();
+            }
+            $offline_devices   = (new Gps())->getAllOfflineDevices($offline_date_time, $device_type, $download_type , $gps_id_of_active_vehicles);
+        }
+        if( $download_type == 'pdf' )
+        {
+            $pdf    =   PDF::loadView('GpsReport::device-offline-status-report-download',[ 'offline_devices' => $offline_devices, 'offline_duration' => $offline_duration, 'device_type' => $device_type, 'generated_by' => ucfirst(strtolower($logged_user_details->root->name)).' '.'( Manufacturer )', 'user_generated_by' => $logged_user_details->name, 'generated_on' => date("d/m/Y h:i:s A") ]);
+            return $pdf->download('device-offline-status-report.pdf');
+        }
+        else
+        {
+            return view('GpsReport::device-offline-status-report', [ 'offline_devices' => $offline_devices, 'offline_duration' => $offline_duration, 'device_type' => $device_type ]);
+        }
+    }
+
+    /**
+     * 
+     * 
+     */
+    public function deviceOfflineReportDetailedView(Request $request)
+    {
+        $gps_id      = Crypt::decrypt($request->id);
+        $gps_details = (new Gps())->getGpsDetailswithVehicleData($gps_id);
+        return view('GpsReport::device-offline-status-report-view', [ 'gps_details' => $gps_details ]);
     }
 
 }

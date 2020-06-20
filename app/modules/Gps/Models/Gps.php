@@ -249,18 +249,55 @@ class Gps extends Model
      * 
      * 
      */
-    public function getAllOfflineDevices($offline_date_time)
+    public function getAllOfflineDevices($offline_date_time, $device_type = null,$download_type = null , $gps_id_of_active_vehicles = null)
     {
-        return self::select('id','imei','serial_no')
+        $result =   self::select('id','imei','serial_no','device_time')
                     ->with('vehicleGps')
+                    ->with('gpsStock')
                     ->where(function ($query) {
                         $query->where('is_returned', '=', 0)
                         ->orWhere('is_returned', '=', NULL);
-                    })
-                    ->where(function ($query) use($offline_date_time) {
-                        $query->where('device_time', '=' ,NULL)
-                        ->orWhere('device_time', '<=' ,$offline_date_time);
-                    })
-                    ->paginate(10);        
+                    });
+                    if( $device_type == '1' )
+                    {
+                        $result->whereIn('id', $gps_id_of_active_vehicles)
+                                ->where('device_time', '<=' ,$offline_date_time);
+                    }
+                    else if( $device_type == '2' )
+                    {
+                        $result->whereNotIn('id', $gps_id_of_active_vehicles)
+                                ->where('device_time', '<=' ,$offline_date_time);
+                    }
+                    else if( $device_type == '3' )
+                    {
+                        $result->where('device_time', '=' ,NULL);
+                    }
+                    else
+                    {
+                        $result->where(function ($query) use($offline_date_time) {
+                            $query->where('device_time', '=' ,NULL)
+                            ->orWhere('device_time', '<=' ,$offline_date_time);
+                        });
+                    }
+        if($download_type == 'pdf')
+        {
+            return $result->get();   
+        }else
+        {
+            return $result->paginate(10);   
+        }     
+    }
+
+    /**
+     * 
+     * 
+     */
+    public function getGpsDetailswithVehicleData($gps_id)
+    {
+        return self::select('id','imei','serial_no','device_time')
+                    ->with('gpsStock')
+                    ->with('vehicleGps')
+                    ->where('id',$gps_id)
+                    ->first();
     }
 }
