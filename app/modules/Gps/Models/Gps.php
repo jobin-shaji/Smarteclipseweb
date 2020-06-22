@@ -244,6 +244,62 @@ class Gps extends Model
             'e_sim_number'  => $msisdn
         ]);
     }
+
+    /**
+     * 
+     * 
+     */
+    public function getAllOfflineDevices($offline_date_time, $device_type = null,$download_type = null , $gps_id_of_active_vehicles = null)
+    {
+        $result =   self::select('id','imei','serial_no','device_time')
+                    ->with('vehicleGps')
+                    ->with('gpsStock')
+                    ->where(function ($query) {
+                        $query->where('is_returned', '=', 0)
+                        ->orWhere('is_returned', '=', NULL);
+                    });
+                    if( $device_type == config("eclipse.DEVICE_STATUS.TAGGED") )
+                    {
+                        $result->whereIn('id', $gps_id_of_active_vehicles)
+                                ->where('device_time', '<=' ,$offline_date_time);
+                    }
+                    else if( $device_type == config("eclipse.DEVICE_STATUS.UNTAGGED") )
+                    {
+                        $result->whereNotIn('id', $gps_id_of_active_vehicles)
+                                ->where('device_time', '<=' ,$offline_date_time);
+                    }
+                    else if( $device_type == config("eclipse.DEVICE_STATUS.NOT_YET_ACTIVATED") )
+                    {
+                        $result->where('device_time', '=' ,NULL);
+                    }
+                    else
+                    {
+                        $result->where(function ($query) use($offline_date_time) {
+                            $query->where('device_time', '=' ,NULL)
+                            ->orWhere('device_time', '<=' ,$offline_date_time);
+                        });
+                    }
+        if($download_type == 'pdf')
+        {
+            return $result->get();   
+        }else
+        {
+            return $result->paginate(10);   
+        }     
+    }
+
+    /**
+     * 
+     * 
+     */
+    public function getGpsDetailswithVehicleData($gps_id)
+    {
+        return self::select('id','imei','serial_no','device_time')
+                    ->with('gpsStock')
+                    ->with('vehicleGps')
+                    ->where('id',$gps_id)
+                    ->first();
+    }
     public function getDeviceOnlineReport($online_limit_date,$current_time,$vehicle_status=null,$device_status=null,$gps_ids=null)
     {
         $query = self::select( 
@@ -275,13 +331,12 @@ class Gps extends Model
     public function getDeviceOnlineCount($online_limit_date,$current_time)
     {
         return $query = self::select('id')
-       ->whereBetween('device_time',[$online_limit_date,$current_time])   
+        ->whereBetween('device_time',[$online_limit_date,$current_time])   
         ->where(function ($query) {
             $query->where('is_returned', '=', 0)
             ->orWhere('is_returned', '=', NULL);
         })
-       ->count();
-       
+        ->count();
     }
     public function getDeviceOfflineCount($online_limit_date)
     {
@@ -295,7 +350,6 @@ class Gps extends Model
             ->orWhere('device_time', '<=', $online_limit_date);
         })
         ->count();
-       
     }
     
 }

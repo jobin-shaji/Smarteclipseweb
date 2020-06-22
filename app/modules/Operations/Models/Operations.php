@@ -13,5 +13,22 @@ class Operations extends Model
 	public function user()
     {
     	return $this->belongsTo('App\Modules\User\Models\User','user_id','id')->withTrashed();
+	}
+
+	/**
+	 * 
+	 * 
+	 */
+    public function root(){
+        return $this->hasOne('App\Modules\Root\Models\Root', 'id', 'root_id');
     }
+	
+	/**
+	 * 
+	 * 
+	 */
+	public function getOperatorDetails($operator_id)
+	{
+		return self::select('id','name','root_id')->where('id',$operator_id)->with('root')->first();
+	}
 }

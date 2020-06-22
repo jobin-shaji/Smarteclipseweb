@@ -296,6 +296,11 @@ class Vehicle extends Model
                   ->withTrashed()
                   ->get();
     }
+
+    /**
+     * 
+     * 
+     */
     public function getAllVehiclesWithUnreturnedGps()
     {
       return self::where(function ($query) {

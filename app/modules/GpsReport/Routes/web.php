@@ -34,5 +34,7 @@ Route::group(['middleware' => ['web','auth','role:operations'] , 'namespace' => 
 
     //offline reports
     Route::get('/device-offline-report','GpsReportController@deviceOfflineReport')->name('device-offline-report');
+    Route::get('/device-offline-report-downloads','GpsReportController@deviceOfflineReport')->name('device-offline-report-downloads');
+    Route::get('/device-offline-report/{id}/view','GpsReportController@deviceOfflineReportDetailedView')->name('device-offline-report-view');
     
 });
