@@ -1330,7 +1330,26 @@ class GpsReportController extends Controller
             return view('GpsReport::device-offline-status-report', [ 'offline_devices' => $offline_devices, 'offline_duration' => $offline_duration, 'device_type' => $device_type ]);
         }
     }
-
+    public function getModeAttribute($mode)
+    {
+        switch( $mode )
+        {
+            case $mode == 'M':
+                $device_status = '#84b752';
+                break;
+            case $mode == 'H':
+                $device_status = '#69b4b9';
+                break;
+            case $mode == 'S':
+                $device_status = '#858585';
+                break;
+            default:
+                $device_status = 'Invalid Mode';
+                break;
+        }
+        // response
+        return $device_status;
+    }
     /**
      * 
      * 
@@ -1338,13 +1357,114 @@ class GpsReportController extends Controller
     public function deviceReportDetailedView(Request $request)
     {
         $imei               = Crypt::decrypt($request->imei);
-        $gps_details        = (new Gps())->getGpsDetailswithVehicleData($imei);
+        //get offline time limit
         $offline_date_time  = date('Y-m-d H:i:s',strtotime("".'-'. config('eclipse.OFFLINE_DURATION').""));
-       
-        ( $gps_details->device_time <= $offline_date_time ) ? $gps_details->device_status = '#c41900' : $gps_details->device_status = $gps_details->mode ;
+        //get gps details based on imei
+        $gps_details        = (new Gps())->getGpsDetailswithVehicleData($imei);
+        if( $gps_details->device_time <= $offline_date_time ) 
+        {
+            $gps_details->device_status = '#c41900';
+            $gps_details->mode          = 'Offline ('.$gps_details->mode.')';
+        }
+        else
+        { 
+            switch( $gps_details->mode )
+            {
+                case 'M':
+                    $gps_details->device_status = '#84b752';
+                    $gps_details->mode          = 'Motion';
+                    break;
+                case 'H':
+                    $gps_details->device_status = '#69b4b9';
+                    $gps_details->mode          = 'Halt';
+                    break;
+                case 'S':
+                    $gps_details->device_status = '#858585';
+                    $gps_details->mode          = 'Sleep';
+                    break;
+                default:
+                    $gps_details->device_status = '#c41900';
+                    $gps_details->mode          = 'Offline';
+                    break;
+            }
+        }
+        //SIGNAL STRENGTH
+        if ($gps_details->gsm_signal_strength >= 19 ) 
+        {
+            $gps_details->gsm_signal_strength = "GOOD";
+        }
+        else if ($gps_details->gsm_signal_strength < 19 && $gps_details->gsm_signal_strength >= 13 ) 
+        {
+            $gps_details->gsm_signal_strength = "AVERAGE";
+        }
+        else if ($gps_details->gsm_signal_strength <= 12 )
+        {
+            $gps_details->gsm_signal_strength = "POOR";
+        }
+        else
+        {
+            $gps_details->gsm_signal_strength = "LOST";
+        }
+        // AC STATUS
+        if( $gps_details->ac_status == 1 )
+        {
+            $gps_details->ac_status = "ON";
+        }
+        else if( $gps_details->ac_status == 0 )
+        {
+            $gps_details->ac_status = "OFF";
+        }
+        //IGNITION
+        if( $gps_details->ignition == 1 )
+        {
+            $gps_details->ignition = "ON";
+        }
+        else if( $gps_details->ignition == 0 )
+        {
+            $gps_details->ignition = "OFF";
+        }
+        //MAIN POWER STATUS
+        if( $gps_details->main_power_status == 1) 
+        {
+            $gps_details->main_power_status  = "CONNECTED";
+        }
+        else if( $gps_details->main_power_status == 0) 
+        {
+            $gps_details->main_power_status  = "DISCONNECTED";
+        }
+        //TILT
+        if( $gps_details->tilt_status == 1) 
+        {
+            $gps_details->tilt_status  = "YES";
+        }
+        else
+        {
+            $gps_details->tilt_status  = "NO";
+        }
+        //OVER SPEED
+        if( $gps_details->overspeed_status == 1) 
+        {
+            $gps_details->overspeed_status  = "YES";
+        }
+        else
+        {
+            $gps_details->overspeed_status  = "NO";
+        }
+        //EMERGENCY
+        if( $gps_details->emergency_status == 1) 
+        {
+            $gps_details->emergency_status  = "YES";
+        }
+        else
+        {
+            $gps_details->emergency_status  = "NO";
+        }
+        
 
         $last_location      = $this->getPlacenameFromLatLng($gps_details->lat,$gps_details->lon);
-        $last_location      = "gfhghghgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg";
+        $last_location      = "HMT Colony
+        North Kalamassery, Kalamassery
+        Kochi, Kerala 683503";
         return view('GpsReport::device-detailed-report-view', [ 'gps_details' => $gps_details, 'last_location' => $last_location ]);
     }
 

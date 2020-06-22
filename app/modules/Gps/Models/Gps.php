@@ -292,31 +292,6 @@ class Gps extends Model
      * 
      * 
      */
-    public function getModeAttribute($mode)
-    {
-        switch( $mode )
-        {
-            case $mode == 'M':
-                $device_status = '#84b752';
-                break;
-            case $mode == 'H':
-                $device_status = '#69b4b9';
-                break;
-            case $mode == 'S':
-                $device_status = '#858585';
-                break;
-            default:
-                $device_status = 'Invalid Mode';
-                break;
-        }
-        // response
-        return $device_status;
-    }
-
-    /**
-     * 
-     * 
-     */
     public function getGpsDetailswithVehicleData($imei)
     {
         return self::with('gpsStock')
