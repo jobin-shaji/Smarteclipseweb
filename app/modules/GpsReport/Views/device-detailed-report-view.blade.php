@@ -45,49 +45,58 @@
                 </tr>                
                 </thead>
             </table> 
-            <table class="table table-borderless"  style='width: 365px; margin-left: 515px;border: 0px solid transparent' >
+            <table class="table table-borderless"  style='border: 0px solid transparent' >
                 <thead>
                 <tr class="success" >
+                    <td ></td>
+                    <td ></td>
+                    <td ></td>
+                    <td ></td>
+                    <td ></td>
                     <td ><b>Tilt</b></td>
                     <td><b>OverSpeed</b></td>               
-                    <td><b>Emergency</b></td>           
+                    <td><b>Emergency</b></td> 
+                    <td ></td>
+                    <td ></td>
+                    <td ></td>
+                    <td ></td>   
+                    <td ></td>       
                 </tr>                
                 </thead>
             </table>               
         </div>
         <div class="container">
-            <ul class="nav nav-pills">
+            <ul class="nav nav-pills" id="buttons">
                 <li class="active"><a data-toggle="pill" href="#home">Vehicle Details</a></li>
                 <li><a data-toggle="pill" href="#menu1">Device Details</a></li>
                 <li><a data-toggle="pill" href="#menu2"> Alerts</a></li>
             </ul> 
             <div class="tab-content">
             </br>
-                <div id="home" class="tab-pane fade in active">
-              
-                    <table class="table table-borderless"  style='border: 0px solid transparent' >
+                <div id="home" class="tab-pane fade in active">              
+                    <table class="table table-borderless "  style='border: 0px solid transparent' >
                         <thead>
-                        <tr class="success" >
-                            <td>Tilt</td>
-                            <td>OverSpeed</td>
-                        </tr>               
-                            <td>Emergency</td> 
-                            <td >Tilt</td>          
-                        </tr>   
-                        <tr class="success" >
-                            <td >Tilt</td>
-                            <td>OverSpeed</td>
-                        </tr>               
-                            <td>Emergency</td> 
-                            <td >Tilt</td>          
-                        </tr>   
-                        <tr class="success" >
-                            <td >Tilt</td>
-                            <td>OverSpeed</td>
-                        </tr>               
-                            <td>Emergency</td> 
-                            <td >Tilt</td>          
-                        </tr>                
+                            <tr class="success" >
+                                <td>Tilt</td>
+                                <td>OverSpeed</td>
+                            </tr>               
+                                <td>Emergency</td> 
+                                <td >Tilt</td>          
+                            </tr>   
+                            <tr class="success" >
+                                <td >Tilt</td>
+                                <td>OverSpeed</td>
+                            </tr>               
+                                <td>Emergency</td> 
+                                <td >Tilt</td>          
+                            </tr>   
+                            <tr class="success" >
+                                <td >Tilt</td>
+                                <td>OverSpeed</td>
+                            </tr>               
+                                <td>Emergency</td> 
+                                <td >Tilt</td>          
+                            </tr>                
                         </thead>
                     </table>   
                 </div>
@@ -159,11 +168,28 @@ table, th, td {
   border: 1px solid black;
 }
 tr:hover {background-color: #D5D4D5;}
+#buttons li {
+  float: left;
+  list-style: none;
+  text-align: center;
+  background-color: #65A6D8;
+  margin-right: 30px;
+  width: 150px;
+  line-height: 60px;
+}
+#buttons li a {
+  text-decoration: none;
+  color: #FFFFFF;
+  display: block;
+}
 
+#buttons li a:hover {
+  text-decoration: none;
+  color: #000000;
+  background-color: #33B5E5;
+}
 </style>
 @section('script')
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
- 
     <script src="{{asset('js/gps/device-detailed-view.js')}}"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
