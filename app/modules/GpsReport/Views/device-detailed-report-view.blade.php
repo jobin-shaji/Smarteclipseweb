@@ -33,24 +33,24 @@
                 <table class="table table-borderless" style='border: 50px solid transparent' >
                 <thead>
                 <tr class="success" >
-                    <td>Mode</td>
-                    <td>Network Status</td>               
-                    <td>Fuel Status</td>
-                    <td>Speed</td>             
-                    <td>Main Power</td>
-                    <td>Ingnition ON/OFF</td>               
-                    <td>Gsm </td>
-                    <td>GPS FIX</td>
-                    <td>A/C Status</td>               
+                    <td><b>Mode</b></td>
+                    <td><b>Network Status</b></td>               
+                    <td><b>Fuel Status</b></td>
+                    <td><b>Speed</b></td>             
+                    <td><b>Main Power</b></td>
+                    <td><b>Ignition ON/OFF</b></td>               
+                    <td><b>Gsm </b></td>
+                    <td><b>GPS FIX</b></td>
+                    <td><b>A/C Status</b></td>               
                 </tr>                
                 </thead>
             </table> 
             <table class="table table-borderless"  style='width: 365px; margin-left: 515px;border: 0px solid transparent' >
                 <thead>
                 <tr class="success" >
-                    <td >Tilt</td>
-                    <td>OverSpeed</td>               
-                    <td>Emergency</td>           
+                    <td ><b>Tilt</b></td>
+                    <td><b>OverSpeed</b></td>               
+                    <td><b>Emergency</b></td>           
                 </tr>                
                 </thead>
             </table>               
@@ -68,7 +68,7 @@
                     <table class="table table-borderless"  style='border: 0px solid transparent' >
                         <thead>
                         <tr class="success" >
-                            <td >Tilt</td>
+                            <td>Tilt</td>
                             <td>OverSpeed</td>
                         </tr>               
                             <td>Emergency</td> 
