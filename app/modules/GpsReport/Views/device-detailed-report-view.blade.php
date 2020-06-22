@@ -29,54 +29,34 @@
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                         <span><b>Last Packet Received On :</b> <?php ( isset($gps_details->device_time) ) ? $device_time = date('d/m/Y h:i:s A', strtotime($gps_details->device_time)): $device_time='-Not Yet Activated-' ?> {{$device_time}}<span>
                     </div>
-                </div>
-                
-            </div>
-
-
+                </div> 
+                <table class="table table-borderless" style='border: 50px solid transparent' >
+                <thead>
+                <tr class="success" >
+                    <td >IMEI</td>
+                    <td>Network Status</td>               
+                    <td>Fuel Status</td>
+                    <td>Speed</td>             
+                    <td>Main Power</td>
+                    <td>Ingnition ON/OFF</td>               
+                    <td>Gsm </td>
+                    <td>GPS FIX</td>
+                    <td>A/C Status</td>               
+                </tr>                
+                </thead>
+            </table> 
+            <table class="table table-borderless"  style='width: 365px; margin-left: 515px;border: 0px solid transparent' >
+                <thead>
+                <tr class="success" >
+                    <td >Tilt</td>
+                    <td>OverSpeed</td>               
+                    <td>Emergency</td>           
+                </tr>                
+                </thead>
+            </table>   
+        </div>
             <!-- table section -->
-            <!-- <table class="table" style='width:700px;'>
-                <tbody>
-                <tr class="success">
-                    <td><b>IMEI </b></td>
-                    <td><?php ( isset($gps_details->imei) ) ? $imei = $gps_details->imei : $imei='-NA-' ?>{{$imei}}</td>
-                </tr>
-                <tr class="success">
-                    <td><b>Serial Number</b></td>
-                    <td><?php ( isset($gps_details->serial_no) ) ? $serial_no = $gps_details->serial_no : $serial_no='-NA-' ?>{{$serial_no}}</td>
-                </tr>
-                <tr class="success">
-                    <td><b>Distributor </b></td>
-                    <td><?php ( isset($gps_details->gpsStock->dealer->name) ) ? $dealer = $gps_details->gpsStock->dealer->name : $dealer='-NA-' ?>{{$dealer}}</td>
-                </tr>
-                <tr class="success">
-                    <td><b>Dealer </td>
-                    <td><?php ( isset($gps_details->gpsStock->subdealer->name) ) ? $subdealer = $gps_details->gpsStock->subdealer->name : $subdealer='-NA-' ?>{{$subdealer}}</td>
-                </tr>
-                <tr class="success">
-                    <td><b>Sub Dealer</b></td>
-                    <td><?php ( isset($gps_details->vehicleGps->vehicle->client->trader->name) ) ? $trader = $gps_details->vehicleGps->vehicle->client->trader->name : $trader='-NA-' ?>{{$trader}}</td>
-                </tr>
-                <tr class="success">
-                    <td><b>End User </b></td>
-                    <td><?php ( isset($gps_details->vehicleGps->vehicle->client->name) ) ? $client = $gps_details->vehicleGps->vehicle->client->name : $client='-NA-' ?>{{$client}}</td>
-                </tr>
-                <tr class="success">
-                    <td><b>Vehicle Name </b></td>
-                    <td><?php ( isset($gps_details->vehicleGps->vehicle->name) ) ? $vehicle_name = $gps_details->vehicleGps->vehicle->name : $vehicle_name='-NA-' ?>{{$vehicle_name}}</td>
-                </tr>
-                <tr class="success">
-                    <td><b>Vehicle Registration Number </b></td>
-                    <td><?php ( isset($gps_details->vehicleGps->vehicle->register_number) ) ? $register_no = $gps_details->vehicleGps->vehicle->register_number : $register_no='-NA-' ?>{{$register_no}}</td>
-                </tr>
-                <tr class="success">
-                    <td><b>Last Packet Received On </b></td>
-                    <td><?php ( isset($gps_details->device_time) ) ? $device_time = $gps_details->device_time : $device_time='-Not Yet Activated-' ?>{{$device_time}}</td>
-                    
-                </tr>
-                
-                </tbody>
-            </table> -->
+           
         </div>
     </div>
 </section>
