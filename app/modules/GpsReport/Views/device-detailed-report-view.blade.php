@@ -190,7 +190,7 @@
 
 
 <style>
-#buttons li {
+/* #buttons li {
   float: left;
   list-style: none;
   text-align: center;
@@ -209,9 +209,11 @@
   text-decoration: none;
   color: #000000;
   background-color: #33B5E5;
-}
+}  */
 </style>
 @section('script')
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 @endsection
