@@ -1335,7 +1335,7 @@ class GpsReportController extends Controller
      * 
      * 
      */
-    public function deviceOfflineReportDetailedView(Request $request)
+    public function deviceReportDetailedView(Request $request)
     {
         $imei               = Crypt::decrypt($request->imei);
         $gps_details        = (new Gps())->getGpsDetailswithVehicleData($imei);
@@ -1345,7 +1345,7 @@ class GpsReportController extends Controller
 
         $last_location      = $this->getPlacenameFromLatLng($gps_details->lat,$gps_details->lon);
         $last_location      = "gfhghghgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg";
-        return view('GpsReport::device-offline-status-report-view', [ 'gps_details' => $gps_details, 'last_location' => $last_location ]);
+        return view('GpsReport::device-detailed-report-view', [ 'gps_details' => $gps_details, 'last_location' => $last_location ]);
     }
 
     /**
