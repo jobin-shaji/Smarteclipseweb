@@ -35,10 +35,10 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                                                                 <label> Device Type</label>
                                                                 <select class="form-control select2"  name="device_type" data-live-search="true" title="Select Device Type" id='device_type'  required>
                                                                     <option disabled>Select Device Type</option>
-                                                                    <option value = '0'  @if($device_type=='0'){{"selected"}} @endif>All</option>
-                                                                    <option value = '1' @if($device_type=='1'){{"selected"}} @endif>Tagged Devices</option>
-                                                                    <option value = '2' @if($device_type=='2'){{"selected"}} @endif>Untagged Devices</option>
-                                                                    <option value = '3' @if($device_type=='3'){{"selected"}} @endif>Not Yet Activated</option>
+                                                                    <option value = '{{config("eclipse.DEVICE_STATUS.ALL")}}'  @if($device_type==config("eclipse.DEVICE_STATUS.ALL")){{"selected"}} @endif>All</option>
+                                                                    <option value = '{{config("eclipse.DEVICE_STATUS.TAGGED")}}' @if($device_type==config("eclipse.DEVICE_STATUS.TAGGED")){{"selected"}} @endif>Tagged Devices</option>
+                                                                    <option value = '{{config("eclipse.DEVICE_STATUS.UNTAGGED")}}' @if($device_type==config("eclipse.DEVICE_STATUS.UNTAGGED")){{"selected"}} @endif>Untagged Devices</option>
+                                                                    <option value = '{{config("eclipse.DEVICE_STATUS.NOT_YET_ACTIVATED")}}' @if($device_type==config("eclipse.DEVICE_STATUS.NOT_YET_ACTIVATED")){{"selected"}} @endif>Not Yet Activated</option>
                                                                 </select>
                                                                 @if ($errors->has('device_type'))
                                                                     <span class="help-block">

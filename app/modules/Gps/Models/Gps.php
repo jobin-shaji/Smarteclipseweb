@@ -258,17 +258,17 @@ class Gps extends Model
                         $query->where('is_returned', '=', 0)
                         ->orWhere('is_returned', '=', NULL);
                     });
-                    if( $device_type == '1' )
+                    if( $device_type == config("eclipse.DEVICE_STATUS.TAGGED") )
                     {
                         $result->whereIn('id', $gps_id_of_active_vehicles)
                                 ->where('device_time', '<=' ,$offline_date_time);
                     }
-                    else if( $device_type == '2' )
+                    else if( $device_type == config("eclipse.DEVICE_STATUS.UNTAGGED") )
                     {
                         $result->whereNotIn('id', $gps_id_of_active_vehicles)
                                 ->where('device_time', '<=' ,$offline_date_time);
                     }
-                    else if( $device_type == '3' )
+                    else if( $device_type == config("eclipse.DEVICE_STATUS.NOT_YET_ACTIVATED") )
                     {
                         $result->where('device_time', '=' ,NULL);
                     }

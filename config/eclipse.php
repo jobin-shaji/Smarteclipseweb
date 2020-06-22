@@ -27,5 +27,13 @@ return array(
    ],
 
    //OFFLINE DURATION FOR DEVICE STATUS REPORT
-   'OFFLINE_DURATION'   => env("OFFLINE_DURATION")
+   'OFFLINE_DURATION'   => env("OFFLINE_DURATION"),
+
+   //PLAN BASED CONFIGURATIONS
+   'DEVICE_STATUS'  => [
+      'ALL'                => '0',
+      'TAGGED'             => '1',
+      'UNTAGGED'           => '2',
+      'NOT_YET_ACTIVATED'  => '3'
+   ],
 );

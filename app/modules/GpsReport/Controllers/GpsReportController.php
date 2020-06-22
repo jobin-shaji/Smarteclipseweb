@@ -1300,7 +1300,7 @@ class GpsReportController extends Controller
      */
     public function deviceOfflineReport(Request $request)
     {
-        $device_type            = ( isset($request->device_type) ) ? $request->device_type : 1;
+        $device_type            = ( isset($request->device_type) ) ? $request->device_type : config("eclipse.DEVICE_STATUS.TAGGED");
         $offline_duration       = ( isset($request->offline_duration) ) ? $request->offline_duration : null;
         $download_type          = ( isset($request->type) ) ? $request->type : null;
         $logged_user_details    = (new Operations())->getOperatorDetails(\Auth::user()->operations->id);
@@ -1314,14 +1314,14 @@ class GpsReportController extends Controller
             $offline_duration_in_minutes = '-'. $offline_duration * 60 .' minutes';
         }
         $offline_date_time = date('Y-m-d H:i:s',strtotime("".$offline_duration_in_minutes.""));
-        if($device_type == '0')
+        if($device_type == config("eclipse.DEVICE_STATUS.ALL"))
         {
             $offline_devices   = (new Gps())->getAllOfflineDevices($offline_date_time, $device_type, $download_type);
         }
         else
         {
             $gps_id_of_active_vehicles = null;
-            if( $device_type == '1' || $device_type == '2')
+            if( $device_type == config("eclipse.DEVICE_STATUS.TAGGED") || $device_type == config("eclipse.DEVICE_STATUS.UNTAGGED"))
             {
                 $gps_id_of_active_vehicles = (new Vehicle())->getAllVehiclesWithUnreturnedGps();
             }

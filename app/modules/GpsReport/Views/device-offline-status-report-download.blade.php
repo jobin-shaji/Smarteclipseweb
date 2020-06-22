@@ -20,7 +20,7 @@ td, th {
 </head>
 <body>
 @if(count($offline_devices) != 0)
-<?php if($device_type == 1){$device_type = 'Tagged Devices';}elseif($device_type == 2){$device_type = 'Untagged Devices';}elseif($device_type == 3){$device_type = 'Not Yet Activated';}else{$device_type = 'Tagged, Untagged, Not Yet Activated';}; ?>
+<?php if($device_type == config("eclipse.DEVICE_STATUS.TAGGED")){$device_type = 'Tagged Devices';}elseif($device_type == config("eclipse.DEVICE_STATUS.UNTAGGED")){$device_type = 'Untagged Devices';}elseif($device_type == config("eclipse.DEVICE_STATUS.NOT_YET_ACTIVATED")){$device_type = 'Not Yet Activated';}else{$device_type = 'Tagged, Untagged, Not Yet Activated';}; ?>
     <h4 style="position:absolute;top:130px;bottom:30px;">Device Type:<br> {{$device_type}}</h4>
     <h4 style="position:absolute;top:130px;left:520px;bottom:30px;">Offline Duration:<br> <?php ( $offline_duration == null ) ? $offline_duration = '1 Hour' : $offline_duration = $offline_duration.' Hours'; ?>{{$offline_duration}}</h4>
     <br><br><br>
