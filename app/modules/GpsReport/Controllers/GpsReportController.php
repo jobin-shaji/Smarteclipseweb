@@ -1459,6 +1459,15 @@ class GpsReportController extends Controller
         {
             $gps_details->emergency_status  = "NO";
         }
+        //RETURN STATUS
+        if( $gps_details->is_returned == 1) 
+        {
+            $gps_details->is_returned  = "YES";
+        }
+        else
+        {
+            $gps_details->is_returned  = "NO";
+        }
         
 
         $last_location      = $this->getPlacenameFromLatLng($gps_details->lat,$gps_details->lon);

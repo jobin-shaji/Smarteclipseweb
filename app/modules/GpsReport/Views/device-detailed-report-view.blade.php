@@ -20,7 +20,7 @@
                     <span style="color:{{$gps_details->device_status}}">
                         <i class="fa fa-circle" aria-hidden="true"></i>
                     </span>
-                    Mode : <?php ( isset($gps_details->imei) ) ? $imei = $gps_details->imei : $imei='-NA-' ?>{{$imei}} ( Serial No: <?php ( isset($gps_details->serial_no) ) ? $serial_no = $gps_details->serial_no : $serial_no='-NA-' ?>{{$serial_no}})</h4>
+                    IMEI : <?php ( isset($gps_details->imei) ) ? $imei = $gps_details->imei : $imei='-NA-' ?>{{$imei}} ( Serial No: <?php ( isset($gps_details->serial_no) ) ? $serial_no = $gps_details->serial_no : $serial_no='-NA-' ?>{{$serial_no}})</h4>
                 </div><br>
                 <div class="row">
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" style="word-break: break-all;">
@@ -87,7 +87,7 @@
                                 <td></td>
                             </tr>                
                             <tr>
-                                <td>Vehicle Registration Number</td>
+                                <td><b>Vehicle Registration Number</b></td>
                                 <td></td>
                             </tr>                
                             <tr class="success" >
@@ -95,7 +95,7 @@
                                 <td></td>
                             </tr>                
                             <tr>
-                                <td>Engine Number</td>
+                                <td><b>Engine Number</b></td>
                                 <td></td>
                             </tr>      
                             <tr class="success" >
@@ -110,47 +110,47 @@
                     <thead>
                             <tr class="success" >
                                 <td><b>IMEI</b></td>
-                                <td><?php ( isset($gps_details->tilt_status) ) ? $tilt_status = $gps_details->tilt_status : $tilt_status='-NA-' ?>{{$tilt_status}}</td>
+                                <td><?php ( isset($gps_details->imei) ) ? $imei = $gps_details->imei : $imei='-NA-' ?>{{$imei}}</td>
                             </tr>                
                             <tr>
-                                <td>Serial Number</td>
-                                <td><?php ( isset($gps_details->tilt_status) ) ? $tilt_status = $gps_details->tilt_status : $tilt_status='-NA-' ?>{{$tilt_status}}</td>
+                                <td><b>Serial Number</b></td>
+                                <td><?php ( isset($gps_details->serial_no) ) ? $serial_no = $gps_details->serial_no : $serial_no='-NA-' ?>{{$serial_no}}</td>
                             </tr>                
                             <tr class="success" >
                                 <td><b>Manufactured On</b></td>
-                                <td><?php ( isset($gps_details->tilt_status) ) ? $tilt_status = $gps_details->tilt_status : $tilt_status='-NA-' ?>{{$tilt_status}}</td>
+                                <td><?php ( isset($gps_details->manufacturing_date) ) ? $manufacturing_date = $gps_details->manufacturing_date : $manufacturing_date='-NA-' ?>{{$manufacturing_date}}</td>
                             </tr>                
                             <tr>
-                                <td>ICC ID</td>
-                                <td><?php ( isset($gps_details->tilt_status) ) ? $tilt_status = $gps_details->tilt_status : $tilt_status='-NA-' ?>{{$tilt_status}}</td>
+                                <td><b>ICC ID</b></td>
+                                <td><?php ( isset($gps_details->icc_id) ) ? $icc_id = $gps_details->icc_id : $icc_id='-NA-' ?>{{$icc_id}}</td>
                             </tr>      
                             <tr class="success" >
                                 <td><b>IMSI</b></td>
-                                <td><?php ( isset($gps_details->tilt_status) ) ? $tilt_status = $gps_details->tilt_status : $tilt_status='-NA-' ?>{{$tilt_status}}</td>
+                                <td><?php ( isset($gps_details->imsi) ) ? $imsi = $gps_details->imsi : $imsi='-NA-' ?>{{$imsi}}</td>
                             </tr>     
                             <tr>
-                                <td>E-Sim Number</td>
-                                <td><?php ( isset($gps_details->tilt_status) ) ? $tilt_status = $gps_details->tilt_status : $tilt_status='-NA-' ?>{{$tilt_status}}</td>
+                                <td><b>E-Sim Number</b></td>
+                                <td><?php ( isset($gps_details->e_sim_number) ) ? $e_sim_number = $gps_details->e_sim_number : $e_sim_number='-NA-' ?>{{$e_sim_number}}</td>
                             </tr>                
                             <tr class="success" >
                                 <td><b> Batch Number</b></td>
-                                <td><?php ( isset($gps_details->tilt_status) ) ? $tilt_status = $gps_details->tilt_status : $tilt_status='-NA-' ?>{{$tilt_status}}</td>
+                                <td><?php ( isset($gps_details->batch_number) ) ? $batch_number = $gps_details->batch_number : $batch_number='-NA-' ?>{{$batch_number}}</td>
                             </tr>                
                             <tr>
-                                <td>Model Name</td>
-                                <td><?php ( isset($gps_details->tilt_status) ) ? $tilt_status = $gps_details->tilt_status : $tilt_status='-NA-' ?>{{$tilt_status}}</td>
+                                <td><b>Model Name</b></td>
+                                <td><?php ( isset($gps_details->model_name) ) ? $model_name = $gps_details->model_name : $model_name='-NA-' ?>{{$model_name}}</td>
                             </tr>      
                             <tr class="success" >
                                 <td><b>Version</b></td>
-                                <td><?php ( isset($gps_details->tilt_status) ) ? $tilt_status = $gps_details->tilt_status : $tilt_status='-NA-' ?>{{$tilt_status}}</td>
+                                <td><?php ( isset($gps_details->version) ) ? $version = $gps_details->version : $version='-NA-' ?>{{$version}}</td>
                             </tr> 
                             <tr>
-                                <td>Employee Code</td>
-                                <td><?php ( isset($gps_details->tilt_status) ) ? $tilt_status = $gps_details->tilt_status : $tilt_status='-NA-' ?>{{$tilt_status}}</td>
+                                <td><b>Employee Code</b></td>
+                                <td><?php ( isset($gps_details->employee_code) ) ? $employee_code = $gps_details->employee_code : $employee_code='-NA-' ?>{{$employee_code}}</td>
                             </tr> 
                             <tr class="success" >
-                                <td><b>Return Status</b></td>
-                                <td><?php ( isset($gps_details->tilt_status) ) ? $tilt_status = $gps_details->tilt_status : $tilt_status='-NA-' ?>{{$tilt_status}}</td>
+                                <td><b>Is Returned</b></td>
+                                <td><?php ( isset($gps_details->is_returned) ) ? $is_returned = $gps_details->is_returned : $is_returned='-NA-' ?>{{$is_returned}}</td>
                             </tr>                    
                         </thead>
                     </table>                
