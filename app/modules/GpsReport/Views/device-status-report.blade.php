@@ -14,9 +14,9 @@
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                 <div class="box-part text-center" style="background-color:#ded8ca;">
                     <i class="fa fa-arrows-h icon" aria-hidden="true"></i>
-                    <!-- <div class="title">
-                        <h4 style="font-size: 17px;">ONLINE : 25</h4>
-                    </div><br> -->
+                    <div class="title">
+                        <h4 style="font-size: 17px;">ONLINE : <label>25</label></h4>
+                    </div><br>
                     <div class="title">
                         <h4 style="font-size: 17px;">DEVICE ONLINE REPORT</h4>
                     </div><br>
@@ -26,9 +26,9 @@
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12" style="padding-left: 10px;">
                 <div class="box-part text-center" style="background-color:#ded8ca;">
                     <i class="fa fa-arrows-h icon" aria-hidden="true"></i>
-                    <!-- <div class="title">
+                    <div class="title">
                         <h4 style="font-size: 17px;">OFFLINE : 25</h4>
-                    </div><br> -->
+                    </div><br>
                     <div class="title">
                         <h4 style="font-size: 17px;">DEVICE OFFLINE REPORT</h4>
                     </div><br>

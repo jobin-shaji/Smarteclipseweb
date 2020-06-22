@@ -244,4 +244,58 @@ class Gps extends Model
             'e_sim_number'  => $msisdn
         ]);
     }
+    public function getDeviceOnlineReport($online_limit_date,$current_time,$vehicle_status=null,$device_status=null,$gps_ids=null)
+    {
+        $query = self::select( 
+            'id',
+            'imei',
+            'serial_no',
+            'mode'
+        )
+        ->with('vehicleGps.vehicle.client')
+        ->whereBetween('device_time',[$online_limit_date,$current_time])   
+        ->where(function ($query) {
+            $query->where('is_returned', '=', 0)
+            ->orWhere('is_returned', '=', NULL);
+        });
+        ( $vehicle_status == null ) ? $query : $query->where('mode', $vehicle_status); 
+        if($device_status == 1)
+        {
+            $query = $query->whereIN('id',$gps_ids);
+        }
+        else if($device_status == 2)
+        {
+            $query = $query->whereNotIn('id',$gps_ids);
+        }  
+        return $query->paginate(10);
+    }
+    /**
+     * online offline Report count
+     */
+    public function getDeviceOnlineCount($online_limit_date,$current_time)
+    {
+        return $query = self::select()
+        ->with('vehicleGps.vehicle.client')
+        ->whereBetween('device_time',[$online_limit_date,$current_time])   
+        ->where(function ($query) {
+            $query->where('is_returned', '=', 0)
+            ->orWhere('is_returned', '=', NULL);
+        })
+       ->get()->count();
+       
+    }
+    public function getDeviceOfflineCount($online_limit_date)
+    {
+        return $query = self::select()
+        ->with('vehicleGps.vehicle.client')
+        ->where('device_time')   
+        ->where(function ($query) {
+            $query->where('is_returned', '=', 0)
+            ->orWhere('is_returned', '=', NULL);
+        })
+        ->where('device_time', '>=', $online_limit_date)
+        ->get()->count();
+       
+    }
+    
 }

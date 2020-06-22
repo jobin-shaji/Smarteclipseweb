@@ -24,5 +24,6 @@ return array(
       [ 'ID'=> 1, 'NAME' => 'FUNDAMENTAL'],
       [ 'ID'=> 2, 'NAME' => 'SUPERIOR'],
       [ 'ID'=> 3, 'NAME' => 'PRO']
-   ]
+   ],
+   'OFFLINE_DURATION'   => env("OFFLINE_DURATION"),
 );
