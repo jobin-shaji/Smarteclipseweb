@@ -57,28 +57,95 @@
         </div>
         <div class="container">
             <ul class="nav nav-pills">
-                <li class="active"><a data-toggle="pill" href="#home">Home</a></li>
-                <li><a data-toggle="pill" href="#menu1">Menu 1</a></li>
-                <li><a data-toggle="pill" href="#menu2">Menu 2</a></li>
-                <li><a data-toggle="pill" href="#menu3">Menu 3</a></li>
+                <li class="active"><a data-toggle="pill" href="#home">Vehicle Details</a></li>
+                <li><a data-toggle="pill" href="#menu1">Device Details</a></li>
+                <li><a data-toggle="pill" href="#menu2"> Alerts</a></li>
             </ul> 
             <div class="tab-content">
+            </br>
                 <div id="home" class="tab-pane fade in active">
-                    <h3>HOME</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+              
+                    <table class="table table-borderless"  style='border: 0px solid transparent' >
+                        <thead>
+                        <tr class="success" >
+                            <td >Tilt</td>
+                            <td>OverSpeed</td>
+                        </tr>               
+                            <td>Emergency</td> 
+                            <td >Tilt</td>          
+                        </tr>   
+                        <tr class="success" >
+                            <td >Tilt</td>
+                            <td>OverSpeed</td>
+                        </tr>               
+                            <td>Emergency</td> 
+                            <td >Tilt</td>          
+                        </tr>   
+                        <tr class="success" >
+                            <td >Tilt</td>
+                            <td>OverSpeed</td>
+                        </tr>               
+                            <td>Emergency</td> 
+                            <td >Tilt</td>          
+                        </tr>                
+                        </thead>
+                    </table>   
                 </div>
                 <div id="menu1" class="tab-pane fade">
-                    <h3>Menu 1</h3>
-                    <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                    <table class="table table-borderless"  style='border: 0px solid transparent' >
+                        <thead>
+                        <tr class="success" >
+                            <td >Tilt</td>
+                            <td>OverSpeed</td>
+                        </tr>               
+                            <td>Emergency</td> 
+                            <td >Tilt</td>          
+                        </tr>   
+                        <tr class="success" >
+                            <td >Tilt</td>
+                            <td>OverSpeed</td>
+                        </tr>               
+                            <td>Emergency</td> 
+                            <td >Tilt</td>          
+                        </tr>   
+                        <tr class="success" >
+                            <td >Tilt</td>
+                            <td>OverSpeed</td>
+                        </tr>               
+                            <td>Emergency</td> 
+                            <td >Tilt</td>          
+                        </tr>                
+                        </thead>
+                    </table>                
                 </div>
                 <div id="menu2" class="tab-pane fade">
-                    <h3>Menu 2</h3>
-                    <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
+                    <table class="table table-borderless"  style='border: 0px solid transparent' >
+                        <thead>
+                        <tr class="success" >
+                            <td >Tilt</td>
+                            <td>OverSpeed</td>
+                        </tr>               
+                            <td>Emergency</td> 
+                            <td >Tilt</td>          
+                        </tr>   
+                        <tr class="success" >
+                            <td >Tilt</td>
+                            <td>OverSpeed</td>
+                        </tr>               
+                            <td>Emergency</td> 
+                            <td >Tilt</td>          
+                        </tr>   
+                        <tr class="success" >
+                            <td >Tilt</td>
+                            <td>OverSpeed</td>
+                        </tr>               
+                            <td>Emergency</td> 
+                            <td >Tilt</td>          
+                        </tr>                
+                        </thead>
+                    </table>                
                 </div>
-                <div id="menu3" class="tab-pane fade">
-                    <h3>Menu 3</h3>
-                    <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
-                </div>
+                
             </div>
         </div>
         <!-- table section -->           
@@ -95,6 +162,8 @@ tr:hover {background-color: #D5D4D5;}
 
 </style>
 @section('script')
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+ 
     <script src="{{asset('js/gps/device-detailed-view.js')}}"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
