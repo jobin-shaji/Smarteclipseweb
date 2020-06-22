@@ -35,7 +35,7 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                                                                 <label> Device Type</label>
                                                                 <select class="form-control select2"  name="device_type" data-live-search="true" title="Select Device Type" id='device_type'  required>
                                                                     <option disabled>Select Device Type</option>
-                                                                    <option value = ''  @if($device_type==''){{"selected"}} @endif>All</option>
+                                                                    <option value = '0'  @if($device_type=='0'){{"selected"}} @endif>All</option>
                                                                     <option value = '1' @if($device_type=='1'){{"selected"}} @endif>Tagged Devices</option>
                                                                     <option value = '2' @if($device_type=='2'){{"selected"}} @endif>Untagged Devices</option>
                                                                     <option value = '3' @if($device_type=='3'){{"selected"}} @endif>Not Yet Activated</option>
