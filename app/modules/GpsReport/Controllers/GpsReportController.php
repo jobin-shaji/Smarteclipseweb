@@ -1307,26 +1307,19 @@ class GpsReportController extends Controller
 
         if($offline_duration == null )
         {
-            $offline_duration_in_minutes = '-'. config('eclipse.OFFLINE_DURATION');
+            $offline_duration_in_minutes    = '-'. config('eclipse.OFFLINE_DURATION');
         }
         else
         {
-            $offline_duration_in_minutes = '-'. $offline_duration * 60 .' minutes';
+            $offline_duration_in_minutes    = '-'. $offline_duration * 60 .' minutes';
         }
-        $offline_date_time = date('Y-m-d H:i:s',strtotime("".$offline_duration_in_minutes.""));
-        if($device_type == config("eclipse.DEVICE_STATUS.ALL"))
+        $offline_date_time                  = date('Y-m-d H:i:s',strtotime("".$offline_duration_in_minutes.""));
+        $gps_id_of_active_vehicles          = null;
+        if( $device_type == config("eclipse.DEVICE_STATUS.TAGGED") || $device_type == config("eclipse.DEVICE_STATUS.UNTAGGED"))
         {
-            $offline_devices   = (new Gps())->getAllOfflineDevices($offline_date_time, $device_type, $download_type);
+            $gps_id_of_active_vehicles      = (new Vehicle())->getAllVehiclesWithUnreturnedGps();
         }
-        else
-        {
-            $gps_id_of_active_vehicles = null;
-            if( $device_type == config("eclipse.DEVICE_STATUS.TAGGED") || $device_type == config("eclipse.DEVICE_STATUS.UNTAGGED"))
-            {
-                $gps_id_of_active_vehicles = (new Vehicle())->getAllVehiclesWithUnreturnedGps();
-            }
-            $offline_devices   = (new Gps())->getAllOfflineDevices($offline_date_time, $device_type, $download_type , $gps_id_of_active_vehicles);
-        }
+        $offline_devices                    = (new Gps())->getAllOfflineDevices($offline_date_time, $device_type, $download_type , $gps_id_of_active_vehicles);
         if( $download_type == 'pdf' )
         {
             $pdf    =   PDF::loadView('GpsReport::device-offline-status-report-download',[ 'offline_devices' => $offline_devices, 'offline_duration' => $offline_duration, 'device_type' => $device_type, 'generated_by' => ucfirst(strtolower($logged_user_details->root->name)).' '.'( Manufacturer )', 'user_generated_by' => $logged_user_details->name, 'generated_on' => date("d/m/Y h:i:s A") ]);
