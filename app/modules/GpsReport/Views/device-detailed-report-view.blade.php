@@ -75,7 +75,8 @@
             <ul class="nav nav-pills" id="buttons">
                 <li class="active"><a data-toggle="pill" href="#home">Vehicle Details</a></li>
                 <li><a data-toggle="pill" href="#menu1">Device Details</a></li>
-                <li><a data-toggle="pill" href="#menu2"> Alerts</a></li>
+                <li><a data-toggle="pill" href="#menu2">Transfer Details</a></li>
+                <li><a data-toggle="pill" href="#menu3"> Alerts</a></li>
             </ul> 
             <div class="tab-content">
             </br>
@@ -159,25 +160,31 @@
                     <table class="table table-borderless"  style='border: 0px solid transparent' >
                     <thead>
                             <tr class="success" >
+                                <td><b>Distributor</b></td>
+                                <td><?php ( isset($gps_details->gpsStock->dealer->name) ) ? $dealer = $gps_details->gpsStock->dealer->name : $dealer='-NA-' ?>{{$dealer}}</td>
+                            </tr>                
+                            <tr>
+                                <td><b>Dealer</b></td>
+                                <td><?php ( isset($gps_details->gpsStock->subdealer->name) ) ? $subdealer = $gps_details->gpsStock->subdealer->name : $subdealer='-NA-' ?>{{$subdealer}}</td>
+                            </tr>                
+                            <tr class="success" >
+                                <td><b>Sub Dealer</b></td>
+                                <td><?php ( isset($gps_details->gpsStock->trader->name) ) ? $trader = $gps_details->gpsStock->trader->name : $trader='-NA-' ?>{{$trader}}</td>
+                            </tr>                
+                            <tr>
+                                <td><b>End User</b></td>
+                                <td><?php ( isset($gps_details->gpsStock->client->name) ) ? $client = $gps_details->gpsStock->client->name : $client='-NA-' ?>{{$client}}</td>
+                            </tr>                     
+                        </thead>
+                    </table>                
+                </div>
+                <div id="menu3" class="tab-pane fade">
+                    <table class="table table-borderless"  style='border: 0px solid transparent' >
+                    <thead>
+                            <tr class="success" >
                                 <td><b>Vehicle Name</b></td>
                                 <td></td>
-                            </tr>                
-                            <tr>
-                                <td>Vehicle Registration Number</td>
-                                <td></td>
-                            </tr>                
-                            <tr class="success" >
-                                <td><b>Vehicle Category</b></td>
-                                <td></td>
-                            </tr>                
-                            <tr>
-                                <td>Engine Number</td>
-                                <td></td>
-                            </tr>      
-                            <tr class="success" >
-                                <td><b>Chassis Number</b></td>
-                                <td></td>
-                            </tr>                   
+                            </tr>                               
                         </thead>
                     </table>                
                 </div>

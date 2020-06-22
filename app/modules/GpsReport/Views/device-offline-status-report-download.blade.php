@@ -52,7 +52,7 @@ td, th {
             </tr>
             <tr">
                 <td><b>End User Name</b></td>
-                <td><?php ( isset($gps_details->vehicleGps->vehicle->client->name) ) ? $client = $gps_details->vehicleGps->vehicle->client->name : $client='-NA-' ?>{{$client}}</td>
+                <td><?php ( isset($each_data->gpsStock->client->name) ) ? $client = $each_data->gpsStock->client->name : $client='-NA-' ?>{{$client}}</td>
             </tr>
             <tr">
                 <td><b>Distributor Name</b></td>
@@ -64,7 +64,7 @@ td, th {
             </tr>
             <tr">
                 <td><b>Sub Dealer Name/<b></td>
-                <td><?php ( isset($gps_details->vehicleGps->vehicle->client->trader->name) ) ? $trader = $gps_details->vehicleGps->vehicle->client->trader->name : $trader='-NA-' ?>{{$trader}}</td>
+                <td><?php ( isset($each_data->gpsStock->trader->name) ) ? $trader = $each_data->gpsStock->trader->name : $trader='-NA-' ?>{{$trader}}</td>
             </tr>
         </tbody>
     </table>
