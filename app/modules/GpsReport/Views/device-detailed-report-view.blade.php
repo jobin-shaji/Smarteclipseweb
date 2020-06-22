@@ -20,7 +20,7 @@
                     <span style="color:{{$gps_details->device_status}}">
                         <i class="fa fa-circle" aria-hidden="true"></i>
                     </span>
-                    IMEI : <?php ( isset($gps_details->imei) ) ? $imei = $gps_details->imei : $imei='-NA-' ?>{{$imei}} ( Serial No: <?php ( isset($gps_details->serial_no) ) ? $serial_no = $gps_details->serial_no : $serial_no='-NA-' ?>{{$serial_no}})</h4>
+                    Mode : <?php ( isset($gps_details->imei) ) ? $imei = $gps_details->imei : $imei='-NA-' ?>{{$imei}} ( Serial No: <?php ( isset($gps_details->serial_no) ) ? $serial_no = $gps_details->serial_no : $serial_no='-NA-' ?>{{$serial_no}})</h4>
                 </div><br>
                 <div class="row">
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" style="word-break: break-all;">
@@ -33,7 +33,7 @@
                 <table class="table table-borderless" style='border: 50px solid transparent' >
                 <thead>
                 <tr class="success" >
-                    <td>IMEI</td>
+                    <td>Mode</td>
                     <td>Network Status</td>               
                     <td>Fuel Status</td>
                     <td>Speed</td>             
@@ -53,10 +53,102 @@
                     <td>Emergency</td>           
                 </tr>                
                 </thead>
-            </table>   
+            </table>               
         </div>
-            <!-- table section -->
-           
+        <div class="container">
+            <ul class="nav nav-pills">
+                <li class="active"><a data-toggle="pill" href="#home">Vehicle Details</a></li>
+                <li><a data-toggle="pill" href="#menu1">Device Details</a></li>
+                <li><a data-toggle="pill" href="#menu2"> Alerts</a></li>
+            </ul> 
+            <div class="tab-content">
+            </br>
+                <div id="home" class="tab-pane fade in active">
+              
+                    <table class="table table-borderless"  style='border: 0px solid transparent' >
+                        <thead>
+                        <tr class="success" >
+                            <td >Tilt</td>
+                            <td>OverSpeed</td>
+                        </tr>               
+                            <td>Emergency</td> 
+                            <td >Tilt</td>          
+                        </tr>   
+                        <tr class="success" >
+                            <td >Tilt</td>
+                            <td>OverSpeed</td>
+                        </tr>               
+                            <td>Emergency</td> 
+                            <td >Tilt</td>          
+                        </tr>   
+                        <tr class="success" >
+                            <td >Tilt</td>
+                            <td>OverSpeed</td>
+                        </tr>               
+                            <td>Emergency</td> 
+                            <td >Tilt</td>          
+                        </tr>                
+                        </thead>
+                    </table>   
+                </div>
+                <div id="menu1" class="tab-pane fade">
+                    <table class="table table-borderless"  style='border: 0px solid transparent' >
+                        <thead>
+                        <tr class="success" >
+                            <td >Tilt</td>
+                            <td>OverSpeed</td>
+                        </tr>               
+                            <td>Emergency</td> 
+                            <td >Tilt</td>          
+                        </tr>   
+                        <tr class="success" >
+                            <td >Tilt</td>
+                            <td>OverSpeed</td>
+                        </tr>               
+                            <td>Emergency</td> 
+                            <td >Tilt</td>          
+                        </tr>   
+                        <tr class="success" >
+                            <td >Tilt</td>
+                            <td>OverSpeed</td>
+                        </tr>               
+                            <td>Emergency</td> 
+                            <td >Tilt</td>          
+                        </tr>                
+                        </thead>
+                    </table>                
+                </div>
+                <div id="menu2" class="tab-pane fade">
+                    <table class="table table-borderless"  style='border: 0px solid transparent' >
+                        <thead>
+                        <tr class="success" >
+                            <td >Tilt</td>
+                            <td>OverSpeed</td>
+                        </tr>               
+                            <td>Emergency</td> 
+                            <td >Tilt</td>          
+                        </tr>   
+                        <tr class="success" >
+                            <td >Tilt</td>
+                            <td>OverSpeed</td>
+                        </tr>               
+                            <td>Emergency</td> 
+                            <td >Tilt</td>          
+                        </tr>   
+                        <tr class="success" >
+                            <td >Tilt</td>
+                            <td>OverSpeed</td>
+                        </tr>               
+                            <td>Emergency</td> 
+                            <td >Tilt</td>          
+                        </tr>                
+                        </thead>
+                    </table>                
+                </div>
+                
+            </div>
+        </div>
+        <!-- table section -->           
         </div>
     </div>
 </section>
@@ -69,4 +161,15 @@ table, th, td {
 tr:hover {background-color: #D5D4D5;}
 
 </style>
+<<<<<<< HEAD
+=======
+@section('script')
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+ 
+    <script src="{{asset('js/gps/device-detailed-view.js')}}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+@endsection
+
+>>>>>>> 3f7ffbe562da3ada1cc7784c8b45cdd2f0664497
 @endsection
