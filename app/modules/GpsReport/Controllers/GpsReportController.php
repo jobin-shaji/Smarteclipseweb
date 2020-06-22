@@ -1462,7 +1462,9 @@ class GpsReportController extends Controller
         
 
         $last_location      = $this->getPlacenameFromLatLng($gps_details->lat,$gps_details->lon);
-        $last_location      = "gfhghghgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg";
+        $last_location      = "HMT Colony
+        North Kalamassery, Kalamassery
+        Kochi, Kerala 683503";
         return view('GpsReport::device-detailed-report-view', [ 'gps_details' => $gps_details, 'last_location' => $last_location ]);
     }
 
