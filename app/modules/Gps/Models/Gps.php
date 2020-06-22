@@ -274,27 +274,27 @@ class Gps extends Model
      */
     public function getDeviceOnlineCount($online_limit_date,$current_time)
     {
-        return $query = self::select()
-        ->with('vehicleGps.vehicle.client')
-        ->whereBetween('device_time',[$online_limit_date,$current_time])   
+        return $query = self::select('id')
+       ->whereBetween('device_time',[$online_limit_date,$current_time])   
         ->where(function ($query) {
             $query->where('is_returned', '=', 0)
             ->orWhere('is_returned', '=', NULL);
         })
-       ->get()->count();
+       ->count();
        
     }
     public function getDeviceOfflineCount($online_limit_date)
     {
-        return $query = self::select()
-        ->with('vehicleGps.vehicle.client')
-        ->where('device_time')   
+        return $query = self::select('id')
         ->where(function ($query) {
             $query->where('is_returned', '=', 0)
             ->orWhere('is_returned', '=', NULL);
         })
-        ->where('device_time', '>=', $online_limit_date)
-        ->get()->count();
+        ->where(function ($query) use($online_limit_date) {
+            $query->where('device_time', '=', NULL)
+            ->orWhere('device_time', '<=', $online_limit_date);
+        })
+        ->count();
        
     }
     

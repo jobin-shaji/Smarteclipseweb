@@ -15,7 +15,7 @@
                 <div class="box-part text-center" style="background-color:#ded8ca;">
                     <i class="fa fa-arrows-h icon" aria-hidden="true"></i>
                     <div class="title">
-                        <h4 style="font-size: 17px;">ONLINE : <label>25</label></h4>
+                        <h4 style="font-size: 17px;">ONLINE : <label>{{$device_online_count}}</label></h4>
                     </div><br>
                     <div class="title">
                         <h4 style="font-size: 17px;">DEVICE ONLINE REPORT</h4>
@@ -27,7 +27,7 @@
                 <div class="box-part text-center" style="background-color:#ded8ca;">
                     <i class="fa fa-arrows-h icon" aria-hidden="true"></i>
                     <div class="title">
-                        <h4 style="font-size: 17px;">OFFLINE : 25</h4>
+                        <h4 style="font-size: 17px;">OFFLINE : {{$device_onfline_count}}</h4>
                     </div><br>
                     <div class="title">
                         <h4 style="font-size: 17px;">DEVICE OFFLINE REPORT</h4>

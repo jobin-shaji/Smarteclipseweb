@@ -1247,10 +1247,10 @@ class GpsReportController extends Controller
     {
         $online_limit_date              =   date('Y-m-d H:i:s',strtotime("-".config('eclipse.OFFLINE_DURATION').""));
         $current_time                   =   date('Y-m-d H:i:s');
-        $device_online_report           =   (new GPS())->getDeviceOnlineCount($online_limit_date,$current_time);
-        $device_onfline_report          =   (new GPS())->getDeviceOfflineCount($online_limit_date,$current_time);
+        $device_online_count           =   (new GPS())->getDeviceOnlineCount($online_limit_date,$current_time);
+        $device_onfline_count          =   (new GPS())->getDeviceOfflineCount($online_limit_date,$current_time);
         // dd($device_onfline_report);
-        return view('GpsReport::device-status-report');
+        return view('GpsReport::device-status-report',['device_online_count'=>$device_online_count,'device_onfline_count'=>$device_onfline_count]);
     }
     /**
      * DEVICE ONLINE REPORT
@@ -1260,7 +1260,7 @@ class GpsReportController extends Controller
         $generated_by                   =   \Auth::user()->operations->name;
         $online_limit_date              =   date('Y-m-d H:i:s',strtotime("-".config('eclipse.OFFLINE_DURATION').""));
         $current_time                   =   date('Y-m-d H:i:s');
-        $device_status                  =   (isset($request->device_status) ) ? $request->device_status : 0;     
+        $device_status                  =   (isset($request->device_status) ) ? $request->device_status : 1;     
         $download_type                  =   ( isset($request->type) ) ? $request->type : null;
         $gps_ids                        =   (new Vehicle())->getAllVehiclesWithUnreturnedGps();
         $vehicle_status                 =   (isset($request->vehicle_status) ) ? $request->vehicle_status : null;      
