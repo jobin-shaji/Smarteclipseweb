@@ -292,12 +292,36 @@ class Gps extends Model
      * 
      * 
      */
-    public function getGpsDetailswithVehicleData($gps_id)
+    public function getModeAttribute($mode)
     {
-        return self::select('id','imei','serial_no','device_time')
-                    ->with('gpsStock')
+        switch( $mode )
+        {
+            case $mode == 'M':
+                $device_status = '#84b752';
+                break;
+            case $mode == 'H':
+                $device_status = '#69b4b9';
+                break;
+            case $mode == 'S':
+                $device_status = '#858585';
+                break;
+            default:
+                $device_status = 'Invalid Mode';
+                break;
+        }
+        // response
+        return $device_status;
+    }
+
+    /**
+     * 
+     * 
+     */
+    public function getGpsDetailswithVehicleData($imei)
+    {
+        return self::with('gpsStock')
                     ->with('vehicleGps')
-                    ->where('id',$gps_id)
+                    ->where('imei',$imei)
                     ->first();
     }
     public function getDeviceOnlineReport($online_limit_date,$current_time,$vehicle_status=null,$device_status=null,$gps_ids=null)

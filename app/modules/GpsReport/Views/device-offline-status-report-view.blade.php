@@ -1,6 +1,6 @@
 @extends('layouts.eclipse')
 @section('title')
-    GPS Details
+    Detailed View Of GPS
 @endsection
 @section('content')    
 <section class="hilite-content">
@@ -8,22 +8,34 @@
         <!-- breadcrumbs -->
         <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/GPS Details</li>
-            <b> GPS Details</b>
+            <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Detailed View Of GPS</li>
         </ol>
-        @if(Session::has('message'))
-            <div class="pad margin no-print">
-            <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
-                    {{ Session::get('message') }}  
-            </div>
-            </div>
-        @endif  
         </nav> <br>
         <!-- /breadcrumbs -->
 
         <div class="container-fluid">
+            <div class="box-part text-center" style="background-color:#eae9e2;padding: 35px;">
+                <div class="title">
+                    <h4 style="font-size: 17px;">
+                    <span style="color:{{$gps_details->device_status}}">
+                        <i class="fa fa-circle" aria-hidden="true"></i>
+                    </span>
+                    IMEI : <?php ( isset($gps_details->imei) ) ? $imei = $gps_details->imei : $imei='-NA-' ?>{{$imei}} ( Serial No: <?php ( isset($gps_details->serial_no) ) ? $serial_no = $gps_details->serial_no : $serial_no='-NA-' ?>{{$serial_no}})</h4>
+                </div><br>
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" style="word-break: break-all;">
+                        <span><b>Location :</b><?php ( isset($last_location) ) ? $last_location = $last_location : $last_location='-NA-' ?> {{$last_location}}</span>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <span><b>Last Packet Received On :</b> <?php ( isset($gps_details->device_time) ) ? $device_time = date('d/m/Y h:i:s A', strtotime($gps_details->device_time)): $device_time='-Not Yet Activated-' ?> {{$device_time}}<span>
+                    </div>
+                </div>
+                
+            </div>
+
+
             <!-- table section -->
-            <table class="table" style='width:700px;'>
+            <!-- <table class="table" style='width:700px;'>
                 <tbody>
                 <tr class="success">
                     <td><b>IMEI </b></td>
@@ -64,7 +76,7 @@
                 </tr>
                 
                 </tbody>
-            </table>
+            </table> -->
         </div>
     </div>
 </section>
@@ -77,5 +89,8 @@ table, th, td {
 tr:hover {background-color: #D5D4D5;}
 
 </style>
+@section('script')
+    <script src="{{asset('js/gps/device-detailed-view.js')}}"></script>
+@endsection
 
 @endsection
