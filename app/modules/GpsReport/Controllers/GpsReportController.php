@@ -1432,6 +1432,33 @@ class GpsReportController extends Controller
         {
             $gps_details->main_power_status  = "DISCONNECTED";
         }
+        //TILT
+        if( $gps_details->tilt_status == 1) 
+        {
+            $gps_details->tilt_status  = "YES";
+        }
+        else
+        {
+            $gps_details->tilt_status  = "NO";
+        }
+        //OVER SPEED
+        if( $gps_details->overspeed_status == 1) 
+        {
+            $gps_details->overspeed_status  = "YES";
+        }
+        else
+        {
+            $gps_details->overspeed_status  = "NO";
+        }
+        //EMERGENCY
+        if( $gps_details->emergency_status == 1) 
+        {
+            $gps_details->emergency_status  = "YES";
+        }
+        else
+        {
+            $gps_details->emergency_status  = "NO";
+        }
         
 
         $last_location      = $this->getPlacenameFromLatLng($gps_details->lat,$gps_details->lon);
