@@ -197,22 +197,8 @@ class Gps extends Model
 
     public function getDeviceHierarchyDetails($imei)
     {
-        return self::select(
-            'id',
-            'imei',
-            'serial_no',
-            'manufacturing_date',
-            'icc_id',
-            'imsi',
-            'e_sim_number',
-            'batch_number',
-            'employee_code',
-            'model_name',
-            'version',
-            'is_returned'
-        )  
-        ->where('imei',$imei) 
-        ->with('vehicle:id,gps_id')
+        return self::where('imei',$imei) 
+        ->with('vehicle')
         ->with('gpsStock:id,gps_id,dealer_id,subdealer_id,client_id,trader_id,inserted_by')
         ->with('gpsStock.root:id,name')
         ->with('gpsStock.dealer:id,name')
@@ -292,13 +278,6 @@ class Gps extends Model
      * 
      * 
      */
-    public function getGpsDetailswithVehicleData($imei)
-    {
-        return self::with('gpsStock')
-                    ->with('vehicleGps')
-                    ->where('imei',$imei)
-                    ->first();
-    }
     public function getDeviceOnlineReport($online_limit_date,$current_time,$vehicle_status=null,$device_status=null,$gps_ids=null)
     {
         $query = self::select( 

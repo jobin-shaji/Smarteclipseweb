@@ -1357,10 +1357,13 @@ class GpsReportController extends Controller
     public function deviceReportDetailedView(Request $request)
     {
         $imei               = Crypt::decrypt($request->imei);
+
         //get offline time limit
         $offline_date_time  = date('Y-m-d H:i:s',strtotime("".'-'. config('eclipse.OFFLINE_DURATION').""));
+
         //get gps details based on imei
-        $gps_details        = (new Gps())->getGpsDetailswithVehicleData($imei);
+        $gps_details        = (new Gps())->getDeviceHierarchyDetails($imei);
+        
         if( $gps_details->device_time <= $offline_date_time ) 
         {
             $gps_details->device_status = '#c41900';
