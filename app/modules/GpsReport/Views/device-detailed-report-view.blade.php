@@ -30,7 +30,6 @@
                         <span><b>Last Packet Received On :</b> <?php ( isset($gps_details->device_time) ) ? $device_time = date('d/m/Y h:i:s A', strtotime($gps_details->device_time)): $device_time='-Not Yet Activated-' ?> {{$device_time}}<span>
                     </div>
                 </div>
-                
             </div>
 
 
@@ -89,8 +88,4 @@ table, th, td {
 tr:hover {background-color: #D5D4D5;}
 
 </style>
-@section('script')
-    <script src="{{asset('js/gps/device-detailed-view.js')}}"></script>
-@endsection
-
 @endsection
