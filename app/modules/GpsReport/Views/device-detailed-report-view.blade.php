@@ -84,23 +84,23 @@
                         <thead>
                             <tr class="success" >
                                 <td><b>Vehicle Name</b></td>
-                                <td></td>
+                                <td><?php ( isset($gps_details->vehicle->name) ) ? $name = $gps_details->vehicle->name : $name='-NA-' ?>{{$name}}</td>
                             </tr>                
                             <tr>
                                 <td><b>Vehicle Registration Number</b></td>
-                                <td></td>
+                                <td><?php ( isset($gps_details->vehicle->register_number) ) ? $register_no = $gps_details->vehicle->register_number : $register_no='-NA-' ?>{{$register_no}}</td>
                             </tr>                
                             <tr class="success" >
                                 <td><b>Vehicle Category</b></td>
-                                <td></td>
+                                <td><?php ( isset($gps_details->vehicle->vehicleType->name) ) ? $category = $gps_details->vehicle->vehicleType->name : $category='-NA-' ?>{{$category}}</td>
                             </tr>                
                             <tr>
                                 <td><b>Engine Number</b></td>
-                                <td></td>
+                                <td><?php ( isset($gps_details->vehicle->engine_number) ) ? $engine_no = $gps_details->vehicle->engine_number : $engine_no='-NA-' ?>{{$engine_no}}</td>
                             </tr>      
                             <tr class="success" >
                                 <td><b>Chassis Number</b></td>
-                                <td></td>
+                                <td><?php ( isset($gps_details->vehicle->chassis_number) ) ? $chassis_no = $gps_details->vehicle->chassis_number : $chassis_no='-NA-' ?>{{$chassis_no}}</td>
                             </tr>                   
                         </thead>
                     </table>   
