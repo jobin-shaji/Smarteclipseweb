@@ -179,11 +179,19 @@ class Vehicle extends Model
     {
         return self::select(
                     'id',
+                    'name',
+                    'register_number',
+                    'vehicle_type_id',
+                    'engine_number',
+                    'chassis_number',
                     'gps_id',
+                    'driver_id',
                     'is_returned',
                     'is_reinstallation_job_created'
                     )
                     ->where('gps_id',$gps_id)
+                    ->with('driver')
+                    ->with('vehicleType:id,name')
                     ->withTrashed()
                     ->first();
     }
@@ -308,5 +316,14 @@ class Vehicle extends Model
                       ->orWhere('is_returned', '=', NULL);
                   })
                   ->pluck('gps_id');
+    }
+
+    /**
+     * 
+     * 
+     */
+    public function getClientIdOfVehicle($gps_id)
+    {
+      return self::select('client_id')->where('gps_id', $gps_id)->first();
     }
 }

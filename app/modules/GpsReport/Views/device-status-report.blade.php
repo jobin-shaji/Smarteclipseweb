@@ -15,7 +15,7 @@
                 <div class="box-part text-center" style="background-color:#ded8ca;">
                     <i class="fa fa-arrows-h icon" aria-hidden="true"></i>
                     <div class="title">
-                        <h4 style="font-size: 17px;">ONLINE : <label>{{$device_online_count}}</label></h4>
+                        <h4 style="font-size: 17px;">ONLINE : {{$device_online_count}}</h4>
                     </div><br>
                     <div class="title">
                         <h4 style="font-size: 17px;">DEVICE ONLINE REPORT</h4>

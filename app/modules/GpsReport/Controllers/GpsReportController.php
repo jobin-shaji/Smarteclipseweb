@@ -13,6 +13,8 @@ use App\Modules\Root\Models\Root;
 use App\Modules\Dealer\Models\Dealer;
 use App\Modules\SubDealer\Models\SubDealer;
 use App\Modules\Trader\Models\Trader;
+use App\Modules\Driver\Models\Driver;
+use App\Modules\Servicer\Models\ServicerJob;
 use App\Modules\Operations\Models\Operations;
 use App\Modules\Vehicle\Models\VehicleGps;
 use Illuminate\Support\Facades\Crypt;
@@ -1330,26 +1332,6 @@ class GpsReportController extends Controller
             return view('GpsReport::device-offline-status-report', [ 'offline_devices' => $offline_devices, 'offline_duration' => $offline_duration, 'device_type' => $device_type ]);
         }
     }
-    public function getModeAttribute($mode)
-    {
-        switch( $mode )
-        {
-            case $mode == 'M':
-                $device_status = '#84b752';
-                break;
-            case $mode == 'H':
-                $device_status = '#69b4b9';
-                break;
-            case $mode == 'S':
-                $device_status = '#858585';
-                break;
-            default:
-                $device_status = 'Invalid Mode';
-                break;
-        }
-        // response
-        return $device_status;
-    }
     /**
      * 
      * 
@@ -1362,7 +1344,7 @@ class GpsReportController extends Controller
         $offline_date_time  = date('Y-m-d H:i:s',strtotime("".'-'. config('eclipse.OFFLINE_DURATION').""));
 
         //get gps details based on imei
-        $gps_details        = (new Gps())->getDeviceHierarchyDetails($imei);
+        $gps_details        = (new Gps())->getDeviceDetailsBasedOnImei($imei);
         
         if( $gps_details->device_time <= $offline_date_time ) 
         {
@@ -1471,6 +1453,15 @@ class GpsReportController extends Controller
         {
             $gps_details->is_returned  = "NO";
         }
+        //REFURBISHED STATUS
+        if( $gps_details->refurbished_status == 1) 
+        {
+            $gps_details->refurbished_status  = "YES";
+        }
+        else
+        {
+            $gps_details->refurbished_status  = "NO";
+        }
         
 
         $last_location      = $this->getPlacenameFromLatLng($gps_details->lat,$gps_details->lon);
@@ -1478,6 +1469,99 @@ class GpsReportController extends Controller
         North Kalamassery, Kalamassery
         Kochi, Kerala 683503";
         return view('GpsReport::device-detailed-report-view', [ 'gps_details' => $gps_details, 'last_location' => $last_location ]);
+    }
+
+    /**
+     * 
+     * 
+     */
+    public function deviceReportDetailedViewOfVehicle(Request $request)
+    {
+        $gps_id                 = $request->gps_id;
+        $vehicle_details        = (new Vehicle())->getSingleVehicleDetailsBasedOnGps($gps_id);
+        if($vehicle_details->driver_id)
+        {
+            $driver_details     = (new Driver())->getDriverDetails($vehicle_details->driver_id);
+        }
+        $vehicle_driver_details = array( 'vehicle_details' => $vehicle_details, 'driver_details' => $driver_details);
+        return response()->json($vehicle_driver_details);
+    }
+
+    /**
+     * 
+     * 
+     */
+    public function deviceReportDetailedViewOfTransfer(Request $request)
+    {
+        $gps_id             = $request->gps_id;
+        $transfer_details   = (new GpsStock())->getTransactionDetailsBasedOnGps($gps_id);
+        return response()->json($transfer_details);
+    }
+
+    /**
+     * 
+     * 
+     */
+    public function deviceReportDetailedViewOfEndUser(Request $request)
+    {
+        $gps_id             = $request->gps_id;
+        $vehicle_details    = (new Vehicle())->getClientIdOfVehicle($gps_id);
+        ($vehicle_details->client_id) ? $owner_details = (new Client())->getClientDetailsOfVehicle($vehicle_details->client_id) : $owner_details = null;
+        $plan_names = array_column(config('eclipse.PLANS'), 'NAME', 'ID');
+        ($owner_details) ? $owner_details->user->role = ucfirst(strtolower($plan_names[$owner_details->user->role]))  : $owner_details->user->role = '-NA-'  ;
+        return response()->json($owner_details);
+    }
+
+    /**
+     * 
+     * 
+     */
+    public function deviceReportDetailedViewOfInstallation(Request $request)
+    {
+        $gps_id                 = $request->gps_id;
+        $installation_details   = (new ServicerJob())->getInstallationBasedOnGps($gps_id);
+        if( $installation_details )
+        {
+            if( $installation_details->status == 1 )
+            {
+                $installation_details->status = 'Pending';
+            }
+            else if( $installation_details->status == 2 )
+            {
+                $installation_details->status = 'In Progress';
+            }
+            else if( $installation_details->status == 3 )
+            {
+                $installation_details->status = 'Completed';
+            }
+        }
+        return response()->json($installation_details);
+    }
+
+    /**
+     * 
+     * 
+     */
+    public function deviceReportDetailedViewOfServices(Request $request)
+    {
+        $gps_id             = $request->gps_id;
+        $service_details    = (new ServicerJob())->getServiceDetailsBasedOnGps($gps_id);
+        // if($service_details)
+        // {
+        //     if( $service_details->status == 1 )
+        //     {
+        //         $service_details->status = 'Pending';
+        //     }
+        //     else if( $service_details->status == 2 )
+        //     {
+        //         $service_details->status = 'In Progress';
+        //     }
+        //     else if( $service_details->status == 3 )
+        //     {
+        //         $service_details->status = 'Completed';
+        //     }
+        // }
+        return response()->json($service_details);
     }
 
     /**

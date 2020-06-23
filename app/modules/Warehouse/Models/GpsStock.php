@@ -422,4 +422,27 @@ class GpsStock extends Model
                     ->where('is_returned',1);
     }
 
+    /**
+     * 
+     * 
+     */
+    public function getTransactionDetailsBasedOnGps($gps_id)
+    {
+        return self::select(
+                    'id',
+                    'inserted_by',
+                    'dealer_id',
+                    'subdealer_id',
+                    'trader_id',
+                    'client_id'
+                    )
+                    ->with('root:id,name')
+                    ->with('dealer:id,name')
+                    ->with('subdealer:id,name')
+                    ->with('trader:id,name')
+                    ->with('client:id,name')
+                    ->where('gps_id',$gps_id)
+                    ->first();
+    }
+
 }

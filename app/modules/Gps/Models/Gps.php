@@ -329,5 +329,14 @@ class Gps extends Model
         })
         ->count();
     }
+
+    /**
+     * 
+     * 
+     */
+    public function getDeviceDetailsBasedOnImei($imei)
+    {
+        return self::where('imei',$imei)->first();
+    }
     
 }

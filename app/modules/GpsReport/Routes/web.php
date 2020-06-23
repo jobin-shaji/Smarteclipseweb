@@ -36,5 +36,10 @@ Route::group(['middleware' => ['web','auth','role:operations'] , 'namespace' => 
     Route::get('/device-offline-report','GpsReportController@deviceOfflineReport')->name('device-offline-report');
     Route::get('/device-offline-report-downloads','GpsReportController@deviceOfflineReport')->name('device-offline-report-downloads');
     Route::get('/device-detailed-report/{imei}/view','GpsReportController@deviceReportDetailedView')->name('device-detailed-report-view');
+    Route::post('/device-detailed-report/vehicle-details','GpsReportController@deviceReportDetailedViewOfVehicle')->name('device-detailed-report-vehicle-details-view');
+    Route::post('/device-detailed-report/transfer-details','GpsReportController@deviceReportDetailedViewOfTransfer')->name('device-detailed-report-transfer-details-view');
+    Route::post('/device-detailed-report/end-user-details','GpsReportController@deviceReportDetailedViewOfEndUser')->name('device-detailed-report-end-user-details-view');
+    Route::post('/device-detailed-report/installation-details','GpsReportController@deviceReportDetailedViewOfInstallation')->name('device-detailed-report-installation-details-view');
+    Route::post('/device-detailed-report/services-details','GpsReportController@deviceReportDetailedViewOfServices')->name('device-detailed-report-services-details-view');
     
 });

@@ -480,5 +480,34 @@ class ServicerJob extends Model
                   ->count();
     }
 
+    /**
+     * 
+     * 
+     */
+    public function getInstallationBasedOnGps($gps_id)
+    {
+      return self::select('servicer_id','job_date','job_complete_date','status','location','description','comment')
+                  ->where('gps_id',$gps_id)
+                  ->where('job_type', 1)
+                  ->with('servicer')
+                  ->with('servicer.user')
+                  ->first();
+    }
+
+    /**
+     * 
+     * 
+     */
+    public function getServiceDetailsBasedOnGps($gps_id)
+    {
+      return self::select('servicer_id','job_date','job_complete_date','status','location','description','comment')
+                  ->where('gps_id',$gps_id)
+                  ->where('job_type', 2)
+                  ->with('servicer')
+                  ->with('servicer.user')
+                  ->orderBy('job_date','desc')
+                  ->get();
+    }
+
 }
 
