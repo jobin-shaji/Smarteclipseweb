@@ -18,47 +18,21 @@ trait UserTrait{
 
     public function getOriginalNameFromUserId($user_id)
     {
-        $manufacturer   =   (new Root())->checkUserIdIsInManufacturerTable($user_id);
-        if($manufacturer == null)
-        {
-            $distributor   =   (new Dealer())->checkUserIdIsInDistributorTable($user_id);
-            if($distributor == null)
-            {
-                $dealer   =   (new SubDealer())->checkUserIdIsInDealerTable($user_id);
-                if($dealer == null)
-                {
-                    $sub_dealer   =   (new Trader())->checkUserIdIsInSubDealerTable($user_id);
-                    if($sub_dealer == null)
-                    {
-                        $client   =   (new Client())->checkUserIdIsInClientTable($user_id);
-                        if($client == null)
-                        {
-                            return null;
-                        }
-                        else
-                        {
-                            return ucfirst(strtolower($client->name));
-                        }
-                    }
-                    else
-                    {
-                        return ucfirst(strtolower($sub_dealer->name));
-                    }
-                }
-                else
-                {
-                    return ucfirst(strtolower($dealer->name));
-                }
-            }
-            else
-            {
-                return ucfirst(strtolower($distributor->name));
-            }
-        }
-        else
-        {
-            return ucfirst(strtolower($manufacturer->name));
-        }
+        $user_details = DB::SELECT("select
+        case when isnull(cl.id)=0 then  cl.name
+        when isnull(dl.id)=0 then dl.name
+        when isnull(sb.id)=0 then sb.name
+        when isnull(td.id)=0 then td.name
+        when isnull(rs.id)=0 then rs.name
+        end as `name`
+        from users AS us
+        LEFT JOIN clients AS cl ON us.id =cl.user_id 
+        LEFT JOIN dealers AS dl ON us.id =dl.user_id
+        LEFT JOIN sub_dealers AS sb ON us.id=sb.user_id
+        LEFT JOIN traders AS td ON us.id=td.user_id
+        LEFT JOIN roots AS rs ON us.id=rs.user_id
+        where us.id =".$user_id);
+        return ucfirst(strtolower($user_details ? $user_details[0]->name : ""));
     }
 
 }
