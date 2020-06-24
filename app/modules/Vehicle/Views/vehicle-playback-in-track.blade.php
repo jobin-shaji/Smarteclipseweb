@@ -74,17 +74,7 @@
                               </div>
                            </div>
                         </div>
-                        <!-- <div class='col-sm-3'>
-                           <div class="form-group">
-                             <label style="font-weight:bold">End Date</label>
-                             <div class="input-group date <?php if(\Auth::user()->hasRole('superior')){ echo 'todatepickerSuperior'; }else if(\Auth::user()->hasRole('freebies')){ echo 'todatepickerFreebies'; } else if(\Auth::user()->hasRole('fundamental')){ echo 'todatepickerFundamental'; } else if(\Auth::user()->hasRole('pro')){ echo 'todatepickerPro'; } else{ echo 'todatepickerFreebies';}?>" id="<?php if(\Auth::user()->hasRole('superior')){ echo 'todatepickerSuperior'; }else if(\Auth::user()->hasRole('freebies')){ echo 'todatepickerFreebies'; } else if(\Auth::user()->hasRole('fundamental')){ echo 'todatepickerFundamental'; } else if(\Auth::user()->hasRole('pro')){ echo 'todatepickerPro'; } else{ echo 'todatepickerFreebies';}?>">
-                               <input type="text" id="toDate" style="height: 33px;"class="form-control" name="toDate" required>
-                               <span class="input-group-addon">
-                                 <span class="glyphicon glyphicon-calendar"></span>
-                               </span>
-                             </div>
-                           </div>
-                           </div> -->
+                     
                      </span>
                   </span>
                   <div class='col-sm-2'>
@@ -219,8 +209,8 @@
          new H.mapevents.Behavior(new H.mapevents.MapEvents(map)); // add behavior control
          var ui = H.ui.UI.createDefault(map, maptypes); // add UI
          
-         var location_data_que   =  new Array();
-         var location_details_que =  new Array();
+         var location_data_que        =  new Array();
+         var location_details_que     =  new Array();
          
          var offset                   = 0;
          var isDataLoadInProgress     = false;
@@ -230,19 +220,14 @@
          var previousCoorinates;
          var blacklineStyle;
          
-         
-         var playback_speed_rate  = 1;
-         var speed_val            = 1;
-         var load_speed           = 1;
-         var playback_speed_base  = 300;
-         var playback_speed       = playback_speed_base/playback_speed_rate;
+         var playback_speed_rate        = 1;
+         var speed_val                  = 1;
+         var load_speed                 = 1;
+         var playback_speed_base        = 300;
+         var playback_speed             = playback_speed_base/playback_speed_rate;
          var location_queue_lower_limit = 30;
-         var loader               = false;
-         
+         var loader                     = false;
          var mapUpdateInterval_location;
-         
-         
-         
          
          var gps_id            = $('#gps_id').val();
          var locationQueue       = [];
@@ -411,7 +396,7 @@
          
          function changePlaySpeed(speed){
           playback_speed_rate    = speed;
-          playback_speed_base    = 1000/speed;
+          playback_speed_base    = 100/speed;
           playback_speed         = playback_speed_base/playback_speed_rate;
           playback_speed_changed = true;
           if(playback_start == true)
@@ -546,8 +531,11 @@
          
                                )
              }
-           }
+           } 
+           
          }
+
+         
 
          var previous_vehicle_mode = null;
          function locationStore(data)
@@ -560,12 +548,15 @@
                     var current_vehicle_mode =  data[i].vehicleStatus;
          
                    if(first_set_data==true){
-                       firstCoods(data[i].latitude,data[i].longitude,data[i].angle,data[i].vehicleStatus);
+                       firstCoods(data[i].latitude,data[i].longitude,data[i].angle,data[i].vehicleStatus, data[i].dateTime);
                        previous_data={
-                                         "lat"   : data[i].latitude,
-                                         "lng"   : data[i].longitude,
-                                         "angle" : data[i].angle,
-                                         "mode"  : data[i].vehicleStatus
+                                         "lat"        : data[i].latitude,
+                                         "lng"        : data[i].longitude,
+                                         "angle"      : data[i].angle,
+                                         "mode"       : data[i].vehicleStatus,
+                                         "date_time"  : data[i].dateTime
+
+
                                      };
                          first_set_data = false;
                    }
@@ -581,12 +572,13 @@
                     }else{
          
                      if(first_set_data==true){
-                       firstCoods(data[i].latitude,data[i].longitude,data[i].angle,data[i].vehicleStatus);
+                       firstCoods(data[i].latitude,data[i].longitude,data[i].angle,data[i].vehicleStatus, data[i].dateTime);
                        previous_data={
-                                         "lat"   : data[i].latitude,
-                                         "lng"   : data[i].longitude,
-                                         "angle" : data[i].angle,
-                                         "mode"  : data[i].vehicleStatus
+                                         "lat"        : data[i].latitude,
+                                         "lng"        : data[i].longitude,
+                                         "angle"      : data[i].angle,
+                                         "mode"       : data[i].vehicleStatus,
+                                         "date_time"  : data[i].dateTime
                                      };
                          first_set_data = false;
                      }else{
@@ -596,7 +588,7 @@
                        var end = [data[i].latitude, data[i].longitude];
                        var total_distance = gis.calculateDistance(start, end);
          
-                       createNewCoods(data[i].latitude,data[i].longitude,data[i].angle,data[i].vehicleStatus,total_distance,previous_data);
+                       createNewCoods(data[i].latitude,data[i].longitude,data[i].angle,data[i].vehicleStatus,total_distance,previous_data,data[i].dateTime);
          
                        previous_data = {
                                          "lat"   : data[i].latitude,
@@ -644,19 +636,20 @@
              }
          }
          
-         function firstCoods(lat,lng,angle,mode){
+         function firstCoods(lat,lng,angle,mode,date_time){
             location_data_que.push({
-                               "lat"   : lat,
-                               "lng"   : lng,
-                               "angle" : angle,
-                               "mode"  : mode
+                               "lat"        : lat,
+                               "lng"        : lng,
+                               "angle"      : angle,
+                               "mode"       : mode,
+                               "date_time"  : date_time
                            });
-             moveMarker(angle,lat,lng,mode);
+             moveMarker(angle,lat,lng,mode,date_time);
          
          }
          
          
-         function createNewCoods(lat,lng,angle,mode,distance,previous_data){
+         function createNewCoods(lat,lng,angle,mode,distance,previous_data,date_time){
            var bearing   = angle;
            var start       = [previous_data['lat'],previous_data['lng']];
            var end       = [lat, lng];
@@ -672,10 +665,11 @@
                      if (pCoordinates != new_coord[0]) {
          
                          location_data_que.push({
-                               "lat"   : new_coord[0],
-                               "lng"   : new_coord[1],
-                               "angle" : angle,
-                               "mode"  : mode
+                               "lat"        : new_coord[0],
+                               "lng"        : new_coord[1],
+                               "angle"      : angle,
+                               "mode"       : mode,
+                               "date_time"  : date_time
                            });
          
          
@@ -728,7 +722,7 @@
          
          
          
-                     moveMarker(direction,endPointLatitude,endPointLongitude,vehicle_mode);
+                     moveMarker(direction,endPointLatitude,endPointLongitude,vehicle_mode,location_data_que[0].date_time);
                      addPolylineToMap(startPointLatitude,startPointLongitude,endPointLatitude,endPointLongitude);
                      // var from_Date      = $('#fromDate').val();
                      // var to_Date        = $('#toDate').val();
@@ -855,8 +849,8 @@
            ));
          }
          
-         function moveMarker(RotateDegree,lat,lng,vehicle_mode){
-             // console.log('mode '+vehicle_mode);
+         function moveMarker(RotateDegree,lat,lng,vehicle_mode,date_time){
+
              if ((bearsMarkeronStartPoint != null) && (blPlaceCaronMap == true)) {
                  map.removeObject(bearsMarkeronStartPoint);
                  blPlaceCaronMap = false;
@@ -891,8 +885,9 @@
                  icon: domIcon
              });
              map.addObject(bearsMarkeronStartPoint);
-             if(lat != undefined && lng != undefined){
-               alertPlotOnMap(lat,lng);
+             if(date_time != undefined){
+              
+               alertPlotOnMap(date_time);
               }
          
              blPlaceCaronMap = true;
@@ -1014,22 +1009,21 @@
          
          
          
-          function alertPlotOnMap(lat,lng){
-                 alertsQueue.find(function(x,i){
+          function alertPlotOnMap(date_time){
+                alertsQueue.find(function(x,i){
                 if(x != undefined)
                 {
-                  var start = [lat,lng];
-                  var end   = [x.lat, x.lng];
-                  var total_distance = gis.calculateDistance(start, end);
-                  if(total_distance < 1){
+                  if(date_time === x.date){
+                   
                       if(alertsQueue[i] != undefined){
+
                          addInfoBubble(alertsQueue[i].lat,alertsQueue[i].lng,alertsQueue[i].alert,alertsQueue[i].date)
                          }
                          alertsQueue.splice(0,1)[i];
          
                    }
                   }
-                 },lat,lng);
+                 });
              }
          
          
