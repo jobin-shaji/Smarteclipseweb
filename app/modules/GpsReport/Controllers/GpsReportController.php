@@ -1269,6 +1269,7 @@ class GpsReportController extends Controller
     public function deviceOnlineReport(Request $request)
     {
         $generated_by                   =   \Auth::user()->operations->name;
+        $logged_user_details            = (new Operations())->getOperatorDetails(\Auth::user()->operations->id);
         $online_limit_date              =   date('Y-m-d H:i:s',strtotime("-".config('eclipse.OFFLINE_DURATION').""));
         $current_time                   =   date('Y-m-d H:i:s');
         $device_status                  =   (isset($request->device_status) ) ? $request->device_status : 1;     
@@ -1285,7 +1286,7 @@ class GpsReportController extends Controller
         }
         if($download_type == 'pdf')
         {
-            $pdf                    =   PDF::loadView('GpsReport::device-online-report-download',[ 'device_online_report' => $device_online_report, 'generated_by' => $generated_by,'generated_on' => date("d/m/Y h:m:s A") ]);
+            $pdf                    =   PDF::loadView('GpsReport::device-online-report-download',[ 'device_online_report' => $device_online_report, 'generated_by' => $generated_by, 'manufactured_by' => ucfirst(strtolower($logged_user_details->root->name)).' '.'( Manufacturer )','generated_on' => date("d/m/Y h:m:s A") ]);
             return $pdf->download('device-online-report.pdf');
         }
         else
