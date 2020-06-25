@@ -235,7 +235,7 @@ class Gps extends Model
      * 
      * 
      */
-    public function getAllOfflineDevices($offline_date_time, $device_type = null,$download_type = null , $gps_id_of_active_vehicles = null)
+    public function getAllOfflineDevices($offline_date_time, $device_type = null,$download_type = null , $gps_id_of_active_vehicles = null ,$search_key=null)
     {
         $result =   self::select('id','imei','serial_no','device_time')
                     ->with('vehicleGps')
@@ -265,6 +265,13 @@ class Gps extends Model
                             ->orWhere('device_time', '<=' ,$offline_date_time);
                         });
                     }
+                    if( $search_key != null )
+                    {
+                        $result->where(function($query) use($search_key){
+                            $result = $query->Where('serial_no','like','%'.$search_key.'%')
+                            ->orWhere('imei','like','%'.$search_key.'%');                
+                        });  
+                    }  
         if($download_type == 'pdf')
         {
             return $result->get();   
@@ -278,7 +285,7 @@ class Gps extends Model
      * 
      * 
      */
-    public function getDeviceOnlineReport($online_limit_date,$current_time,$vehicle_status=null,$device_status=null,$gps_ids=null,$search_key=null)
+    public function getDeviceOnlineReport($online_limit_date,$current_time,$vehicle_status=null,$device_status=null,$gps_ids=null,$search_key=null,$download_type=null)
     {
         $query = self::select( 
             'id',
@@ -294,11 +301,11 @@ class Gps extends Model
         });
         
         ( $vehicle_status == null ) ? $query : $query->where('mode', $vehicle_status); 
-        if($device_status == 1)
+        if($device_status == config("eclipse.DEVICE_STATUS.TAGGED"))
         {
             $query = $query->whereIN('id',$gps_ids);
         }
-        else if($device_status == 2)
+        else if($device_status == config("eclipse.DEVICE_STATUS.UNTAGGED"))
         {
             $query = $query->whereNotIn('id',$gps_ids);
         }
@@ -309,7 +316,13 @@ class Gps extends Model
                 ->orWhere('imei','like','%'.$search_key.'%');                
             });  
         }  
-        return $query->paginate(10);
+        if($download_type == 'pdf')
+        {
+            return $query->get();   
+        }else
+        {
+            return $query->paginate(10);   
+        }    
     }
     /**
      * online offline Report count

@@ -36,4 +36,10 @@ return array(
       'UNTAGGED'           => '2',
       'NOT_YET_ACTIVATED'  => '3'
    ],
+    //PLAN BASED CONFIGURATIONS
+    'VEHICLE_STATUS'  => [
+      'MOVING'             => 'M',
+      'HALT'               => 'H',
+      'SLEEP'              => 'S'
+   ],
 );
