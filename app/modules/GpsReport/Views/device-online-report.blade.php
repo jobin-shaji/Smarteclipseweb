@@ -34,9 +34,9 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                                                             <div class="form-group">
                                                                 <label> Device Status</label>
                                                                 <select class="form-control select2"  name="device_status" data-live-search="true" title="Select Device Status" id='device_status'  required>
-                                                                    <option value="0" @if($device_status==0) selected="selected" @endif>ALL</option>
-                                                                    <option value="1"  @if($device_status==1) selected="selected" @endif>TAGGED</option>
-                                                                    <option value="2"  @if($device_status==2) selected="selected" @endif>UNTAGGED</option>
+                                                                    <option value='{{config("eclipse.DEVICE_STATUS.ALL")}}' @if($device_status==config("eclipse.DEVICE_STATUS.ALL")){{"selected"}} @endif>ALL</option>
+                                                                    <option value='{{config("eclipse.DEVICE_STATUS.TAGGED")}}' @if($device_status==config("eclipse.DEVICE_STATUS.TAGGED")){{"selected"}} @endif>TAGGED</option>
+                                                                    <option value='{{config("eclipse.DEVICE_STATUS.UNTAGGED")}}' @if($device_status==config("eclipse.DEVICE_STATUS.UNTAGGED")){{"selected"}} @endif>UNTAGGED</option>
                                                                 </select>
                                                                 @if ($errors->has('device_status'))
                                                                     <span class="help-block">
@@ -50,9 +50,9 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                                                                 <label> Vehicle Status</label>
                                                                 <select class="form-control select2"  name="vehicle_status" data-live-search="true" title="Select Vehicle Status" id='vehicle_status'  required>
                                                                     <option disabled selected="selected">Select Status</option>
-                                                                    <option value="M"  @if($vehicle_status=='M') selected="selected" @endif>Moving</option>
-                                                                    <option value="H"  @if($vehicle_status=='H') selected="selected" @endif>Halt</option>
-                                                                    <option value="S"  @if($vehicle_status=='S') selected="selected" @endif>Sleep</option>
+                                                                    <option value='{{config("eclipse.VEHICLE_STATUS.MOVING")}}'  @if($vehicle_status==config("eclipse.VEHICLE_STATUS.MOVING")){{"selected"}} @endif>Moving</option>
+                                                                    <option value='{{config("eclipse.VEHICLE_STATUS.HALT")}}'  @if($vehicle_status==config("eclipse.VEHICLE_STATUS.HALT")){{"selected"}} @endif>Halt</option>
+                                                                    <option value='{{config("eclipse.VEHICLE_STATUS.SLEEP")}}'  @if($vehicle_status==config("eclipse.VEHICLE_STATUS.SLEEP")){{"selected"}} @endif>Sleep</option>
                                                                 </select>
                                                                 @if ($errors->has('vehicle_status'))
                                                                     <span class="help-block">
