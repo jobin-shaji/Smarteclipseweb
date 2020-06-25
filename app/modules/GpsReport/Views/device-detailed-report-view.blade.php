@@ -349,6 +349,8 @@
                                     </thead>
                                 </table>
                             </div>
+                              <!-- /transfer details -->
+                            <!-- transfer history details -->
                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 location_and_last_updated_section">                       
                                 </br>
                                 <label>Transfer History</label>
@@ -368,7 +370,7 @@
                             </div>
                         </div>              
                     </div>
-                    <!-- /transfer details -->
+                  <!-- /transfer history details -->
 
                     <!-- alert details -->
                     <div id="alert_details_section" class="tab-pane fade">
