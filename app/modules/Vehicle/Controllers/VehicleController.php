@@ -2461,9 +2461,9 @@ class VehicleController extends Controller
         $url = config('eclipse.urls.ms_alerts');
         $url = $url."/get-alerts-between-dates";
         $alert_data = [
-                        'vehicle_id'                                  => (string)$vehicle_id,
-                        'start_date'                                  => (string)$from_date,
-                        'end_date'                                    => (string)$to_date
+                        'vehicle_id'              => (string)$vehicle_id,
+                        'start_date'              => (string)$from_date,
+                        'end_date'                => (string)$to_date
                     ];
         
         $fields = json_encode ( $alert_data );
