@@ -1275,16 +1275,17 @@ class GpsReportController extends Controller
         $current_time                   =   date('Y-m-d H:i:s');
         $device_status                  =   (isset($request->device_status) ) ? $request->device_status : 1;     
         $download_type                  =   ( isset($request->type) ) ? $request->type : null;
+        $search_key                     =   ( isset($request->search_key) ) ? $request->search_key : null;
         $gps_ids                        =   (new Vehicle())->getAllVehiclesWithUnreturnedGps();
         $vehicle_status                 =   (isset($request->vehicle_status) ) ? $request->vehicle_status : null;      
-        if($vehicle_status == '')
-        {
-            $device_online_report       =   (new GPS())->getDeviceOnlineReport($online_limit_date,$current_time,$vehicle_status,$device_status,$gps_ids);
-        }
-        else
-        {
-            $device_online_report       =   (new GPS())->getDeviceOnlineReport($online_limit_date,$current_time,$vehicle_status,$device_status,$gps_ids);           
-        }
+        // if($vehicle_status == '')
+        // {
+            $device_online_report       =   (new GPS())->getDeviceOnlineReport($online_limit_date,$current_time,$vehicle_status,$device_status,$gps_ids,$search_key);
+        // }
+        // else
+        // {
+        //     $device_online_report       =   (new GPS())->getDeviceOnlineReport($online_limit_date,$current_time,$vehicle_status,$device_status,$gps_ids);           
+        // }
         if($download_type == 'pdf')
         {
             $pdf                    =   PDF::loadView('GpsReport::device-online-report-download',[ 'device_online_report' => $device_online_report, 'generated_by' => $generated_by,'generated_on' => date("d/m/Y h:m:s A") ]);
@@ -1292,7 +1293,7 @@ class GpsReportController extends Controller
         }
         else
         {
-            return view('GpsReport::device-online-report',['device_online_report'=>$device_online_report,'device_status'=>$device_status,'vehicle_status'=>$vehicle_status]);    
+            return view('GpsReport::device-online-report',['device_online_report'=>$device_online_report,'device_status'=>$device_status,'vehicle_status'=>$vehicle_status,'search_key'=>$search_key]);    
         }
     }
 

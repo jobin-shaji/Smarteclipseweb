@@ -278,7 +278,7 @@ class Gps extends Model
      * 
      * 
      */
-    public function getDeviceOnlineReport($online_limit_date,$current_time,$vehicle_status=null,$device_status=null,$gps_ids=null)
+    public function getDeviceOnlineReport($online_limit_date,$current_time,$vehicle_status=null,$device_status=null,$gps_ids=null,$search_key=null)
     {
         $query = self::select( 
             'id',
@@ -292,6 +292,7 @@ class Gps extends Model
             $query->where('is_returned', '=', 0)
             ->orWhere('is_returned', '=', NULL);
         });
+        
         ( $vehicle_status == null ) ? $query : $query->where('mode', $vehicle_status); 
         if($device_status == 1)
         {
@@ -300,6 +301,13 @@ class Gps extends Model
         else if($device_status == 2)
         {
             $query = $query->whereNotIn('id',$gps_ids);
+        }
+        if( $search_key != null )
+        {
+            $query->where(function($query) use($search_key){
+                $query = $query->Where('serial_no','like','%'.$search_key.'%')
+                ->orWhere('imei','like','%'.$search_key.'%');                
+            });  
         }  
         return $query->paginate(10);
     }

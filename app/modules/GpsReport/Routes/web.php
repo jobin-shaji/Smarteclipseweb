@@ -30,7 +30,8 @@ Route::group(['middleware' => ['web','auth','role:operations'] , 'namespace' => 
     //online reports
     Route::get('/device-online-report','GpsReportController@deviceOnlineReport')->name('device-online-report');
     Route::get('/device-online-report-downloads','GpsReportController@deviceOnlineReport')->name('device-online-report-downloads');
-
+    // Route::get('/gps-returned-report','GpsReportController@gpsReturnedReport')->name('gps-returned-report');
+    
 
     //offline reports
     Route::get('/device-offline-report','GpsReportController@deviceOfflineReport')->name('device-offline-report');
