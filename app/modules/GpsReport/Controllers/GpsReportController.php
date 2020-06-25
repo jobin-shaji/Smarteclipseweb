@@ -17,14 +17,23 @@ use App\Modules\Driver\Models\Driver;
 use App\Modules\Servicer\Models\ServicerJob;
 use App\Modules\Operations\Models\Operations;
 use App\Modules\Vehicle\Models\VehicleGps;
+use App\Modules\VltData\Models\VltData;
+use App\Modules\Ota\Models\OtaResponse;
 use Illuminate\Support\Facades\Crypt;
 use App\Http\Traits\UserTrait;
+use App\Http\Traits\MqttTrait;
 use DataTables;
 use DB;
 use PDF;
 
 class GpsReportController extends Controller 
 {
+    /**
+     * 
+     * 
+     *
+     */
+    use MqttTrait;
     /**
      * 
      * 
@@ -1463,12 +1472,8 @@ class GpsReportController extends Controller
         {
             $gps_details->refurbished_status  = "NO";
         }
-        
-
+        //get location based on latlng
         $last_location      = $this->getPlacenameFromLatLng($gps_details->lat,$gps_details->lon);
-        $last_location      = "HMT Colony
-        North Kalamassery, Kalamassery
-        Kochi, Kerala 683503";
         return view('GpsReport::device-detailed-report-view', [ 'gps_details' => $gps_details, 'last_location' => $last_location ]);
     }
 
@@ -1480,9 +1485,29 @@ class GpsReportController extends Controller
     {
         $gps_id                 = $request->gps_id;
         $vehicle_details        = (new Vehicle())->getSingleVehicleDetailsBasedOnGps($gps_id);
+        //THEFT MODE
+        if( $vehicle_details->theft_mode == 1) 
+        {
+            $vehicle_details->theft_mode  = "Enabled";
+        }
+        else
+        {
+            $vehicle_details->theft_mode  = "Disabled";
+        }
+        //TOWING STATUS
+        if( $vehicle_details->towing == 1) 
+        {
+            $vehicle_details->towing  = "Enabled";
+        }
+        else
+        {
+            $vehicle_details->towing  = "Disabled";
+        }
         if($vehicle_details->driver_id)
         {
             $driver_details     = (new Driver())->getDriverDetails($vehicle_details->driver_id);
+            ( $driver_details->points > 100 ) ? $driver_details->points = 100 : $driver_details->points;
+            ( $driver_details->points < 0 )   ? $driver_details->points = 0 : $driver_details->points;
         }
         $vehicle_driver_details = array( 'vehicle_details' => $vehicle_details, 'driver_details' => $driver_details);
         return response()->json($vehicle_driver_details);
@@ -1547,22 +1572,48 @@ class GpsReportController extends Controller
     {
         $gps_id             = $request->gps_id;
         $service_details    = (new ServicerJob())->getServiceDetailsBasedOnGps($gps_id);
-        // if($service_details)
-        // {
-        //     if( $service_details->status == 1 )
-        //     {
-        //         $service_details->status = 'Pending';
-        //     }
-        //     else if( $service_details->status == 2 )
-        //     {
-        //         $service_details->status = 'In Progress';
-        //     }
-        //     else if( $service_details->status == 3 )
-        //     {
-        //         $service_details->status = 'Completed';
-        //     }
-        // }
         return response()->json($service_details);
+    }
+    
+    /**
+     * 
+     * 
+     */
+    public function deviceReportDetailedViewSetOta(Request $request)
+    {
+        $gps_id     = $request->gps_id;
+        $command    = $request->command;
+        $imei       = $request->imei;
+        $response   = (new OtaResponse())->saveCommandsToDevice($gps_id,$command);
+        if($response)
+        {
+            $is_command_write_to_device =   (new OtaResponse())->writeCommandToDevice($imei,$command);
+            if($is_command_write_to_device)
+            {
+                $this->topic            =   $this->topic.'/'.$imei;
+                $is_mqtt_publish        =   $this->mqttPublish($this->topic, $command);
+                if ($is_mqtt_publish === true) 
+                {
+                    $request->session()->flash('message','Command send successfully..');
+                    $request->session()->flash('alert-class','alert-success');
+                }
+            }
+            
+        }
+        $request->session()->flash('message','Send command to device is failed!! Please try again..');
+        $request->session()->flash('alert-class','alert-success');
+        return  redirect(route('device-detailed-report-view',encrypt($imei)));
+    }
+
+    /**
+     * 
+     * 
+     */
+    public function deviceReportDetailedViewConsole(Request $request)
+    {
+        $imei       = $request->imei;
+        $packets    = (new VltData())->getProcessedAndUnprocessedDataFromDynamicTableVltData($imei);
+        return response()->json($packets);
     }
 
     /**

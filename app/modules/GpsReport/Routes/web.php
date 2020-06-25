@@ -43,5 +43,7 @@ Route::group(['middleware' => ['web','auth','role:operations'] , 'namespace' => 
     Route::post('/device-detailed-report/installation-details','GpsReportController@deviceReportDetailedViewOfInstallation')->name('device-detailed-report-installation-details-view');
     Route::post('/device-detailed-report/services-details','GpsReportController@deviceReportDetailedViewOfServices')->name('device-detailed-report-services-details-view');
     Route::post('/device-detailed-report/transfer-history-details','GpsReportController@deviceReportDetailedViewOfTransferHistory')->name('device-detailed-report-transfer-history-details-view');
+    Route::post('/device-detailed-report/set-ota','GpsReportController@deviceReportDetailedViewSetOta')->name('device-detailed-report-view-set-ota');
+    Route::post('/device-detailed-report/get-console','GpsReportController@deviceReportDetailedViewConsole')->name('device-detailed-report-view-console');
 
 });

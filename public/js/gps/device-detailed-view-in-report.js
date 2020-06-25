@@ -17,25 +17,43 @@ function getVehicleDetailsBasedOnGps()
             var vehicle_category;
             var engine_number;
             var chassis_number;
+            var vehicle_model;
+            var vehicle_make;
+            var vehicle_theft_mode;
+            var vehicle_towing_mode;
+            var vehicle_created_on;
             var driver_name;
             var driver_address;
             var driver_mobile;
+            var driver_score;
             (res.vehicle_details.name) ? vehicle_name = res.vehicle_details.name : vehicle_name = "-NA-";
             (res.vehicle_details.register_number) ? vehicle_registration_number = res.vehicle_details.register_number : vehicle_registration_number = "-NA-";
             (res.vehicle_details.vehicle_type) ? vehicle_category = res.vehicle_details.vehicle_type.name : vehicle_category = "-NA-";
             (res.vehicle_details.engine_number) ? engine_number = res.vehicle_details.engine_number : engine_number = "-NA-";
             (res.vehicle_details.chassis_number) ? chassis_number = res.vehicle_details.chassis_number : chassis_number = "-NA-";
+            (res.vehicle_details.vehicle_models) ? vehicle_model = res.vehicle_details.vehicle_models.name : vehicle_model = "-NA-";
+            (res.vehicle_details.vehicle_models.vehicle_make) ? vehicle_make = res.vehicle_details.vehicle_models.vehicle_make.name : vehicle_make = "-NA-";
+            (res.vehicle_details.theft_mode) ? vehicle_theft_mode = res.vehicle_details.theft_mode : vehicle_theft_mode = "-NA-";
+            (res.vehicle_details.towing) ? vehicle_towing_mode = res.vehicle_details.towing : vehicle_towing_mode = "-NA-";
+            (res.vehicle_details.created_at) ? vehicle_created_on = res.vehicle_details.created_at : vehicle_created_on = "-NA-";
             (res.driver_details.name) ? driver_name = res.driver_details.name : driver_name = "-NA-";
             (res.driver_details.address) ? driver_address = res.driver_details.address : driver_address = "-NA-";
             (res.driver_details.mobile) ? driver_mobile = res.driver_details.mobile : driver_mobile = "-NA-";
+            (res.driver_details.points != 'null') ? driver_score = res.driver_details.points : driver_score = "-NA-";
             document.getElementById("vehicle_name").innerHTML = vehicle_name;
             document.getElementById("vehicle_registration_number").innerHTML = vehicle_registration_number;
             document.getElementById("vehicle_category").innerHTML = vehicle_category;
             document.getElementById("engine_number").innerHTML = engine_number;
             document.getElementById("chassis_number").innerHTML = chassis_number;
+            document.getElementById("vehicle_model").innerHTML = vehicle_model;
+            document.getElementById("vehicle_make").innerHTML = vehicle_make;
+            document.getElementById("vehicle_theft_mode").innerHTML = vehicle_theft_mode;
+            document.getElementById("vehicle_towing_mode").innerHTML = vehicle_towing_mode;
+            document.getElementById("vehicle_created_on").innerHTML = vehicle_created_on;
             document.getElementById("driver_name").innerHTML = driver_name;
             document.getElementById("driver_address").innerHTML = driver_address;
             document.getElementById("driver_mobile").innerHTML = driver_mobile;
+            document.getElementById("driver_score").innerHTML = driver_score;
         }
     });
 }
@@ -96,18 +114,18 @@ function getTransferHistoryBasedOnGps()
             $.each(res,function(key , item){ 
                 var transfer_log = item.gps_transfer_detail;
                 $.each(transfer_log,function(item_key , item_value){ 
-                    console.log(item_value);
-                    tbody += "<tr>"+
+                     
+                    tbody += (item_value.deleted_at) ?  "<tr style='background:#d98b8b'>" : "<tr style='background:#f5f5f5'>" + 
                                 "<td>"+item_value.from_user.username+"</td>"+
                                 "<td>"+item_value.to_user.username+"</td>"+
                                 "<td>"+item_value.dispatched_on+"</td>"+
                                 "<td>"+item_value.accepted_on+"</td>"+
                             "</tr>";
-                });             
+                });     
             });           
             if(res.length == 0)
             {
-                tbody = '<td colspan ="10"> No data available</td>';
+                tbody = '<td colspan ="4"> No data available</td>';
             }
             transfer_table.html(tbody);
         }
@@ -269,3 +287,40 @@ function getServiceDetailsBasedOnGps()
         }
     });
 }
+
+function getRealTimePackets(imei)
+{
+    
+    var data = { 'imei':imei };
+    var url = '/device-detailed-report/get-console';
+    $.ajax({
+        type: 'POST',
+        url: url,
+        data: data,
+        async: true,
+        headers: {
+            'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function(res) {
+            var packets_in_console  = $("#packets_in_console").find('tbody');
+            var tbody               = "";
+            packets_in_console.html("");
+            $.each(res,function(item_key , item_value){ 
+                    
+                tbody += "<tr>" + 
+                            "<td>"+item_value.vltdata+"</td>"+
+                            "<td>"+item_value.created_at+"</td>"+
+                        "</tr>";
+            });              
+            if(res.length == 0)
+            {
+                tbody = '<td colspan ="2"> No data available</td>';
+            }
+            packets_in_console.html(tbody);
+        }
+    });
+}
+
+$("#packets_in_console").delegate('tr', 'click', function() {
+    alert(jQuery(this).find('td').html());
+});
