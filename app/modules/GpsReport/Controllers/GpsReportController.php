@@ -1587,4 +1587,13 @@ class GpsReportController extends Controller
             return false;
         }
     }
+    /**
+     * 
+     */
+    public function deviceReportDetailedViewOfTransferHistory(Request $request)
+    {
+        $gps_id             = $request->gps_id;
+        $transfer_details   = (new GpsTransferItems())->getTransferDetailsBasedOnGps($gps_id);
+        return response()->json($transfer_details);
+    }
 }

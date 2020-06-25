@@ -71,6 +71,47 @@ function getTransferDetailsBasedOnGps()
             document.getElementById("client").innerHTML = client;
         }
     });
+    getTransferHistoryBasedOnGps();
+}
+
+function getTransferHistoryBasedOnGps()
+{
+    var gps_id = document.getElementById('gps_id').value;
+    var data = { 'gps_id':gps_id };
+    var url = '/device-detailed-report/transfer-history-details';
+    $.ajax({
+        type: 'POST',
+        url: url,
+        data: data,
+        async: true,
+        headers: {
+            'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function(res) {
+      
+            var transfer_table      = $("#transfer_history").find('tbody');
+            var tbody               = "";
+            transfer_table.html("");
+
+            $.each(res,function(key , item){ 
+                var transfer_log = item.gps_transfer_detail;
+                $.each(transfer_log,function(item_key , item_value){ 
+                    console.log(item_value);
+                    tbody += "<tr>"+
+                                "<td>"+item_value.from_user.username+"</td>"+
+                                "<td>"+item_value.to_user.username+"</td>"+
+                                "<td>"+item_value.dispatched_on+"</td>"+
+                                "<td>"+item_value.accepted_on+"</td>"+
+                            "</tr>";
+                });             
+            });           
+            if(res.length == 0)
+            {
+                tbody = '<td colspan ="10"> No data available</td>';
+            }
+            transfer_table.html(tbody);
+        }
+    });
 }
 
 function getOwnerDetailsBasedOnGps()
@@ -177,27 +218,54 @@ function getServiceDetailsBasedOnGps()
             'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
         },
         success: function(res) {
-            console.log(res);
+            
             var table       = $("#service_details").find('tbody');
             var tbody       = "";
+            table.html("");
+            var comments;
             $.each(res,function(key , each_data){ 
-                tbody += "<tr>"+
-                                "<td>"+(each_data.servicer) ? res.servicer.name : "-NA-"+"</td>"+
-                                "<td>"+(each_data.servicer) ? res.servicer.address : "-NA-"+"</td>"+
-                                "<td>"+(each_data.servicer.user) ? res.servicer.user.mobile : "-NA-"+"</td>"+
-                                "<td>"+(each_data.servicer.user) ? res.servicer.user.email : "-NA-"+"</td>"+
-                                "<td>"+(res.job_date) ? res.job_date : "-NA-"+"</td>"+
-                                "<td>"+(res.status) ? res.status : "-NA-"+"</td>"+
-                                "<td>"+(res.job_complete_date) ? res.job_complete_date : "-NA-"+"</td>"+
-                                "<td>"+(res.location) ? res.location : "-NA-"+"</td>"+
-                                "<td>"+(res.description) ?  res.description : "-NA-"+"</td>"+
-                                "<td>"+(res.comments) ? res.comments : "-NA-"+"</td>"+
-                            "</tr>";
-            });
+            if(each_data.status == 1 )
+            {
+                var status  = 'Pending';
+            }
+            else if(each_data.status == 2 )
+            {
+                var status  = 'In Progress';
+            }
+            else if(each_data.status == 3 )
+            {
+                var status  =  'Completed';
+            }
+            else{
+                var status  =  '-NA-';
+            }
+            var servicer_name=(each_data.servicer) ? each_data.servicer.name : "-NA-";
+            var servicer_address=(each_data.servicer) ? each_data.servicer.address : "-NA-";
+            var servicer_mobile=(each_data.servicer.user) ? each_data.servicer.user.mobile : "-NA-";
+            var servicer_email=(each_data.servicer.user) ? each_data.servicer.user.email : "-NA-";
+            var job_date=(each_data.job_date) ? each_data.job_date : "-NA-";
+            var job_complete_date=(each_data.job_complete_date) ? each_data.job_complete_date : "-NA-";
+            var location=(each_data.location) ? each_data.location : "-NA-";
+            var description=(each_data.description) ?  each_data.description : "-NA-";
+            var comment=(each_data.comments) ? each_data.comments : "-NA-";                
+            tbody += "<tr>"+
+                            "<td>"+servicer_name+"</td>"+
+                            "<td>"+servicer_address +"</td>"+
+                            "<td>"+servicer_mobile +"</td>"+
+                            "<td>"+servicer_email+"</td>"+
+                            "<td>"+job_date +"</td>"+
+                            "<td>"+status+"</td>"+
+                            "<td>"+job_complete_date+"</td>"+
+                            "<td>"+location+"</td>"+
+                            "<td>"+description+"</td>"+
+                            "<td>"+comment+"</td>"+
+                        "</tr>";
+            });           
             if(res.length == 0)
             {
                 tbody = '<td colspan ="10"> No data available</td>';
             }
+            table.html(tbody);
         }
     });
 }

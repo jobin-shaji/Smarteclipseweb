@@ -309,36 +309,64 @@
                                     <td><b>Comments</b></td>
                                 </tr>                                          
                             </thead>
+                            <tbody> 
+                                                                                             
+                            </tbody>
                         </table>                
                     </div>
                     <!-- /service details -->
 
                     <!-- /transfer details -->
                     <div id="transfer_details_section" class="tab-pane fade">
-                        <table class="table table-borderless tables_in_tab_section" >
-                            <thead>
-                                <tr class="success" >
-                                    <td><b>Manufacturer</b></td>
-                                    <td id = 'manufacturer'></td>
-                                </tr>                
-                                <tr>
-                                    <td><b>Distributor</b></td>
-                                    <td id = 'dealer'></td>
-                                </tr>                
-                                <tr class="success" >
-                                    <td><b>Dealer</b></td>
-                                    <td id = 'subdealer'></td>
-                                </tr>                
-                                <tr>
-                                    <td><b>Sub Dealer</b></td>
-                                    <td id = 'trader'></td>
-                                </tr>  
-                                <tr class="success" >
-                                    <td><b>End User</b></td>
-                                    <td id = 'client'></td>
-                                </tr>                    
-                            </thead>
-                        </table>                
+                        <div class="row">
+                            <!-- location -->
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 location_and_last_updated_section">          
+                                </br>
+                                <label>Transfer Details</label>
+                                </br>
+                                <table class="table table-borderless tables_in_tab_section" >
+                                    <thead>
+                                        <tr class="success" >
+                                            <td><b>Manufacturer</b></td>
+                                            <td id = 'manufacturer'></td>
+                                        </tr>                
+                                        <tr>
+                                            <td><b>Distributor</b></td>
+                                            <td id = 'dealer'></td>
+                                        </tr>                
+                                        <tr class="success" >
+                                            <td><b>Dealer</b></td>
+                                            <td id = 'subdealer'></td>
+                                        </tr>                
+                                        <tr>
+                                            <td><b>Sub Dealer</b></td>
+                                            <td id = 'trader'></td>
+                                        </tr>  
+                                        <tr class="success" >
+                                            <td><b>End User</b></td>
+                                            <td id = 'client'></td>
+                                        </tr>                    
+                                    </thead>
+                                </table>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 location_and_last_updated_section">                       
+                                </br>
+                                <label>Transfer History</label>
+                                </br>
+                                <table  id ="transfer_history" class="table table-borderless tables_in_tab_section" >
+                                    <thead>
+                                        <tr class="success" >                                    
+                                            <td>From User</td>
+                                            <td>To User</td>                                        
+                                            <td>Dispatched On</td>
+                                            <td>Accepted On</td>                                                                                                                               
+                                        </tr>                    
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>              
                     </div>
                     <!-- /transfer details -->
 
@@ -390,10 +418,7 @@
         border: 0px solid transparent; 
     }
 
-    /* .nav-pills>li{float:left}.nav-pills>li>a{border-radius:4px}.nav-pills>li+li{margin-left:2px}.nav-pills>li.active>a,.nav-pills>li.active>a:focus,.nav-pills>li.active>a:hover{color:#fff;
-        background-color:#337ab7}
-        .nav-pills>.active>a>.badge{color:#337ab7;background-color:#fff}.list-group-item>.badge{float:right}.list-group-item>.badge+.badge{margin-right:5px}.nav-pills>li>a> */
-    /* #buttons li {
+   /* #buttons li {
     float: left;
     list-style: none;
     text-align: center;
@@ -414,9 +439,11 @@
     background-color: #33B5E5;
     }  */
 </style>
+<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> -->
+  <link rel="stylesheet" href="{{asset('dist/css/device-status.css')}}">
+    
 @section('script')
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="{{asset('js/gps/device-detailed-view-in-report.js')}}"></script>
 @endsection
