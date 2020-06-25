@@ -301,11 +301,11 @@ class Gps extends Model
         });
         
         ( $vehicle_status == null ) ? $query : $query->where('mode', $vehicle_status); 
-        if($device_status == 1)
+        if($device_status == config("eclipse.DEVICE_STATUS.TAGGED"))
         {
             $query = $query->whereIN('id',$gps_ids);
         }
-        else if($device_status == 2)
+        else if($device_status == config("eclipse.DEVICE_STATUS.UNTAGGED"))
         {
             $query = $query->whereNotIn('id',$gps_ids);
         }
