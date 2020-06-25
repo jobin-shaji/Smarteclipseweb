@@ -66,6 +66,7 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                                                             <div class="form-group">
                                                                 <button type="submit" class="btn btn-sm btn-info btn2 srch search-btn " > <i class="fa fa-search"></i> </button>
                                                                 <a  href="device-online-report" class="btn btn-primary">Clear</a>
+                                                                
                                                             </div>
                                                         </div>
                                                     </div>
@@ -74,25 +75,22 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                                             </form> 
                                         </div>                            
                                         @if(count($device_online_report) != 0)
-                                        <!-- <button class="btn btn-xs" style='margin-left: 1000px;'><i class='fa fa-download'></i>
-                                            <a href="device-online-report-downloads?type=pdf&device_status={{$device_status}}&vehicle_status={{$vehicle_status}}" style="color:white">Download Report</a>
-                                            </button> -->
                                             <form method="GET" action="{{route('device-online-report')}}" class="search-top">
                                                 {{csrf_field()}}
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <div class="row">
-                                                            <div class="col-md-6" style="width: 300px; margin-left: 415px; margin-bottom: 15px;">
+                                                            <div class="col-md-6 device_search" style="">
                                                             <input type="hidden" name="device_status" id="device_status" value="{{$device_status}}">
                                                             <input type="hidden" name="vehicle_status" id="vehicle_status" value="{{$vehicle_status}}">
                                                                 <input type="text" class="form-control" placeholder="Search Here.." name="search_key" id="search_key" autocomplete='off' value="{{$search_key}}">
                                                             </div>
 
-                                                            <div class="col-md-4" style="margin-left: 10px;">
+                                                            <div >
                                                                 <button type="submit"  class="btn btn-primary search_data_list" id='search_submit' title='Enter IMEI, Serial Number, Manufacturer Name, Distributor Name, Dealer Name, Sub Dealer Name, End User Name, Service Engineer Name, Returned On'>Search</button>
                                                                 <button type="button" class="btn btn-primary search_data_list" onclick="clearSearch()">Clear</button>
                                                                 <button class="btn btn-xs" ><i class='fa fa-download'></i>
-                                                                    <a href="device-online-report-downloads?type=pdf&device_status={{$device_status}}&vehicle_status={{$vehicle_status}}" style="color:white">Download Report</a>
+                                                                    <a href="device-online-report-downloads?type=pdf&device_status={{$device_status}}&vehicle_status={{$vehicle_status}}&search_key={{$search_key}}" style="color:white">Download Report</a>
                                                                 </button>
                                                             </div>
                                                              
@@ -162,8 +160,22 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
         margin-left: 153px;
         padding: 15px;
     }
+    .device_search {
+        width: 174px;
+        margin-left: 710px;
+        margin-bottom: 15px;
+    }
     
 </style>
 
+@section('script')
+    <script type="text/javascript">
+        function clearSearch()
+        {
+            document.getElementById('search_key').value = '';
+            $("#search_submit").click();
+        }
+    </script>
+@endsection
 @endsection
 

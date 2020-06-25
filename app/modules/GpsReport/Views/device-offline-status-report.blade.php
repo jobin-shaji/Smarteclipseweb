@@ -70,9 +70,30 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                                             </form> 
                                         </div> 
                                         @if(count($offline_devices) != 0)
-                                            <button class="btn btn-xs" style='margin-left: 1000px;margin-bottom: 20px;'><i class='fa fa-download'></i>
-                                                <a href="device-offline-report-downloads?type=pdf&device_type={{$device_type}}&offline_duration={{$offline_duration}}" style="color:white">Download Report</a>
-                                            </button>
+                                           
+                                            <form method="GET" action="{{route('device-offline-report')}}" class="search-top">
+                                                {{csrf_field()}}
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="row">
+                                                            <div class="col-md-6 device_search" style="">
+                                                            <input type="hidden" name="device_type" id="device_type" value="{{$device_type}}">
+                                                            <input type="hidden" name="offline_duration" id="offline_duration" value="{{$offline_duration}}">
+                                                                <input type="text" class="form-control" placeholder="Search Here.." name="search_key" id="search_key" autocomplete='off' value="{{$search_key}}">
+                                                            </div>
+
+                                                            <div>
+                                                                <button type="submit"  class="btn btn-primary search_data_list" id='search_submit' title='Enter IMEI, Serial Number, Manufacturer Name, Distributor Name, Dealer Name, Sub Dealer Name, End User Name, Service Engineer Name, Returned On'>Search</button>
+                                                                <button type="button" class="btn btn-primary search_data_list" onclick="clearSearch()">Clear</button>
+                                                                <button class="btn btn-xs" style='margin-bottom: 20px;'><i class='fa fa-download'></i>
+                                                                    <a href="device-offline-report-downloads?type=pdf&device_type={{$device_type}}&offline_duration={{$offline_duration}}&search_key={{$search_key}}" style="color:white">Download Report</a>
+                                                                </button>
+                                                            </div>
+                                                             
+                                                        </div>
+                                                    </div>  
+                                                </div>
+                                            </form>
                                         @endif
                                         <div class="row col-md-6 col-md-offset-2">
                                             <table class="table table-bordered">
@@ -129,9 +150,21 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
         background-color: #59607b;
         border-color: #59607b;
     } 
+    .device_search {
+        width: 174px;
+        margin-left: 710px;
+        margin-bottom: 15px;
+    }
 </style>
 
 @section('script')
+    <script type="text/javascript">
+        function clearSearch()
+        {
+            document.getElementById('search_key').value = '';
+            $("#search_submit").click();
+        }
+    </script>
     <script src="{{asset('js/gps/mdb.js')}}"></script>
     <script src="{{asset('js/gps/plan-based-report-chart.js')}}"></script>
 @endsection
