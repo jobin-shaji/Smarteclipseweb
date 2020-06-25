@@ -46,7 +46,7 @@ class OverSpeedReportController extends Controller
         {
             $single_vehicle_gps_ids[]   =   $vehicle_gps_id->gps_id;
         }
-        $query                          =   (new Alert())->getOverspeedAlerts($single_vehicle_gps_ids); 
+        $query                          =   (())->getOverspeedAlerts($single_vehicle_gps_ids); 
         if($from_date)
         {
             $search_from_date           =   date("Y-m-d", strtotime($from_date));
