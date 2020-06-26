@@ -420,15 +420,18 @@ class SubDealerController extends Controller {
     {
         if(\Auth::user()->hasRole('sub_dealer'))
         {
-            $subdealer_trader_id  =   \Auth::user()->subdealer->id;
-            $clients        =   Client::select('id','name')->where('sub_dealer_id',$subdealer_trader_id)->get();
+            $subdealer_trader_id    =   \Auth::user()->subdealer->id;
+            $clients                =   Client::select('id','name')->where('sub_dealer_id',$subdealer_trader_id)->get();
         }
         elseif(\Auth::user()->hasRole('trader'))
         {
-            $subdealer_trader_id  =   \Auth::user()->trader->id;
-            $clients        =   Client::select('id','name')->where('trader_id',$subdealer_trader_id)->get();
+            $subdealer_trader_id    =   \Auth::user()->trader->id;
+            $clients                =   Client::select('id','name')->where('trader_id',$subdealer_trader_id)->get();
         }
-        return view('SubDealer::temporary-certificate-create',['user_id' => $subdealer_trader_id,'clients' => $clients]);
+        return view('SubDealer::temporary-certificate-create',[
+            'user_id' => $subdealer_trader_id,
+            'clients' => $clients
+            ]);
     }
 
     public function getOwner(Request $request)
@@ -484,8 +487,18 @@ class SubDealerController extends Controller {
         $install_date = date("Y-m-d", strtotime($request->job_date));
         if($install_date < $expires)
         {
+
+         
+            if($request->client != null)
+            {
+                $client_name = $request->client;
+            }else
+            {
+                $client_name = $request->user_enter_name; 
+            }
+            
             $detail['plan_name']                                =   $request->plan;
-            $detail['client_name']                              =   $request->client;
+            $detail['client_name']                              =   $client_name;
             $detail['imei']                                     =   $request->imei;
             $detail['device_model']                             =   $request->model;
             $detail['manufacturer_name']                        =   $request->manufacturer;
