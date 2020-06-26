@@ -1285,18 +1285,35 @@ class GpsReportController extends Controller
         $current_time                   =   date('Y-m-d H:i:s');
         $device_status                  =   (isset($request->device_status) ) ? $request->device_status : 1;     
         $download_type                  =   ( isset($request->type) ) ? $request->type : null;
-        $search_key                     =   ( isset($request->search_key) ) ? $request->search_key : null;
+        // $search_key                     =   ( isset($request->search_key) ) ? $request->search_key : null;
+        $search                         =   ( isset($request->search) ) ? $request->search : null;     
+        
         $gps_ids                        =   (new Vehicle())->getAllVehiclesWithUnreturnedGps();
         $vehicle_status                 =   (isset($request->vehicle_status) ) ? $request->vehicle_status : null;      
-        $device_online_report           =   (new GPS())->getDeviceOnlineReport($online_limit_date,$current_time,$vehicle_status,$device_status,$gps_ids,$search_key,$download_type);
+        $device_online_report           =   (new GPS())->getDeviceOnlineReport($online_limit_date,$current_time,$vehicle_status,$device_status,$gps_ids,$search,$download_type);
+    //   dd($device_online_report);
+       
         if($download_type == 'pdf')
         {
-            $pdf                        =   PDF::loadView('GpsReport::device-online-report-download',[ 'device_online_report' => $device_online_report, 'generated_by' => $generated_by, 'manufactured_by' => ucfirst(strtolower($logged_user_details->root->name)).' '.'( Manufacturer )','generated_on' => date("d/m/Y h:m:s A") ]);
-            return $pdf->download('device-online-report.pdf');
+            if($device_online_report->count()>0)
+            {
+                $pdf                        =   PDF::loadView('GpsReport::device-online-report-download',[ 'device_online_report' => $device_online_report, 'generated_by' => $generated_by, 'manufactured_by' => ucfirst(strtolower($logged_user_details->root->name)).' '.'( Manufacturer )','generated_on' => date("d/m/Y h:m:s A") ]);
+                return $pdf->download('device-online-report.pdf');
+            }
+            else{
+               return view('GpsReport::device-online-report',['device_online_report'=>$device_online_report,'device_status'=>$device_status,'vehicle_status'=>$vehicle_status,'search'=>$search]);    
+            }
+            
+        }  
+        else if($request->ajax())
+        {
+            
+            return ($device_online_report != null) ? Response([ 'links' => $device_online_report->appends(['sort' => 'votes'])]) : Response([ 'links' => null]);
         }
         else
         {
-            return view('GpsReport::device-online-report',['device_online_report'=>$device_online_report,'device_status'=>$device_status,'vehicle_status'=>$vehicle_status,'search_key'=>$search_key]);    
+            // dd($search);
+            return view('GpsReport::device-online-report',['device_online_report'=>$device_online_report,'device_status'=>$device_status,'vehicle_status'=>$vehicle_status,'search'=>$search]);    
         }
     }
 
@@ -1309,7 +1326,9 @@ class GpsReportController extends Controller
         $device_type            = ( isset($request->device_type) ) ? $request->device_type : config("eclipse.DEVICE_STATUS.TAGGED");
         $offline_duration       = ( isset($request->offline_duration) ) ? $request->offline_duration : null;
         $download_type          = ( isset($request->type) ) ? $request->type : null;
-        $search_key             = ( isset($request->search_key) ) ? $request->search_key : null;
+        // $search_key          = ( isset($request->search_key) ) ? $request->search_key : null;
+        $search_key             =   ( isset($request->search) ) ? $request->search : null;     
+       
         $logged_user_details    = (new Operations())->getOperatorDetails(\Auth::user()->operations->id);
 
         if($offline_duration == null )
@@ -1327,13 +1346,25 @@ class GpsReportController extends Controller
             $gps_id_of_active_vehicles      = (new Vehicle())->getAllVehiclesWithUnreturnedGps();
         }
         $offline_devices                    = (new Gps())->getAllOfflineDevices($offline_date_time, $device_type, $download_type , $gps_id_of_active_vehicles,$search_key);
-        if( $download_type == 'pdf' )
+        
+        if( $download_type == 'pdf')
         {
-            $pdf    =   PDF::loadView('GpsReport::device-offline-status-report-download',[ 'offline_devices' => $offline_devices, 'offline_duration' => $offline_duration, 'device_type' => $device_type, 'generated_by' => ucfirst(strtolower($logged_user_details->root->name)).' '.'( Manufacturer )', 'user_generated_by' => $logged_user_details->name, 'generated_on' => date("d/m/Y h:i:s A") ]);
-            return $pdf->download('device-offline-status-report.pdf');
+            if($offline_devices->count()>0)
+            {
+                $pdf    =   PDF::loadView('GpsReport::device-offline-status-report-download',[ 'offline_devices' => $offline_devices, 'offline_duration' => $offline_duration, 'device_type' => $device_type, 'generated_by' => ucfirst(strtolower($logged_user_details->root->name)).' '.'( Manufacturer )', 'user_generated_by' => $logged_user_details->name, 'generated_on' => date("d/m/Y h:i:s A") ]);
+                return $pdf->download('device-offline-status-report.pdf');
+            }
+            else{
+                return view('GpsReport::device-offline-status-report', [ 'offline_devices' => $offline_devices, 'offline_duration' => $offline_duration, 'device_type' => $device_type]);
+            }
+        }
+        else if($request->ajax())
+        {            
+            return ($offline_devices != null) ? Response([ 'links' => $offline_devices->appends(['sort' => 'votes'])]) : Response([ 'links' => null]);
         }
         else
         {
+            
             return view('GpsReport::device-offline-status-report', [ 'offline_devices' => $offline_devices, 'offline_duration' => $offline_duration, 'device_type' => $device_type, 'search_key' => $search_key ]);
         }
     }

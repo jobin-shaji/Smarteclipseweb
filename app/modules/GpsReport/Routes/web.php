@@ -31,11 +31,13 @@ Route::group(['middleware' => ['web','auth','role:operations'] , 'namespace' => 
     Route::get('/device-online-report','GpsReportController@deviceOnlineReport')->name('device-online-report');
     Route::get('/device-online-report-downloads','GpsReportController@deviceOnlineReport')->name('device-online-report-downloads');
     // Route::get('/gps-returned-report','GpsReportController@gpsReturnedReport')->name('gps-returned-report');
-    
+    Route::get('/device-search','GpsReportController@deviceOnlineReport')->name('gps-online-search');
+
 
     //offline reports
     Route::get('/device-offline-report','GpsReportController@deviceOfflineReport')->name('device-offline-report');
     Route::get('/device-offline-report-downloads','GpsReportController@deviceOfflineReport')->name('device-offline-report-downloads');
+    Route::get('/device-offline-search','GpsReportController@deviceOfflineReport')->name('gps-offline-search');
     Route::get('/device-detailed-report/{imei}/view','GpsReportController@deviceReportDetailedView')->name('device-detailed-report-view');
     Route::post('/device-detailed-report/vehicle-details','GpsReportController@deviceReportDetailedViewOfVehicle')->name('device-detailed-report-vehicle-details-view');
     Route::post('/device-detailed-report/transfer-details','GpsReportController@deviceReportDetailedViewOfTransfer')->name('device-detailed-report-transfer-details-view');
