@@ -14,6 +14,12 @@
         <!-- /breadcrumbs -->
 
         <div class="container-fluid">
+            <!-- console modal button-->
+            @if($gps_details->device_status == '#c41900')
+                <button class="btn-sm console_view img-responsive pull-right" onclick="return getRealTimePackets({{$gps_details->imei}})" data-toggle="modal" data-target="#consoleModal"><i class='fa fa-arrow-left'></i></button>
+            @endif
+            <!-- /console modal button-->
+
             <!-- section 1 -->
             <div class="box-part text-center section_1">
                 <!-- IMEI and serial number -->
@@ -51,21 +57,24 @@
                             <td><b>Fuel Status</b></td>
                             <td><b>Speed</b></td>             
                             <td><b>Main Power Status</b></td>
+                            <td><b>Number Of Satellites</b></td>
+                            <td><b>Battery Percentage</b></td>
                             <td><b>Ignition ON/OFF</b></td>               
                             <td><b>Gsm Signal Strength </b></td>
                             <td><b>GPS FIX</b></td>
-                            <td><b>A/C Status</b></td>               
-                        </tr>   
+                            <td><b>A/C Status</b></td>    
                         <tr>
                             <td><?php ( isset($gps_details->mode) ) ? $mode = $gps_details->mode : $mode='-NA-' ?>{{$mode}}</td>
                             <td><?php ( isset($gps_details->network_status) ) ? $network_status = $gps_details->network_status : $network_status='-NA-' ?>{{$network_status}}</td>               
                             <td><?php ( isset($gps_details->fuel_status) ) ? $fuel_status = $gps_details->fuel_status : $fuel_status='-NA-' ?>{{$fuel_status}}</td>
                             <td><?php ( isset($gps_details->speed) ) ? $speed = $gps_details->speed.' km/h' : $speed='-NA-' ?>{{$speed}}</td>             
                             <td><?php ( isset($gps_details->main_power_status) ) ? $main_power_status = $gps_details->main_power_status : $main_power_status='-NA-' ?>{{$main_power_status}}</td>
+                            <td><?php ( isset($gps_details->no_of_satellites) ) ? $no_of_satellites = $gps_details->no_of_satellites : $no_of_satellites='-NA-' ?>{{$no_of_satellites}}</td>
+                            <td><?php ( isset($gps_details->battery_status) ) ? $battery_status = $gps_details->battery_status : $battery_status='-NA-' ?>{{$battery_status}}</td>  
                             <td><?php ( isset($gps_details->ignition) ) ? $ignition = $gps_details->ignition : $ignition='-NA-' ?>{{$ignition}}</td>               
                             <td><?php ( isset($gps_details->gsm_signal_strength) ) ? $gsm_signal_strength = $gps_details->gsm_signal_strength : $gsm_signal_strength='-NA-' ?>{{$gsm_signal_strength}}</td>
                             <td><?php ( isset($gps_details->gps_fix_on) ) ? $gps_fix_on = $gps_details->gps_fix_on : $gps_fix_on='-NA-' ?>{{$gps_fix_on}}</td>           
-                            <td><?php ( isset($gps_details->ac_status) ) ? $ac_status = $gps_details->ac_status : $ac_status='-NA-' ?>{{$ac_status}}</td>               
+                            <td><?php ( isset($gps_details->ac_status) ) ? $ac_status = $gps_details->ac_status : $ac_status='-NA-' ?>{{$ac_status}}</td>      
                         </tr>                
                     </thead>
                 </table>
@@ -88,18 +97,29 @@
                 <!-- /basic device details - alert based -->               
             </div>
             <!-- /section 1 -->
+            
             <!-- section 2 -->
             <div class="container">
+                <!-- message section -->
+                @if(Session::has('message'))
+                    <div class="pad margin no-print">
+                        <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 1!important;">
+                            {{ Session::get('message') }}  
+                        </div>
+                    </div>
+                @endif  
+                <!-- /message section -->
                 <!-- tabs -->
                 <ul class="nav nav-pills" id="buttons">
                     <li class="active"><a data-toggle="pill" href="#device_details_section">Device Details</a></li>
                     <input type = 'hidden' name = 'gps_id' id = 'gps_id' value = "{{$gps_details->id}}" >
                     <li><a data-toggle="pill" href="#vehicle_details_section" onclick="getVehicleDetailsBasedOnGps()">Vehicle Details</a></li>
-                    <li><a data-toggle="pill" href="#end_user_details_section" onclick="getOwnerDetailsBasedOnGps()">End User Details</a></li>
+                    <li><a data-toggle="pill" href="#end_user_details_section" onclick="getOwnerDetailsBasedOnGps()">Owner Details</a></li>
                     <li><a data-toggle="pill" href="#transfer_details_section" onclick="getTransferDetailsBasedOnGps()">Transfer Details</a></li>
                     <li><a data-toggle="pill" href="#installation_details_section" onclick="getInstallationDetailsBasedOnGps()">Installation Details</a></li>
                     <li><a data-toggle="pill" href="#service_details_section" onclick="getServiceDetailsBasedOnGps()">Service Details</a></li>
                     <li><a data-toggle="pill" href="#alert_details_section" onclick="getAlertDetailsBasedOnGps()"> Alerts</a></li>
+                    <li><a data-toggle="pill" href="#set_ota_section" onclick="setOtaInGps()"> Set OTA</a></li>
                 </ul>
                 <!-- /tabs --> 
                 <!-- tab contents -->
@@ -145,6 +165,14 @@
                                     <td><?php ( isset($gps_details->version) ) ? $version = $gps_details->version : $version='-NA-' ?>{{$version}}</td>
                                 </tr> 
                                 <tr>
+                                    <td><b>Calibrated On</b></td>
+                                    <td><?php ( isset($gps_details->calibrated_on) ) ? $calibrated_on = $gps_details->calibrated_on : $calibrated_on='-NA-' ?>{{$calibrated_on}}</td>
+                                </tr>      
+                                <tr class="success" >
+                                    <td><b>Login On</b></td>
+                                    <td><?php ( isset($gps_details->login_on) ) ? $login_on = $gps_details->login_on : $login_on='-NA-' ?>{{$login_on}}</td>
+                                </tr> 
+                                <tr>
                                     <td><b>Employee Code</b></td>
                                     <td><?php ( isset($gps_details->employee_code) ) ? $employee_code = $gps_details->employee_code : $employee_code='-NA-' ?>{{$employee_code}}</td>
                                 </tr> 
@@ -155,7 +183,11 @@
                                 <tr>
                                     <td><b>Refurbished Device</b></td>
                                     <td><?php ( isset($gps_details->refurbished_status) ) ? $refurbished_status = $gps_details->refurbished_status : $refurbished_status='-NA-' ?>{{$refurbished_status}}</td>
-                                </tr>                       
+                                </tr>    
+                                <tr class="success" >
+                                    <td><b>GPS Created On</b></td>
+                                    <td><?php ( isset($gps_details->created_at) ) ? $created_at = $gps_details->created_at : $created_at='-NA-' ?>{{$created_at}}</td>         
+                                </tr>                     
                             </thead>
                         </table>   
                     </div>
@@ -186,17 +218,41 @@
                                     <td id = 'chassis_number'></td>
                                 </tr>     
                                 <tr>
+                                    <td><b>Vehicle Model</b></td>
+                                    <td id = 'vehicle_model'></td>
+                                </tr>                
+                                <tr class="success" >
+                                    <td><b>Vehicle Manufacturers</b></td>
+                                    <td id = 'vehicle_make'></td>
+                                </tr>                
+                                <tr>
+                                    <td><b>Anti Theft Mode</b></td>
+                                    <td id = 'vehicle_theft_mode'></td>
+                                </tr>      
+                                <tr class="success" >
+                                    <td><b>Towing Mode</b></td>
+                                    <td id = 'vehicle_towing_mode'></td>
+                                </tr>  
+                                <tr>
+                                    <td><b>Created On</b></td>
+                                    <td id = 'vehicle_created_on'></td>
+                                </tr>  
+                                <tr class="success">
                                     <td><b>Driver Name</b></td>
                                     <td id = 'driver_name'></td>
                                 </tr> 
-                                <tr class="success" >
+                                <tr>
                                     <td><b>Address</b></td>
                                     <td id = 'driver_address'></td>
                                 </tr>                
-                                <tr>
+                                <tr class="success" >
                                     <td><b>Mobile Number</b></td>
                                     <td id = 'driver_mobile'></td>
-                                </tr>                                
+                                </tr>    
+                                <tr>
+                                    <td><b>Driver Score</b></td>
+                                    <td id = 'driver_score'></td>
+                                </tr>                               
                             </thead>
                         </table>                
                     </div>
@@ -370,7 +426,7 @@
                             </div>
                         </div>              
                     </div>
-                  <!-- /transfer history details -->
+                    <!-- /transfer history details -->
 
                     <!-- alert details -->
                     <div id="alert_details_section" class="tab-pane fade">
@@ -384,6 +440,29 @@
                         </table>                
                     </div>
                     <!-- /alert details -->
+
+                    <!-- Set OTA section -->
+                    <div id="set_ota_section" class="tab-pane fade">
+                        <form method="POST" id="form1" action="{{route('device-detailed-report-view-set-ota')}}">
+                        {{csrf_field()}}
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <input type="hidden" name="gps_id" id="gps_id" value="{{$gps_details->id}}">
+                                        <input type="hidden" name="imei" id="imei" value="{{$gps_details->imei}}">
+                                        <div class="form-group row" style="float:none!important">
+                                            <label class="col-sm-3 text-right control-label col-form-label">Command:</label>
+                                            <div class="form-group has-feedback">
+                                                <textarea class="form-control" name="command" id="command" rows=5 required></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary">POST</button>
+                        </form>              
+                    </div>
+                    <!-- /Set OTA section -->
                 </div>
                 <!-- /tab contents -->
             </div>    
@@ -392,6 +471,28 @@
     </div>
 </section>
 
+<!-- console modal -->
+<div class="modal bottom fade" id="consoleModal" tabindex="-1" role="dialog" aria-labelledby="modelForConsole">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><i class="fa fa-arrow-right" aria-hidden="true"></i></button>
+            </div>
+
+            <div class="modal-body">
+                <table class="table table-borderless tables_in_tab_section" id = 'packets_in_console'>
+                    <tbody> 
+                                                                                        
+                    </tbody>
+                </table>      
+                
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- /console modal -->
 
 <style>
     .section_1
@@ -419,27 +520,66 @@
     {
         border: 0px solid transparent; 
     }
-
-   /* #buttons li {
-    float: left;
-    list-style: none;
-    text-align: center;
-    background-color: #65A6D8;
-    margin-right: 30px;
-    width: 150px;
-    line-height: 60px;
+    .console_view
+    {
+        background-color: #0b0a0a;
+        color: #fdfcfc;
     }
-    #buttons li a {
-    text-decoration: none;
-    color: #FFFFFF;
-    display: block;
+    /*******************************
+    * MODAL AS BOTTOM SIDEBAR
+    *******************************/
+	.modal.bottom .modal-dialog {
+		position: fixed;
+		margin: auto;
+	}
+	.modal.bottom .modal-content {
+		height: 100%;
+		overflow-y: auto;
+        background-color: #040404;
+        color: #fffbfb;
+        font-weight: bold;
+        width:100% !important;
+        max-width:100% !important;
     }
 
-    #buttons li a:hover {
-    text-decoration: none;
-    color: #000000;
-    background-color: #33B5E5;
-    }  */
+    .modal-header
+    {
+        background-color: #fffbfb;
+    }
+
+    /*Bottom*/
+	.modal.bottom.fade .modal-dialog {
+		bottom: -320px;
+		-webkit-transition: opacity 0.3s linear, bottom 0.3s ease-out;
+		   -moz-transition: opacity 0.3s linear, bottom 0.3s ease-out;
+		     -o-transition: opacity 0.3s linear, bottom 0.3s ease-out;
+		        transition: opacity 0.3s linear, bottom 0.3s ease-out;
+	}
+	
+	.modal.bottom.fade.in .modal-dialog {
+		bottom: 0;
+	}
+
+    /* #buttons li {
+        float: left;
+        list-style: none;
+        text-align: center;
+        background-color: #65A6D8;
+        margin-right: 30px;
+        width: 150px;
+        line-height: 60px;
+        }
+        #buttons li a {
+        text-decoration: none;
+        color: #FFFFFF;
+        display: block;
+        }
+
+        #buttons li a:hover {
+        text-decoration: none;
+        color: #000000;
+        background-color: #33B5E5;
+        }  */
 </style>
 <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> -->
   <link rel="stylesheet" href="{{asset('dist/css/device-status.css')}}">

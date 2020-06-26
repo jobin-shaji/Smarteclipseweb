@@ -53,7 +53,6 @@ class GpsTransferItems extends Model
             ->where('gps_id', $gps_id)
             ->with('gpsTransferDetail.fromUser')
             ->with('gpsTransferDetail.toUser')
-
             ->get();
     }
     

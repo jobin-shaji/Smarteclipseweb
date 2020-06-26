@@ -177,21 +177,11 @@ class Vehicle extends Model
 
     public function getSingleVehicleDetailsBasedOnGps($gps_id)
     {
-        return self::select(
-                    'id',
-                    'name',
-                    'register_number',
-                    'vehicle_type_id',
-                    'engine_number',
-                    'chassis_number',
-                    'gps_id',
-                    'driver_id',
-                    'is_returned',
-                    'is_reinstallation_job_created'
-                    )
-                    ->where('gps_id',$gps_id)
+        return self::where('gps_id',$gps_id)
                     ->with('driver')
                     ->with('vehicleType:id,name')
+                    ->with('vehicleModels')
+                    ->with('vehicleModels.vehicleMake')
                     ->withTrashed()
                     ->first();
     }
