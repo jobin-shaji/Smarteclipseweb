@@ -144,7 +144,7 @@ class VltData extends Model
         {
             $packets =  self::select('id','vltdata','created_at')
                             ->orderBy('created_at','DESC')
-                            ->get();
+                            ->take(10)->get();
         }
         return $packets;
     }

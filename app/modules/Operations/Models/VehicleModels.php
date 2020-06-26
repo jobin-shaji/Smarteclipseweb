@@ -12,5 +12,10 @@ class VehicleModels extends Model
 	public function vehicleMake()
   	{
     	return $this->hasOne('App\Modules\Operations\Models\VehicleMake','id','vehicle_make_id');
+	}
+	  
+	public function vehicleMakeWithTrashed()
+  	{
+    	return $this->hasOne('App\Modules\Operations\Models\VehicleMake','id','vehicle_make_id')->withTrashed();
   	}
 }

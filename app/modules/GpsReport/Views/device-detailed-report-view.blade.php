@@ -14,12 +14,6 @@
         <!-- /breadcrumbs -->
 
         <div class="container-fluid">
-            <!-- console modal button-->
-            @if($gps_details->device_status == '#c41900')
-                <button class="btn-sm console_view img-responsive pull-right" onclick="return getRealTimePackets({{$gps_details->imei}})" data-toggle="modal" data-target="#consoleModal"><i class='fa fa-arrow-left'></i></button>
-            @endif
-            <!-- /console modal button-->
-
             <!-- section 1 -->
             <div class="box-part text-center section_1">
                 <!-- IMEI and serial number -->
@@ -430,14 +424,31 @@
 
                     <!-- alert details -->
                     <div id="alert_details_section" class="tab-pane fade">
-                        <table class="table table-borderless tables_in_tab_section" >
+                        <table class="table table-borderless tables_in_tab_section" id = 'alert_details'>
                             <thead>
                                 <tr class="success" >
-                                    <td><b>Vehicle Name</b></td>
-                                    <td></td>
-                                </tr>                               
+                                    <th><b>SL.No</b></th>
+                                    <th><b>Alert Type</b></th>                             
+                                    <th><b>Date & Time</b></th>  
+                                    <th><b>Location</b></th>        
+                                </tr>                                          
                             </thead>
-                        </table>                
+                            <tbody> 
+                                                                                      
+                            </tbody>
+                        </table>  
+                        <!-- loader -->
+                        <div class="loader-wrapper loader-1"  style="display:none">
+                          <div id="loader"></div>
+                        </div> 
+                        <!-- /loader -->
+
+                        <!-- pagination -->
+                        <div class="row float-right">
+                          <div class="col-md-12 " id="alert-list-pagination">
+                          </div>
+                        </div>  
+                        <!-- /pagination -->             
                     </div>
                     <!-- /alert details -->
 
@@ -467,28 +478,29 @@
                 <!-- /tab contents -->
             </div>    
             <!-- /section 2 -->  
+            <!-- console modal button-->
+            <button class="btn-sm console_view img-responsive pull-right" onclick="return openConsole({{$gps_details->imei}})" data-toggle="modal" data-target="#consoleModal">CONSOLE <i class='fa fa-arrow-up'></i></button>
+            <!-- /console modal button-->
         </div>
     </div>
 </section>
 
 <!-- console modal -->
 <div class="modal bottom fade" id="consoleModal" tabindex="-1" role="dialog" aria-labelledby="modelForConsole">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-1-test" role="document">
         <div class="modal-content">
-
+            <!-- console model header -->
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><i class="fa fa-arrow-right" aria-hidden="true"></i></button>
+                <button type="button" class="close"onclick="closeConsole()" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i></button>
             </div>
+            <!-- /console model header -->
 
+            <!-- console model body -->
             <div class="modal-body">
-                <table class="table table-borderless tables_in_tab_section" id = 'packets_in_console'>
-                    <tbody> 
-                                                                                        
-                    </tbody>
-                </table>      
-                
+                <div id="loading-indicator" class="hide-loading-indicator">Loading latest records...</div>
+                <div class="each_packets"></div>
             </div>
-
+            <!-- /console model body -->
         </div>
     </div>
 </div>
@@ -525,6 +537,10 @@
         background-color: #0b0a0a;
         color: #fdfcfc;
     }
+    .each_packets
+    {
+        word-break: break-all;
+    }
     /*******************************
     * MODAL AS BOTTOM SIDEBAR
     *******************************/
@@ -533,20 +549,47 @@
 		margin: auto;
 	}
 	.modal.bottom .modal-content {
-		height: 100%;
-		overflow-y: auto;
-        background-color: #040404;
-        color: #fffbfb;
-        font-weight: bold;
+        /* background-color: #040404;
+        color: #fffbfb; */
+        border-radius: 0px;
         width:100% !important;
         max-width:100% !important;
+        height:250px !important;
+        overflow-x: hidden;
+        overflow-y: scroll;
+    }
+    .modal.bottom .modal-content #loading-indicator{
+        text-align: center;
+        font-size: 10px;
+    }
+    .show-loading-indicator{
+        visibility:visible;
+    }
+    .hide-loading-indicator{
+        visibility: hidden;
+    }
+    .modal.bottom .modal-content .row{
+        border-bottom:1px solid #f5f5f5;
+        padding-top:5px;
+        padding-bottom:5px;
+        line-height:25px;
+    }
+    .modal.bottom .modal-content .time{
+        padding-left:15px;
     }
 
     .modal-header
     {
         background-color: #fffbfb;
+        padding:6px !important;
     }
-
+    .modal-1-test
+    {
+        width: 100% !important;
+        float: left;
+        max-width: 100% !important;
+        max-height: 250px !important;
+    }
     /*Bottom*/
 	.modal.bottom.fade .modal-dialog {
 		bottom: -320px;

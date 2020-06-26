@@ -165,8 +165,6 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
             $("#search_submit").click();
         }
     </script>
-    <script src="{{asset('js/gps/mdb.js')}}"></script>
-    <script src="{{asset('js/gps/plan-based-report-chart.js')}}"></script>
 @endsection
 @endsection
 
