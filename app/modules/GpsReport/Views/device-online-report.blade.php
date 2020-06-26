@@ -79,12 +79,12 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                                             <form method="GET" action="{{route('device-online-report')}}" class="search-top">
                                                 {{csrf_field()}}
                                                 <!-- filter section -->
-                                                <div class="row border">
+                                                <div class="row ">
                                                     <!-- search -->
-                                                    <div class="col-lg-5 border">
+                                                    <div class="col-lg-5 ">
                                                         <input type="hidden" name="device_status" id="device_status" value="{{$device_status}}">
                                                         <input type="hidden" name="vehicle_status" id="vehicle_status" value="{{$vehicle_status}}">                                                           
-                                                        <input type="text" class="form-controller" id="search" name="search"value="" placeholder="Search here..."></input>
+                                                        <input type="text" class="form-controller" id="search" name="search"value="" placeholder="IMEI or Serial number"></input>
                                                     </div>
                                                     <!-- /search -->
                                                     <!-- download button -->
