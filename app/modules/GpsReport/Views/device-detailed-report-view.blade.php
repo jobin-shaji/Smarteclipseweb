@@ -440,9 +440,8 @@
                         </table>                
                     </div>
                     <!-- /alert details -->
-
                     <!-- Set OTA section -->
-                    <div id="set_ota_section" class="tab-pane fade">
+                    <div id="set_ota_section" class="panel">
                         <form method="POST" id="form1" action="{{route('device-detailed-report-view-set-ota')}}">
                         {{csrf_field()}}
                             <div class="modal-body">
@@ -463,6 +462,7 @@
                         </form>              
                     </div>
                     <!-- /Set OTA section -->
+                    
                 </div>
                 <!-- /tab contents -->
             </div>    
