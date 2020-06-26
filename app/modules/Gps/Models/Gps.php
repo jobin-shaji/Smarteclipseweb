@@ -238,7 +238,8 @@ class Gps extends Model
     public function getAllOfflineDevices($offline_date_time, $device_type = null,$download_type = null , $gps_id_of_active_vehicles = null ,$search_key=null)
     {
         $result =   self::select('id','imei','serial_no','device_time')
-                    ->with('vehicleGps')
+                    // ->with('vehicleGps')
+                    ->with('vehicleGps.vehicle.client')
                     ->with('gpsStock')
                     ->where(function ($query) {
                         $query->where('is_returned', '=', 0)
