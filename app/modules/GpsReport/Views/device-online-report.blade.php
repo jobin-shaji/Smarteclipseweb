@@ -267,6 +267,7 @@ $.ajaxSetup({ headers: { 'csrftoken' : '{{ csrf_token() }}' } });
           });
     }
     </script>
+      
 @endsection
 @endsection
 
