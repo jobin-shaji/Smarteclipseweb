@@ -714,7 +714,7 @@
     .operation-header
     {
         width: 100%;
-        padding: 0px 5px 0px 0;
+        padding: 0px 5px 0px 0 !important;
         margin-left: -50px;
     }
 

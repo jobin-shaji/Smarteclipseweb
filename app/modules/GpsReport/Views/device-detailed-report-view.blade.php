@@ -279,7 +279,7 @@
                             <!-- location -->
                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 location_and_last_updated_section">          
                                 </br>
-                                <label>Transfer Details</label>
+                                <label>Transfer Overview</label>
                                 </br>
                                 <table class="table table-borderless tables_in_tab_section" >
                                     <tbody>
@@ -313,10 +313,10 @@
                                 <table  id ="transfer_history" class="table table-borderless tables_in_tab_section" >
                                     <thead>
                                         <tr class="success" >                                    
-                                            <td>From User</td>
-                                            <td>To User</td>                                        
-                                            <td>Dispatched On</td>
-                                            <td>Accepted On</td>                                                                                                                               
+                                            <td><b>From User</b></td>
+                                            <td><b>To User</b></td>                                        
+                                            <td><b>Dispatched On</b></td>
+                                            <td><b>Accepted On</b></td>                                                                                                                               
                                         </tr>                    
                                     </thead>
                                     <tbody>
@@ -381,11 +381,11 @@
                                 <tr class="success" >
                                     <td><b>Service Engineer Name</b></td>
                                     <td><b>Address</b></td>
-                                    <td><b>MObile Number</b></td>
+                                    <td><b>Mobile Number</b></td>
                                     <td><b>Email</b></td>
                                     <td><b>Job Date</b></td>
                                     <td><b>Job Status</b></td>
-                                    <td><b>JOb Completion Date</b></td>
+                                    <td><b>Job Completion Date</b></td>
                                     <td><b>Location</b></td>
                                     <td><b>Description</b></td>
                                     <td><b>Comments</b></td>
@@ -448,11 +448,11 @@
                         </form>              
                     </div>
                     <!-- /Set OTA section -->
+                    <!-- console modal button-->
+                    <button class="btn-sm console_view img-responsive pull-right" onclick="return openConsole({{$gps_details->imei}})" data-toggle="modal" data-target="#consoleModal">CONSOLE <i class='fa fa-arrow-up'></i></button>
+                    <!-- /console modal button-->      
                 </div>               
-            </div> <!-- ends the tabbed panels / wrapper-->  
-            <!-- console modal button-->
-            <button class="btn-sm console_view img-responsive pull-right" onclick="return openConsole({{$gps_details->imei}})" data-toggle="modal" data-target="#consoleModal">CONSOLE <i class='fa fa-arrow-up'></i></button>
-            <!-- /console modal button-->                            
+            </div> <!-- ends the tabbed panels / wrapper-->                        
         </div>
     </div>
 </section>
@@ -462,7 +462,7 @@
         <div class="modal-content">
             <!-- console model header -->
             <div class="modal-header">
-                <button type="button" class="close"onclick="closeConsole()" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i></button>
+                <button type="button" class="close" onclick="closeConsole()" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i></button>
             </div>
             <!-- /console model header -->
 
@@ -507,6 +507,18 @@
         width: 100%; 
         margin-top: 25px;
         float:left;
+    }
+
+    .console_view
+    {
+        background-color: #0b0a0a;
+        color: #fdfcfc;
+        padding: 7px;
+    }
+
+    .operation-header
+    {
+        margin-left: -114px !important;
     }
 
 .panelContainer {
