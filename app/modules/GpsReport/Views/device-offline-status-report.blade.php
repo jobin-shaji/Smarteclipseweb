@@ -173,63 +173,61 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
     </script>
 
     <script type="text/javascript">
-    $('#search').on('keyup',function(){
-        $value=$(this).val();
-        $device_type=$('#device_type').val();
-        $offline_duration=$('#offline_duration').val();
-        if($offline_duration==null)
-        {
-            $offline_duration="";
-        }
-        $.ajax({
-            type : 'get',
-            url : '{{URL::to('device-offline-search')}}',
-            data:{
-                'search':$value,
-                'device_type':$device_type,
-                'offline_duration':$offline_duration
-            },
-            success:function(data){
-                $("#data_tbody").empty();
-                $("#pagination_links").empty();               
-                var device_details;                
-                for(var i=0;i < data.links.data.length;i++){
-                   var client_name;
+        $('#search').on('keyup',function(){
+            $value=$(this).val();
+            $device_type=$('#device_type').val();
+            $offline_duration=$('#offline_duration').val();
+            if($offline_duration==null)
+            {
+                $offline_duration="";
+            }
+            $.ajax({
+                type : 'get',
+                url : '{{URL::to('device-offline-search')}}',
+                data:{
+                    'search':$value,
+                    'device_type':$device_type,
+                    'offline_duration':$offline_duration
+                },
+                success:function(data){
+                    $("#data_tbody").empty();
+                    $("#pagination_links").empty();               
+                    var device_details;                
+                    for(var i=0;i < data.links.data.length;i++){
+                    var client_name;
                     var vehicle_name;
                     var register_number;
                     var device_time;
                     var imei;  
                     var serial_no;                      
-                   (data.links.data[i].imei) ? imei = data.links.data[i].imei : imei = "-NA-";          
-                   (data.links.data[i].serial_no) ? serial_no = data.links.data[i].serial_no : serial_no = "-NA-";
-                   (data.links.data[i].vehicle_gps) ? client_name = data.links.data[i].vehicle_gps.vehicle.client.name : client_name = "-NA-";
-                   (data.links.data[i].vehicle_gps) ? vehicle_name = data.links.data[i].vehicle_gps.vehicle.name : vehicle_name = "-NA-";
-                   (data.links.data[i].vehicle_gps) ? register_number = data.links.data[i].vehicle_gps.vehicle.register_number : register_number = "-NA-";
-                   (data.links.data[i].device_time) ? device_time = data.links.data[i].device_time : device_time = "-NA-";
-                   var j=i+1;
-                    device_details += '<tr><td>'+j+'</td>'+
-                    '<td>'+imei+'</td>'+
-                    '<td>'+serial_no+'</td>'+
-                    '<td>'+client_name+'</td>'+
-                    '<td>'+vehicle_name+'</td>'+
-                    '<td>'+register_number+'</td>'+
-                    '<td>'+device_time+'</td>'+
-                    '<td><button class="btn btn-sm btn-info " > View</button></td>'+
-                    '</tr>';
+                    (data.links.data[i].imei) ? imei = data.links.data[i].imei : imei = "-NA-";          
+                    (data.links.data[i].serial_no) ? serial_no = data.links.data[i].serial_no : serial_no = "-NA-";
+                    (data.links.data[i].vehicle_gps) ? client_name = data.links.data[i].vehicle_gps.vehicle.client.name : client_name = "-NA-";
+                    (data.links.data[i].vehicle_gps) ? vehicle_name = data.links.data[i].vehicle_gps.vehicle.name : vehicle_name = "-NA-";
+                    (data.links.data[i].vehicle_gps) ? register_number = data.links.data[i].vehicle_gps.vehicle.register_number : register_number = "-NA-";
+                    (data.links.data[i].device_time) ? device_time = data.links.data[i].device_time : device_time = "-NA-";
+                    var j=i+1;
+                        device_details += '<tr><td>'+j+'</td>'+
+                        '<td>'+imei+'</td>'+
+                        '<td>'+serial_no+'</td>'+
+                        '<td>'+client_name+'</td>'+
+                        '<td>'+vehicle_name+'</td>'+
+                        '<td>'+register_number+'</td>'+
+                        '<td>'+device_time+'</td>'+
+                        '<td><a href="device-detailed-report/<?php echo Crypt::encrypt('imei')?>/view" class="btn btn-xs btn-success" data-toggle="tooltip" title="View More Details"><i class="fa fa-eye"></i> View</a></td>'+
+                        '</tr>';
+                    }
+                    $("tbody").append(device_details);
+                    $("a.offline_device_download").attr('href', function(i,a){
+                        $('a.offline_device_download').attr("href", "device-offline-report-downloads?type=pdf&device_type="+$device_type+"&offline_duration="+$offline_duration+"&search=" + $value);
+                    });
                 }
-                $("tbody").append(device_details);
-                $("a.offline_device_download").attr('href', function(i,a){
-                    $('a.offline_device_download').attr("href", "device-offline-report-downloads?type=pdf&device_type="+$device_type+"&offline_duration="+$offline_duration+"&search=" + $value);
-                });
-            }
-        });
-    })
-</script>
-<script type="text/javascript">
-$.ajaxSetup({ headers: { 'csrftoken' : '{{ csrf_token() }}' } });
-</script>
-    <script src="{{asset('js/gps/mdb.js')}}"></script>
-    <script src="{{asset('js/gps/device-offline-report.js')}}"></script>
+            });
+        })
+    </script>
+    <script type="text/javascript">
+        $.ajaxSetup({ headers: { 'csrftoken' : '{{ csrf_token() }}' } });
+    </script>
 @endsection
 @endsection
 

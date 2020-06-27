@@ -31,6 +31,11 @@ class Vehicle extends Model
         return $this->hasOne('App\Modules\Client\Models\Client','id','client_id');
     }
 
+    // client
+    public function clientWithTrashed(){
+      return $this->hasOne('App\Modules\Client\Models\Client','id','client_id')->withTrashed();
+    }
+
     public function vehicleRoute()
     {
         return $this->hasMany('App\Modules\Vehicle\Models\VehicleRoute','vehicle_id','id');
@@ -42,6 +47,11 @@ class Vehicle extends Model
     public function vehicleModels()
     {
       return $this->hasOne('App\Modules\Operations\Models\VehicleModels','id','model_id');
+    }
+
+    public function vehicleModelsWithTrashed()
+    {
+      return $this->hasOne('App\Modules\Operations\Models\VehicleModels','id','model_id')->withTrashed();
     }
 
     public function servicerjob()
@@ -306,14 +316,5 @@ class Vehicle extends Model
                       ->orWhere('is_returned', '=', NULL);
                   })
                   ->pluck('gps_id');
-    }
-
-    /**
-     * 
-     * 
-     */
-    public function getClientIdOfVehicle($gps_id)
-    {
-      return self::select('client_id')->where('gps_id', $gps_id)->first();
     }
 }

@@ -14,12 +14,6 @@
         <!-- /breadcrumbs -->
 
         <div class="container-fluid">
-            <!-- console modal button-->
-            @if($gps_details->device_status == '#c41900')
-                <button class="btn-sm console_view img-responsive pull-right" onclick="return getRealTimePackets({{$gps_details->imei}})" data-toggle="modal" data-target="#consoleModal"><i class='fa fa-arrow-left'></i></button>
-            @endif
-            <!-- /console modal button-->
-
             <!-- section 1 -->
             <div class="box-part text-center section_1">
                 <!-- IMEI and serial number -->
@@ -51,38 +45,35 @@
                 <!-- basic device details -->
                 <table class="table table-borderless basic_device_details" >
                     <thead>
-                        <tr>
+                        <tr class="border-bottom-w">
                             <td><b>Mode</b></td>
                             <td><b>Network Status</b></td>               
                             <td><b>Fuel Status</b></td>
                             <td><b>Speed</b></td>             
                             <td><b>Main Power Status</b></td>
-                            <td><b>Number Of Satellites</b></td>
-                            <td><b>Battery Percentage</b></td>
                             <td><b>Ignition ON/OFF</b></td>               
                             <td><b>Gsm Signal Strength </b></td>
                             <td><b>GPS FIX</b></td>
-                            <td><b>A/C Status</b></td>    
+                            <td><b>A/C Status</b></td>               
+                        </tr>   
                         <tr>
                             <td><?php ( isset($gps_details->mode) ) ? $mode = $gps_details->mode : $mode='-NA-' ?>{{$mode}}</td>
                             <td><?php ( isset($gps_details->network_status) ) ? $network_status = $gps_details->network_status : $network_status='-NA-' ?>{{$network_status}}</td>               
                             <td><?php ( isset($gps_details->fuel_status) ) ? $fuel_status = $gps_details->fuel_status : $fuel_status='-NA-' ?>{{$fuel_status}}</td>
                             <td><?php ( isset($gps_details->speed) ) ? $speed = $gps_details->speed.' km/h' : $speed='-NA-' ?>{{$speed}}</td>             
                             <td><?php ( isset($gps_details->main_power_status) ) ? $main_power_status = $gps_details->main_power_status : $main_power_status='-NA-' ?>{{$main_power_status}}</td>
-                            <td><?php ( isset($gps_details->no_of_satellites) ) ? $no_of_satellites = $gps_details->no_of_satellites : $no_of_satellites='-NA-' ?>{{$no_of_satellites}}</td>
-                            <td><?php ( isset($gps_details->battery_status) ) ? $battery_status = $gps_details->battery_status : $battery_status='-NA-' ?>{{$battery_status}}</td>  
                             <td><?php ( isset($gps_details->ignition) ) ? $ignition = $gps_details->ignition : $ignition='-NA-' ?>{{$ignition}}</td>               
                             <td><?php ( isset($gps_details->gsm_signal_strength) ) ? $gsm_signal_strength = $gps_details->gsm_signal_strength : $gsm_signal_strength='-NA-' ?>{{$gsm_signal_strength}}</td>
                             <td><?php ( isset($gps_details->gps_fix_on) ) ? $gps_fix_on = $gps_details->gps_fix_on : $gps_fix_on='-NA-' ?>{{$gps_fix_on}}</td>           
-                            <td><?php ( isset($gps_details->ac_status) ) ? $ac_status = $gps_details->ac_status : $ac_status='-NA-' ?>{{$ac_status}}</td>      
+                            <td><?php ( isset($gps_details->ac_status) ) ? $ac_status = $gps_details->ac_status : $ac_status='-NA-' ?>{{$ac_status}}</td>               
                         </tr>                
                     </thead>
                 </table>
                 <!-- /basic device details -->
                 <!-- basic device details - alert based -->
-                <table class="table table-borderless basic_alert_details" >
+                <table class="table table-borderless basic_alert_details basiclaart-width" >
                     <thead>
-                        <tr>
+                        <tr class="border-bottom-w">
                             <td><b>Tilt State</b></td>
                             <td><b>OverSpeed State</b></td>               
                             <td><b>Emergency State</b></td>           
@@ -97,37 +88,23 @@
                 <!-- /basic device details - alert based -->               
             </div>
             <!-- /section 1 -->
-            
             <!-- section 2 -->
-            <div class="container">
-                <!-- message section -->
-                @if(Session::has('message'))
-                    <div class="pad margin no-print">
-                        <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 1!important;">
-                            {{ Session::get('message') }}  
-                        </div>
-                    </div>
-                @endif  
-                <!-- /message section -->
-                <!-- tabs -->
-                <ul class="nav nav-pills" id="buttons">
-                    <li class="active"><a data-toggle="pill" href="#device_details_section">Device Details</a></li>
+            <div class="tabbed Panels">  <!-- begins the tabbed panels / wrapper-->                
+                <ul class="tabs">
+                    <li><a href="#device_details_section">Device Details</a></li>
                     <input type = 'hidden' name = 'gps_id' id = 'gps_id' value = "{{$gps_details->id}}" >
-                    <li><a data-toggle="pill" href="#vehicle_details_section" onclick="getVehicleDetailsBasedOnGps()">Vehicle Details</a></li>
-                    <li><a data-toggle="pill" href="#end_user_details_section" onclick="getOwnerDetailsBasedOnGps()">Owner Details</a></li>
-                    <li><a data-toggle="pill" href="#transfer_details_section" onclick="getTransferDetailsBasedOnGps()">Transfer Details</a></li>
-                    <li><a data-toggle="pill" href="#installation_details_section" onclick="getInstallationDetailsBasedOnGps()">Installation Details</a></li>
-                    <li><a data-toggle="pill" href="#service_details_section" onclick="getServiceDetailsBasedOnGps()">Service Details</a></li>
-                    <li><a data-toggle="pill" href="#alert_details_section" onclick="getAlertDetailsBasedOnGps()"> Alerts</a></li>
-                    <li><a data-toggle="pill" href="#set_ota_section" onclick="setOtaInGps()"> Set OTA</a></li>
+                    <li><a href="#vehicle_details_section" onclick="getVehicleDetailsBasedOnGps()">Vehicle Details</a></li>
+                    <li><a href="#end_user_details_section" onclick="getOwnerDetailsBasedOnGps()">End User Details</a></li>                    
+                    <li><a  href="#transfer_details_section" onclick="getTransferDetailsBasedOnGps()">Transfer Details</a></li>
+                    <li><a  href="#installation_details_section" onclick="getInstallationDetailsBasedOnGps()">Installation Details</a></li>
+                    <li><a  href="#service_details_section" onclick="getServiceDetailsBasedOnGps()">Service Details</a></li>
+                    <li><a  href="#alert_details_section" onclick="getAlertDetailsBasedOnGps()"> Alerts</a></li>                
+                    <li><a  href="#set_ota_section" onclick="setOtaInGps()"> Set OTA</a></li>
                 </ul>
-                <!-- /tabs --> 
-                <!-- tab contents -->
-                <div class="tab-content">
-                    <!-- device details -->
-                    <div id="device_details_section" class="tab-pane fade in active">
+                <div class="panelContainer">
+                    <div id="device_details_section" class="panel">
                         <table class="table table-borderless tables_in_tab_section">
-                            <thead>
+                            <tbody>
                                 <tr class="success" >
                                     <td><b>IMEI</b></td>
                                     <td><?php ( isset($gps_details->imei) ) ? $imei = $gps_details->imei : $imei='-NA-' ?>{{$imei}}</td>
@@ -188,15 +165,14 @@
                                     <td><b>GPS Created On</b></td>
                                     <td><?php ( isset($gps_details->created_at) ) ? $created_at = $gps_details->created_at : $created_at='-NA-' ?>{{$created_at}}</td>         
                                 </tr>                     
-                            </thead>
-                        </table>   
-                    </div>
-                    <!-- /device details -->
-
-                    <!-- vehicle details -->
-                    <div id="vehicle_details_section" class="tab-pane fade">
+                            </tbody>
+                        </table>                           
+                    </div>             
+                    <!-- </div>   -->  
+                     <!-- vehicle details -->                                          
+                    <div id="vehicle_details_section" class="panel">
                         <table class="table table-borderless tables_in_tab_section">
-                            <thead>
+                            <tbody>
                                 <tr class="success" >
                                     <td><b>Vehicle Name</b></td>
                                     <td id = 'vehicle_name'></td>
@@ -253,15 +229,14 @@
                                     <td><b>Driver Score</b></td>
                                     <td id = 'driver_score'></td>
                                 </tr>                               
-                            </thead>
-                        </table>                
-                    </div>
-                    <!-- /vehicle details -->
-
-                    <!-- end user details -->
-                    <div id="end_user_details_section" class="tab-pane fade">
+                            </tbody>
+                        </table>                                  
+                    </div> 
+                    <!-- vehicle details -->
+                       <!-- end user details -->
+                    <div id="end_user_details_section" class="panel">
                         <table class="table table-borderless tables_in_tab_section">
-                            <thead>
+                            <tbody>
                                 <tr class="success" >
                                     <td><b>End User Name</b></td>
                                     <td id = 'owner_name'></td>
@@ -294,15 +269,67 @@
                                     <td><b>Package</b></td>
                                     <td id = 'owner_package'></td>
                                 </tr>                                
-                            </thead>
-                        </table>                
+                            </tbody>
+                        </table>                 
                     </div>
                     <!-- /end user details -->
-
-                    <!-- installation details -->
-                    <div id="installation_details_section" class="tab-pane fade">
+                   <!-- /transfer details -->
+                    <div id="transfer_details_section" class="panel">
+                        <div class="row">
+                            <!-- location -->
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 location_and_last_updated_section">          
+                                </br>
+                                <label>Transfer Details</label>
+                                </br>
+                                <table class="table table-borderless tables_in_tab_section" >
+                                    <tbody>
+                                        <tr class="success" >
+                                            <td><b>Manufacturer</b></td>
+                                            <td id = 'manufacturer'></td>
+                                        </tr>                
+                                        <tr>
+                                            <td><b>Distributor</b></td>
+                                            <td id = 'dealer'></td>
+                                        </tr>                
+                                        <tr class="success" >
+                                            <td><b>Dealer</b></td>
+                                            <td id = 'subdealer'></td>
+                                        </tr>                
+                                        <tr>
+                                            <td><b>Sub Dealer</b></td>
+                                            <td id = 'trader'></td>
+                                        </tr>  
+                                        <tr class="success" >
+                                            <td><b>End User</b></td>
+                                            <td id = 'client'></td>
+                                        </tr>                    
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 location_and_last_updated_section">                       
+                                </br>
+                                <label>Transfer History</label>
+                                </br>
+                                <table  id ="transfer_history" class="table table-borderless tables_in_tab_section" >
+                                    <thead>
+                                        <tr class="success" >                                    
+                                            <td>From User</td>
+                                            <td>To User</td>                                        
+                                            <td>Dispatched On</td>
+                                            <td>Accepted On</td>                                                                                                                               
+                                        </tr>                    
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>              
+                    </div>
+                    <!-- /transfer details -->
+                     <!-- installation details -->
+                     <div id="installation_details_section" class="panel">
                         <table class="table table-borderless tables_in_tab_section">
-                            <thead>
+                            <tbody>
                                 <tr class="success" >
                                     <td><b>Service Engineer Name</b></td>
                                     <td id = 'servicer_name'></td>
@@ -343,14 +370,13 @@
                                     <td><b>Comments</b></td>
                                     <td id = 'comments'></td>
                                 </tr>                              
-                            </thead>
-                        </table>                
+                            </tbody>
+                        </table>              
                     </div>
                     <!-- /installation details -->
-
                     <!-- service details -->
-                    <div id="service_details_section" class="tab-pane fade">
-                        <table class="table table-borderless tables_in_tab_section" id = 'service_details'>
+                    <div id="service_details_section" class="panel">
+                    <table class="table table-borderless tables_in_tab_section" id = 'service_details'>
                             <thead>
                                 <tr class="success" >
                                     <td><b>Service Engineer Name</b></td>
@@ -368,76 +394,36 @@
                             <tbody> 
                                                                                              
                             </tbody>
-                        </table>                
+                        </table>                 
                     </div>
                     <!-- /service details -->
-
-                    <!-- /transfer details -->
-                    <div id="transfer_details_section" class="tab-pane fade">
-                        <div class="row">
-                            <!-- location -->
-                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 location_and_last_updated_section">          
-                                </br>
-                                <label>Transfer Details</label>
-                                </br>
-                                <table class="table table-borderless tables_in_tab_section" >
-                                    <thead>
-                                        <tr class="success" >
-                                            <td><b>Manufacturer</b></td>
-                                            <td id = 'manufacturer'></td>
-                                        </tr>                
-                                        <tr>
-                                            <td><b>Distributor</b></td>
-                                            <td id = 'dealer'></td>
-                                        </tr>                
-                                        <tr class="success" >
-                                            <td><b>Dealer</b></td>
-                                            <td id = 'subdealer'></td>
-                                        </tr>                
-                                        <tr>
-                                            <td><b>Sub Dealer</b></td>
-                                            <td id = 'trader'></td>
-                                        </tr>  
-                                        <tr class="success" >
-                                            <td><b>End User</b></td>
-                                            <td id = 'client'></td>
-                                        </tr>                    
-                                    </thead>
-                                </table>
-                            </div>
-                              <!-- /transfer details -->
-                            <!-- transfer history details -->
-                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 location_and_last_updated_section">                       
-                                </br>
-                                <label>Transfer History</label>
-                                </br>
-                                <table  id ="transfer_history" class="table table-borderless tables_in_tab_section" >
-                                    <thead>
-                                        <tr class="success" >                                    
-                                            <td>From User</td>
-                                            <td>To User</td>                                        
-                                            <td>Dispatched On</td>
-                                            <td>Accepted On</td>                                                                                                                               
-                                        </tr>                    
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>              
-                    </div>
-                    <!-- /transfer history details -->
-
                     <!-- alert details -->
-                    <div id="alert_details_section" class="tab-pane fade">
-                        <table class="table table-borderless tables_in_tab_section" >
+                    <div id="alert_details_section" class="panel">
+                        <table class="table table-borderless tables_in_tab_section" id = 'alert_details'>
                             <thead>
                                 <tr class="success" >
-                                    <td><b>Vehicle Name</b></td>
-                                    <td></td>
-                                </tr>                               
+                                    <th><b>SL.No</b></th>
+                                    <th><b>Alert Type</b></th>                             
+                                    <th><b>Date & Time</b></th>  
+                                    <th><b>Location</b></th>        
+                                </tr>                                          
                             </thead>
-                        </table>                
+                            <tbody> 
+                                                                                      
+                            </tbody>
+                        </table>  
+                        <!-- loader -->
+                        <div class="loader-wrapper loader-1"  style="display:none">
+                          <div id="loader"></div>
+                        </div> 
+                        <!-- /loader -->
+
+                        <!-- pagination -->
+                        <div class="row float-right">
+                          <div class="col-md-12 " id="alert-list-pagination">
+                          </div>
+                        </div>  
+                        <!-- /pagination -->                
                     </div>
                     <!-- /alert details -->
                     <!-- Set OTA section -->
@@ -462,43 +448,39 @@
                         </form>              
                     </div>
                     <!-- /Set OTA section -->
-                    
-                </div>
-                <!-- /tab contents -->
-            </div>    
-            <!-- /section 2 -->  
+                </div>               
+            </div> <!-- ends the tabbed panels / wrapper-->  
+            <!-- console modal button-->
+            <button class="btn-sm console_view img-responsive pull-right" onclick="return openConsole({{$gps_details->imei}})" data-toggle="modal" data-target="#consoleModal">CONSOLE <i class='fa fa-arrow-up'></i></button>
+            <!-- /console modal button-->                            
         </div>
     </div>
 </section>
-
 <!-- console modal -->
 <div class="modal bottom fade" id="consoleModal" tabindex="-1" role="dialog" aria-labelledby="modelForConsole">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-1-test" role="document">
         <div class="modal-content">
-
+            <!-- console model header -->
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><i class="fa fa-arrow-right" aria-hidden="true"></i></button>
+                <button type="button" class="close"onclick="closeConsole()" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i></button>
             </div>
+            <!-- /console model header -->
 
+            <!-- console model body -->
             <div class="modal-body">
-                <table class="table table-borderless tables_in_tab_section" id = 'packets_in_console'>
-                    <tbody> 
-                                                                                        
-                    </tbody>
-                </table>      
-                
+                <div id="loading-indicator" class="hide-loading-indicator">Loading latest records...</div>
+                <div class="each_packets"></div>
             </div>
-
+            <!-- /console model body -->
         </div>
     </div>
 </div>
 <!-- /console modal -->
-
 <style>
     .section_1
     {
         padding: 35px;
-    } 
+    } old;
     .imei_serial_no_main_section
     {
         font-size: 17px;
@@ -519,13 +501,82 @@
     .tables_in_tab_section
     {
         border: 0px solid transparent; 
+        font-size: 14px;
     }
-    .console_view
-    {
-        background-color: #0b0a0a;
-        color: #fdfcfc;
+    .tabbedPanels {
+        width: 100%; 
+        margin-top: 25px;
+        float:left;
     }
-    /*******************************
+
+.panelContainer {
+	clear: left;
+    margin-bottom: 25px;
+    border: 0px solid green;
+    background-color: #f3f3f3;
+    padding: 13px;
+	/* add height if you want equal panels */
+}
+
+
+
+
+/* reset ul defaults  */
+.tabs {
+	margin: 0;
+	padding: 0;	
+	list-style: none;	
+}
+
+/* set li properties  */
+.tabs li {
+    float: left;
+   /* width: 150px; */
+	padding: 0;
+	margin: 0;
+    text-align: center;
+}
+
+/* all formatting goes inside 'a' */
+.tabs a {
+	display: block;
+	text-decoration: none;
+	color: #fff;
+    font-weight:normal;
+	padding:  8px;
+	margin-right: 4px; /*// spaces out the tabs  */
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    color:#337ab7;
+    margin-bottom: -2px;  /* negative margin will move it down
+	                         to blend in with outer border  */
+}
+
+
+.tabs a.active {
+    color: #fff;
+    background-color: #337ab7;
+    border-radius: 4px;
+    font-weight: bold;
+}
+        
+ .panel img {
+             
+         margin-top: 10px;
+}
+
+.panel p  {
+             
+         margin-bottom: 0px;
+}
+.border-bottom-w{
+    border-bottom: 1px solid #dedcdc;
+}
+.basiclaart-width{
+    margin:0px auto;
+    width: 500px;
+}
+   /*******************************
     * MODAL AS BOTTOM SIDEBAR
     *******************************/
 	.modal.bottom .modal-dialog {
@@ -533,20 +584,47 @@
 		margin: auto;
 	}
 	.modal.bottom .modal-content {
-		height: 100%;
-		overflow-y: auto;
-        background-color: #040404;
-        color: #fffbfb;
-        font-weight: bold;
+        /* background-color: #040404;
+        color: #fffbfb; */
+        border-radius: 0px;
         width:100% !important;
         max-width:100% !important;
+        height:250px !important;
+        overflow-x: hidden;
+        overflow-y: scroll;
+    }
+    .modal.bottom .modal-content #loading-indicator{
+        text-align: center;
+        font-size: 10px;
+    }
+    .show-loading-indicator{
+        visibility:visible;
+    }
+    .hide-loading-indicator{
+        visibility: hidden;
+    }
+    .modal.bottom .modal-content .row{
+        border-bottom:1px solid #f5f5f5;
+        padding-top:5px;
+        padding-bottom:5px;
+        line-height:25px;
+    }
+    .modal.bottom .modal-content .time{
+        padding-left:15px;
     }
 
     .modal-header
     {
         background-color: #fffbfb;
+        padding:6px !important;
     }
-
+    .modal-1-test
+    {
+        width: 100% !important;
+        float: left;
+        max-width: 100% !important;
+        max-height: 250px !important;
+    }
     /*Bottom*/
 	.modal.bottom.fade .modal-dialog {
 		bottom: -320px;
@@ -559,32 +637,29 @@
 	.modal.bottom.fade.in .modal-dialog {
 		bottom: 0;
 	}
-
-    /* #buttons li {
-        float: left;
-        list-style: none;
-        text-align: center;
-        background-color: #65A6D8;
-        margin-right: 30px;
-        width: 150px;
-        line-height: 60px;
-        }
-        #buttons li a {
-        text-decoration: none;
-        color: #FFFFFF;
-        display: block;
-        }
-
-        #buttons li a:hover {
-        text-decoration: none;
-        color: #000000;
-        background-color: #33B5E5;
-        }  */
-</style>
-<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> -->
-  <link rel="stylesheet" href="{{asset('dist/css/device-status.css')}}">
-    
+    tbody tr:nth-child(odd)
+    {
+        background: #E4E9EA;
+    }
+    .success{
+        background: #C7CBCC;
+    }
+</style>   
 @section('script')
+<script>
+$(document).ready(function() {    
+    //alert('here');	
+  $('.tabs a').click(function(){ 
+     $('.panel').hide();
+     $('.tabs a.active').removeClass('active');
+     $(this).addClass('active');     
+     var panel = $(this).attr('href');
+     $(panel).fadeIn(1000);     
+     return false;  // prevents link action    
+  });  // end click 
+     $('.tabs li:first a').click();     
+}); // end ready
+</script>
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="{{asset('js/gps/device-detailed-view-in-report.js')}}"></script>

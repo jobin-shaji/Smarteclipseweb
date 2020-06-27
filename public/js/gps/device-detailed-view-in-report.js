@@ -1,3 +1,9 @@
+var auto_refresh_console    = false;
+var refresh_interval_id     = null;
+var vehicle_id              = '';
+var user_id                 = '';
+var filterData              = new FormData();
+
 function getVehicleDetailsBasedOnGps()
 {
     var gps_id = document.getElementById('gps_id').value;
@@ -26,16 +32,16 @@ function getVehicleDetailsBasedOnGps()
             var driver_address;
             var driver_mobile;
             var driver_score;
-            (res.vehicle_details.name) ? vehicle_name = res.vehicle_details.name : vehicle_name = "-NA-";
-            (res.vehicle_details.register_number) ? vehicle_registration_number = res.vehicle_details.register_number : vehicle_registration_number = "-NA-";
-            (res.vehicle_details.vehicle_type) ? vehicle_category = res.vehicle_details.vehicle_type.name : vehicle_category = "-NA-";
-            (res.vehicle_details.engine_number) ? engine_number = res.vehicle_details.engine_number : engine_number = "-NA-";
-            (res.vehicle_details.chassis_number) ? chassis_number = res.vehicle_details.chassis_number : chassis_number = "-NA-";
-            (res.vehicle_details.vehicle_models) ? vehicle_model = res.vehicle_details.vehicle_models.name : vehicle_model = "-NA-";
-            (res.vehicle_details.vehicle_models.vehicle_make) ? vehicle_make = res.vehicle_details.vehicle_models.vehicle_make.name : vehicle_make = "-NA-";
-            (res.vehicle_details.theft_mode) ? vehicle_theft_mode = res.vehicle_details.theft_mode : vehicle_theft_mode = "-NA-";
-            (res.vehicle_details.towing) ? vehicle_towing_mode = res.vehicle_details.towing : vehicle_towing_mode = "-NA-";
-            (res.vehicle_details.created_at) ? vehicle_created_on = res.vehicle_details.created_at : vehicle_created_on = "-NA-";
+            (res.vehicle_details.vehicle) ? vehicle_name = res.vehicle_details.vehicle.name : vehicle_name = "-NA-";
+            (res.vehicle_details.vehicle) ? vehicle_registration_number = res.vehicle_details.vehicle.register_number : vehicle_registration_number = "-NA-";
+            (res.vehicle_details.vehicle) ? vehicle_category = res.vehicle_details.vehicle.vehicle_type.name : vehicle_category = "-NA-";
+            (res.vehicle_details.vehicle) ? engine_number = res.vehicle_details.vehicle.engine_number : engine_number = "-NA-";
+            (res.vehicle_details.vehicle) ? chassis_number = res.vehicle_details.vehicle.chassis_number : chassis_number = "-NA-";
+            (res.vehicle_details.vehicle.vehicle_models_with_trashed) ? vehicle_model = res.vehicle_details.vehicle.vehicle_models_with_trashed.name : vehicle_model = "-NA-";
+            (res.vehicle_details.vehicle.vehicle_models_with_trashed.vehicle_make_with_trashed) ? vehicle_make = res.vehicle_details.vehicle.vehicle_models_with_trashed.vehicle_make_with_trashed.name : vehicle_make = "-NA-";
+            (res.vehicle_details.vehicle) ? vehicle_theft_mode = res.vehicle_details.vehicle.theft_mode : vehicle_theft_mode = "-NA-";
+            (res.vehicle_details.vehicle) ? vehicle_towing_mode = res.vehicle_details.vehicle.towing : vehicle_towing_mode = "-NA-";
+            (res.vehicle_details.vehicle) ? vehicle_created_on = res.vehicle_details.vehicle.created_at : vehicle_created_on = "-NA-";
             (res.driver_details.name) ? driver_name = res.driver_details.name : driver_name = "-NA-";
             (res.driver_details.address) ? driver_address = res.driver_details.address : driver_address = "-NA-";
             (res.driver_details.mobile) ? driver_mobile = res.driver_details.mobile : driver_mobile = "-NA-";
@@ -288,11 +294,60 @@ function getServiceDetailsBasedOnGps()
     });
 }
 
+function closeConsole()
+{
+    //stop refreshing of console window
+    auto_refresh_console = false;
+    window.clearInterval(refresh_interval_id);
+}
+
+function openConsole(imei)
+{
+    auto_refresh_console = true;
+    //first load of console window
+    getRealTimePackets(imei);
+    // auto refresh of console window
+    refresh_interval_id = setInterval(getRealTimePackets.bind(null, imei), 5000);
+}
+
 function getRealTimePackets(imei)
 {
-    
-    var data = { 'imei':imei };
-    var url = '/device-detailed-report/get-console';
+    if( auto_refresh_console )
+    {
+        $("#loading-indicator").removeClass('hide-loading-indicator').addClass('show-loading-indicator');
+        var data = { 'imei':imei };
+        var url = '/device-detailed-report/get-console';
+        $.ajax({
+            type: 'POST',
+            url: url,
+            data: data,
+            async: true,
+            headers: {
+                'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function(res) {
+                var packets_in_console  = $("#packets_in_console").find('.each_packets');
+                var each_packets        = '';
+                packets_in_console.html("");
+                $.each(res,function(item_key , item_value){ 
+                    each_packets +=  '<div class="row"><div class="time">'+item_value.created_at+'</div><div class="col-lg-10">'+item_value.vltdata+'</div></div>';
+                });              
+                if(res.length == 0)
+                {
+                    each_packets += 'No data available';
+                }
+                $(".each_packets").html(each_packets);
+                $("#loading-indicator").addClass('hide-loading-indicator').removeClass('show-loading-indicator');
+            }
+        });
+    }
+}
+
+function getAlertDetailsBasedOnGps()
+{
+    var gps_id = document.getElementById('gps_id').value;
+    var data = { 'gps_id':gps_id };
+    var url = "/device-detailed-report/get-vehicle-id"
     $.ajax({
         type: 'POST',
         url: url,
@@ -302,25 +357,90 @@ function getRealTimePackets(imei)
             'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
         },
         success: function(res) {
-            var packets_in_console  = $("#packets_in_console").find('tbody');
-            var tbody               = "";
-            packets_in_console.html("");
-            $.each(res,function(item_key , item_value){ 
-                    
-                tbody += "<tr>" + 
-                            "<td>"+item_value.vltdata+"</td>"+
-                            "<td>"+item_value.created_at+"</td>"+
-                        "</tr>";
-            });              
+            var alerts_table    = $("#alert_details").find('tbody');
+            var tbody           = '';
+            alerts_table.html("");
             if(res.length == 0)
             {
-                tbody = '<td colspan ="2"> No data available</td>';
+                tbody = '<td colspan ="4"> No data available</td>';
             }
-            packets_in_console.html(tbody);
+            else
+            {
+                ( res.vehicle ) ? vehicle_id = res.vehicle.id : tbody = '<td colspan ="4"> No data available</td>';
+                if(vehicle_id)
+                {
+                    ( res.vehicle.client_with_trashed ) ? user_id = res.vehicle.client_with_trashed.user_id : tbody = '<td colspan ="4"> No data available</td>';
+                    if(user_id)
+                    {
+                        getMsAlertList();
+                        $('body').find("#alert-list-pagination").on("click","a.page-link",function(event){
+                            event.preventDefault();
+                            $(".loader-1").show();
+                            pagination($(this).attr("href"))
+                        })
+                    }
+                }
+            }
+            alerts_table.html(tbody);
         }
     });
 }
 
-$("#packets_in_console").delegate('tr', 'click', function() {
-    alert(jQuery(this).find('td').html());
-});
+function getMsAlertList()
+{
+    $(".loader-1").show();
+    getFilterData();
+    var url = url_ms_alerts + "/alert-report";
+    ajaxRequestMs(url,filterData,'POST',successAlertList,failedAlertList)
+}
+
+function successAlertList(response) 
+{
+    var table       = $("#alert_details").find('tbody');
+    var tbody       = "";
+    var alertData   = response.data.alerts;
+    var page        = parseInt(response.data.page);
+    table.html("");
+    $(".loader-1").hide();
+    var per_page    = parseInt(response.data.per_page);
+    page            = (per_page * page) - per_page;
+    $.each(alertData,function(key , alert){    
+        page =  page + 1;
+        tbody += "<tr>"+
+                        "<td>"+page+"</td>"+
+                        "<td>"+alert.alert_type.description+"</td>"+
+                        "<td>"+alert.device_time+"</td>"+
+                        "<td>"+alert.address+"</td>"+       
+                    "</tr>";
+    });
+    if(alertData.length == 0)
+    {
+        tbody = '<td colspan ="7"> No data available</td>';
+    }
+    console.log(response.data.total_pages);
+    if(response.data.total_pages > 1)
+    {
+        $('body').find('#alert-list-pagination').html(response.data.link);
+    }else{
+        $('body').find('#alert-list-pagination').html("");
+    }
+    
+    table.html(tbody);
+}
+
+function failedAlertList(error) 
+{
+    $(".loader-1").hide();
+}
+
+function pagination(url)
+{
+    getFilterData();
+    ajaxRequestMs(url,filterData,'POST',successAlertList,failedAlertList)
+}
+
+function getFilterData()
+{
+    filterData.append('user_id',user_id);
+    filterData.append('vehicle_id',vehicle_id);
+}
