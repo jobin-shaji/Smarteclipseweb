@@ -114,7 +114,7 @@
     </div>
     
     <div class="cover_poi">
-      <div class="poi_atm poi_item" filter="atm" id="actv1">
+      <!-- <div class="poi_atm poi_item" filter="atm" id="actv1">
         <a href="#" id="poi_atm" >
         <img src="{{ url('/') }}/images/ATM.png">
         </a>
@@ -128,7 +128,7 @@
         <a href="#" id="poi_hopital" >
           <img src="{{ url('/') }}/images/hospital.png">
         </a>
-      </div>
+      </div> -->
       <div class="poi_item">
         <a target="_blank" href="{{url('/vehicles/'.Crypt::encrypt($Vehicle_id).'/playback-page')}}">
           <img src="{{ url('/') }}/images/playback.png" width="64px" height="64px">
