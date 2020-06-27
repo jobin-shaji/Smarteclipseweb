@@ -296,6 +296,8 @@ function getServiceDetailsBasedOnGps()
 
 function closeConsole()
 {
+    // workaround to handle padding issue in body tag
+    removePaddingFromBody();
     //stop refreshing of console window
     auto_refresh_console = false;
     window.clearInterval(refresh_interval_id);
@@ -443,4 +445,11 @@ function getFilterData()
 {
     filterData.append('user_id',user_id);
     filterData.append('vehicle_id',vehicle_id);
+}
+
+function removePaddingFromBody()
+{
+    setTimeout(function(){
+        $('body').removeAttr('style');
+    }, 500);      
 }
