@@ -190,6 +190,7 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                     'offline_duration':$offline_duration
                 },
                 success:function(data){
+                    console.log(data);
                     $("#data_tbody").empty();
                     $("#pagination_links").empty();               
                     var device_details;                
@@ -199,13 +200,16 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                     var register_number;
                     var device_time;
                     var imei;  
-                    var serial_no;                      
+                    var serial_no; 
+                    var encryptedimei; 
+                    (data.links.data[i].encrypted_imei) ? encryptedimei = data.links.data[i].encrypted_imei : encryptedimei = "-NA-";                              
                     (data.links.data[i].imei) ? imei = data.links.data[i].imei : imei = "-NA-";          
                     (data.links.data[i].serial_no) ? serial_no = data.links.data[i].serial_no : serial_no = "-NA-";
                     (data.links.data[i].vehicle_gps) ? client_name = data.links.data[i].vehicle_gps.vehicle.client.name : client_name = "-NA-";
                     (data.links.data[i].vehicle_gps) ? vehicle_name = data.links.data[i].vehicle_gps.vehicle.name : vehicle_name = "-NA-";
                     (data.links.data[i].vehicle_gps) ? register_number = data.links.data[i].vehicle_gps.vehicle.register_number : register_number = "-NA-";
                     (data.links.data[i].device_time) ? device_time = data.links.data[i].device_time : device_time = "-NA-";
+                   console.log(encryptedimei);
                     var j=i+1;
                         device_details += '<tr><td>'+j+'</td>'+
                         '<td>'+imei+'</td>'+

@@ -1,13 +1,15 @@
 <?php
 
 namespace App\Modules\Gps\Models;
+
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Crypt;
 use App\Scopes\DeleteScope;
 
 class Gps extends Model
-{
+{  
     use SoftDeletes;
     
     protected static function boot()
@@ -28,6 +30,16 @@ class Gps extends Model
     public function vehicleGps()
     {
         return $this->hasOne('App\Modules\Vehicle\Models\VehicleGps');
+    }
+    
+    /**
+     * 
+     * 
+     * 
+     */
+    public function getEncryptedImeiAttribute() 
+    {  
+        return Crypt::encrypt($this->imei);
     }
 
     //join user table with gps table
@@ -237,7 +249,7 @@ class Gps extends Model
      */
     public function getAllOfflineDevices($offline_date_time, $device_type = null,$download_type = null , $gps_id_of_active_vehicles = null ,$search_key=null)
     {
-        $result =   self::select('id','imei','serial_no','device_time')
+        $result =   self::select('id', 'imei', 'serial_no','device_time')
                     // ->with('vehicleGps')
                     ->with('vehicleGps.vehicle.client')
                     ->with('gpsStock')
