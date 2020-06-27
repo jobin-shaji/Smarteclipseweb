@@ -202,14 +202,14 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                     var imei;  
                     var serial_no; 
                     var encryptedimei; 
-                    (data.links.data[i].encrypted_imei) ? encryptedimei = data.links.data[i].encrypted_imei : encryptedimei = "-NA-";                              
+                    (data.links.data[i].eimei) ? encryptedimei = data.links.data[i].eimei : encryptedimei = "-NA-";                              
                     (data.links.data[i].imei) ? imei = data.links.data[i].imei : imei = "-NA-";          
                     (data.links.data[i].serial_no) ? serial_no = data.links.data[i].serial_no : serial_no = "-NA-";
                     (data.links.data[i].vehicle_gps) ? client_name = data.links.data[i].vehicle_gps.vehicle.client.name : client_name = "-NA-";
                     (data.links.data[i].vehicle_gps) ? vehicle_name = data.links.data[i].vehicle_gps.vehicle.name : vehicle_name = "-NA-";
                     (data.links.data[i].vehicle_gps) ? register_number = data.links.data[i].vehicle_gps.vehicle.register_number : register_number = "-NA-";
                     (data.links.data[i].device_time) ? device_time = data.links.data[i].device_time : device_time = "-NA-";
-                   console.log(encryptedimei);
+                //    console.log(encryptedimei);
                     var j=i+1;
                         device_details += '<tr><td>'+j+'</td>'+
                         '<td>'+imei+'</td>'+
@@ -218,7 +218,9 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                         '<td>'+vehicle_name+'</td>'+
                         '<td>'+register_number+'</td>'+
                         '<td>'+device_time+'</td>'+
-                        '<td><a href="device-detailed-report/<?php echo Crypt::encrypt('imei')?>/view" class="btn btn-xs btn-success" data-toggle="tooltip" title="View More Details"><i class="fa fa-eye"></i> View</a></td>'+
+                        // '<td><a href="device-detailed-report/<?php //echo Crypt::encrypt()?>/view" class="btn btn-xs btn-success" data-toggle="tooltip" title="View More Details"><i class="fa fa-eye"></i> View</a></td>'+
+                        '<td><button onclick="imeiEncryption('+imei+')" class="btn btn-xs btn-success" data-toggle="tooltip" title="View More Details">view</button></td>'+
+                        
                         '</tr>';
                     }
                     $("tbody").append(device_details);
@@ -228,9 +230,26 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                 }
             });
         })
+        
     </script>
     <script type="text/javascript">
         $.ajaxSetup({ headers: { 'csrftoken' : '{{ csrf_token() }}' } });
+    </script>
+    <script>
+     function imeiEncryption(value){
+       $.ajax({
+            type:'post',
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            data:{
+                imei : value
+            },           
+            url: 'device-detail-encription',
+            success: function (res) 
+            {  
+                window.location.href = "/device-detailed-report/"+res+"/view";
+            }
+          });
+    }
     </script>
 @endsection
 @endsection
