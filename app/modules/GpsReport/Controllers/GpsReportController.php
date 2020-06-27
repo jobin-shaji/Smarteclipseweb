@@ -1346,12 +1346,11 @@ class GpsReportController extends Controller
             $gps_id_of_active_vehicles      = (new Vehicle())->getAllVehiclesWithUnreturnedGps();
         }
         $offline_devices                    = (new Gps())->getAllOfflineDevices($offline_date_time, $device_type, $download_type , $gps_id_of_active_vehicles,$search_key);
-        //   dd($offline_devices->first->eid);
-        $imei=[];
-        foreach($offline_devices as $offline_device)
-        {
-            $encryptedid[]= $offline_device->encryptedimei;
-        }
+        // $imei=[];
+        // foreach($offline_devices as $offline_device)
+        // {
+        //     $encryptedid[]= $offline_device->eimei;
+        // }
         // dd($encryptedid);
         if( $download_type == 'pdf')
         {
@@ -1381,7 +1380,6 @@ class GpsReportController extends Controller
     public function deviceReportDetailedView(Request $request)
     {
         $imei               = Crypt::decrypt($request->imei);
-
         //get offline time limit
         $offline_date_time  = date('Y-m-d H:i:s',strtotime("".'-'. config('eclipse.OFFLINE_DURATION').""));
 
@@ -1690,5 +1688,9 @@ class GpsReportController extends Controller
         $gps_id             = $request->gps_id;
         $transfer_details   = (new GpsTransferItems())->getTransferDetailsBasedOnGps($gps_id);
         return response()->json($transfer_details);
+    }
+    public function deviceDetailImeiEncription(Request $request)
+    {
+       return $encrypt_imei=Crypt::encrypt($request['imei']);
     }
 }

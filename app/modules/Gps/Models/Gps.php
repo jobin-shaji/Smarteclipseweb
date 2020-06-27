@@ -37,7 +37,7 @@ class Gps extends Model
      * 
      * 
      */
-    public function getEncryptedImeiAttribute() 
+    public function getEimeiAttribute() 
     {  
         return Crypt::encrypt($this->imei);
     }

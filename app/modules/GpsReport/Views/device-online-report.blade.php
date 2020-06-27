@@ -237,8 +237,8 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                     '<td>'+vehicle_name+'</td>'+
                     '<td>'+register_number+'</td>'+
                     '<td>'+mode+'</td>'+
-                    '<td><button class="btn btn-sm btn-info " > View</button></td>'+
-                    '</tr>';
+                    '<td><button onclick="imeiEncryption('+imei+')" class="btn btn-xs btn-success" data-toggle="tooltip" title="View More Details">view</button></td>'+
+                        '</tr>';
                 }
                 $("tbody").append(device_details);
                 $("a.online_device_download").attr('href', function(i,a){
@@ -251,6 +251,22 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
 <script type="text/javascript">
 $.ajaxSetup({ headers: { 'csrftoken' : '{{ csrf_token() }}' } });
 </script>
+<script>
+     function imeiEncryption(value){
+       $.ajax({
+            type:'post',
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            data:{
+                imei : value
+            },           
+            url: 'device-detail-encription',
+            success: function (res) 
+            {  
+                window.location.href = "/device-detailed-report/"+res+"/view";
+            }
+          });
+    }
+    </script>
 @endsection
 @endsection
 
