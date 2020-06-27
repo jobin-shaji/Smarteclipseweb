@@ -13,16 +13,27 @@ use App\Modules\Root\Models\Root;
 use App\Modules\Dealer\Models\Dealer;
 use App\Modules\SubDealer\Models\SubDealer;
 use App\Modules\Trader\Models\Trader;
+use App\Modules\Driver\Models\Driver;
+use App\Modules\Servicer\Models\ServicerJob;
 use App\Modules\Operations\Models\Operations;
 use App\Modules\Vehicle\Models\VehicleGps;
+use App\Modules\VltData\Models\VltData;
+use App\Modules\Ota\Models\OtaResponse;
 use Illuminate\Support\Facades\Crypt;
 use App\Http\Traits\UserTrait;
+use App\Http\Traits\MqttTrait;
 use DataTables;
 use DB;
 use PDF;
 
 class GpsReportController extends Controller 
 {
+    /**
+     * 
+     * 
+     *
+     */
+    use MqttTrait;
     /**
      * 
      * 
@@ -1269,29 +1280,40 @@ class GpsReportController extends Controller
     public function deviceOnlineReport(Request $request)
     {
         $generated_by                   =   \Auth::user()->operations->name;
-        $logged_user_details            = (new Operations())->getOperatorDetails(\Auth::user()->operations->id);
+        $logged_user_details            =   (new Operations())->getOperatorDetails(\Auth::user()->operations->id);
         $online_limit_date              =   date('Y-m-d H:i:s',strtotime("-".config('eclipse.OFFLINE_DURATION').""));
         $current_time                   =   date('Y-m-d H:i:s');
         $device_status                  =   (isset($request->device_status) ) ? $request->device_status : 1;     
         $download_type                  =   ( isset($request->type) ) ? $request->type : null;
+        // $search_key                     =   ( isset($request->search_key) ) ? $request->search_key : null;
+        $search                         =   ( isset($request->search) ) ? $request->search : null;     
+        
         $gps_ids                        =   (new Vehicle())->getAllVehiclesWithUnreturnedGps();
         $vehicle_status                 =   (isset($request->vehicle_status) ) ? $request->vehicle_status : null;      
-        if($vehicle_status == '')
-        {
-            $device_online_report       =   (new GPS())->getDeviceOnlineReport($online_limit_date,$current_time,$vehicle_status,$device_status,$gps_ids);
-        }
-        else
-        {
-            $device_online_report       =   (new GPS())->getDeviceOnlineReport($online_limit_date,$current_time,$vehicle_status,$device_status,$gps_ids);           
-        }
+        $device_online_report           =   (new GPS())->getDeviceOnlineReport($online_limit_date,$current_time,$vehicle_status,$device_status,$gps_ids,$search,$download_type);
+    //   dd($device_online_report);
+       
         if($download_type == 'pdf')
         {
-            $pdf                    =   PDF::loadView('GpsReport::device-online-report-download',[ 'device_online_report' => $device_online_report, 'generated_by' => $generated_by, 'manufactured_by' => ucfirst(strtolower($logged_user_details->root->name)).' '.'( Manufacturer )','generated_on' => date("d/m/Y h:m:s A") ]);
-            return $pdf->download('device-online-report.pdf');
+            if($device_online_report->count()>0)
+            {
+                $pdf                        =   PDF::loadView('GpsReport::device-online-report-download',[ 'device_online_report' => $device_online_report, 'generated_by' => $generated_by, 'manufactured_by' => ucfirst(strtolower($logged_user_details->root->name)).' '.'( Manufacturer )','generated_on' => date("d/m/Y h:m:s A") ]);
+                return $pdf->download('device-online-report.pdf');
+            }
+            else{
+               return view('GpsReport::device-online-report',['device_online_report'=>$device_online_report,'device_status'=>$device_status,'vehicle_status'=>$vehicle_status,'search'=>$search]);    
+            }
+            
+        }  
+        else if($request->ajax())
+        {
+            
+            return ($device_online_report != null) ? Response([ 'links' => $device_online_report->appends(['sort' => 'votes'])]) : Response([ 'links' => null]);
         }
         else
         {
-            return view('GpsReport::device-online-report',['device_online_report'=>$device_online_report,'device_status'=>$device_status,'vehicle_status'=>$vehicle_status]);    
+            // dd($search);
+            return view('GpsReport::device-online-report',['device_online_report'=>$device_online_report,'device_status'=>$device_status,'vehicle_status'=>$vehicle_status,'search'=>$search]);    
         }
     }
 
@@ -1304,6 +1326,9 @@ class GpsReportController extends Controller
         $device_type            = ( isset($request->device_type) ) ? $request->device_type : config("eclipse.DEVICE_STATUS.TAGGED");
         $offline_duration       = ( isset($request->offline_duration) ) ? $request->offline_duration : null;
         $download_type          = ( isset($request->type) ) ? $request->type : null;
+        // $search_key          = ( isset($request->search_key) ) ? $request->search_key : null;
+        $search_key             =   ( isset($request->search) ) ? $request->search : null;     
+       
         $logged_user_details    = (new Operations())->getOperatorDetails(\Auth::user()->operations->id);
 
         if($offline_duration == null )
@@ -1320,27 +1345,361 @@ class GpsReportController extends Controller
         {
             $gps_id_of_active_vehicles      = (new Vehicle())->getAllVehiclesWithUnreturnedGps();
         }
-        $offline_devices                    = (new Gps())->getAllOfflineDevices($offline_date_time, $device_type, $download_type , $gps_id_of_active_vehicles);
-        if( $download_type == 'pdf' )
+        $offline_devices                    = (new Gps())->getAllOfflineDevices($offline_date_time, $device_type, $download_type , $gps_id_of_active_vehicles,$search_key);
+        // $imei=[];
+        // foreach($offline_devices as $offline_device)
+        // {
+        //     $encryptedid[]= $offline_device->eimei;
+        // }
+        // dd($encryptedid);
+        if( $download_type == 'pdf')
         {
-            $pdf    =   PDF::loadView('GpsReport::device-offline-status-report-download',[ 'offline_devices' => $offline_devices, 'offline_duration' => $offline_duration, 'device_type' => $device_type, 'generated_by' => ucfirst(strtolower($logged_user_details->root->name)).' '.'( Manufacturer )', 'user_generated_by' => $logged_user_details->name, 'generated_on' => date("d/m/Y h:i:s A") ]);
-            return $pdf->download('device-offline-status-report.pdf');
+            if($offline_devices->count()>0)
+            {
+                $pdf    =   PDF::loadView('GpsReport::device-offline-status-report-download',[ 'offline_devices' => $offline_devices, 'offline_duration' => $offline_duration, 'device_type' => $device_type, 'generated_by' => ucfirst(strtolower($logged_user_details->root->name)).' '.'( Manufacturer )', 'user_generated_by' => $logged_user_details->name, 'generated_on' => date("d/m/Y h:i:s A") ]);
+                return $pdf->download('device-offline-status-report.pdf');
+            }
+            else{
+                return view('GpsReport::device-offline-status-report', [ 'offline_devices' => $offline_devices, 'offline_duration' => $offline_duration, 'device_type' => $device_type]);
+            }
+        }
+        else if($request->ajax())
+        {            
+            return ($offline_devices != null) ? Response([ 'links' => $offline_devices->appends(['sort' => 'votes'])]) : Response([ 'links' => null]);
         }
         else
         {
-            return view('GpsReport::device-offline-status-report', [ 'offline_devices' => $offline_devices, 'offline_duration' => $offline_duration, 'device_type' => $device_type ]);
+            
+            return view('GpsReport::device-offline-status-report', [ 'offline_devices' => $offline_devices, 'offline_duration' => $offline_duration, 'device_type' => $device_type, 'search_key' => $search_key ]);
         }
+    }
+    /**
+     * 
+     * 
+     */
+    public function deviceReportDetailedView(Request $request)
+    {
+        $imei               = Crypt::decrypt($request->imei);
+        //get offline time limit
+        $offline_date_time  = date('Y-m-d H:i:s',strtotime("".'-'. config('eclipse.OFFLINE_DURATION').""));
+
+        //get gps details based on imei
+        $gps_details        = (new Gps())->getDeviceDetailsBasedOnImei($imei);
+        
+        if( $gps_details->device_time <= $offline_date_time ) 
+        {
+            $gps_details->device_status = '#c41900';
+            $gps_details->mode          = 'Offline ('.$gps_details->mode.')';
+        }
+        else
+        { 
+            switch( $gps_details->mode )
+            {
+                case 'M':
+                    $gps_details->device_status = '#84b752';
+                    $gps_details->mode          = 'Motion';
+                    break;
+                case 'H':
+                    $gps_details->device_status = '#69b4b9';
+                    $gps_details->mode          = 'Halt';
+                    break;
+                case 'S':
+                    $gps_details->device_status = '#858585';
+                    $gps_details->mode          = 'Sleep';
+                    break;
+                default:
+                    $gps_details->device_status = '#c41900';
+                    $gps_details->mode          = 'Offline';
+                    break;
+            }
+        }
+        //SIGNAL STRENGTH
+        if ($gps_details->gsm_signal_strength >= 19 ) 
+        {
+            $gps_details->gsm_signal_strength = "GOOD";
+        }
+        else if ($gps_details->gsm_signal_strength < 19 && $gps_details->gsm_signal_strength >= 13 ) 
+        {
+            $gps_details->gsm_signal_strength = "AVERAGE";
+        }
+        else if ($gps_details->gsm_signal_strength <= 12 )
+        {
+            $gps_details->gsm_signal_strength = "POOR";
+        }
+        else
+        {
+            $gps_details->gsm_signal_strength = "LOST";
+        }
+        // AC STATUS
+        if( $gps_details->ac_status == 1 )
+        {
+            $gps_details->ac_status = "ON";
+        }
+        else if( $gps_details->ac_status == 0 )
+        {
+            $gps_details->ac_status = "OFF";
+        }
+        //IGNITION
+        if( $gps_details->ignition == 1 )
+        {
+            $gps_details->ignition = "ON";
+        }
+        else if( $gps_details->ignition == 0 )
+        {
+            $gps_details->ignition = "OFF";
+        }
+        //MAIN POWER STATUS
+        if( $gps_details->main_power_status == 1) 
+        {
+            $gps_details->main_power_status  = "CONNECTED";
+        }
+        else if( $gps_details->main_power_status == 0) 
+        {
+            $gps_details->main_power_status  = "DISCONNECTED";
+        }
+        //TILT
+        if( $gps_details->tilt_status == 1) 
+        {
+            $gps_details->tilt_status  = "YES";
+        }
+        else
+        {
+            $gps_details->tilt_status  = "NO";
+        }
+        //OVER SPEED
+        if( $gps_details->overspeed_status == 1) 
+        {
+            $gps_details->overspeed_status  = "YES";
+        }
+        else
+        {
+            $gps_details->overspeed_status  = "NO";
+        }
+        //EMERGENCY
+        if( $gps_details->emergency_status == 1) 
+        {
+            $gps_details->emergency_status  = "YES";
+        }
+        else
+        {
+            $gps_details->emergency_status  = "NO";
+        }
+        //RETURN STATUS
+        if( $gps_details->is_returned == 1) 
+        {
+            $gps_details->is_returned  = "YES";
+        }
+        else
+        {
+            $gps_details->is_returned  = "NO";
+        }
+        //REFURBISHED STATUS
+        if( $gps_details->refurbished_status == 1) 
+        {
+            $gps_details->refurbished_status  = "YES";
+        }
+        else
+        {
+            $gps_details->refurbished_status  = "NO";
+        }
+        //get location based on latlng
+        $last_location      = $this->getPlacenameFromLatLng($gps_details->lat,$gps_details->lon);
+        return view('GpsReport::device-detailed-report-view', [ 'gps_details' => $gps_details, 'last_location' => $last_location ]);
     }
 
     /**
      * 
      * 
      */
-    public function deviceOfflineReportDetailedView(Request $request)
+    public function deviceReportDetailedViewOfVehicle(Request $request)
     {
-        $gps_id      = Crypt::decrypt($request->id);
-        $gps_details = (new Gps())->getGpsDetailswithVehicleData($gps_id);
-        return view('GpsReport::device-offline-status-report-view', [ 'gps_details' => $gps_details ]);
+        $gps_id                 = $request->gps_id;
+        $driver_details         = [];
+        $vehicle_details        = (new VehicleGps())->getSingleVehicleDetailsBasedOnGps($gps_id);
+        if($vehicle_details)
+        {
+            //THEFT MODE
+            if( $vehicle_details->vehicle->theft_mode == 1) 
+            {
+                $vehicle_details->vehicle->theft_mode  = "Enabled";
+            }
+            else
+            {
+                $vehicle_details->vehicle->theft_mode  = "Disabled";
+            }
+            //TOWING STATUS
+            if( $vehicle_details->vehicle->towing == 1) 
+            {
+                $vehicle_details->vehicle->towing  = "Enabled";
+            }
+            else
+            {
+                $vehicle_details->vehicle->towing  = "Disabled";
+            }
+            if($vehicle_details->vehicle->driver_id)
+            {
+                $driver_details     = (new Driver())->getDriverDetails($vehicle_details->vehicle->driver_id);
+                ( $driver_details->points > 100 ) ? $driver_details->points = 100 : $driver_details->points;
+                ( $driver_details->points < 0 )   ? $driver_details->points = 0 : $driver_details->points;
+            }
+        }
+        
+        $vehicle_driver_details = array( 'vehicle_details' => $vehicle_details, 'driver_details' => $driver_details);
+        return response()->json($vehicle_driver_details);
     }
 
+    /**
+     * 
+     * 
+     */
+    public function deviceReportDetailedViewOfTransfer(Request $request)
+    {
+        $gps_id             = $request->gps_id;
+        $transfer_details   = (new GpsStock())->getTransactionDetailsBasedOnGps($gps_id);
+        return response()->json($transfer_details);
+    }
+
+    /**
+     * 
+     * 
+     */
+    public function deviceReportDetailedViewOfEndUser(Request $request)
+    {
+        $gps_id             = $request->gps_id;
+        $owner_details      = [];
+        $vehicle_details    = (new VehicleGps())->getClientIdOfVehicle($gps_id);
+        if($vehicle_details)
+        {
+            ($vehicle_details->vehicle->client_id) ? $owner_details = (new Client())->getClientDetailsOfVehicle($vehicle_details->vehicle->client_id) : $owner_details = null;
+            $plan_names = array_column(config('eclipse.PLANS'), 'NAME', 'ID');
+            ($owner_details) ? $owner_details->user->role = ucfirst(strtolower($plan_names[$owner_details->user->role]))  : $owner_details->user->role = '-NA-'  ;
+        }
+        return response()->json($owner_details);
+    }
+
+    /**
+     * 
+     * 
+     */
+    public function deviceReportDetailedViewOfInstallation(Request $request)
+    {
+        $gps_id                 = $request->gps_id;
+        $installation_details   = (new ServicerJob())->getInstallationBasedOnGps($gps_id);
+        if( $installation_details )
+        {
+            if( $installation_details->status == 1 )
+            {
+                $installation_details->status = 'Pending';
+            }
+            else if( $installation_details->status == 2 )
+            {
+                $installation_details->status = 'In Progress';
+            }
+            else if( $installation_details->status == 3 )
+            {
+                $installation_details->status = 'Completed';
+            }
+        }
+        return response()->json($installation_details);
+    }
+
+    /**
+     * 
+     * 
+     */
+    public function deviceReportDetailedViewOfServices(Request $request)
+    {
+        $gps_id             = $request->gps_id;
+        $service_details    = (new ServicerJob())->getServiceDetailsBasedOnGps($gps_id);
+        return response()->json($service_details);
+    }
+    
+    /**
+     * 
+     * 
+     */
+    public function deviceReportDetailedViewSetOta(Request $request)
+    {
+        $gps_id     = $request->gps_id;
+        $command    = $request->command;
+        $imei       = $request->imei;
+        $response   = (new OtaResponse())->saveCommandsToDevice($gps_id,$command);
+        if($response)
+        {
+            $is_command_write_to_device =   (new OtaResponse())->writeCommandToDevice($imei,$command);
+            if($is_command_write_to_device)
+            {
+                $this->topic            =   $this->topic.'/'.$imei;
+                $is_mqtt_publish        =   $this->mqttPublish($this->topic, $command);
+                if ($is_mqtt_publish === true) 
+                {
+                    $request->session()->flash('message','Command send successfully..');
+                    $request->session()->flash('alert-class','alert-success');
+                }
+            }
+            
+        }
+        $request->session()->flash('message','Send command to device is failed!! Please try again..');
+        $request->session()->flash('alert-class','alert-success');
+        return  redirect(route('device-detailed-report-view',encrypt($imei)));
+    }
+
+    /**
+     * 
+     * 
+     */
+    public function deviceReportDetailedViewConsole(Request $request)
+    {
+        $imei       = $request->imei;
+        $packets    = (new VltData())->getProcessedAndUnprocessedDataFromDynamicTableVltData($imei);
+        return response()->json($packets);
+    }
+
+    /**
+     * 
+     * 
+     */
+    public function getVehicleAndUserIdBasedOnGps(Request $request)
+    {
+        $gps_id             = $request->gps_id;
+        $vehicle_details    = (new VehicleGps())->getVehicleAndUserIdBasedOnGps($gps_id);
+        return response()->json($vehicle_details);
+    }
+
+    /**
+     * 
+     * Find location based on latitude and longitude
+     */
+    private function getPlacenameFromLatLng($latitude,$longitude)
+    {
+        if(!empty($latitude) && !empty($longitude)){
+            //Send request and receive json data by address
+            $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key='.config('eclipse.keys.googleMap'));
+            $output = json_decode($geocodeFromLatLong);
+            $status = $output->status;
+            //Get address from json data
+            $address = ($status=="OK")?$output->results[1]->formatted_address:'';
+            //Return address of the given latitude and longitude
+            if(!empty($address)){
+                return $address;
+            }else{
+                return false;
+            }
+        }else{
+            return false;
+        }
+    }
+    /**
+     * 
+     */
+    public function deviceReportDetailedViewOfTransferHistory(Request $request)
+    {
+        $gps_id             = $request->gps_id;
+        $transfer_details   = (new GpsTransferItems())->getTransferDetailsBasedOnGps($gps_id);
+        return response()->json($transfer_details);
+    }
+    public function deviceDetailImeiEncription(Request $request)
+    {
+       return $encrypt_imei=Crypt::encrypt($request['imei']);
+    }
 }

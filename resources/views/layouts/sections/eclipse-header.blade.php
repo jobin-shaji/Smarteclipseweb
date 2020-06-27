@@ -72,7 +72,7 @@
         <!-- ============================================================== -->
         <!-- End Logo -->
         <!-- ============================================================== -->
-        <div class="navbar-collapse collapse" id="navbarSupportedContent" data-navbarbg="skin5">
+        <div class="navbar-collapse collapse operation-header" id="navbarSupportedContent" data-navbarbg="skin5">
             <!-- ============================================================== -->
             <!-- toggle and nav items -->
             <!-- ============================================================== -->
@@ -408,6 +408,11 @@
                         <a class="dropdown-item"><button onclick="verifyHeaderEmergency()">Verify</button></a>
                     </div>
                 </li>
+                @role('root|operations|client')
+                    <script> 
+                        var url_ms_alerts = '{{ Config::get("eclipse.urls.ms_alerts") }}';
+                    </script>
+                @endrole
                 @role('client')
 
                 <input type="hidden" id="user_id" value="{{\Auth::user()->id}}">
@@ -431,9 +436,6 @@
                     </div>
                     
                     <script> 
-
-                   var url_ms_alerts = '{{ Config::get("eclipse.urls.ms_alerts") }}';
-                   console.log('url_ms_alerts'+url_ms_alerts);
                         var firebaseConfig = {
                             apiKey:  '{{Config::get("firebase.apiKey")}}',
                             authDomain: '{{Config::get("firebase.authDomain")}}',
@@ -707,6 +709,17 @@
         Contact for Assistance +91 9544313131</div>
     </div>  
 </div>
+@role('operations')
+<style>
+    .operation-header
+    {
+        width: 100%;
+        padding: 0px 5px 0px 0 !important;
+        margin-left: -50px;
+    }
+
+</style>
+@endrole
 
 <style>
     .load-modal-img{

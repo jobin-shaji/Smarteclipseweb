@@ -30,11 +30,27 @@ Route::group(['middleware' => ['web','auth','role:operations'] , 'namespace' => 
     //online reports
     Route::get('/device-online-report','GpsReportController@deviceOnlineReport')->name('device-online-report');
     Route::get('/device-online-report-downloads','GpsReportController@deviceOnlineReport')->name('device-online-report-downloads');
+    // Route::get('/gps-returned-report','GpsReportController@gpsReturnedReport')->name('gps-returned-report');
+    Route::get('/device-search','GpsReportController@deviceOnlineReport')->name('gps-online-search');
 
 
     //offline reports
     Route::get('/device-offline-report','GpsReportController@deviceOfflineReport')->name('device-offline-report');
     Route::get('/device-offline-report-downloads','GpsReportController@deviceOfflineReport')->name('device-offline-report-downloads');
-    Route::get('/device-offline-report/{id}/view','GpsReportController@deviceOfflineReportDetailedView')->name('device-offline-report-view');
+    Route::get('/device-offline-search','GpsReportController@deviceOfflineReport')->name('gps-offline-search');
+    Route::get('/device-detailed-report/{imei}/view','GpsReportController@deviceReportDetailedView')->name('device-detailed-report-view');
+    Route::post('/device-detail-encription','GpsReportController@deviceDetailImeiEncription')->name('device-detail-encription');
     
+    
+    Route::post('/device-detailed-report/vehicle-details','GpsReportController@deviceReportDetailedViewOfVehicle')->name('device-detailed-report-vehicle-details-view');
+    Route::post('/device-detailed-report/transfer-details','GpsReportController@deviceReportDetailedViewOfTransfer')->name('device-detailed-report-transfer-details-view');
+    Route::post('/device-detailed-report/end-user-details','GpsReportController@deviceReportDetailedViewOfEndUser')->name('device-detailed-report-end-user-details-view');
+    Route::post('/device-detailed-report/installation-details','GpsReportController@deviceReportDetailedViewOfInstallation')->name('device-detailed-report-installation-details-view');
+    Route::post('/device-detailed-report/services-details','GpsReportController@deviceReportDetailedViewOfServices')->name('device-detailed-report-services-details-view');
+    Route::post('/device-detailed-report/transfer-history-details','GpsReportController@deviceReportDetailedViewOfTransferHistory')->name('device-detailed-report-transfer-history-details-view');
+    Route::post('/device-detailed-report/set-ota','GpsReportController@deviceReportDetailedViewSetOta')->name('device-detailed-report-view-set-ota');
+    Route::post('/device-detailed-report/get-console','GpsReportController@deviceReportDetailedViewConsole')->name('device-detailed-report-view-console');
+    Route::post('/device-detailed-report/get-vehicle-id','GpsReportController@getVehicleAndUserIdBasedOnGps')->name('device-detailed-report-view-get-vehicle-id');
+    Route::post('/device-detailed-report/alert-details','GpsReportController@deviceReportDetailedViewofAlerts')->name('device-detailed-report-alert-details-view');
+
 });

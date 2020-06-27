@@ -302,6 +302,22 @@ class Client extends Model
     return self::withTrashed()->pluck('user_id');
   }
 
+  /**
+   * 
+   * 
+   */
+  public function getClientDetailsOfVehicle($client_id)
+  {
+    return self::select('id','address','name','user_id','country_id','state_id','city_id')
+                ->where('id', $client_id)
+                ->with('user')
+                ->with('state')
+                ->with('country')
+                ->with('city')
+                ->withTrashed()
+                ->first();
+  }
+
 
   
 }

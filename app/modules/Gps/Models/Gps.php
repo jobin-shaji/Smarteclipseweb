@@ -1,13 +1,15 @@
 <?php
 
 namespace App\Modules\Gps\Models;
+
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Crypt;
 use App\Scopes\DeleteScope;
 
 class Gps extends Model
-{
+{  
     use SoftDeletes;
     
     protected static function boot()
@@ -28,6 +30,16 @@ class Gps extends Model
     public function vehicleGps()
     {
         return $this->hasOne('App\Modules\Vehicle\Models\VehicleGps');
+    }
+    
+    /**
+     * 
+     * 
+     * 
+     */
+    public function getEimeiAttribute() 
+    {  
+        return Crypt::encrypt($this->imei);
     }
 
     //join user table with gps table
@@ -197,22 +209,8 @@ class Gps extends Model
 
     public function getDeviceHierarchyDetails($imei)
     {
-        return self::select(
-            'id',
-            'imei',
-            'serial_no',
-            'manufacturing_date',
-            'icc_id',
-            'imsi',
-            'e_sim_number',
-            'batch_number',
-            'employee_code',
-            'model_name',
-            'version',
-            'is_returned'
-        )  
-        ->where('imei',$imei) 
-        ->with('vehicle:id,gps_id')
+        return self::where('imei',$imei) 
+        ->with('vehicle')
         ->with('gpsStock:id,gps_id,dealer_id,subdealer_id,client_id,trader_id,inserted_by')
         ->with('gpsStock.root:id,name')
         ->with('gpsStock.dealer:id,name')
@@ -249,10 +247,11 @@ class Gps extends Model
      * 
      * 
      */
-    public function getAllOfflineDevices($offline_date_time, $device_type = null,$download_type = null , $gps_id_of_active_vehicles = null)
+    public function getAllOfflineDevices($offline_date_time, $device_type = null,$download_type = null , $gps_id_of_active_vehicles = null ,$search_key=null)
     {
-        $result =   self::select('id','imei','serial_no','device_time')
-                    ->with('vehicleGps')
+        $result =   self::select('id', 'imei', 'serial_no','device_time')
+                    // ->with('vehicleGps')
+                    ->with('vehicleGps.vehicle.client')
                     ->with('gpsStock')
                     ->where(function ($query) {
                         $query->where('is_returned', '=', 0)
@@ -279,6 +278,13 @@ class Gps extends Model
                             ->orWhere('device_time', '<=' ,$offline_date_time);
                         });
                     }
+                    if( $search_key != null )
+                    {
+                        $result->where(function($query) use($search_key){
+                            $result = $query->Where('serial_no','like','%'.$search_key.'%')
+                            ->orWhere('imei','like','%'.$search_key.'%');                
+                        });  
+                    }  
         if($download_type == 'pdf')
         {
             return $result->get();   
@@ -292,15 +298,7 @@ class Gps extends Model
      * 
      * 
      */
-    public function getGpsDetailswithVehicleData($gps_id)
-    {
-        return self::select('id','imei','serial_no','device_time')
-                    ->with('gpsStock')
-                    ->with('vehicleGps')
-                    ->where('id',$gps_id)
-                    ->first();
-    }
-    public function getDeviceOnlineReport($online_limit_date,$current_time,$vehicle_status=null,$device_status=null,$gps_ids=null)
+    public function getDeviceOnlineReport($online_limit_date,$current_time,$vehicle_status=null,$device_status=null,$gps_ids=null,$search_key=null,$download_type=null)
     {
         $query = self::select( 
             'id',
@@ -314,16 +312,30 @@ class Gps extends Model
             $query->where('is_returned', '=', 0)
             ->orWhere('is_returned', '=', NULL);
         });
+        
         ( $vehicle_status == null ) ? $query : $query->where('mode', $vehicle_status); 
-        if($device_status == 1)
+        if($device_status == config("eclipse.DEVICE_STATUS.TAGGED"))
         {
             $query = $query->whereIN('id',$gps_ids);
         }
-        else if($device_status == 2)
+        else if($device_status == config("eclipse.DEVICE_STATUS.UNTAGGED"))
         {
             $query = $query->whereNotIn('id',$gps_ids);
+        }
+        if( $search_key != null )
+        {
+            $query->where(function($query) use($search_key){
+                $query = $query->Where('serial_no','like','%'.$search_key.'%')
+                ->orWhere('imei','like','%'.$search_key.'%');                
+            });  
         }  
-        return $query->paginate(10);
+        if($download_type == 'pdf')
+        {
+            return $query->get();   
+        }else
+        {
+            return $query->paginate(10);   
+        }    
     }
     /**
      * online offline Report count
@@ -350,6 +362,15 @@ class Gps extends Model
             ->orWhere('device_time', '<=', $online_limit_date);
         })
         ->count();
+    }
+
+    /**
+     * 
+     * 
+     */
+    public function getDeviceDetailsBasedOnImei($imei)
+    {
+        return self::where('imei',$imei)->first();
     }
     
 }

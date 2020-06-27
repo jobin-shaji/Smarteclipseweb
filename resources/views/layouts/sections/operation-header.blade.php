@@ -1,131 +1,116 @@
-    <ul class="navbar-nav float-left mr-auto">
-        <li class="nav-item d-none d-md-block">
-        </li>                       
-        
-        <li class="nav-item"> 
-            <a class="nav-link-operation waves-effect waves-dark" href="{{url('/home')}}">
+<ul class="navbar-nav float-left mr-auto">
+    <li class="nav-item d-none d-md-block">
+    </li>
+    <li class="nav-item">
+        <a class="nav-link waves-effect waves-dark" href="{{url('/home')}}">
             <i class="fa fa-home" aria-hidden="true"></i>
-            </a>
-        </li>
-        <li class="nav-item dropdown">
-           
-        </li>
+        </a>
+    </li>
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> CONFIGURATION
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="{{url('/all-gps-config')}}">SINGLE GPS CONFIGURATION</a>
+            <a class="dropdown-item"href="{{url('/gps-config')}}">GPS CONFIGURATION</a>
+            <a class="dropdown-item" href="{{url('/gps-map')}}">GPS FIX AND NON FIX</a>
+            <a class="dropdown-item" href="{{url('/gps-km-map')}}">GPS KM</a>
+            <a class="dropdown-item" href="{{url('/console-data-list')}}">CONSOLE</a>
+        </div>
+    </li>
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> DEVICE
+        </a>
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="{{url('/gps/stock')}}">ADD STOCK</a> 
+            <a class="dropdown-item" href="{{url('/gps-records')}}">DEVICE PROCESSED DAILY RECORDS</a>
+            <a class="dropdown-item" href="{{url('/gps-unprocessed-records')}}">DEVICE UNPROCESSED DAILY RECORDS</a>
+            <a class="dropdown-item" href="{{url('/device-status-report')}}"> DEVICE STATUS REPORT </a>
+        </div>
+    </li>
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> OTA
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="{{url('/set-ota-operations')}}">SET SOTA </a>
+            <a class="dropdown-item" href="{{url('/ota-response')}}">OTA RESPONSE</a>
+            <a class="dropdown-item"href="{{url('/ota-update')}}">OTA UPDATES</a>
+        </div>
+    </li>
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> VLT DATA
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="{{url('/unprocessed-data-list')}}">VLT DATA (PROCESSED & UNPROCESSED)</a>
+            <a class="dropdown-item" href="{{url('/operation-gps-data')}}">PROCESSED DATA </a>
+            <a class="dropdown-item" href="{{url('/packet-split-data')}}">
+            NRM PACKET DATA </a>
+            <a class="dropdown-item" href="{{url('/lgn-split-data')}}">
+            LOGIN/ACTIVATION PACKET DATA</a>
+            <a class="dropdown-item" href="{{url('/hlm-split-data')}}">
+            HLM PACKET DATA</a>
+            <a class="dropdown-item" href="{{url('/ful-split-data')}}">
+            FULL PACKET DATA</a>
+            <a class="dropdown-item" href="{{url('/ack-split-data')}}">
+            ACKNOWLEDGMENT PACKET DATA</a>
+            <a class="dropdown-item" href="{{url('/alt-split-data')}}">
+            ALERT PACKET DATA</a>
+            <a class="dropdown-item" href="{{url('/crt-split-data')}}">
+            CRT PACKET DATA</a>
+            <a class="dropdown-item" href="{{url('/epb-split-data')}}">
+            EMERGENCY(EPB) PACKET DATA</a>
+            <a class="dropdown-item" href="{{url('/batch-split-data')}}">
+            BATCH PACKET DATA</a>
+        </div>
+    </li>
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> GPS STOCK REPORT
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="{{url('/stock-report')}}">STOCK REPORT</a>
+            <a class="dropdown-item"href="{{url('/combined-stock-report')}}">COMBINED STOCK REPORT</a>
+        </div>
+    </li>
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> TESTED REPORT
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="{{url('/gps-report')}}">GPS TESTED REPORT</a>
+            <!-- <a class="dropdown-item"href="{{url('/combined-gps-report')}}">COMBINED GPS TESTED REPORT</a> -->
+        </div>
+    </li>
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> VEHICLE MAKE
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="{{url('/vehicle-make-create')}}">CREATE VEHICLE MAKE</a>
+            <a class="dropdown-item"href="{{url('/vehicle-make')}}">LIST VEHICLE MAKE</a>
+        </div>
+    </li>
+     
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> VEHICLE MODELS
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="{{url('/vehicle-models-create')}}">CREATE VEHICLE MODELS</a>
+            <a class="dropdown-item"href="{{url('/vehicle-models')}}">LIST VEHICLE MODELS</a>
+        </div>
+    </li>
 
-        <li class="nav-item dropdown">
-            <a class="nav-link-operation dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">  CONFIGURATION
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="{{url('/all-gps-config')}}">SINGLE GPS CONFIGURATION</a>
-                <a class="dropdown-item"href="{{url('/gps-config')}}">GPS CONFIGURATION</a>
-                <a class="dropdown-item" href="{{url('/gps-map')}}">GPS FIX AND NON FIX</a>
-                <a class="dropdown-item" href="{{url('/gps-km-map')}}">GPS KM</a>
-                <a class="dropdown-item" href="{{url('/console-data-list')}}">CONSOLE</a>
-            </div>
-        </li>
-        <li class="nav-item dropdown">
-            <a class="nav-link-operation dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> DEVICE
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <div class="dropdown-divider"></div>         
-                <a class="dropdown-item" href="{{url('/gps/stock')}}">ADD STOCK</a> 
-                <a class="dropdown-item" href="{{url('/gps-records')}}">DEVICE PROCESSED DAILY RECORDS</a>
-                <a class="dropdown-item" href="{{url('/gps-unprocessed-records')}}">DEVICE UNPROCESSED DAILY RECORDS</a>
-                <a class="dropdown-item" href="{{url('/device-status-report')}}"> DEVICE STATUS REPORT  <span class="badge">New</span></a>
-            </div>
-        </li>      
-        <li class="nav-item dropdown">
-            <a class="nav-link-operation dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> OTA
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <div class="dropdown-divider"></div>
-                 <a class="dropdown-item" href="{{url('/set-ota-operations')}}">SET SOTA </a>
-                <a class="dropdown-item" href="{{url('/ota-response')}}">OTA RESPONSE</a>
-                <a class="dropdown-item"href="{{url('/ota-update')}}">OTA UPDATES</a>
-                
-            </div>
-        </li>
-            <li class="nav-item dropdown">
-            <a class="nav-link-operation dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> VLT DATA
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="{{url('/unprocessed-data-list')}}">VLT DATA (PROCESSED & UNPROCESSED)</a>
-                <a class="dropdown-item" href="{{url('/operation-gps-data')}}">PROCESSED DATA </a>
-                <a class="dropdown-item" href="{{url('/packet-split-data')}}">
-                NRM PACKET DATA </a>
-                <a class="dropdown-item" href="{{url('/lgn-split-data')}}">
-                LOGIN/ACTIVATION PACKET DATA</a>
-                <a class="dropdown-item" href="{{url('/hlm-split-data')}}">
-                HLM PACKET DATA</a>
-                <a class="dropdown-item" href="{{url('/ful-split-data')}}">
-                FULL PACKET DATA</a>
-                <a class="dropdown-item" href="{{url('/ack-split-data')}}">
-                ACKNOWLEDGMENT PACKET DATA</a>
-                <a class="dropdown-item" href="{{url('/alt-split-data')}}">
-                ALERT PACKET DATA</a>
-                <a class="dropdown-item" href="{{url('/crt-split-data')}}">
-                CRT PACKET DATA</a>
-                <a class="dropdown-item" href="{{url('/epb-split-data')}}">
-                EMERGENCY(EPB) PACKET DATA</a>
-                <a class="dropdown-item" href="{{url('/batch-split-data')}}">
-                BATCH PACKET DATA</a>
-            </div>
-        </li>
-
-
-        <li class="nav-item dropdown">
-            <a class="nav-link-operation dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> GPS STOCK REPORT
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="{{url('/stock-report')}}">STOCK REPORT</a>
-                <a class="dropdown-item"href="{{url('/combined-stock-report')}}">COMBINED STOCK REPORT</a>
-                
-            </div>
-        </li> 
-
-        <li class="nav-item dropdown">
-            <a class="nav-link-operation dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> TESTED REPORT
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="{{url('/gps-report')}}">GPS TESTED REPORT</a>
-                <!-- <a class="dropdown-item"href="{{url('/combined-gps-report')}}">COMBINED GPS TESTED REPORT</a> -->
-                
-            </div>
-        </li>
-         <li class="nav-item dropdown">
-            <a class="nav-link-operation dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> VEHICLE MAKE
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="{{url('/vehicle-make-create')}}">CREATE VEHICLE MAKE</a>
-                <a class="dropdown-item"href="{{url('/vehicle-make')}}">LIST VEHICLE MAKE</a>
-                
-            </div>
-        </li>
-        <li class="nav-item dropdown">
-            <a class="nav-link-operation dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> VEHICLE MODELS
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="{{url('/vehicle-models-create')}}">CREATE VEHICLE MODELS</a>
-                <a class="dropdown-item"href="{{url('/vehicle-models')}}">LIST VEHICLE MODELS</a>
-            </div>
-        </li>
-        <li class="nav-item dropdown">
-            <a class="nav-link-operation dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> DURATIONS
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item"href="{{url('/vehicle-duration')}}">LIST VEHICLE DURATIONS</a>
-            </div>
-        </li>
-       
-
-
-      <!--   <li class="nav-item dropdown">
-            <a class="nav-link" href="{{url('/gps-report')}}">GPS REPORT</a>
-        </li> -->
-    </ul>
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> DURATIONS
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item"href="{{url('/vehicle-duration')}}">LIST VEHICLE DURATIONS</a>
+        </div>
+    </li>
+</ul>

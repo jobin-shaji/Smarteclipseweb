@@ -18,6 +18,13 @@ class GpsTransferItems extends Model
     {
         return $this->hasOne('App\Modules\Gps\Models\Gps','id','gps_id');
     }
+    public function gpsTransferDetail()
+    {       
+        return $this->hasMany('App\Modules\Gps\Models\GpsTransfer','id','gps_transfer_id');
+    }
+
+
+    
     /**
      * 
      * 
@@ -35,6 +42,18 @@ class GpsTransferItems extends Model
                 ->update([
                     'is_returned' =>  1,
                 ]);
+    }
+    public function getTransferDetailsBasedOnGps($gps_id)
+    {
+        return self::select(
+            'id',
+            'gps_transfer_id',
+            'gps_id'
+            )
+            ->where('gps_id', $gps_id)
+            ->with('gpsTransferDetail.fromUser')
+            ->with('gpsTransferDetail.toUser')
+            ->get();
     }
     
 }

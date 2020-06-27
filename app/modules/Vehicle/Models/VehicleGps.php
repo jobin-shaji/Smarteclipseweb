@@ -130,4 +130,43 @@ class VehicleGps extends Model
           ( '$search_date' BETWEEN date(gps_fitted_on) AND IF(date(gps_removed_on) IS NULL, CURDATE(), date(gps_removed_on)) )
       )");
     }
+
+    /**
+     * 
+     * 
+     */
+    public function getVehicleAndUserIdBasedOnGps($gps_id)
+    {
+      return self::select('vehicle_id','gps_id')
+                  ->where('gps_id',$gps_id)
+                  ->with('vehicle.clientWithTrashed')
+                  ->first();
+    }
+    /**
+     * 
+     * 
+     */
+    public function getSingleVehicleDetailsBasedOnGps($gps_id)
+    {
+        return self::select('vehicle_id','gps_id')
+                    ->where('gps_id',$gps_id)
+                    ->with('vehicle')
+                    ->with('vehicle.driver')
+                    ->with('vehicle.vehicleType:id,name')
+                    ->with('vehicle.vehicleModelsWithTrashed')
+                    ->with('vehicle.vehicleModelsWithTrashed.vehicleMakeWithTrashed')
+                    ->first();
+    }
+    
+    /**
+     * 
+     * 
+     */
+    public function getClientIdOfVehicle($gps_id)
+    {
+      return self::select('vehicle_id')
+                  ->with('vehicle')
+                  ->where('gps_id', $gps_id)
+                  ->first();
+    }
 }

@@ -4,6 +4,7 @@ namespace App\Modules\VltData\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 class VltData extends Model
 {
@@ -128,5 +129,23 @@ class VltData extends Model
         return self::select('id','imei')->where('imei',$imei)->update([
                         'imei' =>  $imei_incremented,
                     ]);
+    }
+
+    /**
+     * 
+     * 
+     */
+    public function getProcessedAndUnprocessedDataFromDynamicTableVltData($imei)
+    {
+        $packets    = [];
+        $table_name = 'vlt_data_'.date('Ymd');
+        $this->setTable($table_name);
+        if(Schema::hasTable($table_name) == true)
+        {
+            $packets =  self::select('id','vltdata','created_at')
+                            ->orderBy('created_at','DESC')
+                            ->take(10)->get();
+        }
+        return $packets;
     }
 }

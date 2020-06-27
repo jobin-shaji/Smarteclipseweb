@@ -4,7 +4,7 @@
 
     @include('layouts.sections.eclipse-meta')
 
-<body>
+<body style="padding-right:0px !important;">
     <!-- ============================================================== -->
     <!-- Preloader - style you can find in spinners.css -->
     <!-- ============================================================== -->
