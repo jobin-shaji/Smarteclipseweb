@@ -509,12 +509,14 @@
         float:left;
     }
 
-    .console_view
-    {
-        background-color: #0b0a0a;
-        color: #fdfcfc;
-        padding: 7px;
-    }
+    .console_view {
+    background-color: #0b0a0a;
+    color: #fdfcfc;
+    padding: 7px;
+    position: fixed;
+    bottom: 29px;
+    right: 30px;
+}
 
     .operation-header
     {
