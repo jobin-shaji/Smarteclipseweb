@@ -31,7 +31,7 @@ Create Dealer
           <div class="card">
             <!-- help text -->
             <div class="row" style="padding-left: 23px;">
-              <p><strong>How do you want to add owner ?</strong></p>
+              <p><strong>How do you want to add owner ?</strong></p><br>
               <p>If the owner is already exist, you can choose from the following list. Owner name and address will be automatically filled.  Otherwise, choose the manual option and add the user details.</p>
             </div>
             <!-- /help text -->
