@@ -521,73 +521,69 @@
         margin-left: -114px !important;
     }
 
-.panelContainer {
-	clear: left;
-    margin-bottom: 25px;
-    border: 0px solid green;
-    background-color: #f3f3f3;
-    padding: 13px;
-	/* add height if you want equal panels */
-}
+    .panelContainer {
+        clear: left;
+        margin-bottom: 25px;
+        border: 0px solid green;
+        background-color: #f3f3f3;
+        padding: 13px;
+        /* add height if you want equal panels */
+    }
 
+    /* reset ul defaults  */
+    .tabs {
+        margin: 0;
+        padding: 0;	
+        list-style: none;	
+    }
 
+    /* set li properties  */
+    .tabs li {
+        float: left;
+    /* width: 150px; */
+        padding: 0;
+        margin: 0;
+        text-align: center;
+    }
 
+    /* all formatting goes inside 'a' */
+    .tabs a {
+        display: block;
+        text-decoration: none;
+        color: #fff;
+        font-weight:normal;
+        padding:  8px;
+        margin-right: 4px; /*// spaces out the tabs  */
+        border-top-right-radius: 5px;
+        border-top-left-radius: 5px;
+        color:#337ab7;
+        margin-bottom: -2px;  /* negative margin will move it down
+                                to blend in with outer border  */
+    }
+    
+    .tabs a.active {
+        color: #fff;
+        background-color: #337ab7;
+        border-radius: 4px;
+        font-weight: bold;
+    }
+            
+    .panel img {
+                
+            margin-top: 10px;
+    }
 
-/* reset ul defaults  */
-.tabs {
-	margin: 0;
-	padding: 0;	
-	list-style: none;	
-}
-
-/* set li properties  */
-.tabs li {
-    float: left;
-   /* width: 150px; */
-	padding: 0;
-	margin: 0;
-    text-align: center;
-}
-
-/* all formatting goes inside 'a' */
-.tabs a {
-	display: block;
-	text-decoration: none;
-	color: #fff;
-    font-weight:normal;
-	padding:  8px;
-	margin-right: 4px; /*// spaces out the tabs  */
-    border-top-right-radius: 5px;
-    border-top-left-radius: 5px;
-    color:#337ab7;
-    margin-bottom: -2px;  /* negative margin will move it down
-	                         to blend in with outer border  */
-}
-
-
-.tabs a.active {
-    color: #fff;
-    background-color: #337ab7;
-    border-radius: 4px;
-    font-weight: bold;
-}
-        
- .panel img {
-             
-         margin-top: 10px;
-}
-
-.panel p  {
-             
-         margin-bottom: 0px;
-}
-.border-bottom-w{
-    border-bottom: 1px solid #dedcdc;
-}
-.basiclaart-width{
-    margin:0px auto;
-    width: 500px;
-}
+    .panel p  {
+                
+            margin-bottom: 0px;
+    }
+    .border-bottom-w{
+        border-bottom: 1px solid #dedcdc;
+    }
+    .basiclaart-width{
+        margin:0px auto;
+        width: 500px;
+    }
    /*******************************
     * MODAL AS BOTTOM SIDEBAR
     *******************************/
