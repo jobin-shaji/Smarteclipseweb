@@ -95,11 +95,11 @@
                     <input type = 'hidden' name = 'gps_id' id = 'gps_id' value = "{{$gps_details->id}}" >
                     <li><a href="#vehicle_details_section" onclick="getVehicleDetailsBasedOnGps()">Vehicle Details</a></li>
                     <li><a href="#end_user_details_section" onclick="getOwnerDetailsBasedOnGps()">End User Details</a></li>                    
-                    <li><a  href="#transfer_details_section" onclick="getTransferDetailsBasedOnGps()">Transfer Details</a></li>
-                    <li><a  href="#installation_details_section" onclick="getInstallationDetailsBasedOnGps()">Installation Details</a></li>
-                    <li><a  href="#service_details_section" onclick="getServiceDetailsBasedOnGps()">Service Details</a></li>
-                    <li><a  href="#alert_details_section" onclick="getAlertDetailsBasedOnGps()"> Alerts</a></li>                
-                    <li><a  href="#set_ota_section" onclick="setOtaInGps()"> Set OTA</a></li>
+                    <li><a href="#transfer_details_section" onclick="getTransferDetailsBasedOnGps()">Transfer Details</a></li>
+                    <li><a href="#installation_details_section" onclick="getInstallationDetailsBasedOnGps()">Installation Details</a></li>
+                    <li><a href="#service_details_section" onclick="getServiceDetailsBasedOnGps()">Service Details</a></li>
+                    <li><a href="#alert_details_section" onclick="getAlertDetailsBasedOnGps()"> Alerts</a></li>                
+                    <li><a href="#set_ota_section" onclick="setOtaInGps()"> Set OTA</a></li>
                 </ul>
                 <div class="panelContainer">
                     <div id="device_details_section" class="panel">
