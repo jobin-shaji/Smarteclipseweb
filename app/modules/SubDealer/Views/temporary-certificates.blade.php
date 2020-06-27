@@ -49,10 +49,12 @@
                   </tr>
                 </thead>
                 <tbody>
+                 <?php if($details->count() > 0 ) { ?>
                   @foreach($details as $data)
                   <?php 
                     $datas = json_decode($data['details'],true);
                   ?>
+                
                   <tr>
                     <td>{{$loop->iteration}}</td>
                     <td>{{$datas['client_name']}}</td>
@@ -62,6 +64,11 @@
                     <td><a href="/temporary-certificate/{{encrypt($data->id)}}" class="btn btn-xs btn-info"><i class="glyphicon glyphicon-eye-open"></i> View </a></td>
                   </tr>
                   @endforeach
+                 <?php }else{ ?>
+                    <tr>
+                      <td colspan="6">There is no temporary certificate</td>
+                    </tr>
+                 <?php } ?>
                 </tbody>
               </table>
             </div>
