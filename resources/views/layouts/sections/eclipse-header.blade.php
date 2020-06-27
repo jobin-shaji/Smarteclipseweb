@@ -72,7 +72,7 @@
         <!-- ============================================================== -->
         <!-- End Logo -->
         <!-- ============================================================== -->
-        <div class="navbar-collapse collapse" id="navbarSupportedContent" data-navbarbg="skin5">
+        <div class="navbar-collapse collapse operation-header" id="navbarSupportedContent" data-navbarbg="skin5">
             <!-- ============================================================== -->
             <!-- toggle and nav items -->
             <!-- ============================================================== -->
@@ -709,6 +709,17 @@
         Contact for Assistance +91 9544313131</div>
     </div>  
 </div>
+@role('operations')
+<style>
+    .operation-header
+    {
+        width: 100%;
+        padding: 0px 5px 0px 0;
+        margin-left: -50px;
+    }
+
+</style>
+@endrole
 
 <style>
     .load-modal-img{
