@@ -25,14 +25,14 @@
       </tr>
 
       <tr style=" width:710px; border:solid 1px #222;border-width:0 0 1px 0;position:absolute;">
-        <td style="padding:12px 0;width:250px;margin:0 0 0 12px;font-family:’Helvetica Bold’,Helvetica,’Arial Bold’,Arial,sans-serif;font-size:16px;font-weight:bolder;border:none;padding:0 0 0 12px">To:<br><br><span style="font-size:13px">{{$role_details->name}},<br>
+        <td style="padding:12px 0;width:250px;margin:0 0 0 12px;font-family:’Helvetica Bold’,Helvetica,’Arial Bold’,Arial,sans-serif;font-size:16px;font-weight:bolder;border:none;padding:0 0 0 12px">To:<br><br><span style="font-size:13px;word-wrap: break-word;">{{$role_details->name}},<br>
         {{$role_details->address}}</span>
         </td>
       </tr>
-      <tr style="width:710px;border:solid 1px #222;border-width:0 0 1px 0;position:absolute;">
+        <tr style="width:710px;border:solid 1px #222;border-width:0 0 1px 0;position:absolute;">
         <td style="margin:0 0 0 12px;width:250px;font-family:’Helvetica Bold’,Helvetica,’Arial Bold’,Arial,sans-serif;font-size:13px;font-weight:bolder;padding:12px 0 12px 12px;border:none;">Mobile Number:{{$user_details->mobile}}
         </td>
-        
+   
         <td style="margin:0 0 0 12px;width:250px;font-family:’Helvetica Bold’,Helvetica,’Arial Bold’,Arial,sans-serif;font-size:13px;font-weight:bolder;padding:12px 0 12px 12px;border:solid 1px #222;border-width:0 0 0 1px;">Scanned Employee Code:{{$gps_transfer->scanned_employee_code}}
         </td>
        
@@ -46,7 +46,7 @@
       </tr>
 
       <tr style="position:absolute;" >
-        <td style="margin:0 0 0 12px;width:250px;font-family:’Helvetica Bold’,Helvetica,’Arial Bold’,Arial,sans-serif;font-size:16px;font-weight:bolder;padding:12px 0 12px 12px;border:none;" >From:<br><br><span style="font-size:13px">{{$from_user_details->name}},<br>
+        <td style="margin:0 0 0 12px;width:250px;font-family:’Helvetica Bold’,Helvetica,’Arial Bold’,Arial,sans-serif;font-size:16px;font-weight:bolder;padding:12px 0 12px 12px;border:none;" >From:<br><br><span style="font-size:13px;word-wrap: break-word;">{{$from_user_details->name}},<br>
           {{$from_user_details->address}},<br>
           Mobile Number: {{$user_details_data->mobile}}</span><br>
         </td>
