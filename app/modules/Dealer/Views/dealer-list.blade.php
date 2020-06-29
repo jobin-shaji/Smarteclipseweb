@@ -23,7 +23,7 @@
  
   <div class="container-fluid">
     <div class="card-body">
-      <div class="table-responsive scrollmenu">
+      <div class="table-responsive">
         <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">                     
           <div class="row">
             <div class="col-sm-12">
@@ -51,6 +51,12 @@
 </div>
 </div>
 
+<style>
+  .table tr td
+  {
+    word-break: break-all;
+  }
+</style>
 @endsection
 
   @section('script')
