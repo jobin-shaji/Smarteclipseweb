@@ -825,13 +825,16 @@ class ClientController extends Controller {
     // update user logo
     public function saveUserLogo(Request $request)
     {
+        // dd(1);
         $client     =   (new Client())->getClientDetailsWithClientId($request->id);
         if($client == null){
            return view('Client::404');
         }
+        // dd($request->file('logo'));
         $rules = $this->logoUpdateRules();
         $this->validate($request, $rules);
         $file=$request->file('logo');
+      
         if($file){
             $old_file = $client->logo;
             if($old_file){
