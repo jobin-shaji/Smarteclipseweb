@@ -137,12 +137,22 @@
             td{
                 vertical-align: text-top;
             }
+            .wr { 
+                word-wrap: break-word; 
+                width: 140px;  
+                border: 1px solid green; 
+            }
+            .word-wrap { 
+                word-wrap: break-word; 
+                width: 400px;  
+                /* border: 1px solid green;  */
+            }
         </style>
 
         <script type="text/javascript" src="wz_jsgraphics.js"></script>
 
     </head>
-    <body >
+    <body>
         <div >
             <div style="position:absolute;left:23px;">
                 <img style="position:absolute;left:530px" class="cls_003" src="assets/images/smart_eclipse_logo.png" alt="Logo" height="30px" width="150px">
@@ -159,15 +169,15 @@
             <div style="position:fixed;margin:1%;overflow:auto">
 
                 <div style="position:absolute;left:20px;top:10px;width: 65%" class="cls_002">
-                    <div class="cls_002 lineheight">
-                        <b>Name:</b> {{$dealer_trader->name}}
+                    <div class="cls_002 lineheight word-wrap">
+                        <b>Name:</b> {{$dealer_trader->name}}</br>
                     </div>
-                    <div class="cls_002 lineheight">
+                    <div class="cls_002 lineheight word-wrap">
                         <b>Address:</b> {{$dealer_trader->address}}
                     </div>
                     <div class="cls_002 lineheight">
-                       <span> <b>Email:</b> {{$servicer_job->user->email}}</span>
-                       <span> <b>Ph:</b> {{$servicer_job->user->mobile}}</span>
+                       <span class="word-wrap"> <b>Email:</b> {{$servicer_job->user->email}}</span>
+                       <span class="word-wrap"> <b>Ph:</b> {{$servicer_job->user->mobile}}</span></br>
                     </div>
                 </div>
                 <?php 
@@ -177,21 +187,21 @@
                     <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(150)->generate($qr)) !!} ">
                 </div>
 
-                <div style="position:absolute;left:20px;top:170px; line-height: 21px;" class="cls_002">
+                <div style="position:absolute;left:20px;top:250px; line-height: 21px;" class="cls_002">
                     <span class="cls_002">This is to certify that, this vehicle is equipped with the AIS 140 compliant device, approved by <b>CDAC</b> and <b>ARAI</b>.</span>
                 </div>
-                <div style="position:absolute;top:210px">
+                <div style="position:absolute;top:300px">
                 <p><b style="margin-top: 250px;margin-left: 255px">Details of AIS 140 Device</b></p>
                 <table border="1" cellspacing="0" cellpadding="5px" style="margin-left: 20px;width:100%">
-                     <tr>
+                     <tr class="wr">
                         <td class="cls_002 grey" style="width:10%">Device IMEI</td>
                         <td>{{$servicer_job->gps->imei}}</td>
                         <td class="cls_002 grey" style="width: 10%">Model</td>
                         <td style="width: 15%">VST0507C</td>
                     </tr>
-                    <tr>
+                    <tr class="wr">
                         <td class="cls_002 grey" style="width:10%">Manufacturer</td>
-                        <td style="width:30%">
+                        <td style="width:30%" >
                            VST Mobility Solutions Private Limited,<br> B2,Kerala Technology Innovation Zone <br>Kinfra Hi Tech Park, Kalamassery <br>Ernakulam
                         </td>
                         <td class="cls_002 grey" style="width: 10%">CDAC Certification No</td>
@@ -200,19 +210,19 @@
                 </table>
                 <p><b style="margin-left: 255px;align:center">Details of the Vehicle</b></p>
                 <table border="1" cellspacing="0" cellpadding="5px" style="margin-left: 22px;width: 100%">
-                    <tr>
+                    <tr class="wr">
                         <td class="cls_002 grey">Registration Number</td>
                         <td>{{$vehicle_servicer_job_log->vehicle->register_number}}</td>
                         <td class="cls_002 grey">Chassis Number</td>
                         <td>{{$vehicle_servicer_job_log->vehicle->chassis_number}}</td>
                     </tr>
-                    <tr>
+                    <tr  class="wr">
                         <td class="cls_002 grey">Registered Owner Name</td>
                         <td>{{$client->name}}</td>
                         <td class="cls_002 grey" style="width: 30%">Registered Owner Address</td>
                         <td>{{$client->address}}</td>
                     </tr>
-                    <tr>
+                    <tr class="wr">
                         <td class="cls_002 grey">Engine Number</td>
                         <td>{{$vehicle_servicer_job_log->vehicle->engine_number}}</td>
                         <td class="cls_002 grey">Date of Installation</td>
@@ -244,7 +254,7 @@
                 <span class="cls_002">Yours Sincerly,</span>
             </div>
              <div style="position:absolute;left:20px;top:900px" class="cls_002">
-                <span class="cls_002">{{$dealer_trader->name}}</span>
+                <span class="cls_002 word-wrap">{{$dealer_trader->name}}</span>
             </div>
             <div style="position:absolute;top:900px;float:right" class="cls_002">
                 <span class="cls_002">Authorised Signatory</span>
