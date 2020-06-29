@@ -83,15 +83,17 @@
                   <label class="srequired">Upload Logo</label>
                   <div class="row">
                     <div class="col-md-6">
-                      <p style="font-size: 11px!important;color: green">Image types allowed: <b>PNG</b><br>Image size should not be more than <b>2mb</b></p>
-                      <input type="file" id="choose_image" name="logo" value="{{$client->logo }}">
+                      <p style="font-size: 11px!important;color: green">Image types allowed: <b>PNG</b><br></p>
+                      <input type="file" id="choose_image" name="logo" value="{{$client->logo }}" onchange="Filevalidation()" >
                     </div>
                     <?php if(!empty($response)) { ?>
                     <div class="response <?php echo $response["type"]; ?>
                         ">
                         <?php echo $response["message"]; ?>
+                       
                     </div>
                     <?php }?>
+                    <p id="size"></p> 
                     <div class="col-md-6">
                       @if($client->logo)
                         <img style='width:150px;height:100px;' class='uploaded_image' src="/logo/{{ $client->logo }}" />
@@ -132,9 +134,9 @@
 @endif -->
 @section('script')
   <script>
-    $("#choose_image").change(function() {
-      displaySelectedImage(this);
-    });
+    // $("#choose_image").change(function() {
+    //   displaySelectedImage(this);
+    // });
     function displaySelectedImage(input) {
       if (input.files && input.files[0]) {
         var reader = new FileReader();
@@ -149,6 +151,25 @@
       }
     }
   </script>
+    
+<script> 
+    Filevalidation = () => { 
+        const fi = document.getElementById('choose_image'); 
+        if (fi.files.length > 0) { 
+            for (const i = 0; i <= fi.files.length - 1; i++) {   
+                const fsize = fi.files.item(i).size; 
+                const file = Math.round((fsize / 1024));
+                if (file > 2048) { 
+                  document.getElementById('choose_image').value = '';  
+                  document.getElementById('size').innerHTML = '<span style="font-size: 11px!important;color: red">Image size should not be more than 2mb</span>';                                  
+                } 
+                else{
+                  displaySelectedImage(this);
+                }
+            } 
+        } 
+    } 
+</script> 
 @endsection
 
 @endsection
