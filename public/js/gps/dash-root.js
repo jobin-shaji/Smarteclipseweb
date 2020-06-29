@@ -26,7 +26,7 @@ var ctx = document.getElementById("rootChart").getContext('2d');
     data: {
       labels: res.gps_month,
       datasets: [{
-        label: 'Gps Transfer',
+        label: 'GPS Transfer',
         data:res.gps_count,
         backgroundColor:'rgba(245, 186, 110 )',
         borderColor:'rgba(242, 143, 16)',
@@ -106,7 +106,7 @@ var ctx = document.getElementById("rootGpsSaleChart").getContext('2d');
     data: {
       labels: res.gps_month,
       datasets: [{
-        label: 'Gps Sale',
+        label: 'GPS Sale',
         data:res.gps_count,
         backgroundColor:'rgba(245, 186, 110 )',
         borderColor:'rgba(242, 143, 16)',
