@@ -1514,31 +1514,36 @@ class GpsReportController extends Controller
     public function deviceReportDetailedViewOfVehicle(Request $request)
     {
         $gps_id                 = $request->gps_id;
+        $driver_details         = [];
         $vehicle_details        = (new VehicleGps())->getSingleVehicleDetailsBasedOnGps($gps_id);
-        //THEFT MODE
-        if( $vehicle_details->vehicle->theft_mode == 1) 
+        if($vehicle_details)
         {
-            $vehicle_details->vehicle->theft_mode  = "Enabled";
+            //THEFT MODE
+            if( $vehicle_details->vehicle->theft_mode == 1) 
+            {
+                $vehicle_details->vehicle->theft_mode  = "Enabled";
+            }
+            else
+            {
+                $vehicle_details->vehicle->theft_mode  = "Disabled";
+            }
+            //TOWING STATUS
+            if( $vehicle_details->vehicle->towing == 1) 
+            {
+                $vehicle_details->vehicle->towing  = "Enabled";
+            }
+            else
+            {
+                $vehicle_details->vehicle->towing  = "Disabled";
+            }
+            if($vehicle_details->vehicle->driver_id)
+            {
+                $driver_details     = (new Driver())->getDriverDetails($vehicle_details->vehicle->driver_id);
+                ( $driver_details->points > 100 ) ? $driver_details->points = 100 : $driver_details->points;
+                ( $driver_details->points < 0 )   ? $driver_details->points = 0 : $driver_details->points;
+            }
         }
-        else
-        {
-            $vehicle_details->vehicle->theft_mode  = "Disabled";
-        }
-        //TOWING STATUS
-        if( $vehicle_details->vehicle->towing == 1) 
-        {
-            $vehicle_details->vehicle->towing  = "Enabled";
-        }
-        else
-        {
-            $vehicle_details->vehicle->towing  = "Disabled";
-        }
-        if($vehicle_details->vehicle->driver_id)
-        {
-            $driver_details     = (new Driver())->getDriverDetails($vehicle_details->vehicle->driver_id);
-            ( $driver_details->points > 100 ) ? $driver_details->points = 100 : $driver_details->points;
-            ( $driver_details->points < 0 )   ? $driver_details->points = 0 : $driver_details->points;
-        }
+        
         $vehicle_driver_details = array( 'vehicle_details' => $vehicle_details, 'driver_details' => $driver_details);
         return response()->json($vehicle_driver_details);
     }
@@ -1561,10 +1566,14 @@ class GpsReportController extends Controller
     public function deviceReportDetailedViewOfEndUser(Request $request)
     {
         $gps_id             = $request->gps_id;
+        $owner_details      = [];
         $vehicle_details    = (new VehicleGps())->getClientIdOfVehicle($gps_id);
-        ($vehicle_details->vehicle->client_id) ? $owner_details = (new Client())->getClientDetailsOfVehicle($vehicle_details->vehicle->client_id) : $owner_details = null;
-        $plan_names = array_column(config('eclipse.PLANS'), 'NAME', 'ID');
-        ($owner_details) ? $owner_details->user->role = ucfirst(strtolower($plan_names[$owner_details->user->role]))  : $owner_details->user->role = '-NA-'  ;
+        if($vehicle_details)
+        {
+            ($vehicle_details->vehicle->client_id) ? $owner_details = (new Client())->getClientDetailsOfVehicle($vehicle_details->vehicle->client_id) : $owner_details = null;
+            $plan_names = array_column(config('eclipse.PLANS'), 'NAME', 'ID');
+            ($owner_details) ? $owner_details->user->role = ucfirst(strtolower($plan_names[$owner_details->user->role]))  : $owner_details->user->role = '-NA-'  ;
+        }
         return response()->json($owner_details);
     }
 

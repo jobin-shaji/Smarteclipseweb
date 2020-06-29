@@ -95,11 +95,11 @@
                     <input type = 'hidden' name = 'gps_id' id = 'gps_id' value = "{{$gps_details->id}}" >
                     <li><a href="#vehicle_details_section" onclick="getVehicleDetailsBasedOnGps()">Vehicle Details</a></li>
                     <li><a href="#end_user_details_section" onclick="getOwnerDetailsBasedOnGps()">End User Details</a></li>                    
-                    <li><a  href="#transfer_details_section" onclick="getTransferDetailsBasedOnGps()">Transfer Details</a></li>
-                    <li><a  href="#installation_details_section" onclick="getInstallationDetailsBasedOnGps()">Installation Details</a></li>
-                    <li><a  href="#service_details_section" onclick="getServiceDetailsBasedOnGps()">Service Details</a></li>
-                    <li><a  href="#alert_details_section" onclick="getAlertDetailsBasedOnGps()"> Alerts</a></li>                
-                    <li><a  href="#set_ota_section" onclick="setOtaInGps()"> Set OTA</a></li>
+                    <li><a href="#transfer_details_section" onclick="getTransferDetailsBasedOnGps()">Transfer Details</a></li>
+                    <li><a href="#installation_details_section" onclick="getInstallationDetailsBasedOnGps()">Installation Details</a></li>
+                    <li><a href="#service_details_section" onclick="getServiceDetailsBasedOnGps()">Service Details</a></li>
+                    <li><a href="#alert_details_section" onclick="getAlertDetailsBasedOnGps()"> Alerts</a></li>                
+                    <li><a href="#set_ota_section" onclick="setOtaInGps()"> Set OTA</a></li>
                 </ul>
                 <div class="panelContainer">
                     <div id="device_details_section" class="panel">
@@ -449,7 +449,7 @@
                     </div>
                     <!-- /Set OTA section -->
                     <!-- console modal button-->
-                    <button class="btn-sm console_view img-responsive pull-right" onclick="return openConsole({{$gps_details->imei}})" data-toggle="modal" data-target="#consoleModal">CONSOLE <i class='fa fa-arrow-up'></i></button>
+                    <button class="btn-sm console_view pull-right" onclick="return openConsole({{$gps_details->imei}})" data-toggle="modal" data-target="#consoleModal">CONSOLE <i class='fa fa-arrow-up'></i></button>
                     <!-- /console modal button-->      
                 </div>               
             </div> <!-- ends the tabbed panels / wrapper-->                        
@@ -457,8 +457,8 @@
     </div>
 </section>
 <!-- console modal -->
-<div class="modal bottom fade" id="consoleModal" tabindex="-1" role="dialog" aria-labelledby="modelForConsole">
-    <div class="modal-dialog modal-1-test" role="document">
+<div class="modal bottom fade" id="consoleModal" >
+    <div class="modal-dialog modal-1-test" >
         <div class="modal-content">
             <!-- console model header -->
             <div class="modal-header">
@@ -510,13 +510,13 @@
     }
 
     .console_view {
-    background-color: #0b0a0a;
-    color: #fdfcfc;
-    padding: 7px;
-    position: fixed;
-    bottom: 29px;
-    right: 30px;
-}
+        background-color: #0b0a0a;
+        color: #fdfcfc;
+        padding: 7px;
+        position: fixed;
+        bottom: 29px;
+        right: 50px;
+    }
 
     .operation-header
     {
@@ -562,7 +562,7 @@
         margin-bottom: -2px;  /* negative margin will move it down
                                 to blend in with outer border  */
     }
-    
+
     .tabs a.active {
         color: #fff;
         background-color: #337ab7;
@@ -647,6 +647,10 @@
 	.modal.bottom.fade.in .modal-dialog {
 		bottom: 0;
 	}
+    .body-padding-0 {
+        padding-right: 0px !important;
+    }
+    /* modal section ends here */
     tbody tr:nth-child(odd)
     {
         background: #E4E9EA;

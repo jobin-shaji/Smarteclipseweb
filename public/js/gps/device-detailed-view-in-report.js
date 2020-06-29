@@ -18,21 +18,23 @@ function getVehicleDetailsBasedOnGps()
             'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
         },
         success: function(res) {
-            var vehicle_name;
-            var vehicle_registration_number;
-            var vehicle_category;
-            var engine_number;
-            var chassis_number;
-            var vehicle_model;
-            var vehicle_make;
-            var vehicle_theft_mode;
-            var vehicle_towing_mode;
-            var vehicle_created_on;
-            var driver_name;
-            var driver_address;
-            var driver_mobile;
-            var driver_score;
-            (res.vehicle_details.vehicle) ? vehicle_name = res.vehicle_details.vehicle.name : vehicle_name = "-NA-";
+            var vehicle_name                = '-NA-';
+            var vehicle_registration_number = '-NA-';
+            var vehicle_category            = '-NA-';
+            var engine_number               = '-NA-';
+            var chassis_number              = '-NA-';
+            var vehicle_model               = '-NA-';
+            var vehicle_make                = '-NA-';
+            var vehicle_theft_mode          = '-NA-';
+            var vehicle_towing_mode         = '-NA-';
+            var vehicle_created_on          = '-NA-';
+            var driver_name                 = '-NA-';
+            var driver_address              = '-NA-';
+            var driver_mobile               = '-NA-';
+            var driver_score                = '-NA-';
+            if(res.vehicle_details != null)
+            {
+                (res.vehicle_details.vehicle) ? vehicle_name = res.vehicle_details.vehicle.name : vehicle_name = "-NA-";
             (res.vehicle_details.vehicle) ? vehicle_registration_number = res.vehicle_details.vehicle.register_number : vehicle_registration_number = "-NA-";
             (res.vehicle_details.vehicle) ? vehicle_category = res.vehicle_details.vehicle.vehicle_type.name : vehicle_category = "-NA-";
             (res.vehicle_details.vehicle) ? engine_number = res.vehicle_details.vehicle.engine_number : engine_number = "-NA-";
@@ -46,6 +48,7 @@ function getVehicleDetailsBasedOnGps()
             (res.driver_details.address) ? driver_address = res.driver_details.address : driver_address = "-NA-";
             (res.driver_details.mobile) ? driver_mobile = res.driver_details.mobile : driver_mobile = "-NA-";
             (res.driver_details.points != 'null') ? driver_score = res.driver_details.points : driver_score = "-NA-";
+            }
             document.getElementById("vehicle_name").innerHTML = vehicle_name;
             document.getElementById("vehicle_registration_number").innerHTML = vehicle_registration_number;
             document.getElementById("vehicle_category").innerHTML = vehicle_category;
@@ -152,22 +155,25 @@ function getOwnerDetailsBasedOnGps()
             'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
         },
         success: function(res) {
-            var owner_name;
-            var owner_address;
-            var owner_mobile;
-            var owner_email;
-            var owner_country;
-            var owner_state;
-            var owner_city;
-            var owner_package;
-            (res.name) ? owner_name = res.name : owner_name = "-NA-";
-            (res.address) ? owner_address = res.address : owner_address = "-NA-";
-            (res.user) ? owner_mobile = res.user.mobile : owner_mobile = "-NA-";
-            (res.user) ? owner_email = res.user.email : owner_email = "-NA-";
-            (res.country) ? owner_country = res.country.name : owner_country = "-NA-";
-            (res.state) ? owner_state = res.state.name : owner_state = "-NA-";
-            (res.city) ? owner_city = res.city.name : owner_city = "-NA-";
-            (res.user) ? owner_package = res.user.role : owner_package = "-NA-";
+            var owner_name      = '-NA-';
+            var owner_address   = '-NA-';
+            var owner_mobile    = '-NA-';
+            var owner_email     = '-NA-';
+            var owner_country   = '-NA-';
+            var owner_state     = '-NA-';
+            var owner_city      = '-NA-';
+            var owner_package   = '-NA-';
+            if(res)
+            {
+                (res.name) ? owner_name = res.name : owner_name = "-NA-";
+                (res.address) ? owner_address = res.address : owner_address = "-NA-";
+                (res.user) ? owner_mobile = res.user.mobile : owner_mobile = "-NA-";
+                (res.user) ? owner_email = res.user.email : owner_email = "-NA-";
+                (res.country) ? owner_country = res.country.name : owner_country = "-NA-";
+                (res.state) ? owner_state = res.state.name : owner_state = "-NA-";
+                (res.city) ? owner_city = res.city.name : owner_city = "-NA-";
+                (res.user) ? owner_package = res.user.role : owner_package = "-NA-";
+            }
             document.getElementById("owner_name").innerHTML = owner_name;
             document.getElementById("owner_address").innerHTML = owner_address;
             document.getElementById("owner_mobile").innerHTML = owner_mobile;
@@ -194,26 +200,29 @@ function getInstallationDetailsBasedOnGps()
             'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
         },
         success: function(res) {
-            var servicer_name;
-            var servicer_address;
-            var servicer_mobile;
-            var servicer_email;
-            var job_date;
-            var job_status;
-            var job_complete_date;
-            var location;
-            var description;
-            var comments;
-            (res.servicer) ? servicer_name = res.servicer.name : servicer_name = "-NA-";
-            (res.servicer) ? servicer_address = res.servicer.address : servicer_address = "-NA-";
-            (res.servicer.user) ? servicer_mobile = res.servicer.user.mobile : servicer_mobile = "-NA-";
-            (res.servicer.user) ? servicer_email = res.servicer.user.email : servicer_email = "-NA-";
-            (res.job_date) ? job_date = res.job_date : job_date = "-NA-";
-            (res.status) ? job_status = res.status : job_status = "-NA-";
-            (res.job_complete_date) ? job_complete_date = res.job_complete_date : job_complete_date = "-NA-";
-            (res.location) ? location = res.location : location = "-NA-";
-            (res.description) ? description = res.description : description = "-NA-";
-            (res.comments) ? comments = res.comments : comments = "-NA-";
+            var servicer_name       = '-NA-';
+            var servicer_address    = '-NA-';
+            var servicer_mobile     = '-NA-';
+            var servicer_email      = '-NA-';
+            var job_date            = '-NA-';
+            var job_status          = '-NA-';
+            var job_complete_date   = '-NA-';
+            var location            = '-NA-';
+            var description         = '-NA-';
+            var comments            = '-NA-';
+            if(Object.keys(res).length != 0)
+            {
+                (res.servicer) ? servicer_name = res.servicer.name : servicer_name = "-NA-";
+                (res.servicer) ? servicer_address = res.servicer.address : servicer_address = "-NA-";
+                (res.servicer.user) ? servicer_mobile = res.servicer.user.mobile : servicer_mobile = "-NA-";
+                (res.servicer.user) ? servicer_email = res.servicer.user.email : servicer_email = "-NA-";
+                (res.job_date) ? job_date = res.job_date : job_date = "-NA-";
+                (res.status) ? job_status = res.status : job_status = "-NA-";
+                (res.job_complete_date) ? job_complete_date = res.job_complete_date : job_complete_date = "-NA-";
+                (res.location) ? location = res.location : location = "-NA-";
+                (res.description) ? description = res.description : description = "-NA-";
+                (res.comments) ? comments = res.comments : comments = "-NA-";
+            }
             document.getElementById("servicer_name").innerHTML = servicer_name;
             document.getElementById("servicer_address").innerHTML = servicer_address;
             document.getElementById("servicer_mobile").innerHTML = servicer_mobile;
@@ -296,6 +305,8 @@ function getServiceDetailsBasedOnGps()
 
 function closeConsole()
 {
+    // workaround to handle padding issue in body tag
+    removePaddingFromBody();
     //stop refreshing of console window
     auto_refresh_console = false;
     window.clearInterval(refresh_interval_id);
@@ -443,4 +454,11 @@ function getFilterData()
 {
     filterData.append('user_id',user_id);
     filterData.append('vehicle_id',vehicle_id);
+}
+
+function removePaddingFromBody()
+{
+    setTimeout(function(){
+        $('body').removeAttr('style');
+    }, 500);      
 }
