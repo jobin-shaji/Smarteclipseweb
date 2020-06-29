@@ -55,7 +55,12 @@
 </div>
 
 </div>
-
+<style>
+  .card-text
+  {
+    word-break: break-all !important;
+  }
+</style>
 @endsection
 
   

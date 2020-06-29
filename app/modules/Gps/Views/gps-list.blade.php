@@ -67,6 +67,10 @@
   {
     margin-left:58px;
   }
+  .table tr td
+  {
+    word-break: break-all !important;
+  }
 </style>
 
 @endsection
