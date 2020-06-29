@@ -134,13 +134,14 @@
 @endif -->
 @section('script')
   <script>
-    // $("#choose_image").change(function() {
-    //   displaySelectedImage(this);
-    // });
+    $("#choose_image").change(function() {
+      displaySelectedImage(this);
+    });
     function displaySelectedImage(input) {
+      
       if (input.files && input.files[0]) {
         var reader = new FileReader();
-        
+        // alert(input.files);
         reader.onload = function(e) {
           $('.selected_image').show();
           $('.uploaded_image').hide();
@@ -152,7 +153,7 @@
     }
   </script>
     
-<script> 
+  <script> 
     Filevalidation = () => { 
         const fi = document.getElementById('choose_image'); 
         if (fi.files.length > 0) { 
@@ -164,6 +165,7 @@
                   document.getElementById('size').innerHTML = '<span style="font-size: 11px!important;color: red">Image size should not be more than 2mb</span>';                                  
                 } 
                 else{
+                  document.getElementById('size').innerHTML = '';                                  
                   displaySelectedImage(this);
                 }
             } 
