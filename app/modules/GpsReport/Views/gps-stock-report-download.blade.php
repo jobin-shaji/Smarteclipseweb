@@ -80,7 +80,7 @@ td, th {
         $total_instock          =   0;
     ?>
     @foreach($stock_details_of_manufacturer as $each_data)
-    <tr>
+    <tr style = "word-wrap: break-word;">
         <td><?php ( isset($each_data['user']) ) ? $manufacturer_name = $each_data['user'] : $manufacturer_name='-NA-' ?>{{$manufacturer_name}}</td>
         <td><?php ( isset($each_data['in_stock']) ) ? $in_stock = $each_data['in_stock'] : $in_stock='-NA-' ?>{{$in_stock}}</td>
     </tr>
@@ -112,7 +112,7 @@ td, th {
         $total_stock_to_accept  =   0;
     ?>
     @foreach($stock_details_of_distributors as $each_data)
-    <tr>
+    <tr style = "word-wrap: break-word;">
         <td><?php ( isset($each_data['manufacturer_name']) ) ? $manufacturer_name = $each_data['manufacturer_name'] : $manufacturer_name='-NA-' ?>{{$manufacturer_name}}</td>
         <td><?php ( isset($each_data['distributor_name']) ) ? $distributor_name = $each_data['distributor_name'] : $distributor_name='-NA-' ?>{{$distributor_name}}</td>
         <td><?php ( isset($each_data['in_stock']) ) ? $in_stock = $each_data['in_stock'] : $in_stock='-NA-' ?>{{$in_stock}}</td>
@@ -152,7 +152,7 @@ td, th {
         $total_stock_to_accept  =   0;
     ?>
     @foreach($stock_details_of_dealers as $each_data)
-    <tr>
+    <tr style = "word-wrap: break-word;">
         <td><?php ( isset($each_data['distributor_name']) ) ? $distributor_name = $each_data['distributor_name'] : $distributor_name='-NA-' ?>{{$distributor_name}}</td>
         <td><?php ( isset($each_data['dealer_name']) ) ? $dealer_name = $each_data['dealer_name'] : $dealer_name='-NA-' ?>{{$dealer_name}}</td> 
         <td><?php ( isset($each_data['in_stock']) ) ? $in_stock = $each_data['in_stock'] : $in_stock='-NA-' ?>{{$in_stock}}</td>
@@ -192,7 +192,7 @@ td, th {
         $total_stock_to_accept  =   0;
     ?>
     @foreach($stock_details_of_sub_dealers as $each_data)
-    <tr>
+    <tr style = "word-wrap: break-word;">
         <td><?php ( isset($each_data['dealer_name']) ) ? $dealer_name = $each_data['dealer_name'] : $dealer_name='-NA-' ?>{{$dealer_name}}</td> 
         <td><?php ( isset($each_data['sub_dealer_name']) ) ? $sub_dealer_name = $each_data['sub_dealer_name'] : $sub_dealer_name='-NA-' ?>{{$sub_dealer_name}}</td> 
         <td><?php ( isset($each_data['in_stock']) ) ? $in_stock = $each_data['in_stock'] : $in_stock='-NA-' ?>{{$in_stock}}</td>

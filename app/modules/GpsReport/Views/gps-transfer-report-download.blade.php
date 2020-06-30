@@ -71,7 +71,7 @@ td, th {
   <tbody>
   <?php $total  = 0; ?>
   @foreach($manufacturer_to_distributor_details as $each_data)
-    <tr>
+    <tr style = "word-wrap: break-word;">
       <td>{{$each_data['transfer_from']}}</td>
       <td>{{$each_data['transfer_to']}}</td>
       <td>{{$each_data['transferred_count']}}</td>
@@ -101,7 +101,7 @@ td, th {
   <tbody>
   <?php $total  = 0; ?>
   @foreach($distributor_to_dealer_details as $each_data)
-    <tr>
+    <tr style = "word-wrap: break-word;">
       <td>{{$each_data['transfer_from']}}</td>
       <td>{{$each_data['transfer_to']}}</td>
       <td>{{$each_data['transferred_count']}}</td>
@@ -131,7 +131,7 @@ td, th {
   <tbody>
   <?php $total  = 0; ?>
   @foreach($dealer_to_sub_dealer_details as $each_data)
-    <tr>
+    <tr style = "word-wrap: break-word;">
       <td>{{$each_data['transfer_from']}}</td>
       <td>{{$each_data['transfer_to']}}</td>
       <td>{{$each_data['transferred_count']}}</td>
@@ -161,7 +161,7 @@ td, th {
   <tbody>
   <?php $total  = 0; ?>
   @foreach($dealer_to_client_details as $each_data)
-    <tr>
+    <tr style = "word-wrap: break-word;">
       <td>{{$each_data['transfer_from']}}</td>
       <td>{{$each_data['transfer_to']}}</td>
       <td>{{$each_data['transferred_count']}}</td>
@@ -191,7 +191,7 @@ td, th {
   <tbody>
   <?php $total  = 0; ?>
   @foreach($sub_dealer_to_client_details as $each_data)
-    <tr>
+    <tr style = "word-wrap: break-word;">
       <td>{{$each_data['transfer_from']}}</td>
       <td>{{$each_data['transfer_to']}}</td>
       <td>{{$each_data['transferred_count']}}</td>
