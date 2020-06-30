@@ -110,14 +110,14 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                                                         <th></th>
                                                     </tr>
                                                 </thead>
-                                                <tbody id="data_tbody">
+                                                <tbody id="data_tbody" class = 'table_alignment'>
                                                     @if(count($offline_devices) == 0)
                                                         <tr>
                                                             <td colspan='8' style='text-align: center;'><b>No Data Available</b></td>
                                                         </tr>
                                                     @endif
                                                     @foreach($offline_devices as $each_data)
-                                                    <tr class = 'table_alignment'>
+                                                    <tr>
                                                         <td>{{ (($perPage * ($page - 1)) + $loop->iteration) }}</td>
                                                         <td><?php ( isset($each_data->imei) ) ? $imei = $each_data->imei : $imei='-NA-' ?>{{$imei}}</td>
                                                         <td><?php ( isset($each_data->serial_no) ) ? $serial_no = $each_data->serial_no : $serial_no='-NA-' ?>{{$serial_no}}</td>

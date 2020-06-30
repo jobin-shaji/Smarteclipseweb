@@ -103,23 +103,23 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                                                 <thead class="thead-color">
                                                     <tr>
                                                         <th>SL.NO</th>
-                                                        <th>IMEI</th>
-                                                        <th>Serial Number</th>
+                                                        <th class='imei_column'>IMEI</th>
+                                                        <th class='serial_no_column'>Serial Number</th>
                                                         <th>End User Name</th>
-                                                        <th>Vehicle Name</th>
+                                                        <th class='vehicle_name_column'>Vehicle Name</th>
                                                         <th>Registration Number</th>
                                                         <th>Vehicle Status</th>
                                                         <th>Action</th>
                                                     </tr>
                                                 </thead>
-                                                <tbody id="data_tbody">
+                                                <tbody id="data_tbody" class = 'table_alignment'>
                                                 @if(count($device_online_report) == 0)
                                                         <tr>
                                                             <td colspan='8' style='text-align: center;'><b>No Data Available</b></td>
                                                         </tr>
                                                    @else                                            
                                                 @foreach($device_online_report as $each_data)                                               
-                                                    <tr class = 'table_alignment'>
+                                                    <tr>
                                                         <td>{{ (($perPage * ($page - 1)) + $loop->iteration) }}</td>
                                                         <td><?php ( isset($each_data->imei) ) ? $imei = $each_data->imei : $imei='-NA-' ?>{{$imei}}</td>
                                                         <td><?php ( isset($each_data->serial_no) ) ? $serial_no = $each_data->serial_no : $serial_no='-NA-' ?>{{$serial_no}}</td>                                                       
@@ -174,6 +174,18 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
     .table_alignment
     {
         word-break: break-all;
+    }
+    .imei_column
+    {
+        width:170px;
+    }
+    .serial_no_column
+    {
+        width:210px;
+    }
+    .vehicle_name_column
+    {
+        width:150px;
     }
     
 </style>
