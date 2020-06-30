@@ -635,8 +635,6 @@ class ServicerController extends Controller {
     public function subDealerAssignServicerList()
     {
         $user_id=\Auth::user()->id;
-       
-
         return view('Servicer::sub-dealer-assign-servicer-list');
     }
     public function getSubDealerAssignServicerList()
@@ -670,13 +668,21 @@ class ServicerController extends Controller {
         return DataTables::of($servicer_job)
         ->addIndexColumn()
          ->addColumn('job_type', function ($servicer_job) {
-            if($servicer_job->job_type==1)
+            if($servicer_job->job_type== 1)
             {
                 return "Installation" ;
             }
-            else
+            else if($servicer_job->job_type== 2)
             {
                 return "Service" ;
+            }
+            else if($servicer_job->job_type== 3)
+            {
+                return "Reinstallation" ;
+            }
+            else
+            {
+                return "-NA-" ;
             }
 
          })
