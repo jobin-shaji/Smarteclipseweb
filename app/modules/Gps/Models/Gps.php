@@ -81,6 +81,9 @@ class Gps extends Model
     {
         return $this->hasMany('App\Modules\Ota\Models\OtaUpdates','gps_id','id');
     }
+    public function device_return(){
+        return $this->hasOne('App\Modules\DeviceReturn\Models\DeviceReturn','gps_id','id')->withTrashed();
+    }
     /**
      * 
      * 
