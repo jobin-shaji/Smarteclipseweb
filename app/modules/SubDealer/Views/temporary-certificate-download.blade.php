@@ -137,6 +137,21 @@
             td{
                 vertical-align: text-top;
             }
+            .wr { 
+                word-wrap: break-word; 
+                /* width: 140px;  
+                border: 1px solid green;  */
+            }
+            .word-wrap{
+                word-wrap: break-word; 
+                width: 50%;  
+                /* border: 1px solid green;  */
+            }
+            /* .table tr td
+            {
+                word-wrap: break-word;
+                width:140px;  
+            } */
         </style>
 
         <script type="text/javascript" src="wz_jsgraphics.js"></script>
@@ -159,8 +174,8 @@
             <br>
             <div style="position:fixed;margin:1%;overflow:auto">
 
-                <div style="position:absolute;left:20px;top:10px;width: 65%" class="cls_002">
-                    <div class="cls_002 lineheight">
+                <div style="position:absolute;left:20px;top:10px;width: 65%" class="cls_002 wr">
+                    <div class="cls_002 lineheight ">
                         <b>Name:</b> {{$subdealer_trader->name}}
                     </div>
                     <div class="cls_002 lineheight">
@@ -174,25 +189,25 @@
                 <?php 
                    $qr ='IMEI: '.$datas['imei'].' MODEL: VST0507C MANUFACTURER: VST Mobility Solutions Private Limited, B2,Kerala Technology Innovation Zone Kinfra Hi Tech Park, Kalamassery FROM: '.$subdealer_trader->name.''.$subdealer_trader->address;
                 ?>
-                <div style="position:absolute;left: 560px!important;margin-top: 20px!important">
+                <div style="position:absolute;left: 560px!important;margin-top: 40px!important">
                     <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(150)->generate($qr)) !!} ">
                 </div>
                 <div class="cls_002 lineheight" style="position:absolute;left: 540px!important;margin-top: 165px!important">
                     <b>Valid Till:</b> {{$validity}}
                 </div>
-                <div style="position:absolute;left:20px;top:200px; line-height: 21px;" class="cls_002">
+                <div style="position:absolute;left:20px;top:300px; line-height: 21px;" class="cls_002">
                     <span class="cls_002">This is to certify that, this vehicle will be equipped with the AIS 140 compliant device, approved by <b>CDAC</b> and <b>ARAI</b>.</span>
                 </div>
-                <div style="position:absolute;top:240px">
-                <p><b style="margin-top: 250px;margin-left: 255px">Details of AIS 140 Device</b></p>
+                <div style="position:absolute;top:350px">
+                <p><b style="margin-top: 350px;margin-left: 255px">Details of AIS 140 Device</b></p>
                 <table border="1" cellspacing="0" cellpadding="5px" style="margin-left: 20px;width:100%">
-                     <tr>
+                     <tr class="wr">
                         <td class="cls_002 grey" style="width:10%">Device IMEI</td>
-                        <td>{{$datas['imei']}}</td>
+                        <td >{{$datas['imei']}}hjhfgdhghdgvhbjhdfgdgfhvcghghfdgchggfdghfgsfdxcggdcgdycggdfsgfdgfffcfgdccfcccfcfcfffcfcccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc</td>
                         <td class="cls_002 grey" style="width: 10%">Model</td>
                         <td style="width: 15%">VST0507C</td>
                     </tr>
-                    <tr>
+                    <tr class="wr">
                         <td class="cls_002 grey" style="width:10%">Manufacturer</td>
                         <td style="width:30%">
                            VST Mobility Solutions Private Limited,<br> B2,Kerala Technology Innovation Zone <br>Kinfra Hi Tech Park, Kalamassery <br>Ernakulam
@@ -203,19 +218,19 @@
                 </table>
                 <p><b style="margin-left: 255px;align:center">Details of the Vehicle</b></p>
                 <table border="1" cellspacing="0" cellpadding="5px" style="margin-left: 22px;width: 100%">
-                    <tr>
+                    <tr class="wr">
                         <td class="cls_002 grey">Registration Number</td>
                         <td>{{$datas['vehicle_registration_number']}}</td>
                         <td class="cls_002 grey">Chassis Number</td>
                         <td>{{$datas['vehicle_chasis_number']}}</td>
                     </tr>
-                    <tr>
+                    <tr class="wr">
                         <td class="cls_002 grey">Registered Owner Name</td>
                         <td>{{$datas['owner_name']}}</td>
                         <td class="cls_002 grey" style="width: 30%">Registered Owner Address</td>
                         <td>{{$datas['owner_address']}}</td>
                     </tr>
-                    <tr>
+                    <tr class="wr">
                         <td class="cls_002 grey">Engine Number</td>
                         <td>{{$datas['vehicle_engine_number']}}</td>
                         <td class="cls_002 grey">Date of Installation</td>
@@ -233,8 +248,8 @@
             <div style="position:absolute;left:20px;top:780px" class="cls_002">
                 <span class="cls_002">Yours Sincerly,</span>
             </div>
-             <div style="position:absolute;left:20px;top:810px" class="cls_002">
-                <span class="cls_002">{{$subdealer_trader->name}}</span>
+             <div style="position:absolute;left:20px;top:810px" class="cls_002 word-wrap">
+                <span class="cls_002 ">{{$subdealer_trader->name}}</span>
             </div>
             <div style="position:absolute;top:810px;float:right" class="cls_002">
                 <span class="cls_002">Authorised Signatory</span>
