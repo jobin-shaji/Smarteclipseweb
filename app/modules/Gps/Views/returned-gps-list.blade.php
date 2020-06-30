@@ -30,8 +30,8 @@
                                     <thead>
                                         <tr>
                                             <th>SL.No</th>
-                                            <th>IMEI</th>
-                                            <th>Serial Number</th>
+                                            <th class='imei'>IMEI</th>
+                                            <th class='serial_no'>Serial Number</th>
                                             @role('root')
                                             <th>Distributor</th>
                                             @endrole
@@ -61,6 +61,14 @@
   .table tr td
   {
     word-break: break-all;
+  }
+  .imei
+  {
+    width:120px;
+  }
+  .serial_no
+  {
+    width:154px;
   }
 </style>
 

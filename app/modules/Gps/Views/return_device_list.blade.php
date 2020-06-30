@@ -55,6 +55,11 @@
         </div>
     </div>
 </div>
-
+<style>
+  .table tr td
+  {
+    word-break: break-all;
+  }
+</style>
 @endsection
 
