@@ -128,8 +128,8 @@
                 <thead>
                   <tr>
                       <th><b>SL.No</b></th>
-                      <th><b>From User</b></th>
-                      <th><b>To User</b></th>
+                      <th class='column_width'><b>From User</b></th>
+                      <th class='column_width'><b>To User</b></th>
                       <th><b>Dispatched On</b></th>
                       <th><b>Count</b></th>
                       <th><b>Action</b></th>
@@ -146,7 +146,16 @@
 </div>
 
 </div>
-
+<style>
+  .table tr td
+  {
+    word-break: break-all;
+  }
+  .column_width
+  {
+    width: 250px;
+  }
+</style>
 @endsection
 
   @section('script')
