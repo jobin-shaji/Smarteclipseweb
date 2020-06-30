@@ -187,10 +187,10 @@
                     <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(150)->generate($qr)) !!} ">
                 </div>
 
-                <div style="position:absolute;left:20px;top:300px; line-height: 21px;" class="cls_002">
+                <div style="position:absolute;left:20px;top:250px; line-height: 21px;" class="cls_002">
                     <span class="cls_002">This is to certify that, this vehicle is equipped with the AIS 140 compliant device, approved by <b>CDAC</b> and <b>ARAI</b>.</span>
                 </div>
-                <div style="position:absolute;top:300px">
+                <div style="position:absolute;top:280px">
                 <p><b style="margin-top: 250px;margin-left: 255px">Details of AIS 140 Device</b></p>
                 <table border="1" cellspacing="0" cellpadding="5px" style="margin-left: 20px;width:100%">
                      <tr class="wr">
@@ -230,7 +230,7 @@
                     </tr>
                 </table>
                 </div>
-                <div style="position:absolute;margin-top:700px">
+                <div style="position:absolute;margin-top:750px">
                 <p style="margin-left: 270px"><b>Fitment Images</b></p>
                 <span class="cls_002" style="position:absolute;left:77px;text-align: center;">RC Book</span>
                 <span class="cls_002" style="position:absolute;left:240px;text-align: center;">Installation</span>
@@ -247,16 +247,16 @@
         </div>
         
         <div style="position:absolute;margin:1%;overflow:auto">
-            <div style="position:absolute;left:20px;top:890px;line-height: 21px" class="cls_002">
+            <div style="position:absolute;left:20px;top:920px;line-height: 21px" class="cls_002">
                 <span class="cls_002">This letter has been issued on <b>{{$date}}</b> upon the specific request from the customer as a proof of installation</span>
             </div>
-            <div style="position:absolute;left:20px;top:910px" class="cls_002">
+            <div style="position:absolute;left:20px;top:940px" class="cls_002">
                 <span class="cls_002">Yours Sincerly,</span>
             </div>
-             <div style="position:absolute;left:20px;top:930px" class="cls_002 word-wrap">
+             <div style="position:absolute;left:20px;top:960px" class="cls_002 word-wrap">
                 <span class="cls_002 word-wrap">{{$dealer_trader->name}}</span>
             </div>
-            <div style="position:absolute;top:930px;float:right" class="cls_002">
+            <div style="position:absolute;top:950px;float:right" class="cls_002">
                 <span class="cls_002">Authorised Signatory</span>
             </div>
         </div>
