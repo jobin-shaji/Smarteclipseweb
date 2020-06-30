@@ -72,7 +72,7 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                                                     <tr>
                                                         <th>SL.NO</th>
                                                         <th>End User Name</th>
-                                                        <th>Plan</th>
+                                                        <th class='plan_column'>Plan</th>
                                                         <th>Distributor Name</th>
                                                         <th>Dealer Name</th>
                                                         <th>Sub Dealer Name</th>
@@ -134,6 +134,14 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
         margin-left: 190px !important;
         padding: 10px !important;
         margin-bottom: 12px !important;
+    }
+    .table tr td
+    {
+        word-break: break-all;
+    }
+    .plan_column
+    {
+        width: 100px !important;
     }
 </style>
 
