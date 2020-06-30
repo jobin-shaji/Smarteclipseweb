@@ -80,7 +80,7 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                                                     <div class="col-lg-5 ">
                                                         <input type="hidden" name="device_type" id="device_type" value="{{$device_type}}">
                                                         <input type="hidden" name="offline_duration" id="offline_duration" value="{{$offline_duration}}">
-                                                        <input type="text" class="form-controller" id="search" name="search"value="" placeholder="IMEI or Serial number"></input>
+                                                        <input type="text" class="form-controller" id="search" name="search"value="{{$search_key}}"  placeholder="IMEI or Serial number"></input>
                                                     </div>
                                                     <!-- /search -->
                                                     <!-- download button -->
