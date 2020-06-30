@@ -101,12 +101,12 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                                                 <thead class="thead-color">
                                                     <tr>
                                                         <th>SL.NO</th>
-                                                        <th>IMEI</th>
-                                                        <th>Serial Number</th>
+                                                        <th class='imei_column'>IMEI</th>
+                                                        <th class='serial_no_column'>Serial Number</th>
                                                         <th>End User Name</th>
-                                                        <th>Vehicle Name</th>
+                                                        <th class='vehicle_name_column'>Vehicle Name</th>
                                                         <th>Registration Number</th>
-                                                        <th>Last Packet Received On</th>
+                                                        <th class='device_time_column'>Last Packet Received On</th>
                                                         <th></th>
                                                     </tr>
                                                 </thead>
@@ -117,11 +117,11 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                                                         </tr>
                                                     @endif
                                                     @foreach($offline_devices as $each_data)
-                                                    <tr>
+                                                    <tr class = 'table_alignment'>
                                                         <td>{{ (($perPage * ($page - 1)) + $loop->iteration) }}</td>
                                                         <td><?php ( isset($each_data->imei) ) ? $imei = $each_data->imei : $imei='-NA-' ?>{{$imei}}</td>
                                                         <td><?php ( isset($each_data->serial_no) ) ? $serial_no = $each_data->serial_no : $serial_no='-NA-' ?>{{$serial_no}}</td>
-                                                        <td><?php ( isset($each_data->vehicleGps->vehicle->client->name) ) ? $client_name = $each_data->vehicleGps->vehicle->client->name : $client_name='-NA-' ?>{{$client_name}}</td>
+                                                        <td><?php ( isset($each_data->gpsStock->client->name) ) ? $client_name = $each_data->gpsStock->client->name : $client_name='-NA-' ?>{{$client_name}}</td>
                                                         <td><?php ( isset($each_data->vehicleGps->vehicle->name) ) ? $vehicle_name = $each_data->vehicleGps->vehicle->name : $vehicle_name='-NA-' ?>{{$vehicle_name}}</td>
                                                         <td><?php ( isset($each_data->vehicleGps->vehicle->register_number) ) ? $register_number = $each_data->vehicleGps->vehicle->register_number : $register_number='-NA-' ?>{{$register_number}}</td>
                                                         <td><?php ( isset($each_data->device_time) ) ? $device_time = $each_data->device_time : $device_time='-Not Yet Activated-' ?>{{$device_time}}</td>
@@ -159,8 +159,28 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
         margin-bottom: 15px;
     }
     .download_btn{
-    padding: 0px 0px 0px 514px;
-   }
+        padding: 0px 0px 0px 514px;
+    }
+    .table_alignment
+    {
+        word-break: break-all;
+    }
+    .imei_column
+    {
+        width:170px;
+    }
+    .serial_no_column
+    {
+        width:210px;
+    }
+    .vehicle_name_column
+    {
+        width:150px;
+    }
+    .device_time_column
+    {
+        width:166px;
+    }
 </style>
 
 @section('script')
@@ -205,7 +225,7 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                     (data.links.data[i].eimei) ? encryptedimei = data.links.data[i].eimei : encryptedimei = "-NA-";                              
                     (data.links.data[i].imei) ? imei = data.links.data[i].imei : imei = "-NA-";          
                     (data.links.data[i].serial_no) ? serial_no = data.links.data[i].serial_no : serial_no = "-NA-";
-                    (data.links.data[i].vehicle_gps) ? client_name = data.links.data[i].vehicle_gps.vehicle.client.name : client_name = "-NA-";
+                    (data.links.data[i].gpsStock) ? client_name = data.links.data[i].gpsStock.client.name : client_name = "-NA-";
                     (data.links.data[i].vehicle_gps) ? vehicle_name = data.links.data[i].vehicle_gps.vehicle.name : vehicle_name = "-NA-";
                     (data.links.data[i].vehicle_gps) ? register_number = data.links.data[i].vehicle_gps.vehicle.register_number : register_number = "-NA-";
                     (data.links.data[i].device_time) ? device_time = data.links.data[i].device_time : device_time = "-NA-";

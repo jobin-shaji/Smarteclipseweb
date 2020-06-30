@@ -1346,12 +1346,6 @@ class GpsReportController extends Controller
             $gps_id_of_active_vehicles      = (new Vehicle())->getAllVehiclesWithUnreturnedGps();
         }
         $offline_devices                    = (new Gps())->getAllOfflineDevices($offline_date_time, $device_type, $download_type , $gps_id_of_active_vehicles,$search_key);
-        // $imei=[];
-        // foreach($offline_devices as $offline_device)
-        // {
-        //     $encryptedid[]= $offline_device->eimei;
-        // }
-        // dd($encryptedid);
         if( $download_type == 'pdf')
         {
             if($offline_devices->count()>0)

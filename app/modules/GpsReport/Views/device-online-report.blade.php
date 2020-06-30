@@ -119,7 +119,7 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                                                         </tr>
                                                    @else                                            
                                                 @foreach($device_online_report as $each_data)                                               
-                                                    <tr>
+                                                    <tr class = 'table_alignment'>
                                                         <td>{{ (($perPage * ($page - 1)) + $loop->iteration) }}</td>
                                                         <td><?php ( isset($each_data->imei) ) ? $imei = $each_data->imei : $imei='-NA-' ?>{{$imei}}</td>
                                                         <td><?php ( isset($each_data->serial_no) ) ? $serial_no = $each_data->serial_no : $serial_no='-NA-' ?>{{$serial_no}}</td>                                                       
@@ -160,27 +160,21 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
         background-color: #59607b;
         border-color: #59607b;
     }
-    .report_summary_title
-    {
-        font-size:18px;
-        margin-bottom: 15px;
-    }
-    .search_dates
-    {
-        margin-left: 153px;
-        padding: 15px;
-    }
     .device_search {
         width: 174px;
         /* margin-left: 710px; */
         margin-bottom: 15px;
     }
     .device-heading {
-    padding: 21px 20px 0 23px;
-   }
-   .download_btn{
-    padding: 0px 0px 0px 514px;
-   }
+        padding: 21px 20px 0 23px;
+    }
+    .download_btn{
+        padding: 0px 0px 0px 514px;
+    }
+    .table_alignment
+    {
+        word-break: break-all;
+    }
     
 </style>
 

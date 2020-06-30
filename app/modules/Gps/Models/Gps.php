@@ -255,7 +255,7 @@ class Gps extends Model
         $result =   self::select('id', 'imei', 'serial_no','device_time')
                     // ->with('vehicleGps')
                     ->with('vehicleGps.vehicle.client')
-                    ->with('gpsStock')
+                    ->with('gpsStock.client')
                     ->where(function ($query) {
                         $query->where('is_returned', '=', 0)
                         ->orWhere('is_returned', '=', NULL);
