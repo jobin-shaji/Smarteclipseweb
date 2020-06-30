@@ -187,7 +187,7 @@
                     <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(150)->generate($qr)) !!} ">
                 </div>
 
-                <div style="position:absolute;left:20px;top:250px; line-height: 21px;" class="cls_002">
+                <div style="position:absolute;left:20px;top:300px; line-height: 21px;" class="cls_002">
                     <span class="cls_002">This is to certify that, this vehicle is equipped with the AIS 140 compliant device, approved by <b>CDAC</b> and <b>ARAI</b>.</span>
                 </div>
                 <div style="position:absolute;top:300px">
@@ -253,7 +253,7 @@
             <div style="position:absolute;left:20px;top:910px" class="cls_002">
                 <span class="cls_002">Yours Sincerly,</span>
             </div>
-             <div style="position:absolute;left:20px;top:930px" class="cls_002">
+             <div style="position:absolute;left:20px;top:930px" class="cls_002 word-wrap">
                 <span class="cls_002 word-wrap">{{$dealer_trader->name}}</span>
             </div>
             <div style="position:absolute;top:930px;float:right" class="cls_002">

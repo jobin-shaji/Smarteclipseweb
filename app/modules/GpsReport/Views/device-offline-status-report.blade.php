@@ -213,35 +213,42 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                     console.log(data);
                     $("#data_tbody").empty();
                     $("#pagination_links").empty();               
-                    var device_details;                
-                    for(var i=0;i < data.links.data.length;i++){
-                    var client_name;
-                    var vehicle_name;
-                    var register_number;
-                    var device_time;
-                    var imei;  
-                    var serial_no; 
-                    var encryptedimei; 
-                    (data.links.data[i].eimei) ? encryptedimei = data.links.data[i].eimei : encryptedimei = "-NA-";                              
-                    (data.links.data[i].imei) ? imei = data.links.data[i].imei : imei = "-NA-";          
-                    (data.links.data[i].serial_no) ? serial_no = data.links.data[i].serial_no : serial_no = "-NA-";
-                    (data.links.data[i].gps_stock) ? client_name = data.links.data[i].gps_stock.client.name : client_name = "-NA-";
-                    (data.links.data[i].vehicle_gps) ? vehicle_name = data.links.data[i].vehicle_gps.vehicle.name : vehicle_name = "-NA-";
-                    (data.links.data[i].vehicle_gps) ? register_number = data.links.data[i].vehicle_gps.vehicle.register_number : register_number = "-NA-";
-                    (data.links.data[i].device_time) ? device_time = data.links.data[i].device_time : device_time = "-NA-";
-                //    console.log(encryptedimei);
-                    var j=i+1;
-                        device_details += '<tr><td>'+j+'</td>'+
-                        '<td>'+imei+'</td>'+
-                        '<td>'+serial_no+'</td>'+
-                        '<td>'+client_name+'</td>'+
-                        '<td>'+vehicle_name+'</td>'+
-                        '<td>'+register_number+'</td>'+
-                        '<td>'+device_time+'</td>'+
-                        // '<td><a href="device-detailed-report/<?php //echo Crypt::encrypt()?>/view" class="btn btn-xs btn-success" data-toggle="tooltip" title="View More Details"><i class="fa fa-eye"></i> View</a></td>'+
-                        '<td><button onclick="imeiEncryption('+imei+')" class="btn btn-xs btn-success" data-toggle="tooltip" title="View More Details">view</button></td>'+
-                        
-                        '</tr>';
+                    var device_details; 
+                    if(data.links.data.length>0)  
+                    {                                 
+                        for(var i=0;i < data.links.data.length;i++){
+                        var client_name;
+                        var vehicle_name;
+                        var register_number;
+                        var device_time;
+                        var imei;  
+                        var serial_no; 
+                        var encryptedimei; 
+                        (data.links.data[i].eimei) ? encryptedimei = data.links.data[i].eimei : encryptedimei = "-NA-";                              
+                        (data.links.data[i].imei) ? imei = data.links.data[i].imei : imei = "-NA-";          
+                        (data.links.data[i].serial_no) ? serial_no = data.links.data[i].serial_no : serial_no = "-NA-";
+                        (data.links.data[i].gps_stock) ? client_name = data.links.data[i].gps_stock.client.name : client_name = "-NA-";
+                        (data.links.data[i].vehicle_gps) ? vehicle_name = data.links.data[i].vehicle_gps.vehicle.name : vehicle_name = "-NA-";
+                        (data.links.data[i].vehicle_gps) ? register_number = data.links.data[i].vehicle_gps.vehicle.register_number : register_number = "-NA-";
+                        (data.links.data[i].device_time) ? device_time = data.links.data[i].device_time : device_time = "-NA-";               
+                        var j=i+1;
+                            device_details += '<tr><td>'+j+'</td>'+
+                            '<td>'+imei+'</td>'+
+                            '<td>'+serial_no+'</td>'+
+                            '<td>'+client_name+'</td>'+
+                            '<td>'+vehicle_name+'</td>'+
+                            '<td>'+register_number+'</td>'+
+                            '<td>'+device_time+'</td>'+
+                            // '<td><a href="device-detailed-report/<?php //echo Crypt::encrypt()?>/view" class="btn btn-xs btn-success" data-toggle="tooltip" title="View More Details"><i class="fa fa-eye"></i> View</a></td>'+
+                            '<td><button onclick="imeiEncryption('+imei+')" class="btn btn-xs btn-success" data-toggle="tooltip" title="View More Details">view</button></td>'+
+                            
+                            '</tr>';
+                        }
+                    }
+                    else{
+                        device_details = '<tr>'+
+                            '<td colspan="8" style="text-align: center;"><b>No Data Available</b></td>'+
+                                                        '</tr>';
                     }
                     $("tbody").append(device_details);
                     $("a.offline_device_download").attr('href', function(i,a){
