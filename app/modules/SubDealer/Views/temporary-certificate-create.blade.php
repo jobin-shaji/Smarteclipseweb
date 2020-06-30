@@ -200,7 +200,7 @@ Create Dealer
                               <div class="form-group row" style="float:none!important">
                                 <label for="fname" class="col-md-6 text-right control-label col-form-label">Owner Name</label>
                                 <div class="form-group has-feedback">
-                                    <input type="text" readonly class="form-control {{ $errors->has('owner_name') ? ' has-error' : '' }}" placeholder="Owner Name" name="owner_name" required id="owner_name">
+                                    <input type="text" readonly class="form-control {{ $errors->has('owner_name') ? ' has-error' : '' }}" placeholder="Owner Name" name="owner_name" required id="owner_name" maxlength="50">
                                 </div>
                                 @if ($errors->has('owner_name'))
                                 <span class="help-block">
@@ -213,7 +213,7 @@ Create Dealer
                               <div class="form-group row" style="float:none!important">
                                 <label for="fname" class="col-md-6 text-right control-label col-form-label">Owner Address</label>
                                 <div class="form-group has-feedback">
-                                    <input type="text" readonly class="form-control {{ $errors->has('owner_address') ? ' has-error' : '' }}" placeholder="Owner Address" name="owner_address" id="owner_address" required>
+                                    <input type="text" maxlength="150" readonly class="form-control {{ $errors->has('owner_address') ? ' has-error' : '' }}" placeholder="Owner Address" name="owner_address" id="owner_address" required>
                                 </div>
                                 @if ($errors->has('owner_address'))
                                 <span class="help-block">
