@@ -123,7 +123,7 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                                                         <td>{{ (($perPage * ($page - 1)) + $loop->iteration) }}</td>
                                                         <td><?php ( isset($each_data->imei) ) ? $imei = $each_data->imei : $imei='-NA-' ?>{{$imei}}</td>
                                                         <td><?php ( isset($each_data->serial_no) ) ? $serial_no = $each_data->serial_no : $serial_no='-NA-' ?>{{$serial_no}}</td>                                                       
-                                                        <td><?php ( isset($each_data->vehicleGps->vehicle->client->name) ) ? $client_name = $each_data->vehicleGps->vehicle->client->name : $client_name='-NA-' ?>{{$client_name}}</td>
+                                                        <td><?php ( isset($each_data->gpsStock->client->name) ) ? $client_name = $each_data->gpsStock->client->name : $client_name='-NA-' ?>{{$client_name}}</td>
                                                         <td><?php ( isset($each_data->vehicleGps->vehicle->name) ) ? $vehicle_name = $each_data->vehicleGps->vehicle->name : $vehicle_name='-NA-' ?>{{$vehicle_name}}</td>
                                                         <td><?php ( isset($each_data->vehicleGps->vehicle->register_number) ) ? $register_number = $each_data->vehicleGps->vehicle->register_number : $register_number='-NA-' ?>{{$register_number}}</td>                                                       
                                                         <td><?php ( isset($each_data->mode) ) ? $mode = $each_data->mode : $mode='-NA-' ?>{{$mode}}</td>
@@ -219,7 +219,7 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                     // (data.links.data[i].imei) ? imei = data.links.data[i].imei : imei = "-NA-";
                    (data.links.data[i].imei) ? imei = data.links.data[i].imei : imei = "-NA-";          
                    (data.links.data[i].serial_no) ? serial_no = data.links.data[i].serial_no : serial_no = "-NA-";
-                   (data.links.data[i].vehicle_gps) ? client_name = data.links.data[i].vehicle_gps.vehicle.client.name : client_name = "-NA-";
+                   (data.links.data[i].gps_stock) ? client_name = data.links.data[i].gps_stock.client.name : client_name = "-NA-";
                    (data.links.data[i].vehicle_gps) ? vehicle_name = data.links.data[i].vehicle_gps.vehicle.name : vehicle_name = "-NA-";
                    (data.links.data[i].vehicle_gps) ? register_number = data.links.data[i].vehicle_gps.vehicle.register_number : register_number = "-NA-";
                    (data.links.data[i].mode) ? mode = data.links.data[i].mode : mode = "-NA-";

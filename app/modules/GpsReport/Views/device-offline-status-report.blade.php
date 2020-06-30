@@ -225,7 +225,7 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                     (data.links.data[i].eimei) ? encryptedimei = data.links.data[i].eimei : encryptedimei = "-NA-";                              
                     (data.links.data[i].imei) ? imei = data.links.data[i].imei : imei = "-NA-";          
                     (data.links.data[i].serial_no) ? serial_no = data.links.data[i].serial_no : serial_no = "-NA-";
-                    (data.links.data[i].gpsStock) ? client_name = data.links.data[i].gpsStock.client.name : client_name = "-NA-";
+                    (data.links.data[i].gps_stock) ? client_name = data.links.data[i].gps_stock.client.name : client_name = "-NA-";
                     (data.links.data[i].vehicle_gps) ? vehicle_name = data.links.data[i].vehicle_gps.vehicle.name : vehicle_name = "-NA-";
                     (data.links.data[i].vehicle_gps) ? register_number = data.links.data[i].vehicle_gps.vehicle.register_number : register_number = "-NA-";
                     (data.links.data[i].device_time) ? device_time = data.links.data[i].device_time : device_time = "-NA-";

@@ -310,7 +310,7 @@ class Gps extends Model
             'mode'
         )
         ->with('vehicleGps.vehicle.client')
-        ->with('gpsStock')
+        ->with('gpsStock.client')
         ->whereBetween('device_time',[$online_limit_date,$current_time])   
         ->where(function ($query) {
             $query->where('is_returned', '=', 0)
