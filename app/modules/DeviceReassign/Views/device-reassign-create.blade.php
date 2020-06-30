@@ -238,7 +238,7 @@ Create Device Reassign
   100% { transform: rotate(360deg); }
 }
 .wr { 
-    word-break: break-all;
+      word-break: break-all;
       /* word-wrap: break-word;  */
       width: 100px;  
       border: 1px solid green; 

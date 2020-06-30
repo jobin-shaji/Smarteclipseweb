@@ -97,6 +97,13 @@
     </div>
   </div>
 </div>
+<style>
+  .table tr td
+  {
+    word-break: break-all;
+  }
+</style>
+
 @section('script')
     <script src="{{asset('js/gps/installation-report-list.js')}}"></script>
 @endsection
