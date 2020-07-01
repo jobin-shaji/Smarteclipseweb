@@ -80,5 +80,21 @@
   </div>
 </div>
 </div>
+<style>
+ .table tr td
+  {
+    word-break: break-all;
+  }
+.table th, .table thead th{
+  font-size: 14px;
+    padding: 10px 13px;
+}
+.table-bordered td, .table-bordered th {
+    font-size: 14px;
+}.form-group {
+    width: 100%;
+}
+</style>
+
 
 @endsection

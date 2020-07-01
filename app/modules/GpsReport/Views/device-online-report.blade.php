@@ -221,30 +221,38 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                 $("#pagination_links").empty();
                 var client_name;
                 var device_details;
-                for(var i=0;i < data.links.data.length;i++){
-                    var client_name;
-                    var vehicle_name;
-                    var register_number;
-                    var mode;
-                    var imei;  
-                    var serial_no;  
-                    // (data.links.data[i].imei) ? imei = data.links.data[i].imei : imei = "-NA-";
-                   (data.links.data[i].imei) ? imei = data.links.data[i].imei : imei = "-NA-";          
-                   (data.links.data[i].serial_no) ? serial_no = data.links.data[i].serial_no : serial_no = "-NA-";
-                   (data.links.data[i].gps_stock) ? client_name = data.links.data[i].gps_stock.client.name : client_name = "-NA-";
-                   (data.links.data[i].vehicle_gps) ? vehicle_name = data.links.data[i].vehicle_gps.vehicle.name : vehicle_name = "-NA-";
-                   (data.links.data[i].vehicle_gps) ? register_number = data.links.data[i].vehicle_gps.vehicle.register_number : register_number = "-NA-";
-                   (data.links.data[i].mode) ? mode = data.links.data[i].mode : mode = "-NA-";
-                   var j=i+1;
-                    device_details += '<tr><td>'+j+'</td>'+
-                    '<td>'+imei+'</td>'+
-                    '<td>'+serial_no+'</td>'+
-                    '<td>'+client_name+'</td>'+
-                    '<td>'+vehicle_name+'</td>'+
-                    '<td>'+register_number+'</td>'+
-                    '<td>'+mode+'</td>'+
-                    '<td><button onclick="imeiEncryption('+imei+')" class="btn btn-xs btn-success" data-toggle="tooltip" title="View More Details">view</button></td>'+
-                        '</tr>';
+                if(data.links.data.length>0)  
+                { 
+                    for(var i=0;i < data.links.data.length;i++){
+                        var client_name;
+                        var vehicle_name;
+                        var register_number;
+                        var mode;
+                        var imei;  
+                        var serial_no;  
+                        // (data.links.data[i].imei) ? imei = data.links.data[i].imei : imei = "-NA-";
+                        (data.links.data[i].imei) ? imei = data.links.data[i].imei : imei = "-NA-";          
+                        (data.links.data[i].serial_no) ? serial_no = data.links.data[i].serial_no : serial_no = "-NA-";
+                        (data.links.data[i].gps_stock) ? client_name = data.links.data[i].gps_stock.client.name : client_name = "-NA-";
+                        (data.links.data[i].vehicle_gps) ? vehicle_name = data.links.data[i].vehicle_gps.vehicle.name : vehicle_name = "-NA-";
+                        (data.links.data[i].vehicle_gps) ? register_number = data.links.data[i].vehicle_gps.vehicle.register_number : register_number = "-NA-";
+                        (data.links.data[i].mode) ? mode = data.links.data[i].mode : mode = "-NA-";
+                        var j=i+1;
+                        device_details += '<tr><td>'+j+'</td>'+
+                        '<td>'+imei+'</td>'+
+                        '<td>'+serial_no+'</td>'+
+                        '<td>'+client_name+'</td>'+
+                        '<td>'+vehicle_name+'</td>'+
+                        '<td>'+register_number+'</td>'+
+                        '<td>'+mode+'</td>'+
+                        '<td><button onclick="imeiEncryption('+imei+')" class="btn btn-xs btn-success" data-toggle="tooltip" title="View More Details">view</button></td>'+
+                            '</tr>';
+                    }
+                }
+                else{
+                    device_details = '<tr>'+
+                            '<td colspan="8" style="text-align: center;"><b>No Data Available</b></td>'+
+                                                        '</tr>';
                 }
                 $("tbody").append(device_details);
                 $("a.online_device_download").attr('href', function(i,a){
