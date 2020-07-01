@@ -84,8 +84,8 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                                                     </div>
                                                     <!-- /search -->
                                                     <!-- download button -->
-                                                    <div class="col-lg-7  download_btn">
-                                                        <button class="btn btn "><i class='fa fa-download'></i>
+                                                    <div class="col-lg-7  download_btn download-button-visibility">
+                                                        <button class="btn btn download_button_view"><i class='fa fa-download'></i>
                                                             <a href="device-offline-report-downloads?type=pdf&device_type={{$device_type}}&offline_duration={{$offline_duration}}&search=" class="offline_device_download" style="color:white">Download Report</a>
                                                         </button>
                                                     </div>
@@ -181,6 +181,10 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
     {
         width:166px;
     }
+    .download_button_view
+    {
+        padding: .25rem .5rem;
+    }
 </style>
 
 @section('script')
@@ -243,12 +247,17 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                             '<td><button onclick="imeiEncryption('+imei+')" class="btn btn-xs btn-success" data-toggle="tooltip" title="View More Details">view</button></td>'+
                             
                             '</tr>';
+                            $('.download-button-visibility').show();
+
                         }
                     }
                     else{
                         device_details = '<tr>'+
                             '<td colspan="8" style="text-align: center;"><b>No Data Available</b></td>'+
                                                         '</tr>';
+                    $('.download-button-visibility').hide();
+
+                                                        
                     }
                     $("tbody").append(device_details);
                     $("a.offline_device_download").attr('href', function(i,a){
