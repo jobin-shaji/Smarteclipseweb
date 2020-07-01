@@ -71,7 +71,7 @@
 
                   <div class="form-group has-feedback form-group-1 mrg-rt-5">
                     <label class="srequired">Description</label>
-                    <textarea rows="5" cols="10" maxlength="500" class="form-control {{ $errors->has('description') ? ' has-error' : '' }}" placeholder="Description" name="description" value="{{ old('description') }}" required></textarea>
+                    <textarea rows="5" cols="10" maxlength="160" class="form-control {{ $errors->has('description') ? ' has-error' : '' }}" placeholder="Description" name="description" value="{{ old('description') }}" required></textarea>
                     <!-- <input type="text" class="form-control {{ $errors->has('description') ? ' has-error' : '' }}" placeholder="Description" name="description" value="{{ old('description') }}" required> -->
                     @if ($errors->has('description'))
                       <span class="help-block">
