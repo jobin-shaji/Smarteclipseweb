@@ -687,7 +687,6 @@ class ClientController extends Controller {
             }
         }
 
-        // dd($gps_id);
         if($request->client_role==6)
         {
             $user->role = 1;
@@ -706,11 +705,9 @@ class ClientController extends Controller {
         {
             $user->removeRole($request->role_name);
         }
-
         $current_date   =   date('Y-m-d H:i:s');
-        $client         =   (new Client())->getClientDetailsBasedOnUserIdWithTrashedItems($client_user_id);
-        $client->latest_user_updates = $current_date;
-        $client->save();
+        //update role updation date in client table
+        $client_update  =   (new Client())->updateLatestUserUpdate($client_user_id, $current_date);
         $user->assignRole($request->client_role);
         $roles = $user->roles;
         $request->session()->flash('message', 'User Role added successfully!');
@@ -753,9 +750,8 @@ class ClientController extends Controller {
         $user->role = 0;
         $user->save();
         $current_date   =   date('Y-m-d H:i:s');
-        $client         =   (new Client())->getClientDetailsBasedOnUserIdWithTrashedItems($decrypted_user_id);
-        $client->latest_user_updates = $current_date;
-        $client->save();
+        //update role updation date in client table
+        $client_update  =   (new Client())->updateLatestUserUpdate($decrypted_user_id, $current_date);
         $user->removeRole($decrypted_role_id);
         $roles = $user->roles;
         $request->session()->flash('message', 'User Role deleted successfully!');
