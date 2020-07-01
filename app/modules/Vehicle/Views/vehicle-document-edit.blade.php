@@ -15,10 +15,10 @@
   @if(Session::has('message'))
     <div class="pad margin no-print">
       <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
-        {{ Session::get('message') }}
+          {{ Session::get('message') }}  
       </div>
     </div>
-  @endif
+  @endif    
 
   <div class="container-fluid">
     <div class="card-body">
@@ -45,7 +45,7 @@
                   <div class="form-group has-feedback">
 
                     <label>Expiry Date</label>
-                    <input type="text" class="date_expiry_edit form-control {{ $errors->has('expiry_date') ? ' has-error' : '' }}"  name="expiry_date" id="expiry_date" onkeydown="return false;" value="{{date('d-m-Y', strtotime($vehicle_doc->expiry_date))}}">
+                    <input type="text" class="date_expiry_edit form-control {{ $errors->has('expiry_date') ? ' has-error' : '' }}"  name="expiry_date" id="expiry_date" onkeydown="return false;" value="{{date('d-m-Y', strtotime($vehicle_doc->expiry_date))}}" required>
                   </div>
                   @if ($errors->has('expiry_date'))
                     <span class="help-block">
@@ -143,7 +143,7 @@ $('#upload_form').on('submit', function(event){
                 return false;
             }
             if(res.count==0){
-              alert('image size should be 2 MBs');
+              alert('The image size should be less than 2MB');
 
             }
             else if(res.count==3){
@@ -152,8 +152,7 @@ $('#upload_form').on('submit', function(event){
                 }
             }
             else{
-                alert("Document successfully Updated");
-                location.reload(true);
+                toastr.success('Document successfully Updated')
             }
        }
   })
@@ -169,7 +168,7 @@ function changeEditDocumentsExpiryDate(data_val){
         processData: false,
         success:function(data)
         {
-            location.reload(true);
+          toastr.success('Document successfully Updated')
         }
   })
 }
