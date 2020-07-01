@@ -203,7 +203,7 @@
                 <table border="1" cellspacing="0" cellpadding="5px" style="margin-left: 20px;width:100%">
                      <tr class="wr">
                         <td class="cls_002 grey" style="width:10%">Device IMEI</td>
-                        <td >{{$datas['imei']}}hjhfgdhghdgvhbjhdfgdgfhvcghghfdgchggfdghfgsfdxcggdcgdycggdfsgfdgfffcfgdccfcccfcfcfffcfcccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc</td>
+                        <td >{{$datas['imei']}}</td>
                         <td class="cls_002 grey" style="width: 10%">Model</td>
                         <td style="width: 15%">VST0507C</td>
                     </tr>

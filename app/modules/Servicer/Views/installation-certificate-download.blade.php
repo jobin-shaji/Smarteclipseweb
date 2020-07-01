@@ -230,7 +230,7 @@
                     </tr>
                 </table>
                 </div>
-                <div style="position:absolute;margin-top:750px">
+                <div style="position:absolute;margin-top:780px">
                 <p style="margin-left: 270px"><b>Fitment Images</b></p>
                 <span class="cls_002" style="position:absolute;left:77px;text-align: center;">RC Book</span>
                 <span class="cls_002" style="position:absolute;left:240px;text-align: center;">Installation</span>
@@ -247,16 +247,16 @@
         </div>
         
         <div style="position:absolute;margin:1%;overflow:auto">
-            <div style="position:absolute;left:20px;top:920px;line-height: 21px" class="cls_002">
+            <div style="position:absolute;left:20px;top:940px;line-height: 21px" class="cls_002">
                 <span class="cls_002">This letter has been issued on <b>{{$date}}</b> upon the specific request from the customer as a proof of installation</span>
             </div>
-            <div style="position:absolute;left:20px;top:940px" class="cls_002">
+            <div style="position:absolute;left:20px;top:960px" class="cls_002">
                 <span class="cls_002">Yours Sincerly,</span>
             </div>
-             <div style="position:absolute;left:20px;top:960px" class="cls_002 word-wrap">
+             <div style="position:absolute;left:20px;top:1000px" class="cls_002 word-wrap">
                 <span class="cls_002 word-wrap">{{$dealer_trader->name}}</span>
             </div>
-            <div style="position:absolute;top:950px;float:right" class="cls_002">
+            <div style="position:absolute;top:1000px;float:right" class="cls_002">
                 <span class="cls_002">Authorised Signatory</span>
             </div>
         </div>
