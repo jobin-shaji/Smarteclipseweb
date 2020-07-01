@@ -51,10 +51,6 @@ td, th {
             </tr>
             <tr>
                 <td><b>End User Name</b></td>
-                <td class = 'column_alignment'><?php ( isset($each_data->vehicleGps->vehicle->client->name) ) ? $client_name = $each_data->vehicleGps->vehicle->client->name : $client_name='-NA-' ?>{{$client_name}}</td>
-            </tr>
-            <tr>
-                <td><b>End User Name</b></td>
                 <td class = 'column_alignment'><?php ( isset($each_data->gpsStock->client->name) ) ? $client = $each_data->gpsStock->client->name : $client='-NA-' ?>{{$client}}</td>
             </tr>
             <tr>
