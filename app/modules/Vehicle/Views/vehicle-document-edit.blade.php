@@ -147,12 +147,14 @@ $('#upload_form').on('submit', function(event){
 
             }
             else if(res.count==3){
-                 if (confirm('A document with a different expiry date is already in the database. Do you want to replace date ?')){
-                  changeEditDocumentsExpiryDate(data_val);
-                }
+              if (confirm('A document with a different expiry date is already in the database. Do you want to replace date ?')){
+                changeEditDocumentsExpiryDate(data_val);
+              }
             }
             else{
+              if (confirm('Are you sure to update this document?')){
                 toastr.success('Document successfully Updated')
+              }
             }
        }
   })
