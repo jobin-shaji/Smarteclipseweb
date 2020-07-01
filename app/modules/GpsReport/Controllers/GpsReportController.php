@@ -1291,7 +1291,7 @@ class GpsReportController extends Controller
         $gps_ids                        =   (new Vehicle())->getAllVehiclesWithUnreturnedGps();
         $vehicle_status                 =   (isset($request->vehicle_status) ) ? $request->vehicle_status : null;      
         $device_online_report           =   (new GPS())->getDeviceOnlineReport($online_limit_date,$current_time,$vehicle_status,$device_status,$gps_ids,$search,$download_type);
-    //   dd($device_online_report);
+     
        
         if($download_type == 'pdf')
         {
@@ -1307,7 +1307,7 @@ class GpsReportController extends Controller
         }  
         else if($request->ajax())
         {
-            
+            // dd($device_online_report);
             return ($device_online_report != null) ? Response([ 'links' => $device_online_report->appends(['sort' => 'votes'])]) : Response([ 'links' => null]);
         }
         else
