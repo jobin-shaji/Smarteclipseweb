@@ -2169,6 +2169,7 @@ class VehicleController extends Controller
         if($request->document_type_id == 6 || $request->document_type_id == 7 || $request->document_type_id == 8)
         {
             $validator = Validator::make($request->all(), $this->documentCreateRules(),$messages);
+            //dd($validator);
             $expiry_date=null;
             if ($validator->fails())
             {

@@ -33,10 +33,10 @@
                         <i class="fa fa-file"></i>
                       </h2>
                   </div>
-                </div>
+                  </div>
                 <form  method="POST"  id="upload_form"  enctype="multipart/form-data">
                 {{csrf_field()}}
-                <div class="row">
+                <div class="row"> 
                   <div class="col-xs-12">
                   <input type="hidden" name="vehicle_id" id="vehicle_id" value="{{$vehicle_doc->vehicle_id}}">
                   <input type="hidden" name="document_type_id" id="document_type_id" value="{{$vehicle_doc->document_type_id}}">
@@ -52,7 +52,7 @@
                         <strong class="error-text">{{ $errors->first('expiry_date') }}</strong>
                     </span>
                   @endif
-
+                  
                   <div class="form-group has-feedback"><br>
                     <label class="srequired">Upload File</label>&nbsp;&nbsp;&nbsp;<span style='color:#f29a0e;'>Size: max 2MB, Format: jpg/jpeg,png</span>
                     <div class="row">
@@ -75,9 +75,8 @@
                       @endif
                     </div>
                   </div>
-
+                  <div id="loader"></div>
                   </div>
-
                   </div>
                   <div class="row">
                     <!-- /.col -->
@@ -95,11 +94,26 @@
     </div>
   </div>
 </div>
-
+<style>
+  #loader {
+    border: 16px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 16px solid #3498db;
+    width: 120px;
+    height: 120px;
+    margin-left: 45%;
+    margin-top: 6%;
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
+  }
+</style>
 <div class="clearfix"></div>
 
 @section('script')
   <script>
+    $(document).ready(function () {
+      $("#loader").hide();
+    });
     $("#choose_image").change(function() {
       displaySelectedImage(this);
     });
@@ -119,7 +133,7 @@
   </script>
    <script>
 $('#upload_form').on('submit', function(event){
-
+  $("#loader").show();
    event.preventDefault();
   //  $("#load4").removeAttr("style");
   //  $("#load-4").removeAttr("style");
@@ -135,6 +149,9 @@ $('#upload_form').on('submit', function(event){
        processData: false,
        success:function(res)
        {
+
+          $("#loader").hide();
+          setTimeout(function(){ 
             if(typeof res.error != 'undefined')
             {
                 Object.keys(res.error).forEach(key => {
@@ -156,6 +173,7 @@ $('#upload_form').on('submit', function(event){
                 toastr.success('Document successfully Updated')
               }
             }
+          }, 100);
        }
   })
 });
