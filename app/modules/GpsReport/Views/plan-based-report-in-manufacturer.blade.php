@@ -85,7 +85,7 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                                                         <td>{{ (($perPage * ($page - 1)) + $loop->iteration) }}</td>
                                                         <td><?php ( isset($each_data->client->name) ) ? $client_name = $each_data->client->name : $client_name='-NA-' ?>{{$client_name}}</td>
                                                         <td><?php ( isset($each_data->role) ) ? $role = ucfirst(strtolower($plan_names[$each_data->role])) : $role='-NA-' ?>{{$role}}</td>
-                                                        @if($each_data->client->trader_id)
+                                                        @if(isset($each_data->client->trader_id) && ($each_data->client->trader_id))
                                                         <td><?php ( isset($each_data->client->trader->subDealer) ) ? $distributor_name = $each_data->client->trader->subDealer->dealer->name : $distributor_name='-NA-' ?>{{$distributor_name}}</td>
                                                         <td><?php ( isset($each_data->client->trader->subDealer) ) ? $dealer_name = $each_data->client->trader->subDealer->name : $dealer_name='-NA-' ?>{{$dealer_name}}</td>
                                                         @else

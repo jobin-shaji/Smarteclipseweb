@@ -58,7 +58,7 @@ td, th {
                 <td><b>Plan</b></td>
                 <td style = "word-wrap: break-word;"><?php ( isset($each_data->role) ) ? $role = ucfirst(strtolower($plan_names[$each_data->role])) : $role='-NA-' ?>{{$role}}</td>
             </tr>
-            @if($each_data->client->trader_id)
+            @if(isset($each_data->client->trader_id) && ($each_data->client->trader_id))
                 <tr>
                     <td><b>Distributor Name</b></td>
                     <td style = "word-wrap: break-word;"><?php ( isset($each_data->client->trader->subDealer) ) ? $distributor_name = $each_data->client->trader->subDealer->dealer->name : $distributor_name='-NA-' ?>{{$distributor_name}}</td>

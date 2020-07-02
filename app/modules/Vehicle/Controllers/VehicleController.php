@@ -1187,7 +1187,7 @@ class VehicleController extends Controller
             ->addIndexColumn()
             ->addColumn('dealer',function($vehicles){
                 $vehicle = Vehicle::find($vehicles->id);
-                if($vehicle->client->trader_id)
+                if(isset($vehicle->client->trader_id) && ($vehicle->client->trader_id))
                 {
                     return ( isset($vehicle->client->trader->subDealer) ) ? $vehicle->client->trader->subDealer->dealer->name : '-NA-';
                 }
@@ -1199,7 +1199,7 @@ class VehicleController extends Controller
             })
             ->addColumn('sub_dealer',function($vehicles){
                 $vehicle = Vehicle::find($vehicles->id);
-                if($vehicle->client->trader_id)
+                if(isset($vehicle->client->trader_id) && ($vehicle->client->trader_id))
                 {
                      return $vehicle->client->trader->subDealer->name;
                 }

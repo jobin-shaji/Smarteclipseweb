@@ -29,13 +29,13 @@
                   <thead>
                     <tr>
                       <th>SL.No</th>
-                      <th style="width:173px!important;">Name</th>                            
-                      <th>Address</th>                              
+                      <th class='client_name'>Name</th>                            
+                      <th class='client_address'>Address</th>                              
                       <th>Mobile Number</th>                            
                       <th>Email</th>
                       <th>Dealer</th>
                       <th>Sub Dealer</th>
-                      <th style="width:0px!important;">Working Status</th>
+                      <th class='working_status'>Working Status</th>
                     </tr>
                   </thead>
                 </table>
@@ -51,6 +51,18 @@
   .table tr td
   {
     word-break: break-all !important;
+  }
+  .client_name
+  {
+    width:235px !important;
+  }
+  .client_address
+  {
+    width:273px !important;
+  }
+  .working_status
+  {
+    width:198px !important;
   }
 </style>
 @endsection
