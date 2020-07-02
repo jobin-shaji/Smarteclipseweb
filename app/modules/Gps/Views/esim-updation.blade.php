@@ -37,6 +37,8 @@ Create Vehicle Type
                                 <!-- file upload button -->
                                 <input type="button" class="upload_xl" id="upload" value="Upload" onclick="uploadFile()" /><input type="button" class="refresh" id="refresh" value="Refresh" onclick="refreshPage()" />
                                 <!-- /file upload button -->
+                              
+
                             </div>
                             <!-- /file uploader -->
 
@@ -56,9 +58,10 @@ Create Vehicle Type
                                 <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Choose
                                 <span class="caret"></span></button>
                                 <ul class="dropdown-menu">
-                                <li onclick="removeSelectedRows()" style="cursor:pointer;"> Remove selected rows </li>
+                                <li onclick="removeSelectedRows()" style="cursor:pointer;padding: 4px;"><i class="fa fa-trash" aria-hidden="true"></i> Remove selected rows </li>
                                 </ul>
                                 <!-- /action items -->
+                                <button style="cursor:pointer;    margin: 2px 0px 0px 0px; padding: 6px 6px 3px 5px;" type="button" class="pull-right" value="Update E-Sim Numbers" onclick="updateEsimNumbersToDatabase()" />Update E-Sim Numbers</button>    
                             </div>
                             <!-- /action bar -->
 
@@ -88,7 +91,7 @@ Create Vehicle Type
                                     </thead>
                                     <tbody id="uploaded-excel-details"></tbody>
                                 </table>
-                                <button style="cursor:pointer;" type="button" class="pull-right" value="Update E-Sim Numbers" onclick="updateEsimNumbersToDatabase()" />Update E-Sim Numbers</button>
+                                <!-- <button style="cursor:pointer;" type="button" class="pull-right" value="Update E-Sim Numbers" onclick="updateEsimNumbersToDatabase()" />Update E-Sim Numbers</button> -->
                             </div>
                             <!-- /temporary listing -->
                         </form>

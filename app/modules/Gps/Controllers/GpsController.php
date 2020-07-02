@@ -22,6 +22,7 @@ use App\Modules\Gps\Models\GpsModeChange;
 use App\Modules\Ota\Models\OtaResponse;
 use App\Modules\Ota\Models\OtaUpdates;
 use App\Modules\Gps\Models\GpsConfiguration;
+use App\Modules\Esim\Models\SimActivationDetails;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
 use PDF;
@@ -2383,7 +2384,9 @@ class GpsController extends Controller {
         foreach($items as $each_item)
         {
             ( (new Gps())->updateEsimNumbers($each_item->imsi, $each_item->msisdn) ) ? array_push($result['success'], $each_item->imsi) : array_push($result['failed'], $each_item->imsi);
-
+            (new SimActivationDetails())->updateEsimDetails($each_item);
+           
+            
         }
         return $result;
     }

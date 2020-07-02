@@ -43,7 +43,8 @@ return  [
        'VltData',
        'DeviceReturn',
        'DeviceReassign',
-       'GpsReport'
+       'GpsReport',
+       'Esim'
 
     ]
 ]
