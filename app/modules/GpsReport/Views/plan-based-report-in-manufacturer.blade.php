@@ -121,19 +121,19 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
     } 
     .client_details_title
     {
-        margin-top: 336px;
-        margin-left: -928px;
+        margin-top: 465px;
+        margin-left: -1100px;
         padding: 18px;
         font-size: 18px;
     }
     #pieChart
     {
         display: block !important;
-        width: 732px !important;
-        height: 359px !important;
-        margin-left: 190px !important;
-        padding: 10px !important;
-        margin-bottom: 12px !important;
+        width: 950px !important;
+        height: 482px !important;
+        margin-left: 173px !important;
+        padding: 23px !important;
+        margin-bottom: 50px !important;
     }
     .table tr td
     {

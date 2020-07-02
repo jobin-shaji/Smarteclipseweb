@@ -32,7 +32,7 @@ function planBasedChart(res){
                 labels: {
                     fontSize: 25,
                     padding: 20
-                }
+                },
             },
         }
     });
