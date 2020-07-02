@@ -247,9 +247,9 @@
     .pie_graph
     {
         display: block !important;
-        width: 732px !important;
-        height: 359px !important;
-        margin-left: 190px !important;
+        width: 950px !important;
+        height: 450px !important;
+        margin-left: 43px !important;
     }
     .table_alignment
     {

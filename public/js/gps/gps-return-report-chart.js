@@ -49,6 +49,16 @@ function returnedGpsManufacturedChart(res){
                     ],
                 borderWidth: 1
             }]
+        },
+        options : {
+            legend: {
+                display: true,
+                position: 'right',
+                labels: {
+                    fontSize: 25,
+                    padding: 20
+                },
+            },
         }
     });
 }
