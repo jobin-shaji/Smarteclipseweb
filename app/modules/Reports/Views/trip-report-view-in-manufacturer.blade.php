@@ -95,6 +95,7 @@
                                         <div class="row col-md-6 col-md-offset-2">
                                             <table class="table table-bordered">
                                                 <thead class="thead-color">
+                                                    <th>SL.NO</th>
                                                     <th>End User</th>
                                                     <th>Vehicle Name</th>
                                                     <th>Vehicle Registration Number</th>
@@ -110,6 +111,7 @@
 
                                                     @foreach($trip_reports as $each_data)
                                                     <tr>
+                                                        <td>{{$loop->iteration}}</td>
                                                         <td><?php ( isset($each_data->client->name) ) ? $client_name =$each_data->client->name : $client_name='-NA-' ?>{{$client_name}}</td>
                                                         <td><?php ( isset($each_data->vehicle->name) ) ? $vehicle_name = $each_data->vehicle->name : $vehicle_name='-NA-' ?>{{$vehicle_name}}</td>
                                                         <td><?php ( isset($each_data->vehicle->register_number) ) ? $vehicle_reg_no = $each_data->vehicle->register_number : $vehicle_reg_no='-NA-' ?>{{$vehicle_reg_no}}</td>
