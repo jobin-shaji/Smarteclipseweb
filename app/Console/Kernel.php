@@ -14,7 +14,8 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         Commands\TripM::class,
-        Commands\VehicleTrips::class
+        Commands\VehicleTrips::class,
+        Commands\OldTrips::class,
     ];
 
     /**
