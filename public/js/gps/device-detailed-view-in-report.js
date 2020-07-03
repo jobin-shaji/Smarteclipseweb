@@ -115,22 +115,17 @@ function getTransferHistoryBasedOnGps()
             'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
         },
         success: function(res) {
-      
             var transfer_table      = $("#transfer_history").find('tbody');
             var tbody               = "";
             transfer_table.html("");
 
-            $.each(res,function(key , item){ 
-                var transfer_log = item.gps_transfer_detail;
-                $.each(transfer_log,function(item_key , item_value){ 
-                     
-                    tbody += (item_value.deleted_at) ?  "<tr style='background:#d98b8b'>" : "<tr style='background:#f5f5f5'>" + 
-                                "<td>"+item_value.from_user.username+"</td>"+
-                                "<td>"+item_value.to_user.username+"</td>"+
-                                "<td>"+item_value.dispatched_on+"</td>"+
-                                "<td>"+item_value.accepted_on+"</td>"+
-                            "</tr>";
-                });     
+            $.each(res,function(key , item){   
+                tbody += (item.deleted_at) ?  "<tr style='background:#d98b8b'>" : "<tr style='background:#f5f5f5'>" + 
+                            "<td>"+item.transfer_from+"</td>"+
+                            "<td>"+item.transfer_to+"</td>"+
+                            "<td>"+item.dispatched_on+"</td>"+
+                            "<td>"+item.accepted_on+"</td>"+
+                        "</tr>";  
             });           
             if(res.length == 0)
             {

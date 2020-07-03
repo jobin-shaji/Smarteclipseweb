@@ -316,8 +316,9 @@
     }
     .modal-content 
     {
-        max-width: 1000px;
-        width: 120%;
+        max-width: 1154px;
+        width: 150%;
+        margin-left: -180px;
     }
     
 </style>

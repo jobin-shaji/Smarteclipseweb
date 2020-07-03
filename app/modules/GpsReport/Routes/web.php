@@ -17,6 +17,10 @@ Route::group(['middleware' => ['web','auth','role:root|dealer|sub_dealer|trader'
     Route::get('/gps-stock-report','GpsReportController@gpsStockReport')->name('gps-stock-report');
     Route::get('/gps-stock-report-downloads','GpsReportController@gpsStockReport')->name('gps-stock-report-downloads');
 
+});
+
+Route::group(['middleware' => ['web','auth','role:root'] , 'namespace' => 'App\Modules\GpsReport\Controllers' ] , function() {	
+    
     //PLAN BASED REPORT
     Route::get('/plan-based-report','GpsReportController@planBasedReport')->name('plan-based-report');
     Route::post('/plan-based-report-chart','GpsReportController@planBasedReportGraph')->name('plan-based-report-chart');

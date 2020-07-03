@@ -277,7 +277,7 @@
                     <div id="transfer_details_section" class="panel">
                         <div class="row">
                             <!-- location -->
-                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 location_and_last_updated_section">          
+                            <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12 location_and_last_updated_section">          
                                 </br>
                                 <label>Transfer Overview</label>
                                 </br>
@@ -306,17 +306,17 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 location_and_last_updated_section">                       
+                            <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12 location_and_last_updated_section">                       
                                 </br>
                                 <label>Transfer History</label>
                                 </br>
-                                <table  id ="transfer_history" class="table table-borderless tables_in_tab_section" >
+                                <table id ="transfer_history" class="table table-borderless tables_in_tab_section word_break" >
                                     <thead>
                                         <tr class="success" >                                    
-                                            <td><b>From User</b></td>
-                                            <td><b>To User</b></td>                                        
-                                            <td><b>Dispatched On</b></td>
-                                            <td><b>Accepted On</b></td>                                                                                                                               
+                                            <th><b>From User</b></th>
+                                            <th><b>To User</b></th>                                        
+                                            <th><b>Dispatched On</b></th>
+                                            <th><b>Accepted On</b></th>                                                                                                                               
                                         </tr>                    
                                     </thead>
                                     <tbody>
@@ -376,19 +376,19 @@
                     <!-- /installation details -->
                     <!-- service details -->
                     <div id="service_details_section" class="panel">
-                    <table class="table table-borderless tables_in_tab_section" id = 'service_details'>
+                    <table class="table table-borderless tables_in_tab_section word_break" id = 'service_details'>
                             <thead>
                                 <tr class="success" >
-                                    <td><b>Service Engineer Name</b></td>
-                                    <td><b>Address</b></td>
-                                    <td><b>Mobile Number</b></td>
-                                    <td><b>Email</b></td>
-                                    <td><b>Job Date</b></td>
-                                    <td><b>Job Status</b></td>
-                                    <td><b>Job Completion Date</b></td>
-                                    <td><b>Location</b></td>
-                                    <td><b>Description</b></td>
-                                    <td><b>Comments</b></td>
+                                    <th><b>Service Engineer Name</b></th>
+                                    <th><b>Address</b></th>
+                                    <th><b>Mobile Number</b></th>
+                                    <th><b>Email</b></th>
+                                    <th><b>Job Date</b></th>
+                                    <th><b>Job Status</b></th>
+                                    <th><b>Job Completion Date</b></th>
+                                    <th><b>Location</b></th>
+                                    <th><b>Description</b></th>
+                                    <th><b>Comments</b></th>
                                 </tr>                                          
                             </thead>
                             <tbody> 
@@ -507,6 +507,11 @@
         width: 100%; 
         margin-top: 25px;
         float:left;
+    }
+
+    .word_break tr td
+    {
+        word-break: break-all;
     }
 
     .console_view {

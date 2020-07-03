@@ -114,7 +114,7 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                       @endif
                     </div>
                     <div class="form-group row" style="float:none!important">
-                      <label for="fname" class="col-md-6 text-right control-label col-form-label">Commet</label>
+                      <label for="fname" class="col-md-6 text-right control-label col-form-label">Comment</label>
                       <div class="form-group has-feedback">
                         <input type="text" class=" form-control {{ $errors->has('comment') ? ' has-error' : '' }}" name="comment" value="{{$servicer_job->comment}} " required readonly="">
                         <span class="glyphicon glyphicon-phone form-control-feedback"></span>

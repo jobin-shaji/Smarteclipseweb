@@ -85,7 +85,7 @@
                                                     @endif
 
                                                     @foreach($return_details as $each_data)
-                                                    <tr>
+                                                    <tr class='table_alignment'>
                                                         <td><?php ( isset($each_data->client_name) ) ? $client_name = $each_data->client_name : $client_name='-NA-' ?>{{$client_name}}</td>
                                                         <td><b>{{$each_data->count}}</b></td>
                                                     </tr>
@@ -120,7 +120,7 @@
                                                     @endif
 
                                                     @foreach($return_details as $each_data)
-                                                    <tr>
+                                                    <tr class='table_alignment'>
                                                         <td><?php ( isset($each_data->manufacturer_name) ) ? $manufacturer_name = $each_data->manufacturer_name : $manufacturer_name='-NA-' ?>{{$manufacturer_name}}</td>
                                                         <td><?php ( isset($each_data->distributor_name) ) ? $distributor_name = $each_data->distributor_name : $distributor_name='-NA-' ?>{{$distributor_name}}</td>
                                                         <td><?php ( isset($each_data->dealer_name) ) ? $dealer_name = $each_data->dealer_name : $dealer_name='-NA-' ?>{{$dealer_name}}</td>
@@ -179,7 +179,7 @@
                                                     @endif
 
                                                     @foreach($return_device_details as $each_data)
-                                                    <tr>
+                                                    <tr class='table_alignment'>
                                                         <td>{{$each_data->imei}}</td>
                                                         <td>{{$each_data->serial_number}}</td>
                                                         <td><?php ( isset($each_data->manufacturer_name) ) ? $manufacturer_name = $each_data->manufacturer_name : $manufacturer_name='-NA-' ?>{{$manufacturer_name}}</td>
@@ -247,9 +247,13 @@
     .pie_graph
     {
         display: block !important;
-        width: 732px !important;
-        height: 359px !important;
-        margin-left: 190px !important;
+        width: 950px !important;
+        height: 450px !important;
+        margin-left: 43px !important;
+    }
+    .table_alignment
+    {
+        word-break: break-all;
     }
     
 </style>

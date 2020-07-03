@@ -9,7 +9,7 @@
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/End User List</li>
-        <b>List User</b>
+        <b>End User List</b>
       </ol>
       @if(Session::has('message'))
         <div class="pad margin no-print">
@@ -20,8 +20,8 @@
       @endif 
     </nav>          
     <div class="container-fluid">
-      <div class="card-body"><h4>End User List</h4>
-        <div class="table-responsive scrollmenu">
+      <div class="card-body">
+        <div class="table-responsive">
           <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">                     
             <div class="row">
               <div class="col-sm-12">
@@ -29,13 +29,13 @@
                   <thead>
                     <tr>
                       <th>SL.No</th>
-                      <th style="width:173px!important;">Name</th>                            
-                      <th>Address</th>                              
-                      <th>Mobile</th>                            
+                      <th class='client_name'>Name</th>                            
+                      <th class='client_address'>Address</th>                              
+                      <th>Mobile Number</th>                            
                       <th>Email</th>
                       <th>Dealer</th>
                       <th>Sub Dealer</th>
-                      <th style="width:0px!important;">Working Status</th>
+                      <th class='working_status'>Working Status</th>
                     </tr>
                   </thead>
                 </table>
@@ -47,7 +47,24 @@
     </div>
   </div>
 </div>
-
+<style>
+  .table tr td
+  {
+    word-break: break-all !important;
+  }
+  .client_name
+  {
+    width:235px !important;
+  }
+  .client_address
+  {
+    width:273px !important;
+  }
+  .working_status
+  {
+    width:198px !important;
+  }
+</style>
 @endsection
 
 @section('script')

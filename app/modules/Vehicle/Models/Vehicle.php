@@ -260,18 +260,22 @@ class Vehicle extends Model
 
     public function getNonReturnedDeviceVehiclesOfClient($client_id,$device_returned_with_submitted_status)
     {
-      return self::where('client_id',$client_id)
-                  ->with('gps')
-                  ->where(function ($query) {
-                    $query->where('is_returned', '=', 0)
-                    ->orWhere('is_returned', '=', NULL);
-                    })
-                  ->where(function ($query) {
-                    $query->where('is_reinstallation_job_created', '=', 0)
-                    ->orWhere('is_reinstallation_job_created', '=', NULL);
-                    })
-                  ->whereNotIn('gps_id',$device_returned_with_submitted_status)
-                  ->get();
+      return  DB::table('vehicles')
+              ->select('gps.id as gps_id','gps.imei as imei','gps.serial_no as serial_no')
+              ->where('vehicles.client_id',$client_id)
+              ->where(function ($query) {
+                $query->where('vehicles.is_returned', '=', 0)
+                ->orWhere('vehicles.is_returned', '=', NULL);
+                })
+              ->where(function ($query) {
+                $query->where('vehicles.is_reinstallation_job_created', '=', 0)
+                ->orWhere('vehicles.is_reinstallation_job_created', '=', NULL);
+                })
+              ->whereNotIn('vehicles.gps_id',$device_returned_with_submitted_status)
+              ->leftJoin('gps', 'gps.id', '=', 'vehicles.gps_id')
+              ->leftJoin('servicer_jobs', 'servicer_jobs.id', '=', 'vehicles.servicer_job_id')
+              ->whereNotNull('servicer_jobs.job_complete_date')
+              ->get();
     }
 
     public function checkVehicleIsNotReturnedOrReassigned($gps_id)

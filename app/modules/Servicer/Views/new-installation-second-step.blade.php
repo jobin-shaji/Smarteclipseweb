@@ -138,7 +138,7 @@ Assign Servicer
     <div class="form-group row" style="float:none!important">
     <label for="fname" class="col-sm-3 text-right control-label col-form-label">Vehicle Name</label>
     <div class="form-group has-feedback">
-    <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Name" name="name" id="name" value="{{ old('name') }}" required> 
+    <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Name" name="name" id="name" value="{{ old('name') }}" maxlength="50" required> 
     </div>
     @if ($errors->has('name'))
     <span class="help-block">
@@ -149,7 +149,7 @@ Assign Servicer
     <div class="form-group row" style="float:none!important">
     <label for="fname" class="col-md-6 text-right control-label col-form-label">Registration Number</label>
     <div class="form-group has-feedback">
-    <input type="text" class="form-control {{ $errors->has('register_number') ? ' has-error' : '' }}" placeholder="Registration Number" name="register_number" value="{{ old('register_number') }}" maxlength="20" id="register_number" required>
+    <input type="text" class="form-control {{ $errors->has('register_number') ? ' has-error' : '' }}" placeholder="Registration Number" name="register_number" maxlength="20" value="{{ old('register_number') }}" maxlength="20" id="register_number" required>
     <p style="color:#FF0000" id="message1"> Spaces not  allowed for registration number</p>
     </div>
     @if ($errors->has('register_number'))
@@ -161,7 +161,7 @@ Assign Servicer
     <div class="form-group row" style="float:none!important">
     <label for="fname" class="col-md-6 text-right control-label col-form-label">Engine Number</label>
     <div class="form-group has-feedback">
-    <input type="text" class="form-control {{ $errors->has('engine_number') ? ' has-error' : '' }}" placeholder="Engine Number" name="engine_number" value="{{ old('engine_number') }}" maxlength="20" id="engine_number" required>
+    <input type="text" class="form-control {{ $errors->has('engine_number') ? ' has-error' : '' }}" placeholder="Engine Number" name="engine_number" maxlength="50" value="{{ old('engine_number') }}" maxlength="20" id="engine_number" required>
     <p style="color:#FF0000" id="message2"> Spaces not  allowed for engine number</p>
     </div>
     @if ($errors->has('engine_number'))
@@ -173,7 +173,7 @@ Assign Servicer
     <div class="form-group row" style="float:none!important">
     <label for="fname" class="col-md-6 text-right control-label col-form-label">Chassis Number</label>
     <div class="form-group has-feedback">
-    <input type="text" class="form-control {{ $errors->has('chassis_number') ? ' has-error' : '' }}" placeholder="Chassis Number" name="chassis_number" value="{{ old('chassis_number') }}" maxlength="20" id="chassis_number" required>
+    <input type="text" class="form-control {{ $errors->has('chassis_number') ? ' has-error' : '' }}" placeholder="Chassis Number" name="chassis_number" maxlength="50" value="{{ old('chassis_number') }}" maxlength="20" id="chassis_number" required>
     <p style="color:#FF0000" id="message3"> Spaces not  allowed for chassis number</p>
     </div>
     @if ($errors->has('chassis_number'))
@@ -348,7 +348,7 @@ Assign Servicer
 <div class="form-group row" style="float:none!important">
 <label for="fname" class="col-sm-3 text-right control-label col-form-label">Name</label>
 <div class="form-group has-feedback">
-<input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Name" name="driver_name" id="driver_name" value="{{ old('name') }}" > 
+<input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Name" name="driver_name" id="driver_name" maxlength='50' value="{{ old('name') }}" > 
 </div>
 @if ($errors->has('name'))
 <span class="help-block">
@@ -402,7 +402,7 @@ else { ?>
 <div class="form-group row" style="float:none!important">
 <label for="fname" class="col-sm-3 text-right control-label col-form-label">Address</label>
 <div class="form-group has-feedback">
-<textarea class="form-control driver_address {{ $errors->has('address') ? ' has-error' : '' }}" placeholder="Address" name="address" id="address" rows=5></textarea>
+<textarea class="form-control driver_address {{ $errors->has('address') ? ' has-error' : '' }}" placeholder="Address" name="address" id="address" maxlength='150' rows=5></textarea>
 </div>
 @if ($errors->has('address'))
 <span class="help-block">

@@ -32,7 +32,7 @@ td, th {
   </thead>
   <tbody>
     @foreach($return_details as $each_data)
-      <tr>
+      <tr style = "word-wrap: break-word;">
         <td><?php ( isset($each_data->client_name) ) ? $client_name = $each_data->client_name : $client_name='-NA-' ?>{{$client_name}}</td>
         <td><b>{{$each_data->count}}</b></td>
       </tr>
@@ -55,7 +55,7 @@ td, th {
     </thead>
   <tbody>
     @foreach($return_device_manufactured as $each_data)
-    <tr>
+    <tr style = "word-wrap: break-word;">
         <td>{{date('d-m-Y',strtotime($each_data->manufacturing_date))}}</td>
         <td>{{$each_data->count}}</td>
     </tr>
@@ -78,7 +78,7 @@ td, th {
     </thead>
   <tbody>
     @foreach($return_details as $each_data)
-    <tr>
+    <tr style = "word-wrap: break-word;">
         <td><?php ( isset($each_data->manufacturer_name) ) ? $manufacturer_name = $each_data->manufacturer_name : $manufacturer_name='-NA-' ?>{{$manufacturer_name}}</td>
         <td><?php ( isset($each_data->distributor_name) ) ? $distributor_name = $each_data->distributor_name : $distributor_name='-NA-' ?>{{$distributor_name}}</td>
         <td><?php ( isset($each_data->dealer_name) ) ? $dealer_name = $each_data->dealer_name : $dealer_name='-NA-' ?>{{$dealer_name}}</td>
@@ -97,41 +97,41 @@ td, th {
 <h4 style="text-align: left;">#{{$i}}</h4>
 <table style="width:100%;text-align: left;">
     <tbody>
-      <tr">
+      <tr>
           <td><b>Returned On</b></td>
-          <td>{{date('d/m/Y',strtotime($each_data->returned_on))}}</td>
+          <td style = "word-wrap: break-word;">{{date('d/m/Y',strtotime($each_data->returned_on))}}</td>
       </tr>
-      <tr">
+      <tr>
           <td><b>IMEI</b></td>
-          <td>{{$each_data->imei}}</td>
+          <td style = "word-wrap: break-word;">{{$each_data->imei}}</td>
       </tr>
-      <tr">
+      <tr>
           <td><b>Serial Number</b></td>
-          <td>{{$each_data->serial_number}}</td>
+          <td style = "word-wrap: break-word;">{{$each_data->serial_number}}</td>
       </tr>
-      <tr">
+      <tr>
           <td><b>Manufacturer Name</b></td>
-          <td><?php ( isset($each_data->manufacturer_name) ) ? $manufacturer_name = $each_data->manufacturer_name : $manufacturer_name='-NA-' ?>{{$manufacturer_name}}</td>
+          <td style = "word-wrap: break-word;"><?php ( isset($each_data->manufacturer_name) ) ? $manufacturer_name = $each_data->manufacturer_name : $manufacturer_name='-NA-' ?>{{$manufacturer_name}}</td>
       </tr>
-      <tr">
+      <tr>
           <td><b>Distributor Name/<b></td>
-          <td><?php ( isset($each_data->distributor_name) ) ? $distributor_name = $each_data->distributor_name : $distributor_name='-NA-' ?>{{$distributor_name}}</td>
+          <td style = "word-wrap: break-word;"><?php ( isset($each_data->distributor_name) ) ? $distributor_name = $each_data->distributor_name : $distributor_name='-NA-' ?>{{$distributor_name}}</td>
       </tr>
-      <tr">
+      <tr>
           <td><b>Dealer Name</b></td>
-          <td><?php ( isset($each_data->dealer_name) ) ? $dealer_name = $each_data->dealer_name : $dealer_name='-NA-' ?>{{$dealer_name}}</td>
+          <td style = "word-wrap: break-word;"><?php ( isset($each_data->dealer_name) ) ? $dealer_name = $each_data->dealer_name : $dealer_name='-NA-' ?>{{$dealer_name}}</td>
       </tr>
-      <tr">
+      <tr>
           <td><b>Sub Dealer Name</b></td>
-          <td><?php ( isset($each_data->sub_dealer_name) ) ? $sub_dealer_name = $each_data->sub_dealer_name : $sub_dealer_name='-NA-' ?>{{$sub_dealer_name}}</td>
+          <td style = "word-wrap: break-word;"><?php ( isset($each_data->sub_dealer_name) ) ? $sub_dealer_name = $each_data->sub_dealer_name : $sub_dealer_name='-NA-' ?>{{$sub_dealer_name}}</td>
       </tr>
-      <tr">
+      <tr>
           <td><b>End User Name</b></td>
-          <td><?php ( isset($each_data->client_name) ) ? $client_name = $each_data->client_name : $client_name='-NA-' ?>{{$client_name}}</td>
+          <td style = "word-wrap: break-word;"><?php ( isset($each_data->client_name) ) ? $client_name = $each_data->client_name : $client_name='-NA-' ?>{{$client_name}}</td>
       </tr>
-      <tr">
+      <tr>
           <td><b>Service Engineer Name</b></td>
-          <td>{{$each_data->servicer_name}}</td>
+          <td style = "word-wrap: break-word;">{{$each_data->servicer_name}}</td>
       </tr>
     </tbody>
 </table>
@@ -141,8 +141,3 @@ td, th {
 
 </body>
 </html>
-
-@section('script')
-    <script src="{{asset('js/gps/mdb.js')}}"></script>
-    <script src="{{asset('js/gps/gps-return-report-chart.js')}}"></script>
-@endsection

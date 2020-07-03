@@ -57,12 +57,12 @@
                     </div>  
                   </div>
                 </div>
-                <table class="table table-hover table-bordered  table-striped datatable" style="text-align: center;" id="dataTable">
+                <table class="table table-hover table-bordered  table-striped datatable" style="width:100%;text-align: center;" id="dataTable">
                   <thead>
                     <tr>
                         <th>SL.No</th>
-                        <th>From User</th>
-                        <th>To User</th>
+                        <th class='column_width'>From User</th>
+                        <th class='column_width'>To User</th>
                         <th>Dispatched On</th>
                         <th>Count</th>
                         <th>Action</th>
@@ -77,7 +77,16 @@
     </div>
   </div>
 </div>
-
+<style>
+  .table tr td
+  {
+    word-break: break-all;
+  }
+  .column_width
+  {
+    width: 210px;
+  }
+</style>
 @endsection
 
   @section('script')

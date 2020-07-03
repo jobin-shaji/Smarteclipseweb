@@ -81,6 +81,9 @@ class Gps extends Model
     {
         return $this->hasMany('App\Modules\Ota\Models\OtaUpdates','gps_id','id');
     }
+    public function device_return(){
+        return $this->hasOne('App\Modules\DeviceReturn\Models\DeviceReturn','gps_id','id')->withTrashed();
+    }
     /**
      * 
      * 
@@ -252,7 +255,7 @@ class Gps extends Model
         $result =   self::select('id', 'imei', 'serial_no','device_time')
                     // ->with('vehicleGps')
                     ->with('vehicleGps.vehicle.client')
-                    ->with('gpsStock')
+                    ->with('gpsStock.client')
                     ->where(function ($query) {
                         $query->where('is_returned', '=', 0)
                         ->orWhere('is_returned', '=', NULL);
@@ -307,7 +310,7 @@ class Gps extends Model
             'mode'
         )
         ->with('vehicleGps.vehicle.client')
-        ->with('gpsStock')
+        ->with('gpsStock.client')
         ->whereBetween('device_time',[$online_limit_date,$current_time])   
         ->where(function ($query) {
             $query->where('is_returned', '=', 0)

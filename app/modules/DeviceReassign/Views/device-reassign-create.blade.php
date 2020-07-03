@@ -55,7 +55,7 @@ Create Device Reassign
                     <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
                       <div class="row">
                         <div class="col-sm-12">
-                          <table class="table table-hover table-bordered  table-striped" style="width:100%!important;text-align: center" id="preview_table">
+                          <table class="table table-hover table-bordered  table-striped " id="preview_table">
                             <thead>
                               <tr>
                                 <th>IMEI</th> 
@@ -82,11 +82,11 @@ Create Device Reassign
                             <tr> 
                               <td>{{$data->imei}}</td>
                               <td>{{$data->serial_no}}</td>
-                              <td>@if($data->gpsStock->root){{$data->gpsStock->root['name']}}@endif</td>  
-                              <td>@if($data->gpsStock->dealer){{$data->gpsStock->dealer['name']}}@endif</td>     
-                              <td>@if($data->gpsStock->subdealer){{$data->gpsStock->subdealer['name']}}@endif</td>
-                              <td>@if($data->gpsStock->trader){{$data->gpsStock->trader['name']}}@endif</td>
-                              <td>@if($data->gpsStock->client){{$data->gpsStock->client['name']}}@endif</td>  
+                              <td  class="wr">@if($data->gpsStock->root){{$data->gpsStock->root['name']}}@endif</td>  
+                              <td  class="wr">@if($data->gpsStock->dealer){{$data->gpsStock->dealer['name']}}@endif</td>     
+                              <td  class="wr">@if($data->gpsStock->subdealer){{$data->gpsStock->subdealer['name']}}@endif</td>
+                              <td  class="wr">@if($data->gpsStock->trader){{$data->gpsStock->trader['name']}}@endif</td>
+                              <td  class="wr">@if($data->gpsStock->client){{$data->gpsStock->client['name']}}@endif</td>  
                             </tr>
                           </tbody>
                         </table>
@@ -236,6 +236,21 @@ Create Device Reassign
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+.wr { 
+      word-break: break-all;
+      /* word-wrap: break-word;  */
+      width: 100px;  
+      border: 1px solid green; 
+  }
+  .table th, .table thead th{
+  font-size: 14px;
+    padding: 10px 13px;
+}
+.table-bordered td, .table-bordered th {
+    font-size: 14px;
+}.form-group {
+    width: 100%;
 }
 </style>
 @endsection

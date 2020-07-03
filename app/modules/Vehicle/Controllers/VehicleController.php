@@ -1187,7 +1187,7 @@ class VehicleController extends Controller
             ->addIndexColumn()
             ->addColumn('dealer',function($vehicles){
                 $vehicle = Vehicle::find($vehicles->id);
-                if($vehicle->client->trader_id)
+                if(isset($vehicle->client->trader_id) && ($vehicle->client->trader_id))
                 {
                     return ( isset($vehicle->client->trader->subDealer) ) ? $vehicle->client->trader->subDealer->dealer->name : '-NA-';
                 }
@@ -1199,7 +1199,7 @@ class VehicleController extends Controller
             })
             ->addColumn('sub_dealer',function($vehicles){
                 $vehicle = Vehicle::find($vehicles->id);
-                if($vehicle->client->trader_id)
+                if(isset($vehicle->client->trader_id) && ($vehicle->client->trader_id))
                 {
                      return $vehicle->client->trader->subDealer->name;
                 }
@@ -2169,6 +2169,7 @@ class VehicleController extends Controller
         if($request->document_type_id == 6 || $request->document_type_id == 7 || $request->document_type_id == 8)
         {
             $validator = Validator::make($request->all(), $this->documentCreateRules(),$messages);
+            //dd($validator);
             $expiry_date=null;
             if ($validator->fails())
             {

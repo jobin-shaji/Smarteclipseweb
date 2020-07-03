@@ -72,7 +72,7 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                                                     <tr>
                                                         <th>SL.NO</th>
                                                         <th>End User Name</th>
-                                                        <th>Plan</th>
+                                                        <th class='plan_column'>Plan</th>
                                                         <th>Distributor Name</th>
                                                         <th>Dealer Name</th>
                                                         <th>Sub Dealer Name</th>
@@ -85,7 +85,7 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                                                         <td>{{ (($perPage * ($page - 1)) + $loop->iteration) }}</td>
                                                         <td><?php ( isset($each_data->client->name) ) ? $client_name = $each_data->client->name : $client_name='-NA-' ?>{{$client_name}}</td>
                                                         <td><?php ( isset($each_data->role) ) ? $role = ucfirst(strtolower($plan_names[$each_data->role])) : $role='-NA-' ?>{{$role}}</td>
-                                                        @if($each_data->client->trader_id)
+                                                        @if(isset($each_data->client->trader_id) && ($each_data->client->trader_id))
                                                         <td><?php ( isset($each_data->client->trader->subDealer) ) ? $distributor_name = $each_data->client->trader->subDealer->dealer->name : $distributor_name='-NA-' ?>{{$distributor_name}}</td>
                                                         <td><?php ( isset($each_data->client->trader->subDealer) ) ? $dealer_name = $each_data->client->trader->subDealer->name : $dealer_name='-NA-' ?>{{$dealer_name}}</td>
                                                         @else
@@ -121,19 +121,27 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
     } 
     .client_details_title
     {
-        margin-top: 336px;
-        margin-left: -928px;
+        margin-top: 465px;
+        margin-left: -1100px;
         padding: 18px;
         font-size: 18px;
     }
     #pieChart
     {
         display: block !important;
-        width: 732px !important;
-        height: 359px !important;
-        margin-left: 190px !important;
-        padding: 10px !important;
-        margin-bottom: 12px !important;
+        width: 950px !important;
+        height: 482px !important;
+        margin-left: 173px !important;
+        padding: 23px !important;
+        margin-bottom: 50px !important;
+    }
+    .table tr td
+    {
+        word-break: break-all;
+    }
+    .plan_column
+    {
+        width: 100px !important;
     }
 </style>
 

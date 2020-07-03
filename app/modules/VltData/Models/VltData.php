@@ -143,6 +143,7 @@ class VltData extends Model
         if(Schema::hasTable($table_name) == true)
         {
             $packets =  self::select('id','vltdata','created_at')
+                            ->where('imei',$imei)
                             ->orderBy('created_at','DESC')
                             ->take(10)->get();
         }

@@ -50,36 +50,36 @@ td, th {
     <h4 style="text-align: left;">#{{$i}}</h4>
     <table style="width:100%;text-align: left;">
         <tbody>
-            <tr">
+            <tr>
                 <td><b>End User Name</b></td>
-                <td><?php ( isset($each_data->client->name) ) ? $client_name = $each_data->client->name : $client_name='-NA-' ?>{{$client_name}}</td>
+                <td style = "word-wrap: break-word;"><?php ( isset($each_data->client->name) ) ? $client_name = $each_data->client->name : $client_name='-NA-' ?>{{$client_name}}</td>
             </tr>
-            <tr">
+            <tr>
                 <td><b>Plan</b></td>
-                <td><?php ( isset($each_data->role) ) ? $role = ucfirst(strtolower($plan_names[$each_data->role])) : $role='-NA-' ?>{{$role}}</td>
+                <td style = "word-wrap: break-word;"><?php ( isset($each_data->role) ) ? $role = ucfirst(strtolower($plan_names[$each_data->role])) : $role='-NA-' ?>{{$role}}</td>
             </tr>
-            @if($each_data->client->trader_id)
-                <tr">
+            @if(isset($each_data->client->trader_id) && ($each_data->client->trader_id))
+                <tr>
                     <td><b>Distributor Name</b></td>
-                    <td><?php ( isset($each_data->client->trader->subDealer) ) ? $distributor_name = $each_data->client->trader->subDealer->dealer->name : $distributor_name='-NA-' ?>{{$distributor_name}}</td>
+                    <td style = "word-wrap: break-word;"><?php ( isset($each_data->client->trader->subDealer) ) ? $distributor_name = $each_data->client->trader->subDealer->dealer->name : $distributor_name='-NA-' ?>{{$distributor_name}}</td>
                 </tr>
-                <tr">
+                <tr>
                     <td><b>Dealer Name</b></td>
-                    <td><?php ( isset($each_data->client->trader->subDealer) ) ? $dealer_name = $each_data->client->trader->subDealer->name : $dealer_name='-NA-' ?>{{$dealer_name}}</td>
+                    <td style = "word-wrap: break-word;"><?php ( isset($each_data->client->trader->subDealer) ) ? $dealer_name = $each_data->client->trader->subDealer->name : $dealer_name='-NA-' ?>{{$dealer_name}}</td>
                 </tr>
             @else
-                <tr">
+                <tr>
                     <td><b>Distributor Name</b></td>
-                    <td><?php ( isset($each_data->client->subdealer) ) ? $distributor_name = $each_data->client->subdealer->dealer->name : $distributor_name='-NA-' ?>{{$distributor_name}}</td>
+                    <td style = "word-wrap: break-word;"><?php ( isset($each_data->client->subdealer) ) ? $distributor_name = $each_data->client->subdealer->dealer->name : $distributor_name='-NA-' ?>{{$distributor_name}}</td>
                 </tr>
-                <tr">
+                <tr>
                     <td><b>Dealer Name</b></td>
-                    <td><?php ( isset($each_data->client->subdealer) ) ? $dealer_name = $each_data->client->subdealer->name : $dealer_name='-NA-' ?>{{$dealer_name}}</td>
+                    <td style = "word-wrap: break-word;"><?php ( isset($each_data->client->subdealer) ) ? $dealer_name = $each_data->client->subdealer->name : $dealer_name='-NA-' ?>{{$dealer_name}}</td>
                 </tr>
             @endif
-            <tr">
-                <td><b>Sub Dealer Name/<b></td>
-                <td><?php ( isset($each_data->client->trader->name) ) ? $sub_dealer_name = $each_data->client->trader->name : $sub_dealer_name='-NA-' ?>{{$sub_dealer_name}}</td>
+            <tr>
+                <td><b>Sub Dealer Name</b></td>
+                <td style = "word-wrap: break-word;"><?php ( isset($each_data->client->trader->name) ) ? $sub_dealer_name = $each_data->client->trader->name : $sub_dealer_name='-NA-' ?>{{$sub_dealer_name}}</td>
             </tr>
         </tbody>
     </table>

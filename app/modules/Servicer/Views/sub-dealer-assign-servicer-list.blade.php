@@ -20,7 +20,7 @@
  
  <div class="container-fluid">
     <div class="card-body">
-      <div class="table-responsive scrollmenu">
+      <div class="table-responsive">
         <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">                     
           <div class="row">
             <div class="col-sm-12">
@@ -32,11 +32,11 @@
                       <th>SL.No</th>
                       <th>Job Code</th>
                       <th>Service Engineer</th>
-                      <th>End User</th>
-                      <th>GPS Serial Number</th>
-                      <th>Job Type</th>
+                      <th class='end_user'>End User</th>
+                      <th class='serial_no'>GPS Serial Number</th>
+                      <th class='job_type'>Job Type</th>
                       <th>Description</th>
-                      <th>Job Date</th>
+                      <th class='job_date'>Job Date</th>
                       
                   </tr>
                 </thead>
@@ -49,6 +49,28 @@
   </div>
  </div>
 </div>
+<style>
+  .table tr td
+  {
+    word-break: break-all !important;
+  }
+  .end_user
+  {
+    width: 58px;
+  }
+  .serial_no
+  {
+    width: 160px;
+  }
+  .job_type
+  {
+    width: 87px;
+  }
+  .job_date
+  {
+    width: 86px;
+  }
+</style>
 @endsection
 
   @section('script')
