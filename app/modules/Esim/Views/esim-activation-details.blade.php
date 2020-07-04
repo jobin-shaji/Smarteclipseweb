@@ -30,14 +30,21 @@
                             <i class="fa fa-user"></i> : {{(isset($esim->gps->gpsStock->client)) ? strtoupper($esim->gps->gpsStock->client->name) :"NA"}}
                         </span>
                         <span class="user_phone" style="padding-left: 60px;">
-                            <i class="fa fa-mobile"></i> : {{(isset($esim->gps->gpsStock->user)) ? $esim->gps->gpsStock->user->mobile : "NA"}}
+                            <i class="fa fa-mobile"></i> : {{(isset($esim->gps->gpsStock->client->user)) ? $esim->gps->gpsStock->client->user->mobile : "NA"}}
                         </span>
                         <span class="user_role" style="padding-left: 60px;">
                         <i class='far fa-id-card'></i> : 
                         <?php
-                         
+                        
+                         if($esim->gps->gpsStock->client)
+                         {
                             $plan_names     = array_column(config('eclipse.PLANS'), 'NAME', 'ID');
-                            $plan_name      = $plan_names[$esim->gps->gpsStock->user->role ? $esim->gps->gpsStock->user->role : 0];
+                            $plan_name      = $plan_names[$esim->gps->gpsStock->user->role ? $esim->gps->gpsStock->user->role : 0];                            
+                         }
+                         else
+                         {
+                          $plan_name      ="NA";
+                         }
                             echo $plan_name;
                         ?>
                         </span> 

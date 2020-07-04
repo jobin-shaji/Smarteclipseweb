@@ -33,7 +33,7 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                     <div class="col-lg-3 col-md-3"> 
                       <div class="form-group"> 
                           <!-- <input type="text" class="form-control " name="esim_number" id="esim_number">  -->
-                          <input type="text" class="form-controller" id="search" name="search"value="{{$search_key}}" placeholder="IMEI or Serial number"></input>                                                    
+                          <input type="text" class="form-controller" id="search" name="search"value="{{$search_key}}" placeholder="IMEI / IMSI / ICCID number"></input>                                                    
                       </div>
                     </div>
                   </div>
@@ -41,16 +41,9 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
             </div>
           
         </div>
-
-
-
-
-                
-                    
-  
         <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">                     
           <div class="row">
-            <div class="col-sm-12" style="overflow: scroll">
+            <div class="col-sm-12" >
               <table class="table table-hover table-bordered  table-striped datatable esim-table" style="width:100%!important;text-align: center" id="dataTable">
                 <thead>
                   <tr>
@@ -97,19 +90,31 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
 
 @section('script')
 <script>
+  window.addEventListener( "pageshow", function ( event ) {
+    var historyTraversal = event.persisted || 
+    ( typeof window.performance != "undefined" && window.performance.navigation.type === 2 );
+    if ( historyTraversal ) {
+      window.location.reload();
+    }
+  });
+</script>
+<script>
 $('#search').on('keyup',function(){
             $value=$(this).val();
             $.ajax({
                 type : 'get',
-                url : '{{URL::to('esim-activation-search')}}',
+                url : '{{URL::to('esim-activation-details')}}',
                 data:{
                     'search':$value
                 },
                 success:function(data){
-                  console.log(data);
+               
+                  // console.log(data);
                     $("#data_tbody").empty();                    
                     $("#pagination_links").empty();               
-                    var esim_details;                
+                    var esim_details;  
+                  if(data.lists.data.length>0)  
+                  {                 
                     for(var i=0;i < data.lists.data.length;i++){
                       var imei;
                       var imsi;
@@ -141,11 +146,20 @@ $('#search').on('keyup',function(){
                         '<td>'+activated_on+'</td>'+
                         '<td>'+expire_on+'</td>'+
                         '<td>'+product_status+'</td>'+
-                        '<td><button onclick="esimActivation('+id+')" class="btn btn-xs btn-success" data-toggle="tooltip" title="View More Details">Details</button></td>'+                       
+                        '<td><button onclick="esimActivation('+id+')" class="btn btn-info"  title="View More Details">Details</button></td>'+                       
                         '</tr>';
-                    }                   
-                    $("tbody").append(esim_details); 
-                    $("#pagination_links").append(data.link);                        
+                    }  
+                  }
+                  else{
+                    esim_details = '<tr>'+
+                            '<td colspan="8" style="text-align: center;"><b>No Data Available</b></td>'+
+                                                        '</tr>';
+                  }                 
+                    $("tbody").append(esim_details);                    
+                    $("#pagination_links").append(data.link); 
+                    var search = $value; 
+                    // window.history.pushState("", "", "/esim-activation-details?search="+search);
+                    // location.reload(true);                                          
                 }
             });
         })

@@ -78,6 +78,7 @@ $(document).ready(function() {
      */
     function processRawUploadedFileContents()
     {
+      
         var workbook = XLSX.read(uploadedFileContentsRaw, {
             type: 'binary'
         });
@@ -86,18 +87,27 @@ $(document).ready(function() {
         var filename    = document.getElementById("fileUpload").files[0].name;
         // read all rows from first sheet into an JSON array.
         var excelRows = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
-        for (var i = 0; i < excelRows.length; i++)
+        // console.log(excelRows[0]["MSISDN"]);
+        if((excelRows[0]["IMSI"]!= undefined )&& (excelRows[0]["MSISDN"]!= undefined) && ( excelRows[0]["Business Unit Name"] != undefined) && (excelRows[0]["Product Status"] != undefined) && (excelRows[0]["Product Type"] != undefined) && (excelRows[0]["PUK1"] != undefined) && (excelRows[0]["ICCID"]!= undefined))
         {
-            uploadedFileContentsProcessed.push({
-                'imsi'                  : excelRows[i]["IMSI"],
-                'msisdn'                : excelRows[i]["MSISDN"],
-                'business_unit_name'    : excelRows[i]["Business Unit Name"],
-                'product_status'        : excelRows[i]["Product Status"],
-                'product_type'          : excelRows[i]["Product Type"],
-                'puk'                   : excelRows[i]["PUK1"],
-                'iccid'                 : excelRows[i]["ICCID"],
-                'activation_date'       : (typeof excelRows[i]["Activation Date"] != 'undefined') ? excelRows[i]["Activation Date"] : ''
-            });
+            for (var i = 0; i < excelRows.length; i++)
+            {
+                uploadedFileContentsProcessed.push({
+                    'imsi'                  : excelRows[i]["IMSI"],
+                    'msisdn'                : excelRows[i]["MSISDN"],
+                    'business_unit_name'    : excelRows[i]["Business Unit Name"],
+                    'product_status'        : excelRows[i]["Product Status"],
+                    'product_type'          : excelRows[i]["Product Type"],
+                    'puk'                   : excelRows[i]["PUK1"],
+                    'iccid'                 : excelRows[i]["ICCID"],
+                    'activation_date'       : (typeof excelRows[i]["Activation Date"] != 'undefined') ? excelRows[i]["Activation Date"] : ''
+                });
+            }
+        }
+        else
+        {
+            alert("Please Check the file");
+            refreshPage();
         }
         $('#file_name').text('File:- '+filename);
     }
@@ -114,6 +124,7 @@ $(document).ready(function() {
         $('#checkAll').prop('checked', true);
         document.getElementById("check_uncheck_label").innerHTML = "Uncheck All";
         $("#uploaded-excel-details").html('');
+        // alert(uploadedFileContentsProcessed.length);
         for (var i = 0; i < uploadedFileContentsProcessed.length; i++)
         {
             $("#uploaded-excel-details").append('<tr class = "text-center" id="checkbox-'+i+'"><td><input onclick="checkboxClicked('+i+')" type="checkbox" name="checkbox[]" class="check_uncheck" checked id="checkbox'+i+'" value="'+i+'"></td>'+ 
@@ -186,10 +197,10 @@ $(document).ready(function() {
         {
             if(!confirm('Do you want to remove selected items?'))
                 return false;
-            userSelectedItems.sort()
+            userSelectedItems.sort()           
             for(index = userSelectedItems.length - 1  ; index >= 0 ; index--)
             {
-                uploadedFileContentsProcessed.splice(userSelectedItems[index], 1);
+                uploadedFileContentsProcessed.splice(userSelectedItems[index], userSelectedItems.length );
             }
             listUploadedFileContents();
         }
@@ -325,6 +336,7 @@ $(document).ready(function() {
                          processRawUploadedFileContents();
                          listUploadedFileContents();
                      };
+                    //  console.log(reader.readAsBinaryString(uploadedContent));
                      reader.readAsBinaryString(uploadedContent.files[0]);
                  } 
                  else 
