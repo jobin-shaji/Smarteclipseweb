@@ -72,23 +72,24 @@
       </div>
       <div class="modal-body">
             <div class="row">
-                <h4 style="border-bottom: 1px solid; padding: 4px;">PLAN NAME: <i><span id="plan_name"></span></i></h4>   
-            </div>
-            <div class="row">
             <form  method="POST" action="{{route('trip-report-vehicle-configuration.update')}}">
             {{csrf_field()}}
                 <input type="hidden" name="plan_id" id="plan_id">
                 <div class="form-group">
+                    <label for="number_of_reports">PLAN NAME:</label>
+                    <div class="form-control" id="plan_name"></div>
+                </div>
+                <div class="form-group">
                     <label for="number_of_reports">Number of reports:</label>
-                    <input type="number_of_reports" name="number_of_reports" class="form-control" id="number_of_reports">
+                    <input type="number" min="1" max="180" name="number_of_reports" class="form-control" id="number_of_reports">
                 </div>
                 <div class="form-group">
                     <label for="backup_days">Backup days:</label>
-                    <input type="backup_days" name="backup_days" class="form-control" id="backup_days">
+                    <input  type="number" min="1" max="180" name="backup_days" class="form-control" id="backup_days">
                 </div>
                 <div class="form-group">
                     <label for="free_vehicle">Free vehicle:</label>
-                    <input type="free_vehicle" name="free_vehicle" class="form-control" id="free_vehicle">
+                    <input  type="number" min="0" max="999" name="free_vehicle" class="form-control" id="free_vehicle">
                 </div>
                 
                 <span>
