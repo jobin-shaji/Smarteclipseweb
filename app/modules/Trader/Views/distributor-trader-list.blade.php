@@ -45,6 +45,12 @@
     </div>            
   </div>
 </div>
+<style>
+  .table tr td
+  {
+    word-break: break-all;
+  }
+</style>
 @section('script')
     <script src="{{asset('js/gps/distributor-sub-dealer-list.js')}}"></script>
 @endsection

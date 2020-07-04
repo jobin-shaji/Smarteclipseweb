@@ -28,21 +28,18 @@ $is_root = false;
     <div class="card-body">
         <div class="table-responsive">
             <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
-                <div class="row" style="margin-left:3%!important">
+                <div class="row" >
                     <div class="col-sm-12">
                       <section class="content">
                         <div class="row">
                           <div class="form-group">
-                            <div style="padding:10px;text-align:right;">
+                            <div style="padding:10px 0;text-align:right;">
                               <input type="text" class="form-controller" id="search" name="search" placeholder="Search IMEI">
                             </div>
                              <input type="hidden" class="form-controller" id="gps_transfer_id" name="gps_transfer_id" value="{{$gps_transfer_id}}">
                           </div>
-                              <!-- <div class="col-md-10 col-md-offset-1">
-                                  <div class="panel panel-default">
-                                      <div class="table-responsive">
-                                      <div class="panel-body"> -->
-                                          <table class="table table-bordered  table-striped " style="text-align: center;overflow: scroll!important;margin-left: 0.5%!important;margin-right: 0.5%!important;width:95%!important">
+                              
+                                          <table class="table table-bordered  table-striped " >
                                             <thead>
                                               <tr>
                                                 <th><b>SL.No</b></th>
@@ -97,10 +94,7 @@ $is_root = false;
                                           </span>
                                           <div id="gps_list_table_empty_message">
                                           </div>
-                                      <!-- </div>
-                                    </div>
-                                  </div>
-                              </div> -->
+                                     
                           </div>
                       </section>
                     </div>                
@@ -113,7 +107,7 @@ $is_root = false;
     </div>
     @section('script')
     <script type="text/javascript">
-      $('#search').on('keyup',function(){
+      $('#search').on('keyup',function(){10px
         $value=$(this).val();
        
         
@@ -170,6 +164,15 @@ $is_root = false;
 #gps_list_table_empty_message{
   width:100%;
   float:left;
+}
+.table th, .table thead th{
+  font-size: 14px;
+    padding: 10px 13px;
+}
+.table-bordered td, .table-bordered th {
+    font-size: 14px;
+}.form-group {
+    width: 100%;
 }
 
 </style>

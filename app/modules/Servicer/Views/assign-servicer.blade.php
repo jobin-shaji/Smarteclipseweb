@@ -101,7 +101,7 @@
                     <div class="form-group row"  id='location_section' style="float:none!important;display:none;">
                       <label for="fname" class="col-sm-3 text-right control-label col-form-label">End User Location</label>
                       <div class="form-group has-feedback">
-                        <input type="text" class="form-control {{ $errors->has('address') ? ' has-error' : '' }}" placeholder="Location" name="search_place" id="search_place" value="{{ old('search_place') }}" required>
+                        <input type="text" class="form-control {{ $errors->has('address') ? ' has-error' : '' }}" placeholder="Location" name="search_place" id="search_place" value="{{ old('search_place') }}" maxlength="150" required>
                         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
                       </div>
                       @if ($errors->has('search_place'))

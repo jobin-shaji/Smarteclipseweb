@@ -28,10 +28,10 @@
                             <div class="col-sm-12">
                                 <table class="table table-hover table-bordered  table-striped datatable" style="text-align: center;" id="dataTable">
                                     <thead>
-                                        <tr>
+                                        <tr >
                                             <th>SL.No</th>
-                                            <th>IMEI</th>
-                                            <th>Serial Number</th>
+                                            <th class='imei'>IMEI</th>
+                                            <th class='serial_no'>Serial Number</th>
                                             @role('root')
                                             <th>Distributor</th>
                                             @endrole
@@ -56,6 +56,33 @@
         </div>
     </div>
 </div>
+
+<style>
+  .table tr td
+  {
+    word-break: break-all;
+  }
+  
+  .imei
+  {
+    width:120px;
+  }
+  .serial_no
+  {
+    width:154px;
+  }
+  .table th, .table thead th{
+  font-size: 14px;
+    padding: 10px 13px;
+}
+.table-bordered td, .table-bordered th {
+    font-size: 14px;
+}
+.form-group {
+    width: 100%;
+}
+</style>
+
 
 @endsection
 @role('root')

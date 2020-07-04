@@ -10,6 +10,10 @@ td, th {
     border: 1px solid #dddddd;
     padding: 8px;
 }
+.column_alignment
+{
+    word-break: break-all;
+}
 
 </style>
 <h1>Device Status Report (Online)</h1>
@@ -35,11 +39,11 @@ td, th {
             </tr>
             <tr>
                 <td><b>Vehicle Name</b></td>
-                <td><?php ( isset($each_data->vehicleGps->vehicle->name) ) ? $vehicle_name = $each_data->vehicleGps->vehicle->name : $vehicle_name='-NA-' ?>{{$vehicle_name}}</td>
+                <td class = 'column_alignment'><?php ( isset($each_data->vehicleGps->vehicle->name) ) ? $vehicle_name = $each_data->vehicleGps->vehicle->name : $vehicle_name='-NA-' ?>{{$vehicle_name}}</td>
             </tr>
             <tr>
                 <td><b>Registration Number</b></td>
-                <td><?php ( isset($each_data->vehicleGps->vehicle->register_number) ) ? $register_no = $each_data->vehicleGps->vehicle->register_number : $register_no='-NA-' ?>{{$register_no}}</td>
+                <td class = 'column_alignment'><?php ( isset($each_data->vehicleGps->vehicle->register_number) ) ? $register_no = $each_data->vehicleGps->vehicle->register_number : $register_no='-NA-' ?>{{$register_no}}</td>
             </tr>
             <tr>
                 <td><b>Last Packet Received On</b></td>
@@ -47,42 +51,19 @@ td, th {
             </tr>
             <tr>
                 <td><b>End User Name</b></td>
-                <td><?php ( isset($each_data->vehicleGps->vehicle->client->name) ) ? $client_name = $each_data->vehicleGps->vehicle->client->name : $client_name='-NA-' ?>{{$client_name}}</td>
+                <td class = 'column_alignment'><?php ( isset($each_data->gpsStock->client->name) ) ? $client = $each_data->gpsStock->client->name : $client='-NA-' ?>{{$client}}</td>
             </tr>
-            {{$each_data->vehicleStock}}
-            @if($each_data->vehicleGps)
-                @if($each_data->vehicleGps->vehicle->client->trader_id)
-                    <tr>
-                        <td><b>Distributor Name</b></td>
-                        <td><?php ( isset($each_data->vehicleGps->vehicle->client->trader->subDealer) ) ? $distributor_name = $each_data->vehicleGps->vehicle->client->trader->subDealer->dealer->name : $distributor_name='-NA-' ?>{{$distributor_name}}</td>
-                    </tr>
-                    <tr>
-                        <td><b>Dealer Name</b></td>
-                        <td><?php ( isset($each_data->vehicleGps->vehicle->client->trader->subDealer) ) ? $dealer_name = $each_data->vehicleGps->vehicle->client->trader->subDealer->name : $dealer_name='-NA-' ?>{{$dealer_name}}</td>
-                    </tr>
-                @else
-                    <tr>
-                        <td><b>Distributor Name</b></td>
-                        <td><?php ( isset($each_data->vehicleGps->vehicle->client->subdealer) ) ? $distributor_name = $each_data->vehicleGps->vehicle->client->subdealer->dealer->name : $distributor_name='-NA-' ?>{{$distributor_name}}</td>
-                    </tr>
-                    <tr>
-                        <td><b>Dealer Name</b></td>
-                        <td><?php ( isset($each_data->vehicleGps->vehicle->client->subdealer) ) ? $dealer_name = $each_data->vehicleGps->vehicle->client->subdealer->name : $dealer_name='-NA-' ?>{{$dealer_name}}</td>
-                    </tr>
-                @endif
-            @else
-                <tr>
-                    <td><b>Distributor Name</b></td>
-                    <td>-NA-</td>
-                </tr>
-                <tr>
-                    <td><b>Dealer Name</b></td>
-                    <td>-NA-</td>
-                </tr>
-            @endif
+            <tr>
+                <td><b>Distributor Name</b></td>
+                <td class = 'column_alignment'><?php ( isset($each_data->gpsStock->dealer->name) ) ? $dealer = $each_data->gpsStock->dealer->name : $dealer='-NA-' ?>{{$dealer}}</td>
+            </tr>
+            <tr>
+                <td><b>Dealer Name</b></td>
+                <td class = 'column_alignment'><?php ( isset($each_data->gpsStock->subdealer->name) ) ? $subdealer = $each_data->gpsStock->subdealer->name : $subdealer='-NA-' ?>{{$subdealer}}</td>
+            </tr>
             <tr>
                 <td><b>Sub Dealer Name<b></td>
-                <td><?php ( isset($each_data->vehicleGps->vehicle->client->trader->name) ) ? $sub_dealer_name = $each_data->vehicleGps->vehicle->client->trader->name : $sub_dealer_name='-NA-' ?>{{$sub_dealer_name}}</td>
+                <td class = 'column_alignment'><?php ( isset($each_data->gpsStock->trader->name) ) ? $trader = $each_data->gpsStock->trader->name : $trader='-NA-' ?>{{$trader}}</td>
             </tr>
             <tr>
                 <td><b>Vehicle Status<b></td>

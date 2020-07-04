@@ -18,7 +18,7 @@ $(document).ready(function() {
             $('#gps_id').focus;
             $('#gps_id').append('<option value="">  Select Device </option>'); 
             $.each(data.vehicle, function(key, value){
-              $('select[name="gps_id"]').append('<option value="'+ value.gps.id +'">' + value.gps.imei+' || '+ value.gps.serial_no+ '</option>');
+              $('select[name="gps_id"]').append('<option value="'+ value.gps_id +'">' + value.imei+' || '+ value.serial_no+ '</option>');
             });
           }else{
             $('#gps_id').empty();

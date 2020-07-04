@@ -516,10 +516,9 @@ class ClientController extends Controller {
             return "
                 <b style='color:#008000';>Enabled</b>
                 <button onclick=disableEndUser(".$client->user_id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-remove'></i> Disable</button>
-                <a href=".$b_url."/client/".Crypt::encrypt($client->user_id)."/subscription class=' btn-xs btn-danger'> Subscription </a>
-
                 <a href=".$b_url."/client/".Crypt::encrypt($client->user_id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
                 <a href=".$b_url."/client/".Crypt::encrypt($client->user_id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
+                <a href=".$b_url."/client/".Crypt::encrypt($client->user_id)."/subscription class=' btn-xs btn-danger'> Subscription </a>
 
             ";
             }else{
@@ -688,7 +687,6 @@ class ClientController extends Controller {
             }
         }
 
-        // dd($gps_id);
         if($request->client_role==6)
         {
             $user->role = 1;
@@ -707,11 +705,9 @@ class ClientController extends Controller {
         {
             $user->removeRole($request->role_name);
         }
-
         $current_date   =   date('Y-m-d H:i:s');
-        $client         =   (new Client())->getClientDetailsBasedOnUserIdWithTrashedItems($client_user_id);
-        $client->latest_user_updates = $current_date;
-        $client->save();
+        //update role updation date in client table
+        $client_update  =   (new Client())->updateLatestUserUpdate($client_user_id, $current_date);
         $user->assignRole($request->client_role);
         $roles = $user->roles;
         $request->session()->flash('message', 'User Role added successfully!');
@@ -754,9 +750,8 @@ class ClientController extends Controller {
         $user->role = 0;
         $user->save();
         $current_date   =   date('Y-m-d H:i:s');
-        $client         =   (new Client())->getClientDetailsBasedOnUserIdWithTrashedItems($decrypted_user_id);
-        $client->latest_user_updates = $current_date;
-        $client->save();
+        //update role updation date in client table
+        $client_update  =   (new Client())->updateLatestUserUpdate($decrypted_user_id, $current_date);
         $user->removeRole($decrypted_role_id);
         $roles = $user->roles;
         $request->session()->flash('message', 'User Role deleted successfully!');
@@ -825,13 +820,16 @@ class ClientController extends Controller {
     // update user logo
     public function saveUserLogo(Request $request)
     {
+        // dd(1);
         $client     =   (new Client())->getClientDetailsWithClientId($request->id);
         if($client == null){
            return view('Client::404');
         }
+        // dd($request->file('logo'));
         $rules = $this->logoUpdateRules();
         $this->validate($request, $rules);
         $file=$request->file('logo');
+      
         if($file){
             $old_file = $client->logo;
             if($old_file){

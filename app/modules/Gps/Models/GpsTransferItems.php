@@ -3,6 +3,7 @@
 namespace App\Modules\Gps\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class GpsTransferItems extends Model
 {
@@ -45,15 +46,10 @@ class GpsTransferItems extends Model
     }
     public function getTransferDetailsBasedOnGps($gps_id)
     {
-        return self::select(
-            'id',
-            'gps_transfer_id',
-            'gps_id'
-            )
-            ->where('gps_id', $gps_id)
-            ->with('gpsTransferDetail.fromUser')
-            ->with('gpsTransferDetail.toUser')
-            ->get();
+        return DB::table('gps_transfer_items')
+                ->select('gps_transfers.from_user_id as from_user_id', 'gps_transfers.to_user_id as to_user_id', 'gps_transfers.dispatched_on as dispatched_on', 'gps_transfers.accepted_on as accepted_on', 'gps_transfers.deleted_at as deleted_at')
+                ->join('gps_transfers', 'gps_transfers.id', '=', 'gps_transfer_items.gps_transfer_id')
+                ->where('gps_transfer_items.gps_id', $gps_id)
+                ->get();
     }
-    
 }

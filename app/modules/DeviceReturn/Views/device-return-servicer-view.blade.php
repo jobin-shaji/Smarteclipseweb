@@ -27,50 +27,50 @@
         <tbody>
           <tr class="success">
             <td><b>Code </b></td>
-            <td>{{ $device_return_details->return_code}}</td>
+            <td class='table_row'>{{ $device_return_details->return_code}}</td>
           </tr>
           <tr class="success">
             <td><b>Returned Service Engineer </b></td>
-            <td>{{ $device_return_details->servicer->name}}</td>
+            <td class='table_row'>{{ $device_return_details->servicer->name}}</td>
           </tr>
           <tr class="success">
             <td><b>IMEI </b></td>
-            <td>{{ $device_return_details->gps->imei}}</td>
+            <td class='table_row'>{{ $device_return_details->gps->imei}}</td>
           </tr>
           <tr class="success">
             <td><b>Serial Number </td>
-            <td>{{ $device_return_details->gps->serial_no}}</td>
+            <td class='table_row'>{{ $device_return_details->gps->serial_no}}</td>
           </tr>
           <tr class="success">
             <td><b>Type of Issues </b></td>
             @if($device_return_details->type_of_issues==0) 
-              <td>{{'Hardware'}}</td>
+              <td class='table_row'>{{'Hardware'}}</td>
             @endif
             @if($device_return_details->type_of_issues==1) 
-              <td>{{'Software'}}</td>
+              <td class='table_row'>{{'Software'}}</td>
             @endif
           </tr>
           <tr class="success">
             <td><b>Comments </b></td>
-            <td>{{ $device_return_details->comments}}</td>
+            <td class='table_row'>{{ $device_return_details->comments}}</td>
           </tr>
           <tr class="success">
             <td><b>Returned Date </b></td>
-            <td>{{ $device_return_details->created_at}}</td>
+            <td class='table_row'>{{ $device_return_details->created_at}}</td>
           </tr>
           <tr class="success">
             <td><b>Status </b></td>
             @if($device_return_details->status==0)
-              <td>{{'Submitted'}} </td>              
+              <td class='table_row'>{{'Submitted'}} </td>              
             @elseif($device_return_details->status==1)
-              <td>{{'Cancelled'}} </td>               
+              <td class='table_row'>{{'Cancelled'}} </td>               
             @elseif($device_return_details->status==2)
-              <td>{{'Accepted'}} </td> 
+              <td class='table_row'>{{'Accepted'}} </td> 
             @endif
           </tr>
           <tr class="success">
             <td><b>End User </b></td>
-            <td>{{ $device_return_details->client->name}}</td>
+            <td class='table_row'>{{ $device_return_details->client->name}}</td>
           </tr>
         </tbody>
       </table>
@@ -81,9 +81,13 @@
 
 
 <style>
-    table, th, td {
-    border: 1px solid black;
-    }
-    tr:hover {background-color: #D5D4D5;}
+  table, th, td {
+  border: 1px solid black;
+  }
+  tr:hover {background-color: #D5D4D5;}
+  .table_row
+  {
+    word-break: break-all;
+  }
 </style>
 @endsection

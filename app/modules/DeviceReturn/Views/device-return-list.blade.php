@@ -22,7 +22,7 @@
       <div class="table-responsive ">
         <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">                     
           <div class="row">
-            <div class="col-sm-12" style="overflow: scroll">
+            <div class="col-sm-12">
               <table class="table table-hover table-bordered  table-striped datatable" style="width:100%!important;text-align: center" id="dataTable">
                 <thead>
                   <tr>
@@ -45,7 +45,12 @@
     </div>        
   </div>
 </div>
-
+<style>
+  .table tr td
+  {
+    word-break: break-all;
+  }
+</style>
 @section('script')
  @role('servicer')
     <script src="{{asset('js/gps/client-device-return-list.js')}}"></script>

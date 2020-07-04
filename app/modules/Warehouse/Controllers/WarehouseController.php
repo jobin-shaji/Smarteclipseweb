@@ -23,6 +23,7 @@ use App\Modules\Trader\Models\Trader;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Str;
 use Illuminate\Pagination\Paginator;
+use App\Http\Traits\UserTrait;
 
 use Carbon\Carbon;
 use DB;
@@ -32,6 +33,12 @@ use Auth;
 use DataTables;
 
 class WarehouseController extends Controller {
+
+    /**
+     * 
+     * 
+     */
+    use UserTrait;
 
     /////////////////////////New Arrivals-start//////////////////////////////////
 
@@ -51,13 +58,16 @@ class WarehouseController extends Controller {
             'dispatched_on',
             'accepted_on'
         )
-        ->with('fromUser:id,username')
         ->where('to_user_id',$user_id)
         ->with('gpsTransferItems')
         ->orderBy('id','DESC')
         ->get();
         return DataTables::of($devices)
             ->addIndexColumn()
+            ->addColumn('from_user', function ($gps_transfer)
+            {
+                return $this->getOriginalNameFromUserId($gps_transfer->from_user_id);
+            })
             ->addColumn('count',function($gps_transfer){
                 return $gps_transfer->gpsTransferItems->count();
              })
@@ -96,13 +106,16 @@ class WarehouseController extends Controller {
             'dispatched_on',
             'accepted_on'
         )
-        ->with('fromUser:id,username')
         ->where('to_user_id',$user_id)
         ->with('gpsTransferItems')
         ->orderBy('id','DESC')
         ->get();
         return DataTables::of($devices)
             ->addIndexColumn()
+            ->addColumn('from_user', function ($gps_transfer)
+            {
+                return $this->getOriginalNameFromUserId($gps_transfer->from_user_id);
+            })
             ->addColumn('count',function($gps_transfer){
                 return $gps_transfer->gpsTransferItems->count();
              })
@@ -141,13 +154,16 @@ class WarehouseController extends Controller {
             'dispatched_on',
             'accepted_on'
         )
-        ->with('fromUser:id,username')
         ->where('to_user_id',$user_id)
         ->with('gpsTransferItems')
         ->orderBy('id','DESC')
         ->get();
         return DataTables::of($devices)
             ->addIndexColumn()
+            ->addColumn('from_user', function ($gps_transfer)
+            {
+                return $this->getOriginalNameFromUserId($gps_transfer->from_user_id);
+            })
             ->addColumn('count',function($gps_transfer){
                 return $gps_transfer->gpsTransferItems->count();
              })
@@ -283,6 +299,14 @@ class WarehouseController extends Controller {
             $gps_transfer = $this->manufacturerToDistributorTransferredListInRoot($gps_transfer,$from_user_id,$to_user_id);
             return DataTables::of($gps_transfer)
             ->addIndexColumn()
+            ->addColumn('from_user', function ($gps_transfer)
+            {
+                return $this->getOriginalNameFromUserId($gps_transfer->from_user_id);
+            })
+            ->addColumn('to_user', function ($gps_transfer)
+            {
+                return $this->getOriginalNameFromUserId($gps_transfer->to_user_id);
+            })
             ->addColumn('count', function ($gps_transfer)
             {
                 return $gps_transfer->gpsTransferItems->count();
@@ -318,6 +342,14 @@ class WarehouseController extends Controller {
             $gps_transfer = $this->distributorToDealerTransferredListInRoot($gps_transfer,$from_user_id,$to_user_id);
             return DataTables::of($gps_transfer)
             ->addIndexColumn()
+            ->addColumn('from_user', function ($gps_transfer)
+            {
+                return $this->getOriginalNameFromUserId($gps_transfer->from_user_id);
+            })
+            ->addColumn('to_user', function ($gps_transfer)
+            {
+                return $this->getOriginalNameFromUserId($gps_transfer->to_user_id);
+            })
             ->addColumn('count', function ($gps_transfer)
             {
                 return $gps_transfer->gpsTransferItems->count();
@@ -352,6 +384,14 @@ class WarehouseController extends Controller {
             $gps_transfer = $this->dealerToClientTransferredListInRoot($gps_transfer,$from_user_id,$to_user_id);
             return DataTables::of($gps_transfer)
             ->addIndexColumn()
+            ->addColumn('from_user', function ($gps_transfer)
+            {
+                return $this->getOriginalNameFromUserId($gps_transfer->from_user_id);
+            })
+            ->addColumn('to_user', function ($gps_transfer)
+            {
+                return $this->getOriginalNameFromUserId($gps_transfer->to_user_id);
+            })
             ->addColumn('count', function ($gps_transfer)
             {
                 return $gps_transfer->gpsTransferItems->count();
@@ -386,6 +426,14 @@ class WarehouseController extends Controller {
             $gps_transfer = $this->dealerToSubDealerTransferredListInRoot($gps_transfer,$from_user_id,$to_user_id);
             return DataTables::of($gps_transfer)
             ->addIndexColumn()
+            ->addColumn('from_user', function ($gps_transfer)
+            {
+                return $this->getOriginalNameFromUserId($gps_transfer->from_user_id);
+            })
+            ->addColumn('to_user', function ($gps_transfer)
+            {
+                return $this->getOriginalNameFromUserId($gps_transfer->to_user_id);
+            })
             ->addColumn('count', function ($gps_transfer)
             {
                 return $gps_transfer->gpsTransferItems->count();
@@ -420,6 +468,14 @@ class WarehouseController extends Controller {
             $gps_transfer = $this->subDealerToClientTransferredListInRoot($gps_transfer,$from_user_id,$to_user_id);
             return DataTables::of($gps_transfer)
             ->addIndexColumn()
+            ->addColumn('from_user', function ($gps_transfer)
+            {
+                return $this->getOriginalNameFromUserId($gps_transfer->from_user_id);
+            })
+            ->addColumn('to_user', function ($gps_transfer)
+            {
+                return $this->getOriginalNameFromUserId($gps_transfer->to_user_id);
+            })
             ->addColumn('count', function ($gps_transfer)
             {
                 return $gps_transfer->gpsTransferItems->count();
@@ -1567,8 +1623,6 @@ class WarehouseController extends Controller {
             'deleted_at'
             // \DB::raw('count(id) as count')
         )
-        ->with('fromUser:id,username')
-        ->with('toUser:id,username')
         ->with('gpsTransferItems')
         ->where('from_user_id',$user_id)
         ->orderBy('id','DESC')
@@ -1581,6 +1635,14 @@ class WarehouseController extends Controller {
         $gps_transfer = $gps_transfer->get();
         return DataTables::of($gps_transfer)
         ->addIndexColumn()
+        ->addColumn('from_user', function ($gps_transfer)
+        {
+            return $this->getOriginalNameFromUserId($gps_transfer->from_user_id);
+        })
+        ->addColumn('to_user', function ($gps_transfer)
+        {
+            return $this->getOriginalNameFromUserId($gps_transfer->to_user_id);
+        })
         ->addColumn('count', function ($gps_transfer)
         {
             return $gps_transfer->gpsTransferItems->count();
@@ -1811,8 +1873,6 @@ class WarehouseController extends Controller {
             'deleted_at'
             // \DB::raw('count(id) as count') 
         )
-        ->with('fromUser:id,username')
-        ->with('toUser:id,username')
         ->with('gpsTransferItems')
         ->where('from_user_id',$user_id)
         ->whereIn('to_user_id',$trader_user_ids)
@@ -1826,6 +1886,14 @@ class WarehouseController extends Controller {
         $gps_transfer = $gps_transfer->get();
         return DataTables::of($gps_transfer)
         ->addIndexColumn()
+        ->addColumn('from_user', function ($gps_transfer)
+        {
+            return $this->getOriginalNameFromUserId($gps_transfer->from_user_id);
+        })
+        ->addColumn('to_user', function ($gps_transfer)
+        {
+            return $this->getOriginalNameFromUserId($gps_transfer->to_user_id);
+        })
         ->addColumn('count', function ($gps_transfer) 
         {
             return $gps_transfer->gpsTransferItems->count();
@@ -2075,8 +2143,6 @@ class WarehouseController extends Controller {
             'deleted_at'
             // \DB::raw('count(id) as count')
         )
-        ->with('fromUser:id,username')
-        ->with('toUser:id,username')
         ->with('gpsTransferItems')
         ->where('from_user_id',$user_id)
         ->whereIn('to_user_id',$client_user_ids)
@@ -2090,6 +2156,14 @@ class WarehouseController extends Controller {
         $gps_transfer = $gps_transfer->get();
         return DataTables::of($gps_transfer)
         ->addIndexColumn()
+        ->addColumn('from_user', function ($gps_transfer)
+        {
+            return $this->getOriginalNameFromUserId($gps_transfer->from_user_id);
+        })
+        ->addColumn('to_user', function ($gps_transfer)
+        {
+            return $this->getOriginalNameFromUserId($gps_transfer->to_user_id);
+        })
         ->addColumn('count', function ($gps_transfer)
         {
             return $gps_transfer->gpsTransferItems->count();
@@ -2318,8 +2392,6 @@ class WarehouseController extends Controller {
             'deleted_at'
             // \DB::raw('count(id) as count')
         )
-        ->with('fromUser:id,username')
-        ->with('toUser:id,username')
         ->with('gpsTransferItems')
         ->where('from_user_id',$user_id)
         ->orderBy('id','DESC')
@@ -2332,6 +2404,14 @@ class WarehouseController extends Controller {
         $gps_transfer = $gps_transfer->get();
         return DataTables::of($gps_transfer)
         ->addIndexColumn()
+        ->addColumn('from_user', function ($gps_transfer)
+        {
+            return $this->getOriginalNameFromUserId($gps_transfer->from_user_id);
+        })
+        ->addColumn('to_user', function ($gps_transfer)
+        {
+            return $this->getOriginalNameFromUserId($gps_transfer->to_user_id);
+        })
         ->addColumn('count', function ($gps_transfer)
         {
             return $gps_transfer->gpsTransferItems->count();

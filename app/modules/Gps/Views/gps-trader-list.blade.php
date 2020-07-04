@@ -32,7 +32,7 @@
                     <th style="width: 10%!important">Model Name</th>
                     <th style="width: 10%!important">User</th>
                     <th style="width: 10%!important">Status</th>
-                    <th style="width: 0px!important">Action</th>
+                    <th style="width: 9% !important;">Action</th>
                   </tr>
                 </thead>
               </table>
@@ -43,6 +43,12 @@
     </div>
   </div>
 </div>
+<style>
+  .table tr td
+  {
+    word-break: break-all !important;
+  }
+</style>
 @section('script')
     <script src="{{asset('js/gps/gps-trader-list.js')}}"></script>
 @endsection
