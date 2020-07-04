@@ -244,6 +244,7 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                 $("a.online_device_download").attr('href', function(i,a){
                     $('a.online_device_download').attr("href", "device-online-report-downloads?type=pdf&device_status="+$device_status+"&vehicle_status="+$vehicle_status+"&search=" + $value);
                 });
+                $("#pagination_links").append(data.link);    
             }
         });
     })

@@ -1,8 +1,11 @@
 $(document).ready(function() {
     $('.action-items,.refresh,.loader').hide();
     $('.upload_xl,.browse').show();
+    $('#existing_color').hide();
+    
 });
-var check_box = '';
+    var  esim_upload_flag =1;
+    var check_box = '';
 
     var uploadedFileContentsRaw         = null;         // raw file contents
     var uploadedFileContentsProcessed   = [];           // file contents as array
@@ -17,48 +20,35 @@ var check_box = '';
      */
     function uploadFile()
     {
-        var uploadedContent = document.getElementById("fileUpload");      
-        if (uploadedFileTypes.test(uploadedContent.value.toLowerCase()))
-        {
-            $('.loader').show();
-            if (typeof (FileReader) != "undefined")
+        var uploadedContent = document.getElementById("fileUpload");
+        var file_name=uploadedContent.files[0].name;
+        $.ajax({
+            type:'POST',
+            url: "esim-activation-file",
+            data: { file_name:file_name},
+            async: true,
+            headers: {
+                'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function (res) 
             {
-                var reader = new FileReader();
-                if (reader.readAsBinaryString)
+                if(jQuery.parseJSON(res)==false)
                 {
-                    reader.onload = function (e) {
-                        uploadedFileContentsRaw = e.target.result;
-                        // process and list file contents
-                        processRawUploadedFileContents();
-                        listUploadedFileContents();
-                    };
-                    reader.readAsBinaryString(uploadedContent.files[0]);
-                } 
-                else 
-                {
-                    reader.onload = function (e) {
-                        var data    = "";
-                        var bytes   = new Uint8Array(e.target.result);
-                        for (var i = 0; i < bytes.byteLength; i++) 
-                        {
-                            data += String.fromCharCode(bytes[i]);
-                        }
-                        uploadedFileContentsRaw = data;
-                        // process and list file contents
-                        processRawUploadedFileContents();
-                        listUploadedFileContents();
-                    };
-                    reader.readAsArrayBuffer(uploadedContent.files[0]);
+                    if(confirm('Already added file.Do you want to replace it')){
+                        uploadNewFile();
+                    }
+                    else{
+                        refreshPage();
+                    }
+
                 }
-                
-            } else {
-                alert("This browser does not support HTML5.");
+                else
+                {
+                    uploadNewFile();
+                }
+
             }
-        } else {
-            alert("Please upload a valid Excel file.");
-        }
-        $('.upload_xl,.browse').hide();
-        $('.refresh').show();
+        });        
     }
 
     function refreshPage(){
@@ -103,6 +93,9 @@ var check_box = '';
                 'msisdn'                : excelRows[i]["MSISDN"],
                 'business_unit_name'    : excelRows[i]["Business Unit Name"],
                 'product_status'        : excelRows[i]["Product Status"],
+                'product_type'          : excelRows[i]["Product Type"],
+                'puk'                   : excelRows[i]["PUK1"],
+                'iccid'                 : excelRows[i]["ICCID"],
                 'activation_date'       : (typeof excelRows[i]["Activation Date"] != 'undefined') ? excelRows[i]["Activation Date"] : ''
             });
         }
@@ -126,8 +119,11 @@ var check_box = '';
             $("#uploaded-excel-details").append('<tr class = "text-center" id="checkbox-'+i+'"><td><input onclick="checkboxClicked('+i+')" type="checkbox" name="checkbox[]" class="check_uncheck" checked id="checkbox'+i+'" value="'+i+'"></td>'+ 
             '<td><label>'+uploadedFileContentsProcessed[i]["imsi"]+'</label></td>'+
             '<td><label>'+uploadedFileContentsProcessed[i]["msisdn"]+'</label></td>'+
+            '<td><label>'+uploadedFileContentsProcessed[i]["iccid"]+'</label></td>'+
+            '<td><label>'+uploadedFileContentsProcessed[i]["puk"]+'</label></td>'+
             '<td><label>'+uploadedFileContentsProcessed[i]["business_unit_name"]+'</label></td>'+
             '<td><label>'+uploadedFileContentsProcessed[i]["product_status"]+'</label></td>'+
+            // '<td><label>'+uploadedFileContentsProcessed[i]["product_type"]+'</label></td>'+
             '<td><label>'+uploadedFileContentsProcessed[i]["activation_date"]+'</label></td>'+
             '</tr>');
             // items to update on database
@@ -228,34 +224,161 @@ var check_box = '';
      * 
      */
     function updateEsimNumbersToDatabase()
-    { 
-       
-        if( userSelectedItems.length == 0 )
+    {        
+        if(esim_upload_flag==1)
         {
-            alert('Please choose at least one row to update');
-            return false;
-        }
-        else
-        {
-            $('.action-items').hide();
-            $('.loader').show();
             $.ajax({
                 type:'POST',
-                url: "update-esim-numbers",
-                data: { selected_items: JSON.stringify(removeUncheckedFileContentsProcessed()) },
+                url: "compare-esim-numbers",
+                data: {selected_items: JSON.stringify(removeUncheckedFileContentsProcessed()) },
                 async: true,
                 headers: {
                     'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
                 },
                 success: function (res) 
                 {
+                    userSelectedItems  = [];
                     $('.loader').hide();
-                    alert('Success Count -'+ res.success.length + ' Failed Count -'+  res.failed.length);
-                    refreshPage();
+                    $('#checkAll').prop('checked', true);
+                    document.getElementById("check_uncheck_label").innerHTML = "Uncheck All";
+                    $("#uploaded-excel-details").html('');
+                    for (var i = 0; i < res.data.length; i++)
+                    {
+                        if(res.data[i].status==true)
+                        {
+                            color="#EB8B8B";
+                        }
+                        else{
+                            color=""; 
+                        } 
+                        $("#uploaded-excel-details").append('<tr class = "text-center"  style="background-color:'+color+'" id="checkbox-'+i+'"><td><input onclick="checkboxClicked('+i+')" type="checkbox" name="checkbox[]" class="check_uncheck" checked id="checkbox'+i+'" value="'+i+'"></td>'+ 
+                        '<td><label>'+res.data[i]["imsi"]+'</label></td>'+
+                        '<td><label>'+res.data[i]["msisdn"]+'</label></td>'+
+                        '<td><label>'+res.data[i]["iccid"]+'</label></td>'+
+                        '<td><label>'+res.data[i]["puk"]+'</label></td>'+
+                        '<td><label>'+res.data[i]["business_unit_name"]+'</label></td>'+
+                        '<td><label>'+res.data[i]["product_status"]+'</label></td>'+
+                        '<td><label>'+res.data[i]["activated_on"]+'</label></td>'+
+                        '</tr>');
+                        userSelectedItems.push(i);                        
+                    }
+                    $('#exist_count').text('Exist esim count:- '+res.exist);
+                    $('#new_count').text('New esim Count:- '+res.new);
+                    $('#existing_color').show();
+
+
+                    esim_upload_flag=2;                                
                 }
-  
             });
         }
+        else{
+            updateEsim(); 
+        }
+             
+    }
+    function updateEsim()
+    {
+        if( userSelectedItems.length == 0 )
+            {
+                alert('Please choose at least one row to update');
+                return false;
+            }
+            else
+            {
+                $('.action-items').hide();
+                $('.loader').show();
+                $.ajax({
+                    type:'POST',
+                    url: "update-esim-numbers",
+                    data: {selected_items: JSON.stringify(removeUncheckedFileContentsProcessed()) },
+                    async: true,
+                    headers: {
+                        'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function (res) 
+                    {
+                        $('.loader').hide();
+                        alert('Success Count -'+ res.success.length + ' Failed Count -'+  res.failed.length);
+                        refreshPage();
+                    
+                    }
+    
+                });
+            }  
+    }
+
+    function uploadNewFile()
+    {
+        var uploadedContent = document.getElementById("fileUpload");
+         if (uploadedFileTypes.test(uploadedContent.value.toLowerCase()))
+         {
+             $('.loader').show();
+             if (typeof (FileReader) != "undefined")
+             {
+                 var reader = new FileReader();
+                 if (reader.readAsBinaryString)
+                 {
+                     reader.onload = function (e) {
+                         uploadedFileContentsRaw = e.target.result;
+                        
+                         // process and list file contents
+                         processRawUploadedFileContents();
+                         listUploadedFileContents();
+                     };
+                     reader.readAsBinaryString(uploadedContent.files[0]);
+                 } 
+                 else 
+                 {
+                     reader.onload = function (e) {
+                         var data    = "";
+                         var bytes   = new Uint8Array(e.target.result);
+                         for (var i = 0; i < bytes.byteLength; i++) 
+                         {
+                             data += String.fromCharCode(bytes[i]);
+                         }
+                         uploadedFileContentsRaw = data;
+                         // process and list file contents
+                         processRawUploadedFileContents();
+                         listUploadedFileContents();
+                     };
+                     reader.readAsArrayBuffer(uploadedContent.files[0]);
+                 }
+                 
+             } else {
+                 alert("This browser does not support HTML5.");
+             }
+         } else {
+             alert("Please upload a valid Excel file.");
+         }
+         $('.upload_xl,.browse').hide();
+         $('.refresh').show();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
     }
 
     // function Upload() {

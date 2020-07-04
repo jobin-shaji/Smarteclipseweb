@@ -1308,7 +1308,7 @@ class GpsReportController extends Controller
         else if($request->ajax())
         {
             
-            return ($device_online_report != null) ? Response([ 'links' => $device_online_report->appends(['sort' => 'votes'])]) : Response([ 'links' => null]);
+            return ($device_online_report != null) ? Response([ 'links' => $device_online_report->appends(['search' => $search,'device_status'=>$device_status,'vehicle_status'=>$vehicle_status]),'link'=> (string)$device_online_report->render(),]) : Response([ 'links' => null]);
         }
         else
         {
@@ -1365,7 +1365,7 @@ class GpsReportController extends Controller
         }
         else if($request->ajax())
         {            
-            return ($offline_devices != null) ? Response([ 'links' => $offline_devices->appends(['sort' => 'votes'])]) : Response([ 'links' => null]);
+            return ($offline_devices != null) ? Response([ 'links' => $offline_devices->appends(['search' => $search_key, 'offline_duration' => $offline_duration, 'device_type' => $device_type]),'link'=> (string)$offline_devices->render(),]) : Response([ 'links' => null]);
         }
         else
         {

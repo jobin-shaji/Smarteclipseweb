@@ -27,10 +27,10 @@
                         <td> <b>Client Details:</b></td>
                         <td>
                         <span class="user_name">
-                            <i class="fa fa-user"></i> : {{strtoupper($esim->gps->gpsStock->client->name)}}
+                            <i class="fa fa-user"></i> : {{(isset($esim->gps->gpsStock->client)) ? strtoupper($esim->gps->gpsStock->client->name) :"NA"}}
                         </span>
                         <span class="user_phone" style="padding-left: 60px;">
-                            <i class="fa fa-mobile"></i> : {{$esim->gps->gpsStock->user->mobile}}
+                            <i class="fa fa-mobile"></i> : {{(isset($esim->gps->gpsStock->user)) ? $esim->gps->gpsStock->user->mobile : "NA"}}
                         </span>
                         <span class="user_role" style="padding-left: 60px;">
                         <i class='far fa-id-card'></i> : 

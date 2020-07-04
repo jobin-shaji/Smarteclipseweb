@@ -227,6 +227,7 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                     $("a.offline_device_download").attr('href', function(i,a){
                         $('a.offline_device_download').attr("href", "device-offline-report-downloads?type=pdf&device_type="+$device_type+"&offline_duration="+$offline_duration+"&search=" + $value);
                     });
+                    $("#pagination_links").append(data.link);    
                 }
             });
         })

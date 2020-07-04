@@ -77,6 +77,20 @@ Create Vehicle Type
                             </div>
                             <p id="file_name"> </p>
                             <p id="file_rows"> </p>
+                            <div class="row" style="padding: 10px 0px 19px 0px;">
+                                <div class="col-md-4" id="exist_count">
+                                </div>
+                                <div class="col-md-4" id="existing_color"><span style="left" >
+                                <span style="width:4%;padding-bottom:4%;background-color:#EB8B8B;padding: 0px 10px;
+    margin-right: 9px;"></span>
+                                Existing Item
+                                </span>
+                                    
+                                </div>
+                                <div class="col-md-4" id="new_count">
+                                </div>
+                            </div>
+                            
                             <div class="esim-upload-section uploaded-excel-details-wrapper action-items">
                                 <table class="table table-bordered">
                                     <thead>
@@ -84,6 +98,8 @@ Create Vehicle Type
                                         <th><label id="check_uncheck_label">Uncheck All</label>&nbsp;<input type="checkbox" name="checkall" id="checkAll" checked></th>
                                         <th>IMSI Number</th>
                                         <th>E-SIM/MSISDN Number</th>
+                                        <th>ICCID</th>
+                                        <th>PUK</th>
                                         <th>Business Unit Name</th>
                                         <th>Product Status</th>
                                         <th>Activation Date</th>

@@ -17,10 +17,17 @@ class EsimController extends Controller {
      * @author PMS
      * 
      */
-    public function getEsimDetails()
+    public function getEsimDetails(Request $request)
     {
-        $esim_list = (new SimActivationDetails())->getSimActivationList();
-        return view('Esim::esim-activation-details-list')->with([ 'lists' => $esim_list ]);   
+        $search_key             =   ( isset($request->search) ) ? $request->search : null;  
+        $esim_list = (new SimActivationDetails())->getSimActivationList($search_key);
+        if($request->ajax())
+        {            
+            return ($esim_list != null) ? Response([ 'lists' => $esim_list->appends(['search'=>$search_key]) ,'link'=> (string)$esim_list->render() ]) : Response([ 'links' => null]);
+        }
+        else{
+            return view('Esim::esim-activation-details-list')->with([ 'lists' => $esim_list,'search_key'=>$search_key ]);   
+        }
     }
     public function getDetails(Request $request)
     {
@@ -30,5 +37,9 @@ class EsimController extends Controller {
             return view('Esim::404');
         }
         return view('Esim::esim-activation-details',['esim' => $esim_details]);
+    }
+    public function esimDetailIdEncription(Request $request)
+    {
+       return $encrypt_sim_activation_id=Crypt::encrypt($request['sim_activation_id']);
     }
 }

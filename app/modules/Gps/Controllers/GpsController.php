@@ -23,6 +23,8 @@ use App\Modules\Ota\Models\OtaResponse;
 use App\Modules\Ota\Models\OtaUpdates;
 use App\Modules\Gps\Models\GpsConfiguration;
 use App\Modules\Esim\Models\SimActivationDetails;
+use App\Modules\Esim\Models\EsimUploadFile;
+
 use Illuminate\Support\Str;
 use Carbon\Carbon;
 use PDF;
@@ -2376,20 +2378,81 @@ class GpsController extends Controller {
      */
     public function updateEsimNumbers(Request $request)
     {
-        $items      = json_decode($request->selected_items);
-        $result     = [
+       $result     = [
             'success'   => [],
             'failed'    => []
-        ];
+        ];  
+        $items      = json_decode($request->selected_items);            
         foreach($items as $each_item)
         {
-            ( (new Gps())->updateEsimNumbers($each_item->imsi, $each_item->msisdn) ) ? array_push($result['success'], $each_item->imsi) : array_push($result['failed'], $each_item->imsi);
-            (new SimActivationDetails())->updateEsimDetails($each_item);
-           
-            
+            // dd($each_item);
+            $gps_details= (new Gps())->updateEsimNumbers($each_item->imsi, $each_item->msisdn) ;
+            if($gps_details)
+            {
+                $gps_details->e_sim_number = $each_item->msisdn;
+                $gps_details->save();
+                array_push($result['success'], $each_item->imsi);
+                (new SimActivationDetails())->updateEsimDetails($each_item,$gps_details);
+            }else{
+                array_push($result['failed'], $each_item->imsi);
+            }        
         }
         return $result;
     }
+    public function compareEsimNumbers(Request $request)
+    {
+        $result     = [
+            "exist"     => 0,
+            "new"       => 0,
+            "data"      => []
+        ];  
+        $items      = json_decode($request->selected_items); 
+      
+        $new        = 0;
+        $exist      = 0;           
+        foreach($items as $each_item)
+        {    
+
+            $compare_exist = (new SimActivationDetails())->compareEsimDetails($each_item) ?  true : false;
+            if($compare_exist){
+                $exist = $exist+1;
+            }else{
+                $new =$new+1;
+            }
+            $result ['data'][]=[
+                "msisdn"                => isset($each_item->msisdn)? $each_item->msisdn:""  ,
+                "iccid"                 => isset($each_item->iccid)? $each_item->iccid:"",
+                "imsi"                  => isset($each_item->imsi)? $each_item->imsi:"",
+                "puk"                   => isset($each_item->puk)? $each_item->puk:"",
+                "product_type"          => isset($each_item->product_type)? $each_item->product_type:"",                
+                "product_status"        => isset($each_item->product_status)? $each_item->product_status:"",
+                "activated_on"          => isset($each_item->activation_date)? $each_item->activation_date:"",
+                "expire_on"             => isset($each_item->expire_on)? $each_item->expire_on:"",
+                "business_unit_name"    => isset($each_item->business_unit_name)? $each_item->business_unit_name:"",
+                "status"                => $compare_exist 
+            ];                 
+        }      
+        $result ['new']     =  $new;
+        $result ['exist']   =  $exist;
+        return $result;
+    }
+
+    public function EsimFileExistance(Request $request)
+    {
+        $file_name=$request->file_name;
+        $sim_upload_count= (new EsimUploadFile())->esimFilenameCount($file_name) ;       
+        if($sim_upload_count==0)
+        {        
+            $sim_upload= (new EsimUploadFile())->esimFilenameSave($file_name) ;     
+            return 'true';
+        }
+        else
+        {
+            return 'false';
+        }
+    }
+    
+    
 
     //validation for gps creation
     public function gpsCreateRules(){
