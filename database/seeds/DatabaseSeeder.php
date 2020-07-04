@@ -15,7 +15,7 @@ class DatabaseSeeder extends Seeder
         $this->call(UsersTableSeeder::class);  
         $this->call(AlertTypeTableSeeder::class);     
         $this->call(OtaTypeTableSeeder::class);  
-
+        $this->call(SubscriptionPlan::class);  
     }
 }
 

@@ -6,8 +6,10 @@
 	Route::post('/configuration-create','ConfigurationController@save')->name('configuration.create.p');
 	Route::post('/get-config-data','ConfigurationController@getConfiguration')->name('get-gps-data-hlm');
 	
-	// Route::post('/gpsconfig-list','ConfigurationController@getAllGpsConfig')->name('gpsconfig-list');
-	// Route::get('/all-gps-config','ConfigurationController@allGpsConfigListPage')->name('all-gps-config');
-	// Route::post('/all-gpsconfig-list','ConfigurationController@getAllGpsConfigList')->name('all-gpsconfig-list');
+	Route::get('/trip-report-configuration-list','ConfigurationController@tripReportConfigList')->name('trip-report.configuration-list');
+	Route::post('/trip-report-vehicle-configuration-update','ConfigurationController@tripReportConfigUpdate')->name('trip-report-vehicle-configuration.update');
+	
+
+	
 });
 
