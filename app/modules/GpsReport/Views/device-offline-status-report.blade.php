@@ -146,7 +146,6 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
 </div>
 </div>
 </div>
-
 <style>
     .table .thead-color th {
         color: #FDFEFE;
@@ -214,13 +213,14 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                     'offline_duration':$offline_duration
                 },
                 success:function(data){
-                    console.log(data);
+                    // console.log(data);
                     $("#data_tbody").empty();
                     $("#pagination_links").empty();               
                     var device_details; 
                     if(data.links.data.length>0)  
                     {                                 
                         for(var i=0;i < data.links.data.length;i++){
+                            console.log(data.links.data);
                         var client_name;
                         var vehicle_name;
                         var register_number;
@@ -239,7 +239,7 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                             device_details += '<tr><td>'+j+'</td>'+
                             '<td>'+imei+'</td>'+
                             '<td>'+serial_no+'</td>'+
-                            '<td>'+client_name+'</td>'+
+                            // '<td>'+client_name+'</td>'+
                             '<td>'+vehicle_name+'</td>'+
                             '<td>'+register_number+'</td>'+
                             '<td>'+device_time+'</td>'+
