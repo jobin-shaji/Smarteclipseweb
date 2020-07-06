@@ -61,7 +61,7 @@ Create Vehicle Type
                                 <li onclick="removeSelectedRows()" style="cursor:pointer;padding: 4px;"><i class="fa fa-trash" aria-hidden="true"></i> Remove selected rows </li>
                                 </ul>
                                 <!-- /action items -->
-                                <button style="cursor:pointer;    margin: 2px 0px 0px 0px; padding: 6px 6px 3px 5px;" type="button" class="pull-right" value="Update E-Sim Numbers" onclick="updateEsimNumbersToDatabase()" />Update E-Sim Numbers</button>    
+                                <button style="cursor:pointer;    margin: 2px 0px 0px 0px; padding: 6px 6px 3px 5px;" type="button" id="esim_update" class="pull-right" value="Update E-Sim Numbers" onclick="updateEsimNumbersToDatabase()" />Update E-Sim Numbers</button>    
                             </div>
                             <!-- /action bar -->
 

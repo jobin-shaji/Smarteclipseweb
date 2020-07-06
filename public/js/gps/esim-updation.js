@@ -238,6 +238,8 @@ $(document).ready(function() {
     {        
         if(esim_upload_flag==1)
         {
+            $('.loader').show();
+            $('#esim_update').hide();
             $.ajax({
                 type:'POST',
                 url: "compare-esim-numbers",
@@ -250,6 +252,7 @@ $(document).ready(function() {
                 {
                     userSelectedItems  = [];
                     $('.loader').hide();
+                    $('#esim_update').show();
                     $('#checkAll').prop('checked', true);
                     document.getElementById("check_uncheck_label").innerHTML = "Uncheck All";
                     $("#uploaded-excel-details").html('');
@@ -289,6 +292,8 @@ $(document).ready(function() {
     }
     function updateEsim()
     {
+            $('.loader').show();
+            $('#esim_update').hide();
         if( userSelectedItems.length == 0 )
             {
                 alert('Please choose at least one row to update');
@@ -309,6 +314,7 @@ $(document).ready(function() {
                     success: function (res) 
                     {
                         $('.loader').hide();
+                        $('#esim_update').show();
                         alert('Success Count -'+ res.success.length + ' Failed Count -'+  res.failed.length);
                         refreshPage();
                     
