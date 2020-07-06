@@ -6,6 +6,9 @@ use Illuminate\Support\Facades\DB;
 
 class ClientTripReportSubscription extends Model
 {
+    protected $fillable=[
+		'client_id','vehicle_id','configuration','start_date','end_date'
+    ];
     /**
      * 
      * 

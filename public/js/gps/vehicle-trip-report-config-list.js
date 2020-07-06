@@ -29,5 +29,33 @@ $(document).ready(function() {
             }
         });
     });
+
+    $('#client_id').on('change', function() {
+        var client_id = $(this).val();
+        // alert(client_id);
+        var data={ client_id : client_id };
+        $.ajax({
+            type:'POST',
+            url: '/end-user-vehicle',
+            data:data ,
+            async: true,
+            headers: {
+                'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+            },
+            success:function(data) {
+                            
+                $('#vehicle_id').empty();
+                $('#vehicle_id').focus;
+                $('#vehicle_id').append('<option value="" disabled="disabled" selected="selected">Select vehicles</option>'); 
+                $.each(data.vehicles, function(key, value){
+                    $('select[name="vehicle_id"]').append('<option value="'+ value.id +'">' + value.name+ '</option>');
+                });                
+            }
+        });
+    });
 });
+function getVehicleTripReportConfiguration()
+{
+    $('#myModal').modal('show');
+}
 

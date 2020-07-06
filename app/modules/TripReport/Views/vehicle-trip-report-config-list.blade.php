@@ -8,13 +8,30 @@ $perPage    = 10;
 $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
 ?>
 <div class="page-wrapper_new">
-    <div class="page-breadcrumb">
-        <div class="row">
-            <div class="col-12 d-flex no-block align-items-center">
-                <b> Vehicle Trip Report Configuration List</b>
+
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Vehicle Trip Report Configuration List</li>
+        <b>Vehicle Trip Report Configuration List</b>
+     </ol>
+       @if(Session::has('message'))
+          <div class="pad margin no-print">
+            <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
+                {{ Session::get('message') }}  
             </div>
-        </div>
-    </div>
+          </div>
+        @endif  
+    </nav>
+    <style>
+     /* .select2-container .select2-selection--single .select2-selection__rendered {
+        display: block;
+        padding-left: 8px;
+        padding-right: 20px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: normal; */
+    }
+    </style>
     <div class="container-fluid">
         <div class="card-body">
             <div >
@@ -73,8 +90,8 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                                             </form> 
                                         </div> 
                                         <div class="row col-md-6 col-md-offset-2">
-                                            <button class="btn btn-xs add_new"><i class='fa fa-plus'></i>
-                                                <a href="#" style="color:white">Add Vehicle Configuration</a>
+                                           <button class="btn btn-xs add_new" id="vehicleTripReportConfiguration" onclick="getVehicleTripReportConfiguration()"><i class='fa fa-plus'></i>
+                                               Add Vehicle Configuration
                                             </button>
                                             <?php $plan_names = array_column(config('eclipse.PLANS'), 'NAME', 'ID'); ?>
                                             @if(!is_null($plan_type) && $client_id != 'all')
@@ -123,6 +140,66 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                                             @if(count($vehicle_trip_config_details) != 0)
                                             {{ $vehicle_trip_config_details->appends(Request::all())->links() }}
                                             @endif
+                                        </div>                                    
+                                        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                            <!-- <form  method="POST" action="{{route('configuration.create.p')}}"> -->
+                                            <form  method="POST" action="{{route('vehicle.trip.report.config.create.p')}}">
+                                                {{csrf_field()}}    
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header text-center">
+                                                            <h4 class="modal-title w-100 font-weight-bold">Configuration</h4>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body mx-3">   
+                                                            <div class="row"> 
+                                                                <div class="col-md-6">  
+                                                                <label  data-success="right" >Client</label> 
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                <select class="form-control select2"  name="client_id" data-live-search="true" title="Select End User" id='client_id'>
+                                                                    <option selected disabeled>Select End User</option>
+                                                                    @foreach($client_details as $each_data)
+                                                                        <option value="{{encrypt($each_data->id)}}" @if($client_id != '' && $client_id==$each_data->id){{"selected"}} @endif >{{$each_data->name}} || Mobile No: {{$each_data->mobile}}</option>  
+                                                                    @endforeach
+                                                                </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row"> 
+                                                                <div class="col-md-6">  
+                                                                <label  data-success="right" >Vehicle</label> 
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                <select  class="form-control select2"  name="vehicle_id" data-live-search="true" title="Select End User Vehicle" id='vehicle_id' >
+                                                                <option selected disabeled>Select End User first</option>
+                                                                </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row"> 
+                                                                <div class="col-md-6">  
+                                                                    <label  data-success="right" >Start date</label> 
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <input type="text" class="datepicker form-control" id="startDate" name="startDate" onkeydown="return false" autocomplete="off">
+                                                                </div>
+                                                            </div>
+                                                            <div class="row"> 
+                                                                <div class="col-md-6">  
+                                                                <label  data-success="right" >End Date</label> 
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <input type="text" class="datepicker form-control" id="toDate" name="toDate" onkeydown="return false" autocomplete="off">                                                                    
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer d-flex justify-content-center">
+                                                            <button class="btn btn-default">Submit</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
@@ -161,6 +238,7 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
         margin-left:85%;
         margin-bottom: 10px;
     }
+   
 </style>
 
 @section('script')

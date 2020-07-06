@@ -38,7 +38,7 @@ class GeofenceReportExport implements FromView
         {
             $search_from_date               =   date("Y-m-d", strtotime($from_date));
             $search_to_date                 =   date("Y-m-d", strtotime($to_date));
-            $query                          =   $query->whereDate('device_time', '>=', $search_from_date)->whereDate('device_time', '<=', $search_to_date);
+            $query                          =   $query->('device_time', '>=', $search_from_date)->whereDate('device_time', '<=', $search_to_date);
         }
         $this->geofenceReportExport = $query->get(); 
     }
