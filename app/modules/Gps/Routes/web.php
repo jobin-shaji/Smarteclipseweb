@@ -22,7 +22,9 @@ Route::group(['middleware' => ['web','auth','role:root'] , 'namespace' => 'App\M
 	Route::get('/esim-updation','GpsController@esimUpdation')->name('esim.updation');
 	Route::post('/esim-upload','GpsController@saveVehicleType')->name('esim.upload');
 	Route::post('/update-esim-numbers','GpsController@updateEsimNumbers')->name('update.esim.p');
-	
+	Route::post('/esim-activation-file','GpsController@EsimFileExistance')->name('esim.activation.file');
+	Route::post('/compare-esim-numbers','GpsController@compareEsimNumbers')->name('compare.esim.p');
+
 	});
 	Route::group(['middleware' => ['web','auth','role:dealer'] , 'namespace' => 'App\Modules\Gps\Controllers' ] , function() {
 

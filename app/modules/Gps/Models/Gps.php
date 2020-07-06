@@ -241,9 +241,11 @@ class Gps extends Model
      */
     public function updateEsimNumbers($imsi, $msisdn)
     {
-        return self::where('imsi', $imsi)->update([
-            'e_sim_number'  => $msisdn
-        ]);
+        return self::select('id','imei','e_sim_number')->where('imsi', $imsi)
+        // ->update([
+        //     'e_sim_number'  => $msisdn
+        // ])
+        ->first();
     }
 
     /**

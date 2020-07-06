@@ -17,10 +17,11 @@
             <a class="dropdown-item" href="{{url('/gps-all')}}">ALL DEVICES</a>
             <a class="dropdown-item" href="{{url('/gps')}}">IN STOCK</a>
             <a class="dropdown-item" href="{{url('/gps-transfer-root')}}">TRANSFER DEVICES</a>
-            <a class="dropdown-item" href="{{url('/gps-transferred-root')}}">DEVICE TRANSFER LIST  
-            <a class="dropdown-item" href="{{url('/gps-device-track-root')}}">DEVICE TRACK
-            <a class="dropdown-item" href="{{url('/esim-updation')}}">ESIM UPDATION </a>
+            <a class="dropdown-item" href="{{url('/gps-transferred-root')}}">DEVICE TRANSFER LIST</a>
+            <a class="dropdown-item" href="{{url('/gps-device-track-root')}}">DEVICE TRACK</a>
             <a class="dropdown-item" href="{{url('/devicereassign/create')}}">DEVICE REASSIGN  </a>
+            <a class="dropdown-item" href="{{url('/esim-updation')}}">ESIM UPDATION </a>
+            <a class="dropdown-item" href="{{url('/esim-activation-details')}}">ESIM ACTIVATION DETAILS <span class="badge">New</span></a>
             <a class="dropdown-item" href="{{url('/detailed-device-report')}}">DETAILED DEVICE REPORT  <span class="badge">New</span></a>
             
         </div>
