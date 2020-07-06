@@ -64,24 +64,24 @@ class IndividualTrips extends Command
 
         if(!$vehicle)
         {
-            echo "vehicle not found";
+            echo "vehicle not found"."\n";
             exit;
         }
 
-        $question = "processing trips of vehicle ".$vehicle->name." ".$vehicle->register_number."of customer ".$vehicle->client->name." on date ".$this->trip_date." do you want to proceed ? (y/n)";
+        $question = "processing trips of vehicle ".$vehicle->name." ".$vehicle->register_number."of customer ".$vehicle->client->name." on date ".$this->trip_date." do you want to proceed ? (y/n)"."\n";
 
         $user_response = $this->ask($question);
 
         if($user_response != "y")
         {
-            echo "exiting..";
+            echo "exiting.."."\n";
             exit;
         }
         else
         {
-            echo "processing trip....";
+            echo "processing trip...."."\n";
             $this->processTripsofVehicle($vehicle->gps);
-            echo "processing completed !!";
+            echo "processing completed !!"."\n";
         }
 
     }
