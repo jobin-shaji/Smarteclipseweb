@@ -177,6 +177,10 @@ class GpsData extends Model
     {
         $this->setTable('gps_data_'.date('Ymd',strtotime("-1 days")));
 
-        return self::select('imei', 'latitude', 'longitude', 'vehicle_mode', 'device_time')->where('imei', $imei)->orderBy('device_time','asc')->get();
+        return self::select('imei', 'latitude', 'longitude', 'vehicle_mode', 'device_time','header')
+                    ->where('imei', $imei)
+                    ->whereNotIn('header',['HLM','LGN'])
+                    ->orderBy('device_time','asc')
+                    ->get();
     }
 }

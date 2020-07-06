@@ -1291,7 +1291,7 @@ class GpsReportController extends Controller
         $gps_ids                        =   (new Vehicle())->getAllVehiclesWithUnreturnedGps();
         $vehicle_status                 =   (isset($request->vehicle_status) ) ? $request->vehicle_status : null;      
         $device_online_report           =   (new GPS())->getDeviceOnlineReport($online_limit_date,$current_time,$vehicle_status,$device_status,$gps_ids,$search,$download_type);
-     
+    //   dd($device_online_report);
        
         if($download_type == 'pdf')
         {
@@ -1307,8 +1307,8 @@ class GpsReportController extends Controller
         }  
         else if($request->ajax())
         {
-            // dd($device_online_report);
-            return ($device_online_report != null) ? Response([ 'links' => $device_online_report->appends(['sort' => 'votes'])]) : Response([ 'links' => null]);
+            
+            return ($device_online_report != null) ? Response([ 'links' => $device_online_report->appends(['search' => $search,'device_status'=>$device_status,'vehicle_status'=>$vehicle_status]),'link'=> (string)$device_online_report->render(),]) : Response([ 'links' => null]);
         }
         else
         {
@@ -1346,6 +1346,12 @@ class GpsReportController extends Controller
             $gps_id_of_active_vehicles      = (new Vehicle())->getAllVehiclesWithUnreturnedGps();
         }
         $offline_devices                    = (new Gps())->getAllOfflineDevices($offline_date_time, $device_type, $download_type , $gps_id_of_active_vehicles,$search_key);
+        // $imei=[];
+        // foreach($offline_devices as $offline_device)
+        // {
+        //     $encryptedid[]= $offline_device->eimei;
+        // }
+        // dd($encryptedid);
         if( $download_type == 'pdf')
         {
             if($offline_devices->count()>0)
@@ -1359,7 +1365,7 @@ class GpsReportController extends Controller
         }
         else if($request->ajax())
         {            
-            return ($offline_devices != null) ? Response([ 'links' => $offline_devices->appends(['sort' => 'votes'])]) : Response([ 'links' => null]);
+            return ($offline_devices != null) ? Response([ 'links' => $offline_devices->appends(['search' => $search_key, 'offline_duration' => $offline_duration, 'device_type' => $device_type]),'link'=> (string)$offline_devices->render(),]) : Response([ 'links' => null]);
         }
         else
         {
@@ -1561,10 +1567,10 @@ class GpsReportController extends Controller
     {
         $gps_id             = $request->gps_id;
         $owner_details      = [];
-        $transfer_details    = (new GpsStock())->getTransactionDetailsBasedOnGps($gps_id);
-        if($transfer_details)
+        $vehicle_details    = (new VehicleGps())->getClientIdOfVehicle($gps_id);
+        if($vehicle_details)
         {
-            ($transfer_details->client_id) ? $owner_details = (new Client())->getClientDetailsOfVehicle($transfer_details->client_id) : $owner_details = null;
+            ($vehicle_details->vehicle->client_id) ? $owner_details = (new Client())->getClientDetailsOfVehicle($vehicle_details->vehicle->client_id) : $owner_details = null;
             $plan_names = array_column(config('eclipse.PLANS'), 'NAME', 'ID');
             ($owner_details) ? $owner_details->user->role = ucfirst(strtolower($plan_names[$owner_details->user->role]))  : $owner_details->user->role = '-NA-'  ;
         }
@@ -1688,20 +1694,9 @@ class GpsReportController extends Controller
      */
     public function deviceReportDetailedViewOfTransferHistory(Request $request)
     {
-        $gps_id             =  $request->gps_id;
+        $gps_id             = $request->gps_id;
         $transfer_details   = (new GpsTransferItems())->getTransferDetailsBasedOnGps($gps_id);
-        $transfer_log       = [];
-        foreach($transfer_details as $each_data)
-        {
-            $transfer_log[] =   [
-                'transfer_from'     =>  $this->getOriginalNameFromUserId($each_data->from_user_id),
-                'transfer_to'       =>  $this->getOriginalNameFromUserId($each_data->to_user_id),
-                'dispatched_on'     =>  $each_data->dispatched_on,
-                'accepted_on'       =>  $each_data->accepted_on,
-                'deleted_at'        =>  $each_data->deleted_at
-            ];
-        }
-        return response()->json($transfer_log);
+        return response()->json($transfer_details);
     }
     public function deviceDetailImeiEncription(Request $request)
     {

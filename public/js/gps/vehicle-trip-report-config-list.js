@@ -29,7 +29,10 @@ $(document).ready(function() {
             }
         });
     });
-
+/**
+ * 
+ * fetch client vehicles 
+ */
     $('#client_id').on('change', function() {
         var client_id = $(this).val();
         // alert(client_id);
@@ -54,6 +57,9 @@ $(document).ready(function() {
         });
     });
 });
+/**
+ *  modal show
+ */
 function getVehicleTripReportConfiguration()
 {
     $('#myModal').modal('show');

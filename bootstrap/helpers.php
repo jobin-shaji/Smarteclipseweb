@@ -189,6 +189,7 @@ function dateTimediff($d1, $d2)
     </gpx>';
 
     $client     = new \GuzzleHttp\Client(['base_uri' => 'https://m.fleet.ls.hereapi.com/']);
+    $distance   = 0;
 
     try
     {

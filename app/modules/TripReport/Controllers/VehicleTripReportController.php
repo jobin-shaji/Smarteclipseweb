@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use App\Modules\Client\Models\Client;
 use App\Modules\TripReport\Models\ClientTripReportSubscription;
 use App\Modules\Vehicle\Models\Vehicle;
+use App\Modules\TripReport\Models\TripReportConfiguration;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 
@@ -57,7 +58,7 @@ class VehicleTripReportController extends Controller
     }
     /**
      * 
-     * 
+     * fetch vehicles based on client
      * 
      */
     public function getVehiclesBasedOnClient(Request $request)
@@ -79,85 +80,45 @@ class VehicleTripReportController extends Controller
         }
     }
 
+    /**
+     * vehickle trip report configuration save
+     */
     public function vehicletripreportsave(Request $request)
     {        
         $client_id = Crypt::decrypt($request->client_id);  
-        $vehicle_id=$request->vehicle_id; 
         $startDate = date('Y-m-d',strtotime($request->startDate));
         $toDate = date('Y-m-d',strtotime($request->toDate));
-        $configuration = ClientTripReportSubscription::where('client_id', $client_id)
-        ->where('vehicle_id', $vehicle_id)
-        ->whereDate('start_date', '>=', $startDate)
-        ->whereDate('end_date', '<=', $toDate)
-        ->first();
-        if($configuration)
+        // $vehicle_configuration      = (new ClientTripReportSubscription())->getClientConfiguration($client_id,$request->vehicle_id, $startDate,$toDate);
+        $vehicle_configuration = ClientTripReportSubscription::where('client_id', $client_id)
+        ->where('vehicle_id',$request->vehicle_id)
+        ->where(function($query) use ($startDate , $toDate) {
+            $query->whereDate('start_date', '>=',$startDate);
+            $query->whereDate('end_date', '<=', $toDate);
+        })
+        ->orWhereBetween('start_date',[$startDate, $toDate])
+        ->orWhereBetween('end_date',[$startDate, $toDate])
+        ->get();
+        
+        if($vehicle_configuration->count()==0)
         {
-            $client_trip_report_subscription     =   (new ClientTripReportSubscription())->clientTripReportSubscription($current_date);
-            $request->session()->flash('message', 'New Configuration created successfully!'); 
+            $plan_of_client      = (new Client())->getClientDetailsWithClientId($client_id)->user->role;
+            $trip_report_config = TripReportConfiguration::select(
+                'number_of_report_per_month',
+                'backup_days',
+                'free_vehicle'
+            )
+            ->where('plan_id', $plan_of_client)
+            ->first();  
+            $client_trip_report_subscription     =   (new ClientTripReportSubscription())->clientVehcileTripReportConfiguration($client_id,$request->vehicle_id,$startDate,$toDate,json_encode($trip_report_config));
+            $request->session()->flash('message', 'Vehicle configuration added successfully'); 
             $request->session()->flash('alert-class', 'alert-success'); 
             return redirect(route('vehicle-trip-report-config')); 
         }
         else{
-            $request->session()->flash('message', 'New Configuration created successfully!'); 
-            $request->session()->flash('alert-class', 'alert-danger'); 
+            $request->session()->flash('message', 'Already created configuration between'.$request->startDate.'and'.$request->toDate); 
+            $request->session()->flash('alert-class', 'alert-success'); 
             return redirect(route('vehicle-trip-report-config')); 
         }
-
-        // dd($configuration);
-        //     $fields = [
-        //       "fuel",
-        //       "radar",
-        //       "invoice", 
-        //       "ac_status", 
-        //       "api_access", 
-        //       "white_list", 
-        //       "client_logo", 
-        //       "immobilizer", 
-        //       "driver_score", 
-        //       "towing_alert", 
-        //       "client_domain", 
-        //       "modify_design", 
-        //       "custom_feature", 
-        //       "geofence_count", 
-        //       "anti_theft_mode", 
-        //       "database_backup", 
-        //       "emergency_alerts", 
-        //       "share_in_web_app", 
-        //       "point_of_interest", 
-        //       "mobile_application", 
-        //       "daily_report_as_sms", 
-        //       "privillaged_support", 
-        //       "route_deviation_count", 
-        //       "route_playback_history_month", 
-        //       "daily_report_summary_to_reg_mail"
-        //     ];
-        //     $field_values = [];
-        //     foreach($fields as $each_field)
-        //     {
-              
-        //       $field_values[$each_field] = ( ctype_digit($request->{$each_field}) ) ? (int)$request->{$each_field} : $this->congig_status($request->{$each_field});
-        //     }
-        //     $configuration = Configuration::where('code', 'plan')->first();
-        //     $old_configuration_value = json_decode($configuration->value);
-        //     $old_configuration_value[$plan]->configuration = $field_values; 
-        //     $save_config = Configuration::find(1);
-
-        //     // dd($field_values);
-        //     $save_config->value = json_encode($old_configuration_value,true);
-        //     $save_config->date = date('Y-m-d');
-        //     $save_config->version = $request->version;
-        //     $save_config->save();
-        //     if($save_config){
-        //       $gps = ConfigurationVersion::create([
-        //         'plan'=>$plan_name,
-        //         'version'=>$request->version       
-        //       ]); 
-        //     }
-                        
-       
-        // $request->session()->flash('message', 'New Configuration created successfully!'); 
-        // $request->session()->flash('alert-class', 'alert-success'); 
-        // return redirect(route('configuration.create')); 
     }
 
 }

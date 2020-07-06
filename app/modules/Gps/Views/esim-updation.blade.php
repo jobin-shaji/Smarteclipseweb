@@ -37,6 +37,8 @@ Create Vehicle Type
                                 <!-- file upload button -->
                                 <input type="button" class="upload_xl" id="upload" value="Upload" onclick="uploadFile()" /><input type="button" class="refresh" id="refresh" value="Refresh" onclick="refreshPage()" />
                                 <!-- /file upload button -->
+                              
+
                             </div>
                             <!-- /file uploader -->
 
@@ -56,9 +58,10 @@ Create Vehicle Type
                                 <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Choose
                                 <span class="caret"></span></button>
                                 <ul class="dropdown-menu">
-                                <li onclick="removeSelectedRows()" style="cursor:pointer;"> Remove selected rows </li>
+                                <li onclick="removeSelectedRows()" style="cursor:pointer;padding: 4px;"><i class="fa fa-trash" aria-hidden="true"></i> Remove selected rows </li>
                                 </ul>
                                 <!-- /action items -->
+                                <button style="cursor:pointer;    margin: 2px 0px 0px 0px; padding: 6px 6px 3px 5px;" type="button" class="pull-right" value="Update E-Sim Numbers" onclick="updateEsimNumbersToDatabase()" />Update E-Sim Numbers</button>    
                             </div>
                             <!-- /action bar -->
 
@@ -74,6 +77,20 @@ Create Vehicle Type
                             </div>
                             <p id="file_name"> </p>
                             <p id="file_rows"> </p>
+                            <div class="row" style="padding: 10px 0px 19px 0px;">
+                                <div class="col-md-4" id="exist_count">
+                                </div>
+                                <div class="col-md-4" id="existing_color"><span style="left" >
+                                <span style="width:4%;padding-bottom:4%;background-color:#EB8B8B;padding: 0px 10px;
+    margin-right: 9px;"></span>
+                                Existing Item
+                                </span>
+                                    
+                                </div>
+                                <div class="col-md-4" id="new_count">
+                                </div>
+                            </div>
+                            
                             <div class="esim-upload-section uploaded-excel-details-wrapper action-items">
                                 <table class="table table-bordered">
                                     <thead>
@@ -81,6 +98,8 @@ Create Vehicle Type
                                         <th><label id="check_uncheck_label">Uncheck All</label>&nbsp;<input type="checkbox" name="checkall" id="checkAll" checked></th>
                                         <th>IMSI Number</th>
                                         <th>E-SIM/MSISDN Number</th>
+                                        <th>ICCID</th>
+                                        <th>PUK</th>
                                         <th>Business Unit Name</th>
                                         <th>Product Status</th>
                                         <th>Activation Date</th>
@@ -88,7 +107,7 @@ Create Vehicle Type
                                     </thead>
                                     <tbody id="uploaded-excel-details"></tbody>
                                 </table>
-                                <button style="cursor:pointer;" type="button" class="pull-right" value="Update E-Sim Numbers" onclick="updateEsimNumbersToDatabase()" />Update E-Sim Numbers</button>
+                                <!-- <button style="cursor:pointer;" type="button" class="pull-right" value="Update E-Sim Numbers" onclick="updateEsimNumbersToDatabase()" />Update E-Sim Numbers</button> -->
                             </div>
                             <!-- /temporary listing -->
                         </form>

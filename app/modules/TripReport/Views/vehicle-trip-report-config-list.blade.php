@@ -119,7 +119,7 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                                                         <tr>
                                                             <td colspan='9' style='text-align: center;'><b>No Data Available</b></td>
                                                         </tr>
-                                                    @else
+                                                    @else                                                    
                                                     @foreach($vehicle_trip_config_details as $each_data)
                                                     <tr>
                                                         <td>{{ (($perPage * ($page - 1)) + $loop->iteration) }}</td>
@@ -128,7 +128,7 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                                                         <td><?php ( isset($each_data->veh_reg_no) ) ? $veh_reg_no = $each_data->veh_reg_no : $veh_reg_no='-NA-' ?>{{$veh_reg_no}}</td>
                                                         <td><?php ( isset($each_data->role) ) ? $role = ucfirst(strtolower($plan_names[$each_data->role])) : $role='-NA-' ?>{{$role}}</td>
                                                         <?php if(isset($each_data->configuration)){extract(json_decode($each_data->configuration, true));} ?>
-                                                        <td><?php ( isset($each_data->configuration) ) ? $configuration = $number_of_reports : $configuration='-NA-' ?>{{$configuration}}</td>
+                                                        <td><?php ( isset($each_data->configuration) ) ? $configuration = $number_of_report_per_month : $configuration='-NA-' ?>{{$configuration}}</td>
                                                         <td><?php ( isset($each_data->start_date) ) ? $start_date = $each_data->start_date : $start_date='-NA-' ?>{{$start_date}}</td>
                                                         <td><?php ( isset($each_data->end_date) ) ? $end_date = $each_data->end_date : $end_date='-NA-' ?>{{$end_date}}</td>
                                                         <td><?php ( isset($each_data->last_generated_on) ) ? $last_generated_on = $each_data->last_generated_on : $last_generated_on='-NA-' ?>{{$last_generated_on}}</td>
@@ -141,7 +141,7 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                                             {{ $vehicle_trip_config_details->appends(Request::all())->links() }}
                                             @endif
                                         </div>                                    
-                                        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                        <div class="modal fade" id="myModal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                             <!-- <form  method="POST" action="{{route('configuration.create.p')}}"> -->
                                             <form  method="POST" action="{{route('vehicle.trip.report.config.create.p')}}">
                                                 {{csrf_field()}}    
@@ -154,24 +154,31 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                                                             </button>
                                                         </div>
                                                         <div class="modal-body mx-3">   
-                                                            <div class="row"> 
+                                                            <div  class="row"> 
                                                                 <div class="col-md-6">  
                                                                 <label  data-success="right" >Client</label> 
                                                                 </div>
-                                                                <div class="col-md-6">
-                                                                <select class="form-control select2"  name="client_id" data-live-search="true" title="Select End User" id='client_id'>
-                                                                    <option selected disabeled>Select End User</option>
+                                                                <div class="col-md-6 select2-new">
+                                                              
+                                                                <select class="form-control select2"  name="client_id"  title="Select End User" id='client_id'>
+                                                                    <option selected >Select End User</option>
+                                                                    <option value='all'>ALL</option>
                                                                     @foreach($client_details as $each_data)
                                                                         <option value="{{encrypt($each_data->id)}}" @if($client_id != '' && $client_id==$each_data->id){{"selected"}} @endif >{{$each_data->name}} || Mobile No: {{$each_data->mobile}}</option>  
                                                                     @endforeach
                                                                 </select>
+                                                                @if ($errors->has('client_id'))
+                                                                    <span class="help-block">
+                                                                        <strong class="error-text">{{ $errors->first('client_id') }}</strong>
+                                                                    </span>
+                                                                @endif
                                                                 </div>
                                                             </div>
                                                             <div class="row"> 
                                                                 <div class="col-md-6">  
                                                                 <label  data-success="right" >Vehicle</label> 
                                                                 </div>
-                                                                <div class="col-md-6">
+                                                                <div class="col-md-6 select2-new">
                                                                 <select  class="form-control select2"  name="vehicle_id" data-live-search="true" title="Select End User Vehicle" id='vehicle_id' >
                                                                 <option selected disabeled>Select End User first</option>
                                                                 </select>
@@ -181,7 +188,7 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                                                                 <div class="col-md-6">  
                                                                     <label  data-success="right" >Start date</label> 
                                                                 </div>
-                                                                <div class="col-md-4">
+                                                                <div class="col-md-6">
                                                                     <input type="text" class="datepicker form-control" id="startDate" name="startDate" onkeydown="return false" autocomplete="off">
                                                                 </div>
                                                             </div>
@@ -189,7 +196,7 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                                                                 <div class="col-md-6">  
                                                                 <label  data-success="right" >End Date</label> 
                                                                 </div>
-                                                                <div class="col-md-4">
+                                                                <div class="col-md-6">
                                                                     <input type="text" class="datepicker form-control" id="toDate" name="toDate" onkeydown="return false" autocomplete="off">                                                                    
                                                                 </div>
                                                             </div>
@@ -226,7 +233,7 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
     }
     .count
     {
-        width:30px;
+        width:30px;ext
     }
     .selected_plan
     {
@@ -238,7 +245,12 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
         margin-left:85%;
         margin-bottom: 10px;
     }
-   
+   .select2-new{
+       width:100% !important;
+   }
+   .select2-new .select2-container{
+    width:100% !important;  
+   }
 </style>
 
 @section('script')

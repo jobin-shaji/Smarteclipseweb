@@ -44,7 +44,8 @@ return  [
        'DeviceReturn',
        'DeviceReassign',
        'GpsReport',
-       'TripReport'
+       'TripReport',
+       'Esim'
 
     ]
 ]

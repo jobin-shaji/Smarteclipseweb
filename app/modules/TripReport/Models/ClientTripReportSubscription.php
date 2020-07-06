@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 class ClientTripReportSubscription extends Model
 {
     protected $fillable=[
-		'client_id','vehicle_id','configuration','start_date','end_date'
+		'client_id','vehicle_id','configuration','start_date','end_date','configuration'
     ];
     /**
      * 
@@ -34,5 +34,26 @@ class ClientTripReportSubscription extends Model
                             }); 
                         }
         return $query->paginate(10);
+    }
+
+    public function clientVehcileTripReportConfiguration($client_id,$vehicle_id,$start_date,$end_date,$plan)
+    {
+        // dd($plan);
+        return self::Create([
+        'client_id'     => $client_id,
+        'vehicle_id'    => $vehicle_id,
+        'start_date'    => $start_date,     
+        'end_date'      => $end_date,
+        'configuration' => $plan     
+
+      ]);
+    }
+    
+    /**
+     * 
+     */
+    public function getClientConfiguration($client_id,$vehicle_id,$startDate,$toDate)
+    {
+
     }
 }
