@@ -68,7 +68,7 @@ class IndividualTrips extends Command
             exit;
         }
 
-        $question = "processing trips of vehicle ".$vehicle->name." ".$vehicle->register_number."of customer ".$vehicle->client->name." on date ".$this->trip_date." do you want to proceed ? (y/n)"."\n";
+        $question = "processing trips of vehicle ".$vehicle->name." ".$vehicle->register_number." of customer ".$vehicle->client->name." on date ".$this->trip_date." do you want to proceed ? (y/n)"."\n";
 
         $user_response = $this->ask($question);
 
