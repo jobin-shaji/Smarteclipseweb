@@ -16,6 +16,7 @@ class Kernel extends ConsoleKernel
         Commands\TripM::class,
         Commands\VehicleTrips::class,
         Commands\OldTrips::class,
+        Commands\IndividualTrips::class
     ];
 
     /**
