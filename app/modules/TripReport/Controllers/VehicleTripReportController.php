@@ -63,7 +63,7 @@ class VehicleTripReportController extends Controller
      */
     public function getVehiclesBasedOnClient(Request $request)
     {     
-        $vehicles           =   (new Vehicle())->getVehiclesOfSelectedClient(Crypt::decrypt($request->client_id));        
+        $vehicles    =   (new Vehicle())->getVehiclesOfSelectedClient(Crypt::decrypt($request->client_id));        
         if($vehicles == null)
         {
             return response()->json([
@@ -84,14 +84,14 @@ class VehicleTripReportController extends Controller
      */
     public function vehicletripreportsave(Request $request)
     {        
-        $client_id = Crypt::decrypt($request->client_id);  
-        $startDate = date('Y-m-d',strtotime($request->startDate));
-        $toDate = date('Y-m-d',strtotime($request->toDate));
+        $client_id                  = Crypt::decrypt($request->client_id);  
+        $startDate                  = date('Y-m-d',strtotime($request->startDate));
+        $toDate                     = date('Y-m-d',strtotime($request->toDate));
         $vehicle_configuration      = (new ClientTripReportSubscription())->getClientConfiguration($client_id,$request->vehicle_id, $startDate,$toDate);       
         if($vehicle_configuration->count()==0)
         {
-            $plan_of_client             = (new Client())->getClientDetailsWithClientId($client_id)->user->role;
-            $trip_report_config = TripReportConfiguration::select(
+            $plan_of_client         = (new Client())->getClientDetailsWithClientId($client_id)->user->role;
+            $trip_report_config     = TripReportConfiguration::select(
                 'number_of_report_per_month',
                 'backup_days',
                 'free_vehicle'
