@@ -115,6 +115,7 @@
                 </ul>
             </li>
             <a class="dropdown-item" href="{{url('/monitor')}}">MONITORING</a>
+            <a class="dropdown-item" href="{{url('/vehicle-trip-report-config')}}">VEHICLE TRIP REPORT CONFIGURATION </a>
             <a class="dropdown-item" href="{{url('/trip-report-manufacturer')}}">TRIP REPORT<span></span></a>
         </ul>
     </li>
@@ -176,6 +177,7 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="{{url('/trip-report-configuration-list')}}">TRIP REPORT CONFIGURATION </a>
             <a class="dropdown-item" href="{{url('/configuration-create')}}">PLAN CONFIGURATION </a>
         </div>
     </li>

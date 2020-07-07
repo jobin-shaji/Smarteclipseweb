@@ -159,8 +159,8 @@ $('#search').on('keyup',function(){
                     $("#pagination_links").append(data.link); 
                     var search = $value; 
                     // window.history.pushState("", "", "/esim-activation-details?search="+search);
-                    // location.reload(true);                                          
-                }
+                
+                  }
             });
         })
         

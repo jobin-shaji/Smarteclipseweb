@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Modules\Gps\Models\Gps;
 use App\Modules\Configuration\Models\Configuration;
 use App\Modules\Configuration\Models\ConfigurationVersion;
+use App\Modules\TripReport\Models\TripReportConfiguration;
 
 use Illuminate\Support\Str;
 use Carbon\Carbon;
@@ -100,5 +101,29 @@ class ConfigurationController extends Controller {
         else{
             return false;
         }
+    }
+
+    public function tripReportConfigList(Request $request)
+    {
+
+     return view('Configuration::trip-report-configuration',
+     [
+       'trip_reports_config' => (new TripReportConfiguration())->getListConfiguration()
+     ]);
+    }
+
+    public function tripReportConfigUpdate(Request $request)
+    {
+      $update_config    = (new TripReportConfiguration())->updateConfiguration($request);
+      if($update_config)
+      {
+        $request->session()->flash('message', 'Updated successfully!'); 
+        $request->session()->flash('alert-class', 'alert-success'); 
+      }else
+      {
+        $request->session()->flash('message', 'failed!'); 
+        $request->session()->flash('alert-class', 'alert-danger'); 
+      }
+      return redirect(route('trip-report.configuration-list')); 
     }
 }
