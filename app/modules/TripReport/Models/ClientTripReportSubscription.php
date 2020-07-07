@@ -27,7 +27,7 @@ class ClientTripReportSubscription extends Model
                         ->join('users', 'users.id', '=', 'clients.user_id')
                         ->join('vehicles', 'subscriptions.vehicle_id', '=', 'vehicles.id')
                         ->select('subscriptions.configuration as configuration','subscriptions.start_date as start_date','subscriptions.end_date as end_date','clients.name as client_name',
-                        'vehicles.name as vehicle_name','vehicles.register_number as veh_reg_no','users.role as role');
+                        'vehicles.name as vehicle_name','vehicles.register_number as veh_reg_no','users.role as role','subscriptions.id as id');
                         if($client_id != 'all')
                         {
                             $query->where(function($query) use($client_id){
@@ -77,5 +77,10 @@ class ClientTripReportSubscription extends Model
             ->orWhereBetween('end_date',[$startDate, $toDate]);
         })
         ->get();
+    }
+    /** */
+    public function deleteTripReportSubscription($id,$date)
+    {
+        return $query=self::where('id', $id)->whereDate('start_date', '>',$date)->whereDate('end_date', '>',$date)->count();
     }
 }

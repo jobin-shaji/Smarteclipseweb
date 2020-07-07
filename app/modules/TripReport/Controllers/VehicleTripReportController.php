@@ -112,5 +112,30 @@ class VehicleTripReportController extends Controller
             return redirect(route('vehicle-trip-report-config')); 
         }
     }
+    /**
+     * vehicle trip report configuration delete
+     */
+    public function vehicletripreportdelete(Request $request)
+    {  
+        $decrypted      =   Crypt::decrypt($request->id);  
+        $current_date   =   date('y-m-d');
+        $query          =   (new ClientTripReportSubscription())->deleteTripReportSubscription($decrypted,$current_date);
+        if($query)
+        {
+            ClientTripReportSubscription::find($decrypted)->delete();            
+            $request->session()->flash('message', 'Trip report configuration deleted successfully'); 
+            $request->session()->flash('alert-class', 'alert-success'); 
+            return redirect(route('vehicle-trip-report-config')); 
+        }
+        else
+        {
+            $request->session()->flash('message', 'History Dates cant be deleted'); 
+            $request->session()->flash('alert-class', 'alert-success'); 
+            return redirect(route('vehicle-trip-report-config')); 
+
+        }
+        
+       
+    }
 
 }

@@ -100,6 +100,10 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                                             @if(!is_null($plan_type) && $client_id == 'all')
                                             <span class='selected_plan'> Plan : {{"$plan_names[$plan_type]"}}</span> 
                                             @endif
+                                            <!-- <form  method="POST" action="{{route('alert.type.create.p')}}" enctype="multipart/form-data"> -->
+                                            <!-- <form  method="POST"> -->
+                                                
+                                                <!-- {{csrf_field()}} -->
                                             <table class="table table-bordered">
                                                 <thead class="thead-color">
                                                     <tr>
@@ -112,6 +116,7 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                                                         <th>Start Date</th>
                                                         <th>End Date</th>
                                                         <th>Last Generated On</th>
+                                                        <th>Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -121,6 +126,7 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                                                         </tr>
                                                     @else                                                    
                                                     @foreach($vehicle_trip_config_details as $each_data)
+                                                    
                                                     <tr>
                                                         <td>{{ (($perPage * ($page - 1)) + $loop->iteration) }}</td>
                                                         <td><?php ( isset($each_data->client_name) ) ? $client_name = $each_data->client_name : $client_name='-NA-' ?>{{$client_name}}</td>
@@ -132,11 +138,13 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                                                         <td><?php ( isset($each_data->start_date) ) ? $start_date = $each_data->start_date : $start_date='-NA-' ?>{{$start_date}}</td>
                                                         <td><?php ( isset($each_data->end_date) ) ? $end_date = $each_data->end_date : $end_date='-NA-' ?>{{$end_date}}</td>
                                                         <td><?php ( isset($each_data->last_generated_on) ) ? $last_generated_on = $each_data->last_generated_on : $last_generated_on='-NA-' ?>{{$last_generated_on}}</td>
+                                                        <td><a href="{{url('/trip-report-configuration-delete',Crypt::encrypt($each_data->id))}}"><button class="btn btn-sm btn-info btn2" >   Delete</button></a></td>
                                                     </tr>
                                                     @endforeach
                                                     @endif
                                                 </tbody>
                                             </table>
+                                            </form>
                                             @if(count($vehicle_trip_config_details) != 0)
                                             {{ $vehicle_trip_config_details->appends(Request::all())->links() }}
                                             @endif
@@ -193,7 +201,7 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                                                                     <label  data-success="right" >Start date</label> 
                                                                 </div>
                                                                 <div class="col-md-6 div_margin_top">
-                                                                    <input required type="text" class="datepicker form-control" id="startDate" name="startDate" onkeydown="return false" autocomplete="off">
+                                                                    <input required type="text" class="config_date form-control" id="startDate" name="startDate" onkeydown="return false" autocomplete="off">
                                                                 </div>
                                                             </div>
                                                             <div class="row"> 
@@ -201,7 +209,7 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                                                                 <label  data-success="right" >End Date</label> 
                                                                 </div>
                                                                 <div class="col-md-6 div_margin_top">
-                                                                    <input required type="text" class="datepicker form-control" id="toDate" name="toDate" onkeydown="return false" autocomplete="off">                                                                    
+                                                                    <input required type="text" class="config_date form-control" id="toDate" name="toDate" onkeydown="return false" autocomplete="off">                                                                    
                                                                 </div>
                                                             </div>
                                                           </div>
