@@ -3,7 +3,21 @@
    Trip Report Configuration
 @endsection
 @section('content')
-
+<style>
+.table_style
+{
+    text-align: center;
+    font-weight: bold;
+}
+.table th, .table thead th {
+    font-weight: bold;
+}
+.div_margin_bottom
+    {
+        /* margin-left:83%; */
+        margin-bottom: 10px;
+    }
+</style>
 
 <div class="page-wrapper page-wrapper-root page-wrapper_new" style="min-height: 630px;">
 <div class="page-wrapper-root1">
@@ -20,23 +34,18 @@
                         </div>
                         @endif 
         </nav>    
-
-
         <div class="row col-md-6 col-md-offset-2 custyle">
-            <table class="table table-striped table-bordered ">
+            <table class="table table-striped table-bordered table_style">
             <thead>
-
                 <tr>
                     <th>SL.NO</th>
                     <th>Plan Name</th>
                     <th>Number Of Reports</th>
                     <th>Backup Days</th>
                     <th>Free Vehicle</th>
-
                     <th class="text-center">Action</th>
                 </tr>
             </thead>
-
                 @foreach ($trip_reports_config as $item)
                     <tr>
                         <td>{{$loop->iteration}}</td>
@@ -77,19 +86,19 @@
                 <input type="hidden" name="plan_id" id="plan_id">
                 <div class="form-group">
                     <label for="number_of_reports">PLAN NAME:</label>
-                    <div class="form-control" id="plan_name"></div>
+                    <div id="plan_name" class="div_margin_bottom"></div>
                 </div>
                 <div class="form-group">
                     <label for="number_of_reports">Number of reports:</label>
-                    <input type="number" min="1" max="180" name="number_of_reports" class="form-control" id="number_of_reports">
+                    <input type="number" min="1" max="180" name="number_of_reports" class="form-control div_margin_bottom" id="number_of_reports">
                 </div>
                 <div class="form-group">
                     <label for="backup_days">Backup days:</label>
-                    <input  type="number" min="1" max="180" name="backup_days" class="form-control" id="backup_days">
+                    <input  type="number" min="1" max="180" name="backup_days" class="form-control div_margin_bottom" id="backup_days">
                 </div>
                 <div class="form-group">
                     <label for="free_vehicle">Free vehicle:</label>
-                    <input  type="number" min="0" max="999" name="free_vehicle" class="form-control" id="free_vehicle">
+                    <input  type="number" min="0" max="999" name="free_vehicle" class="form-control div_margin_bottom" id="free_vehicle">
                 </div>
                 
                 <span>
@@ -104,6 +113,7 @@
 
   </div>
 </div>
+
 @section('script')
 <script>
 function editConfig(id,name,number_of_reports,backup_days,free_vehicle)

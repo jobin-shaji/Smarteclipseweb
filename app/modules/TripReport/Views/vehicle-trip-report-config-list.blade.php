@@ -64,7 +64,7 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                                                                 @endif
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-3 col-md-3" id = "plan_section"> 
+                                                        <div class="col-lg-3 col-md-3 select2-new" id = "plan_section"> 
                                                             <div class="form-group">                      
                                                                 <label> Plan</label>
                                                                 <select class="form-control select2"  name="plan" data-live-search="true" title="Select Plan" id='plan'>
@@ -90,7 +90,7 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                                             </form> 
                                         </div> 
                                         <div class="row col-md-6 col-md-offset-2">
-                                           <button class="btn btn-xs add_new" id="vehicleTripReportConfiguration" onclick="getVehicleTripReportConfiguration()"><i class='fa fa-plus'></i>
+                                           <button class="btn btn-sm btn-info btn2 add_new" id="vehicleTripReportConfiguration" onclick="getVehicleTripReportConfiguration()"><i class='fa fa-plus'></i>
                                                Add Vehicle Configuration
                                             </button>
                                             <?php $plan_names = array_column(config('eclipse.PLANS'), 'NAME', 'ID'); ?>
@@ -146,7 +146,7 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                                             <form  method="POST"  action="{{route('vehicle.trip.report.config.create.p')}}">
                                                 {{csrf_field()}}    
                                                 <div class="modal-dialog" role="document">
-                                                    <div class="modal-content">
+                                                    <div class="modal-content ">
                                                         <div class="modal-header text-center">
                                                             <h4 class="modal-title w-100 font-weight-bold">Vehicle Trip Report Configuration</h4>
                                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -158,7 +158,7 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                                                                 <div class="col-md-6">  
                                                                 <label  data-success="right" >End User</label> 
                                                                 </div>
-                                                                <div class="col-md-6 select2-new">
+                                                                <div class="col-md-6 select2-new div_margin_top">
                                                               
                                                                 <select required class="form-control select2"  name="client_id"  title="Select End User" id='client_id'>
                                                                     <option value="" selected >Select End User</option>
@@ -177,7 +177,7 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                                                                 <div class="col-md-6">  
                                                                 <label  data-success="right" >Vehicle</label> 
                                                                 </div>
-                                                                <div class="col-md-6 select2-new">
+                                                                <div class="col-md-6 select2-new div_margin_top">
                                                                 <select required  class="form-control select2"  name="vehicle_id" data-live-search="true" title="Select End User Vehicle" id='vehicle_id' >
                                                                 <option value="" selected disabeled>Select End User first</option>
                                                                 </select>
@@ -192,7 +192,7 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                                                                 <div class="col-md-6">  
                                                                     <label  data-success="right" >Start date</label> 
                                                                 </div>
-                                                                <div class="col-md-6">
+                                                                <div class="col-md-6 div_margin_top">
                                                                     <input required type="text" class="datepicker form-control" id="startDate" name="startDate" onkeydown="return false" autocomplete="off">
                                                                 </div>
                                                             </div>
@@ -200,13 +200,13 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                                                                 <div class="col-md-6">  
                                                                 <label  data-success="right" >End Date</label> 
                                                                 </div>
-                                                                <div class="col-md-6">
+                                                                <div class="col-md-6 div_margin_top">
                                                                     <input required type="text" class="datepicker form-control" id="toDate" name="toDate" onkeydown="return false" autocomplete="off">                                                                    
                                                                 </div>
                                                             </div>
-                                                        </div>
+                                                          </div>
                                                         <div class="modal-footer d-flex justify-content-center">
-                                                            <button type="submit" class="btn btn-default">Submit</button>
+                                                            <button type="submit"  class="btn btn-default" >Submit</button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -244,7 +244,7 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
     }
     .add_new
     {
-        margin-left:85%;
+        margin-left:83%;
         margin-bottom: 10px;
     }
    .select2-new{
@@ -253,6 +253,11 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
    .select2-new .select2-container{
     width:100% !important;  
    }
+   .div_margin_top
+    {
+        /* margin-left:83%; */
+        margin-bottom: 10px;
+    }
 </style>
 
 @section('script')
