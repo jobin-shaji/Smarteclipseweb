@@ -10,6 +10,13 @@ class ClientTripReportSubscription extends Model
 		'client_id','vehicle_id','configuration','start_date','end_date','configuration'
     ];
     /**
+     * vehicle
+     */
+    public function vehicles()
+    {
+      return $this->hasOne('App\Modules\Vehicle\Models\Vehicle','id','vehicle_id');
+    }
+    /**
      * 
      * 
      */
@@ -48,12 +55,27 @@ class ClientTripReportSubscription extends Model
 
       ]);
     }
-    
+
     /**
-     * 
+     * vehicle configuration between dates
      */
     public function getClientConfiguration($client_id,$vehicle_id,$startDate,$toDate)
     {
-
+        return self::where('client_id', $client_id)
+        ->where('vehicle_id',$vehicle_id)
+        ->with('vehicles:id,name')
+        ->where(function($query) use ($startDate , $toDate) {
+            $query->where(function($query) use ($startDate , $toDate) {
+                $query->whereDate('start_date', '>=',$startDate);
+                $query->whereDate('end_date', '<=', $toDate);
+            })
+            ->orWhere(function($query) use ($startDate , $toDate) {
+                $query->whereDate('start_date', '<=',$startDate);
+                $query->whereDate('end_date', '>=', $toDate);
+            })
+            ->orWhereBetween('start_date',[$startDate, $toDate])
+            ->orWhereBetween('end_date',[$startDate, $toDate]);
+        })
+        ->get();
     }
 }

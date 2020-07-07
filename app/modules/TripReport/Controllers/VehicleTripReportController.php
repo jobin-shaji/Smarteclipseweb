@@ -62,9 +62,8 @@ class VehicleTripReportController extends Controller
      * 
      */
     public function getVehiclesBasedOnClient(Request $request)
-    {
-        $client_id = Crypt::decrypt($request->client_id);       
-        $vehicles           =   (new Vehicle())->getVehiclesOfSelectedClient($client_id);        
+    {     
+        $vehicles           =   (new Vehicle())->getVehiclesOfSelectedClient(Crypt::decrypt($request->client_id));        
         if($vehicles == null)
         {
             return response()->json([
@@ -81,27 +80,17 @@ class VehicleTripReportController extends Controller
     }
 
     /**
-     * vehickle trip report configuration save
+     * vehicle trip report configuration save
      */
     public function vehicletripreportsave(Request $request)
     {        
         $client_id = Crypt::decrypt($request->client_id);  
         $startDate = date('Y-m-d',strtotime($request->startDate));
         $toDate = date('Y-m-d',strtotime($request->toDate));
-        // $vehicle_configuration      = (new ClientTripReportSubscription())->getClientConfiguration($client_id,$request->vehicle_id, $startDate,$toDate);
-        $vehicle_configuration = ClientTripReportSubscription::where('client_id', $client_id)
-        ->where('vehicle_id',$request->vehicle_id)
-        ->where(function($query) use ($startDate , $toDate) {
-            $query->whereDate('start_date', '>=',$startDate);
-            $query->whereDate('end_date', '<=', $toDate);
-        })
-        ->orWhereBetween('start_date',[$startDate, $toDate])
-        ->orWhereBetween('end_date',[$startDate, $toDate])
-        ->get();
-        
+        $vehicle_configuration      = (new ClientTripReportSubscription())->getClientConfiguration($client_id,$request->vehicle_id, $startDate,$toDate);       
         if($vehicle_configuration->count()==0)
         {
-            $plan_of_client      = (new Client())->getClientDetailsWithClientId($client_id)->user->role;
+            $plan_of_client             = (new Client())->getClientDetailsWithClientId($client_id)->user->role;
             $trip_report_config = TripReportConfiguration::select(
                 'number_of_report_per_month',
                 'backup_days',
@@ -115,7 +104,7 @@ class VehicleTripReportController extends Controller
             return redirect(route('vehicle-trip-report-config')); 
         }
         else{
-            $request->session()->flash('message', 'Already created configuration between'.$request->startDate.'and'.$request->toDate); 
+            $request->session()->flash('message', $vehicle_configuration->first()->vehicles->name.' Already  configured between '.$request->startDate.' and '.$request->toDate); 
             $request->session()->flash('alert-class', 'alert-success'); 
             return redirect(route('vehicle-trip-report-config')); 
         }

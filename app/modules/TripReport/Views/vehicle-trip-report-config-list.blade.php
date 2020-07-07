@@ -140,15 +140,15 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                                             @if(count($vehicle_trip_config_details) != 0)
                                             {{ $vehicle_trip_config_details->appends(Request::all())->links() }}
                                             @endif
-                                        </div>                                    
+                                        </div>     
+                                                                       <!-- modal for create configuration -->
                                         <div class="modal fade" id="myModal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                            <!-- <form  method="POST" action="{{route('configuration.create.p')}}"> -->
-                                            <form  method="POST" action="{{route('vehicle.trip.report.config.create.p')}}">
+                                            <form  method="POST"  action="{{route('vehicle.trip.report.config.create.p')}}">
                                                 {{csrf_field()}}    
                                                 <div class="modal-dialog" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header text-center">
-                                                            <h4 class="modal-title w-100 font-weight-bold">Configuration</h4>
+                                                            <h4 class="modal-title w-100 font-weight-bold">Vehicle Trip Report Configuration</h4>
                                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                 <span aria-hidden="true">&times;</span>
                                                             </button>
@@ -156,14 +156,13 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                                                         <div class="modal-body mx-3">   
                                                             <div  class="row"> 
                                                                 <div class="col-md-6">  
-                                                                <label  data-success="right" >Client</label> 
+                                                                <label  data-success="right" >End User</label> 
                                                                 </div>
                                                                 <div class="col-md-6 select2-new">
                                                               
-                                                                <select class="form-control select2"  name="client_id"  title="Select End User" id='client_id'>
-                                                                    <option selected >Select End User</option>
-                                                                    <option value='all'>ALL</option>
-                                                                    @foreach($client_details as $each_data)
+                                                                <select required class="form-control select2"  name="client_id"  title="Select End User" id='client_id'>
+                                                                    <option value="" selected >Select End User</option>
+                                                                   @foreach($client_details as $each_data)
                                                                         <option value="{{encrypt($each_data->id)}}" @if($client_id != '' && $client_id==$each_data->id){{"selected"}} @endif >{{$each_data->name}} || Mobile No: {{$each_data->mobile}}</option>  
                                                                     @endforeach
                                                                 </select>
@@ -179,9 +178,14 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                                                                 <label  data-success="right" >Vehicle</label> 
                                                                 </div>
                                                                 <div class="col-md-6 select2-new">
-                                                                <select  class="form-control select2"  name="vehicle_id" data-live-search="true" title="Select End User Vehicle" id='vehicle_id' >
-                                                                <option selected disabeled>Select End User first</option>
+                                                                <select required  class="form-control select2"  name="vehicle_id" data-live-search="true" title="Select End User Vehicle" id='vehicle_id' >
+                                                                <option value="" selected disabeled>Select End User first</option>
                                                                 </select>
+                                                                @if ($errors->has('vehicle_id'))
+                                                                    <span class="help-block">
+                                                                        <strong class="error-text">{{ $errors->first('vehicle_id') }}</strong>
+                                                                    </span>
+                                                                @endif
                                                                 </div>
                                                             </div>
                                                             <div class="row"> 
@@ -189,7 +193,7 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                                                                     <label  data-success="right" >Start date</label> 
                                                                 </div>
                                                                 <div class="col-md-6">
-                                                                    <input type="text" class="datepicker form-control" id="startDate" name="startDate" onkeydown="return false" autocomplete="off">
+                                                                    <input required type="text" class="datepicker form-control" id="startDate" name="startDate" onkeydown="return false" autocomplete="off">
                                                                 </div>
                                                             </div>
                                                             <div class="row"> 
@@ -197,17 +201,18 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                                                                 <label  data-success="right" >End Date</label> 
                                                                 </div>
                                                                 <div class="col-md-6">
-                                                                    <input type="text" class="datepicker form-control" id="toDate" name="toDate" onkeydown="return false" autocomplete="off">                                                                    
+                                                                    <input required type="text" class="datepicker form-control" id="toDate" name="toDate" onkeydown="return false" autocomplete="off">                                                                    
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <div class="modal-footer d-flex justify-content-center">
-                                                            <button class="btn btn-default">Submit</button>
+                                                            <button type="submit" class="btn btn-default">Submit</button>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </form>
                                         </div>
+                                        <!--/ modal for create configuration -->
                                     </div>
                                 </div>
                             </div>
@@ -218,9 +223,6 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
         </div>
     </div>
 </div>
-</div>
-</div>
-
 <style>
     .table .thead-color th {
         color: #FDFEFE;

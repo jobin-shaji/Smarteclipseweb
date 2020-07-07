@@ -35,7 +35,6 @@ $(document).ready(function() {
  */
     $('#client_id').on('change', function() {
         var client_id = $(this).val();
-        // alert(client_id);
         var data={ client_id : client_id };
         $.ajax({
             type:'POST',
@@ -51,7 +50,7 @@ $(document).ready(function() {
                 $('#vehicle_id').focus;
                 $('#vehicle_id').append('<option value="" disabled="disabled" selected="selected">Select vehicles</option>'); 
                 $.each(data.vehicles, function(key, value){
-                    $('select[name="vehicle_id"]').append('<option value="'+ value.id +'">' + value.name+ '</option>');
+                    $('select[name="vehicle_id" ]').append('<option value="'+ value.id +'">' + value.name+ '</option>');
                 });                
             }
         });
@@ -64,4 +63,3 @@ function getVehicleTripReportConfiguration()
 {
     $('#myModal').modal('show');
 }
-
