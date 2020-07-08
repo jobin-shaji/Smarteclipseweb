@@ -183,4 +183,15 @@ class GpsData extends Model
                     ->orderBy('device_time','asc')
                     ->get();
     }
+
+    public function fetchDateWiseRecordsOfVehicleDevice($imei, $table)
+    {
+        $this->setTable($table);
+
+        return self::select('imei', 'latitude', 'longitude', 'vehicle_mode', 'device_time','header')
+                    ->where('imei', $imei)
+                    ->whereNotIn('header',['HLM','LGN'])
+                    ->orderBy('device_time','asc')
+                    ->get();
+    }
 }
