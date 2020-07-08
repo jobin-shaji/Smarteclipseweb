@@ -16,8 +16,10 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
      </ol>
        @if(Session::has('message'))
           <div class="pad margin no-print">
-            <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
-                {{ Session::get('message') }}  
+             <div style="    padding-left: 22px;padding-right: 9px;">
+                <div class="callout {{ Session::get('alert-class') }}" style="margin-bottom: 0!important;">
+                    {{ Session::get('message') }}  
+                </div>
             </div>
           </div>
         @endif  
@@ -201,7 +203,7 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                                                                     <label  data-success="right" >Start date</label> 
                                                                 </div>
                                                                 <div class="col-md-6 div_margin_top">
-                                                                    <input required type="text" class="config_date form-control" id="startDate" name="startDate" onkeydown="return false" autocomplete="off">
+                                                                    <input required type="text" class="config_date form-control" id="start_date" name="startDate" onkeydown="return false" autocomplete="off">
                                                                 </div>
                                                             </div>
                                                             <div class="row"> 
@@ -209,7 +211,7 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                                                                 <label  data-success="right" >End Date</label> 
                                                                 </div>
                                                                 <div class="col-md-6 div_margin_top">
-                                                                    <input required type="text" class="config_date form-control" id="toDate" name="toDate" onkeydown="return false" autocomplete="off">                                                                    
+                                                                    <input required type="text" class=" config_end_date form-control" id="end_date" name="toDate" onkeydown="return false" autocomplete="off">                                                                    
                                                                 </div>
                                                             </div>
                                                           </div>
@@ -270,6 +272,9 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
 
 @section('script')
     <script src="{{asset('js/gps/vehicle-trip-report-config-list.js')}}"></script>
+
+
+
 @endsection
 @endsection
 

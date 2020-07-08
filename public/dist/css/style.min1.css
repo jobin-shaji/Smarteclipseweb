@@ -18030,3 +18030,22 @@ input:invalid, textarea:invalid, select:invalid {
     margin-bottom: 10px;
     font-size: 12px;
 }
+
+
+.callout.callout-danger {
+    color: #fff;
+    background: #b21331;
+    padding: 15px;
+    /* width: 25%; */
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
+
+.callout.callout-success {
+    color: #fff;
+    background: #194520;
+    padding: 15px;
+    /* width: 25%; */
+    border-radius: 5px;
+    margin-bottom: 5px;
+}

@@ -75,3 +75,20 @@ function getVehicleTripReportConfiguration()
 $(".modal").on("hidden.bs.modal", function(){
     $(".modal-body1").html("");
 })
+
+// date picker validations
+$( ".config_date" ).datetimepicker({
+    format: 'DD-MM-YYYY',
+    minDate: new Date()
+});
+
+$('.config_date').datetimepicker().on('dp.change', function (e) {
+    $('.config_end_date').data('DateTimePicker').minDate(new Date(e.date));
+
+});
+$( ".config_end_date" ).datetimepicker({
+    format: 'DD-MM-YYYY',
+    minDate: new Date()
+
+});
+// date picker validations
