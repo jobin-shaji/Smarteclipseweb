@@ -20,15 +20,16 @@ class VehicleTripReportController extends Controller
     {
         $vehicle_trip_config_details    =  [];
         $plan_type                      = ( isset($request->plan) ) ? $request->plan : null;
-        $client_id                      = ( isset($request->client) ) ? $request->client : null;
+       
+        $client_id                      = ( isset($request->client) ) ? $request->client : 'all';
         if( !is_null($client_id))  
         {
+            
             $client_id = ( ($client_id != 'all') ) ? decrypt($client_id) : $client_id;
         } 
         if($client_id != null)
         {
             $vehicle_trip_config_details= (new ClientTripReportSubscription())->getVehicleTripConfigDetails($plan_type, $client_id);
-            //$plan_type                  = (new Client())->getClientDetailsWithClientId($client_id)->user->role;
         }
         $client_details                 = (new Client())->getDetailsOfAllClients();
         return view('TripReport::vehicle-trip-report-config-list',['client_details' => $client_details ,'vehicle_trip_config_details' => $vehicle_trip_config_details, 'plan_type' => $plan_type, 'client_id' => $client_id]);
@@ -83,11 +84,12 @@ class VehicleTripReportController extends Controller
      * vehicle trip report configuration save
      */
     public function vehicletripreportsave(Request $request)
-    {        
-        $client_id                  = Crypt::decrypt($request->client_id);  
-        $startDate                  = date('Y-m-d',strtotime($request->startDate));
-        $toDate                     = date('Y-m-d',strtotime($request->toDate));
-        $vehicle_configuration      = (new ClientTripReportSubscription())->getClientConfiguration($client_id,$request->vehicle_id, $startDate,$toDate);       
+    {      
+        $vehicle_trip_config_details    =  [];
+        $client_id                      = Crypt::decrypt($request->client_id);  
+        $startDate                      = date('Y-m-d',strtotime($request->startDate));
+        $toDate                         = date('Y-m-d',strtotime($request->toDate));
+        $vehicle_configuration          = (new ClientTripReportSubscription())->getClientConfiguration($client_id,$request->vehicle_id, $startDate,$toDate);       
         if($vehicle_configuration->count()==0)
         {
             $plan_of_client         = (new Client())->getClientDetailsWithClientId($client_id)->user->role;
@@ -99,6 +101,7 @@ class VehicleTripReportController extends Controller
             ->where('plan_id', $plan_of_client)
             ->first();  
             $client_trip_report_subscription     =   (new ClientTripReportSubscription())->clientVehcileTripReportConfiguration($client_id,$request->vehicle_id,$startDate,$toDate,json_encode($trip_report_config));
+            
             $request->session()->flash('message', 'Vehicle configuration added successfully'); 
             $request->session()->flash('alert-class', 'alert-success'); 
             return redirect(route('vehicle-trip-report-config')); 
@@ -108,6 +111,31 @@ class VehicleTripReportController extends Controller
             $request->session()->flash('alert-class', 'alert-success'); 
             return redirect(route('vehicle-trip-report-config')); 
         }
+    }
+    /**
+     * vehicle trip report configuration delete
+     */
+    public function vehicletripreportdelete(Request $request)
+    {  
+        $decrypted      =   Crypt::decrypt($request->id);  
+        $current_date   =   date('y-m-d');
+        $query          =   (new ClientTripReportSubscription())->deleteTripReportSubscription($decrypted,$current_date);
+        if($query)
+        {
+            ClientTripReportSubscription::find($decrypted)->delete();            
+            $request->session()->flash('message', 'Trip report configuration deleted successfully'); 
+            $request->session()->flash('alert-class', 'alert-success'); 
+            return redirect(route('vehicle-trip-report-config')); 
+        }
+        else
+        {
+            $request->session()->flash('message', 'History Dates cant be deleted'); 
+            $request->session()->flash('alert-class', 'alert-success'); 
+            return redirect(route('vehicle-trip-report-config')); 
+
+        }
+        
+       
     }
 
 }

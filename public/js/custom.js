@@ -258,6 +258,12 @@ $(function () {
         format: 'YYYY-MM-DD HH:mm:ss',
         minDate: new Date()
     });
+    $( ".config_date" ).datetimepicker({
+        format: 'DD-MM-YYYY',
+        // minDate: new Date()
+        // minDate: moment().millisecond(0).second(0).minute(0).hour(0)
+
+    });
 
 function getUrl(){
   return $('meta[name = "domain"]').attr('content');

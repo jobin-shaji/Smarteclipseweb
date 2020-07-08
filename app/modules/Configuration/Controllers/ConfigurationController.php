@@ -117,7 +117,7 @@ class ConfigurationController extends Controller {
       $update_config    = (new TripReportConfiguration())->updateConfiguration($request);
       if($update_config)
       {
-        $request->session()->flash('message', 'Updated successfully!'); 
+        $request->session()->flash('message', 'Trip Report configuration updated successfully!'); 
         $request->session()->flash('alert-class', 'alert-success'); 
       }else
       {

@@ -1,4 +1,5 @@
 $(document).ready(function() {
+    $("#plan_section").hide();
     $('#client').on('change', function() {
         var client_id = $(this).val();
         var data={ client_id : client_id };
@@ -13,12 +14,14 @@ $(document).ready(function() {
             success:function(data) {
                 if(data.client_id != 'all')
                 {
+                    $("#plan_section").hide();
                     $('#plan').empty();
                     $('#plan').focus;
                     $('#plan').append('<option value="'+ data.plan_type.ID +'">' + data.plan_type.NAME+ '</option>'); 
                 }
                 else
                 {
+                    $("#plan_section").show();
                     $('#plan').empty();
                     $('#plan').focus;
                     $('#plan').append('<option value="">ALL</option>'); 
@@ -28,6 +31,9 @@ $(document).ready(function() {
                 }
             }
         });
+        
+           
+         
     });
 /**
  * 
@@ -63,3 +69,9 @@ function getVehicleTripReportConfiguration()
 {
     $('#myModal').modal('show');
 }
+/**
+ * for clearing the modal when close
+ */
+$(".modal").on("hidden.bs.modal", function(){
+    $(".modal-body1").html("");
+})
