@@ -54,8 +54,8 @@ class VehicleTrips extends Command
         $subscribed_vehicles         =   (new ClientTripReportSubscription())->getSubscribedVehicles($this->trip_date );
         foreach ($subscribed_vehicles as $subscribed_vehicle) 
         {
-            $vehicle_number_reports  = (isset(json_decode($subscribed_vehicle->configuration)->number_of_report_per_month)) ? json_decode($subscribed_vehicle->configuration)->number_of_report_per_month : 0; 
-            if($vehicle_number_reports > 0 && $subscribed_vehicle->vehicles->gps)
+            $number_of_report_per_month  = (isset(json_decode($subscribed_vehicle->configuration)->number_of_report_per_month)) ? json_decode($subscribed_vehicle->configuration)->number_of_report_per_month : 0; 
+            if($number_of_report_per_month > 0 && $subscribed_vehicle->vehicles->gps)
             {             
                 try 
                 {
