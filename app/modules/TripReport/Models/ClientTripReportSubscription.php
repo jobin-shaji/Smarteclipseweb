@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 class ClientTripReportSubscription extends Model
 {
     protected $fillable=[
-		'client_id','vehicle_id','configuration','start_date','end_date','configuration'
+		'client_id','vehicle_id','configuration','start_date','end_date','configuration','last_generated_on'
     ];
     /**
      * vehicle
@@ -83,4 +83,28 @@ class ClientTripReportSubscription extends Model
     {
         return $query=self::where('id', $id)->whereDate('start_date', '>',$date)->whereDate('end_date', '>',$date)->count();
     }
+
+    /**
+     * 
+     * @author  PMS
+     * 
+     */
+
+     public function getSubscribedVehicles($date)
+     {
+        return self::with('vehicles:id,name,gps_id')
+                    ->where('start_date', '<=', $date)
+                    ->where('end_date', '>=', $date)
+                    ->get();
+     }
+
+     /**
+      * @author PMS
+      */
+     public function updateSubscriptionPlan($subscription_id,$data)
+     {
+        return self::where('id', $subscription_id)
+                     ->update($data);
+     }
+    
 }
