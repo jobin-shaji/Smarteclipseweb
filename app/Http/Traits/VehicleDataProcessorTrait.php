@@ -85,8 +85,6 @@ trait VehicleDataProcessorTrait{
     public function vehicleDailyUpdates($gps_ids,$from_date,$to_date)
     {
         $vehicle_durations          =   (new VehicleDailyUpdate())->getVehicleDurationsBasedOnDates($gps_ids,$from_date,$to_date); 
-        
-       
         $ignition_on_time           =   $this->timeFormate($vehicle_durations->ignition_on);
         $ignition_off_time          =   $this->timeFormate($vehicle_durations->ignition_off);
         // dd($ignition_off_time);
@@ -130,8 +128,6 @@ trait VehicleDataProcessorTrait{
         $ignition_on_duration           =   $vehicle_daily_updates['ignition_on_time'];
         $ignition_off_duration          =   $vehicle_daily_updates['ignition_off_time'];
 
-        $ac_on_duration                 =   $vehicle_daily_updates['ac_on_time'];
-        $ac_off_duration                =   $vehicle_daily_updates['ac_off_time'];
         
         $sum_of_ignition_durations      =   $this->calculateSumOfDurations([$ignition_on_duration, $ignition_off_duration]);
         if( $sum_of_ignition_durations['hours'] > $maximum_allowed_time_in_hours )
@@ -147,21 +143,6 @@ trait VehicleDataProcessorTrait{
                 $ignition_off_duration  =   $this->calculateDeviationFromMaximumAllowedDuration($ignition_on_duration, $maximum_allowed_time_in_hours);
             }
         }
-        $sum_of_ac_durations      =   $this->calculateSumOfDurations([$ac_on_duration, $ac_off_duration]);
-        if( $sum_of_ac_durations['hours'] > $maximum_allowed_time_in_hours )
-        {
-            if($ac_on_duration > $ac_off_duration)
-            {
-                
-                $ac_on_duration   =   $this->calculateDeviationFromMaximumAllowedDuration($ac_off_duration, $maximum_allowed_time_in_hours);
-            }
-            else
-            {
-                
-                $ac_off_duration  =   $this->calculateDeviationFromMaximumAllowedDuration($ac_on_duration, $maximum_allowed_time_in_hours);
-            }
-        }
-// dd($ignition_off_duration);
         // workaround for vehicle status durations
         $vehicle_status_durations       =   $this->maskVehicleStatusDurationOverflow([ 
                                                 'm'     =>  $vehicle_daily_updates['moving_time'],
@@ -190,8 +171,8 @@ trait VehicleDataProcessorTrait{
                                                 'maximum_allowed_time_in_hours' => $maximum_allowed_time_in_hours, // debug purpose
                                                 'engine_on_duration1'       =>   $ignition_on_duration, // debug purpose
                                                 'engine_off_duration1'      =>  $ignition_off_duration, // debug purpose
-                                                'ac_on_duration'            =>  $ac_on_duration,
-                                                'ac_off_duration'           =>  $ac_off_duration,
+                                                'ac_on_duration'            =>  $vehicle_daily_updates['ac_on_time'],
+                                                'ac_off_duration'           =>  $vehicle_daily_updates['ac_off_time'],
                                                 'ac_halt_on_duration'       =>  $vehicle_daily_updates['ac_on_idle_time'],
                                                 'sleep'                     =>  $vehicle_status_durations['s'],  
                                                 'motion'                    =>  $vehicle_status_durations['m'], 
