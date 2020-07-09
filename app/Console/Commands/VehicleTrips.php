@@ -6,6 +6,8 @@ use App\Modules\Vehicle\Models\Vehicle;
 use App\Modules\Gps\Models\GpsData;
 use App\Modules\Vehicle\Models\DailyKm;
 use App\Modules\Vehicle\Models\VehicleTripSummary;
+use App\Modules\TripReport\Models\ClientTripReportSubscription;
+
 use PDF;
 use \DB;
 
@@ -49,38 +51,24 @@ class VehicleTrips extends Command
 
     public function handle()
     {
-        //fetch vehicles based on priority and generate trip report 
-        $vehicles = Vehicle::select('id','gps_id','client_id')
-                            ->whereIn('id',[962,988,989,1016,1033,847,848,846,537,854,693,694,919,680,682,672,956,974,979,996,1005,1017])
-                            ->get();
-        foreach ($vehicles as $vehicle) 
+        $subscribed_vehicles         =   (new ClientTripReportSubscription())->getSubscribedVehicles($this->trip_date );
+        foreach ($subscribed_vehicles as $subscribed_vehicle) 
         {
-            if($vehicle->gps)
-            {               
+            $number_of_report_per_month  = (isset(json_decode($subscribed_vehicle->configuration)->number_of_report_per_month)) ? json_decode($subscribed_vehicle->configuration)->number_of_report_per_month : 0; 
+            if($number_of_report_per_month > 0 && $subscribed_vehicle->vehicles->gps)
+            {             
                 try 
                 {
-                    $this->processTripsofVehicle($vehicle->gps);
-                } 
-                catch (Exception $e) 
-                {
-                    report($e);
-                    continue;     
-                } 
-            }
-        }
+                    $this->processTripsofVehicle($subscribed_vehicle->vehicles->gps);
+                    $subscription_details                             = json_decode($subscribed_vehicle->configuration);
+                    $subscription_details->number_of_report_per_month = $subscription_details->number_of_report_per_month - 1;
+                    $update_subscription                              = (new ClientTripReportSubscription())->updateSubscriptionPlan(
+                                                                            $subscribed_vehicle->id,
+                                                                            [
+                                                                                "configuration"         => json_encode($subscription_details),
+                                                                                "last_generated_on"     => Carbon::now()
+                                                                            ]);
 
-        //generate trip report of rest of the vehicles 
-        $vehicles = Vehicle::select('id','gps_id','client_id')
-                            ->whereNotIn('id',[962,988,989,1016,1033,847,848,846,537,854,693,694,919,680,682,672,956,974,979,996,1005,1017])
-                            ->get();
-
-        foreach ($vehicles as $vehicle) 
-        {
-            if($vehicle->gps)
-            {               
-                try 
-                {
-                    $this->processTripsofVehicle($vehicle->gps);
                 } 
                 catch (Exception $e) 
                 {

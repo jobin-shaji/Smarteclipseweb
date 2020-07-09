@@ -20,6 +20,7 @@ class CreateClientTripReportSubscriptionsTable extends Migration
             $table->text('configuration');
             $table->date('start_date');
             $table->date('end_date');
+            $table->dateTime('last_generated_on');
             $table->timestamps();
             $table->softDeletes();
         });
