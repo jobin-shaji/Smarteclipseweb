@@ -103,12 +103,12 @@ class VehicleTripReportController extends Controller
             $client_trip_report_subscription     =   (new ClientTripReportSubscription())->clientVehcileTripReportConfiguration($client_id,$request->vehicle_id,$startDate,$toDate,json_encode($trip_report_config));
             
             $request->session()->flash('message', 'Vehicle configuration added successfully'); 
-            $request->session()->flash('alert-class', 'alert-success'); 
+            $request->session()->flash('alert-class', 'callout-success'); 
             return redirect(route('vehicle-trip-report-config')); 
         }
         else{
             $request->session()->flash('message', $vehicle_configuration->first()->vehicles->name.' Already  configured between '.$request->startDate.' and '.$request->toDate); 
-            $request->session()->flash('alert-class', 'alert-success'); 
+            $request->session()->flash('alert-class', 'callout-danger'); 
             return redirect(route('vehicle-trip-report-config')); 
         }
     }
@@ -124,13 +124,13 @@ class VehicleTripReportController extends Controller
         {
             ClientTripReportSubscription::find($decrypted)->delete();            
             $request->session()->flash('message', 'Trip report configuration deleted successfully'); 
-            $request->session()->flash('alert-class', 'alert-success'); 
+            $request->session()->flash('alert-class', 'callout-success'); 
             return redirect(route('vehicle-trip-report-config')); 
         }
         else
         {
-            $request->session()->flash('message', 'History Dates cant be deleted'); 
-            $request->session()->flash('alert-class', 'alert-success'); 
+            $request->session()->flash('message', 'History dates cant be deleted'); 
+            $request->session()->flash('alert-class', 'callout-danger'); 
             return redirect(route('vehicle-trip-report-config')); 
 
         }

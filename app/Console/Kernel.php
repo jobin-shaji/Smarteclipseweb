@@ -14,7 +14,9 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         Commands\TripM::class,
-        Commands\VehicleTrips::class
+        Commands\VehicleTrips::class,
+        Commands\OldTrips::class,
+        Commands\IndividualTrips::class
     ];
 
     /**
@@ -25,7 +27,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('vehicle:trips')->dailyAt('01:00');
+        $schedule->command('vehicle:trips')->dailyAt('04:00');
     }
 
     /**
