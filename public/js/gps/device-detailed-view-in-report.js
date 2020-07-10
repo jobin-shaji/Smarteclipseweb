@@ -33,21 +33,21 @@ function getVehicleDetailsBasedOnGps()
             var driver_mobile               = '-NA-';
             var driver_score                = '-NA-';
             if(res.vehicle_details != null)
-            {
+                {
                 (res.vehicle_details.vehicle) ? vehicle_name = res.vehicle_details.vehicle.name : vehicle_name = "-NA-";
-            (res.vehicle_details.vehicle) ? vehicle_registration_number = res.vehicle_details.vehicle.register_number : vehicle_registration_number = "-NA-";
-            (res.vehicle_details.vehicle) ? vehicle_category = res.vehicle_details.vehicle.vehicle_type.name : vehicle_category = "-NA-";
-            (res.vehicle_details.vehicle) ? engine_number = res.vehicle_details.vehicle.engine_number : engine_number = "-NA-";
-            (res.vehicle_details.vehicle) ? chassis_number = res.vehicle_details.vehicle.chassis_number : chassis_number = "-NA-";
-            (res.vehicle_details.vehicle.vehicle_models_with_trashed) ? vehicle_model = res.vehicle_details.vehicle.vehicle_models_with_trashed.name : vehicle_model = "-NA-";
-            (res.vehicle_details.vehicle.vehicle_models_with_trashed.vehicle_make_with_trashed) ? vehicle_make = res.vehicle_details.vehicle.vehicle_models_with_trashed.vehicle_make_with_trashed.name : vehicle_make = "-NA-";
-            (res.vehicle_details.vehicle) ? vehicle_theft_mode = res.vehicle_details.vehicle.theft_mode : vehicle_theft_mode = "-NA-";
-            (res.vehicle_details.vehicle) ? vehicle_towing_mode = res.vehicle_details.vehicle.towing : vehicle_towing_mode = "-NA-";
-            (res.vehicle_details.vehicle) ? vehicle_created_on = res.vehicle_details.vehicle.created_at : vehicle_created_on = "-NA-";
-            (res.driver_details.name) ? driver_name = res.driver_details.name : driver_name = "-NA-";
-            (res.driver_details.address) ? driver_address = res.driver_details.address : driver_address = "-NA-";
-            (res.driver_details.mobile) ? driver_mobile = res.driver_details.mobile : driver_mobile = "-NA-";
-            (res.driver_details.points != 'null') ? driver_score = res.driver_details.points : driver_score = "-NA-";
+                (res.vehicle_details.vehicle) ? vehicle_registration_number = res.vehicle_details.vehicle.register_number : vehicle_registration_number = "-NA-";
+                (res.vehicle_details.vehicle) ? vehicle_category = res.vehicle_details.vehicle.vehicle_type.name : vehicle_category = "-NA-";
+                (res.vehicle_details.vehicle) ? engine_number = res.vehicle_details.vehicle.engine_number : engine_number = "-NA-";
+                (res.vehicle_details.vehicle) ? chassis_number = res.vehicle_details.vehicle.chassis_number : chassis_number = "-NA-";
+                (res.vehicle_details.vehicle.vehicle_models_with_trashed) ? vehicle_model = res.vehicle_details.vehicle.vehicle_models_with_trashed.name : vehicle_model = "-NA-";
+                (res.vehicle_details.vehicle.vehicle_models_with_trashed.vehicle_make_with_trashed) ? vehicle_make = res.vehicle_details.vehicle.vehicle_models_with_trashed.vehicle_make_with_trashed.name : vehicle_make = "-NA-";
+                (res.vehicle_details.vehicle) ? vehicle_theft_mode = res.vehicle_details.vehicle.theft_mode : vehicle_theft_mode = "-NA-";
+                (res.vehicle_details.vehicle) ? vehicle_towing_mode = res.vehicle_details.vehicle.towing : vehicle_towing_mode = "-NA-";
+                (res.vehicle_details.vehicle) ? vehicle_created_on = res.vehicle_details.vehicle.created_at : vehicle_created_on = "-NA-";
+                (res.driver_details.name) ? driver_name = res.driver_details.name : driver_name = "-NA-";
+                (res.driver_details.address) ? driver_address = res.driver_details.address : driver_address = "-NA-";
+                (res.driver_details.mobile) ? driver_mobile = res.driver_details.mobile : driver_mobile = "-NA-";
+                (res.driver_details.points || res.driver_details.points==0) ? driver_score = res.driver_details.points : driver_score = "-NA-";
             }
             document.getElementById("vehicle_name").innerHTML = vehicle_name;
             document.getElementById("vehicle_registration_number").innerHTML = vehicle_registration_number;

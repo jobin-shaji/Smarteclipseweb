@@ -1385,11 +1385,19 @@ class GpsReportController extends Controller
 
         //get gps details based on imei
         $gps_details        = (new Gps())->getDeviceDetailsBasedOnImei($imei);
-        
+     
         if( $gps_details->device_time <= $offline_date_time ) 
         {
-            $gps_details->device_status = '#c41900';
-            $gps_details->mode          = 'Offline ('.$gps_details->mode.')';
+            if($gps_details->mode)
+            {
+                $gps_details->device_status = '#c41900';
+                $gps_details->mode          = 'Offline ('.$gps_details->mode.')';
+            }
+            else{
+                $gps_details->device_status = "";
+                $gps_details->mode          = 'NA';
+            }
+           
         }
         else
         { 
@@ -1422,9 +1430,13 @@ class GpsReportController extends Controller
         {
             $gps_details->gsm_signal_strength = "AVERAGE";
         }
-        else if ($gps_details->gsm_signal_strength <= 12 )
+        else if ($gps_details->gsm_signal_strength <= 12 && $gps_details->gsm_signal_strength !=null)
         {
             $gps_details->gsm_signal_strength = "POOR";
+        }
+        else if ($gps_details->gsm_signal_strength ==null)
+        {
+            $gps_details->gsm_signal_strength = "NA";
         }
         else
         {
@@ -1435,27 +1447,44 @@ class GpsReportController extends Controller
         {
             $gps_details->ac_status = "ON";
         }
-        else if( $gps_details->ac_status == 0 )
+        
+        else if( $gps_details->ac_status == 0 && $gps_details->ac_status != null)
         {
             $gps_details->ac_status = "OFF";
         }
+        else
+        {
+            $gps_details->ac_status = "NA";
+        }
+        
         //IGNITION
         if( $gps_details->ignition == 1 )
         {
             $gps_details->ignition = "ON";
-        }
-        else if( $gps_details->ignition == 0 )
+        }       
+        else if( $gps_details->ignition == 0 && $gps_details->ignition != null)
         {
             $gps_details->ignition = "OFF";
         }
+        else 
+        {
+            $gps_details->ignition = "NA";
+        }
+       
         //MAIN POWER STATUS
         if( $gps_details->main_power_status == 1) 
         {
             $gps_details->main_power_status  = "CONNECTED";
         }
-        else if( $gps_details->main_power_status == 0) 
+        
+        else if($gps_details->main_power_status == 0 && $gps_details->main_power_status != null) 
         {
+            // dd( $gps_details->main_power_status);
             $gps_details->main_power_status  = "DISCONNECTED";
+        }
+        else
+        {
+            $gps_details->main_power_status  = "NA";
         }
         //TILT
         if( $gps_details->tilt_status == 1) 
@@ -1542,6 +1571,7 @@ class GpsReportController extends Controller
                 ( $driver_details->points > 100 ) ? $driver_details->points = 100 : $driver_details->points;
                 ( $driver_details->points < 0 )   ? $driver_details->points = 0 : $driver_details->points;
             }
+           
         }
         
         $vehicle_driver_details = array( 'vehicle_details' => $vehicle_details, 'driver_details' => $driver_details);
