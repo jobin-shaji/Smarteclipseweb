@@ -69,6 +69,11 @@ function getVehicleTripReportConfiguration()
 {
     $('#myModal').modal('show');
 }
+
+function addVehicleSubscription()
+{
+    $('#vehicle_registration').modal('show');
+}
 /**
  * for clearing the modal when close
  */

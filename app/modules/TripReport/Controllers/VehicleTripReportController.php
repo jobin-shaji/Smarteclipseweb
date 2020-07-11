@@ -6,6 +6,7 @@ use App\Modules\Client\Models\Client;
 use App\Modules\TripReport\Models\ClientTripReportSubscription;
 use App\Modules\Vehicle\Models\Vehicle;
 use App\Modules\TripReport\Models\TripReportConfiguration;
+use  App\Modules\TripReport\Models\TripReportSubscriptionVehicles;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 
@@ -33,6 +34,7 @@ class VehicleTripReportController extends Controller
         }
         $client_details                 = (new Client())->getDetailsOfAllClients();
         return view('TripReport::vehicle-trip-report-config-list',['client_details' => $client_details ,'vehicle_trip_config_details' => $vehicle_trip_config_details, 'plan_type' => $plan_type, 'client_id' => $client_id]);
+   
     }
 
     /**
@@ -83,25 +85,22 @@ class VehicleTripReportController extends Controller
     /**
      * vehicle trip report configuration save
      */
-    public function vehicletripreportsave(Request $request)
+    public function saveTripReportSubscription(Request $request)
     {      
         $vehicle_trip_config_details    =  [];
         $client_id                      = Crypt::decrypt($request->client_id);  
-        $startDate                      = date('Y-m-d',strtotime($request->startDate));
-        $toDate                         = date('Y-m-d',strtotime($request->toDate));
-        $vehicle_configuration          = (new ClientTripReportSubscription())->getClientConfiguration($client_id,$request->vehicle_id, $startDate,$toDate);       
+        $vehicle_configuration          = (new ClientTripReportSubscription())->getClientConfiguration($request);       
         if($vehicle_configuration->count()==0)
         {
-            $plan_of_client         = (new Client())->getClientDetailsWithClientId($client_id)->user->role;
-            $trip_report_config     = TripReportConfiguration::select(
+            $plan_of_client                 = (new Client())->getClientDetailsWithClientId($client_id)->user->role;
+            $trip_report_config             = TripReportConfiguration::select(
                 'number_of_report_per_month',
                 'backup_days',
                 'free_vehicle'
             )
             ->where('plan_id', $plan_of_client)
             ->first();  
-            $client_trip_report_subscription     =   (new ClientTripReportSubscription())->clientVehcileTripReportConfiguration($client_id,$request->vehicle_id,$startDate,$toDate,json_encode($trip_report_config));
-            
+            $client_trip_report_subscription     =   (new ClientTripReportSubscription())->saveTripReportSubscription($client_id,$request,json_encode($trip_report_config)); 
             $request->session()->flash('message', 'Vehicle configuration added successfully'); 
             $request->session()->flash('alert-class', 'callout-success'); 
             return redirect(route('vehicle-trip-report-config')); 
@@ -115,27 +114,76 @@ class VehicleTripReportController extends Controller
     /**
      * vehicle trip report configuration delete
      */
-    public function vehicletripreportdelete(Request $request)
+    public function tripReportSubscriptionDelete(Request $request)
     {  
-        $decrypted      =   Crypt::decrypt($request->id);  
-        $current_date   =   date('y-m-d');
-        $query          =   (new ClientTripReportSubscription())->deleteTripReportSubscription($decrypted,$current_date);
-        if($query)
+ 
+        $subscription         =   (new ClientTripReportSubscription())->deleteTripReportSubscription(Crypt::decrypt($request->id));
+        if($subscription != null)
         {
-            ClientTripReportSubscription::find($decrypted)->delete();            
-            $request->session()->flash('message', 'Trip report configuration deleted successfully'); 
+            $subscription->delete();            
+            $request->session()->flash('message', 'Trip report subscription deleted successfully'); 
             $request->session()->flash('alert-class', 'callout-success'); 
             return redirect(route('vehicle-trip-report-config')); 
         }
         else
         {
-            $request->session()->flash('message', 'History dates cant be deleted'); 
+            $request->session()->flash('message', 'Something went wrong'); 
             $request->session()->flash('alert-class', 'callout-danger'); 
             return redirect(route('vehicle-trip-report-config')); 
 
+        } 
+    }
+
+    /**
+     * 
+     * @author PMS
+     * trip report subscription vehicles
+     */
+    public function tripReportSubscriptionVehiclesList(Request $request)
+    {
+     
+        $subscription         =   (new ClientTripReportSubscription())->getTripSubscription(Crypt::decrypt($request->id));
+        if($subscription != null)
+        {
+            $vehicles                      = (new Vehicle())->getVehicleListBasedOnClient($subscription->client_id);
+            $subscription_vehicle_list     = (new TripReportSubscriptionVehicles())->getSubscriptionVehicles($subscription->id);
+            return view('TripReport::trip-report-vehicles',
+            [
+                'subscription'              => $subscription,
+                'vehicles'                  => $vehicles,
+                'subscription_list'         => $subscription_vehicle_list
+            ]);
+        }else{
+
+            $request->session()->flash('message', 'Something went wrong'); 
+            $request->session()->flash('alert-class', 'callout-danger'); 
+            return redirect(route('vehicle-trip-report-config'));
         }
-        
-       
+
+    }
+
+    public function saveVehicleSubscription(Request $request)
+    {
+
+        $subscription         =   (new ClientTripReportSubscription())->getTripSubscription($request->id);
+        if($subscription != null)
+        {
+
+           $add_vehicle_to_subscription = (new TripReportSubscriptionVehicles())->addSubscriptionVehicles([
+                'client_trip_report_subscription_id'  => $subscription->id,
+                'vehicle_id'    => $request->vehicle_id,
+                'attached_on'   => date('Y-m-d'),
+                'expired_on'    => $subscription->end_date
+           ]);
+           $request->session()->flash('message', 'Vehicle added successfully'); 
+           $request->session()->flash('alert-class', 'callout-success'); 
+            return back();
+        }else{
+            
+            $request->session()->flash('message', 'Something went wrong'); 
+            $request->session()->flash('alert-class', 'callout-danger'); 
+            return back();
+        }
     }
 
 }

@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 class ClientTripReportSubscription extends Model
 {
     protected $fillable=[
-		'client_id','vehicle_id','configuration','start_date','end_date','configuration','last_generated_on'
+		'client_id','subscription_id','configuration','start_date','end_date','configuration','number_of_vehicles','number_of_reports_generated'
     ];
     /**
      * vehicle
@@ -25,9 +25,18 @@ class ClientTripReportSubscription extends Model
         $query  =   DB::table('client_trip_report_subscriptions as subscriptions')
                         ->join('clients', 'subscriptions.client_id', '=', 'clients.id')
                         ->join('users', 'users.id', '=', 'clients.user_id')
-                        ->join('vehicles', 'subscriptions.vehicle_id', '=', 'vehicles.id')
-                        ->select('subscriptions.configuration as configuration','subscriptions.start_date as start_date','subscriptions.end_date as end_date','clients.name as client_name',
-                        'vehicles.name as vehicle_name','vehicles.register_number as veh_reg_no','users.role as role','subscriptions.id as id');
+                        ->select(
+                            'subscriptions.configuration as configuration',
+                            'subscriptions.start_date as start_date',
+                            'subscriptions.end_date as end_date',
+                            'clients.name as client_name',
+                            'users.role as role',
+                            'subscriptions.id as id',
+                            'subscriptions.subscription_id',
+                            'subscriptions.number_of_vehicles',
+                            'subscriptions.number_of_reports_generated',
+
+                        );
                         if($client_id != 'all')
                         {
                             $query->where(function($query) use($client_id){
@@ -43,45 +52,35 @@ class ClientTripReportSubscription extends Model
         return $query->paginate(10);
     }
 
-    public function clientVehcileTripReportConfiguration($client_id,$vehicle_id,$start_date,$end_date,$plan)
+    public function saveTripReportSubscription($client_id,$request,$plan)
     {
-        // dd($plan);
-        return self::Create([
-        'client_id'     => $client_id,
-        'vehicle_id'    => $vehicle_id,
-        'start_date'    => $start_date,     
-        'end_date'      => $end_date,
-        'configuration' => $plan     
 
+        return self::Create([
+        'client_id'             => $client_id,
+        'subscription_id'       => "SMETRP".date('ymdhms').''.mt_rand(10000,99999),
+        'start_date'            => date('Y-m-d',strtotime($request->start_date)),     
+        'end_date'              => date('Y-m-d',strtotime($request->end_date)),
+        'number_of_vehicles'    => $request->number_of_vehicle ,
+        'configuration'         => $plan 
       ]);
     }
 
     /**
      * vehicle configuration between dates
+     * 
      */
-    public function getClientConfiguration($client_id,$vehicle_id,$startDate,$toDate)
+    public function getClientConfiguration($request)
     {
-        return self::where('client_id', $client_id)
-        ->where('vehicle_id',$vehicle_id)
-        ->with('vehicles:id,name')
-        ->where(function($query) use ($startDate , $toDate) {
-            $query->where(function($query) use ($startDate , $toDate) {
-                $query->whereDate('start_date', '>=',$startDate);
-                $query->whereDate('end_date', '<=', $toDate);
-            })
-            ->orWhere(function($query) use ($startDate , $toDate) {
-                $query->whereDate('start_date', '<=',$startDate);
-                $query->whereDate('end_date', '>=', $toDate);
-            })
-            ->orWhereBetween('start_date',[$startDate, $toDate])
-            ->orWhereBetween('end_date',[$startDate, $toDate]);
-        })
-        ->get();
+        return self::where('client_id', $request->client_id)
+                    ->where('number_of_vehicles', $request->number_of_vehicle)
+                    ->where('start_date', date('Y-m-d',strtotime($request->start_date)))
+                    ->where('end_date', date('Y-m-d',strtotime($request->end_date)))
+                    ->get();
     }
     /** */
-    public function deleteTripReportSubscription($id,$date)
+    public function deleteTripReportSubscription($id)
     {
-        return $query=self::where('id', $id)->whereDate('start_date', '>',$date)->whereDate('end_date', '>',$date)->count();
+        return self::find($id);
     }
 
     /**
@@ -96,6 +95,12 @@ class ClientTripReportSubscription extends Model
                     ->where('start_date', '<=', $date)
                     ->where('end_date', '>=', $date)
                     ->get();
+     }
+
+     public function getTripSubscription($id)
+     {
+        return self::find($id);
+
      }
 
      /**
