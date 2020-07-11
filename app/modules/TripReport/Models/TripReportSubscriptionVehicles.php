@@ -2,9 +2,13 @@
 
 namespace  App\Modules\TripReport\Models;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
+
 
 class TripReportSubscriptionVehicles extends Model
 {
+    use SoftDeletes;    
     protected $fillable=[
 		'client_trip_report_subscription_id','vehicle_id','attached_on','detached_on','expired_on','report_last_generated_on'
     ];	
@@ -16,6 +20,7 @@ class TripReportSubscriptionVehicles extends Model
     public function getSubscriptionVehicles($id)
     {
         return self::where('client_trip_report_subscription_id',$id)
+                     ->withTrashed()
                      ->get();
     }
     /**
@@ -59,6 +64,20 @@ class TripReportSubscriptionVehicles extends Model
     {
       return self::where('id', $id)
                   ->update($data);
+    }
+    /** */
+    public function deleteTripReportVehicleSubscription($id)
+    {
+        return self::where('id', $id)
+        ->update(['detached_on' => date('Y-m-d'),'deleted_at' => date('Y-m-d H:i:s')]);
+    }
+
+    public function getSubscriptionVehicleIds($id)
+    {
+        return self::select('vehicle_id')
+                    ->where('client_trip_report_subscription_id',$id)
+                    ->whereNull('detached_on')
+                    ->pluck('vehicle_id');
     }
     
 }

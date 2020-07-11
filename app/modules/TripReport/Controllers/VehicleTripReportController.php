@@ -145,13 +145,16 @@ class VehicleTripReportController extends Controller
         $subscription         =   (new ClientTripReportSubscription())->getTripSubscription(Crypt::decrypt($request->id));
         if($subscription != null)
         {
-            $vehicles                      = (new Vehicle())->getVehicleListBasedOnClient($subscription->client_id);
+            $subscription_vehicle     = (new TripReportSubscriptionVehicles())->getSubscriptionVehicleIds($subscription->id);
+            // dd($subscription_vehicle->count());
+            $vehicles                      = (new Vehicle())->getVehicleListBasedOnClientNotSubscribed($subscription->client_id,$subscription_vehicle);
             $subscription_vehicle_list     = (new TripReportSubscriptionVehicles())->getSubscriptionVehicles($subscription->id);
             return view('TripReport::trip-report-vehicles',
             [
                 'subscription'              => $subscription,
                 'vehicles'                  => $vehicles,
-                'subscription_list'         => $subscription_vehicle_list
+                'subscription_list'         => $subscription_vehicle_list,
+                'vehicle_count'         => $subscription_vehicle->count()
             ]);
         }else{
 
@@ -184,6 +187,31 @@ class VehicleTripReportController extends Controller
             $request->session()->flash('alert-class', 'callout-danger'); 
             return back();
         }
+    }
+
+    /**
+     *  trip report vehicle delete
+     */
+    public function tripReportVehicleDelete(Request $request)
+    {  
+        // dd(Crypt::decrypt($request->id));
+        $subscription_vehicle_list     = (new TripReportSubscriptionVehicles())->deleteTripReportVehicleSubscription(Crypt::decrypt($request->id));
+        return back();
+        // $subscription         =   (new ClientTripReportSubscription())->deleteTripReportSubscription(Crypt::decrypt($request->id));
+        // if($subscription != null)
+        // {
+        //     $subscription->delete();            
+        //     $request->session()->flash('message', 'Trip report subscription deleted successfully'); 
+        //     $request->session()->flash('alert-class', 'callout-success'); 
+        //     return redirect(route('vehicle-trip-report-config')); 
+        // }
+        // else
+        // {
+        //     $request->session()->flash('message', 'Something went wrong'); 
+        //     $request->session()->flash('alert-class', 'callout-danger'); 
+        //     return redirect(route('vehicle-trip-report-config')); 
+
+        // } 
     }
 
 }

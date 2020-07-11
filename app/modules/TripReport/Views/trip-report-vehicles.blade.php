@@ -10,7 +10,7 @@ Trip report subscription vehicle list
          <b><i class="fa fa-car" aria-hidden="true"></i> Trip report subscription vehicles list</b>
       </ol>
       @if(Session::has('message'))
-      <div class="pad margin no-print">
+      <div class="pad margin no-print alert_hide " id="successMessage">
          <div style="    padding-left: 22px;padding-right: 9px;">
             <div class="callout {{ Session::get('alert-class') }}" style="margin-bottom: 0!important;">
                {{ Session::get('message') }}  
@@ -51,7 +51,7 @@ Trip report subscription vehicle list
                              $subscription_config = json_decode($subscription->configuration);
                            @endphp
                            {{
-                             isset($subscription_config->free_vehicle) ? $subscription_config->free_vehicle : 0
+                             isset($subscription_config->free_vehicle) ? $free_vehicle =$subscription_config->free_vehicle : $free_vehicle=0
                            }}
                            </span>
                         </div>
@@ -66,11 +66,23 @@ Trip report subscription vehicle list
                            <span class="item_value">: {{$subscription->end_date}}</span>
                         </div>
                      </div>
+
+                     <div class="row" style="margin-top: 16px;">
+                        
+                        <div class="col-lg-4">
+                           <span class="icon"><i class="fa fa fa-car"></i></span>
+                           <span class="item">Subscribed vehicles</span>
+                           <span class="item_value">: {{$vehicle_count}}</span>
+                        </div>
+                       
+                     </div>
+
                   </div>
                   <div class="row" style=" margin-top:40px;padding: 0 10px;">
                      <div class="col-md-6">
                         <div class="panel panel-primary">
                            <div class="panel-heading">
+                           @if($vehicle_count < $subscription->number_of_vehicles + $free_vehicle )
                               <span class="pull-right">
                               <button type="button" class="btn btn-primary" onclick="addVehicleSubscription()"><i class="fa fa-plus"></i> Add Vehicle to subscription list</button>
                               </span>
@@ -79,11 +91,12 @@ Trip report subscription vehicle list
                                  <i class="glyphicon glyphicon-filter"></i>
                                  </span>
                               </div>
+                              @endif
                            </div>
                            <div class="panel-body">
                               <input type="text" class="form-control" id="dev-table-filter" data-action="filter" data-filters="#dev-table" placeholder="Filter Developers" />
                            </div>
-                           <table class="table table-hover" id="dev-table">
+                           <table class="table table-hover table-bordered" id="dev-table">
                               <thead>
                                  <tr>
                                     <th>#</th>
@@ -98,7 +111,7 @@ Trip report subscription vehicle list
                               </thead>
                               <tbody>
                               @foreach ($subscription_list as $item)
-                                 <tr>
+                                 <tr @if($item->deleted_at != null) style="background: #ecd8da;" @endif>
                                     <td>{{$loop->iteration}}</td>
                                     <td>{{$item->vehicles->name}}</td>
                                     <td>{{$item->vehicles->register_number}}</td>
@@ -106,7 +119,15 @@ Trip report subscription vehicle list
                                     <td>{{$item->expired_on ? $item->expired_on : "NA"}}</td>
                                     <td>{{$item->detached_on ? $item->detached_on : "NA"}}</td>
                                     <td>{{$item->report_last_generated_on ? $item->report_last_generated_on : "NA"}}</td>
-                                    <td>{{$item->id}}</td>
+                                    <td> 
+                                    
+                                     @if($item->deleted_at == null)
+                                       <a href="{{url('/trip-report-vehicle-delete',Crypt::encrypt($item->id))}}"><button style="border-radius: 4px;height: 41px;padding: 9px;width: 100%;" class="btn btn-sm btn-info btn2" ><i class="fa fa-trash" aria-hidden="true"></i>   Delete</button></a>
+                                     @else
+                                       <span style="padding: 10px; border: solid 1px;border-radius: 5px;" >Detached</span>
+                                     @endif
+                                    
+                                    </td>
                                  </tr>
                               @endforeach  
                               </tbody>

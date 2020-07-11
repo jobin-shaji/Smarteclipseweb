@@ -231,7 +231,7 @@ Trip report subscription list
    }
    .add_new
    {
-   margin-left:90%;
+   margin-left:88%;
    margin-bottom: 10px;
    }
    .select2-new{
