@@ -89,7 +89,7 @@ Trip report subscription vehicle list
                            <div class="panel-heading">
                            @if($vehicle_count < $subscription->number_of_vehicles + $free_vehicle )
                               <span class="pull-right">
-                              <button type="button" class="btn btn-primary" onclick="addVehicleSubscription()"><i class="fa fa-plus"></i> Add Vehicle to subscription list</button>
+                              <button type="button" class="btn btn-primary" onclick="addVehicleSubscription()"><i class="fa fa-plus"></i>Attach a vehicle</button>
                               </span>
                               <div class="pull-right">
                                  <span class="clickable filter" data-toggle="tooltip" title="Toggle table filter" data-container="body">
@@ -127,7 +127,7 @@ Trip report subscription vehicle list
                                     <td> 
                                     
                                      @if($item->deleted_at == null)
-                                       <a href="{{url('/trip-report-vehicle-delete',Crypt::encrypt($item->id))}}"><button style="border-radius: 4px;height: 41px;padding: 9px;width: 100%;" class="btn btn-sm btn-info btn2" ><i class="fa fa-trash" aria-hidden="true"></i>   Delete</button></a>
+                                       <a href="{{url('/trip-report-vehicle-delete',Crypt::encrypt($item->id))}}"><button style="border-radius: 4px;height: 41px;padding: 9px;width: 100%;" class="btn btn-sm btn-info btn2" ><i class="fa fa-trash" aria-hidden="true"></i>   Detatch</button></a>
                                      @else
                                        <span style="padding: 10px; border: solid 1px;border-radius: 5px;" >Detached</span>
                                      @endif

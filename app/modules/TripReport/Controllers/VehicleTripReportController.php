@@ -193,25 +193,11 @@ class VehicleTripReportController extends Controller
      *  trip report vehicle delete
      */
     public function tripReportVehicleDelete(Request $request)
-    {  
-        // dd(Crypt::decrypt($request->id));
+    {         
         $subscription_vehicle_list     = (new TripReportSubscriptionVehicles())->deleteTripReportVehicleSubscription(Crypt::decrypt($request->id));
-        return back();
-        // $subscription         =   (new ClientTripReportSubscription())->deleteTripReportSubscription(Crypt::decrypt($request->id));
-        // if($subscription != null)
-        // {
-        //     $subscription->delete();            
-        //     $request->session()->flash('message', 'Trip report subscription deleted successfully'); 
-        //     $request->session()->flash('alert-class', 'callout-success'); 
-        //     return redirect(route('vehicle-trip-report-config')); 
-        // }
-        // else
-        // {
-        //     $request->session()->flash('message', 'Something went wrong'); 
-        //     $request->session()->flash('alert-class', 'callout-danger'); 
-        //     return redirect(route('vehicle-trip-report-config')); 
-
-        // } 
+        $request->session()->flash('message', 'Trip report subscription deleted successfully'); 
+        $request->session()->flash('alert-class', 'callout-success'); 
+        return back();       
     }
 
 }
