@@ -65,19 +65,23 @@ class VltDataController extends Controller
         $this->imei         = ( isset($request->imei) ) ? $request->imei : '';
         $this->header       = ( isset($request->header) ) ? $request->header : '';
         $this->search_key   = ( isset($request->search_key) ) ? $request->search_key : '';
-
+        $this->vltDate      = ( isset($request->vltDate) ) ?date("Ymd", strtotime($request->vltDate)) : date('Ymd');
+        // $search_from_date=;
         // filters
         $filters            = [
             'imei'          => $this->imei,
             'header'        => $this->header,
-            'search_key'    => $this->search_key
+            'search_key'    => $this->search_key,
+            'vltDate'       =>( isset($request->vltDate) ) ?$request->vltDate : date('d-m-Y')
         ];
 
         if( ($this->imei != '') || ($this->header != '') )
         {
-            $data           = (new VltData())->getUnprocessedVltData($this->imei, $this->header, $this->search_key);
+            // dd($this->vltDate);
+            $data           = (new VltData())->getUnprocessedVltData($this->imei, $this->header, $this->search_key,$this->vltDate);
         }
-
+        // dd($data);
+        // $data=[];
         return view('VltData::unprocessed-list', [ 'imei_list' => $imei_list, 'headers' => $gps_header_list, 'data' => $data, 'filters' => $filters ]);
     }
 
