@@ -52,15 +52,15 @@ class ClientTripReportSubscription extends Model
         return $query->paginate(10);
     }
 
-    public function saveTripReportSubscription($client_id,$request,$plan)
+    public function saveTripReportSubscription($client_id,$request,$subsribed_vehicle_count,$plan)
     {
 
         return self::Create([
         'client_id'             => $client_id,
-        'subscription_id'       => "SMETRP".date('ymdhms').''.mt_rand(10000,99999),
+        'subscription_id'       => "TRP".date('ymdhms').''.mt_rand(10,99),
         'start_date'            => date('Y-m-d',strtotime($request->start_date)),     
         'end_date'              => date('Y-m-d',strtotime($request->end_date)),
-        'number_of_vehicles'    => $request->number_of_vehicle ,
+        'number_of_vehicles'    => $subsribed_vehicle_count ,
         'configuration'         => $plan 
       ]);
     }

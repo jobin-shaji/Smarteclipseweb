@@ -99,8 +99,14 @@ class VehicleTripReportController extends Controller
                 'free_vehicle'
             )
             ->where('plan_id', $plan_of_client)
-            ->first();  
-            $client_trip_report_subscription     =   (new ClientTripReportSubscription())->saveTripReportSubscription($client_id,$request,json_encode($trip_report_config)); 
+            ->first(); 
+            if($request->number_of_vehicle >= $trip_report_config->free_vehicle)
+            {
+                $subsribed_vehicle_count = $request->number_of_vehicle - $trip_report_config->free_vehicle;
+            }else{
+                $subsribed_vehicle_count = 0;
+            }
+            $client_trip_report_subscription     =   (new ClientTripReportSubscription())->saveTripReportSubscription($client_id,$request,$subsribed_vehicle_count,json_encode($trip_report_config)); 
             $request->session()->flash('message', 'Vehicle configuration added successfully'); 
             $request->session()->flash('alert-class', 'callout-success'); 
             return redirect(route('vehicle-trip-report-config')); 
