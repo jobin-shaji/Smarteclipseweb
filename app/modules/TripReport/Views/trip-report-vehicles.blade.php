@@ -74,6 +74,11 @@ Trip report subscription vehicle list
                            <span class="item">Subscribed vehicles</span>
                            <span class="item_value">: {{$vehicle_count}}</span>
                         </div>
+                        <div class="col-lg-4">
+                           <span class="icon"><i class="fa fa fa-calendar"></i></span>
+                           <span class="item"> Available vehicle subscriptions</span>
+                           <span class="item_value">: {{ $subscription->number_of_vehicles + $free_vehicle - $vehicle_count}}</span>
+                        </div>
                        
                      </div>
 

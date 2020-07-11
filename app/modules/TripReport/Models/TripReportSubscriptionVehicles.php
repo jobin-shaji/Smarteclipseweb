@@ -21,6 +21,7 @@ class TripReportSubscriptionVehicles extends Model
     {
         return self::where('client_trip_report_subscription_id',$id)
                      ->withTrashed()
+                     ->orderBy('detached_on','ASC')
                      ->get();
     }
     /**
