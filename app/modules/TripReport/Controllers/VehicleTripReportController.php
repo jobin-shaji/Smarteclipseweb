@@ -32,6 +32,8 @@ class VehicleTripReportController extends Controller
         {
             $vehicle_trip_config_details= (new ClientTripReportSubscription())->getVehicleTripConfigDetails($plan_type, $client_id);
         }
+
+        // dd($vehicle_trip_config_details);
         $client_details                 = (new Client())->getDetailsOfAllClients();
         return view('TripReport::vehicle-trip-report-config-list',['client_details' => $client_details ,'vehicle_trip_config_details' => $vehicle_trip_config_details, 'plan_type' => $plan_type, 'client_id' => $client_id]);
    
