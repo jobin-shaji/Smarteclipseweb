@@ -187,7 +187,7 @@ Trip report subscription list
                                                    <label  data-success="right" >Number of subscription vehicles</label> 
                                                 </div>
                                                 <div class="col-md-6 select2-new div_margin_top">
-                                                   <input required type="text" class="form-control" id="number_of_vehicle" name="number_of_vehicle" Placeholder="Subscription vehicle">                                                                    
+                                                   <input required type="number" class="form-control" id="number_of_vehicle" name="number_of_vehicle" Placeholder="Subscription vehicle">                                                                    
                                                   
                                                 </div>
                                              </div>
