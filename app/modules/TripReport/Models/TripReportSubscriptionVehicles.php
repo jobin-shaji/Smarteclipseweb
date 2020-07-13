@@ -76,7 +76,7 @@ class TripReportSubscriptionVehicles extends Model
     public function getSubscriptionVehicleIds($id)
     {
         return self::select('vehicle_id')
-                    ->where('client_trip_report_subscription_id',$id)
+                    // ->where('client_trip_report_subscription_id',$id)
                     ->whereNull('detached_on')
                     ->pluck('vehicle_id');
     }

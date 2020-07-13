@@ -108,7 +108,7 @@ class VehicleTripReportController extends Controller
             }else{
                 $subscribed_vehicle_count = 0;
             }
-            $client_trip_report_subscription     =   (new ClientTripReportSubscription())->saveTripReportSubscription($client_id,$request,$subsribed_vehicle_count,json_encode($trip_report_config)); 
+            $client_trip_report_subscription     =   (new ClientTripReportSubscription())->saveTripReportSubscription($client_id,$request,$subscribed_vehicle_count,json_encode($trip_report_config)); 
             $request->session()->flash('message', 'Vehicle configuration added successfully'); 
             $request->session()->flash('alert-class', 'callout-success'); 
             return redirect(route('vehicle-trip-report-config')); 
@@ -154,7 +154,7 @@ class VehicleTripReportController extends Controller
         if($subscription != null)
         {
             $subscription_vehicle     = (new TripReportSubscriptionVehicles())->getSubscriptionVehicleIds($subscription->id);
-            // dd($subscription_vehicle->count());
+            // dd($subscription_vehicle);
             $vehicles                      = (new Vehicle())->getVehicleListBasedOnClientNotSubscribed($subscription->client_id,$subscription_vehicle);
             $subscription_vehicle_list     = (new TripReportSubscriptionVehicles())->getSubscriptionVehicles($subscription->id);
             return view('TripReport::trip-report-vehicles',
