@@ -30,8 +30,8 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class=" col-md-2 select-gps-box" >
-                                <div class="form-group" style ="margin-left: 77px;margin-top: 2px;">
+                            <div class=" col-md-2" >
+                                <div class="form-group" style ="margin-left: 5px;margin-top: 2px;">
                                     <label>Header</label>
                                     <select class="select2 form-control select-gps-span" id="header" name="header"  data-live-search="true" title="Select header" required>
                                         <option selected="selected" disabled="disabled" value="">Select Header</option>
@@ -42,12 +42,18 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-lg-2 col-md-2 select-gps-box">
-                                <div class="form-group" style ="margin-left: 77px;margin-top: 12px;">
-                                    <input type="text" name="search_key" placeholder="Enter in vlt data" value="{{ $filters['search_key'] }}">
+                            <div class=" col-md-2 " >
+                                <div class="form-group" style ="margin-top: 2px;">    
+                                <label>Date</label>                             
+                                <input type="text" class="vlt_datepicker form-control" id="vltDate" name="vltDate" value="{{$filters['vltDate']}}" onkeydown="return false" autocomplete="off">
                                 </div>
                             </div>
                             <div class="col-lg-2 col-md-2 select-gps-box">
+                                <div class="form-group" style ="margin-left: 5px;margin-top: 12px;">
+                                    <input type="text" name="search_key" placeholder="Enter in vlt data" value="{{ $filters['search_key'] }}">
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-md-2 ">
                                 <div class="form-group">
                                     <button type="submit" class="btn btn-sm btn-info btn2 srch" style ="margin-left: 0px;margin-top: 6px;" onclick="return searchButtonClicked()"> <i class="fa fa-search"></i> </button>
                                     <a class="btn btn-sm btn-info btn2 srch" href="{{route('unprocessed-data-list')}}" >RESET </a>
@@ -56,6 +62,13 @@
                         </div>
                     </form>
                 </div>
+               
+
+
+
+
+
+
             </div>
         </div>
     </div>
@@ -66,18 +79,27 @@
         @if ($filters['imei'] != 0)
         <button class="btn btn-sm btn-info" style ="margin-left: 1160px;margin-top: 6px;" onclick="return sendCommandToDevice({{$filters['imei']}})" data-toggle="modal" data-target="#setOtaModal">Send Command </button>
         @endif
-        @foreach($data as $key => $each_data)
-        <div class="gps_data_item">
-            {{$each_data->vltdata}}
-            <div class="timestamp">
-                <p>
-                    Created at: {{ $each_data->created_at }}
-                    &nbsp;({{ \Carbon\Carbon::parse($each_data->created_at)->diffForHumans() }})
-                </p>
+        @if($data)
+            @foreach($data as $key => $each_data)
+            <div class="gps_data_item">
+                {{$each_data->vltdata}}
+                <div class="timestamp">
+                    <p>
+                        Created at: {{ $each_data->created_at }}
+                        &nbsp;({{ \Carbon\Carbon::parse($each_data->created_at)->diffForHumans() }})
+                    </p>
+                </div>
             </div>
-        </div>
-        @endforeach
+            @endforeach      
         @if(count($data)== 0)
+        <div>
+            <p style="font-size: 50px;text-align: center;margin-top: 12%;">
+                No Data Found
+            </p>
+        </div>
+        @endif
+        @endif
+        @if(empty($data))
         <div>
             <p style="font-size: 50px;text-align: center;margin-top: 12%;">
                 No Data Found
@@ -149,6 +171,14 @@
         font-size: 12px;
         font-weight: 700;
         color: lightgreen;
+    }
+    .cover_div_date
+    {
+        padding: 0px 0px 0px 458px;
+    }
+    .vlt_datepicker
+    {
+        padding: 2px;
     }
 </style>
 @section('script')

@@ -160,7 +160,6 @@ trait VehicleDataProcessorTrait{
         {
             $stop_time                  =   $vehicle_daily_updates['stop_time'];
         }
-
         $alerts                         =   (new Alert())->getAlertsDetailsForVehicleReport($single_vehicle_gps_ids,$from_date,$to_date);        
         $route_deviation                =   (new RouteDeviation())->getCountOfRouteDeviatingRecords($vehicle_id,$client_id,$from_date,$to_date);
         $vehicle_profile                =   array();

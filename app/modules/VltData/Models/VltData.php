@@ -16,27 +16,30 @@ class VltData extends Model
      *
      *
      */
-    public function getUnprocessedVltData($imei, $header, $search_key)
+    public function getUnprocessedVltData($imei, $header, $search_key,$date)
     {
-        $table = "vlt_data_".date('Ymd');
-
-        $query  =   DB::table($table)
-                        // ->where('is_processed', '0')
-                        ->select('vltdata','created_at')
-                        ->orderBy('created_at','DESC');
-        if( $imei != '0' )
+        $table = "vlt_data_".$date;
+        if(Schema::hasTable($table) == true)
         {
-            $query = $query->where('imei', $imei);
+            $query  =   DB::table($table)
+                            // ->where('is_processed', '0')
+                            ->select('vltdata','created_at')
+                            ->orderBy('created_at','DESC');
+            if( $imei != '0' )
+            {
+                $query = $query->where('imei', $imei);
+            }
+            if( $header != '0' )
+            {
+                $query = $query->where('header',$header);
+            }
+            if( $search_key != null )
+            {
+                $query = $query->where('vltdata','LIKE','%'.$search_key."%");
+            }
+        
+            return $query->paginate(10);
         }
-        if( $header != '0' )
-        {
-            $query = $query->where('header',$header);
-        }
-        if( $search_key != null )
-        {
-            $query = $query->where('vltdata','LIKE','%'.$search_key."%");
-        }
-        return $query->paginate(10);
     }
 
     public function getUnprocessedData($imei,$date=null)

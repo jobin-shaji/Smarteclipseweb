@@ -49,27 +49,40 @@ function check()
 
         $(".loader-1").show();
         backgroundPostData(url,data,'vehicleReport',{alert:true});
+         vehicleAlertCount();
     }
 }
 
 
-function vehicleReport(res)
-{
-    $(".loader-1").hide();
-    var km                          =   res.dailykm;
-    var sudden_acceleration         =   res.sudden_acceleration;
-    var harsh_braking               =   res.harsh_braking;
-    var main_battery_disconnect     =   res.main_battery_disconnect;
-    var accident_impact             =   res.accident_impact;
-    var over_speed                  =   res.over_speed;
-    var zig_zag                     =   res.zig_zag;
-    var user_alert                  =   res.user_alert;
-    var route_deviation             =   res.route_deviation;
-    var geofence_entry              =   res.geofence_entry;
-    var geofence_exit               =   res.geofence_exit;
-    var geofence_entry_overspeed    =   res.geofence_entry_overspeed;
-    var geofence_exit_overspeed     =   res.geofence_exit_overspeed;
 
+
+
+function vehicleAlertCount(){
+    var vehicle_id      =   document.getElementById('vehicle').value;
+    var report_type     =   document.getElementById('report').value;
+    var  data = {
+        vehicle_id : vehicle_id,
+        report_type : report_type,                    
+    }; 
+    var url = url_ms_alerts + "/vehicle-alert-count";
+    ajaxRequestMs(url,data,'POST',successAlertCount,failedAlert)
+
+}
+function successAlertCount(response){
+
+
+
+    var sudden_acceleration         =   response.sudden_acceleration;
+    var harsh_braking               =   response.harsh_braking;
+    var main_battery_disconnect     =   response.main_battery_disconnect;
+    var accident_impact             =   response.accident_impact;
+    var over_speed                  =   response.overspeed_count;
+    var zig_zag                     =   response.zig_zag_alert;
+    var user_alert                  =   response.total;
+    var geofence_entry              =   response.geofence_entry;
+    var geofence_exit               =   response.geofence_exit;
+    var geofence_entry_overspeed    =   response.geofence_entry_overspeed;
+    var geofence_exit_overspeed     =   response.geofence_exit_overspeed;
     if(sudden_acceleration == 0)
     {
         sudden_acceleration         =   "No alerts";
@@ -98,10 +111,6 @@ function vehicleReport(res)
     {
         user_alert                  =   "No alerts";
     }
-    if(route_deviation == 0)
-    {
-        route_deviation             =   "No alerts";
-    }
     if(geofence_entry == 0)
     {
         geofence_entry              =   "No alerts";
@@ -118,12 +127,6 @@ function vehicleReport(res)
     {
         geofence_exit_overspeed     =   "No alerts";
     }
-
-    $('#total_km').text(km);
-    $('#sleep').text(res.sleep);
-    $('#moving').text(res.motion);
-    $('#halt').text(res.halt);
-    $('#stop_duration').text(res.stop_duration);
     $('#sudden_acceleration').text(sudden_acceleration);
     $('#harsh_braking').text(harsh_braking);
     $('#main_battery_disconnect').text(main_battery_disconnect);
@@ -131,11 +134,33 @@ function vehicleReport(res)
     $('#overspeed_count').text(over_speed);
     $('#zig_zag').text(zig_zag);
     $('#alerts').text(user_alert);
-    $('#route_deviation').text(route_deviation);
     $('#geofence_entry').text(geofence_entry);
     $('#geofence_exit').text(geofence_exit);
     $('#geofence_entry_overspeed').text(geofence_entry_overspeed);
     $('#geofence_exit_overspeed').text(geofence_exit_overspeed);
+
+}
+function failedAlert(error)
+{
+
+}
+
+
+function vehicleReport(res)
+{
+    $(".loader-1").hide();
+    var km                          =   res.dailykm;
+    var route_deviation             =   res.route_deviation;   
+    if(route_deviation == 0)
+    {
+        route_deviation             =   "No alerts";
+    }
+    $('#total_km').text(km);
+    $('#sleep').text(res.sleep);
+    $('#moving').text(res.motion);
+    $('#halt').text(res.halt);
+    $('#stop_duration').text(res.stop_duration);
+    $('#route_deviation').text(route_deviation);
     $('#engine_on_duration').text(res.engine_on_duration);
     $('#engine_off_duration').text(res.engine_off_duration);
     $('#ac_on_duration').text(res.ac_on_duration);

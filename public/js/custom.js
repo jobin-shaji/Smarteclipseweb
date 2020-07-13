@@ -259,7 +259,12 @@ $(function () {
         minDate: new Date()
     });
 
-
+    $(".vlt_datepicker" ).datetimepicker({
+        format: 'DD-MM-YYYY',
+        defaultDate: null,
+        useCurrent: true,
+        maxDate: new Date()
+     });
 
     
 
