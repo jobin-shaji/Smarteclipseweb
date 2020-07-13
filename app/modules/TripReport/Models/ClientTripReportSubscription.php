@@ -25,6 +25,7 @@ class ClientTripReportSubscription extends Model
         $query  =   DB::table('client_trip_report_subscriptions as subscriptions')
                         ->join('clients', 'subscriptions.client_id', '=', 'clients.id')
                         ->join('users', 'users.id', '=', 'clients.user_id')
+                        ->orderBy('id','desc')
                         ->select(
                             'subscriptions.configuration as configuration',
                             'subscriptions.start_date as start_date',
@@ -111,5 +112,29 @@ class ClientTripReportSubscription extends Model
         return self::where('id', $subscription_id)
                      ->update($data);
      }
+
+     /**
+      * @author PMS
+      */
+      public function getAllActiveSubscription($client_id,$start_date,$end_date)
+      {
+        return self::
+          select(
+                    'id',
+                    'client_id',
+                    'subscription_id',
+                    'configuration',
+                    'number_of_vehicles',
+                    'number_of_reports_generated',
+                    'start_date',
+                    'end_date'
+
+                )
+        ->where('start_date', '<=',  date('Y-m-d',strtotime($start_date)))
+        ->where('end_date', '>=', date('Y-m-d',strtotime($end_date)))
+        ->where('client_id',$client_id)
+        ->get();
+
+      }
     
 }

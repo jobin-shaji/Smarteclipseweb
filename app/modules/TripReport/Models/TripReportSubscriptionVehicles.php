@@ -80,5 +80,13 @@ class TripReportSubscriptionVehicles extends Model
                     ->whereNull('detached_on')
                     ->pluck('vehicle_id');
     }
+
+    public function findActiveVehicles($subscription_id)
+    {
+      return self::where('id',$subscription_id)
+                   ->whereNull('expired_on')
+                   ->count();
+
+    }
     
 }

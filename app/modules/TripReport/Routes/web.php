@@ -8,6 +8,7 @@
     Route::post('trip-report-subscription-vehicles/{id}','VehicleTripReportController@saveVehicleSubscription')->name('vehicle.subscriptions.create.p');
     Route::get('trip-report-configuration-delete/{id}','VehicleTripReportController@tripReportSubscriptionDelete')->name('trip.report.configuration.delete');
     Route::get('trip-report-vehicle-delete/{id}','VehicleTripReportController@tripReportVehicleDelete')->name('trip.report.configuration.delete');
+    Route::post('subscription_validation','VehicleTripReportController@getSubscriptionValidation')->name('subscription.validation');
     
 	
 });

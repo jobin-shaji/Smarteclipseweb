@@ -259,23 +259,84 @@ Trip report subscription list
    min-height: 621px;
    background: #f8f9fa;
    }
+
+
+.modal-content {
+   max-width: 100% !important;
+}
+@media (min-width: 576px){
+.modal-dialog.error_message_modal {
+    max-width: 90% !important;
+    margin: 1.75rem auto;
+}
+}
 </style>
 @section('script')
 <script src="{{asset('js/gps/vehicle-trip-report-config-list.js')}}"></script>
 <script>
-   var form_submit = 0
+   var form_submit      = 0
    function validateSubscription()
    {
+     
+
       if(form_submit == 0)
       {
-         $('.form_section').css('display','none');
-         $('#save_subscription').html('Proceed to create');
+         var url = '/subscription_validation';
+         $.ajax({
+         type: 'POST',
+         url: url,
+         data: {
+            "client_id"             : $('#client_id').val(),
+            "start_date"            : $('#start_date').val(),
+            "end_date"              : $('#end_date').val(),
+            "number_of_vehicle"    : $('#number_of_vehicle').val()
+         },
+         async: true,
+         headers: {
+               'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+         },
+             success: function(res) 
+             {
+               var response = JSON.parse(res);  
+               console.log(response); 
+               if( response.status == "success")
+               {
+                  $(".modal-dialog").addClass('error_message_modal');
+                  $('.form_section').css('display','none');
+                  $('#save_subscription').html('Proceed to create');
+                  var subscribed_vehicles = "";
+                  subscribed_vehicles += "<span>You have not utilized 100% your subscription .details below</span>";
+                  subscribed_vehicles += "<table class='table table-bordered'>";
+                  subscribed_vehicles += "<th>ID</th><th>Number of vehicle subscribed</th><th>Number of vehicle added</th><th>Remaining subscription vehicles</th><th>Start at</th><th>Expired on</th><th>Action</th>";
+                  $.each($(response.data),function(key,value){
+                     subscribed_vehicles +="<tr>"+
+                     "<td>"+value.subscription_id+"</td>"+
+                     "<td style='width: 149px;'>"+value.number_of_vehicles+"</td>"+
+                     "<td>"+value.number_of_vehicles_added+"</td>"+
+                     "<td>"+value.remaining_subscription_vehicles+"</td>"+
+                     "<td>"+value.start_date+"</td>"+
+                     "<td>"+value.expired_on+"</td>"+
+
+                     "<td style='width: 217px;'><a style='color: #fff;padding: 4px;border: 1px solid;background: #f0b230;' href='/trip-report-subscription-vehicles/"+value.id+"'><i class='fa fa-cog' aria-hidden='true'></i> Goto subscription</a></td>"+
+                     "</tr>";
+                  });
+                  subscribed_vehicles +="</table>";
+                   $(".validation_section").html(subscribed_vehicles);
+                  return false;
+               }else{
+                  return true;
+               }
+            
+            }
+         });
          form_submit  = 1;
          return false;
-      }else{
+      } else {
+
          return true;
       }
    }
+
 </script>
 @endsection
 @endsection

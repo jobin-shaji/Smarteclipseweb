@@ -104,9 +104,9 @@ class VehicleTripReportController extends Controller
             ->first(); 
             if($request->number_of_vehicle >= $trip_report_config->free_vehicle)
             {
-                $subsribed_vehicle_count = $request->number_of_vehicle - $trip_report_config->free_vehicle;
+                $subscribed_vehicle_count = $request->number_of_vehicle - $trip_report_config->free_vehicle;
             }else{
-                $subsribed_vehicle_count = 0;
+                $subscribed_vehicle_count = 0;
             }
             $client_trip_report_subscription     =   (new ClientTripReportSubscription())->saveTripReportSubscription($client_id,$request,$subsribed_vehicle_count,json_encode($trip_report_config)); 
             $request->session()->flash('message', 'Vehicle configuration added successfully'); 
@@ -206,6 +206,57 @@ class VehicleTripReportController extends Controller
         $request->session()->flash('message', 'Trip report subscription deleted successfully'); 
         $request->session()->flash('alert-class', 'callout-success'); 
         return back();       
+    }
+
+
+    /**
+     * 
+     * @author PMS
+     * Validation in subscription
+     */
+
+    public function getSubscriptionValidation(Request $request)
+    {
+        $client_id              =  Crypt::decrypt($request->client_id);
+        $start_date             =  $request->start_date;
+        $end_date               =  $request->end_date;
+        $number_of_vehicle      =  $request->number_of_vehicle;
+        $subscriptions          =  (new ClientTripReportSubscription())->getAllActiveSubscription($client_id,$start_date,$end_date);
+        $active_subscription    =  []; 
+
+            foreach ($subscriptions as $item)
+            {
+                $subscribed_vehicles =  $item->number_of_vehicles;
+                $count_of_vehicle    =  (new TripReportSubscriptionVehicles())->findActiveVehicles($item->id);
+                
+                    if($subscribed_vehicles > $count_of_vehicle)
+                    {
+                        $active_subscription[] = [
+                            "id"                                  => Crypt::encrypt($item->id),
+                            "subscription_id"                     => $item->subscription_id,
+                            "number_of_vehicles"                  => $item->number_of_vehicles,
+                            "number_of_vehicles_added"            => $count_of_vehicle,
+                            "remaining_subscription_vehicles"     => $item->number_of_vehicles - $count_of_vehicle,
+                            "start_date"                          => $item->start_date,
+                            "expired_on"                          => $item->end_date
+
+                        ];
+                    }
+            }
+            if(sizeof($active_subscription) > 0)
+            {
+                return json_encode([
+                    "status"  => "success",
+                    "data"    => $active_subscription
+                ]);
+            }else{
+                return json_encode([
+                    "status"  => "failed",
+                    "data"    => []
+                ]);
+            }
+                
+       
     }
 
 }
