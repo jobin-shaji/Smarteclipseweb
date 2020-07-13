@@ -72,7 +72,7 @@ Trip report subscription list
                                              <div class="col-lg-3 col-md-3 pt-4">
                                                 <label> &nbsp;</label>
                                                 <div class="form-group">                           
-                                                   <button type="submit" class="btn btn-sm btn-info btn2 srch search-btn " > <i class="fa fa-search"></i> </button>
+                                                   <button type="submit"  class="btn btn-sm btn-info btn2 srch search-btn " > <i class="fa fa-search"></i> </button>
                                                    <a  href="vehicle-trip-report-config" class="btn btn-primary">Clear</a>
                                                 </div>
                                              </div>
@@ -124,7 +124,7 @@ Trip report subscription list
                                           <td><?php ( isset($each_data->role) ) ? $role = ucfirst(strtolower($plan_names[$each_data->role])) : $role='-NA-' ?>{{$role}}</td>
                                           @php
                                              $free_vehicle = (isset(json_decode($each_data->configuration)->free_vehicle)) ? json_decode($each_data->configuration)->free_vehicle : 0; 
-                                             echo $free_vehicle;
+                                             
                                           @endphp
                                           <td><?php ( isset($each_data->number_of_vehicles) ) ? $number_of_vehicles = $each_data->number_of_vehicles + $free_vehicle : $number_of_vehicles='-NA-' ?>{{$number_of_vehicles}}</td>
                                           <td><?php ( isset($each_data->number_of_reports_generated) ) ? $number_of_reports_generated = $each_data->number_of_reports_generated : $number_of_reports_generated='-NA-' ?>{{$number_of_reports_generated}}</td>
@@ -146,7 +146,7 @@ Trip report subscription list
                               </div>
                               <!-- modal for create configuration -->
                               <div class="modal fade" id="myModal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                 <form  method="POST"  action="{{route('trip.report.subscriptions.create.p')}}">
+                                 <form  method="POST"  action="{{route('trip.report.subscriptions.create.p')}}" onsubmit="return validateSubscription()">
                                     {{csrf_field()}}    
                                     <div class="modal-dialog" role="document">
                                        <div class="modal-content ">
@@ -157,48 +157,53 @@ Trip report subscription list
                                              </button>
                                           </div>
                                           <div class="modal-body mx-3">
-                                             <div  class="row">
-                                                <div class="col-md-6">  
-                                                   <label  data-success="right" >Client</label> 
+                                                     
+                                             <div class="form_section">
+                                                <div  class="row">
+                                                   <div class="col-md-6">  
+                                                      <label  data-success="right" >Client</label> 
+                                                   </div>
+                                                   <div class="col-md-6 select2-new div_margin_top">
+                                                      <select required class="form-control select2"  name="client_id"  title="Select End User" id='client_id'>
+                                                         <option value="" selected >Select End User</option>
+                                                         @foreach($client_details as $each_data)
+                                                         <option value="{{encrypt($each_data->id)}}" @if($client_id != '' && $client_id==$each_data->id){{"selected"}} @endif >{{$each_data->name}} || Mobile No: {{$each_data->mobile}}</option>  
+                                                         @endforeach
+                                                      </select>
+                                                   </div>
                                                 </div>
-                                                <div class="col-md-6 select2-new div_margin_top">
-                                                   <select required class="form-control select2"  name="client_id"  title="Select End User" id='client_id'>
-                                                      <option value="" selected >Select End User</option>
-                                                      @foreach($client_details as $each_data)
-                                                      <option value="{{encrypt($each_data->id)}}" @if($client_id != '' && $client_id==$each_data->id){{"selected"}} @endif >{{$each_data->name}} || Mobile No: {{$each_data->mobile}}</option>  
-                                                      @endforeach
-                                                   </select>
-                                                  
+                                                <div class="row">
+                                                   <div class="col-md-6">  
+                                                      <label  data-success="right" >Start date</label> 
+                                                   </div>
+                                                   <div class="col-md-6 div_margin_top">
+                                                      <input required type="text" class="config_date form-control" id="start_date" Placeholder="Subscription start date" name="start_date" onkeydown="return false" autocomplete="off">
+                                                   </div>
                                                 </div>
-                                             </div>
-                                             <div class="row">
-                                                <div class="col-md-6">  
-                                                   <label  data-success="right" >Start date</label> 
+                                                <div class="row">
+                                                   <div class="col-md-6">  
+                                                      <label  data-success="right" >End Date</label> 
+                                                   </div>
+                                                   <div class="col-md-6 div_margin_top">
+                                                      <input required type="text" class=" config_end_date form-control" id="end_date" Placeholder="Subscription end date" name="end_date" onkeydown="return false" autocomplete="off">                                                                    
+                                                   </div>
                                                 </div>
-                                                <div class="col-md-6 div_margin_top">
-                                                   <input required type="text" class="config_date form-control" id="start_date" Placeholder="Subscription start date" name="start_date" onkeydown="return false" autocomplete="off">
+                                                <div class="row">
+                                                   <div class="col-md-6">  
+                                                      <label  data-success="right" >Number of subscription vehicles</label> 
+                                                   </div>
+                                                   <div class="col-md-6 select2-new div_margin_top">
+                                                      <input required type="number" class="form-control" id="number_of_vehicle" name="number_of_vehicle" Placeholder="Subscription vehicle">                                                                    
+                                                   
+                                                   </div>
                                                 </div>
-                                             </div>
-                                             <div class="row">
-                                                <div class="col-md-6">  
-                                                   <label  data-success="right" >End Date</label> 
-                                                </div>
-                                                <div class="col-md-6 div_margin_top">
-                                                   <input required type="text" class=" config_end_date form-control" id="end_date" Placeholder="Subscription end date" name="end_date" onkeydown="return false" autocomplete="off">                                                                    
-                                                </div>
-                                             </div>
-                                             <div class="row">
-                                                <div class="col-md-6">  
-                                                   <label  data-success="right" >Number of subscription vehicles</label> 
-                                                </div>
-                                                <div class="col-md-6 select2-new div_margin_top">
-                                                   <input required type="number" class="form-control" id="number_of_vehicle" name="number_of_vehicle" Placeholder="Subscription vehicle">                                                                    
-                                                  
-                                                </div>
-                                             </div>
+                                             </div> 
+                                             <div class="validation_section">
+
+                                             </div>    
                                           </div>
                                           <div class="modal-footer d-flex justify-content-center">
-                                             <button type="submit"  class="btn btn-default" >Submit</button>
+                                             <button type="submit" id="save_subscription"  class="btn btn-default" >Submit</button>
                                           </div>
                                        </div>
                                     </div>
@@ -257,5 +262,20 @@ Trip report subscription list
 </style>
 @section('script')
 <script src="{{asset('js/gps/vehicle-trip-report-config-list.js')}}"></script>
+<script>
+   var form_submit = 0
+   function validateSubscription()
+   {
+      if(form_submit == 0)
+      {
+         $('.form_section').css('display','none');
+         $('#save_subscription').html('Proceed to create');
+         form_submit  = 1;
+         return false;
+      }else{
+         return true;
+      }
+   }
+</script>
 @endsection
 @endsection

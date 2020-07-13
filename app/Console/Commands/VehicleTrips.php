@@ -61,18 +61,16 @@ class VehicleTrips extends Command
                 {
                     
                     $this->processTripsofVehicle($subscribed_vehicle->vehicles->gps);
-                   
+                
                     $update_last_generated_on   = (new TripReportSubscriptionVehicles())->updateGeneratedDetails(
                         $subscribed_vehicle->id,
                         [  
-                          "report_last_generated_on"     => Carbon::now()
+                          "report_last_generated_on"     => date('Y-m-d')
                         ]);
-
                     $report_generated           = $subscribed_vehicle->subscriptions->number_of_reports_generated ? $subscribed_vehicle->subscriptions->number_of_reports_generated : 0 ;
                     $update_subscription        = (new ClientTripReportSubscription())->updateSubscriptionPlan(
                                                         $subscribed_vehicle->client_trip_report_subscription_id,
                                                         [
-
                                                             "number_of_reports_generated" => $report_generated + 1
                                                             
                                                         ]);
