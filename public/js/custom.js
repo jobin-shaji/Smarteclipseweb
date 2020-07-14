@@ -1869,3 +1869,7 @@ if(document.getElementById('user_id').value!=null){
             }
         })
     }
+
+    setTimeout(function() {
+        $('#successMessage').fadeOut('fast');
+    }, 3000); 

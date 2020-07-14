@@ -7,7 +7,7 @@ use App\Modules\Gps\Models\GpsData;
 use App\Modules\Vehicle\Models\DailyKm;
 use App\Modules\Vehicle\Models\VehicleTripSummary;
 use App\Modules\TripReport\Models\ClientTripReportSubscription;
-
+use App\Modules\TripReport\Models\TripReportSubscriptionVehicles;
 use PDF;
 use \DB;
 
@@ -51,23 +51,29 @@ class VehicleTrips extends Command
 
     public function handle()
     {
-        $subscribed_vehicles         =   (new ClientTripReportSubscription())->getSubscribedVehicles($this->trip_date );
+        $subscribed_vehicles         =   (new TripReportSubscriptionVehicles())->getSubscribedVehicles($this->trip_date);
         foreach ($subscribed_vehicles as $subscribed_vehicle) 
         {
-            $number_of_report_per_month  = (isset(json_decode($subscribed_vehicle->configuration)->number_of_report_per_month)) ? json_decode($subscribed_vehicle->configuration)->number_of_report_per_month : 0; 
-            if($number_of_report_per_month > 0 && $subscribed_vehicle->vehicles->gps)
+           
+            if($subscribed_vehicle->vehicles->gps)
             {             
                 try 
                 {
+                    
                     $this->processTripsofVehicle($subscribed_vehicle->vehicles->gps);
-                    $subscription_details                             = json_decode($subscribed_vehicle->configuration);
-                    $subscription_details->number_of_report_per_month = $subscription_details->number_of_report_per_month - 1;
-                    $update_subscription                              = (new ClientTripReportSubscription())->updateSubscriptionPlan(
-                                                                            $subscribed_vehicle->id,
-                                                                            [
-                                                                                "configuration"         => json_encode($subscription_details),
-                                                                                "last_generated_on"     => Carbon::now()
-                                                                            ]);
+                
+                    $update_last_generated_on   = (new TripReportSubscriptionVehicles())->updateGeneratedDetails(
+                        $subscribed_vehicle->id,
+                        [  
+                          "report_last_generated_on"     => date('Y-m-d')
+                        ]);
+                    $report_generated           = $subscribed_vehicle->subscriptions->number_of_reports_generated ? $subscribed_vehicle->subscriptions->number_of_reports_generated : 0 ;
+                    $update_subscription        = (new ClientTripReportSubscription())->updateSubscriptionPlan(
+                                                        $subscribed_vehicle->client_trip_report_subscription_id,
+                                                        [
+                                                            "number_of_reports_generated" => $report_generated - 1
+                                                            
+                                                        ]);
 
                 } 
                 catch (Exception $e) 
@@ -92,11 +98,14 @@ class VehicleTrips extends Command
         $trips           = [];
         $total_distance  = 0;
         $summary         = [];
-
+       
         foreach ($vehicle_records as $item) 
         {
+
+
             if($item->vehicle_mode == 'M')
-            {    
+            { 
+                
                $node =  [ 'lattitude' => $item->latitude, 'longitude' => $item->longitude, 'device_time' => $item->device_time];
                $geo_locations[] = $node;
             }
