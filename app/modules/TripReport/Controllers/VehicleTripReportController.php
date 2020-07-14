@@ -153,16 +153,15 @@ class VehicleTripReportController extends Controller
         $subscription         =   (new ClientTripReportSubscription())->getTripSubscription(Crypt::decrypt($request->id));
         if($subscription != null)
         {
-            $subscription_vehicle     = (new TripReportSubscriptionVehicles())->getSubscriptionVehicleIds($subscription->id);
-            // dd($subscription_vehicle);
-            $vehicles                      = (new Vehicle())->getVehicleListBasedOnClientNotSubscribed($subscription->client_id,$subscription_vehicle);
+            $subscription_vehicle          = (new TripReportSubscriptionVehicles())->getSubscriptionVehicleIds($subscription);
+            $subscription_vehicle_count    = (new TripReportSubscriptionVehicles())->getSubscriptionVehiclesCount($subscription->id);
             $subscription_vehicle_list     = (new TripReportSubscriptionVehicles())->getSubscriptionVehicles($subscription->id);
             return view('TripReport::trip-report-vehicles',
             [
                 'subscription'              => $subscription,
-                'vehicles'                  => $vehicles,
+                'vehicles'                  => $subscription_vehicle,
                 'subscription_list'         => $subscription_vehicle_list,
-                'vehicle_count'         => $subscription_vehicle->count()
+                'vehicle_count'             => $subscription_vehicle_count
             ]);
         }else{
 
@@ -228,7 +227,8 @@ class VehicleTripReportController extends Controller
             {
                 $subscribed_vehicles =  $item->number_of_vehicles;
                 $count_of_vehicle    =  (new TripReportSubscriptionVehicles())->findActiveVehicles($item->id);
-                
+
+                    
                     if($subscribed_vehicles > $count_of_vehicle)
                     {
                         $active_subscription[] = [
