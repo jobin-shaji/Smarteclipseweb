@@ -87,13 +87,5 @@ $( ".config_date" ).datetimepicker({
     minDate: new Date()
 });
 
-$('.config_date').datetimepicker().on('dp.change', function (e) {
-    $('.config_end_date').data('DateTimePicker').minDate(new Date(e.date));
 
-});
-$( ".config_end_date" ).datetimepicker({
-    format: 'DD-MM-YYYY',
-    minDate: new Date()
-
-});
 // date picker validations

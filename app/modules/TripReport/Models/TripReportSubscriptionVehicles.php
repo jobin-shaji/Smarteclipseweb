@@ -82,6 +82,8 @@ class TripReportSubscriptionVehicles extends Model
       LEFT JOIN vehicles AS vh ON vh.id =trsv.vehicle_id
       WHERE vh.client_id =".$subscription->client_id."
       AND
+      trsv.detached_on is null
+      AND
       (
        ('".$subscription->start_date."' > trsv.attached_on AND '".$subscription->end_date."' < trsv.expired_on)
         OR (trsv.attached_on BETWEEN '".$subscription->start_date."' AND '".$subscription->end_date."')
@@ -104,6 +106,17 @@ class TripReportSubscriptionVehicles extends Model
         where('client_trip_report_subscription_id',$id)
       ->whereNull('detached_on')
       ->count();
+     }
+
+     public function getAllSubscriptionVehiclesCount($client_id)
+     {
+      $query = "select trsv.id,trsv.vehicle_id from trip_report_subscription_vehicles  AS trsv
+      LEFT JOIN vehicles AS vh ON vh.id =trsv.vehicle_id
+      where vh.client_id =".$client_id."
+      AND
+      trsv.detached_on is null";
+      return sizeOf(DB::select($query));
+
      }
 
     public function findActiveVehicles($subscription_id)

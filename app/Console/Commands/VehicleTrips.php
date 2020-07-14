@@ -71,7 +71,7 @@ class VehicleTrips extends Command
                     $update_subscription        = (new ClientTripReportSubscription())->updateSubscriptionPlan(
                                                         $subscribed_vehicle->client_trip_report_subscription_id,
                                                         [
-                                                            "number_of_reports_generated" => $report_generated + 1
+                                                            "number_of_reports_generated" => $report_generated - 1
                                                             
                                                         ]);
 

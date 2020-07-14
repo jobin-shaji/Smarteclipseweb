@@ -4,6 +4,8 @@ namespace  App\Modules\TripReport\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
+
+
 class ClientTripReportSubscription extends Model
 {
     protected $fillable=[
@@ -53,16 +55,17 @@ class ClientTripReportSubscription extends Model
         return $query->paginate(10);
     }
 
-    public function saveTripReportSubscription($client_id,$request,$subsribed_vehicle_count,$plan)
+    public function saveTripReportSubscription($client_id,$subscription_start_date,$subscription_end_date,$total_number_of_report,$subscribed_vehicle_count,$plan)
     {
 
         return self::Create([
-        'client_id'             => $client_id,
-        'subscription_id'       => "TRP".date('ymdhms').''.mt_rand(10,99),
-        'start_date'            => date('Y-m-d',strtotime($request->start_date)),     
-        'end_date'              => date('Y-m-d',strtotime($request->end_date)),
-        'number_of_vehicles'    => $subsribed_vehicle_count ,
-        'configuration'         => $plan 
+        'client_id'                   => $client_id,
+        'subscription_id'             => "TRP".date('ymdhms').''.mt_rand(10,99),
+        'start_date'                  => $subscription_start_date,     
+        'end_date'                    => $subscription_end_date,
+        'number_of_vehicles'          => $subscribed_vehicle_count ,
+        'number_of_reports_generated' => $total_number_of_report,
+        'configuration'               => $plan 
       ]);
     }
 
@@ -118,23 +121,26 @@ class ClientTripReportSubscription extends Model
       */
       public function getAllActiveSubscription($client_id,$start_date,$end_date)
       {
-        return self::
-          select(
-                    'id',
-                    'client_id',
-                    'subscription_id',
-                    'configuration',
-                    'number_of_vehicles',
-                    'number_of_reports_generated',
-                    'start_date',
-                    'end_date'
 
-                )
-        ->where('start_date', '<=',  date('Y-m-d',strtotime($start_date)))
-        ->where('end_date', '>=', date('Y-m-d',strtotime($end_date)))
-        ->where('client_id',$client_id)
-        ->get();
-
+        $query = "select 
+                  id,
+                  client_id,
+                  subscription_id,
+                  configuration,
+                  number_of_vehicles,
+                  number_of_reports_generated,
+                  start_date,
+                  end_date 
+                  from client_trip_report_subscriptions 
+                  where 
+                  client_id =".$client_id."
+                  AND
+                  (
+                  ('".date('Y-m-d',strtotime($start_date))."' > start_date AND '".$end_date."' < end_date)
+                    OR (start_date BETWEEN '".date('Y-m-d',strtotime($start_date))."' AND '".$end_date."')
+                    OR (end_date BETWEEN '".date('Y-m-d',strtotime($start_date))."' AND '".$end_date."')
+                  )";
+         return DB::select($query);
       }
     
 }

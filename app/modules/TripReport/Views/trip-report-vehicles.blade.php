@@ -47,12 +47,9 @@ Trip report subscription vehicle list
                            <span class="icon"><i class="fa fa-th"></i></span>
                            <span class="item">Free Vehicles</span>
                            <span class="item_value">: 
-                           @php
-                             $subscription_config = json_decode($subscription->configuration);
-                           @endphp
-                           {{
-                             isset($subscription_config->free_vehicle) ? $free_vehicle =$subscription_config->free_vehicle : $free_vehicle=0
-                           }}
+                       
+                             {{$free_vehicle}}
+                        
                            </span>
                         </div>
                         <div class="col-lg-4">

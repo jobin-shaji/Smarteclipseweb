@@ -182,10 +182,10 @@ Trip report subscription list
                                                 </div>
                                                 <div class="row">
                                                    <div class="col-md-6">  
-                                                      <label  data-success="right" >End Date</label> 
+                                                      <label  data-success="right" >Number of month</label> 
                                                    </div>
                                                    <div class="col-md-6 div_margin_top">
-                                                      <input required type="text" class=" config_end_date form-control" id="end_date" Placeholder="Subscription end date" name="end_date" onkeydown="return false" autocomplete="off">                                                                    
+                                                      <input required type="number" class=" form-control" id="number_of_month" Placeholder="Subscription months" name="number_of_month" >                                                                    
                                                    </div>
                                                 </div>
                                                 <div class="row">
@@ -193,7 +193,7 @@ Trip report subscription list
                                                       <label  data-success="right" >Number of subscription vehicles</label> 
                                                    </div>
                                                    <div class="col-md-6 select2-new div_margin_top">
-                                                      <input required type="number" class="form-control" id="number_of_vehicle" name="number_of_vehicle" Placeholder="Subscription vehicle">                                                                    
+                                                      <input required type="number" class="form-control" id="number_of_vehicle" name="number_of_vehicle" Placeholder="Number of subscription vehicles">                                                                    
                                                    
                                                    </div>
                                                 </div>
@@ -288,8 +288,8 @@ Trip report subscription list
          data: {
             "client_id"             : $('#client_id').val(),
             "start_date"            : $('#start_date').val(),
-            "end_date"              : $('#end_date').val(),
-            "number_of_vehicle"    : $('#number_of_vehicle').val()
+            "number_of_month"       : $('#number_of_month').val(),
+            "number_of_vehicle"     : $('#number_of_vehicle').val()
          },
          async: true,
          headers: {
@@ -324,6 +324,7 @@ Trip report subscription list
                    $(".validation_section").html(subscribed_vehicles);
                   return false;
                }else{
+                  $('#save_subscription').trigger("click");
                   return true;
                }
             

@@ -9,6 +9,7 @@ use App\Modules\TripReport\Models\TripReportConfiguration;
 use  App\Modules\TripReport\Models\TripReportSubscriptionVehicles;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class VehicleTripReportController extends Controller 
 {
@@ -108,7 +109,15 @@ class VehicleTripReportController extends Controller
             }else{
                 $subscribed_vehicle_count = 0;
             }
-            $client_trip_report_subscription     =   (new ClientTripReportSubscription())->saveTripReportSubscription($client_id,$request,$subscribed_vehicle_count,json_encode($trip_report_config)); 
+            $subscribed_month               =  $request->number_of_month;
+            $subscription_start_date        =  (new Carbon($request->start_date))->format('Y-m-d');
+            $subscription_end_date          =  (new Carbon($request->start_date))->addMonths($subscribed_month)->format('Y-m-d');
+            $number_of_subscribed_vehicles  =  $request->number_of_vehicle;
+            
+            // total report = (number_of_reports_per_month*number_of_subscribed_vehicle)*number_of_month
+            $total_number_of_report         =  ($trip_report_config->number_of_report_per_month * $number_of_subscribed_vehicles)*$subscribed_month;
+           
+            $client_trip_report_subscription     =   (new ClientTripReportSubscription())->saveTripReportSubscription($client_id, $subscription_start_date,$subscription_end_date,$total_number_of_report,$subscribed_vehicle_count,json_encode($trip_report_config)); 
             $request->session()->flash('message', 'Vehicle configuration added successfully'); 
             $request->session()->flash('alert-class', 'callout-success'); 
             return redirect(route('vehicle-trip-report-config')); 
@@ -153,15 +162,23 @@ class VehicleTripReportController extends Controller
         $subscription         =   (new ClientTripReportSubscription())->getTripSubscription(Crypt::decrypt($request->id));
         if($subscription != null)
         {
-            $subscription_vehicle          = (new TripReportSubscriptionVehicles())->getSubscriptionVehicleIds($subscription);
-            $subscription_vehicle_count    = (new TripReportSubscriptionVehicles())->getSubscriptionVehiclesCount($subscription->id);
-            $subscription_vehicle_list     = (new TripReportSubscriptionVehicles())->getSubscriptionVehicles($subscription->id);
+            $subscription_vehicle               = (new TripReportSubscriptionVehicles())->getSubscriptionVehicleIds($subscription);
+            $subscription_vehicle_count         = (new TripReportSubscriptionVehicles())->getSubscriptionVehiclesCount($subscription->id);
+            $subscription_vehicle_list          = (new TripReportSubscriptionVehicles())->getSubscriptionVehicles($subscription->id);
+            $all_subscription_vehicles_count    = (new TripReportSubscriptionVehicles())->getAllSubscriptionVehiclesCount($subscription->client_id);
+            $free_vehicle_count_from_plan       = isset((json_decode($subscription->configuration))->free_vehicle) ? (json_decode($subscription->configuration))->free_vehicle : 0;
+            $available_free_vehicle             = 0;
+            if($free_vehicle_count_from_plan >  $all_subscription_vehicles_count)
+            {
+                $available_free_vehicle         = $free_vehicle_count_from_plan - $all_subscription_vehicles_count;
+            }
             return view('TripReport::trip-report-vehicles',
             [
                 'subscription'              => $subscription,
                 'vehicles'                  => $subscription_vehicle,
                 'subscription_list'         => $subscription_vehicle_list,
-                'vehicle_count'             => $subscription_vehicle_count
+                'vehicle_count'             => $subscription_vehicle_count,
+                'free_vehicle'              => $available_free_vehicle
             ]);
         }else{
 
@@ -218,7 +235,8 @@ class VehicleTripReportController extends Controller
     {
         $client_id              =  Crypt::decrypt($request->client_id);
         $start_date             =  $request->start_date;
-        $end_date               =  $request->end_date;
+        $subscribed_month       =  $request->number_of_month;
+        $end_date               =  (new Carbon($request->start_date))->addMonths($subscribed_month)->format('Y-m-d');
         $number_of_vehicle      =  $request->number_of_vehicle;
         $subscriptions          =  (new ClientTripReportSubscription())->getAllActiveSubscription($client_id,$start_date,$end_date);
         $active_subscription    =  []; 
