@@ -122,11 +122,8 @@ Trip report subscription list
                                           <td><?php ( isset($each_data->subscription_id) ) ? $subscription_id = $each_data->subscription_id : $subscription_id='-NA-' ?>{{$subscription_id}}</td>
                                           <td><?php ( isset($each_data->client_name) ) ? $client_name = $each_data->client_name : $client_name='-NA-' ?>{{$client_name}}</td>
                                           <td><?php ( isset($each_data->role) ) ? $role = ucfirst(strtolower($plan_names[$each_data->role])) : $role='-NA-' ?>{{$role}}</td>
-                                          @php
-                                             $free_vehicle = (isset(json_decode($each_data->configuration)->free_vehicle)) ? json_decode($each_data->configuration)->free_vehicle : 0; 
-                                             
-                                          @endphp
-                                          <td><?php ( isset($each_data->number_of_vehicles) ) ? $number_of_vehicles = $each_data->number_of_vehicles + $free_vehicle : $number_of_vehicles='-NA-' ?>{{$number_of_vehicles}}</td>
+                                         
+                                          <td><?php ( isset($each_data->number_of_vehicles) ) ? $number_of_vehicles = $each_data->number_of_vehicles : $number_of_vehicles='-NA-' ?>{{$number_of_vehicles}}</td>
                                           <td><?php ( isset($each_data->number_of_reports_generated) ) ? $number_of_reports_generated = $each_data->number_of_reports_generated : $number_of_reports_generated='-NA-' ?>{{$number_of_reports_generated}}</td>
                                           <td><?php ( isset($each_data->start_date) ) ? $start_date = $each_data->start_date : $start_date='-NA-' ?>{{$start_date}}</td>
                                           <td>
