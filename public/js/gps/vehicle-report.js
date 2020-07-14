@@ -60,13 +60,13 @@ function check()
 function vehicleAlertCount(){
     var vehicle_id      =   document.getElementById('vehicle').value;
     var report_type     =   document.getElementById('report').value;
-    var  data = {
-        "vehicle_id"  : vehicle_id,
-        "report_type" : report_type,                    
-    }; 
+   
+    var data = new FormData();
+    data.append('vehicle_id', vehicle_id);
+    data.append('report_type', report_type);
   
     var url = url_ms_alerts + "/vehicle-alert-count";
-    ajaxRequestMs(url,JSON.stringify(data),'POST',successAlertCount,failedAlert)
+    ajaxRequestMs(url,data,'POST',successAlertCount,failedAlert)
 
 }
 function successAlertCount(response){
