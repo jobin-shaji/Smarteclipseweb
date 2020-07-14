@@ -103,12 +103,21 @@ class VehicleTripReportController extends Controller
             )
             ->where('plan_id', $plan_of_client)
             ->first(); 
-            if($request->number_of_vehicle >= $trip_report_config->free_vehicle)
+             
+            $all_subscription_vehicles_count    = (new TripReportSubscriptionVehicles())->getAllSubscriptionVehiclesCount($client_id);
+            if($all_subscription_vehicles_count < $trip_report_config->free_vehicle)
             {
-                $subscribed_vehicle_count = $request->number_of_vehicle - $trip_report_config->free_vehicle;
+                if($request->number_of_vehicle >= $trip_report_config->free_vehicle)
+                {
+                    $subscribed_vehicle_count = $request->number_of_vehicle - $trip_report_config->free_vehicle;
+                }else{
+                    $subscribed_vehicle_count = 0;
+                }
             }else{
-                $subscribed_vehicle_count = 0;
+                $subscribed_vehicle_count     =   $request->number_of_vehicle;
             }
+            
+           
             $subscribed_month               =  $request->number_of_month;
             $subscription_start_date        =  (new Carbon($request->start_date))->format('Y-m-d');
             $subscription_end_date          =  (new Carbon($request->start_date))->addMonths($subscribed_month)->format('Y-m-d');
