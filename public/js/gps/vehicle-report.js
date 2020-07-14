@@ -64,6 +64,7 @@ function vehicleAlertCount(){
         vehicle_id : vehicle_id,
         report_type : report_type,                    
     }; 
+    console.log(data);
     var url = url_ms_alerts + "/vehicle-alert-count";
     ajaxRequestMs(url,data,'POST',successAlertCount,failedAlert)
 
