@@ -115,7 +115,7 @@
                 </ul>
             </li>
             <a class="dropdown-item" href="{{url('/monitor')}}">MONITORING</a>
-            <a class="dropdown-item" href="{{url('/vehicle-trip-report-config')}}">VEHICLE TRIP REPORT CONFIGURATION </a>
+            <a class="dropdown-item" href="{{url('/vehicle-trip-report-config')}}">VEHICLE TRIP REPORT SUBSCRIPTION </a>
             <a class="dropdown-item" href="{{url('/trip-report-manufacturer')}}">TRIP REPORT<span></span></a>
         </ul>
     </li>

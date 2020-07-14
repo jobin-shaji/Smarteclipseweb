@@ -69,6 +69,11 @@ function getVehicleTripReportConfiguration()
 {
     $('#myModal').modal('show');
 }
+
+function addVehicleSubscription()
+{
+    $('#vehicle_registration').modal('show');
+}
 /**
  * for clearing the modal when close
  */
@@ -82,13 +87,5 @@ $( ".config_date" ).datetimepicker({
     minDate: new Date()
 });
 
-$('.config_date').datetimepicker().on('dp.change', function (e) {
-    $('.config_end_date').data('DateTimePicker').minDate(new Date(e.date));
 
-});
-$( ".config_end_date" ).datetimepicker({
-    format: 'DD-MM-YYYY',
-    minDate: new Date()
-
-});
 // date picker validations
