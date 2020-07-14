@@ -578,7 +578,7 @@ class ClientController extends Controller {
     public function enableClient(Request $request)
     {
         $client_user    =   User::withTrashed()->find($request->id);
-        $client         =   (new Client())->checkUserIdIsInClientTable($request->id); 
+        $client         =   (new Client())->checkUserIdIsInClientTableWithTrashedItems($request->id); 
         if($client_user==null){
             return response()->json([
                 'status' => 0,
