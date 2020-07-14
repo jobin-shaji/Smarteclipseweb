@@ -19,7 +19,7 @@
 				      <b>ECLIPSE</b> &nbsp;Version 0.1
 				    </div>
 				    Developed by  
-				    <strong> <a href="http://vstmobility.com" target="_blank">VST Mobility Solutions</a>.</strong>
+				    <strong> <a href="https://vstmobility.com" target="_blank">VST Mobility Solutions</a>.</strong>
 				 </footer>
           <?php }
           else { ?>
@@ -28,7 +28,7 @@
 				      <b>ECLIPSE</b> &nbsp;Version 0.1
 				    </div>
 				    Developed by  
-				    <strong> <a href="http://vstmobility.com" target="_blank">VST Mobility Solutions</a>.</strong>
+				    <strong> <a href="https://vstmobility.com" target="_blank">VST Mobility Solutions</a>.</strong>
 				 </footer>
    <?php } ?>
 
