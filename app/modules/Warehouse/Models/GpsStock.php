@@ -445,4 +445,15 @@ class GpsStock extends Model
                     ->first();
     }
 
+    /**
+     * 
+     * 
+     */
+    public function manufacturedDevicesAddedToStockCount()
+    {
+        return self::select('id')
+                ->where('refurbished_status',0)
+                ->count();
+    }
+
 }
