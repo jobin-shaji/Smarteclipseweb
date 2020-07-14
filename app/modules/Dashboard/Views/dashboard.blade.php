@@ -55,7 +55,7 @@
                 </div>
               </div>
             </div>
-            <a href="/gps-all" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="/gps-all" class="small-box-footer view-last">View <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <div class="col-lg-3 col-xs-6 gps_dashboard_grid dash_grid">
