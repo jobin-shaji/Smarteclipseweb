@@ -21,6 +21,7 @@ $(document).ready(function () {
 function dbcount(res){
       $('#gps').text(res.gps);
       $('#refurbished_gps').text(res.gps_refurbished_stock);
+      $('#refurbished_devices').text(res.refurbished_devices);
       $('#gps_manufactured').text(res.gps_manufactured);
       $('#gps_transferred').text(res.gps_transferred);
       $('#gps_to_be_added_to_stock').text(res.gps_to_be_added_to_stock);

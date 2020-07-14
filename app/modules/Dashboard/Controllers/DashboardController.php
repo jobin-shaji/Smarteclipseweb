@@ -233,6 +233,7 @@ class DashboardController extends Controller
        
         $gps_manufactured           =   (new Gps())->manufacturedDeviceCount();
         $gps_already_added_to_stock =   (new GpsStock())->manufacturedDevicesAddedToStockCount();
+        $refurbished_devices        =   (new Gps())->refurbishedDevicesInAllDevices();
     
         $gps_nontransferred_stock   =   GpsStock::select('id','dealer_id','subdealer_id','client_id','is_returned')
                                                 ->whereNull('dealer_id')->whereNull('subdealer_id')->whereNull('client_id')
@@ -259,6 +260,7 @@ class DashboardController extends Controller
             'gps_manufactured'          =>  $gps_manufactured, 
             'gps'                       =>  $gps_nontransferred_stock, 
             'gps_refurbished_stock'     =>  $gps_refurbished_stock,
+            'refurbished_devices'       =>  $refurbished_devices,
             'gps_transferred'           =>  $gps_transferred, 
             'gps_to_be_added_to_stock'  =>  $gps_to_be_added_to_stock, 
             'gps_returned'              =>  $gps_returned, 

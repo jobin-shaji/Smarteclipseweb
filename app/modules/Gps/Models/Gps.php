@@ -389,5 +389,16 @@ class Gps extends Model
                 ->where('refurbished_status',0)
                 ->count();
     }
+
+    /**
+     * 
+     * 
+     */
+    public function refurbishedDevicesInAllDevices()
+    {
+        return self::select('id')
+                ->where('refurbished_status',1)
+                ->count();
+    }
     
 }

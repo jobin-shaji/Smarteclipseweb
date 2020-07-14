@@ -43,14 +43,17 @@
         <div class="col-lg-3 col-xs-6 new_arrival_dashboard_grid dash_grid">
           <!-- small box -->
           <div class="small-box bg-green bxs">
-            <div class="inner">
-              <h3 id="gps_manufactured">
-                <div class="loader"></div>
-              </h3>
-              <p>GPS Devices Manufactured</p>
-            </div>
-            <div class="icon">
-              <i class="fa fa-tablet"></i>
+            <div class="inner inner-left">
+              <div class="box-2">
+                <div style="float:left; width:50%">
+                  <h3 id="gps_manufactured"></h3>
+                  <p class="mrg-bt-0">GPS Devices Manufactured</p>
+                </div>
+                <div style="float:left; width:50%">
+                  <h3 id="refurbished_devices"></h3>
+                  <p class="mrg-bt-0">Refurbished GPS Devices</p>
+                </div>
+              </div>
             </div>
             <a href="/gps-all" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
           </div>
