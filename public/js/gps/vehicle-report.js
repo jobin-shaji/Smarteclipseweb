@@ -73,17 +73,17 @@ function successAlertCount(response){
 
 
 
-    var sudden_acceleration         =   response.sudden_acceleration;
-    var harsh_braking               =   response.harsh_braking;
-    var main_battery_disconnect     =   response.main_battery_disconnect;
-    var accident_impact             =   response.accident_impact;
-    var over_speed                  =   response.overspeed_count;
-    var zig_zag                     =   response.zig_zag_alert;
-    var user_alert                  =   response.total;
-    var geofence_entry              =   response.geofence_entry;
-    var geofence_exit               =   response.geofence_exit;
-    var geofence_entry_overspeed    =   response.geofence_entry_overspeed;
-    var geofence_exit_overspeed     =   response.geofence_exit_overspeed;
+    var sudden_acceleration         =   response.data.sudden_acceleration.alert_count;
+    var harsh_braking               =   response.data.harsh_braking.alert_count;
+    var main_battery_disconnect     =   response.data.main_battery_disconnect.alert_count;
+    var accident_impact             =   response.data.accident_impact.alert_count;
+    var over_speed                  =   response.data.overspeed_count.alert_count;
+    var zig_zag                     =   response.data.zig_zag_alert.alert_count;
+    var user_alert                  =   response.data.total.alert_count;
+    var geofence_entry              =   response.data.geofence_entry.alert_count;
+    var geofence_exit               =   response.data.geofence_exit.alert_count;
+    var geofence_entry_overspeed    =   response.data.geofence_entry_overspeed.alert_count;
+    var geofence_exit_overspeed     =   response.data.geofence_exit_overspeed.alert_count;
     if(sudden_acceleration == 0)
     {
         sudden_acceleration         =   "No alerts";
