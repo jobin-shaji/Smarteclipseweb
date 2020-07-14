@@ -37,7 +37,7 @@ class ClientTripReportSubscription extends Model
                             'subscriptions.id as id',
                             'subscriptions.subscription_id',
                             'subscriptions.number_of_vehicles',
-                            'subscriptions.number_of_reports_generated',
+                            'subscriptions.number_of_reports_generated'
 
                         );
                         if($client_id != 'all')
