@@ -378,5 +378,16 @@ class Gps extends Model
     {
         return self::where('imei',$imei)->first();
     }
+
+    /**
+     * 
+     * 
+     */
+    public function manufacturedDeviceCount()
+    {
+        return self::select('id')
+                ->where('refurbished_status',0)
+                ->count();
+    }
     
 }
