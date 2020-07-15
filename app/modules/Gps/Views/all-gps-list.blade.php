@@ -22,7 +22,12 @@
     </nav>
     <div class="container-fluid">
       <div class="card-body">
-        <div class="table-responsive scrollmenu">
+        <div class='checkbox-section'>
+          <input type="checkbox" id="manufactured_device" name="manufactured_device" onChange=callBackDataTable(); checked>Manufactured Devices <div class="color-box"></div><span class="color-box-label">Returned Devices</span> <br>
+          <input type="checkbox" id="refurbished_device" name="refurbished_device" onChange=callBackDataTable(); checked>Refurbished Devices
+        </div>
+       
+        <div class="table-responsive">
           <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">                     
             <div class="row">
               <div class="col-sm-12">
@@ -49,7 +54,27 @@
     </div>
   </div>
 </div>
-
+<style>
+  .checkbox-section
+  {
+    margin-left:58px;
+  }
+  .table tr td
+  {
+    word-break: break-all !important;
+  }
+  .color-box {
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+    background-color: #f1cca0;
+    margin-left: 35px;
+  }
+  .color-box-label
+  {
+    margin-left: 10px;
+  }
+</style>
 @endsection
 
 @section('script')

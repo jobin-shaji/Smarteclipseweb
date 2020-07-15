@@ -107,32 +107,31 @@ class GpsController extends Controller {
         return view('Gps::all-gps-list');
     }
     //returns gps as json
-    public function getAllgpsList()
+    public function getAllgpsList(Request $request)
     {
-        $gps = Gps::select(
-            'id',
-            'serial_no',
-            'imei',
-            'imsi',
-            'icc_id',
-            'batch_number',
-            'employee_code',
-            'manufacturing_date',
-            'e_sim_number',
-            'model_name',
-            'version',
-            'deleted_at'
-        )
-        ->withTrashed()
-        ->get();
-        return DataTables::of($gps)
+        $manufactured_device =  $request->manufactured_device;
+        $refurbished_device  =  $request->refurbished_device;
+        $all_devices         =  (new Gps())->getAllDevicesList();
+        if($manufactured_device == '1' && $refurbished_device == '1')
+        {
+            $all_devices->get();
+        }
+        else if($manufactured_device == '1' && $refurbished_device == '0')
+        {
+            $all_devices->where('refurbished_status',0)->get();
+        }
+        else if($manufactured_device == '0' && $refurbished_device == '1')
+        {
+            $all_devices->where('refurbished_status',1)->get();
+        }
+        return DataTables::of($all_devices)
         ->addIndexColumn()
-        ->addColumn('action', function ($gps) {
+        ->addColumn('action', function ($all_devices) {
             $b_url = \URL::to('/');
-            if($gps->deleted_at == null){
+            if($all_devices->deleted_at == null){
                 return "
-                <a href=".$b_url."/gps/".Crypt::encrypt($gps->id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
-                <a href=".$b_url."/gps/".Crypt::encrypt($gps->id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
+                <a href=".$b_url."/gps/".Crypt::encrypt($all_devices->id)."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
+                <a href=".$b_url."/gps/".Crypt::encrypt($all_devices->id)."/edit class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit </a>
                 ";
             }else{
                  return "";
