@@ -38,7 +38,7 @@ Trip report subscription vehicle list
                         </div>
                         <div class="col-lg-4">
                            <span class="icon"><i class="fa fa-book"></i></span>
-                           <span class="item">Number of report generated</span>
+                           <span class="item">Maximum available reports</span>
                            <span class="item_value">: {{$subscription->number_of_reports_generated ? $subscription->number_of_reports_generated : 0 }}</span>
                         </div>
                      </div>
@@ -113,10 +113,11 @@ Trip report subscription vehicle list
                               </thead>
                               <tbody>
                               @foreach ($subscription_list as $item)
+                                 @if($item->vehicles)
                                  <tr @if($item->deleted_at != null) style="background: #ecd8da;" @endif>
                                     <td>{{$loop->iteration}}</td>
-                                    <td>{{$item->vehicles->name}}</td>
-                                    <td>{{$item->vehicles->register_number}}</td>
+                                    <td>{{$item->vehicles ? $item->vehicles->name : "NA"}}</td>
+                                    <td>{{$item->vehicles ? $item->vehicles->register_number : "NA"}}</td>
                                     <td>{{$item->attached_on ? $item->attached_on : "NA"}}</td>
                                     <td>{{$item->expired_on ? $item->expired_on : "NA"}}</td>
                                     <td>{{$item->detached_on ? $item->detached_on : "NA"}}</td>
@@ -124,13 +125,14 @@ Trip report subscription vehicle list
                                     <td> 
                                     
                                      @if($item->deleted_at == null)
-                                       <a href="{{url('/trip-report-vehicle-delete',Crypt::encrypt($item->id))}}"><button style="border-radius: 4px;height: 41px;padding: 9px;width: 100%;" class="btn btn-sm btn-info btn2" ><i class="fa fa-trash" aria-hidden="true"></i>   Detatch</button></a>
+                                     <a href="{{url('/trip-report-vehicle-delete',Crypt::encrypt($item->id))}}" onclick="return confirm('Are you sure you want to detatch this vehicle?');"><button style="border-radius: 4px;height: 41px;padding: 9px;width: 100%;" class="btn btn-sm btn-info btn2" ><i class="fa fa-trash" aria-hidden="true"></i>   Detatch</button></a>                                       
                                      @else
                                        <span style="padding: 10px; border: solid 1px;border-radius: 5px;" >Detached</span>
                                      @endif
                                     
                                     </td>
                                  </tr>
+                                 @endif
                               @endforeach  
                               </tbody>
                            </table>

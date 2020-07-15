@@ -318,19 +318,19 @@ class WarehouseController extends Controller {
                 {
                     return "
                     <a href=".$b_url."/gps-transfer-root-manufacturer-distributor/".Crypt::encrypt($gps_transfer->id)."/label class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> Box Label </a>
-                    <a href=".$b_url."/gps-transfer/".Crypt::encrypt($gps_transfer->id)."/view class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
+                    <a href=".$b_url."/gps-transfer/".Crypt::encrypt($gps_transfer->id)."/view class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a></br>
                     <button onclick=cancelRootGpsTransfer(".$gps_transfer->id.") class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-remove'></i> Cancel
                     </button>";
                 }
                 else if($gps_transfer->deleted_at != null){
                     return "
-                    <a href=".$b_url."/gps-transfer/".Crypt::encrypt($gps_transfer->id)."/view class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-eye-open'></i> View </a>
+                    <a href=".$b_url."/gps-transfer/".Crypt::encrypt($gps_transfer->id)."/view class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-eye-open'></i> View </a></br>
                     <b style='color:#FF0000';>Cancelled</b>";
                 }
                 else{
                     return "
                     <a href=".$b_url."/gps-transfer-root-manufacturer-distributor/".Crypt::encrypt($gps_transfer->id)."/label class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> Box Label </a>
-                    <a href=".$b_url."/gps-transfer/".Crypt::encrypt($gps_transfer->id)."/view class='btn btn-xs btn-success'><i class='glyphicon glyphicon-eye-open'></i> View </a>
+                    <a href=".$b_url."/gps-transfer/".Crypt::encrypt($gps_transfer->id)."/view class='btn btn-xs btn-success'><i class='glyphicon glyphicon-eye-open'></i> View </a></br>
                     <b style='color:#008000';>Transferred</b>";
                 }
             })
@@ -361,18 +361,18 @@ class WarehouseController extends Controller {
                 {
                     return "
                     <a href=".$b_url."/gps-transfer-root-distributor-dealer/".Crypt::encrypt($gps_transfer->id)."/label class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> Box Label </a>
-                    <a href=".$b_url."/gps-transfer/".Crypt::encrypt($gps_transfer->id)."/view class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
+                    <a href=".$b_url."/gps-transfer/".Crypt::encrypt($gps_transfer->id)."/view class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a><br>
                     <b style='color:#008000';>Transfer In Progress</b>";
                 }
                 else if($gps_transfer->deleted_at != null){
                     return "
-                    <a href=".$b_url."/gps-transfer/".Crypt::encrypt($gps_transfer->id)."/view class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-eye-open'></i> View </a>
+                    <a href=".$b_url."/gps-transfer/".Crypt::encrypt($gps_transfer->id)."/view class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-eye-open'></i> View </a><br>
                     <b style='color:#FF0000';>Cancelled</b>";
                 }
                 else{
                     return "
                     <a href=".$b_url."/gps-transfer-root-distributor-dealer/".Crypt::encrypt($gps_transfer->id)."/label class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> Box Label </a>
-                    <a href=".$b_url."/gps-transfer/".Crypt::encrypt($gps_transfer->id)."/view class='btn btn-xs btn-success'><i class='glyphicon glyphicon-eye-open'></i> View </a>
+                    <a href=".$b_url."/gps-transfer/".Crypt::encrypt($gps_transfer->id)."/view class='btn btn-xs btn-success'><i class='glyphicon glyphicon-eye-open'></i> View </a><br>
                     <b style='color:#008000';>Transferred</b>";
                 }
             })
@@ -403,18 +403,18 @@ class WarehouseController extends Controller {
                 {
                     return "
                     <a href=".$b_url."/gps-transfer-root-dealer-client/".Crypt::encrypt($gps_transfer->id)."/label class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> Box Label </a>
-                    <a href=".$b_url."/gps-transfer/".Crypt::encrypt($gps_transfer->id)."/view class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
+                    <a href=".$b_url."/gps-transfer/".Crypt::encrypt($gps_transfer->id)."/view class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a></br>
                     <b style='color:#008000';>Transfer In Progress</b>";
                 }
                 else if($gps_transfer->deleted_at != null){
                     return "
-                    <a href=".$b_url."/gps-transfer/".Crypt::encrypt($gps_transfer->id)."/view class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-eye-open'></i> View </a>
+                    <a href=".$b_url."/gps-transfer/".Crypt::encrypt($gps_transfer->id)."/view class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-eye-open'></i> View </a></br>
                     <b style='color:#FF0000';>Cancelled</b>";
                 }
                 else{
                     return "
                     <a href=".$b_url."/gps-transfer-root-dealer-client/".Crypt::encrypt($gps_transfer->id)."/label class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> Box Label </a>
-                    <a href=".$b_url."/gps-transfer/".Crypt::encrypt($gps_transfer->id)."/view class='btn btn-xs btn-success'><i class='glyphicon glyphicon-eye-open'></i> View </a>
+                    <a href=".$b_url."/gps-transfer/".Crypt::encrypt($gps_transfer->id)."/view class='btn btn-xs btn-success'><i class='glyphicon glyphicon-eye-open'></i> View </a></br>
                     <b style='color:#008000';>Transferred</b>";
                 }
             })
@@ -445,18 +445,18 @@ class WarehouseController extends Controller {
                 {
                     return "
                     <a href=".$b_url."/gps-transfer-root-sub-dealer-trader/".Crypt::encrypt($gps_transfer->id)."/label class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> Box Label </a>
-                    <a href=".$b_url."/gps-transfer/".Crypt::encrypt($gps_transfer->id)."/view class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
+                    <a href=".$b_url."/gps-transfer/".Crypt::encrypt($gps_transfer->id)."/view class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a></br>
                     <b style='color:#008000';>Transfer In Progress</b>";
                 }
                 else if($gps_transfer->deleted_at != null){
                     return "
-                    <a href=".$b_url."/gps-transfer/".Crypt::encrypt($gps_transfer->id)."/view class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-eye-open'></i> View </a>
+                    <a href=".$b_url."/gps-transfer/".Crypt::encrypt($gps_transfer->id)."/view class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-eye-open'></i> View </a></br>
                     <b style='color:#FF0000';>Cancelled</b>";
                 }
                 else{
                     return "
                     <a href=".$b_url."/gps-transfer-root-sub-dealer-trader/".Crypt::encrypt($gps_transfer->id)."/label class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> Box Label </a>
-                    <a href=".$b_url."/gps-transfer/".Crypt::encrypt($gps_transfer->id)."/view class='btn btn-xs btn-success'><i class='glyphicon glyphicon-eye-open'></i> View </a>
+                    <a href=".$b_url."/gps-transfer/".Crypt::encrypt($gps_transfer->id)."/view class='btn btn-xs btn-success'><i class='glyphicon glyphicon-eye-open'></i> View </a></br>
                     <b style='color:#008000';>Transferred</b>";
                 }
             })
@@ -487,18 +487,18 @@ class WarehouseController extends Controller {
                 {
                     return "
                     <a href=".$b_url."/gps-transfer-root-trader-end-user/".Crypt::encrypt($gps_transfer->id)."/label class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> Box Label </a>
-                    <a href=".$b_url."/gps-transfer/".Crypt::encrypt($gps_transfer->id)."/view class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>
+                    <a href=".$b_url."/gps-transfer/".Crypt::encrypt($gps_transfer->id)."/view class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a></br>
                     <b style='color:#008000';>Transfer In Progress</b>";
                 }
                 else if($gps_transfer->deleted_at != null){
                     return "
-                    <a href=".$b_url."/gps-transfer/".Crypt::encrypt($gps_transfer->id)."/view class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-eye-open'></i> View </a>
+                    <a href=".$b_url."/gps-transfer/".Crypt::encrypt($gps_transfer->id)."/view class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-eye-open'></i> View </a></br>
                     <b style='color:#FF0000';>Cancelled</b>";
                 }
                 else{
                     return "
                     <a href=".$b_url."/gps-transfer-root-trader-end-user/".Crypt::encrypt($gps_transfer->id)."/label class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> Box Label </a>
-                    <a href=".$b_url."/gps-transfer/".Crypt::encrypt($gps_transfer->id)."/view class='btn btn-xs btn-success'><i class='glyphicon glyphicon-eye-open'></i> View </a>
+                    <a href=".$b_url."/gps-transfer/".Crypt::encrypt($gps_transfer->id)."/view class='btn btn-xs btn-success'><i class='glyphicon glyphicon-eye-open'></i> View </a></br>
                     <b style='color:#008000';>Transferred</b>";
                 }
             })
@@ -767,9 +767,9 @@ class WarehouseController extends Controller {
             }
             $stock_in_distributor                   =   GpsStock::select('dealer_id','subdealer_id')->where('dealer_id',$to_user_details->id)->whereNull('subdealer_id')->count();
             if($stock_in_distributor > 1) {
-                $stock_string = 'Devices In Stock With <b>'.$to_user_details->name;
+                $stock_string = 'Devices In Stock With <br><b>'.$to_user_details->name;
             }else{
-                $stock_string = 'Device In Stock With <b>'.$to_user_details->name;
+                $stock_string = 'Device In Stock With <br><b>'.$to_user_details->name;
             }
            
             $transferred_data = [
@@ -894,9 +894,9 @@ class WarehouseController extends Controller {
             $stock_in_dealer=GpsStock::select('subdealer_id','client_id')->where('subdealer_id',$to_user_details->id)->whereNull('client_id')->count();
            
             if($stock_in_dealer > 1) {
-                $stock_string = 'Devices In Stock With <b>'.$to_user_details->name;
+                $stock_string = 'Devices In Stock With <br><b>'.$to_user_details->name;
             }else{
-                $stock_string = 'Device In Stock With <b>'.$to_user_details->name;
+                $stock_string = 'Device In Stock With <br><b>'.$to_user_details->name;
             }
            
             $transferred_data = [
@@ -1082,9 +1082,9 @@ class WarehouseController extends Controller {
             $stock_in_sub_dealer=GpsStock::select('id','trader_id','client_id')->where('trader_id',$to_user_details->id)->whereNull('client_id')->count();
            
             if($stock_in_sub_dealer > 1) {
-                $stock_string = 'Devices In Stock With <b>'.$to_user_details->name;
+                $stock_string = 'Devices In Stock With <br><b>'.$to_user_details->name;
             }else{
-                $stock_string = 'Device In Stock With <b>'.$to_user_details->name;
+                $stock_string = 'Device In Stock With <br><b>'.$to_user_details->name;
             }
             
             $transferred_data = [
@@ -2638,7 +2638,7 @@ class WarehouseController extends Controller {
             return response()->json([
                 'status' => 0,
                 'title' => 'Error',
-                'message' => 'Transferred gps does not exist'
+                'message' => 'Transferred GPS does not exist'
             ]);
         }
         $gps_transfer->accepted_on =date('Y-m-d H:i:s');
@@ -2675,7 +2675,7 @@ class WarehouseController extends Controller {
             return response()->json([
                 'status' => 0,
                 'title' => 'Error',
-                'message' => 'Transferred gps does not exist'
+                'message' => 'Transferred GPS does not exist'
             ]);
         }
         $gps_transfer->accepted_on =date('Y-m-d H:i:s');
@@ -2712,7 +2712,7 @@ class WarehouseController extends Controller {
             return response()->json([
                 'status' => 0,
                 'title' => 'Error',
-                'message' => 'Transferred gps does not exist'
+                'message' => 'Transferred GPS does not exist'
             ]);
         }
         $gps_transfer->accepted_on =date('Y-m-d H:i:s');
