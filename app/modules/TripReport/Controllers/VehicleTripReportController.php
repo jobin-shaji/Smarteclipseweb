@@ -144,9 +144,11 @@ class VehicleTripReportController extends Controller
     {  
  
         $subscription         =   (new ClientTripReportSubscription())->deleteTripReportSubscription(Crypt::decrypt($request->id));
+    //    dd($subscription->id);
         if($subscription != null)
         {
-            $subscription->delete();            
+            $subscription->delete();        
+            $subscription_vehicle_list     = (new TripReportSubscriptionVehicles())->deleteTripReportVehicle($subscription->id);    
             $request->session()->flash('message', 'Trip report subscription deleted successfully'); 
             $request->session()->flash('alert-class', 'callout-success'); 
             return redirect(route('vehicle-trip-report-config')); 
@@ -172,9 +174,11 @@ class VehicleTripReportController extends Controller
         if($subscription != null)
         {
             $subscription_vehicle               = (new TripReportSubscriptionVehicles())->getSubscriptionVehicleIds($subscription);
+            // dd($subscription);
             $subscription_vehicle_count         = (new TripReportSubscriptionVehicles())->getSubscriptionVehiclesCount($subscription->id);
             $subscription_vehicle_list          = (new TripReportSubscriptionVehicles())->getSubscriptionVehicles($subscription->id);
             $all_subscription_vehicles_count    = (new TripReportSubscriptionVehicles())->getAllSubscriptionVehiclesCount($subscription->client_id);
+            // dd($all_subscription_vehicles_count);
             $free_vehicle_count_from_plan       = isset((json_decode($subscription->configuration))->free_vehicle) ? (json_decode($subscription->configuration))->free_vehicle : 0;
             $available_free_vehicle             = 0;
             if($free_vehicle_count_from_plan >  $all_subscription_vehicles_count)
@@ -248,6 +252,7 @@ class VehicleTripReportController extends Controller
         $end_date               =  (new Carbon($request->start_date))->addMonths($subscribed_month)->format('Y-m-d');
         $number_of_vehicle      =  $request->number_of_vehicle;
         $subscriptions          =  (new ClientTripReportSubscription())->getAllActiveSubscription($client_id,$start_date,$end_date);
+        // dd($subscriptions);
         $active_subscription    =  []; 
 
             foreach ($subscriptions as $item)

@@ -130,7 +130,9 @@ Trip report subscription list
                                           <?php ( isset($each_data->end_date) ) ? $end_date = $each_data->end_date : $end_date='-NA-' ?>{{$end_date}}</td>
                                           <td>
                                           <a href="{{url('/trip-report-subscription-vehicles',Crypt::encrypt($each_data->id))}}"><button class="btn btn-sm btn-info btn2" ><i class="fa fa-cog" aria-hidden="true"></i>   Vehicle config</button></a>
-                                          <a href="{{url('/trip-report-configuration-delete',Crypt::encrypt($each_data->id))}}"><button class="btn btn-sm btn-info btn2" ><i class="fa fa-trash" aria-hidden="true"></i>   Delete</button></a></td>
+                                          <a href="{{url('/trip-report-configuration-delete',Crypt::encrypt($each_data->id))}}" onclick="return confirm('Are you sure you want to delete this item?');"><button class="btn btn-sm btn-info btn2" ><i class="fa fa-trash" aria-hidden="true"></i>   Delete</button></a></td>
+                                          </td> 
+
                                        </tr>
                                        @endforeach
                                        @endif
@@ -143,12 +145,13 @@ Trip report subscription list
                               </div>
                               <!-- modal for create configuration -->
                               <div class="modal fade" id="myModal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                 <form  method="POST"  action="{{route('trip.report.subscriptions.create.p')}}" onsubmit="return validateSubscription()">
+                                 <form  method="POST" id="form_trip_report" action="{{route('trip.report.subscriptions.create.p')}}" onsubmit="return validateSubscription()">
                                     {{csrf_field()}}    
                                     <div class="modal-dialog" role="document">
                                        <div class="modal-content ">
                                           <div class="modal-header text-center">
-                                             <h4 class="modal-title w-100 font-weight-bold">Trip Report Subscription </h4>
+                                             <!-- <h4 class="modal-title w-100 font-weight-bold ">Trip Report Subscription </h4> -->
+                                             <label  class="modal-title w-100 font-weight-bold ">Trip Report Subscription</label> 
                                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                              <span aria-hidden="true">&times;</span>
                                              </button>
@@ -158,7 +161,7 @@ Trip report subscription list
                                              <div class="form_section">
                                                 <div  class="row">
                                                    <div class="col-md-6">  
-                                                      <label  data-success="right" >Client</label> 
+                                                      <label  data-success="right" >End User</label> 
                                                    </div>
                                                    <div class="col-md-6 select2-new div_margin_top">
                                                       <select required class="form-control select2"  name="client_id"  title="Select End User" id='client_id'>
@@ -182,15 +185,15 @@ Trip report subscription list
                                                       <label  data-success="right" >Number of month</label> 
                                                    </div>
                                                    <div class="col-md-6 div_margin_top">
-                                                      <input required type="number" class=" form-control" id="number_of_month" Placeholder="Subscription months" name="number_of_month" >                                                                    
+                                                      <input required type="number" min="1" max="999" class=" form-control" id="number_of_month" Placeholder="Subscription months" name="number_of_month" >                                                                    
                                                    </div>
                                                 </div>
                                                 <div class="row">
                                                    <div class="col-md-6">  
-                                                      <label  data-success="right" >Number of subscription vehicles</label> 
+                                                      <label  data-success="right" >Number of vehicles</label> 
                                                    </div>
                                                    <div class="col-md-6 select2-new div_margin_top">
-                                                      <input required type="number" class="form-control" id="number_of_vehicle" name="number_of_vehicle" Placeholder="Number of subscription vehicles">                                                                    
+                                                      <input required type="number" min="1" max="999" class="form-control" id="number_of_vehicle" name="number_of_vehicle" Placeholder="Number of subscription vehicles">                                                                    
                                                    
                                                    </div>
                                                 </div>
@@ -200,7 +203,7 @@ Trip report subscription list
                                              </div>    
                                           </div>
                                           <div class="modal-footer d-flex justify-content-center">
-                                             <button type="submit" id="save_subscription"  class="btn btn-default" >Submit</button>
+                                             <button type="submit" id="save_subscription"  class="btn btn-default save_subscription" >Submit</button>
                                           </div>
                                        </div>
                                     </div>
@@ -274,8 +277,7 @@ Trip report subscription list
    var form_submit      = 0
    function validateSubscription()
    {
-     
-
+      $(".save_subscription").attr("disable", true);
       if(form_submit == 0)
       {
          var url = '/subscription_validation';
@@ -294,6 +296,7 @@ Trip report subscription list
          },
              success: function(res) 
              {
+               $(".save_subscription").attr("enable", true);
                var response = JSON.parse(res);  
                console.log(response); 
                if( response.status == "success")
@@ -314,7 +317,7 @@ Trip report subscription list
                      "<td>"+value.start_date+"</td>"+
                      "<td>"+value.expired_on+"</td>"+
 
-                     "<td style='width: 217px;'><a style='color: #fff;padding: 4px;border: 1px solid;background: #f0b230;' href='/trip-report-subscription-vehicles/"+value.id+"'><i class='fa fa-cog' aria-hidden='true'></i> Goto subscription</a></td>"+
+                     "<td style='width: 217px;'><a style='color: #fff;padding: 4px;border: 1px solid;background: #f0b230;' href='/trip-report-subscription-vehicles/"+value.id+"'><i class='fa fa-cog' aria-hidden='true'></i> Go to subscription</a></td>"+
                      "</tr>";
                   });
                   subscribed_vehicles +="</table>";
@@ -334,7 +337,9 @@ Trip report subscription list
          return true;
       }
    }
-
+   $('#myModal').on('hidden.bs.modal', function () {
+ location.reload();
+})
 </script>
 @endsection
 @endsection

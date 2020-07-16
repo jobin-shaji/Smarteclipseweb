@@ -87,5 +87,3 @@ $( ".config_date" ).datetimepicker({
     minDate: new Date()
 });
 
-
-// date picker validations
