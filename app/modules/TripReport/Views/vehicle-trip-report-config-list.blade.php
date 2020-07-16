@@ -100,7 +100,7 @@ Trip report subscription list
                                        <tr>
                                           <th>SL.NO</th>
                                           <th>Subscription-Id</th>
-                                          <th>Client</th>
+                                          <th>End User</th>
                                           <th>Plan</th>
                                           <th>Number of vehicles</th>
                                           <th >Remaining Reports</th>
@@ -130,7 +130,7 @@ Trip report subscription list
                                           <?php ( isset($each_data->end_date) ) ? $end_date = $each_data->end_date : $end_date='-NA-' ?>{{$end_date}}</td>
                                           <td>
                                           <a href="{{url('/trip-report-subscription-vehicles',Crypt::encrypt($each_data->id))}}"><button class="btn btn-sm btn-info btn2" ><i class="fa fa-cog" aria-hidden="true"></i>   Vehicle config</button></a>
-                                          <a href="{{url('/trip-report-configuration-delete',Crypt::encrypt($each_data->id))}}" onclick="return confirm('Are you sure you want to delete this item?');"><button class="btn btn-sm btn-info btn2" ><i class="fa fa-trash" aria-hidden="true"></i>   Delete</button></a></td>
+                                          <a href="{{url('/trip-report-configuration-delete',Crypt::encrypt($each_data->id))}}" onclick="return confirm('Are you sure you want to delete this subscription?');"><button class="btn btn-sm btn-info btn2" ><i class="fa fa-trash" aria-hidden="true"></i>   Delete</button></a></td>
                                           </td> 
 
                                        </tr>
@@ -210,6 +210,9 @@ Trip report subscription list
                                  </form>
                               </div>
                               <!--/ modal for create configuration -->
+                              <div class="loader-wrapper loader-1"  >
+                                 <div id="loader"></div>
+                              </div> 
                            </div>
                         </div>
                      </div>
@@ -277,7 +280,7 @@ Trip report subscription list
    var form_submit      = 0
    function validateSubscription()
    {
-      $(".save_subscription").attr("disable", true);
+      document.getElementById('save_subscription').disabled=true;
       if(form_submit == 0)
       {
          var url = '/subscription_validation';
@@ -296,11 +299,12 @@ Trip report subscription list
          },
              success: function(res) 
              {
-               $(".save_subscription").attr("enable", true);
+              
                var response = JSON.parse(res);  
                console.log(response); 
                if( response.status == "success")
                {
+                  document.getElementById('save_subscription').disabled=false;
                   $(".modal-dialog").addClass('error_message_modal');
                   $('.form_section').css('display','none');
                   $('#save_subscription').html('Proceed to create');
@@ -340,6 +344,8 @@ Trip report subscription list
    $('#myModal').on('hidden.bs.modal', function () {
  location.reload();
 })
+
+
 </script>
 @endsection
 @endsection

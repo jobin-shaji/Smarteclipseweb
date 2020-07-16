@@ -147,7 +147,7 @@ class DeviceReassignController extends Controller
         {
             $gps_transfer_id [] = $each_transfer_item->gps_transfer_id;
         }
-       
+      
         if($reassign_type_id == 4 || $reassign_type_id == 3)
         {
             if($client != null)
@@ -209,6 +209,14 @@ class DeviceReassignController extends Controller
                         {
                             VehicleDriverLog::where('vehicle_id',$request->vehicle)->delete();
                             DB::table('vehicles')->where('gps_id',$gps)->delete();
+                            // VehicleDriverLog::where('vehicle_id',$request->vehicle)->delete();
+                            DB::table('trip_report_subscription_vehicles')->where('vehicle_id',$$request->vehicle)
+                            ->update([
+                                'detached_on'=>date('Y-m-d'),
+                                'deleted_at'=>date('Y-m-d H:i:s'),
+                            ]);
+                            
+
                             DB::table('vehicle_geofences')->where('vehicle_id',$vehicle)->delete();
                             // VehicleGeofence::where('vehicle_id',$vehicle)->delete();
                             // ServicerJob::where('gps_id',$gps)->delete();
@@ -295,6 +303,11 @@ class DeviceReassignController extends Controller
                             VehicleDriverLog::where('vehicle_id',$request->vehicle)->delete();
                             DB::table('vehicles')->where('gps_id',$gps)->delete();
                             DB::table('vehicle_geofences')->where('vehicle_id',$vehicle)->delete();
+                            DB::table('trip_report_subscription_vehicles')->where('vehicle_id',$$request->vehicle)
+                            ->update([
+                                'detached_on'=>date('Y-m-d'),
+                                'deleted_at'=>date('Y-m-d H:i:s'),
+                            ]);
                             // VehicleGeofence::where('vehicle_id',$vehicle)->delete();
                             // ServicerJob::where('gps_id',$gps)->delete();
                             // Vehicle::where('gps_id',$request->gps)->delete();

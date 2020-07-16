@@ -74,7 +74,7 @@ Trip report subscription vehicle list
                         <div class="col-lg-4">
                            <span class="icon"><i class="fa fa fa-calendar"></i></span>
                            <span class="item"> Available vehicle subscriptions</span>
-                           <span class="item_value">: {{ $subscription->number_of_vehicles + $free_vehicle - $vehicle_count}}</span>
+                           <span class="item_value">: @if($subscription->number_of_vehicles + $free_vehicle - $vehicle_count > 0 ){{ $subscription->number_of_vehicles + $free_vehicle - $vehicle_count}} @else {{0}} @endif</span>
                         </div>
                        
                      </div>
