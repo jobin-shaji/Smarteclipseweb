@@ -116,7 +116,9 @@ Trip report subscription list
                                        </tr>
                                        @else                                                    
                                        @foreach($vehicle_trip_config_details as $each_data)
-                                    
+                                       <?php 
+                                        $configuration = json_decode($each_data->configuration, true);
+                                       ?>                                    
                                        <tr>
                                           <td>{{ (($perPage * ($page - 1)) + $loop->iteration) }}</td>
                                           <td><?php ( isset($each_data->subscription_id) ) ? $subscription_id = $each_data->subscription_id : $subscription_id='-NA-' ?>{{$subscription_id}}</td>
@@ -280,9 +282,9 @@ Trip report subscription list
    var form_submit      = 0
    function validateSubscription()
    {
-      document.getElementById('save_subscription').disabled=true;
       if(form_submit == 0)
       {
+         document.getElementById('save_subscription').disabled=true;
          var url = '/subscription_validation';
          $.ajax({
          type: 'POST',
@@ -302,9 +304,10 @@ Trip report subscription list
               
                var response = JSON.parse(res);  
                console.log(response); 
+               document.getElementById('save_subscription').disabled=false;
                if( response.status == "success")
                {
-                  document.getElementById('save_subscription').disabled=false;
+                  
                   $(".modal-dialog").addClass('error_message_modal');
                   $('.form_section').css('display','none');
                   $('#save_subscription').html('Proceed to create');
@@ -337,6 +340,7 @@ Trip report subscription list
          form_submit  = 1;
          return false;
       } else {
+         document.getElementById('save_subscription').disabled=false;
 
          return true;
       }
