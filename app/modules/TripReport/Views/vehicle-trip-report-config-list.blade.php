@@ -125,7 +125,7 @@ Trip report subscription list
                                           <td><?php ( isset($each_data->client_name) ) ? $client_name = $each_data->client_name : $client_name='-NA-' ?>{{$client_name}}</td>
                                           <td><?php ( isset($each_data->role) ) ? $role = ucfirst(strtolower($plan_names[$each_data->role])) : $role='-NA-' ?>{{$role}}</td>
                                          
-                                          <td><?php ( isset($each_data->number_of_vehicles) ) ? $number_of_vehicles = $each_data->number_of_vehicles : $number_of_vehicles='-NA-' ?>{{$number_of_vehicles}}</td>
+                                          <td><?php ( isset($each_data->number_of_vehicles) ) ? $number_of_vehicles = $each_data->number_of_vehicles  + $configuration['free_vehicle'] : $number_of_vehicles='-NA-' ?>{{$number_of_vehicles}}</td>
                                           <td><?php ( isset($each_data->number_of_reports_generated) ) ? $number_of_reports_generated = $each_data->number_of_reports_generated : $number_of_reports_generated='-NA-' ?>{{$number_of_reports_generated}}</td>
                                           <td><?php ( isset($each_data->start_date) ) ? $start_date = $each_data->start_date : $start_date='-NA-' ?>{{$start_date}}</td>
                                           <td>
@@ -134,7 +134,6 @@ Trip report subscription list
                                           <a href="{{url('/trip-report-subscription-vehicles',Crypt::encrypt($each_data->id))}}"><button class="btn btn-sm btn-info btn2" ><i class="fa fa-cog" aria-hidden="true"></i>   Vehicle config</button></a>
                                           <a href="{{url('/trip-report-configuration-delete',Crypt::encrypt($each_data->id))}}" onclick="return confirm('Are you sure you want to delete this subscription?');"><button class="btn btn-sm btn-info btn2" ><i class="fa fa-trash" aria-hidden="true"></i>   Delete</button></a></td>
                                           </td> 
-
                                        </tr>
                                        @endforeach
                                        @endif

@@ -24,7 +24,7 @@
                   <table class="table table-user-information">
                     <tbody>
                       <tr>
-                        <td> <b>Client Details:</b></td>
+                        <td> <b>End User Details:</b></td>
                         <td>
                         <span class="user_name">
                             <i class="fa fa-user"></i> : {{(isset($esim->gps->gpsStock->client)) ? strtoupper($esim->gps->gpsStock->client->name) :"NA"}}

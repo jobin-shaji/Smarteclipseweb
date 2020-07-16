@@ -35,6 +35,7 @@ $(document).ready(function() {
                 if(jQuery.parseJSON(res)==false)
                 {
                     if(confirm('Already added file.Do you want to replace it')){
+                        $(this).find('button[type="submit"]').prop( 'disabled', true );
                         uploadNewFile();
                     }
                     else{

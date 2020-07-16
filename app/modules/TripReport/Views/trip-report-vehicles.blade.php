@@ -101,7 +101,7 @@ Trip report subscription vehicle list
                            <table class="table table-hover table-bordered" id="dev-table">
                               <thead>
                                  <tr>
-                                    <th>#</th>
+                                    <th>SL NO</th>
                                     <th>Vehicle Name</th>
                                     <th>Register Number</th>
                                     <th>Attached on</th>
