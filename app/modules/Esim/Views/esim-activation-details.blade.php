@@ -27,24 +27,49 @@
                         <td> <b>End User Details:</b></td>
                         <td>
                         <span class="user_name">
-                            <i class="fa fa-user"></i> : {{(isset($esim->gps->gpsStock->client)) ? strtoupper($esim->gps->gpsStock->client->name) :"NA"}}
+                        <?php
+                        if(isset($esim->gps->gpsStock))
+                        {
+                          if(isset($esim->gps->gpsStock->client))
+                          {
+                            $client_name  = strtoupper($esim->gps->gpsStock->client->name);
+                            $mobile       = $esim->gps->gpsStock->client->user->mobile;
+                          }
+                          else{
+                            $client_name  = "NA";
+                            $mobile       = "NA";
+                          }
+
+                        }
+                        else{
+                          $client_name    = "NA";
+                          $mobile         = "NA";
+                        }
+                        ?>
+                            <i class="fa fa-user"></i> : {{$client_name}}
                         </span>
                         <span class="user_phone" style="padding-left: 60px;">
-                            <i class="fa fa-mobile"></i> : {{(isset($esim->gps->gpsStock->client->user)) ? $esim->gps->gpsStock->client->user->mobile : "NA"}}
+                            <i class="fa fa-mobile"></i> : {{$mobile}}
                         </span>
                         <span class="user_role" style="padding-left: 60px;">
                         <i class='far fa-id-card'></i> : 
                         <?php
-                        
-                         if($esim->gps->gpsStock->client)
-                         {
-                            $plan_names     = array_column(config('eclipse.PLANS'), 'NAME', 'ID');
-                            $plan_name      = $plan_names[$esim->gps->gpsStock->user->role ? $esim->gps->gpsStock->user->role : 0];                            
-                         }
-                         else
-                         {
+                        if(isset($esim->gps->gpsStock))
+                        {
+                          if($esim->gps->gpsStock->client)
+                          {
+                              $plan_names     = array_column(config('eclipse.PLANS'), 'NAME', 'ID');
+                              $plan_name      = $plan_names[$esim->gps->gpsStock->client->user->role ? $esim->gps->gpsStock->client->user->role : 0];                            
+                          }
+                          else
+                          {
+                            $plan_name      ="NA";
+                          }
+                        }
+                        else
+                        {
                           $plan_name      ="NA";
-                         }
+                        }
                             echo $plan_name;
                         ?>
                         </span> 

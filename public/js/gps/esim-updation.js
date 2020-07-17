@@ -35,7 +35,7 @@ $(document).ready(function() {
                 if(jQuery.parseJSON(res)==false)
                 {
                     if(confirm('Already added file.Do you want to replace it')){
-                        $(this).find('button[type="submit"]').prop( 'disabled', true );
+                        // $(this).find('button[type="submit"]').prop( 'disabled', true );
                         uploadNewFile();
                     }
                     else{
@@ -88,29 +88,37 @@ $(document).ready(function() {
         var filename    = document.getElementById("fileUpload").files[0].name;
         // read all rows from first sheet into an JSON array.
         var excelRows = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
-        // console.log(excelRows[0]["MSISDN"]);
-        if((excelRows[0]["IMSI"]!= undefined )&& (excelRows[0]["MSISDN"]!= undefined) && ( excelRows[0]["Business Unit Name"] != undefined) && (excelRows[0]["Product Status"] != undefined) && (excelRows[0]["Product Type"] != undefined) && (excelRows[0]["PUK1"] != undefined) && (excelRows[0]["ICCID"]!= undefined))
-        {
-            for (var i = 0; i < excelRows.length; i++)
+       console.log(excelRows);
+       if(excelRows[0]!=undefined)
+       {
+        //   alert(excelRows[0]);  // console.log(excelRows[0]["MSISDN"]);
+            if((excelRows[0]["IMSI"]!= undefined )&& (excelRows[0]["MSISDN"]!= undefined) && ( excelRows[0]["Business Unit Name"] != undefined) && (excelRows[0]["Product Status"] != undefined) && (excelRows[0]["Product Type"] != undefined) && (excelRows[0]["PUK1"] != undefined) && (excelRows[0]["ICCID"]!= undefined))
             {
-                uploadedFileContentsProcessed.push({
-                    'imsi'                  : excelRows[i]["IMSI"],
-                    'msisdn'                : excelRows[i]["MSISDN"],
-                    'business_unit_name'    : excelRows[i]["Business Unit Name"],
-                    'product_status'        : excelRows[i]["Product Status"],
-                    'product_type'          : excelRows[i]["Product Type"],
-                    'puk'                   : excelRows[i]["PUK1"],
-                    'iccid'                 : excelRows[i]["ICCID"],
-                    'activation_date'       : (typeof excelRows[i]["Activation Date"] != 'undefined') ? excelRows[i]["Activation Date"] : ''
-                });
+                for (var i = 0; i < excelRows.length; i++)
+                {
+                    uploadedFileContentsProcessed.push({
+                        'imsi'                  : excelRows[i]["IMSI"],
+                        'msisdn'                : excelRows[i]["MSISDN"],
+                        'business_unit_name'    : excelRows[i]["Business Unit Name"],
+                        'product_status'        : excelRows[i]["Product Status"],
+                        'product_type'          : excelRows[i]["Product Type"],
+                        'puk'                   : excelRows[i]["PUK1"],
+                        'iccid'                 : excelRows[i]["ICCID"],
+                        'activation_date'       : (typeof excelRows[i]["Activation Date"] != 'undefined') ? excelRows[i]["Activation Date"] : ''
+                    });
+                }
             }
-        }
-        else
-        {
-            alert("Please Check the file");
-            refreshPage();
-        }
-        $('#file_name').text('File:- '+filename);
+            else
+            {
+                alert("Please Check the file");
+                refreshPage();
+            }
+            $('#file_name').text('File:- '+filename);
+       }
+       else{
+           alert("Please Check the file");
+       }
+        
     }
 
     /**
@@ -367,7 +375,7 @@ $(document).ready(function() {
                  alert("This browser does not support HTML5.");
              }
          } else {
-             alert("Please upload a valid Excel file.");
+             alert("Please upload a valid Excel or CSV file.");
          }
          $('.upload_xl,.browse').hide();
          $('.refresh').show();

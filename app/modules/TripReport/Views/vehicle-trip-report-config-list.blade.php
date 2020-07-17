@@ -42,8 +42,8 @@ Trip report subscription list
                                              <div class="col-lg-3 col-md-3" id = "client_section">
                                                 <div class="form-group">
                                                    <label> End User</label>
-                                                   <select class="form-control select2"  name="client" data-live-search="true" title="Select End User" id='client'>
-                                                      <option selected disabeled>Select End User</option>
+                                                   <select class="form-control select2"  name="client" data-live-search="true" title="Select End User" id='client' required="required">
+                                                      <option value="" selected disabeled>Select End User</option>
                                                       <option value='all'>ALL</option>
                                                       @foreach($client_details as $each_data)
                                                       <option value="{{encrypt($each_data->id)}}" @if($client_id != '' && $client_id==$each_data->id){{"selected"}} @endif >{{$each_data->name}} || Mobile No: {{$each_data->mobile}}</option>  
@@ -102,7 +102,7 @@ Trip report subscription list
                                           <th>Subscription-Id</th>
                                           <th>End User</th>
                                           <th>Plan</th>
-                                          <th>Number of vehicles</th>
+                                          <!-- <th>Number of vehicles</th> -->
                                           <th >Remaining Reports</th>
                                           <th>Start Date</th>
                                           <th>End Date</th>
@@ -125,7 +125,7 @@ Trip report subscription list
                                           <td><?php ( isset($each_data->client_name) ) ? $client_name = $each_data->client_name : $client_name='-NA-' ?>{{$client_name}}</td>
                                           <td><?php ( isset($each_data->role) ) ? $role = ucfirst(strtolower($plan_names[$each_data->role])) : $role='-NA-' ?>{{$role}}</td>
                                          
-                                          <td><?php ( isset($each_data->number_of_vehicles) ) ? $number_of_vehicles = $each_data->number_of_vehicles  + $configuration['free_vehicle'] : $number_of_vehicles='-NA-' ?>{{$number_of_vehicles}}</td>
+                                          <!-- <td><?php ( isset($each_data->number_of_vehicles) ) ? $number_of_vehicles = $each_data->number_of_vehicles  : $number_of_vehicles='-NA-' ?>{{$number_of_vehicles}}</td> -->
                                           <td><?php ( isset($each_data->number_of_reports_generated) ) ? $number_of_reports_generated = $each_data->number_of_reports_generated : $number_of_reports_generated='-NA-' ?>{{$number_of_reports_generated}}</td>
                                           <td><?php ( isset($each_data->start_date) ) ? $start_date = $each_data->start_date : $start_date='-NA-' ?>{{$start_date}}</td>
                                           <td>
@@ -281,72 +281,82 @@ Trip report subscription list
    var form_submit      = 0
    function validateSubscription()
    {
-      if(form_submit == 0)
-      {
-         document.getElementById('save_subscription').disabled=true;
-         var url = '/subscription_validation';
-         $.ajax({
-         type: 'POST',
-         url: url,
-         data: {
-            "client_id"             : $('#client_id').val(),
-            "start_date"            : $('#start_date').val(),
-            "number_of_month"       : $('#number_of_month').val(),
-            "number_of_vehicle"     : $('#number_of_vehicle').val()
-         },
-         async: true,
-         headers: {
-               'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-         },
-             success: function(res) 
-             {
-              
-               var response = JSON.parse(res);  
-               console.log(response); 
-               document.getElementById('save_subscription').disabled=false;
-               if( response.status == "success")
-               {
-                  
-                  $(".modal-dialog").addClass('error_message_modal');
-                  $('.form_section').css('display','none');
-                  $('#save_subscription').html('Proceed to create');
-                  var subscribed_vehicles = "";
-                  subscribed_vehicles += "<span>You have not utilized 100% your subscription .details below</span>";
-                  subscribed_vehicles += "<table class='table table-bordered'>";
-                  subscribed_vehicles += "<th>ID</th><th>Number of vehicle subscribed</th><th>Number of vehicle added</th><th>Remaining subscription vehicles</th><th>Start at</th><th>Expired on</th><th>Action</th>";
-                  $.each($(response.data),function(key,value){
-                     subscribed_vehicles +="<tr>"+
-                     "<td>"+value.subscription_id+"</td>"+
-                     "<td style='width: 149px;'>"+value.number_of_vehicles+"</td>"+
-                     "<td>"+value.number_of_vehicles_added+"</td>"+
-                     "<td>"+value.remaining_subscription_vehicles+"</td>"+
-                     "<td>"+value.start_date+"</td>"+
-                     "<td>"+value.expired_on+"</td>"+
+     
+         if(form_submit == 0)
+         {
+            var url = '/subscription_validation';
+            $.ajax({
+            type: 'POST',
+            url: url,
+            data: {
+               "client_id"             : $('#client_id').val(),
+               "start_date"            : $('#start_date').val(),
+               "number_of_month"       : $('#number_of_month').val(),
+               "number_of_vehicle"     : $('#number_of_vehicle').val()
+            },
+            async: true,
+            headers: {
+                  'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+            },
+               success: function(res) 
+               {  
+                         
+                  var response = JSON.parse(res);  
+                  console.log(response.status);    
+                  if( response.status == "success")
+                  {
+                     $(".modal-dialog").addClass('error_message_modal');
+                     $('.form_section').css('display','none');
+                     $('#save_subscription').html('Proceed to create');
+                     var subscribed_vehicles = "";
+                     subscribed_vehicles += "<span>You have not utilized 100% your subscription .details below</span>";
+                     subscribed_vehicles += "<table class='table table-bordered'>";
+                     subscribed_vehicles += "<th>ID</th><th>Number of vehicle subscribed</th><th>Number of vehicle added</th><th>Remaining subscription vehicles</th><th>Start at</th><th>Expired on</th><th>Action</th>";
+                     $.each($(response.data),function(key,value){
+                        subscribed_vehicles +="<tr>"+
+                        "<td>"+value.subscription_id+"</td>"+
+                        "<td style='width: 149px;'>"+value.number_of_vehicles+"</td>"+
+                        "<td>"+value.number_of_vehicles_added+"</td>"+
+                        "<td>"+value.remaining_subscription_vehicles+"</td>"+
+                        "<td>"+value.start_date+"</td>"+
+                        "<td>"+value.expired_on+"</td>"+
 
-                     "<td style='width: 217px;'><a style='color: #fff;padding: 4px;border: 1px solid;background: #f0b230;' href='/trip-report-subscription-vehicles/"+value.id+"'><i class='fa fa-cog' aria-hidden='true'></i> Go to subscription</a></td>"+
-                     "</tr>";
-                  });
-                  subscribed_vehicles +="</table>";
-                   $(".validation_section").html(subscribed_vehicles);
-                  return false;
-               }else{
-                  $('#save_subscription').trigger("click");
-                  return true;
+                        "<td style='width: 217px;'><a style='color: #fff;padding: 4px;border: 1px solid;background: #f0b230;' href='/trip-report-subscription-vehicles/"+value.id+"'><i class='fa fa-cog' aria-hidden='true'></i> Go to subscription</a></td>"+
+                        "</tr>";
+                     });
+                     subscribed_vehicles +="</table>";
+                     if( confirm('Are you sure ?'))
+                     {
+                        $(".validation_section").html(subscribed_vehicles);
+                        return false;
+                     }
+                  }
+                  else if( response.status == "no vehicle")
+                  {
+                     alert("There is no vehicle added in this same subscription");
+                     location.reload();                    
+                     return false;
+                  }
+                  else{
+                     if( confirm('Are you sure?'))
+                     {
+                        $('#save_subscription').trigger("click"); 
+                        return true;
+                     }
+                  }
+               
                }
-            
-            }
-         });
-         form_submit  = 1;
-         return false;
-      } else {
-         document.getElementById('save_subscription').disabled=false;
-
-         return true;
-      }
+            });
+            form_submit  = 1;
+            return false;
+         } else {
+            return true;
+         }
+      
    }
    $('#myModal').on('hidden.bs.modal', function () {
- location.reload();
-})
+      location.reload();
+   })
 
 
 </script>

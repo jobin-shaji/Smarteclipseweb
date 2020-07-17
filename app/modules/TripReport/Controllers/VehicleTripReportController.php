@@ -149,7 +149,7 @@ class VehicleTripReportController extends Controller
         {
             $subscription->delete();        
             $subscription_vehicle_list     = (new TripReportSubscriptionVehicles())->deleteTripReportVehicle($subscription->id);    
-            $request->session()->flash('message', 'Trip report subscription deleted successfully'); 
+            $request->session()->flash('message', 'Trip report subscription detatched successfully'); 
             $request->session()->flash('alert-class', 'callout-success'); 
             return redirect(route('vehicle-trip-report-config')); 
         }
@@ -232,7 +232,7 @@ class VehicleTripReportController extends Controller
     public function tripReportVehicleDelete(Request $request)
     {         
         $subscription_vehicle_list     = (new TripReportSubscriptionVehicles())->deleteTripReportVehicleSubscription(Crypt::decrypt($request->id));
-        $request->session()->flash('message', 'Trip report subscription deleted successfully'); 
+        $request->session()->flash('message', 'Trip report subscription detatched successfully'); 
         $request->session()->flash('alert-class', 'callout-success'); 
         return back();       
     }
@@ -252,16 +252,22 @@ class VehicleTripReportController extends Controller
         $end_date               =  (new Carbon($request->start_date))->addMonths($subscribed_month)->format('Y-m-d');
         $number_of_vehicle      =  $request->number_of_vehicle;
         $subscriptions          =  (new ClientTripReportSubscription())->getAllActiveSubscription($client_id,$start_date,$end_date);
-        // dd($subscriptions);
+       
         $active_subscription    =  []; 
 
             foreach ($subscriptions as $item)
             {
-                $subscribed_vehicles =  $item->number_of_vehicles;
+               $subscribed_vehicles =  $item->number_of_vehicles;
                 $count_of_vehicle    =  (new TripReportSubscriptionVehicles())->findActiveVehicles($item->id);
-
-                    
-                    if($subscribed_vehicles > $count_of_vehicle)
+                if($count_of_vehicle ==0)
+                {
+                    return json_encode([
+                        "status"  => "no vehicle",
+                        "data"    => []
+                    ]);
+                }
+               
+                    if($subscribed_vehicles >= $count_of_vehicle)
                     {
                         $active_subscription[] = [
                             "id"                                  => Crypt::encrypt($item->id),
@@ -275,8 +281,10 @@ class VehicleTripReportController extends Controller
                         ];
                     }
             }
+            // dd($subscribed_vehicles);
             if(sizeof($active_subscription) > 0)
             {
+
                 return json_encode([
                     "status"  => "success",
                     "data"    => $active_subscription
