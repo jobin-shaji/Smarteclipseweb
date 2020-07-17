@@ -8,16 +8,16 @@ function callBackDataTable()
     var refurbished_device  =   document.getElementById('refurbished_device');
     if(manufactured_device.checked == true && refurbished_device.checked == true)
     {
-        manufactured_device =   1; 
-        refurbished_device  =   1;
+        manufactured_device =   Number(manufactured_device.checked); 
+        refurbished_device  =   Number(refurbished_device.checked);
     }
     else if(manufactured_device.checked == true && refurbished_device.checked == false){
-        manufactured_device =   1; 
-        refurbished_device  =   0;
+        manufactured_device =   Number(manufactured_device.checked); 
+        refurbished_device  =   Number(refurbished_device.checked);
     }
     else if(manufactured_device.checked == false && refurbished_device.checked == true){
-        manufactured_device =   0; 
-        refurbished_device  =   1;
+        manufactured_device =   Number(manufactured_device.checked); 
+        refurbished_device  =   Number(refurbished_device.checked);
     }
     else if(manufactured_device.checked == false && refurbished_device.checked == false){
         alert('Please select at least one checkbox');
