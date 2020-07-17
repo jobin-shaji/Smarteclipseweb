@@ -400,5 +400,31 @@ class Gps extends Model
                 ->where('refurbished_status',1)
                 ->count();
     }
+
+    /**
+     * 
+     * 
+     */
+    public function getAllDevicesList()
+    {
+        return self::select(
+            'id',
+            'serial_no',
+            'imei',
+            'imsi',
+            'icc_id',
+            'batch_number',
+            'employee_code',
+            'manufacturing_date',
+            'e_sim_number',
+            'model_name',
+            'version',
+            'deleted_at',
+            'refurbished_status',
+            'is_returned'
+        )
+        ->orderBy('id','DESC')
+        ->withTrashed();
+    }
     
 }
