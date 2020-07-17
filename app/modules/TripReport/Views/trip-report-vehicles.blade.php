@@ -33,7 +33,7 @@ Trip report subscription vehicle list
                         </div>
                         <div class="col-lg-4">
                            <span class="icon"><i class="fa fa fa-car"></i></span>
-                           <span class="item">Subscription vehicles</span>
+                           <span class="item">Vehicle requested for  subscription</span>
                            <span class="item_value">: {{$subscription->number_of_vehicles}}</span>
                         </div>
                         <div class="col-lg-4">
@@ -157,26 +157,24 @@ Trip report subscription vehicle list
                <span aria-hidden="true">&times;</span>
                </button>
             </div>
-            <div class="modal-body mx-3">
-  
-   <div class="form-group">
-        <div  class="row">
-                <div class="col-md-6">  
-                        <label  data-success="right" >Vehicle list</label> 
-                </div>
-                <div class="col-md-6 select2-new div_margin_top">
-                            <select required class="form-control select2"  name="vehicle_id"  title="Select vehicle" id='client_id'>
-                            <option value="" selected >Select vehicle</option>
-                            @foreach ($vehicles as $vehicle)
-                                <option value="{{$vehicle->id}}">{{$vehicle->name}}</option>
-                            @endforeach
-                            </select>
-                </div>
-        </div>
-   </div>
-   <button type="submit" class="btn btn-default">Add to subscription list</button>
- 
-   </div>
+            <div class="modal-body mx-3">  
+               <div class="form-group">
+                  <div  class="row">
+                           <div class="col-md-6">  
+                                    <label  data-success="right" >Vehicle list</label> 
+                           </div>
+                           <div class="col-md-6 select2-new div_margin_top">
+                                       <select required class="form-control select2"  name="vehicle_id"  title="Select vehicle" id='client_id'>
+                                       <option value="" selected >Select vehicle</option>
+                                       @foreach ($vehicles as $vehicle)
+                                          <option value="{{$vehicle->id}}">{{$vehicle->name}}</option>
+                                       @endforeach
+                                       </select>
+                           </div>
+                  </div>
+               </div>
+            <button type="submit" class="btn btn-default" onclick="return confirm('Are you sure?');">Add to subscription list</button> 
+         </div>
    <div class="modal-footer d-flex justify-content-center">
    </div>
    </div>

@@ -333,7 +333,7 @@ Trip report subscription list
                   }
                   else if( response.status == "no vehicle")
                   {
-                     alert("There is no vehicle added in this same subscription");
+                     alert("There is already one unused subscription added to this user ");
                      location.reload();                    
                      return false;
                   }

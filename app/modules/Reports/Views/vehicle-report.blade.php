@@ -56,13 +56,18 @@ Total KM Report
                               </select>
                             </div>
                           </div>                         
-                          <div class="col-lg-3 col-md-3 pt-4">
+                          <div class="col-lg-2 col-md-2 pt-2">
                             <div class="form-group">          
                               <button class="btn btn-sm btn-info btn2 srch" onclick="check()">
                                 <i class="fa fa-search"></i> 
                               </button>                     
                             </div>
-                          </div>                        
+                          </div>  
+                          <div class="col-lg-4 col-md-4 pt-4">
+                            <div class="form-group">          
+                              <label id="last_updated_time"></label>                    
+                            </div>
+                          </div>                       
                         </div>
                       </div>
                     </div>  

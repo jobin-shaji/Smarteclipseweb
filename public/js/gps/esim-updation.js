@@ -20,36 +20,45 @@ $(document).ready(function() {
      */
     function uploadFile()
     {
+        
         var uploadedContent = document.getElementById("fileUpload");
-        var file_name=uploadedContent.files[0].name;
-        $.ajax({
-            type:'POST',
-            url: "esim-activation-file",
-            data: { file_name:file_name},
-            async: true,
-            headers: {
-                'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-            },
-            success: function (res) 
-            {
-                if(jQuery.parseJSON(res)==false)
+        if(uploadedContent.files[0] != undefined)
+        {
+            $('#upload').css('display','none');
+            var file_name=uploadedContent.files[0].name;
+            $.ajax({
+                type:'POST',
+                url: "esim-activation-file",
+                data: { file_name:file_name},
+                async: true,
+                headers: {
+                    'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function (res) 
                 {
-                    if(confirm('Already added file.Do you want to replace it')){
-                        // $(this).find('button[type="submit"]').prop( 'disabled', true );
+                    if(jQuery.parseJSON(res)==false)
+                    {
+                        if(confirm('Already added file.Do you want to replace it')){
+                            // $(this).find('button[type="submit"]').prop( 'disabled', true );
+                            uploadNewFile();
+                        }
+                        else{
+                            refreshPage();
+                        }
+
+                    }
+                    else
+                    {
                         uploadNewFile();
                     }
-                    else{
-                        refreshPage();
-                    }
 
                 }
-                else
-                {
-                    uploadNewFile();
-                }
-
-            }
-        });        
+            });        
+        }else{
+            alert("Upload file");
+        }
+        
+        
     }
 
     function refreshPage(){
