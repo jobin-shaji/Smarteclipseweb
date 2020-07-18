@@ -67,10 +67,13 @@ scanner.addListener('scan', function (content) {
             $("#reset_qr_button").hide();
             $(".loader_transfer").show();
             var content_length = content.length;
-            if(content_length >= 170 && content_length <= 180)
+            // if(content_length >= 170 && content_length <= 180)
+            if(content_length >= 19)
             {
-              var scanned_serial_no = content.substr(12, 19);
-              var serial_no = scanned_serial_no.replace(' ');
+              // var scanned_serial_no = content.substr(12, 19);
+              // var serial_no = scanned_serial_no.replace(' ');
+              var serial_no = content;
+              console.log(serial_no);
               var data = { serial_no : serial_no };
               $.ajax({
                   type:'POST',
