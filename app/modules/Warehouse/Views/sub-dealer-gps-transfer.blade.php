@@ -128,7 +128,7 @@
                       <select class="form-control select2" id="stock_add_transfer" name="devicestock_list">
                         <option value="" selected disabled>Select Device</option>
                         @foreach($devices as $device)
-                        <option value="{{$device->gps->imei}}{{$device->gps->serial_no}}">IMEI:- {{$device->gps->imei}} , Serial Number:- {{$device->gps->serial_no}}</option>
+                        <option value="{{$device->gps->serial_no}}">IMEI:- {{$device->gps->imei}} , Serial Number:- {{$device->gps->serial_no}}</option>
                         @endforeach
                       </select>
                   </div>
@@ -193,15 +193,7 @@
 
     $("#stock_add_transfer").change(function() {
       $('textarea[id="scanner"]').text(null);
-      var content = "";
-       content = this.value;
-      
-      var imei    = content.slice(0, 15);
-      var serial_no = content.slice(15, 34);
-      var code = "Serial No.: "+serial_no+
-                "IMEI: "+imei+
-                "Website: https://vstmobility.com" +
-                "Playstore Link: https://play.google.com/store/apps/details?id=vehiclest.vst.gps&hl=en_US";
+      var code = this.value;
         $('textarea[id="scanner"]').val(code);
         addcode();
     });
