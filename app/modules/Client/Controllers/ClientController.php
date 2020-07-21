@@ -106,139 +106,140 @@ class ClientController extends Controller {
          * getCityGeoCodes getting lat lng from city table
          */
       
-        $placeLatLng = (new City())->getCityGeoCodes($request->city_id);
-        $location_lat=$placeLatLng['latitude'];
-        $location_lng=$placeLatLng['longitude'];
+        $placeLatLng            = (new City())->getCityGeoCodes($request->city_id);
+        $location_lat           = $placeLatLng['latitude'];
+        $location_lng           = $placeLatLng['longitude'];
         // $location=$request->search_place;
-        $current_date=date('Y-m-d H:i:s');
+        $current_date           = date('Y-m-d H:i:s');
         if($request->user()->hasRole('sub_dealer'))
         {
-            $subdealer_id = \Auth::user()->subdealer->id;
-            $url=url()->current();
-            $rayfleet_key="rayfleet";
-            $eclipse_key="eclipse";
+            $subdealer_id       = \Auth::user()->subdealer->id;
+            $url                = url()->current();
+            $rayfleet_key       = "rayfleet";
+            $eclipse_key        = "eclipse";
 
-            if (strpos($url, $rayfleet_key) == true) {
-                 $rules = $this->rayfleet_user_create_rules();
+            if (strpos($url, $rayfleet_key) == true) 
+            {
+                 $rules         = $this->rayfleet_user_create_rules();
             }
-            else if (strpos($url, $eclipse_key) == true) {
-                 $rules = $this->user_create_rules();
+            else if (strpos($url, $eclipse_key) == true) 
+            {
+                 $rules         = $this->user_create_rules();
             }
             else
             {
-               $rules = $this->user_create_rules();
+               $rules           = $this->user_create_rules();
             }
-
             $this->validate($request, $rules);
-            $user = User::create([
-                'username' => $request->username,
-                'email' => $request->email,
-                'mobile' => $request->mobile_number,
-                'status' => 1,
-                'password' => bcrypt($request->password),
-                'role' => 0,
-            ]);
+            $user               = User::create([
+                                    'username' => $request->username,
+                                    'email' => $request->email,
+                                    'mobile' => $request->mobile_number,
+                                    'status' => 1,
+                                    'password' => bcrypt($request->password),
+                                    'role' => 0,
+                                ]);
             
-            $client     =   (new Client())->createNewClientFromDealer($user->id, $subdealer_id, strtoupper($request->name), $request->address, $location_lat, $location_lng, $request->country_id, $request->state_id, $request->city_id, $current_date);
-            
+            $client             =   (new Client())->createNewClientFromDealer($user->id, $subdealer_id, strtoupper($request->name), $request->address, $location_lat, $location_lng, $request->country_id, $request->state_id, $request->city_id, $current_date);
             if($client)
             {
-                if($request->client_category=="school"){
-                    User::select('id','username')->where('username', $request->username)->first()->assignRole('school');
-                }else{
-                    User::select('id','username')->where('username', $request->username)->first()->assignRole('client');
-                }
-                if($user->email != null)
+                if($request->client_category=="school")
                 {
-                    Mail::to($user)->send(new UserCreated($user, $request->name, $request->password));
-                }
-            }
-
-            $alert_types = AlertType::select('id','driver_point')->get();
-            
-            if($client){
-                foreach ($alert_types as $alert_type) {
-                    $user_alerts = UserAlerts::create([
-                      "alert_id" => $alert_type->id,
-                      "client_id" => $client->id,
-                      "status" => 1
-                    ]);
-                    $client_alert_point = ClientAlertPoint::create([
-                      "alert_type_id" => $alert_type->id,
-                      "driver_point" => $alert_type->driver_point,
-                      "client_id" => $client->id
-                    ]);
-                }
-            }
-        }else if($request->user()->hasRole('trader')){
-
-            $trader_id = \Auth::user()->trader->id;
-
-            $url=url()->current();
-            $rayfleet_key="rayfleet";
-            $eclipse_key="eclipse";
-
-            if (strpos($url, $rayfleet_key) == true) {
-                 $rules = $this->rayfleet_user_create_rules();
-            }
-            else if (strpos($url, $eclipse_key) == true) {
-                 $rules = $this->user_create_rules();
-            }
-            else
-            {
-               $rules = $this->user_create_rules();
-            }
-
-            $this->validate($request, $rules);
-            $user = User::create([
-                'username' => $request->username,
-                'email' => $request->email,
-                'mobile' => $request->mobile_number,
-                'status' => 1,
-                'password' => bcrypt($request->password),
-                'role' => 0,
-            ]);
-
-            $client     =   (new Client())->createNewClientFromSubDealer($user->id, $trader_id, strtoupper($request->name), $request->address, $location_lat, $location_lng, $request->country_id, $request->state_id, $request->city_id, $current_date); 
-            if($client)
-            {
-                if($request->client_category=="school"){
                     User::select('id','username')->where('username', $request->username)->first()->assignRole('school');
-                }else{
+                }else
+                {
                     User::select('id','username')->where('username', $request->username)->first()->assignRole('client');
                 }
+                // ----------Create user alerts && Client alert points----------
+                $alert_types = AlertType::select('id','driver_point')->get();
+                foreach ($alert_types as $alert_type) 
+                {
+                    $user_alerts = UserAlerts::create([
+                        "alert_id" => $alert_type->id,
+                        "client_id" => $client->id,
+                        "status" => 1
+                    ]);
+                    $client_alert_point     = ClientAlertPoint::create([
+                        "alert_type_id"           => $alert_type->id,
+                        "driver_point"            => $alert_type->driver_point,
+                        "client_id"               => $client->id
+                    ]);
+                }
+                // ----------Create user alerts && Client alert points----------
                 if($user->email != null)
                 {
                     Mail::to($user)->send(new UserCreated($user, $request->name, $request->password));
                 }
             }
            
-            $alert_types = AlertType::select(
-                            'id',
-                            'driver_point'
-                            )
-                            ->get();
-                        
-            if($client){
-                foreach ($alert_types as $alert_type) {
-                    $user_alerts = UserAlerts::create([
-                      "alert_id" => $alert_type->id,
-                      "client_id" => $client->id,
-                      "status" => 1
+        }
+        else if($request->user()->hasRole('trader'))
+        {
+
+            $trader_id      = \Auth::user()->trader->id;
+            $url            = url()->current();
+            $rayfleet_key   = "rayfleet";
+            $eclipse_key    = "eclipse";
+            if (strpos($url, $rayfleet_key) == true) 
+            {
+                $rules = $this->rayfleet_user_create_rules();
+            }
+            else if (strpos($url, $eclipse_key) == true) 
+            {
+                $rules = $this->user_create_rules();
+            }
+            else
+            {
+                $rules = $this->user_create_rules();
+            }
+            $this->validate($request, $rules);
+            $user = User::create([
+                'username'              => $request->username,
+                'email'                 => $request->email,
+                'mobile'                => $request->mobile_number,
+                'status'                => 1,
+                'password'              => bcrypt($request->password),
+                'role'                  => 0,
+            ]);
+
+            $client                     =   (new Client())->createNewClientFromSubDealer($user->id, $trader_id, strtoupper($request->name), $request->address, $location_lat, $location_lng, $request->country_id, $request->state_id, $request->city_id, $current_date); 
+            if($client)
+            {
+                if($request->client_category=="school")
+                {
+                    User::select('id','username')->where('username', $request->username)->first()->assignRole('school');
+                }else{
+                    User::select('id','username')->where('username', $request->username)->first()->assignRole('client');
+                }
+                // ----------Create user alerts && Client alert points----------
+                $alert_types = AlertType::select(
+                'id',
+                'driver_point')
+                ->get();
+                foreach ($alert_types as $alert_type) 
+                {
+                    $user_alerts        = UserAlerts::create([
+                        "alert_id"              => $alert_type->id,
+                        "client_id"            => $client->id,
+                        "status"               => 1
                     ]);
                     $client_alert_point = ClientAlertPoint::create([
-                      "alert_type_id" => $alert_type->id,
-                      "driver_point" => $alert_type->driver_point,
-                      "client_id" => $client->id
+                        "alert_type_id"     => $alert_type->id,
+                        "driver_point"      => $alert_type->driver_point,
+                        "client_id"         => $client->id
                     ]);
                 }
+                // ----------Create user alerts && Client alert points----------
+
+                if($user->email != null)
+                {
+                    Mail::to($user)->send(new UserCreated($user, $request->name, $request->password));
+                }
             }
+           
         }
 
         $eid= encrypt($user->id);
-        // $request->session()->flash('message', 'New end user created successfully!');
-        // $request->session()->flash('alert-class', 'alert-success');
-        // // return redirect(route('clients'));
         return response()->json([
             'status'    => true,
             'message'   => 'New end user created successfully'
@@ -971,31 +972,37 @@ class ClientController extends Controller {
 /////////////////////////////Root Client Create/////////////////////////////
     public function clientCreate()
     {
-        $user = \Auth::user();
-        $root = $user->root;
-        $entities = $root->dealers;
-        $countries=Country::select([
-            'id',
-            'name'
-        ])
-        ->where('id',101)
-        ->get();
-         $url=url()->current();
-        
-         $rayfleet_key="rayfleet";
-         $eclipse_key="eclipse";
-         if (strpos($url, $rayfleet_key) == true) {  
-            $default_country_id="178";
-          }else if (strpos($url, $eclipse_key) == true) {
-            $default_country_id="101";
-          }else
-          {
-         $default_country_id="101";
-          }
-          //for logged in user
+        $user           = \Auth::user();
+        $root           = $user->root;
+        $entities       = $root->dealers;
+        $countries      = Country::select([
+                            'id',
+                            'name'
+                        ])
+                        ->where('id',101)
+                        ->get();
+        $url            = url()->current();
+        $rayfleet_key = "rayfleet";
+        $eclipse_key  = "eclipse";
+
+        if (strpos($url, $rayfleet_key) == true) 
+        {  
+        $default_country_id="178";
+        }else if (strpos($url, $eclipse_key) == true) 
+        {
+        $default_country_id="101";
+        }else
+        {
+        $default_country_id="101";
+        }
+        //for logged in user
         $logged_user_id = \Auth::user()->id;
-        return view('Client::root-client-create',['entities' => $entities,'countries'=>$countries,
-            'default_country_id'=>$default_country_id,'logged_user_id'=>$logged_user_id]);
+        return view('Client::root-client-create',[
+            'entities'              => $entities,
+            'countries'             => $countries,
+            'default_country_id'    => $default_country_id,
+            'logged_user_id'        => $logged_user_id
+        ]);
     }
 
 
@@ -1053,34 +1060,35 @@ public function selectTrader(Request $request)
     {
         if($request->user()->hasRole('root'))
         {
-            $url=url()->current();
-            $rayfleet_key="rayfleet";
-            $eclipse_key="eclipse";
-            if (strpos($url, $rayfleet_key) == true) {
-                 $rules = $this->rayfleetRootUserCreate_rules();
+            $url            = url()->current();
+            $rayfleet_key   = "rayfleet";
+            $eclipse_key    = "eclipse";
+            if (strpos($url, $rayfleet_key) == true) 
+            {
+                 $rules     = $this->rayfleetRootUserCreate_rules();
             }
-            else if (strpos($url, $eclipse_key) == true) {
-                $rules = $this->root_user_create_rules();
+            else if (strpos($url, $eclipse_key) == true) 
+            {
+                $rules      = $this->root_user_create_rules();
             }
             else
             {
-               $rules = $this->root_user_create_rules();
+               $rules       = $this->root_user_create_rules();
             }
             $this->validate($request, $rules);
-            $subdealer_id = $request->sub_dealer;
-            $trader_id = $request->trader;
-            $placeLatLng = (new City())->getCityGeoCodes($request->city_id);
-            $location_lat=$placeLatLng['latitude'];
-            $location_lng=$placeLatLng['longitude'];
-            $current_date=date('Y-m-d H:i:s');
-         
+            $subdealer_id   = $request->sub_dealer;
+            $trader_id      = $request->trader;
+            $placeLatLng    = (new City())->getCityGeoCodes($request->city_id);
+            $location_lat   = $placeLatLng['latitude'];
+            $location_lng   = $placeLatLng['longitude'];
+            $current_date   = date('Y-m-d H:i:s');
             $user = User::create([
-                'username' => $request->username,
-                'email' => $request->email,
-                'mobile' => $request->mobile_number,
-                'status' => 1,
-                'password' => bcrypt($request->password),
-                'role' => 0,
+                'username'      => $request->username,
+                'email'         => $request->email,
+                'mobile'        => $request->mobile_number,
+                'status'        => 1,
+                'password'      => bcrypt($request->password),
+                'role'          => 0,
             ]);
 
             if($trader_id == null)
@@ -1092,29 +1100,35 @@ public function selectTrader(Request $request)
                 $client     =   (new Client())->createNewClientFromSubDealer($user->id, $trader_id, strtoupper($request->name), $request->address, $location_lat, $location_lng, $request->country_id, $request->state_id, $request->city_id, $current_date);
             }
 
-            if($request->client_category=="school"){
+            if($request->client_category=="school")
+            {
                 User::where('username', $request->username)->first()->assignRole('school');
-            }else{
+            }else
+            {
                 User::where('username', $request->username)->first()->assignRole('client');
             }
             
-            $alert_types = AlertType::select('id','driver_point')->get();
-            if($client){
-                foreach ($alert_types as $alert_type) {
+            $alert_types    = AlertType::select('id','driver_point')->get();
+            if($client)
+            {
+
+               
+                foreach ($alert_types as $alert_type) 
+                {
                     $user_alerts = UserAlerts::create([
-                      "alert_id" => $alert_type->id,
-                      "client_id" => $client->id,
-                      "status" => 1
+                      "alert_id"        => $alert_type->id,
+                      "client_id"       => $client->id,
+                      "status"          => 1
                     ]);
                     $client_alert_point = ClientAlertPoint::create([
-                      "alert_type_id" => $alert_type->id,
-                      "driver_point" => $alert_type->driver_point,
-                      "client_id" => $client->id
+                      "alert_type_id"   => $alert_type->id,
+                      "driver_point"    => $alert_type->driver_point,
+                      "client_id"       => $client->id
                     ]);
                 }
             }
         }
-        $eid= encrypt($user->id);
+        $eid                            = encrypt($user->id);
         $request->session()->flash('message', 'New End user created successfully!');
         $request->session()->flash('alert-class', 'alert-success');
         return redirect(route('client'));
