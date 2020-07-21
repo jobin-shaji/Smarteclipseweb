@@ -29,6 +29,7 @@ use Intervention\Image\ImageManagerStatic as Image;
 use App\Jobs\MailJob;
 use App\Http\Traits\MqttTrait;
 use App\Mail\UserCreated;
+use App\Mail\UserCreatedWithoutEmail;
 use App\Mail\UserUpdated;
 use Illuminate\Support\Facades\Mail;
 
@@ -152,6 +153,12 @@ class ClientController extends Controller {
                 {
                     Mail::to($user)->send(new UserCreated($user, $request->name, $request->password));
                 }
+                else
+                {
+                    $root = \Auth::user()->subdealer->dealer->root->id;
+                    $user = User::find($root);
+                    Mail::to($user)->send(new UserCreatedWithoutEmail($user, $request->name, $request->password,$request->username));
+                }
             }
 
             $alert_types = AlertType::select('id','driver_point')->get();
@@ -210,6 +217,12 @@ class ClientController extends Controller {
                 if($user->email != null)
                 {
                     Mail::to($user)->send(new UserCreated($user, $request->name, $request->password));
+                }
+                else
+                {
+                    $root = \Auth::user()->trader->subDealer->dealer->root->id;
+                    $user = User::find($root);
+                    Mail::to($user)->send(new UserCreatedWithoutEmail($user, $request->name, $request->password,$request->username));
                 }
             }
            
@@ -1097,7 +1110,15 @@ public function selectTrader(Request $request)
             }else{
                 User::where('username', $request->username)->first()->assignRole('client');
             }
-            
+            if($user->email != null)
+            {
+                Mail::to($user)->send(new UserCreated($user, $request->name, $request->password));
+            }
+            else
+            {
+                $user = \Auth::user();
+                Mail::to($user)->send(new UserCreatedWithoutEmail($user, $request->name, $request->password,$request->username));
+            }
             $alert_types = AlertType::select('id','driver_point')->get();
             if($client){
                 foreach ($alert_types as $alert_type) {
