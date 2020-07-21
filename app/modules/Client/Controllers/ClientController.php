@@ -152,6 +152,10 @@ class ClientController extends Controller {
                 {
                     Mail::to($user)->send(new UserCreated($user, $request->name, $request->password));
                 }
+            //    else
+            //     {
+            //         Mail::to($user)->send(new UserCreated($user, $request->name, $request->password));
+            //     }
             }
 
             $alert_types = AlertType::select('id','driver_point')->get();
