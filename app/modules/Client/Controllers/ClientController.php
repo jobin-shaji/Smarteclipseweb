@@ -1100,21 +1100,13 @@ public function selectTrader(Request $request)
             {
                 $client     =   (new Client())->createNewClientFromSubDealer($user->id, $trader_id, strtoupper($request->name), $request->address, $location_lat, $location_lng, $request->country_id, $request->state_id, $request->city_id, $current_date);
             }
-
+            
             if($request->client_category=="school"){
                 User::where('username', $request->username)->first()->assignRole('school');
             }else{
                 User::where('username', $request->username)->first()->assignRole('client');
             }
-            if($user->email != null)
-            {
-                Mail::to($user)->send(new UserCreated($user, $request->name, $request->password));
-            }
-            else
-            {
-                $user = \Auth::user();
-                Mail::to($user)->send(new UserCreatedWithoutEmail($user, $request->name, $request->password,$request->username));
-            }
+            // create alert amanager and client alert type
             $alert_types = AlertType::select('id','driver_point')->get();
             if($client){
                 foreach ($alert_types as $alert_type) {
@@ -1130,6 +1122,18 @@ public function selectTrader(Request $request)
                     ]);
                 }
             }
+            // create alert amanager and client alert type
+
+            if($user->email != null)
+            {
+                Mail::to($user)->send(new UserCreated($user, $request->name, $request->password));
+            }
+            else
+            {
+                $user = \Auth::user();
+                Mail::to($user)->send(new UserCreatedWithoutEmail($user, $request->name, $request->password,$request->username));
+            }
+           
         }
         $eid= encrypt($user->id);
         $request->session()->flash('message', 'New End user created successfully!');
