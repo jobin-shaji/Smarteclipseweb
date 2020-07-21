@@ -164,7 +164,7 @@ Trip report subscription vehicle list
                                     <label  data-success="right" >Vehicle list</label> 
                            </div>
                            <div class="col-md-6 select2-new div_margin_top">
-                                       <select required class="form-control select2"  name="vehicle_id"  title="Select vehicle" id='client_id'>
+                                       <select required class="form-control select2"  name="vehicle_id"  title="Select vehicle" id='vehicle_id'>
                                        <option value="" selected >Select vehicle</option>
                                        @foreach ($vehicles as $vehicle)
                                           <option value="{{$vehicle->id}}">{{$vehicle->name}}</option>
@@ -173,7 +173,7 @@ Trip report subscription vehicle list
                            </div>
                   </div>
                </div>
-            <button type="submit" class="btn btn-default" onclick="return confirm('Are you sure?');">Add to subscription list</button> 
+            <button type="submit" class="btn btn-default" onclick="confirmationMessage()">Add to subscription list</button> 
          </div>
    <div class="modal-footer d-flex justify-content-center">
    </div>
@@ -241,5 +241,14 @@ Trip report subscription vehicle list
 </style>
 @section('script')
 <script src="{{asset('js/gps/vehicle-trip-report-config-list.js')}}"></script>
+<script>
+function confirmationMessage()
+{
+   if(document.getElementById('vehicle_id').value)
+   {
+      confirm('Are you sure?');
+   }
+}
+</script>
 @endsection
 @endsection
