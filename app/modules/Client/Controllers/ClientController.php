@@ -149,21 +149,8 @@ class ClientController extends Controller {
                 }else{
                     User::select('id','username')->where('username', $request->username)->first()->assignRole('client');
                 }
-                if($user->email != null)
-                {
-                    Mail::to($user)->send(new UserCreated($user, $request->name, $request->password));
-                }
-                else
-                {
-                    $root = \Auth::user()->subdealer->dealer->root->id;
-                    $user = User::find($root);
-                    Mail::to($user)->send(new UserCreatedWithoutEmail($user, $request->name, $request->password,$request->username));
-                }
-            }
-
-            $alert_types = AlertType::select('id','driver_point')->get();
-            
-            if($client){
+                // -----create alert manager and client alert point
+                $alert_types = AlertType::select('id','driver_point')->get();
                 foreach ($alert_types as $alert_type) {
                     $user_alerts = UserAlerts::create([
                       "alert_id" => $alert_type->id,
@@ -176,7 +163,21 @@ class ClientController extends Controller {
                       "client_id" => $client->id
                     ]);
                 }
+                // -----create alert manager and client alert point
+                if($user->email != null)
+                {
+                    Mail::to($user)->send(new UserCreated($user, $request->name, $request->password));
+                }
+                else
+                {
+                    $root = \Auth::user()->subdealer->dealer->root->id;
+                    $user = User::find($root);
+                    Mail::to($user)->send(new UserCreatedWithoutEmail($user, $request->name, $request->password,$request->username));
+                }
             }
+
+            
+           
         }else if($request->user()->hasRole('trader')){
 
             $trader_id = \Auth::user()->trader->id;
@@ -214,25 +215,9 @@ class ClientController extends Controller {
                 }else{
                     User::select('id','username')->where('username', $request->username)->first()->assignRole('client');
                 }
-                if($user->email != null)
-                {
-                    Mail::to($user)->send(new UserCreated($user, $request->name, $request->password));
-                }
-                else
-                {
-                    $root = \Auth::user()->trader->subDealer->dealer->root->id;
-                    $user = User::find($root);
-                    Mail::to($user)->send(new UserCreatedWithoutEmail($user, $request->name, $request->password,$request->username));
-                }
-            }
-           
-            $alert_types = AlertType::select(
-                            'id',
-                            'driver_point'
-                            )
-                            ->get();
-                        
-            if($client){
+
+                // -----create alert manager and client alert point
+                $alert_types = AlertType::select('id','driver_point')->get();
                 foreach ($alert_types as $alert_type) {
                     $user_alerts = UserAlerts::create([
                       "alert_id" => $alert_type->id,
@@ -244,6 +229,17 @@ class ClientController extends Controller {
                       "driver_point" => $alert_type->driver_point,
                       "client_id" => $client->id
                     ]);
+                }
+                // -----create alert manager and client alert point
+                if($user->email != null)
+                {
+                    Mail::to($user)->send(new UserCreated($user, $request->name, $request->password));
+                }
+                else
+                {
+                    $root = \Auth::user()->trader->subDealer->dealer->root->id;
+                    $user = User::find($root);
+                    Mail::to($user)->send(new UserCreatedWithoutEmail($user, $request->name, $request->password,$request->username));
                 }
             }
         }
