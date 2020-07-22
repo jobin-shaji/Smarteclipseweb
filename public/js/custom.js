@@ -265,6 +265,12 @@ $(function () {
         useCurrent: true,
         maxDate: new Date()
      });
+     $(".esim_datepicker" ).datetimepicker({
+        format: 'DD-MM-YYYY',
+        defaultDate: null,
+        useCurrent: true,
+        // maxDate: new Date()
+     });
 
     
 

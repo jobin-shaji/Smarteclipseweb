@@ -29,13 +29,42 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
               <div class="cover_div_search" style="padding-top: 17px;">
                   <div class="row">
                     
-
-                    <div class="col-lg-3 col-md-3"> 
+                  <form method="GET"  action="{{route('esim.sort.by.date')}}" style="width:100%">
+                     {{csrf_field()}}
+                    <div class="col-lg-3 col-md-3" style="margin-top: 30px;"> 
                       <div class="form-group"> 
+                        <label> Search</label>
                           <!-- <input type="text" class="form-control " name="esim_number" id="esim_number">  -->
                           <input type="text" class="form-controller" id="search" name="search"value="{{$search_key}}" placeholder="IMEI / IMSI / ICCID number"></input>                                                    
                       </div>
                     </div>
+                    <div class="col-lg-3 col-md-3" > 
+                      <div class="form-group">                      
+                        <label> From Date</label>
+                        <input type="text" required class="esim_datepicker form-control"style="width: 100%"  id="fromDate" name="fromDate" onkeydown="return false" value="@if(isset($from_date)) {{$from_date}} @endif"  autocomplete="off"  required>
+                        <span class="input-group-addon" style="z-index: auto;">
+                            <span class="calender1" style="right: 37px;"><i class="fa fa-calendar"></i></span>
+                        </span>
+                      </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3"> 
+                      <div class="form-group">                     
+                        <label> To Date</label>
+                        <input type="text" required class="esim_datepicker form-control" style="width: 100%" id="toDate" name="toDate"  onkeydown="return false"  value="@if(isset($to_date)) {{$to_date}} @endif"  autocomplete="off" required>
+                        <span class="input-group-addon" style="z-index: auto;">
+                            <span class="calender1" style="right: 37px;"><i class="fa fa-calendar"></i></span>
+                        </span>
+                      </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3"> 
+                      <div class="form-group"> 
+                        <button type="submit" class="btn btn-sm btn-info btn2 srch search-btn " style="margin-top: 30px;"> <i class="fa fa-search"></i> </button>
+                        <a href="/esim-activation-details">
+                          <button type="button" class="btn btn-sm btn-info btn2 srch search-btn " style="margin-top: 30px;"> RESET</button>
+                        </a>
+                      </div>
+                    </div>
+                    </form>
                   </div>
               </div>
             </div>
@@ -101,11 +130,16 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
 <script>
 $('#search').on('keyup',function(){
             $value=$(this).val();
+            var from_date = document.getElementById('fromDate').value;
+           var to_date = document.getElementById('toDate').value;
+        
             $.ajax({
                 type : 'get',
                 url : '{{URL::to('esim-activation-details')}}',
                 data:{
-                    'search':$value
+                    'search'    : $value,
+                    'from_date' : from_date,
+                    'to_date'   : to_date
                 },
                 success:function(data){
                

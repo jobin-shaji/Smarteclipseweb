@@ -5,6 +5,8 @@ Route::group(['middleware' => ['web','auth','role:root|operations'] , 'namespace
     Route::get('/esim-activation/{id}/view','EsimController@getDetails')->name('esim-activation.view');
     Route::get('/esim-activation-details','EsimController@getEsimDetails')->name('esim-activation-search');
     Route::post('/esim-detail-encription','EsimController@esimDetailIdEncription')->name('esim-detail-encription');
+    Route::get('/esim-sort-by-date','EsimController@getEsimDetails')->name('esim.sort.by.date');
+    
     
 });
 

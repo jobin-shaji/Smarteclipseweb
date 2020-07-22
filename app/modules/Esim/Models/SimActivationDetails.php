@@ -53,7 +53,7 @@ class SimActivationDetails extends Model
 		}
 		
 	}
-	public function getSimActivationList($search_key=null)
+	public function getSimActivationList($search_key=null,$from_date=null,$to_date=null)
 	{
 		$result =  self::select(
 			'id',
@@ -76,6 +76,11 @@ class SimActivationDetails extends Model
 				->orWhere('iccid','like','%'.$search_key.'%');                
 			});  
 		} 
+		if($from_date != null && $to_date != null)
+		{
+			$result = $result->whereDate('expire_on', '>=', $from_date)
+			->whereDate('expire_on', '<=', $to_date);   
+		}
 		return $result->paginate(10);
 	}
 	public function getSimActivationDetails($id)
