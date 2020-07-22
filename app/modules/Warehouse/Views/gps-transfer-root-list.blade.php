@@ -114,12 +114,12 @@
                 </div>
                 <div class="col-lg-3 col-md-3 instock_device_grid stock_grid" id = "stock_section" style="display: none;">
                   <!-- small box -->
-                  <div class="small-box">
+                  <div class="small-box" >
                     <div class="inner">
                       <h3 id="stock_count">
                         <div class="loader"></div>
                       </h3>
-                      <p id = "stock_message"></p>
+                      <p class="message-wrap" id = "stock_message"></p>
                     </div>
                   </div>
                 </div>

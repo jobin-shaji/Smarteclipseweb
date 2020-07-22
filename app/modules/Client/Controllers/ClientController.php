@@ -29,6 +29,7 @@ use Intervention\Image\ImageManagerStatic as Image;
 use App\Jobs\MailJob;
 use App\Http\Traits\MqttTrait;
 use App\Mail\UserCreated;
+use App\Mail\UserCreatedWithoutEmail;
 use App\Mail\UserUpdated;
 use Illuminate\Support\Facades\Mail;
 
@@ -150,6 +151,7 @@ class ClientController extends Controller {
                 {
                     User::select('id','username')->where('username', $request->username)->first()->assignRole('client');
                 }
+                
                 // ----------Create user alerts && Client alert points----------
                 $alert_types = AlertType::select('id','driver_point')->get();
                 foreach ($alert_types as $alert_type) 
@@ -165,12 +167,22 @@ class ClientController extends Controller {
                         "client_id"               => $client->id
                     ]);
                 }
+
                 // ----------Create user alerts && Client alert points----------
+
                 if($user->email != null)
                 {
                     Mail::to($user)->send(new UserCreated($user, $request->name, $request->password));
                 }
+                else
+                {
+                    $root = \Auth::user()->subdealer->dealer->root->id;
+                    $user = User::find($root);
+                    Mail::to($user)->send(new UserCreatedWithoutEmail($user, $request->name, $request->password,$request->username));
+                }
             }
+
+            
            
         }
         else if($request->user()->hasRole('trader'))
@@ -211,6 +223,7 @@ class ClientController extends Controller {
                 }else{
                     User::select('id','username')->where('username', $request->username)->first()->assignRole('client');
                 }
+
                 // ----------Create user alerts && Client alert points----------
                 $alert_types = AlertType::select(
                 'id',
@@ -229,12 +242,20 @@ class ClientController extends Controller {
                         "client_id"         => $client->id
                     ]);
                 }
+
                 // ----------Create user alerts && Client alert points----------
 
                 if($user->email != null)
                 {
                     Mail::to($user)->send(new UserCreated($user, $request->name, $request->password));
                 }
+                else
+                {
+                    $root = \Auth::user()->trader->subDealer->dealer->root->id;
+                    $user = User::find($root);
+                    Mail::to($user)->send(new UserCreatedWithoutEmail($user, $request->name, $request->password,$request->username));
+                }
+
             }
            
         }
@@ -579,7 +600,7 @@ class ClientController extends Controller {
     public function enableClient(Request $request)
     {
         $client_user    =   User::withTrashed()->find($request->id);
-        $client         =   (new Client())->checkUserIdIsInClientTable($request->id); 
+        $client         =   (new Client())->checkUserIdIsInClientTableWithTrashedItems($request->id); 
         if($client_user==null){
             return response()->json([
                 'status' => 0,
@@ -1107,12 +1128,10 @@ public function selectTrader(Request $request)
             {
                 User::where('username', $request->username)->first()->assignRole('client');
             }
-            
+            // create alert amanager and client alert type
             $alert_types    = AlertType::select('id','driver_point')->get();
             if($client)
             {
-
-               
                 foreach ($alert_types as $alert_type) 
                 {
                     $user_alerts = UserAlerts::create([
@@ -1127,6 +1146,18 @@ public function selectTrader(Request $request)
                     ]);
                 }
             }
+            // create alert amanager and client alert type
+
+            if($user->email != null)
+            {
+                Mail::to($user)->send(new UserCreated($user, $request->name, $request->password));
+            }
+            else
+            {
+                $user = \Auth::user();
+                Mail::to($user)->send(new UserCreatedWithoutEmail($user, $request->name, $request->password,$request->username));
+            }
+           
         }
         $eid                            = encrypt($user->id);
         $request->session()->flash('message', 'New End user created successfully!');

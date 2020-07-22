@@ -4,7 +4,7 @@ $rayfleet_key="rayfleet";
 $eclipse_key="eclipse";
 if (strpos($url, $rayfleet_key) == true) { ?>
 <footer class="footer"> 
-Developed by&nbsp;&nbsp;<a href="http://www.tecnositafgulf.qa" target="blank">Gulf Business Development Group</a>
+Developed by&nbsp;&nbsp;<a href="https://www.tecnositafgulf.qa" target="blank">Gulf Business Development Group</a>
 <div class="footer-bottom" >
 RAYFLEET &nbsp;Version 0.1
 </div>
@@ -12,7 +12,7 @@ RAYFLEET &nbsp;Version 0.1
 <?php } 
 else { ?>
 <footer class="footer"> 
-Developed by&nbsp; <a href="http://vstmobility.com" target="blank">VST Mobility Solutions pvt ltd</a>
+Developed by&nbsp; <a href="https://vstmobility.com" target="blank">VST Mobility Solutions pvt ltd</a>
 <div class="footer-bottom">
 <span id ="versionClick">Eclipse Version 
 <?php 

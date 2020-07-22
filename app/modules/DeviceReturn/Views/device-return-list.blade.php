@@ -33,7 +33,7 @@
                     <th>Date</th>
                     <th>Type of issues</th>
                     <th>Comments</th>
-                    <th>Status</th>
+                    <th style="width:90px">Status</th>
                     <th>Action</th>
                   </tr>
                 </thead>

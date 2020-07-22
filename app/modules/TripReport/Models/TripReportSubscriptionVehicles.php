@@ -76,11 +76,13 @@ class TripReportSubscriptionVehicles extends Model
 
     public function getSubscriptionVehicleIds($subscription)
     {
+    //  dd($subscription->vehicle_id);
       $query = "select id,name from vehicles 
       where client_id =".$subscription->client_id." AND id NOT IN(
       select trsv.vehicle_id AS vehicle_id  FROM `trip_report_subscription_vehicles` AS trsv
       LEFT JOIN vehicles AS vh ON vh.id =trsv.vehicle_id
       WHERE vh.client_id =".$subscription->client_id."
+      
       AND
       trsv.detached_on is null
       AND
@@ -125,6 +127,13 @@ class TripReportSubscriptionVehicles extends Model
                    ->whereNull('detached_on')
                    ->count();
 
+    }
+
+    /** */
+    public function deleteTripReportVehicle($id)
+    {
+        return self::where('client_trip_report_subscription_id', $id)
+        ->update(['detached_on' => date('Y-m-d'),'deleted_at' => date('Y-m-d H:i:s')]);
     }
     
 }

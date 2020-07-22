@@ -29,7 +29,7 @@
                                 <table class="table table-hover table-bordered  table-striped datatable" style="text-align: center;" id="dataTable">
                                     <thead>
                                         <tr >
-                                            <th>SL.No</th>
+                                            <th style="width:50px">SL.No</th>
                                             <th class='imei'>IMEI</th>
                                             <th class='serial_no'>Serial Number</th>
                                             @role('root')
@@ -44,7 +44,7 @@
                                             @role('root|dealer|sub_dealer|trader')
                                             <th>End User</th>
                                             @endrole
-                                            <th>Action</th>
+                                            <th style="width:50px">Action</th>
                                         </tr>
                                     </thead>
                                 </table>

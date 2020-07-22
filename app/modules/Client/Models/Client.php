@@ -112,6 +112,13 @@ class Client extends Model
   /**
    * 
    */
+  public function checkUserIdIsInClientTableWithTrashedItems($user_id)
+  {
+    return self::where('user_id',$user_id)->withTrashed()->first();
+  }
+  /**
+   * 
+   */
   public function getClientDetailsWithClientId($client_id)
 	{
 		return self::where('id',$client_id)->first();

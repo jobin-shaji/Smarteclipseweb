@@ -34,9 +34,10 @@
                     <div class="signup__container signup-container-new">
                       <div class="container__child signup__form signup-form-outer">
                         <div class="form-group row form-group-driver">
-                          <label for="fname" class="col-sm-3 control-label col-form-label lab label-form-drive">Name</label>
+                          <label for="fname" class="col-sm-3 control-label col-form-label lab label-form-drive">Name&nbsp<font color="red">*</font></label>
                           <div class="form-group has-feedback form-drive-outer">
-                            <input type="text" required maxlength='50' class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Name" name="name" value="{{ old('name') }}"> 
+                            <input type="text" required maxlength='50' class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Name" name="name" id="name" value="{{ old('name') }}"> 
+                            <!-- <p style="color:#FF0000" id="name_message">only characters are allowed</p>                           -->
                           </div> 
                         </div>
                         @if ($errors->has('name'))
@@ -193,5 +194,16 @@ padding-left: 3%;
  @section('script')
    
     <script src="{{asset('js/gps/driver-list.js')}}"></script>
-  
+  <script>
+   $('#name').keypress(function(e) {
+        $("#name_message").hide();
+        // $("#user_message").hide();
+        var keyCode = e.which;
+        if (keyCode >= 48 && keyCode <= 57) {
+            $("#name_message").show();
+            e.preventDefault();
+        }
+    });
+
+  </script>
   @endsection

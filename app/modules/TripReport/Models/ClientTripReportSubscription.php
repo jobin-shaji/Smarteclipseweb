@@ -3,11 +3,12 @@
 namespace  App\Modules\TripReport\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 
 class ClientTripReportSubscription extends Model
 {
+    use SoftDeletes;    
     protected $fillable=[
 		'client_id','subscription_id','configuration','start_date','end_date','configuration','number_of_vehicles','number_of_reports_generated'
     ];
@@ -39,7 +40,8 @@ class ClientTripReportSubscription extends Model
                             'subscriptions.number_of_vehicles',
                             'subscriptions.number_of_reports_generated'
 
-                        );
+                        )
+                        ->where('subscriptions.deleted_at',null);
                         if($client_id != 'all')
                         {
                             $query->where(function($query) use($client_id){
@@ -130,10 +132,13 @@ class ClientTripReportSubscription extends Model
                   number_of_vehicles,
                   number_of_reports_generated,
                   start_date,
-                  end_date 
+                  end_date ,
+                  deleted_at
                   from client_trip_report_subscriptions 
                   where 
                   client_id =".$client_id."
+                  AND 
+                  deleted_at is null
                   AND
                   (
                   ('".date('Y-m-d',strtotime($start_date))."' > start_date AND '".$end_date."' < end_date)

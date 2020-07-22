@@ -28,6 +28,8 @@ function check()
     $('#geofence_entry_overspeed').empty();
     $('#geofence_exit_overspeed').empty();
 
+    $('#last_updated_time').empty();
+
      
     if(document.getElementById('vehicle').value == '')
     {
@@ -139,7 +141,6 @@ function successAlertCount(response){
     $('#geofence_exit').text(geofence_exit);
     $('#geofence_entry_overspeed').text(geofence_entry_overspeed);
     $('#geofence_exit_overspeed').text(geofence_exit_overspeed);
-
 }
 function failedAlert(error)
 {
@@ -156,6 +157,7 @@ function vehicleReport(res)
     {
         route_deviation             =   "No alerts";
     }
+   var  last_updated_time           ="Last data received :"+res.last_updated_time;
     $('#total_km').text(km);
     $('#sleep').text(res.sleep);
     $('#moving').text(res.motion);
@@ -167,4 +169,6 @@ function vehicleReport(res)
     $('#ac_on_duration').text(res.ac_on_duration);
     $('#ac_off_duration').text(res.ac_off_duration);
     $('#ac_halt_on_duration').text(res.ac_halt_on_duration);
+    $('#last_updated_time').text(last_updated_time);
+    
 }

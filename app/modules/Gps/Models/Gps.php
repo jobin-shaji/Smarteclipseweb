@@ -400,6 +400,18 @@ class Gps extends Model
                 ->where('refurbished_status',1)
                 ->count();
     }
+    public function getGpsLastPacket($gps_id)
+    {
+       
+        return self::select(
+                'id',
+                'device_time'
+            )
+            ->whereIn('id',$gps_id)
+            ->first();
+    }
+
+
 
     /**
      * 
@@ -426,5 +438,6 @@ class Gps extends Model
         ->orderBy('id','DESC')
         ->withTrashed();
     }
+
     
 }
