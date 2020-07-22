@@ -1291,6 +1291,7 @@ class WarehouseController extends Controller {
     {
         $device_serial_no= trim($request->serial_no," ,\0,\n,\x0B,\r");
         $user = \Auth::user();
+        // dd($device_serial_no);
         $device = Gps::select('id', 'serial_no','batch_number','employee_code')
                         ->where('serial_no',$device_serial_no)
                         ->first();
