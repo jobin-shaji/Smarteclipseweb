@@ -93,7 +93,7 @@ class SimActivationDetails extends Model
             return $result->get();
         }
 	}
-	public function getSimActivationgps_idDetails($id)
+	public function getSimActivationDetails($id)
 	{
 		return self::select(
 			'id',
@@ -147,24 +147,4 @@ class SimActivationDetails extends Model
 		return DB::select($query);
 
 	}
-	public function getSimActivationDetails($id)
-    {
-        return self::select(
-            'id',
-            'imei',
-            'msisdn',
-            'iccid',
-            'imsi',
-            'puk',
-            'product_type',
-            'activated_on',
-            'expire_on',
-            'business_unit_name',
-            'product_status',
-            'gps_id'
-        )
-        ->with('gps')
-        ->where('id',$id)
-        ->first();
-    }
 }
