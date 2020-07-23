@@ -92,7 +92,6 @@ class SimActivationDetails extends Model
         {
             return $result->get();
         }
-		// return $result->paginate(10);
 	}
 	public function getSimActivationgps_idDetails($id)
 	{
@@ -133,17 +132,39 @@ class SimActivationDetails extends Model
 		
 	}
 
-	public function roleBasedCount()
-	{
-	
-		$query = "SELECT 
-        us.role,
-        COUNT(sad.id) as count
+	public function roleBasedCount($search_key,$from_date,$to_date,$download_type)
+	{		
+		$query = "SELECT
+        us.role, us.username,cl.name,
+        COUNT(DISTINCT sad.id) as count
         FROM `sim_activation_details` AS sad
         INNER JOIN vehicles as v ON v.gps_id = sad.gps_id
         INNER JOIN clients as cl ON cl.id = v.client_id
         INNER JOIN users as us ON us.id = cl.user_id
-        GROUP BY us.role";
+		WHERE
+        (date(sad.expire_on) BETWEEN '2021-03-03' AND  '2021-03-03')
+		group by us.role";
 		return DB::select($query);
+
 	}
+	public function getSimActivationDetails($id)
+    {
+        return self::select(
+            'id',
+            'imei',
+            'msisdn',
+            'iccid',
+            'imsi',
+            'puk',
+            'product_type',
+            'activated_on',
+            'expire_on',
+            'business_unit_name',
+            'product_status',
+            'gps_id'
+        )
+        ->with('gps')
+        ->where('id',$id)
+        ->first();
+    }
 }

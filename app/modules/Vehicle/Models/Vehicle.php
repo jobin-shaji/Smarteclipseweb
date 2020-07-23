@@ -321,26 +321,36 @@ class Vehicle extends Model
                   })
                   ->pluck('gps_id');
     }
-//get vehicle list based on client
-public function getVehicleListBasedOnClientNotSubscribed($client_id,$vehicle_id)
-{
-  // dd()
-  return self::select(
-                  'id',
-                  'name',
-                  'register_number',
-                  'gps_id',
-                  'client_id',
-                  'driver_id',
-                  'vehicle_type_id',
-                  'deleted_at',
-                  'is_returned'
-                  )
-                ->withTrashed()
-                ->where('client_id',$client_id)
-                ->whereNotIn('id',$vehicle_id)
-                ->get();
-}
+  //get vehicle list based on client
+  public function getVehicleListBasedOnClientNotSubscribed($client_id,$vehicle_id)
+  {
+    // dd()
+    return self::select(
+                    'id',
+                    'name',
+                    'register_number',
+                    'gps_id',
+                    'client_id',
+                    'driver_id',
+                    'vehicle_type_id',
+                    'deleted_at',
+                    'is_returned'
+                    )
+                  ->withTrashed()
+                  ->where('client_id',$client_id)
+                  ->whereNotIn('id',$vehicle_id)
+                  ->get();
+  }
+  /**
+     * 
+     */
+    public function getVehiclesCountOfSelectedClient($client_id)
+    {
+      return self::select('id','name','register_number','client_id')
+                  ->withTrashed()
+                  ->where('client_id',$client_id)
+                  ->count();
+    }
 
 
   

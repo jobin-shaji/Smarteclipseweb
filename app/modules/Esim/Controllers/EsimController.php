@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use App\Modules\Client\Models\Client;
 use App\Modules\Alert\Models\Alert;
 use App\Modules\Vehicle\Models\Vehicle;
+use App\Modules\Root\Models\Root;
 use App\Modules\User\Models\User;
 use Illuminate\Support\Facades\Crypt;
 use App\Modules\Esim\Models\SimActivationDetails;
@@ -22,22 +23,27 @@ class EsimController extends Controller {
     public function getEsimDetails(Request $request)
     {
       
-        
+        $manufacturer_id                    =   \Auth::user()->root->id;
         $search_key                         =   ( isset($request->search) ) ? $request->search : null;  
         $from_date                          =   ( isset($request->fromDate) ) ? date("Y-m-d", strtotime($request->fromDate)): null; 
         $to_date                            =   ( isset($request->toDate) ) ? date("Y-m-d", strtotime($request->toDate)): null; 
         $download_type                      =   ( isset($request->type) ) ? $request->type : null;        
         $esim_list                          =   (new SimActivationDetails())->getSimActivationList($search_key,$from_date,$to_date,$download_type);
         $role_count                         =   (new SimActivationDetails())->roleBasedCount($search_key,$from_date,$to_date,$download_type);
+        $manufacturer_details               =   (new Root())->getManufacturerDetails($manufacturer_id);
         $role_count_data                    =   [];    
-        $role_count_total                   =   0;                     
-        foreach($role_count as $item)
-        {
-            $role_count_total = $role_count_total + $item->count;
-            $role_count_data [$item->role]  =[
-                "count"  => $item->count
-            ];
-        }
+        $role_count_total                   =   0;   
+       if( $role_count )
+       {
+                 
+            foreach($role_count as $item)
+            {
+                $role_count_total = $role_count_total + $item->count;
+                $role_count_data [$item->role]  =[
+                    "count"  => $item->count
+                ];
+            }
+       } 
 
         if($request->ajax())
         {            
@@ -45,7 +51,7 @@ class EsimController extends Controller {
         }
         if($download_type == 'pdf')
         {
-            $pdf                    =   PDF::loadView('Esim::esim-activation-details-download',['esim_lists' => $esim_list,'generated_on' => date("d/m/Y h:i:s A"), 'from_date' => $request->fromDate, 'to_date' => $request->toDate,'role_count'=>$role_count_data, 'role_count_total' =>  $role_count_total]);
+            $pdf                    =   PDF::loadView('Esim::esim-activation-details-download',['esim_lists' => $esim_list,'generated_on' => date("d/m/Y h:i:s A"), 'from_date' => $request->fromDate, 'to_date' => $request->toDate,'role_count'=>$role_count_data, 'role_count_total' =>  $role_count_total,'generated_by' => ucfirst(strtolower($manufacturer_details->name)).' '.'( Manufacturer )']);
             return $pdf->download('esim-activation-detail-list.pdf');
         }
         else{

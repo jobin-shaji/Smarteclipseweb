@@ -67,19 +67,26 @@ class VehicleTripReportController extends Controller
      * fetch vehicles based on client
      * 
      */
-    public function getVehiclesBasedOnClient(Request $request)
+    public function getPlanBasedOnClient(Request $request)
     {     
-        $vehicles    =   (new Vehicle())->getVehiclesOfSelectedClient(Crypt::decrypt($request->client_id));        
-        if($vehicles == null)
+        $plan_of_client             = (new Client())->getClientDetailsWithClientId(Crypt::decrypt($request->client_id))->user->role;
+        $plan_names                 = array_column(config('eclipse.PLANS'), 'NAME', 'ID');
+        $plan_type                  = [
+                                        'ID'    => $plan_of_client,
+                                        'NAME'  => $plan_names[$plan_of_client],
+                                    ];
+                                   
+        $vehicles    =   (new Vehicle())->getVehiclesCountOfSelectedClient(Crypt::decrypt($request->client_id));        
+        if($plan_of_client == null)
         {
             return response()->json([
-                'vehicles' => '',
+                'plan' => '',
                 'message' => 'no vehicle found'
             ]);
         }else
         {
             return response()->json([
-                    'vehicles' => $vehicles,
+                    'plan' => $plan_type['NAME'],
                     'message' => 'success'
             ]);
         }
