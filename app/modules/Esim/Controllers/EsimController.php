@@ -29,6 +29,7 @@ class EsimController extends Controller {
         $to_date                            =   ( isset($request->toDate) ) ? date("Y-m-d", strtotime($request->toDate)): null; 
         $download_type                      =   ( isset($request->type) ) ? $request->type : null;        
         $esim_list                          =   (new SimActivationDetails())->getSimActivationList($search_key,$from_date,$to_date,$download_type);
+        //    plan  count
         $role_count                         =   (new SimActivationDetails())->roleBasedCount($search_key,$from_date,$to_date,$download_type);
         $manufacturer_details               =   (new Root())->getManufacturerDetails($manufacturer_id);
         $role_count_data                    =   [];    
@@ -44,7 +45,7 @@ class EsimController extends Controller {
                 ];
             }
        } 
-
+        //    plan  count
         if($request->ajax())
         {            
             return ($esim_list != null) ? Response([ 'lists' => $esim_list->appends(['search'=>$search_key]) ,'link'=> (string)$esim_list->render() ]) : Response([ 'links' => null]);
@@ -52,7 +53,7 @@ class EsimController extends Controller {
         if($download_type == 'pdf')
         {
             $pdf                    =   PDF::loadView('Esim::esim-activation-details-download',['esim_lists' => $esim_list,'generated_on' => date("d/m/Y h:i:s A"), 'from_date' => $request->fromDate, 'to_date' => $request->toDate,'role_count'=>$role_count_data, 'role_count_total' =>  $role_count_total,'generated_by' => ucfirst(strtolower($manufacturer_details->name)).' '.'( Manufacturer )']);
-            return $pdf->download('esim-activation-detail-list.pdf');
+            return $pdf->download('device plan expiry report.pdf');
         }
         else{
             return view('Esim::esim-activation-details-list')->with([ 'lists' => $esim_list,'search_key'=>$search_key,'from_date'=>$request->fromDate,'to_date'=>$request->toDate]);   

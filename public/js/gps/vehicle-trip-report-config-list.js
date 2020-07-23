@@ -51,13 +51,7 @@ $(document).ready(function() {
                 'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
             },
             success:function(data) {
-                            
-                $('#vehicle_id').empty();
-                $('#vehicle_id').focus;
-                $('#vehicle_id').append('<option value="" disabled="disabled" selected="selected">Select vehicles</option>'); 
-                $.each(data.vehicles, function(key, value){
-                    $('select[name="vehicle_id" ]').append('<option value="'+ value.id +'">' + value.name+ '</option>');
-                });                
+              $('#client_role').html('<div class="no-data-class" style="margin-top: 8px;">PLAN:'+data.plan+' , Total Vehicles:'+data.vehicle_count+'</div>');                            
             }
         });
     });

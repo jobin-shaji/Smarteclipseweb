@@ -121,7 +121,7 @@ class Client extends Model
    */
   public function getClientDetailsWithClientId($client_id)
 	{
-		return self::where('id',$client_id)->first();
+		return self::where('id',$client_id)->withTrashed()->first();
 	}
   /**
    * 

@@ -171,7 +171,7 @@ Trip report subscription list
                                                          <option value="{{encrypt($each_data->id)}}" @if($client_id != '' && $client_id==$each_data->id){{"selected"}} @endif >{{$each_data->name}} || Mobile No: {{$each_data->mobile}}</option>  
                                                          @endforeach
                                                       </select>
-                                                      <span id="client_role">mjhfgjh</p>
+                                                      <span id="client_role" class="client_role"></span>
                                                    </div>
                                                 </div>
                                                 <div class="row">
