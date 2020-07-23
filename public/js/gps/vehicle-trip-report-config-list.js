@@ -44,7 +44,7 @@ $(document).ready(function() {
         var data={ client_id : client_id };
         $.ajax({
             type:'POST',
-            url: '/end-user-vehicle',
+            url: '/end-user-plan-count',
             data:data ,
             async: true,
             headers: {
