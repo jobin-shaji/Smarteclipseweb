@@ -7,9 +7,5 @@ Route::group(['middleware' => ['web','auth','role:root|operations'] , 'namespace
     Route::post('/esim-detail-encription','EsimController@esimDetailIdEncription')->name('esim-detail-encription');
     Route::get('/esim-sort-by-date','EsimController@getEsimDetails')->name('esim.sort.by.date');
     Route::get('/esim-activation-details-downloads','EsimController@getEsimDetails')->name('esim-activation-details-downloads');
-    
-    Route::get('/esim-activation-mail','EsimController@getEsimMail')->name('esim-activation-details-downloads');
-   
-    
 });
 
