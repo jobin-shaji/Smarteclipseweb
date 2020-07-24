@@ -37,9 +37,9 @@ class EsimPdf extends Mailable implements ShouldQueue
         $this->to_date              =   $data['to_date'];
         $this->role_count_total     =   $data['role_count_total'];
         $this->role_count           =   $data['role_count'];
-        $mytime                     =   Carbon::now();
+        $current_date               =   Carbon::now();
         $this->nextMonth            =   date('F', strtotime('next month'));
-        $this->year                 =   date('Y', strtotime($mytime)) ;       
+        $this->year                 =   date('Y', strtotime($current_date)) ;       
     }
 
     /**

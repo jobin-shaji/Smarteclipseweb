@@ -74,7 +74,6 @@ class Esim extends Command
      */
     public function getEsimMail()
     {
-        $mytime = Carbon::now();
         $firstDateOfNextMonth =strtotime('first day of next month') ;
         $firstDay = date('Y-m-d', $firstDateOfNextMonth);
         $lastDateOfNextMonth =strtotime('last day of next month') ;
