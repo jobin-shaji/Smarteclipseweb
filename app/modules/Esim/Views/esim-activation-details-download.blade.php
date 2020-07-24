@@ -91,8 +91,12 @@ td, th {
         <td>{{$plan_name}}</td>
         <td>{{$item->expire_on}}</td>
     </tr>
-    <?php //$i++; ?>
-@endforeach
+    @endforeach
+    @if(count($esim_lists) == 0)
+      <tr>
+        <td colspan="4" style="text-align: center;"><b>No Data Available</b></td>
+      </tr>
+      @endif
   </tbody>
   
 </table>

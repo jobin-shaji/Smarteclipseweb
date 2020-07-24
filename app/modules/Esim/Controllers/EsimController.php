@@ -54,7 +54,7 @@ class EsimController extends Controller {
         //    plan  count
         if($request->ajax())
         {            
-            return ($esim_list != null) ? Response([ 'lists' => $esim_list->appends(['search'=>$search_key]) ,'link'=> (string)$esim_list->render() ]) : Response([ 'links' => null]);
+            return ($esim_list != null) ? Response([ 'lists' => $esim_list->appends(['search'=>$search_key,'from_date'=> $from_date,'to_date'=>$to_date]) ,'link'=> (string)$esim_list->render() ]) : Response([ 'lists' => $esim_list->appends(['search'=>$search_key,'from_date'=> $from_date,'to_date'=>$to_date]) ,'link'=> (string)$esim_list->render() ]);
         }
         if($download_type == 'pdf')
         {

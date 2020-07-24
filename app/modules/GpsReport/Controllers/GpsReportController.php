@@ -1328,7 +1328,7 @@ class GpsReportController extends Controller
         $download_type          = ( isset($request->type) ) ? $request->type : null;
         // $search_key          = ( isset($request->search_key) ) ? $request->search_key : null;
         $search_key             =   ( isset($request->search) ) ? $request->search : null;     
-       
+      
         $logged_user_details    = (new Operations())->getOperatorDetails(\Auth::user()->operations->id);
 
         if($offline_duration == null )
@@ -1346,7 +1346,7 @@ class GpsReportController extends Controller
             $gps_id_of_active_vehicles      = (new Vehicle())->getAllVehiclesWithUnreturnedGps();
         }
         $offline_devices                    = (new Gps())->getAllOfflineDevices($offline_date_time, $device_type, $download_type , $gps_id_of_active_vehicles,$search_key);
-        // $imei=[];
+       // $imei=[];
         // foreach($offline_devices as $offline_device)
         // {
         //     $encryptedid[]= $offline_device->eimei;

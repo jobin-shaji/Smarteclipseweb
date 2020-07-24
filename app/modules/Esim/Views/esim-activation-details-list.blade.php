@@ -93,8 +93,7 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                 </thead>
                 <tbody id="data_tbody">
                   <!-- @php $i = ($lists->currentpage()-1)* $lists->perpage() + 1;@endphp -->
-                 
-                  @foreach ( $lists as $item)
+                 @foreach ( $lists as $item)
                    <tr>
                       <td> {{ (($perPage * ($page - 1)) + $loop->iteration) }}</td>
                       <td>{{$item->imei}}</td>
@@ -107,6 +106,11 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                    </tr>
                 
                   @endforeach
+                  @if(count($lists) == 0)
+                  <tr>
+                    <td colspan="8" style="text-align: center;"><b>No Data Available</b></td>
+                  </tr>
+                  @endif
                 </tbody>
               </table>
               <span id="pagination_links">
