@@ -67,13 +67,13 @@ td, th {
     @foreach($esim_lists as $item)
     <?php
   
-    if($item->gps->gpsStock)
+    if($item->vehicles)
     {
-        if($item->gps->gpsStock->client)
+        if($item->vehicles->client)
         {
             $plan_names     = array_column(config('eclipse.PLANS'), 'NAME', 'ID');
-            $plan_name      = $plan_names[$item->gps->gpsStock->client->user->role ? $item->gps->gpsStock->client->user->role : 0];                          
-            $result = $item->gps->gpsStock->client->name ;
+            $plan_name      = $plan_names[$item->vehicles->client->user->role ? $item->vehicles->client->user->role : 0];                          
+            $result = $item->vehicles->client->name ;
         }
         else{
             $result = "NA"; 

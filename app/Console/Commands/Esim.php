@@ -102,10 +102,6 @@ class Esim extends Command
             $email[] = $setting->email;            
         }
         $data            =   ['esim_lists' => $esim_list,'generated_on' => date("d/m/Y h:i:s A"), 'from_date' => $firstDay, 'to_date' => $lastDay,'role_count'=>$role_count_data, 'role_count_total' =>  $role_count_total,'generated_by' => 'VST Mobility Solutions ( Manufacturer )'];
-        $pdf             =   PDF::loadView('Esim::esim-activation-details-download',$data);
-        $path            =   public_path('pdf/');
-        $fileName        =  'device plan expiry report'. '.' . 'pdf' ;
-        // $pdf->save($path . '/' . $fileName);
         Mail::to($email[0])->cc($email[1])->send(new EsimPdf($data));
     }
 
