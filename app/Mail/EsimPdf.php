@@ -51,7 +51,7 @@ class EsimPdf extends Mailable implements ShouldQueue
     {   
         $pdf            =   PDF::loadView('Esim::esim-activation-details-download',$this->data);
         return $this->attachData($pdf->output(), "device plan expiry report.pdf")
-            ->subject('List of devices expire in'.$this->nextMonth.'-'.$this->year)
+            ->subject('List of devices expire in '.$this->nextMonth.'-'.$this->year)
             ->markdown('emails.esims.pdf')
             ->with([                       
                 'from_date'         => $this->from_date,
