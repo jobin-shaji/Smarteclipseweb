@@ -4,6 +4,8 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use App\Modules\Esim\Controllers\EsimController;
+
 
 class Kernel extends ConsoleKernel
 {
@@ -16,7 +18,9 @@ class Kernel extends ConsoleKernel
         Commands\TripM::class,
         Commands\VehicleTrips::class,
         Commands\OldTrips::class,
-        Commands\IndividualTrips::class
+        Commands\IndividualTrips::class,
+        Commands\Esim::class
+
     ];
 
     /**
@@ -28,6 +32,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('vehicle:trips')->dailyAt('04:00');
+        $schedule->command('esim:pdf')->monthlyOn(20, '09:00');
     }
 
     /**

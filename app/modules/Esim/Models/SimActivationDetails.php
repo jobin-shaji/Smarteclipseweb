@@ -2,6 +2,7 @@
 namespace App\Modules\Esim\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use DB;
 use Carbon\Carbon AS Carbon;
 
 class SimActivationDetails extends Model
@@ -53,7 +54,7 @@ class SimActivationDetails extends Model
 		}
 		
 	}
-	public function getSimActivationList($search_key=null,$from_date=null,$to_date=null)
+	public function getSimActivationList($search_key=null,$from_date=null,$to_date=null,$download_type=null)
 	{
 		$result =  self::select(
 			'id',
@@ -66,8 +67,10 @@ class SimActivationDetails extends Model
 			'activated_on',
 			'expire_on',
 			'business_unit_name',
-			'product_status'
-		);
+			'product_status',
+			'gps_id'
+		)
+		->with('gps');
 		if( $search_key != null )
 		{
 			$result->where(function($query) use($search_key){
@@ -81,7 +84,14 @@ class SimActivationDetails extends Model
 			$result = $result->whereDate('expire_on', '>=', $from_date)
 			->whereDate('expire_on', '<=', $to_date);   
 		}
-		return $result->paginate(10);
+		if($download_type == null)  
+        {
+            return $result->paginate(10);
+        }
+        else
+        {
+            return $result->get();
+        }
 	}
 	public function getSimActivationDetails($id)
 	{
@@ -120,5 +130,21 @@ class SimActivationDetails extends Model
 		->where('imsi',$esim_details->imsi)
 		->first();
 		
+	}
+
+	public function roleBasedCount($search_key,$from_date,$to_date,$download_type)
+	{		
+		$query = "SELECT
+        us.role, us.username,cl.name,
+        COUNT(DISTINCT sad.id) as count
+        FROM `sim_activation_details` AS sad
+        INNER JOIN vehicles as v ON v.gps_id = sad.gps_id
+        INNER JOIN clients as cl ON cl.id = v.client_id
+        INNER JOIN users as us ON us.id = cl.user_id
+		WHERE
+        (date(sad.expire_on) BETWEEN '2021-03-03' AND  '2021-03-03')
+		group by us.role";
+		return DB::select($query);
+
 	}
 }

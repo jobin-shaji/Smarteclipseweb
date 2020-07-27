@@ -31,7 +31,7 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                     
                   <form method="GET"  action="{{route('esim.sort.by.date')}}" style="width:100%">
                      {{csrf_field()}}
-                    <div class="col-lg-3 col-md-3" style="margin-top: 30px;"> 
+                    <div class="col-lg-3 col-md-3" > 
                       <div class="form-group"> 
                         <label> Search</label>
                           <!-- <input type="text" class="form-control " name="esim_number" id="esim_number">  -->
@@ -62,6 +62,11 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                         <a href="/esim-activation-details">
                           <button type="button" class="btn btn-sm btn-info btn2 srch search-btn " style="margin-top: 30px;"> RESET</button>
                         </a>
+                        @if($from_date && $to_date)
+                        <button class="btn btn-xs"><i class='fa fa-download'></i>
+                          <a href="esim-activation-details-downloads?type=pdf&fromDate={{$from_date}}&toDate={{$to_date}}" style="color:white">Download Report</a>
+                          </button>
+                          @endif
                       </div>
                     </div>
                     </form>
@@ -88,8 +93,7 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                 </thead>
                 <tbody id="data_tbody">
                   <!-- @php $i = ($lists->currentpage()-1)* $lists->perpage() + 1;@endphp -->
-                 
-                  @foreach ( $lists as $item)
+                 @foreach ( $lists as $item)
                    <tr>
                       <td> {{ (($perPage * ($page - 1)) + $loop->iteration) }}</td>
                       <td>{{$item->imei}}</td>
@@ -102,6 +106,11 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                    </tr>
                 
                   @endforeach
+                  @if(count($lists) == 0)
+                  <tr>
+                    <td colspan="8" style="text-align: center;"><b>No Data Available</b></td>
+                  </tr>
+                  @endif
                 </tbody>
               </table>
               <span id="pagination_links">

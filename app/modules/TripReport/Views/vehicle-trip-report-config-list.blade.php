@@ -165,12 +165,13 @@ Trip report subscription list
                                                       <label  data-success="right" >End User</label> 
                                                    </div>
                                                    <div class="col-md-6 select2-new div_margin_top">
-                                                      <select required class="form-control select2"  name="client_id"  title="Select End User" id='client_id'>
+                                                      <select required class="form-control select2"  name="client_id"  title="Select End User" id='client_id' onchange="clientRole()">
                                                          <option value="" selected >Select End User</option>
                                                          @foreach($client_details as $each_data)
                                                          <option value="{{encrypt($each_data->id)}}" @if($client_id != '' && $client_id==$each_data->id){{"selected"}} @endif >{{$each_data->name}} || Mobile No: {{$each_data->mobile}}</option>  
                                                          @endforeach
                                                       </select>
+                                                      <span id="client_role" class="client_role"></span>
                                                    </div>
                                                 </div>
                                                 <div class="row">
