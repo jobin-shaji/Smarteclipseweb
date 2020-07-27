@@ -24,4 +24,4 @@ Attaching below the list of devices in which the plan is goining to expire in {{
 <br>
 Regards,<br>
 Team {{ ucwords(strtolower(config('app.name'))) }}
-@endcomponent
+<!-- @endcomponent -->
