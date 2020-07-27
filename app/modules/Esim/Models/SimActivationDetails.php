@@ -70,7 +70,7 @@ class SimActivationDetails extends Model
 			'product_status',
 			'gps_id'
 		)
-		->with('gps');
+		->with('vehicles');
 		if( $search_key != null )
 		{
 			$result->where(function($query) use($search_key){
@@ -135,16 +135,21 @@ class SimActivationDetails extends Model
 	public function roleBasedCount($search_key,$from_date,$to_date,$download_type)
 	{
 		$query = "SELECT
-        us.role, us.username,cl.name,
+        us.role, us.username,cl.name,gps.imei,
         COUNT(DISTINCT sad.id) as count
         FROM `sim_activation_details` AS sad
+		INNER JOIN gps as gps ON gps.id = sad.gps_id
         INNER JOIN vehicles as v ON v.gps_id = sad.gps_id
         INNER JOIN clients as cl ON cl.id = v.client_id
         INNER JOIN users as us ON us.id = cl.user_id
 		WHERE
-        (date(sad.expire_on) BETWEEN $from_date AND  $to_date)
+        (date(sad.expire_on) BETWEEN '$from_date' AND  '$to_date')
 		group by us.role";
 		return DB::select($query);
 
+	}
+	public function vehicles()
+    {
+      return $this->hasOne('App\Modules\Vehicle\Models\Vehicle','gps_id','gps_id')->withTrashed();
 	}
 }
