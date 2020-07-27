@@ -337,6 +337,17 @@ class UsersTableSeeder extends Seeder
             'created_at' => now()
         ]);
 
+        DB::table('settings')->insert([
+            'name' => 'operations_email_id',
+            'email' => 'operations@vstmobility.com',
+            'created_at' => now()
+        ]);
+        DB::table('settings')->insert([
+            'name' => 'development_id',
+            'email' => 'head.php@vstmobility.com',
+            'created_at' => now()
+        ]);
+
         
     }
 }

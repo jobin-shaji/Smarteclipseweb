@@ -105,7 +105,7 @@ class Esim extends Command
         $pdf             =   PDF::loadView('Esim::esim-activation-details-download',$data);
         $path            =   public_path('pdf/');
         $fileName        =  'device plan expiry report'. '.' . 'pdf' ;
-        $pdf->save($path . '/' . $fileName);
+        // $pdf->save($path . '/' . $fileName);
         Mail::to($email[0])->cc($email[1])->send(new EsimPdf($data));
     }
 

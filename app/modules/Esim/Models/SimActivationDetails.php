@@ -133,7 +133,7 @@ class SimActivationDetails extends Model
 	}
 
 	public function roleBasedCount($search_key,$from_date,$to_date,$download_type)
-	{		
+	{
 		$query = "SELECT
         us.role, us.username,cl.name,
         COUNT(DISTINCT sad.id) as count
@@ -142,7 +142,7 @@ class SimActivationDetails extends Model
         INNER JOIN clients as cl ON cl.id = v.client_id
         INNER JOIN users as us ON us.id = cl.user_id
 		WHERE
-        (date(sad.expire_on) BETWEEN '2021-03-03' AND  '2021-03-03')
+        (date(sad.expire_on) BETWEEN $from_date AND  $to_date)
 		group by us.role";
 		return DB::select($query);
 
