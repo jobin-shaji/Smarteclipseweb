@@ -77,7 +77,7 @@
             <!-- toggle and nav items -->
             <!-- ============================================================== -->
                  
-            @role('root|dealer|sub_dealer|servicer|school|operations|trader')
+            @role('root|dealer|sub_dealer|servicer|school|operations|trader|sales')
 
                 @role('root')
                     @include('layouts.sections.root-header')
@@ -99,6 +99,9 @@
                 @endrole
                 @role('trader')
                     @include('layouts.sections.trader-header')
+                @endrole
+                @role('sales')
+                    @include('layouts.sections.sales-header')
                 @endrole
 
             @endrole
@@ -497,7 +500,7 @@
                         <img src="{{ url('/') }}/images/{{ \Auth::user()->roles->last()->path }}" alt="user" title="{{\Auth::user()->username}}" class="rounded-circle" width="70" height="60"/>
                         @endrole
                    
-                        @role('root|dealer|sub_dealer|servicer|school|operations|trader')
+                        @role('root|dealer|sub_dealer|servicer|school|operations|trader|sales')
                         <img src="{{ url('/') }}/assets/images/2.png" alt="user" title="{{\Auth::user()->username}}" class="rounded-circle" width="31">
                         @endrole
                     </a>
@@ -563,6 +566,13 @@
                             <a class="dropdown-item" href="{{url('/trader_profile_change_password/'.Crypt::encrypt(\Auth::user()->id).'/change-password')}}">
                                 <i class="fa fa-cog m-r-5 m-l-5"></i>CHANGE PASSWORD</a>
                         @endrole
+                        @role('sales')
+                            <a class="dropdown-item" href="{{url('/salesman/profile')}}">
+                                <i class="ti-user m-r-5 m-l-5"></i>{{\Auth::user()->username}}
+                            </a>
+                            <a class="dropdown-item" href="{{url('/salesman/'.Crypt::encrypt(\Auth::user()->id).'/change-password')}}">
+                                <i class="fa fa-cog m-r-5 m-l-5"></i>CHANGE PASSWORD</a>
+                        @endrole
 
                         <a class="dropdown-item" href="{{ route('logout') }}"
                         onclick="clearLocalStorage();event.preventDefault();document.getElementById('logout-form').submit();"><i class="fa fa-power-off m-r-5 m-l-5"></i>LOGOUT</a>
@@ -572,6 +582,7 @@
             </ul>
         </div>
         <?php
+       
             if(\Auth::user()->hasRole('root'))
             {
                 $role=md5('root');
@@ -596,6 +607,10 @@
             {
                 $role=md5('operations');
             }  
+            else if(\Auth::user()->hasRole('sales'))
+            {
+                $role=md5('sales');
+            }
             else if(\Auth::user()->hasRole('servicer'))
             {
                 $role=md5('servicer');

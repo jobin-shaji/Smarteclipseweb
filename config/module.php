@@ -46,7 +46,8 @@ return  [
        'GpsReport',
        'TripReport',
        'Esim',
-       'Settings'
+       'Settings',
+       'Sales'
 
     ]
 ]

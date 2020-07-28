@@ -1,6 +1,6 @@
 <?php
 
-Route::group(['middleware' => ['web','auth','role:root|dealer|sub_dealer|trader'] , 'namespace' => 'App\Modules\GpsReport\Controllers' ] , function() {	
+Route::group(['middleware' => ['web','auth','role:root|dealer|sub_dealer|trader|sales'] , 'namespace' => 'App\Modules\GpsReport\Controllers' ] , function() {	
     Route::get('/detailed-device-report','GpsReportController@detailedDeviceReport')->name('detailed-device-report');
     
     //GPS TRANSFER REPORT
