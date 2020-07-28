@@ -38,7 +38,7 @@
                         @endif
                     @endrole
 
-                    @role('root|dealer|sub_dealer|servicer|trader')
+                    @role('root|dealer|sub_dealer|servicer|trader|sales')
                         <?php
                         $url=url()->current();
                         $rayfleet_key="rayfleet";
