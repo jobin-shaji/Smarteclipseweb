@@ -41,7 +41,7 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                     <div class="col-lg-3 col-md-3" > 
                       <div class="form-group">                      
                         <label> From Date</label>
-                        <input type="text" required class="esim_datepicker form-control"style="width: 100%"  id="fromDate" name="fromDate" onkeydown="return false" value="@if(isset($from_date)) {{$from_date}} @endif"  autocomplete="off"  required>
+                        <input type="text" required class="esim_datepicker form-control start_date"style="width: 100%"  id="fromDate" name="fromDate" onkeydown="return false" value="@if(isset($from_date)) {{$from_date}} @endif"  autocomplete="off"  required>
                         <span class="input-group-addon" style="z-index: auto;">
                             <span class="calender1" style="right: 37px;"><i class="fa fa-calendar"></i></span>
                         </span>
@@ -50,7 +50,7 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                     <div class="col-lg-3 col-md-3"> 
                       <div class="form-group">                     
                         <label> To Date</label>
-                        <input type="text" required class="esim_datepicker form-control" style="width: 100%" id="toDate" name="toDate"  onkeydown="return false"  value="@if(isset($to_date)) {{$to_date}} @endif"  autocomplete="off" required>
+                        <input type="text" required class="esim_datepicker form-control end_date" style="width: 100%" id="toDate" name="toDate"  onkeydown="return false"  value="@if(isset($to_date)) {{$to_date}} @endif"  autocomplete="off" required>
                         <span class="input-group-addon" style="z-index: auto;">
                             <span class="calender1" style="right: 37px;"><i class="fa fa-calendar"></i></span>
                         </span>
@@ -217,6 +217,13 @@ $('#search').on('keyup',function(){
             }
           });
     }
+
+
+      // date picker validations
+ 
+      $('.start_date').on('dp.change', function(e){
+      $('.end_date').data('DateTimePicker').minDate(e.date);
+      })
     </script>
     <!-- <script src="{{asset('js/gps/esim-activation-details-list.js')}}"></script> -->
 @endsection
