@@ -101,7 +101,7 @@
                     @include('layouts.sections.trader-header')
                 @endrole
                 @role('sales')
-                    @include('layouts.sections.operation-header')
+                    @include('layouts.sections.sales-header')
                 @endrole
 
             @endrole

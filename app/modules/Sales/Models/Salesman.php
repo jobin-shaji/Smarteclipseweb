@@ -13,5 +13,21 @@ class Salesman extends Model
     public function user()
     {
     	return $this->belongsTo('App\Modules\User\Models\User','user_id','id')->withTrashed();
-	}
+  }
+  
+  /**
+   * getSalesmanDetails
+   */
+  public function getSalesmanDetails($salesman_id)
+	{
+		return self::select('id','name','root_id')->where('id',$salesman_id)->with('root')->first();
+  }
+   /**
+   * root id
+   */
+  public function root()
+  {
+    return $this->hasOne('App\Modules\Root\Models\Root','id','root_id');
+  }
+
 }
