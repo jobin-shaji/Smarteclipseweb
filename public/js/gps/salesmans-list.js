@@ -44,25 +44,6 @@ function callBackDataTable(){
     var table = $('#dataTable').DataTable();
     table.search('').draw();
 }
-// function delDealers(dealer){
-//     if(confirm('Are you sure to deactivate this user?')){
-//         var url = 'dealer/delete';
-//         var data = {
-//             uid : dealer
-//         };
-//         backgroundPostData(url,data,'callBackDataTables',{alert:true});  
-//     }
-// }
-// function activateDealer(dealer){
-//     if(confirm('Are you sure to activate this user?')){
-//         var url = 'dealer/activate';
-//         var data = {
-//             id : dealer
-//         };
-//         backgroundPostData(url,data,'callBackDataTables',{alert:true});  
-//     }
-// }
-
 function disableSalesman(salesman){
     if(confirm('Are you sure to deactivate this user?')){
         var url = 'salesman/disable';
