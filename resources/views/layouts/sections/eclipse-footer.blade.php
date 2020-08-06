@@ -1,29 +1,128 @@
-<?php
-$url=url()->current();
-$rayfleet_key="rayfleet";
-$eclipse_key="eclipse";
-if (strpos($url, $rayfleet_key) == true) { ?>
-<footer class="footer"> 
-Developed by&nbsp;&nbsp;<a href="https://www.tecnositafgulf.qa" target="blank">Gulf Business Development Group</a>
-<div class="footer-bottom" >
-RAYFLEET &nbsp;Version 0.1
-</div>
-</footer>
-<?php } 
-else { ?>
-<footer class="footer"> 
-Developed by&nbsp; <a href="https://vstmobility.com" target="blank">VST Mobility Solutions pvt ltd</a>
-<div class="footer-bottom">
-<span id ="versionClick">Eclipse Version 
+
+
+<link href="https://fonts.googleapis.com/css?family=Roboto:400,100,500,300italic,500italic,700italic,900,300" rel="stylesheet" type="text/css">
+<style>
+body{
+margin:0;
+padding:0;
+}
+.footer{
+width:100%;
+float:left;
+display:block;
+font-family: 'Roboto', sans-serif;
+}
+.footer_contain {
+max-width: 100%;
+    margin: 0 auto;
+    padding: 4.5em 0;
+}
+.footer_bg {
+      background: #f5f5fa;
+    padding: 4em 0 0em;
+    float: left;
+    width: 100%;
+}
+.logotype {
+    margin: 0;
+    -webkit-box-flex: 1;
+    flex: 1;
+}
+.logotype img
+{
+    display: block;
+    width: 46%;
+	margin:0 2.5%;
+
+}
+.logo-bottom-ft-text{
+    width: 95%;
+    float: left;
+    text-transform: uppercase;
+    color: #818181;
+    margin: 0px 2.5% 30px;
+    font-weight: 200;
+    font-size: 1.4em;
+    position: relative;
+    padding-bottom: 25px;
+}
+.logo-bottom-ft-text span{
+width:100%;
+    padding-top: 6px;
+float:left;
+display:block;
+}
+.logo-bottom-ft-text::before {
+    content: "";
+    border-left: 50px solid #FFD21D;
+    position: absolute;
+    left: 0;
+    top: auto;
+    height: 2px;
+    bottom: -2px;
+}
+.footer-bottom{
+width:95%;
+float:left;
+    padding: 30px 2.5% ;
+    background-color: #c6c6c626;
+	    color: #818181;
+    font-weight: 300;
+}
+.eclips-version-text{
+ width:auto;
+ float:right;
+ }
+.eclips-sub-head{
+}
+
+@media only screen and (max-width: 1500px) {
+.logotype img {
+ width: 42%;
+}
+}
+
+@media only screen and (max-width: 980px) {
+.logo-bottom-ft-text {
+    font-size: 1.2em;
+}
+.footer_bg {
+    padding: 2em 0 0em;
+}
+}
+@media only screen and (max-width: 768px) {
+.logotype img {
+    width: 39%;
+}
+.footer-bottom {
+       padding: 20px 2.5%;
+   }
+}
+
+</style>
+
+
+
+<div  class="footer">
+<div class="footer_contain">
+<div class="footer_bg ">
+<div class="logotype "><img src="../../../assets/images/smart-eclips-logo.svg">  </div>
+<div  class="logo-bottom-ft-text">Engineered by <span>VST mobility</span></div>
+<div class="footer-bottom"><span id ="versionClick">Eclipse Version 
 <?php 
 if( file_exists('storage/releasenotes/latest.txt') )
     {
   echo substr(file_get_contents('storage/releasenotes/latest.txt'),0,6);
     }
 ?></span>
+<!--<div class="eclips-version-text">Eclips Version</div>-->
 </div>
-</footer>
-<?php } ?>
+</div>
+
+</div>
+
+</div>
+
 
 
 <div class="modal fade" id="versionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -65,14 +164,7 @@ if( file_exists('storage/releasenotes/latest.txt') )
 <script src="{{asset('js/gps/version-list.js')}}"></script>
 
 <style type="text/css">
-.footer{
-padding: 5px 4%;
-width: 100%;
-background: #fbfbfb;
-color: #444242;
-text-transform: uppercase;
-font-size: 13px;
-}
+
 .modal-hed-new{    
   background: #daa102;
   color: #fff;
