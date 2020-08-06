@@ -3160,8 +3160,7 @@ class WarehouseController extends Controller {
             $distributor = $gps_stock->dealer_id;
             if($distributor)
             {
-                return $gps_stock->dealer['name'];
-               
+                return ( isset($gps_stock->dealer['name']) ) ? $gps_stock->dealer['name'] : '-NA-';
             }
             else if(isset($distributor))
             {          
@@ -3176,8 +3175,7 @@ class WarehouseController extends Controller {
             $dealer = $gps_stock->subdealer_id;
             if($dealer)
             {
-                return $gps_stock->subdealer['name'];
-               
+                return ( isset($gps_stock->subdealer['name']) ) ? $gps_stock->subdealer['name'] : '-NA-';
             }
             else if(isset($dealer))
             {          
@@ -3191,8 +3189,7 @@ class WarehouseController extends Controller {
             $sub_dealer = $gps_stock->trader_id;
             if($sub_dealer)
             {
-                return $gps_stock->trader['name'];
-               
+                return ( isset($gps_stock->trader['name']) ) ? $gps_stock->trader['name'] : '-NA-';
             }
             else if(isset($sub_dealer))
             {          
@@ -3206,8 +3203,7 @@ class WarehouseController extends Controller {
             $subdealer = $gps_stock->client_id;
             if($subdealer)
             {
-                return $gps_stock->client['name'];
-               
+                return ( isset($gps_stock->client['name']) ) ? $gps_stock->client['name'] : '-NA-';
             }
             else if(isset($subdealer))
             {          
