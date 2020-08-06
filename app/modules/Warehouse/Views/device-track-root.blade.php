@@ -30,23 +30,14 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                             <div class="col-md-12 col-md-offset-1">
                                 <div class="panel panel-default">
                                     <div >
-                                          <form method="GET" action="{{route('gps.device.track.root')}}" class="search-top">
-                                              {{csrf_field()}}
-                                              <div class="row">
-                                                  <div class="col-md-6">
-                                                      <div class="row">
-                                                          <div class="col-md-6" style="width: 300px; margin-left: 685px; margin-bottom: 15px;">
-                                                            <input type="text" class="form-control" placeholder="Search IMEI & Serial Number.." name="search_key" id="search_key" autocomplete='off' value="{{ $search_key }}" required>
-                                                          </div>
-
-                                                          <div class="col-md-2" style="margin-left: 15px;">
-                                                              <button type="submit"  class="btn btn-primary search_data_list" id='search_submit' title='Enter IMEI, Serial Number'>Search</button>
-                                                              <button type="button" class="btn btn-primary search_data_list" onclick="clearSearch()">Clear</button>
-                                                          </div>
-                                                      </div>
-                                                  </div>  
-                                              </div>
-                                          </form>
+                                      <form method="GET" action="{{route('gps.device.track.root')}}" class="search-top">
+                                        {{csrf_field()}}
+                                          <div class="search-section">
+                                            <input type="text" class="search-box" placeholder="Search IMEI & Serial Number.." name="search_key" id="search_key" autocomplete='off' value="{{ $search_key }}">
+                                            <button type="submit"  class="btn btn-primary" id='search_submit' title='Enter IMEI, Serial Number'>Search</button>
+                                            <button type="button" class="btn btn-primary" onclick="clearSearch()">Clear</button>
+                                          </div>
+                                      </form>
                                         <div class="row col-md-6 col-md-offset-2">
                                             <table class="table table-bordered">
                                                 <thead class="thead-color">
@@ -70,7 +61,11 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                                                     @endif
 
                                                     @foreach($gps_stock_details as $each_data)
-                                                    <tr class='table_alignment'>
+                                                    @if($each_data->deleted_at)
+                                                      <tr class='table_alignment deleted_row'>
+                                                    @else
+                                                      <tr class='table_alignment'>
+                                                    @endif
                                                         <td>{{ (($perPage * ($page - 1)) + $loop->iteration) }}</td>
                                                         <td><?php ( isset($each_data->gps->imei) ) ? $imei = $each_data->gps->imei : $imei='-NA-' ?>{{$imei}}</td>
                                                         <td><?php ( isset($each_data->gps->serial_no) ) ? $serial_no = $each_data->gps->serial_no : $serial_no='-NA-' ?>{{$serial_no}}</td>
@@ -164,6 +159,21 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
     .table_alignment
     {
         word-break: break-all;
+    }
+    .deleted_row
+    {
+      background-color:#ffd6d6;
+    }
+    .search-box
+    {
+      width: 271px;
+      padding: 7px;
+      margin: 8px 0;
+      box-sizing: border-box;
+    }
+    .search-section
+    {
+      float:right;
     }
     
 </style>

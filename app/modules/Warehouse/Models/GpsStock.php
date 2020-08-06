@@ -468,7 +468,8 @@ class GpsStock extends Model
                     ->with('subdealer')
                     ->with('trader')
                     ->with('client')
-                    ->with('manufacturer');
+                    ->with('manufacturer')
+                    ->withTrashed();
                        
         if( $search_key != null )
         {
