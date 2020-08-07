@@ -1341,6 +1341,9 @@
           <div class="location-sction-icon"><i class="fa fa-location-arrow" aria-hidden="true"></i></div>
           <div class="location-sction-content">
             <medium id="address" class="font-light">
+            <div class="loader-wrapper loader-1"  >
+                  <div id="loader"></div>
+                </div>
           </div>
         </div>
         <div class="dash-vechile-detials-1">
@@ -1777,6 +1780,10 @@
 
   </section>
   <style>
+  .address
+  { cursor: pointer; 
+
+  }  
   .inner-left {
     float: left;
     display: block;

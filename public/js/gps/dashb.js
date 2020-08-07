@@ -1,6 +1,6 @@
 $(document).ready(function () {
   $("#location-sction").hide();
-
+  $(".loader-1").hide();
    hideFuelBlocks();
 
   var url = 'dash-count';
@@ -112,8 +112,8 @@ function hideFuelBlocks()
 }
 
 function vehicle_details(res){
-  $('#location').empty();
-
+  $('#address').empty();
+  $("#location-sction").show();
   hideFuelBlocks()
   console.log(res);
   var network_status=res.network_status;
@@ -195,13 +195,14 @@ function vehicle_details(res){
   // 
 
 
-  var location = '<button type="button" onclick="address('+res.latitude+','+res.longitude+')">View Location</button>';
-  $("#location").append(location); 
+  var location = '<span style="cursor: pointer;"  onclick="address('+res.latitude+','+res.longitude+')" >View Location</span>';
+  $("#address").append(location); 
   // $('#address').text(address);
   }
   function address(lat,lng)
   {
     $("#location-sction").show();
+    $(".loader-1").show();
     var url = '/vehicle-location-name';
     var data = {
       lat : lat,
@@ -211,7 +212,7 @@ function vehicle_details(res){
   }
 function vehicleAddress(address)
 {
-  console.log(address);
+  $(".loader-1").hide();
   $('#address').text(address);
 }
 
