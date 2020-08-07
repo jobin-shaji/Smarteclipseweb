@@ -589,6 +589,12 @@ function backgroundPostData(url, data, callBack, options) {
                 {
                     subDealerGpsClientSale(res);
                 }
+                else if(callBack=='vehicleAddress')
+                {
+                
+                    console.log(res);
+                    vehicleAddress(res);
+                }
 
 
 

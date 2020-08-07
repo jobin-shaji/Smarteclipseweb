@@ -15,18 +15,19 @@ font-family: 'Roboto', sans-serif;
 .footer_contain {
 max-width: 100%;
     margin: 0 auto;
-    padding: 4.5em 0;
+     padding: 2.5em 0;
 }
 .footer_bg {
       background: #f5f5fa;
-    padding: 4em 0 0em;
+    padding: 3em 0 0em;
     float: left;
     width: 100%;
 }
 .logotype {
     margin: 0;
     -webkit-box-flex: 1;
-    flex: 1;
+  width: 45%;
+  float:left;
 }
 .logotype img
 {
@@ -36,37 +37,33 @@ max-width: 100%;
 
 }
 .logo-bottom-ft-text{
-    width: 95%;
-    float: left;
-    text-transform: uppercase;
+      width: auto;
+    float: right;
+    text-align: right;
+    /* text-transform: uppercase; */
     color: #818181;
     margin: 0px 2.5% 30px;
-    font-weight: 200;
+    font-weight: 300;
     font-size: 1.4em;
     position: relative;
     padding-bottom: 25px;
 }
-.logo-bottom-ft-text span{
-width:100%;
-    padding-top: 6px;
-float:left;
-display:block;
-}
 .logo-bottom-ft-text::before {
-    content: "";
-    border-left: 50px solid #FFD21D;
+   content: "";
+    border-left: 120px solid #FFD21D;
     position: absolute;
-    left: 0;
+    right: 0;
     top: auto;
     height: 2px;
-    bottom: -2px;
+    bottom: 4px;
 }
 .footer-bottom{
-width:95%;
-float:left;
-    padding: 30px 2.5% ;
+width: 95%;
+    float: left;
+    text-align: center;
+    padding: 17px 2.5%;
     background-color: #c6c6c626;
-	    color: #818181;
+    color: #818181;
     font-weight: 300;
 }
 .eclips-version-text{
@@ -115,7 +112,6 @@ if( file_exists('storage/releasenotes/latest.txt') )
   echo substr(file_get_contents('storage/releasenotes/latest.txt'),0,6);
     }
 ?></span>
-<!--<div class="eclips-version-text">Eclips Version</div>-->
 </div>
 </div>
 

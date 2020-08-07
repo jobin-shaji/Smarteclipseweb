@@ -1,4 +1,5 @@
 $(document).ready(function () {
+  $("#location-sction").hide();
 
    hideFuelBlocks();
 
@@ -87,6 +88,7 @@ function dbcount(res){
 //updated all aaaaa
 function getVehicle(value, displayRefreshButton)
 {
+  
   var url = '/vehicle-detail';
   var data = {
     gps_id : value
@@ -110,8 +112,10 @@ function hideFuelBlocks()
 }
 
 function vehicle_details(res){
+  $('#location').empty();
+
   hideFuelBlocks()
-  //console.log(res);
+  console.log(res);
   var network_status=res.network_status;
   var vehicle_mode=res.mode;
   var fuel=res.fuel_status;
@@ -188,11 +192,28 @@ function vehicle_details(res){
   $('#satelite').text(res.satelite);
   $('#battery_status').text(res.battery_status);
   $('#ignition').text(res.ignition);
-  var address=res.address;
-  $('#address').text(address);
+  // 
+
+
+  var location = '<button type="button" onclick="address('+res.latitude+','+res.longitude+')">View Location</button>';
+  $("#location").append(location); 
+  // $('#address').text(address);
   }
-
-
+  function address(lat,lng)
+  {
+    $("#location-sction").show();
+    var url = '/vehicle-location-name';
+    var data = {
+      lat : lat,
+      lng : lng
+    };
+    backgroundPostData(url,data,'vehicleAddress',{alert:true});
+  }
+function vehicleAddress(address)
+{
+  console.log(address);
+  $('#address').text(address);
+}
 
 
 
