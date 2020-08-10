@@ -1456,7 +1456,7 @@ class GpsController extends Controller {
         return response()->json($response_data);
     }
     // --------------------------------------------------------------------------------
-    function getPlacenameFromLatLng(Request $request){
+    function getAddress(Request $request){
         if(!empty($request->latitude) && !empty($request->longitude)){
             //Send request and receive json data by address
             $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($request->latitude).','.trim($request->longitude).'&sensor=false&key='.config('eclipse.keys.googleMap'));
