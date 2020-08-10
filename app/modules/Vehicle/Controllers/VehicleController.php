@@ -1347,7 +1347,7 @@ class VehicleController extends Controller
         if($track_data){
             //$connection_lost_time_minutes   = Carbon::createFromTimeStamp(strtotime($track_data->dateTime))->diffForHumans();
             $connection_lost_time_minutes = date('d-m-Y h:i:s a', strtotime($track_data->dateTime));
-            $plcaeName=$this->getPlacenameFromLatLng($track_data->latitude,$track_data->longitude);
+            // $plcaeName=$this->getPlacenameFromLatLng($track_data->latitude,$track_data->longitude);
             $snapRoute=$this->LiveSnapRoot($track_data->latitude,$track_data->longitude);
             if(\Auth::user()->hasRole('pro|superior')){
                 $gps_id= $get_vehicle->gps_id;
@@ -1411,7 +1411,7 @@ class VehicleController extends Controller
                         "connection_lost_time_minutes"=>$connection_lost_time_minutes,
                         "fuel"=>$fuel_status,
                         "ac"=>$ac_status,
-                        "place"=>$plcaeName,
+                        // "place"=>$plcaeName,
                         "fuelquantity"=>"",
                         "odometer"=>$odometer
                       );

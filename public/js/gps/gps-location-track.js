@@ -59,7 +59,7 @@ function initMap(){
 
 
 function getMarkers() {
-
+    $('#car_location').empty();
     var url = 'gps/location-track/root';
     var id = $("#vehicle_id_data").val();
     // var id=1;
@@ -77,7 +77,6 @@ function getMarkers() {
             'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
         },
         success: function(res) {
-
             if(res.hasOwnProperty('liveData')){
               var device_time=res.liveData.dateTime;
               if (res.liveData.vehicleStatus == 'M' && res.liveData.speed != '0' && device_time >= res.liveData.connection_lost_time_motion)
@@ -303,7 +302,10 @@ function getMarkers() {
               document.getElementById("car_bettary").innerHTML = res.liveData.battery_status;
               document.getElementById("ac").innerHTML = res.liveData.ac;
               document.getElementById("fuel").innerHTML = res.liveData.fuel;
-              document.getElementById("car_location").innerHTML = res.liveData.place;
+              
+              // document.getElementById("car_location").innerHTML = res.liveData.place;
+            var location = '<span style="cursor: pointer;"  onclick="address('+res.liveData.latitude+','+res.liveData.longitude+')" >View Location</span>';
+            $("#car_location").append(location); 
 
               track(map, res);
               setTimeout(locate, 5000);
@@ -476,3 +478,21 @@ $( "#playback_form" ).submit(function( event ) {
 
 
 }
+/**vehicle location */
+
+function address(lat,lng)
+{
+  $(".loader-1").show();
+  var url = '/gps-location-name';
+  var data = {
+    lat : lat,
+    lng : lng
+  };
+  backgroundPostData(url,data,'gpsAddress',{alert:true});
+}
+function gpsAddress(address)
+{
+// $(".loader-1").hide();
+  $('#car_location').text(address);
+}
+/**vehicle location */

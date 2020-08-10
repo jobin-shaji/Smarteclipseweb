@@ -1789,19 +1789,24 @@ class GpsReportController extends Controller
     private function getPlacenameFromLatLng($latitude,$longitude)
     {
         if(!empty($latitude) && !empty($longitude)){
-            //Send request and receive json data by address
-            $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key='.config('eclipse.keys.googleMap'));
-            $output = json_decode($geocodeFromLatLong);
-            $status = $output->status;
-            //Get address from json data
-            $address = ($status=="OK")?$output->results[1]->formatted_address:'';
-            //Return address of the given latitude and longitude
-            if(!empty($address)){
-                return $address;
-            }else{
+            $app_id              = "RN9UIyGura2lyToc9aPg";
+            $app_code            = "4YMdYfSTVVe1MOD_bDp_ZA";   
+            $ch = curl_init();  
+            curl_setopt($ch,CURLOPT_URL,'https://reverse.geocoder.api.here.com/6.2/reversegeocode.json?prox='.$latitude.'%2C'.$longitude.'%2C118&mode=retrieveAddresses&maxresults=1&gen=9&app_id='.$app_id.'&app_code='.$app_code);
+            curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
+            //  curl_setopt($ch,CURLOPT_HEADER, false);
+            $output=curl_exec($ch);
+            curl_close($ch);
+            $data=json_decode($output,true);
+            if(!empty($data))
+            {
+                return $data['Response']['View'][0]['Result'][0]['Location']['Address']['Label'] ;
+            }
+            else{
                 return false;
             }
-        }else{
+        }
+        else{
             return false;
         }
     }
