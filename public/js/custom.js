@@ -591,16 +591,16 @@ function backgroundPostData(url, data, callBack, options) {
                 }
                 else if(callBack=='vehicleAddress')
                 {
-                
-                    console.log(res);
                     vehicleAddress(res);
                 }
-
-
-
-
-
-
+                else if(callBack=='gpsAddress')
+                {
+                    gpsAddress(res);
+                }
+                else if(callBack=='vehicleTrackAddress')
+                {
+                    vehicleTrackAddress(res);
+                }
             }
         },
         error: function (err) {

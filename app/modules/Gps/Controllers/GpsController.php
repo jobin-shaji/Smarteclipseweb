@@ -1407,7 +1407,7 @@ class GpsController extends Controller {
 
         if($track_data){
             $connection_lost_time_minutes   = Carbon::createFromTimeStamp(strtotime($track_data->dateTime))->diffForHumans();
-            $plcaeName=$this->getPlacenameFromLatLng($track_data->latitude,$track_data->longitude);
+            // $plcaeName=$this->getPlacenameFromLatLng($track_data->latitude,$track_data->longitude);
             $snapRoute=$this->LiveSnapRoot($track_data->latitude,$track_data->longitude);
             $fuel_status="0"."%";
             $ac_status =$track_data->ac_status;
@@ -1435,7 +1435,7 @@ class GpsController extends Controller {
                         "connection_lost_time_minutes"=>$connection_lost_time_minutes,
                         "fuel"=>$fuel_status,
                         "ac"=>$ac_status,
-                        "place"=>$plcaeName,
+                        // "place"=>$plcaeName,
                         "fuelquantity"=>""
                       );
 
@@ -1456,10 +1456,10 @@ class GpsController extends Controller {
         return response()->json($response_data);
     }
     // --------------------------------------------------------------------------------
-    function getPlacenameFromLatLng($latitude,$longitude){
-        if(!empty($latitude) && !empty($longitude)){
+    function getPlacenameFromLatLng(Request $request){
+        if(!empty($request->latitude) && !empty($request->longitude)){
             //Send request and receive json data by address
-            $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key='.config('eclipse.keys.googleMap'));
+            $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($request->latitude).','.trim($request->longitude).'&sensor=false&key='.config('eclipse.keys.googleMap'));
             $output = json_decode($geocodeFromLatLong);
             $status = $output->status;
             //Get address from json data

@@ -132,15 +132,15 @@ function gpsAlertTracker(res)
       center: {lat: latitude, lng: longitude},
       mapTypeId: 'terrain'
     });
-  $.ajax({
-    url     :'https://maps.googleapis.com/maps/api/geocode/json?latlng='+latitude+','+longitude+'&sensor=false&key=AIzaSyDl9Ioh5neacm3nsLzjFxatLh1ac86tNgE&libraries=drawing&callback=initMap',
-    method  :"get",
-    async   :true,
-    context :this,
-    success : function (Result) {
+  // $.ajax({
+  //   url     :'https://maps.googleapis.com/maps/api/geocode/json?latlng='+latitude+','+longitude+'&sensor=false&key='.config('eclipse.keys.googleMap'),
+  //   method  :"get",
+  //   async   :true,
+  //   context :this,
+    // success : function (Result) {
       locs();
-    }
-  });     
+  //   }
+  // });     
   var alertMap = {
     alerttype: {
       center: {lat: latitude, lng: longitude},               
