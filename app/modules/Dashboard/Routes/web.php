@@ -1,28 +1,26 @@
 <?php
 Route::group(['middleware' => ['web','auth'] ,'namespace' => 'App\Modules\Dashboard\Controllers' ] , function () {
-     Route::get('/home', 'DashboardController@index')->name('dashboard');
-        Route::post('/dash-count','DashboardController@dashCount')->name('dash.count');
-        // hide for remove 
-        // 2020-05-18
-        // Route::post('/dashboard/getlocation','DashboardController@getLocation')->name('dashboard.getlocation');
-        // hide for remove 
-        // 2020-05-18
-        Route::post('/dashboard-vehicle-list','DashboardController@vehicleList')->name('dashboard-vehicle-list');
-        Route::post('/vehicle-detail','DashboardController@vehicleDetails')->name('vehicle.detail');
-        Route::post('/dash-vehicle-track','DashboardController@dashVehicleTrack')->name('dash.vehicle.track');
-        Route::post('/dashboard-track','DashboardController@vehicleTrackList')->name('/dashboard-track');
+    Route::get('/home', 'DashboardController@index')->name('dashboard');
+    Route::post('/dash-count','DashboardController@dashCount')->name('dash.count');
+    // hide for remove 
+    // 2020-05-18
+    // Route::post('/dashboard/getlocation','DashboardController@getLocation')->name('dashboard.getlocation');
+    // hide for remove 
+    // 2020-05-18
+    Route::post('/dashboard-vehicle-list','DashboardController@vehicleList')->name('dashboard-vehicle-list');
+    Route::post('/vehicle-detail','DashboardController@vehicleDetails')->name('vehicle.detail');
+    Route::post('/dash-vehicle-track','DashboardController@dashVehicleTrack')->name('dash.vehicle.track');
+    Route::post('/dashboard-track','DashboardController@vehicleTrackList')->name('/dashboard-track');
 
-        Route::post('/emergency-alert/verify','DashboardController@verifyEmergencyAlert')->name('emergency-alert.verify');
+    Route::post('/emergency-alert/verify','DashboardController@verifyEmergencyAlert')->name('emergency-alert.verify');
 
-        Route::post('/get-location','DashboardController@getLocationFromLatLng')->name('get.location');
-
-         Route::post('/dashboard-track-vehicle-mode','DashboardController@vehicleMode')->name('/dashboard-track-vehicle-mode');
-
-           Route::post('/location-search','DashboardController@locationSearch')->name('/location-search');
-
-            Route::post('/notification', 'DashboardController@notification')->name('notification');
-
-            
+    Route::post('/get-location','DashboardController@getLocationFromLatLng')->name('get.location');
+    Route::post('/dashboard-track-vehicle-mode','DashboardController@vehicleMode')->name('/dashboard-track-vehicle-mode');
+    Route::post('/location-search','DashboardController@locationSearch')->name('/location-search');
+    Route::post('/notification', 'DashboardController@notification')->name('notification');
+    /**location name */
+    Route::post('/vehicle-location-name','DashboardController@getAddress')->name('vehicle.location.name');
+    /**location name */
 });
 Route::group(['middleware' => ['web','auth','role:root'] , 'namespace' => 'App\Modules\Dashboard\Controllers' ] , function() {
      Route::get('/map-view', 'DashboardController@mapView')->name('map.view');

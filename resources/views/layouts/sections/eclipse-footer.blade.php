@@ -1,98 +1,115 @@
-<?php
-$url=url()->current();
-$rayfleet_key="rayfleet";
-$eclipse_key="eclipse";
-if (strpos($url, $rayfleet_key) == true) { ?>
-<footer class="footer"> 
-Developed by&nbsp;&nbsp;<a href="https://www.tecnositafgulf.qa" target="blank">Gulf Business Development Group</a>
-<div class="footer-bottom" >
-RAYFLEET &nbsp;Version 0.1
-</div>
-</footer>
-<?php } 
-else { ?>
-<footer class="footer"> 
-Developed by&nbsp; <a href="https://vstmobility.com" target="blank">VST Mobility Solutions pvt ltd</a>
-<div class="footer-bottom">
-<span id ="versionClick">Eclipse Version 
-<?php 
-if( file_exists('storage/releasenotes/latest.txt') )
-    {
-  echo substr(file_get_contents('storage/releasenotes/latest.txt'),0,6);
-    }
-?></span>
-</div>
-</footer>
-<?php } ?>
 
 
-<div class="modal fade" id="versionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-<div class="modal-dialog" role="document">
-<div class="modal-content">
-<div class="modal-header modal-hed-new">
-<h5 class="modal-title" id="exampleModalLabel">What's new ?</h5>
-<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-<span aria-hidden="true">&times;</span>
-</button>
-</div>
-<div class="modal-body modal-body-subhead">
-    <?php
-    if(file_exists('storage/releasenotes/latest.txt')) {
-    $release_note_file_name = substr(file_get_contents('storage/releasenotes/latest.txt'), 0, 6).'.txt';
-    
-    //After removing white spaces
-    $release_note_name = preg_replace("/\s+/", "", $release_note_file_name);
-    
-    if( file_exists('storage/releasenotes/'.$release_note_name) )
-    {
-    $file_contents = file_get_contents('storage/releasenotes/'.$release_note_name);
-    echo '<h1>Version '.substr(file_get_contents('storage/releasenotes/latest.txt'), 0, 6).'</h1>';
-    foreach( explode(',', $file_contents) as $each_features)
-    {
-    echo $each_features.'<br>';
-    }
-    }
-    }
-
-    ?>
-</div>
-<div class="modal-footer">
-<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-</div>
-</div>
-</div>
-</div> 
-<script src="{{asset('js/gps/version-list.js')}}"></script>
-
-<style type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Roboto:400,100,500,300italic,500italic,700italic,900,300" rel="stylesheet" type="text/css">
+<style>
+body{
+margin:0;
+padding:0;
+}
 .footer{
-padding: 5px 4%;
-width: 100%;
-background: #fbfbfb;
-color: #444242;
-text-transform: uppercase;
-font-size: 13px;
+width:100%;
+float:left;
+display:block;
+font-family: 'Roboto', sans-serif;
 }
-.modal-hed-new{    
-  background: #daa102;
-  color: #fff;
-  padding: 10px 1rem;
-  }
-.modal-hed-new h5 {
-  font-size: 21px;
-  font-weight: 600;
-  }
+.footer_contain {
+max-width: 100%;
+    margin: 0 auto;
+     padding: 2.5em 0;
+}
+.footer_bg {
+      background: #f5f5fa;
+    padding: 3em 0 0em;
+    float: left;
+    width: 100%;
+}
+.logotype {
+    margin: 0;
+    -webkit-box-flex: 1;
+  width: 45%;
+  float:left;
+}
+.logotype img
+{
+    display: block;
+    width: 46%;
+	margin:0 2.5%;
+
+}
+.logo-bottom-ft-text{
+      width: auto;
+    float: right;
+    text-align: right;
+    /* text-transform: uppercase; */
+    color: #818181;
+    margin: 0px 2.5% 30px;
+    font-weight: 300;
+    font-size: 1.4em;
+    position: relative;
+    padding-bottom: 25px;
+}
+.logo-bottom-ft-text::before {
+   content: "";
+    border-left: 120px solid #FFD21D;
+    position: absolute;
+    right: 0;
+    top: auto;
+    height: 2px;
+    bottom: 4px;
+}
 .footer-bottom{
-  width: 13%;
-  float: right;
-/*margin-left: 10%;*/
-  color: #444242;
-  text-transform: uppercase;
-  font-size: 13px;
+width: 95%;
+    float: left;
+    text-align: center;
+    padding: 17px 2.5%;
+    background-color: #c6c6c626;
+    color: #818181;
+    font-weight: 300;
 }
-.modal-body-subhead h1{
-  font-size: 19px;
-  font-weight: normal;
+.eclips-version-text{
+ width:auto;
+ float:right;
+ }
+.eclips-sub-head{
 }
+
+@media only screen and (max-width: 1500px) {
+.logotype img {
+ width: 42%;
+}
+}
+
+@media only screen and (max-width: 980px) {
+.logo-bottom-ft-text {
+    font-size: 1.2em;
+}
+.footer_bg {
+    padding: 2em 0 0em;
+}
+}
+@media only screen and (max-width: 768px) {
+.logotype img {
+    width: 39%;
+}
+.footer-bottom {
+       padding: 20px 2.5%;
+   }
+}
+
 </style>
+
+
+
+<div  class="footer">
+<div class="footer_contain">
+<div class="footer_bg ">
+<div class="logotype "><img src="../../../assets/images/smart-eclips-logo.svg">  </div>
+<div  class="logo-bottom-ft-text">Engineered by <span>VST mobility</span></div>
+
+</div>
+
+</div>
+
+</div>
+
 
