@@ -114,9 +114,8 @@ function hideFuelBlocks()
 function vehicle_details(res){
   $('#address').empty();
   $("#location-sction").show();
-  hideFuelBlocks()
-  console.log(res);
-  var network_status=res.network_status;
+  hideFuelBlocks();
+ var network_status=res.network_status;
   var vehicle_mode=res.mode;
   var fuel=res.fuel_status;
   if(network_status=="Connection Lost"){

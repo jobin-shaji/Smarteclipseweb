@@ -640,18 +640,24 @@ class DashboardController extends Controller
    public function getAddress(Request $request){
         //Send request and receive json data by address
          $address="No Address";
-        $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($request->lat).','.trim($request->lng).'&sensor=false&key='.config('eclipse.keys.googleMap').'&libraries=drawing&callback=initMap');
-        $output = json_decode($geocodeFromLatLong);
-        $status = $output->status;
-        //Get address from json data
-        $address = ($status=="OK")?$output->results[0]->formatted_address:'';
-        if($address)
+        if(!empty($request->lat)&& !empty($request->lng))
         {
-            return $address;
+            $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($request->lat).','.trim($request->lng).'&sensor=false&key='.config('eclipse.keys.googleMap').'&libraries=drawing&callback=initMap');
+            $output = json_decode($geocodeFromLatLong);
+            $status = $output->status;
+            //Get address from json data
+            $address = ($status=="OK")?$output->results[0]->formatted_address:'';
+            if($address)
+            {
+                return $address;
+            }
+            else{
+                return "No Address";
+            }
         }
         else{
             return "No Address";
-        }
+        }      
     }
 
     // hide for remove 
