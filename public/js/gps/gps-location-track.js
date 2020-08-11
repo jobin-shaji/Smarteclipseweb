@@ -485,14 +485,14 @@ function address(lat,lng)
   $(".loader-1").show();
   var url = '/gps-location-name';
   var data = {
-    lat : lat,
-    lng : lng
+    latitude  : lat,
+    longitude : lng
   };
   backgroundPostData(url,data,'gpsAddress',{alert:true});
 }
 function gpsAddress(address)
 {
-// $(".loader-1").hide();
+$(".loader-1").hide();
   $('#car_location').text(address);
 }
 /**vehicle location */
