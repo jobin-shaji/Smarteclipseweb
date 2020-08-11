@@ -100,7 +100,13 @@
               <img src="../../assets/images/fuel.png" height="25px" width="30px" class="fapad"><b class="mgl">FUEL <b style="margin-left: 22.5%;font-size: 11px;">: <label class="mgl" id="fuel"></label> </b></b>
             </a>                                                  
             <div class="viewmore_location">
-              <i class="fa fa-map-marker"></i><b><span id="car_location" style="font-size: .7rem!important"></span></b>
+              <i class="fa fa-map-marker"></i>
+                <!-- loader -->
+                <div class="loader-wrapper loader-1"  style="display:none">
+                  <div id="loader"></div>
+                </div> 
+                <!-- /loader -->
+                <b><span id="car_location" style="font-size: .7rem!important"></span></b>
             </div>
 
             <hr>
@@ -140,6 +146,8 @@
 
 @section('script')
 <link rel="stylesheet" type="text/css" href="{{asset('css/odometer.css')}}">
+<link rel="stylesheet" href="{{asset('css/loader-1.css')}}">
+
 <script src="{{asset('js/gps/gps-location-track.js')}}"></script>
 
 <script src="https://maps.googleapis.com/maps/api/js?key={{config('eclipse.keys.googleMap')}}&libraries=drawing&libraries=places&callback=initMap" async defer></script>

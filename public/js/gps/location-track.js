@@ -69,10 +69,11 @@ $('document').ready(function(){
 $('document').ready(function(){setTimeout(doWork,1000);});  
 
 function continuousAlert(res){
+ 
     if(res.status == 'success'){
         var latitude=res.alerts[0].latitude;
         var longitude=res.alerts[0].longitude;
-        getPlaceNameFromLatLng(latitude,longitude);
+        address(latitude,longitude);
         
         var modal = document.getElementById('track_alert');
         modal.style.display = "block";
@@ -267,9 +268,7 @@ function updateStatusData(current)
    var odometer=current[20];
   var device_time=dateTime;
   $('#car_location').empty();
-
-
-
+  
     if (vehicleStatus == 'M' && speed != '0' && device_time >= connection_lost_time_motion)
     {
       $("#online").show();
@@ -491,7 +490,6 @@ function updateStatusData(current)
     
       document.getElementById("car_bettary").innerHTML = battery_status;
       // document.getElementById("car_location").innerHTML = place;
-
       var location = '<span style="cursor: pointer;"  onclick="address('+latitude+','+longitude+')" >View Location</span>';
       $("#car_location").append(location); 
   
@@ -825,8 +823,8 @@ function address(lat,lng)
   $(".loader-1").show();
   var url = '/vehicle-track-location-name';
   var data = {
-    lat : lat,
-    lng : lng
+    latitude  : lat,
+    longitude : lng
   };
   backgroundPostData(url,data,'vehicleTrackAddress',{alert:true});
 }
