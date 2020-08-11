@@ -645,7 +645,13 @@ class DashboardController extends Controller
         $status = $output->status;
         //Get address from json data
         $address = ($status=="OK")?$output->results[0]->formatted_address:'';
-        return $address;
+        if($address)
+        {
+            return $address;
+        }
+        else{
+            return "No Address";
+        }
     }
 
     // hide for remove 
