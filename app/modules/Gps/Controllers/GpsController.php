@@ -1468,10 +1468,10 @@ class GpsController extends Controller {
             if(!empty($address)){
                 return $address;
             }else{
-                return false;
+                return "no address";
             }
         }else{
-            return false;
+            return "No address";
         }
     }
 
