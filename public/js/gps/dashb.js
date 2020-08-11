@@ -115,7 +115,7 @@ function vehicle_details(res){
   $('#address').empty();
   $("#location-sction").show();
   hideFuelBlocks();
- var network_status=res.network_status;
+  var network_status=res.network_status;
   var vehicle_mode=res.mode;
   var fuel=res.fuel_status;
   if(network_status=="Connection Lost"){
@@ -182,7 +182,6 @@ function vehicle_details(res){
     document.getElementById("upgradefuel").innerHTML = "Upgrade Version";
     $('.fa-spinner').hide();
   }
-
   $('#network_status').text(network_status);
   // $('#fuel_status').text(res.fuel_status);
   $('#speed').text(res.speed);
@@ -191,24 +190,22 @@ function vehicle_details(res){
   $('#satelite').text(res.satelite);
   $('#battery_status').text(res.battery_status);
   $('#ignition').text(res.ignition);
-  // 
-
-
-  var location = '<span style="cursor: pointer;"  onclick="address('+res.latitude+','+res.longitude+')" >View Location</span>';
+  // location
+  var location = '<span  style="cursor: pointer;" lat="'+res.latitude+'" lng="'+res.longitude+'" id="getaddress" >View Location</span>'; 
   $("#address").append(location); 
-  // $('#address').text(address);
-  }
-  function address(lat,lng)
-  {
-    $("#location-sction").show();
-    $(".loader-1").show();
-    var url = '/vehicle-location-name';
-    var data = {
-      lat : lat,
-      lng : lng
-    };
-    backgroundPostData(url,data,'vehicleAddress',{alert:true});
-  }
+}
+$(document).on("click", "#getaddress" , function() {
+  var lat =$(this).attr('lat');
+  var lng =$(this).attr('lng');
+  $("#location-sction").show();
+  $(".loader-1").show();
+  var url = '/vehicle-location-name';
+  var data = {
+    lat : lat,
+    lng : lng
+  };
+  backgroundPostData(url,data,'vehicleAddress',{alert:true});
+});
 function vehicleAddress(address)
 {
   $(".loader-1").hide();
