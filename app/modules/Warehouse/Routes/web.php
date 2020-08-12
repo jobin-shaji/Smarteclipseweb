@@ -14,7 +14,6 @@ Route::group(['middleware' => ['web','auth','role:root'] , 'namespace' => 'App\M
 
 	//device track in root panel
 	Route::get('/gps-device-track-root','WarehouseController@getRootDeviceTrack')->name('gps.device.track.root');
-	Route::post('/gps-device-track-list-root','WarehouseController@getRootDeviceTrackData')->name('gps-device-track-list.root');
 	Route::get('/gps-device-track-root-details/{id}/view','WarehouseController@rootDeviceTrackDetails')->name('gps.device.track.root.details');
 
 });
