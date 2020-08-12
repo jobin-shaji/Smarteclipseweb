@@ -59,7 +59,7 @@ td, th {
 <table style="width:100%;text-align: left;">
   <tbody>
     <tr>
-        <th>Client name</th>
+        <th>End User name</th>
         <th>IMEI </td> 
         <th>Plan Name</th>
         <th>Expire On</th>
