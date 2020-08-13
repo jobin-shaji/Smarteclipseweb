@@ -32,7 +32,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('vehicle:trips')->dailyAt('04:00');
-        $schedule->command('esim:pdf')->monthlyOn(20, '10:00');
+        $schedule->command('esim:pdf')->monthlyOn(20, '12:00');
     }
 
     /**
