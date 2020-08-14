@@ -438,6 +438,103 @@ class Gps extends Model
         ->orderBy('id','DESC')
         ->withTrashed();
     }
+    /**
+     * 
+     * 
+     */
+    public function getDistributorOfflineDevices($offline_date_time, $device_type = null,$download_type = null , $distributor_all_gps_id = null ,$search_key=null,$active_vehicles_gps_id=null)
+    {
+        $result =   self::select('id', 'imei', 'serial_no','device_time')
+                    // ->with('vehicleGps')
+                    ->with('vehicleGps.vehicle.client')
+                    ->with('gpsStock.client')
+                    ->where(function ($query) {
+                        $query->where('is_returned', '=', 0)
+                        ->orWhere('is_returned', '=', NULL);
+                    });
+                    if( $device_type == config("eclipse.DEVICE_STATUS.TAGGED") )
+                    {
+                        $result->whereIn('id', $active_vehicles_gps_id)
+                                ->where('device_time', '<=' ,$offline_date_time);
+                    }
+                    else if( $device_type == config("eclipse.DEVICE_STATUS.UNTAGGED") )
+                    {
+                        $result->whereNotIn('id', $active_vehicles_gps_id)
+                                ->whereIn('id', $distributor_all_gps_id)
+                                ->where('device_time', '<=' ,$offline_date_time);
+                    }
+                    else if( $device_type == config("eclipse.DEVICE_STATUS.NOT_YET_ACTIVATED") )
+                    {
+                        $result->whereIn('id', $distributor_all_gps_id)->where('device_time', '=' ,NULL);
+                    }
+                    else
+                    {
+                        $result->whereIn('id', $distributor_all_gps_id)
+                        ->where(function ($query) use($offline_date_time) {
+                            $query->where('device_time', '=' ,NULL)
+                            ->orWhere('device_time', '<=' ,$offline_date_time);
+                        });
+                    }
+                    if( $search_key != null )
+                    {
+                        $result->where(function($query) use($search_key){
+                            $result = $query->Where('serial_no','like','%'.$search_key.'%')
+                            ->orWhere('imei','like','%'.$search_key.'%');                
+                        });  
+                    }  
+        if($download_type == 'pdf')
+        {
+            return $result->get();   
+        }else
+        {
+            return $result->paginate(10);   
+        }     
+    }
 
+     /**
+     * 
+     * 
+     */
+    public function getDistributorDeviceOnlineReport($online_limit_date,$current_time,$vehicle_status=null,$device_status=null,$active_vehicles_gps_id=null,$search_key=null,$download_type=null,$distributor_all_gps_id=null)
+    {
+        $query = self::select( 
+            'id',
+            'imei',
+            'serial_no',
+            'mode'
+        )
+        ->with('vehicleGps.vehicle.client')
+        ->with('gpsStock.client')
+        ->whereBetween('device_time',[$online_limit_date,$current_time])   
+        ->where(function ($query) {
+            $query->where('is_returned', '=', 0)
+            ->orWhere('is_returned', '=', NULL);
+        });
+        
+        ( $vehicle_status == null ) ? $query : $query->where('mode', $vehicle_status); 
+        if($device_status == config("eclipse.DEVICE_STATUS.TAGGED"))
+        {
+            $query = $query->whereIN('id',$active_vehicles_gps_id);
+        }
+        else if($device_status == config("eclipse.DEVICE_STATUS.UNTAGGED"))
+        {
+            $query = $query->whereNotIn('id',$active_vehicles_gps_id)
+            ->whereIN('id',$distributor_all_gps_id);
+        }
+        if( $search_key != null )
+        {
+            $query->where(function($query) use($search_key){
+                $query = $query->Where('serial_no','like','%'.$search_key.'%')
+                ->orWhere('imei','like','%'.$search_key.'%');                
+            });  
+        }  
+        if($download_type == 'pdf')
+        {
+            return $query->get();   
+        }else
+        {
+            return $query->paginate(10);   
+        }    
+    }
     
 }

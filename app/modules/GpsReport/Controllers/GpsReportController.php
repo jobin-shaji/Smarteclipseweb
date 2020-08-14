@@ -1823,4 +1823,90 @@ class GpsReportController extends Controller
     {
        return $encrypt_imei=Crypt::encrypt($request['imei']);
     }
+     /**
+     * 
+     * GPS Offline Report
+     */
+    public function offlineDeviceReport(Request $request)
+    {
+        $device_type            = ( isset($request->device_type) ) ? $request->device_type : config("eclipse.DEVICE_STATUS.TAGGED");
+        $offline_duration       = ( isset($request->offline_duration) ) ? $request->offline_duration : null;
+        $download_type          = ( isset($request->type) ) ? $request->type : null;
+        // $search_key          = ( isset($request->search_key) ) ? $request->search_key : null;
+        $search_key             =   ( isset($request->search) ) ? $request->search : null;     
+        $logged_user_details    = (new Dealer())->getDistributorDetails(\Auth::user()->dealer->id);              
+        if($offline_duration == null )
+        {
+            $offline_duration_in_minutes    = '-'. config('eclipse.OFFLINE_DURATION');
+        }
+        else
+        {
+            $offline_duration_in_minutes    = '-'. $offline_duration * 60 .' minutes';
+        }
+        $offline_date_time                  = date('Y-m-d H:i:s',strtotime("".$offline_duration_in_minutes.""));
+        // $gps_id_of_active_vehicles          = null;
+        $distributor_all_gps_id             = (new GpsStock())->getInStockOfDistributor(\Auth::user()->dealer->id);         
+        $active_vehicles_gps_id             = (new Vehicle())->getVehiclesWithUnreturnedGps($distributor_all_gps_id);       
+        $offline_devices                    = (new Gps())->getDistributorOfflineDevices($offline_date_time, $device_type, $download_type , $distributor_all_gps_id,$search_key,$active_vehicles_gps_id);
+        if( $download_type == 'pdf')
+        {
+            if($offline_devices->count()>0)
+            {
+                $pdf    =   PDF::loadView('GpsReport::device-offline-status-report-download',[ 'offline_devices' => $offline_devices, 'offline_duration' => $offline_duration, 'device_type' => $device_type, 'generated_by' => ucfirst(strtolower($logged_user_details->root->name)).' '.'( Manufacturer )', 'user_generated_by' => $logged_user_details->name, 'generated_on' => date("d/m/Y h:i:s A") ]);
+                return $pdf->download('device-offline-status-report.pdf');
+            }
+            else{
+                return view('GpsReport::offline-device-status-report-distributor', [ 'offline_devices' => $offline_devices, 'offline_duration' => $offline_duration, 'device_type' => $device_type]);
+            }
+        }
+        else if($request->ajax())
+        {            
+            return ($offline_devices != null) ? Response([ 'links' => $offline_devices->appends(['search' => $search_key, 'offline_duration' => $offline_duration, 'device_type' => $device_type]),'link'=> (string)$offline_devices->render(),]) : Response([ 'links' => null]);
+        }
+        else
+        {
+            
+            return view('GpsReport::offline-device-status-report-distributor', [ 'offline_devices' => $offline_devices, 'offline_duration' => $offline_duration, 'device_type' => $device_type, 'search_key' => $search_key ]);
+        }
+    }
+    /**
+     * DEVICE ONLINE REPORT DISTRIBUTORS
+     */
+    public function onlineDeviceReport(Request $request)
+    {
+        $generated_by                   =   \Auth::user()->dealer->name;
+        $logged_user_details            = (new Dealer())->getDistributorDetails(\Auth::user()->dealer->id);              
+        $online_limit_date              =   date('Y-m-d H:i:s',strtotime("-".config('eclipse.OFFLINE_DURATION').""));
+        $current_time                   =   date('Y-m-d H:i:s');
+        $device_status                  =   (isset($request->device_status) ) ? $request->device_status : 1;     
+        $download_type                  =   ( isset($request->type) ) ? $request->type : null;
+        $search                         =   ( isset($request->search) ) ? $request->search : null;     
+        $distributor_all_gps_id             = (new GpsStock())->getInStockOfDistributor(\Auth::user()->dealer->id);         
+        $active_vehicles_gps_id             = (new Vehicle())->getVehiclesWithUnreturnedGps($distributor_all_gps_id);       
+        $vehicle_status                 =   (isset($request->vehicle_status) ) ? $request->vehicle_status : null;      
+        $device_online_report           =   (new GPS())->getDistributorDeviceOnlineReport($online_limit_date,$current_time,$vehicle_status,$device_status,$active_vehicles_gps_id,$search,$download_type,$distributor_all_gps_id);   
+        if($download_type == 'pdf')
+        {
+            if($device_online_report->count()>0)
+            {
+                $pdf                        =   PDF::loadView('GpsReport::device-online-report-download',[ 'device_online_report' => $device_online_report, 'generated_by' => $generated_by, 'manufactured_by' => ucfirst(strtolower($logged_user_details->root->name)).' '.'( Manufacturer )','generated_on' => date("d/m/Y h:m:s A") ]);
+                return $pdf->download('device-online-report.pdf');
+            }
+            else{
+               return view('GpsReport::distributors-device-online-report',['device_online_report'=>$device_online_report,'device_status'=>$device_status,'vehicle_status'=>$vehicle_status,'search'=>$search]);    
+            }
+            
+        }  
+        else if($request->ajax())
+        {
+            
+            return ($device_online_report != null) ? Response([ 'links' => $device_online_report->appends(['search' => $search,'device_status'=>$device_status,'vehicle_status'=>$vehicle_status]),'link'=> (string)$device_online_report->render(),]) : Response([ 'links' => null]);
+        }
+        else
+        {
+            // dd($search);
+            return view('GpsReport::distributors-device-online-report',['device_online_report'=>$device_online_report,'device_status'=>$device_status,'vehicle_status'=>$vehicle_status,'search'=>$search]);    
+        }
+    }
+
 }
