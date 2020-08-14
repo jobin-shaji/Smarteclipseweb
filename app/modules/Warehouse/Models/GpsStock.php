@@ -484,5 +484,16 @@ class GpsStock extends Model
         }
         return $result;
     }
+    /**
+     * distributor gps
+     */
+    public function getInStockOfDistributor($distributor_ids)
+    {
+        return self::where('dealer_id',$distributor_ids)
+                   ->where(function ($query) {
+                    $query->where('is_returned', '=', 0)
+                    ->orWhere('is_returned', '=', NULL);
+                    })->pluck('gps_id');
+    }
 
 }

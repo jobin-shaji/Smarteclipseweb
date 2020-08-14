@@ -37,15 +37,27 @@ Route::group(['middleware' => ['web','auth','role:operations'] , 'namespace' => 
     // Route::get('/gps-returned-report','GpsReportController@gpsReturnedReport')->name('gps-returned-report');
     Route::get('/device-search','GpsReportController@deviceOnlineReport')->name('gps-online-search');
 
-
     //offline reports
     Route::get('/device-offline-report','GpsReportController@deviceOfflineReport')->name('device-offline-report');
     Route::get('/device-offline-report-downloads','GpsReportController@deviceOfflineReport')->name('device-offline-report-downloads');
     Route::get('/device-offline-search','GpsReportController@deviceOfflineReport')->name('gps-offline-search');
+    
+    
+});
+Route::group(['middleware' => ['web','auth','role:dealer'] , 'namespace' => 'App\Modules\GpsReport\Controllers' ] , function() {	
+    //offline reports
+    Route::get('/offline-device-report','GpsReportController@offlineDeviceReport')->name('offline-device-report');
+    Route::get('/offline-device-report-downloads','GpsReportController@offlineDeviceReport')->name('offline-device-report-downloads');
+    Route::get('/offline-device-search','GpsReportController@offlineDeviceReport')->name('offline-device-search');
+    //online distributor reports
+    Route::get('/online-device-report','GpsReportController@onlineDeviceReport')->name('online-device-report');
+    Route::get('/online-device-report-downloads','GpsReportController@onlineDeviceReport')->name('online-device-report-downloads');
+    Route::get('/online-device-search','GpsReportController@onlineDeviceReport')->name('online-device-search');
+
+});
+Route::group(['middleware' => ['web','auth','role:dealer|operations'] , 'namespace' => 'App\Modules\GpsReport\Controllers' ] , function() {	
     Route::get('/device-detailed-report/{imei}/view','GpsReportController@deviceReportDetailedView')->name('device-detailed-report-view');
-    Route::post('/device-detail-encription','GpsReportController@deviceDetailImeiEncription')->name('device-detail-encription');
-    
-    
+    Route::post('/device-detail-encription','GpsReportController@deviceDetailImeiEncription')->name('device-detail-encription');        
     Route::post('/device-detailed-report/vehicle-details','GpsReportController@deviceReportDetailedViewOfVehicle')->name('device-detailed-report-vehicle-details-view');
     Route::post('/device-detailed-report/transfer-details','GpsReportController@deviceReportDetailedViewOfTransfer')->name('device-detailed-report-transfer-details-view');
     Route::post('/device-detailed-report/end-user-details','GpsReportController@deviceReportDetailedViewOfEndUser')->name('device-detailed-report-end-user-details-view');
