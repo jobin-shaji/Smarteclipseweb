@@ -1817,6 +1817,7 @@ class GpsReportController extends Controller
     {
         $gps_id             = $request->gps_id;
         $transfer_details   = (new GpsTransferItems())->getTransferDetailsBasedOnGps($gps_id);
+        // dd($transfer_details[0]->gpsTransferDetail[0]->fromUser);
         return response()->json($transfer_details);
     }
     public function deviceDetailImeiEncription(Request $request)

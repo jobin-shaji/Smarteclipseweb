@@ -118,14 +118,15 @@ function getTransferHistoryBasedOnGps()
             var transfer_table      = $("#transfer_history").find('tbody');
             var tbody               = "";
             transfer_table.html("");
-
-            $.each(res,function(key , item){   
+            $.each(res,function(key , item){ 
+                $.each(item.gps_transfer_detail,function(key , values){
                 tbody += (item.deleted_at) ?  "<tr style='background:#d98b8b'>" : "<tr style='background:#f5f5f5'>" + 
-                            "<td>"+item.transfer_from+"</td>"+
-                            "<td>"+item.transfer_to+"</td>"+
-                            "<td>"+item.dispatched_on+"</td>"+
-                            "<td>"+item.accepted_on+"</td>"+
-                        "</tr>";  
+                            "<td>"+values.from_user.username+"</td>"+
+                            "<td>"+values.to_user.username+"</td>"+
+                            "<td>"+values.dispatched_on+"</td>"+
+                            "<td>"+values.accepted_on+"</td>"+
+                        "</tr>"; 
+                    }); 
             });           
             if(res.length == 0)
             {
@@ -275,7 +276,7 @@ function getServiceDetailsBasedOnGps()
             var job_complete_date=(each_data.job_complete_date) ? each_data.job_complete_date : "-NA-";
             var location=(each_data.location) ? each_data.location : "-NA-";
             var description=(each_data.description) ?  each_data.description : "-NA-";
-            var comment=(each_data.comments) ? each_data.comments : "-NA-";                
+            var comment=(each_data.comment) ? each_data.comment : "-NA-";                
             tbody += "<tr>"+
                             "<td>"+servicer_name+"</td>"+
                             "<td>"+servicer_address +"</td>"+

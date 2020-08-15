@@ -46,10 +46,15 @@ class GpsTransferItems extends Model
     }
     public function getTransferDetailsBasedOnGps($gps_id)
     {
-        return DB::table('gps_transfer_items')
-                ->select('gps_transfers.from_user_id as from_user_id', 'gps_transfers.to_user_id as to_user_id', 'gps_transfers.dispatched_on as dispatched_on', 'gps_transfers.accepted_on as accepted_on', 'gps_transfers.deleted_at as deleted_at')
-                ->join('gps_transfers', 'gps_transfers.id', '=', 'gps_transfer_items.gps_transfer_id')
-                ->where('gps_transfer_items.gps_id', $gps_id)
-                ->get();
+        // return DB::table('gps_transfer_items')
+        //         ->select('gps_transfers.from_user_id as from_user_id', 'gps_transfers.to_user_id as to_user_id', 'gps_transfers.dispatched_on as dispatched_on', 'gps_transfers.accepted_on as accepted_on', 'gps_transfers.deleted_at as deleted_at')
+        //         ->join('gps_transfers', 'gps_transfers.id', '=', 'gps_transfer_items.gps_transfer_id')
+        //         ->where('gps_transfer_items.gps_id', $gps_id)
+        //         ->get();
+
+        return self::with('gpsTransferDetail.fromUser')
+        ->with('gpsTransferDetail.toUser')
+        ->where('gps_transfer_items.gps_id', $gps_id)
+        ->get();
     }
 }

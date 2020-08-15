@@ -124,7 +124,7 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                                                         <td><?php ( isset($each_data->gpsStock->client->name) ) ? $client_name = $each_data->gpsStock->client->name : $client_name='-NA-' ?>{{$client_name}}</td>
                                                         <td><?php ( isset($each_data->vehicleGps->vehicle->name) ) ? $vehicle_name = $each_data->vehicleGps->vehicle->name : $vehicle_name='-NA-' ?>{{$vehicle_name}}</td>
                                                         <td><?php ( isset($each_data->vehicleGps->vehicle->register_number) ) ? $register_number = $each_data->vehicleGps->vehicle->register_number : $register_number='-NA-' ?>{{$register_number}}</td>
-                                                        <td><?php ( isset($each_data->device_time) ) ? $device_time = $each_data->device_time : $device_time='-Not Yet Activated-' ?>{{$device_time}}</td>
+                                                        <td class = 'table_alignment'><?php ( isset($each_data->device_time) ) ? $device_time = $each_data->device_time : $device_time='-Not Yet Activated-' ?>{{$device_time}}</td>
                                                         <td><a href="{{route('device-detailed-report-view', Crypt::encrypt($each_data->imei))}}" class='btn btn-xs btn-success' data-toggle='tooltip' title='View More Details'><i class='fa fa-eye'></i> View</a></td>
                                                     </tr>
                                                     @endforeach
