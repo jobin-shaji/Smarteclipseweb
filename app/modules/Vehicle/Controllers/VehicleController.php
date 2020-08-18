@@ -1347,7 +1347,7 @@ class VehicleController extends Controller
         if($track_data){
             //$connection_lost_time_minutes   = Carbon::createFromTimeStamp(strtotime($track_data->dateTime))->diffForHumans();
             $connection_lost_time_minutes = date('d-m-Y h:i:s a', strtotime($track_data->dateTime));
-            $plcaeName=$this->getPlacenameFromLatLng($track_data->latitude,$track_data->longitude);
+            // $plcaeName=$this->getPlacenameFromLatLng($track_data->latitude,$track_data->longitude);
             $snapRoute=$this->LiveSnapRoot($track_data->latitude,$track_data->longitude);
             if(\Auth::user()->hasRole('pro|superior')){
                 $gps_id= $get_vehicle->gps_id;
@@ -1411,7 +1411,7 @@ class VehicleController extends Controller
                         "connection_lost_time_minutes"=>$connection_lost_time_minutes,
                         "fuel"=>$fuel_status,
                         "ac"=>$ac_status,
-                        "place"=>$plcaeName,
+                        // "place"=>$plcaeName,
                         "fuelquantity"=>"",
                         "odometer"=>$odometer
                       );
@@ -1945,25 +1945,28 @@ class VehicleController extends Controller
         return  $rules;
     }
 // --------------------------------------------------------------------------------
-    function getPlacenameFromLatLng($latitude,$longitude){
-        if(!empty($latitude) && !empty($longitude)){
+    function getAddress(Request $request){
+        // getAddress($latitude,$longitude)
+        if(!empty($request->latitude) && !empty($request->longitude)){
             //Send request and receive json data by address
-            $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key='.config('eclipse.keys.googleMap'));
+            $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($request->latitude).','.trim($request->longitude).'&sensor=false&key='.config('eclipse.keys.googleMap'));
             $output = json_decode($geocodeFromLatLong);
-
-
             $status = $output->status;
             //Get address from json data
             $address = ($status=="OK")?$output->results[1]->formatted_address:'';
             //Return address of the given latitude and longitude
-
-            if(!empty($address)){
+            if(!empty($address))
+            {
                 return $address;
-            }else{
-                return false;
             }
-        }else{
-            return false;
+            else
+            {
+                return "No address";
+            }
+        }
+        else
+        {
+            return "No address";
         }
     }
 /////////////// snap root for live data///////////////////////////////////

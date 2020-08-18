@@ -3135,103 +3135,11 @@ class WarehouseController extends Controller {
 
     //Device track in root panel
 
-    public function getRootDeviceTrack()
+    public function getRootDeviceTrack(Request $request)
     {
-        return view('Warehouse::device-track-root');
-    }
-
-    public function getRootDeviceTrackData(Request $request)
-    {
-        $gps_stock = GpsStock::select('id','gps_id','inserted_by','dealer_id','subdealer_id','trader_id','client_id','deleted_at')
-                    ->with('gps')
-                    ->with('dealer')
-                    ->with('subdealer')
-                    ->with('trader')
-                    ->with('client')
-                    ->with('manufacturer')
-                    ->get();
-        return DataTables::of($gps_stock)
-        ->addIndexColumn()
-        ->addColumn('manufacturer',function($gps_stock){
-            $manufacturer = $gps_stock->manufacturer['name'];
-            return $manufacturer;
-        })
-        ->addColumn('distributor',function($gps_stock){
-            $distributor = $gps_stock->dealer_id;
-            if($distributor)
-            {
-                return $gps_stock->dealer['name'];
-               
-            }
-            else if(isset($distributor))
-            {          
-                return 'Awaiting Transfer Confirmation';
-            }
-            else{
-                return "--";
-            }
-           
-        })
-        ->addColumn('dealer',function($gps_stock){
-            $dealer = $gps_stock->subdealer_id;
-            if($dealer)
-            {
-                return $gps_stock->subdealer['name'];
-               
-            }
-            else if(isset($dealer))
-            {          
-                return 'Awaiting Transfer Confirmation';
-            }
-            else{
-                return "--";
-            }
-        })
-        ->addColumn('sub_dealer',function($gps_stock){
-            $sub_dealer = $gps_stock->trader_id;
-            if($sub_dealer)
-            {
-                return $gps_stock->trader['name'];
-               
-            }
-            else if(isset($sub_dealer))
-            {          
-                return 'Awaiting Transfer Confirmation';
-            }
-            else{
-                return "--";
-            }
-        })
-        ->addColumn('client',function($gps_stock){
-            $subdealer = $gps_stock->client_id;
-            if($subdealer)
-            {
-                return $gps_stock->client['name'];
-               
-            }
-            else if(isset($subdealer))
-            {          
-                return 'Awaiting Transfer Confirmation';
-            }
-            else{
-                return "--";
-            }
-        })
-        ->addColumn('action', function ($gps_stock)
-        {
-            $b_url = \URL::to('/');
-            if($gps_stock->deleted_at == null)
-            {
-                return "
-                <a href=".$b_url."/gps-device-track-root-details/".Crypt::encrypt($gps_stock->gps_id)."/view class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>";
-               
-            }
-            else{
-                return "";
-            }
-        })
-        ->rawColumns(['link', 'action'])
-        ->make();
+        $search_key         = ( isset($request->search_key) ) ? $request->search_key : null;
+        $gps_stock_details  = (new GpsStock())->getAllGpsWithTrackDetails($search_key);
+        return view('Warehouse::device-track-root',['gps_stock_details' => $gps_stock_details, 'search_key' => $search_key]);
     }
 
     public function rootDeviceTrackDetails(Request $request)

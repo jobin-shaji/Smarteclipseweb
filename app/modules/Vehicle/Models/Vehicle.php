@@ -351,6 +351,15 @@ class Vehicle extends Model
                   ->where('client_id',$client_id)
                   ->count();
     }
+    public function getVehiclesWithUnreturnedGps($gps_id)
+    {
+      return self::where(function ($query) {
+                      $query->where('is_returned', '=', 0)
+                      ->orWhere('is_returned', '=', NULL);
+                  })
+                  ->whereIn('gps_id',$gps_id)
+                  ->pluck('gps_id');
+    }
 
 
   

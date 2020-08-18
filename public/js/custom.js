@@ -589,12 +589,18 @@ function backgroundPostData(url, data, callBack, options) {
                 {
                     subDealerGpsClientSale(res);
                 }
-
-
-
-
-
-
+                else if(callBack=='vehicleAddress')
+                {
+                    vehicleAddress(res);
+                }
+                else if(callBack=='gpsAddress')
+                {
+                    gpsAddress(res);
+                }
+                else if(callBack=='vehicleTrackAddress')
+                {
+                    vehicleTrackAddress(res);
+                }
             }
         },
         error: function (err) {

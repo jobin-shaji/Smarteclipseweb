@@ -456,4 +456,44 @@ class GpsStock extends Model
                 ->count();
     }
 
+    /**
+     * 
+     * 
+     */
+    public function getAllGpsWithTrackDetails($search_key = null)
+    {
+        
+        $query  =   self::with('gps')
+                    ->with('dealer')
+                    ->with('subdealer')
+                    ->with('trader')
+                    ->with('client')
+                    ->with('manufacturer')
+                    ->withTrashed();
+                       
+        if( $search_key != null )
+        {
+            $result =   $query->whereHas('gps', function ($query) use ($search_key) {
+                            $query->where('imei', 'LIKE', '%'. $search_key .'%')
+                            ->orWhere('serial_no','like','%'.$search_key.'%');
+                        })->paginate(10);
+        }
+        else
+        {
+            $result = $query->paginate(10);
+        }
+        return $result;
+    }
+    /**
+     * distributor gps
+     */
+    public function getInStockOfDistributor($distributor_ids)
+    {
+        return self::where('dealer_id',$distributor_ids)
+                   ->where(function ($query) {
+                    $query->where('is_returned', '=', 0)
+                    ->orWhere('is_returned', '=', NULL);
+                    })->pluck('gps_id');
+    }
+
 }

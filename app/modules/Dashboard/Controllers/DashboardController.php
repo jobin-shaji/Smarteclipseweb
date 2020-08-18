@@ -637,15 +637,27 @@ class DashboardController extends Controller
     //         return response()->json($location);
     //     }
     // }
-    function getAddress($latitude,$longitude){
-         //Send request and receive json data by address
-         
-        $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($latitude).','.trim($longitude).'&sensor=false&key='.config("eclipse.keys.googleMap").'&libraries=drawing&callback=initMap');
-        $output = json_decode($geocodeFromLatLong);
-        $status = $output->status;
-        //Get address from json data
-        $address = ($status=="OK")?$output->results[0]->formatted_address:'';
-        return $address;
+   public function getAddress(Request $request){
+        //Send request and receive json data by address
+         $address="No Address";
+        if(!empty($request->lat)&& !empty($request->lng))
+        {
+            $geocodeFromLatLong = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($request->lat).','.trim($request->lng).'&sensor=false&key='.config('eclipse.keys.googleMap').'&libraries=drawing&callback=initMap');
+            $output = json_decode($geocodeFromLatLong);
+            $status = $output->status;
+            //Get address from json data
+            $address = ($status=="OK")?$output->results[0]->formatted_address:'';
+            if($address)
+            {
+                return $address;
+            }
+            else{
+                return "No Address";
+            }
+        }
+        else{
+            return "No Address";
+        }      
     }
 
     // hide for remove 
@@ -666,7 +678,7 @@ class DashboardController extends Controller
     public function vehicleDetails(Request $request)
     {
         $user = $request->user();
-        $address="";
+        // $address="";
         $satelite=0;
         $gps = Gps::find($request->gps_id);
         $offline_time_difference = date('Y-m-d H:i:s',strtotime("".Config::get('eclipse.offline_time').""));
@@ -713,10 +725,6 @@ class DashboardController extends Controller
         $satelite=$satelite;
         $latitude=$gps->lat;
         $longitude=$gps->lon;
-        if(!empty($latitude) && !empty($longitude)){
-            $address =  $this->getAddress($latitude,$longitude);
-        }
-
         $battery_status=(int)$gps->battery_status;
 
         if($mode=="M")
@@ -809,7 +817,8 @@ class DashboardController extends Controller
                 'satelite' => $satelite,
                 'battery_status' => $battery_status.' %',
                 'ignition' => $ignition,
-                'address' => $address
+                'latitude' => $latitude,
+                'longitude' => $longitude
             );
         }
         else{

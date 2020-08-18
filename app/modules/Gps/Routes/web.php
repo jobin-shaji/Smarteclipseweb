@@ -15,7 +15,9 @@ Route::group(['middleware' => ['web','auth','role:root'] , 'namespace' => 'App\M
 
 	Route::get('/gps/{id}/location/root','GpsController@rootlocation')->name('gps.location');
 	Route::post('/gps/location-track/root','GpsController@rootlocationTrack')->name('gps.location-track');
-
+	/**location name */
+	Route::post('/gps-location-name','GpsController@getAddress')->name('gps.location.name');
+	/**location name */
 	Route::get('/gps_playback','GpsController@playbackPage')->name('gps_playback');
 	Route::get('/gps_playback_data','GpsController@playbackPageData')->name('gps_playback_data');
 

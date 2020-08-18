@@ -1336,10 +1336,14 @@
             </a>
           </div>
         </div>
-        <div class="location-sction">
+        
+        <div class="location-sction" id="location-sction">
           <div class="location-sction-icon"><i class="fa fa-location-arrow" aria-hidden="true"></i></div>
           <div class="location-sction-content">
             <medium id="address" class="font-light">
+            <div class="loader-wrapper loader-1"  >
+                  <div id="loader"></div>
+                </div>
           </div>
         </div>
         <div class="dash-vechile-detials-1">
@@ -1467,6 +1471,9 @@
               <div class="dash-vechile-detail-text"><p>Ignition</p>
                 <medium id="ignition" class="font-light">
                 <i class="fa fa-spinner" aria-hidden="true"></i>
+              </div>
+              <div class="location " id="location">
+                <!-- <button type="button">View Location</button>          -->
               </div>
             </div>
           </div>
@@ -1773,6 +1780,10 @@
 
   </section>
   <style>
+  .address
+  { cursor: pointer; 
+
+  }  
   .inner-left {
     float: left;
     display: block;

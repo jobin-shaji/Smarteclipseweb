@@ -27,8 +27,9 @@
               <div class="row">
                 <div class="col-md-6">
                   <div class="form-group has-feedback">
-                    <label class="srequired">Name</label>
-                    <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Name" name="name" value="{{ old('name') }}" maxlength='50' required autocomplete="off"> 
+                    <label class="srequired">Name&nbsp<font color="red">*</font></label>
+                    <input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Name" id="name" name="name" value="{{ old('name') }}" maxlength='50' required autocomplete="off"> 
+                    <p style="color:#FF0000" id="message">only characters are allowed</p>
                     @if ($errors->has('name'))
                       <span class="help-block">
                       <strong class="error-text">{{ $errors->first('name') }}</strong>
@@ -52,7 +53,7 @@
                     if (strpos($url, $rayfleet_key) == true) {  ?>
                       <div class="form-group has-feedback">
                         <label class="srequired">Mobile Number</label>
-                        <input type="text" required pattern="[0-9]{11}" class="form-control {{ $errors->has('mobile_number') ? ' has-error' : '' }}" placeholder="Mobile Number" name="mobile_number" value="{{ old('mobile_number') }}" title="Mobile number should be exactly 11 digits" /> 
+                        <input type="text" required pattern="[0-9]{11}" class="form-control {{ $errors->has('mobile_number') ? ' has-error' : '' }}" placeholder="Mobile Number" name="mobile_number" value="{{ old('mobile_number') }}" title="Mobile number should be exactly 11 digits"  maxlength="10"  /> 
                         @if ($errors->has('mobile_number'))
                           <span class="help-block">
                               <strong class="error-text">{{ $errors->first('mobile_number') }}</strong>
@@ -63,7 +64,7 @@
                     else if (strpos($url, $eclipse_key) == true) { ?>
                       <div class="form-group has-feedback">
                         <label class="srequired">Mobile Number</label>
-                        <input type="text" required pattern="[0-9]{10}" class="form-control {{ $errors->has('mobile_number') ? ' has-error' : '' }}" placeholder="Mobile Number" name="mobile_number" value="{{ old('mobile_number') }}" title="Mobile number should be exactly 10 digits" /> 
+                        <input type="text" required pattern="[0-9]{10}" class="form-control {{ $errors->has('mobile_number') ? ' has-error' : '' }}" placeholder="Mobile Number" name="mobile_number" value="{{ old('mobile_number') }}" title="Mobile number should be exactly 10 digits"  maxlength="10"  /> 
                         @if ($errors->has('mobile_number'))
                           <span class="help-block">
                             <strong class="error-text">{{ $errors->first('mobile_number') }}</strong>
@@ -74,7 +75,7 @@
                     else { ?>
                       <div class="form-group has-feedback">
                         <label class="srequired">Mobile Number</label>
-                        <input type="text" required pattern="[0-9]{10}" class="form-control {{ $errors->has('mobile_number') ? ' has-error' : '' }}" placeholder="Mobile Number" name="mobile_number" value="{{ old('mobile_number') }}" title="Mobile number should be exactly 10 digits" /> 
+                        <input type="text" required pattern="[0-9]{10}" class="form-control {{ $errors->has('mobile_number') ? ' has-error' : '' }}" placeholder="Mobile Number" name="mobile_number" value="{{ old('mobile_number') }}" title="Mobile number should be exactly 10 digits"  maxlength="10" /> 
                         @if ($errors->has('mobile_number'))
                           <span class="help-block">
                             <strong class="error-text">{{ $errors->first('mobile_number') }}</strong>
@@ -137,6 +138,20 @@
 
  
 <div class="clearfix"></div>
-
-
+@section('script')
+<script>
+$(document).ready(function() {
+  $("#message").hide();
+/**NAme Allow only letters */
+$('#name').keypress(function(e) {
+    $("#message").hide();
+    var keyCode = e.which;
+    if (keyCode >= 48 && keyCode <= 57) {
+        $("#message").show();
+        e.preventDefault();
+    }
+});
+});
+</script>
+@endsection
 @endsection
