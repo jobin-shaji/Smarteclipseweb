@@ -7,8 +7,8 @@
     <div class="page-breadcrumb">
         <div class="row">
             <div class="col-12 d-flex no-block align-items-center">
+                <span id='close' onclick='window.history.go(-1); return false;'><i class="fa fa-chevron-circle-left" aria-hidden="true"></i></span>&nbsp;&nbsp;
                 <b> Transferred List - Dealers To Sub Dealers & End Users</b>
-                <span id='close' onclick='window.history.go(-1); return false;'>x</span>
             </div>
         </div>
     </div>
@@ -34,12 +34,13 @@
                                                         <th>Dealer Name</th>
                                                         <th>Sub Dealer Name</th>
                                                         <th>Transferred</th>
+                                                        <th></th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     @if(count($transfer_details_to_sub_dealer) == 0)
                                                         <tr>
-                                                            <td colspan='6' style='text-align: center;'><b>No Data Available</b></td>
+                                                            <td colspan='4' style='text-align: center;'><b>No Data Available</b></td>
                                                         </tr>
                                                     @else
                                                     <?php $total  = 0; ?>
@@ -51,6 +52,11 @@
                                                         <?php 
                                                             $total = $total + $each_data['transferred_count'];
                                                         ?>
+                                                        <td>
+                                                            <button type="button" class="btn btn-xs"><i class='fa fa-eye'></i>
+                                                            <a href="gps-transfer-report-transaction-details?fromuser={{encrypt($each_data['transfer_from_user_id'])}}&touser={{encrypt($each_data['transfer_to_user_id'])}}&from={{$from_date}}&to={{$to_date}}" style="color:white">Detailed View</a>
+                                                            </button>
+                                                        </td>
                                                     </tr>
                                                     @endforeach
                                                     <tr>
@@ -89,12 +95,13 @@
                                                         <th>Dealer Name</th>
                                                         <th>End User Name</th>
                                                         <th>Transferred</th>
+                                                        <th></th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     @if(count($transfer_details_to_client) == 0)
                                                         <tr>
-                                                            <td colspan='6' style='text-align: center;'><b>No Data Available</b></td>
+                                                            <td colspan='4' style='text-align: center;'><b>No Data Available</b></td>
                                                         </tr>
                                                     @else
                                                     <?php $total  = 0; ?>
@@ -106,6 +113,11 @@
                                                         <?php 
                                                             $total = $total + $each_data['transferred_count'];
                                                         ?>
+                                                        <td>
+                                                            <button type="button" class="btn btn-xs"><i class='fa fa-eye'></i>
+                                                            <a href="gps-transfer-report-transaction-details?fromuser={{encrypt($each_data['transfer_from_user_id'])}}&touser={{encrypt($each_data['transfer_to_user_id'])}}&from={{$from_date}}&to={{$to_date}}" style="color:white">Detailed View</a>
+                                                            </button>
+                                                        </td>
                                                     </tr>
                                                     @endforeach
                                                     <tr>
@@ -153,11 +165,10 @@
         margin-left: 126px;
     }
     #close {
-        float:right;
+        float:left;
         display:inline-block;
         padding:2px 5px;
-        background:#b0b6ce;
-        margin-left: 790px;
+        margin-left: -25px;
     }
     #close:hover {
         float:right;

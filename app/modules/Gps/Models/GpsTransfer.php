@@ -93,6 +93,36 @@ class GpsTransfer extends Model
         ->withTrashed();
     }
 
+    public function getTransferredGpsDetailsWhichIncludesTransactionAcceptedGpsWithOutTranshedItems($from_user_id, $to_user_id, $from_date, $to_date, $download_type)
+    {
+        $query  =   DB::table('gps_transfers')
+                        ->where('gps_transfers.from_user_id',$from_user_id)
+                        ->where('gps_transfers.to_user_id',$to_user_id)
+                        ->whereDate('gps_transfers.dispatched_on', '>=', $from_date)
+                        ->whereDate('gps_transfers.dispatched_on', '<=', $to_date)
+                        ->whereNotNull('gps_transfers.accepted_on')
+                        ->join('gps_transfer_items', 'gps_transfer_items.gps_transfer_id', '=', 'gps_transfers.id')
+                        ->join('gps', 'gps_transfer_items.gps_id', '=', 'gps.id')
+                        ->select('gps_transfers.order_number as order_number',
+                                'gps_transfers.scanned_employee_code as scanned_employee_code',
+                                'gps_transfers.invoice_number as invoice_number',
+                                'gps_transfers.dispatched_on as dispatched_on',
+                                'gps_transfers.accepted_on as accepted_on',
+                                'gps.imei as imei',
+                                'gps.serial_no as serial_no'
+                        );
+        // response
+        if($download_type == NULL)
+        {
+            return $query->orderBy('gps_transfers.dispatched_on','ASC')->paginate(10);
+        }
+        else
+        {
+            return $query->orderBy('gps_transfers.dispatched_on','ASC')->get();
+        }
+        
+    }
+
     public function getStockToAcceptCount($to_user_ids)
     {
         return DB::select("SELECT COUNT(gps_transfer_items.id) as count FROM `gps_transfers` LEFT join gps_transfer_items ON gps_transfers.id = gps_transfer_items.gps_transfer_id WHERE gps_transfers.deleted_at IS NULL AND gps_transfers.accepted_on IS  NULL  AND gps_transfers.to_user_id IN ('" . implode("', '", $to_user_ids) . "')");
