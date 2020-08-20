@@ -114,7 +114,7 @@ td, th {
           <td style = "word-wrap: break-word;"><?php ( isset($each_data->manufacturer_name) ) ? $manufacturer_name = $each_data->manufacturer_name : $manufacturer_name='-NA-' ?>{{$manufacturer_name}}</td>
       </tr>
       <tr>
-          <td><b>Distributor Name/<b></td>
+          <td><b>Distributor Name<b></td>
           <td style = "word-wrap: break-word;"><?php ( isset($each_data->distributor_name) ) ? $distributor_name = $each_data->distributor_name : $distributor_name='-NA-' ?>{{$distributor_name}}</td>
       </tr>
       <tr>

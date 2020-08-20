@@ -62,7 +62,7 @@
                                         </div> 
                                         @if(count($transfer_details) != 0)
                                             
-                                            <button class="btn btn-xs" style='margin-left: 1000px;'><i class='fa fa-download'></i>
+                                            <button class="btn btn-xs" style='float: right;'><i class='fa fa-download'></i>
                                                 <a href="gps-transfer-report-downloads?type=pdf&from_date={{$from_date}}&to_date={{$to_date}}" style="color:white">Download Report</a>
                                             </button>
                                             

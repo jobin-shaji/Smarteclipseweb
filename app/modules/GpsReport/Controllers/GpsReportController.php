@@ -749,13 +749,95 @@ class GpsReportController extends Controller
             foreach($transfer_details as $each_data)
             {
                 $transfer_log[] =   [
-                    'transfer_from'     =>  $this->getOriginalNameFromUserId($each_data->from_user_id),
-                    'transfer_to'       =>  $this->getOriginalNameFromUserId($each_data->to_user_id),
-                    'transferred_count' =>  $each_data->count
+                    'transfer_from_user_id' =>  $each_data->from_user_id,
+                    'transfer_to_user_id'   =>  $each_data->to_user_id,
+                    'transfer_from'         =>  $this->getOriginalNameFromUserId($each_data->from_user_id),
+                    'transfer_to'           =>  $this->getOriginalNameFromUserId($each_data->to_user_id),
+                    'transferred_count'     =>  $each_data->count
                 ];
             }
         }
         return $transfer_log;
+    }
+
+    /**
+     * 
+     * GPS TRANSFER REPORT-TRANSACTION DETAILS VIEW
+     * 
+     */
+    public function gpsTransferReportTransactionDetails(Request $request)
+    {
+        if(\Auth::user()->hasRole('root'))
+        {
+            $logged_user            =   (new Root())->getManufacturerDetails(\Auth::user()->root->id)->name;
+        }
+        else if(\Auth::user()->hasRole('dealer'))
+        {
+            $logged_user            =   (new Dealer())->getDistributorDetails(\Auth::user()->dealer->id)->name;
+        }
+        else if(\Auth::user()->hasRole('sub_dealer'))
+        {
+            $logged_user            =   (new SubDealer())->getDealerDetails(\Auth::user()->subdealer->id)->name;
+        }
+        else if(\Auth::user()->hasRole('trader'))
+        {
+            $logged_user            =   (new Trader())->getSubDealerDetails(\Auth::user()->trader->id)->name;
+        }
+        $from_user_id               = ( isset($request->fromuser) ) ? decrypt($request->fromuser) : null;
+        $to_user_id                 = ( isset($request->touser) ) ? decrypt($request->touser) : null;
+        $from_date                  = ( isset($request->from) ) ? $request->from : null;
+        $to_date                    = ( isset($request->to) ) ? $request->to : null;
+        $download_type              = ( isset($request->type) ) ? $request->type : null;
+        if( $from_user_id != NULL && $to_user_id != NULL )
+        {
+            $transfer_from          = $this->getOriginalNameFromUserId($from_user_id);
+            $transfer_to            = $this->getOriginalNameFromUserId($to_user_id);
+            $transaction_details    = (new GpsTransfer())->getTransferredGpsDetailsWhichIncludesTransactionAcceptedGpsWithOutTranshedItems($from_user_id, $to_user_id, $from_date, $to_date, $download_type);
+            if($download_type == 'pdf')
+            {
+                $iteration          = 1;
+                $devices_per_page   = 500;
+                $folder_name        = rand().date('Ymdhis');
+                $pdf_path           = public_path('pdf/'.$folder_name);
+                if (! File::exists($pdf_path)) {
+                    File::makeDirectory($pdf_path);
+                }
+                foreach($transaction_details->chunk($devices_per_page) as $each_chunk)
+                {
+                    $pdf        =   PDF::loadView('GpsReport::transferred-device-detailed-view-download',[ 'transaction_details' => $each_chunk, 'generated_by' => ucfirst(strtolower($logged_user)), 'generated_on' => date("d/m/Y h:m:s A"), 'transfer_from' => $transfer_from, 'transfer_to' => $transfer_to, 'from_date' => date('d-m-Y', strtotime($from_date)), 'to_date' => date('d-m-Y', strtotime($to_date))]);
+                    $file_name  =  'device-transfer-detailed-report-part-' .$iteration. '.pdf' ;
+                    $pdf->save($pdf_path . '/' . $file_name);
+                    $iteration++;
+                } 
+                $zip_file_name  = 'pdf/device-transfer-detailed-report'.date('Ymdhis').'.zip';
+                $zip            = new ZipArchive;
+        
+                if ($zip->open($zip_file_name, ZipArchive::CREATE))
+                {
+                    $files = File::files($pdf_path);
+                    foreach ($files as $key => $value) {
+                        $relativeNameInZipFile = basename($value);
+                        $zip->addFile($value, $relativeNameInZipFile);
+                    }
+                    $zip->close();
+                }
+                // Download the created zip file
+                header("Content-Type: application/zip");
+                header("Content-Disposition: attachment; filename = $zip_file_name");
+                header("Pragma: no-cache");
+                header("Expires: 0");
+                readfile("$zip_file_name");
+                //delete folder
+                exec('rm -rf pdf/'.$folder_name);
+                //delete zip file
+                unlink($zip_file_name);
+                exit;
+            }
+            else
+            {
+                return view('GpsReport::transferred-device-detailed-view',['transaction_details' => $transaction_details, 'from_date' => $from_date, 'to_date' => $to_date, 'transfer_from' => $transfer_from, 'transfer_to' => $transfer_to, 'from_user_id' => $from_user_id, 'to_user_id' => $to_user_id ]);
+            }
+        }
     }
     /*
      *
