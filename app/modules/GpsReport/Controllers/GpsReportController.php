@@ -1553,8 +1553,8 @@ class GpsReportController extends Controller
                 $gps_details->mode          = 'Offline ('.$gps_details->mode.')';
             }
             else{
-                $gps_details->device_status = "";
-                $gps_details->mode          = 'NA';
+                $gps_details->device_status = "#85929E";
+                $gps_details->mode          = '-NA-';
             }
            
         }
@@ -1583,94 +1583,170 @@ class GpsReportController extends Controller
         //SIGNAL STRENGTH
         if ($gps_details->gsm_signal_strength >= 19 ) 
         {
-            $gps_details->gsm_signal_strength = "GOOD";
+            $gps_details->signal_status         = '#84b752';
+            $gps_details->gsm_signal_strength   = "GOOD";
         }
         else if ($gps_details->gsm_signal_strength < 19 && $gps_details->gsm_signal_strength >= 13 ) 
         {
-            $gps_details->gsm_signal_strength = "AVERAGE";
+            $gps_details->signal_status         = '#F5B041';
+            $gps_details->gsm_signal_strength   = "AVERAGE";
         }
-        else if ($gps_details->gsm_signal_strength <= 12 && $gps_details->gsm_signal_strength !=null)
+        else if ($gps_details->gsm_signal_strength <= 12 && $gps_details->gsm_signal_strength >= 1)
         {
-            $gps_details->gsm_signal_strength = "POOR";
+            $gps_details->signal_status         = '#c41900';
+            $gps_details->gsm_signal_strength   = "POOR";
         }
-        else if ($gps_details->gsm_signal_strength ==null)
+        else if ($gps_details->gsm_signal_strength < 1)
         {
-            $gps_details->gsm_signal_strength = "NA";
+            $gps_details->signal_status         = '#c41900';
+            $gps_details->gsm_signal_strength   = "LOST";
         }
         else
         {
-            $gps_details->gsm_signal_strength = "LOST";
+            $gps_details->signal_status         = '#85929E';
+            $gps_details->gsm_signal_strength   = "-NA-";
         }
+        
+
+        //FUEL STATUS
+        if ($gps_details->fuel_status >= 50 ) 
+        {
+            $gps_details->fuel_level_status     = '#84b752';
+            $gps_details->fuel_status           = ($gps_details->fuel_status > 100) ? 100 : $gps_details->fuel_status ;
+        }
+        else if ($gps_details->fuel_status < 50 && $gps_details->fuel_status >= 35 ) 
+        {
+            $gps_details->fuel_level_status     = '#F5B041';
+            $gps_details->fuel_status           = $gps_details->fuel_status;
+        }
+        else if ($gps_details->fuel_status < 35 && $gps_details->fuel_status != null)
+        {
+            $gps_details->fuel_level_status     = '#c41900';
+            $gps_details->fuel_status           = $gps_details->fuel_status;
+        }
+        else
+        {
+            $gps_details->fuel_level_status     = '#85929E';
+            $gps_details->fuel_status           = "-NA-";
+        }
+
+        //SPEED STATUS
+        if ($gps_details->speed >= 70 ) 
+        {
+            $gps_details->speed_level_status    = '#c41900';
+            $gps_details->speed                 = round($gps_details->speed, 2) ;
+        }
+        else if ($gps_details->speed < 70 && $gps_details->speed > 10 ) 
+        {
+            $gps_details->speed_level_status    = '#84b752';
+            $gps_details->speed                 = round($gps_details->speed, 2);
+        }
+        else if ($gps_details->speed <= 10 && $gps_details->speed >= 1)
+        {
+            $gps_details->speed_level_status    = '#F5B041 ';
+            $gps_details->speed                 = round($gps_details->speed, 2);
+        }
+        else
+        {
+            $gps_details->speed_level_status    = '#85929E';
+            $gps_details->speed                 = round($gps_details->speed, 2);
+        }
+
         // AC STATUS
         if( $gps_details->ac_status == 1 )
         {
-            $gps_details->ac_status = "ON";
+            $gps_details->ac_level_status   = "#84b752";
+            $gps_details->ac_status         = "ON";
         }
         
         else if( $gps_details->ac_status == 0 && $gps_details->ac_status != null)
         {
-            $gps_details->ac_status = "OFF";
+            $gps_details->ac_level_status   = "#c41900";
+            $gps_details->ac_status         = "OFF";
         }
         else
         {
-            $gps_details->ac_status = "NA";
+            $gps_details->ac_level_status   = "#85929E";
+            $gps_details->ac_status         = "-NA-";
         }
         
         //IGNITION
         if( $gps_details->ignition == 1 )
         {
-            $gps_details->ignition = "ON";
+            $gps_details->ignition_status   = "#84b752";
+            $gps_details->ignition          = "ON";
         }       
         else if( $gps_details->ignition == 0 && $gps_details->ignition != null)
         {
-            $gps_details->ignition = "OFF";
+            $gps_details->ignition_status   = "#c41900";
+            $gps_details->ignition          = "OFF";
         }
         else 
         {
-            $gps_details->ignition = "NA";
+            $gps_details->ignition_status   = "#85929E";
+            $gps_details->ignition          = "-NA-";
         }
        
         //MAIN POWER STATUS
         if( $gps_details->main_power_status == 1) 
         {
-            $gps_details->main_power_status  = "CONNECTED";
+            $gps_details->power_status      = "#84b752";
+            $gps_details->main_power_status = "CONNECTED";
         }
         
         else if($gps_details->main_power_status == 0 && $gps_details->main_power_status != null) 
         {
-            // dd( $gps_details->main_power_status);
-            $gps_details->main_power_status  = "DISCONNECTED";
+            $gps_details->power_status      = "#c41900";
+            $gps_details->main_power_status = "DISCONNECTED";
         }
         else
         {
-            $gps_details->main_power_status  = "NA";
+            $gps_details->power_status      = "#85929E";
+            $gps_details->main_power_status = "-NA-";
+        }
+        //GPS FIX
+        if( $gps_details->gps_fix_on != NULL ) 
+        {
+            $gps_details->gps_fix_status    = "#84b752";
+            $gps_details->gps_fix_on        = "YES";
+        }
+        else 
+        {
+            $gps_details->gps_fix_status    = "#c41900";
+            $gps_details->gps_fix_on        = "NO";
         }
         //TILT
         if( $gps_details->tilt_status == 1) 
         {
-            $gps_details->tilt_status  = "YES";
+            $gps_details->tilt_level_status = "#c41900";
+            $gps_details->tilt_status       = "YES";
         }
-        else
+        else 
         {
-            $gps_details->tilt_status  = "NO";
+            $gps_details->tilt_level_status = "#85929E";
+            $gps_details->tilt_status       = "NO";
         }
         //OVER SPEED
         if( $gps_details->overspeed_status == 1) 
         {
-            $gps_details->overspeed_status  = "YES";
+            $gps_details->overspeed_level_status    = "#c41900";
+            $gps_details->overspeed_status          = "YES";
         }
         else
         {
-            $gps_details->overspeed_status  = "NO";
+            $gps_details->overspeed_level_status    = "#85929E";
+            $gps_details->overspeed_status          = "NO";
         }
         //EMERGENCY
         if( $gps_details->emergency_status == 1) 
         {
-            $gps_details->emergency_status  = "YES";
+            $gps_details->emergency_level_status    = "#c41900";
+            $gps_details->emergency_status          = "YES";
         }
-        else
+        else 
         {
-            $gps_details->emergency_status  = "NO";
+            $gps_details->emergency_level_status    = "#85929E";
+            $gps_details->emergency_status          = "NO";
         }
         //RETURN STATUS
         if( $gps_details->is_returned == 1) 
@@ -1889,8 +1965,22 @@ class GpsReportController extends Controller
     public function deviceReportDetailedViewOfTransferHistory(Request $request)
     {
         $gps_id             = $request->gps_id;
+        $transfer_log       = [];
         $transfer_details   = (new GpsTransferItems())->getTransferDetailsBasedOnGps($gps_id);
-        return response()->json($transfer_details);
+        if(count($transfer_details) > 0)
+        {
+            foreach($transfer_details as $each_data)
+            {
+                $transfer_log[] =   [
+                    'transfer_from'     =>  $this->getOriginalNameFromUserId($each_data->from_user_id),
+                    'transfer_to'       =>  $this->getOriginalNameFromUserId($each_data->to_user_id),
+                    'dispatched_on'     =>  $each_data->dispatched_on,
+                    'accepted_on'       =>  $each_data->accepted_on,
+                    'deleted_at'        =>  $each_data->deleted_at
+                ];
+            }
+        }
+        return response()->json($transfer_log);
     }
     public function deviceDetailImeiEncription(Request $request)
     {
