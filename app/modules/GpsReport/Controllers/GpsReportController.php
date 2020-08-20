@@ -796,7 +796,7 @@ class GpsReportController extends Controller
             if($download_type == 'pdf')
             {
                 $iteration          = 1;
-                $devices_per_page   = 500;
+                $devices_per_page   = 100;
                 $folder_name        = rand().date('Ymdhis');
                 $pdf_path           = public_path('pdf/'.$folder_name);
                 if (! File::exists($pdf_path)) {
@@ -1468,7 +1468,7 @@ class GpsReportController extends Controller
             if($device_online_report->count()>0)
             {
                 $iteration          = 1;
-                $devices_per_page   = 500;
+                $devices_per_page   = 100;
                 $folder_name        = rand().date('Ymdhis');
                 $pdf_path           = public_path('pdf/'.$folder_name);
                 if (! File::exists($pdf_path)) {
@@ -1562,7 +1562,7 @@ class GpsReportController extends Controller
             if($offline_devices->count()>0)
             {
                 $iteration          = 1;
-                $devices_per_page   = 500;
+                $devices_per_page   = 100;
                 $folder_name        = rand().date('Ymdhis');
                 $pdf_path           = public_path('pdf/'.$folder_name);
                 if (! File::exists($pdf_path)) {
@@ -2098,7 +2098,7 @@ class GpsReportController extends Controller
             if($offline_devices->count()>0)
             {
                 $iteration          = 1;
-                $devices_per_page   = 500;
+                $devices_per_page   = 100;
                 $folder_name        = rand().date('Ymdhis');
                 $pdf_path           = public_path('pdf/'.$folder_name);
                 if (! File::exists($pdf_path)) {
@@ -2170,7 +2170,7 @@ class GpsReportController extends Controller
             if($device_online_report->count()>0)
             {
                 $iteration          = 1;
-                $devices_per_page   = 500;
+                $devices_per_page   = 100;
                 $folder_name        = rand().date('Ymdhis');
                 $pdf_path           = public_path('pdf/'.$folder_name);
                 if (! File::exists($pdf_path)) {
