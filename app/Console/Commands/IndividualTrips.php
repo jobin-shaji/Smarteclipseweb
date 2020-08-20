@@ -146,6 +146,7 @@ class IndividualTrips extends Command
             $summary["km"]           = m2Km($total_distance);
             $summary["duration"]     = dateTimediff($summary["on"], $summary["off"]);
 
+            dd($trips);
             // generate pdf report of vehicle 
             $this->generatePdfReport($trips, $summary, $gps);
             // update daily km calculation of vehicle based on new calculation 
