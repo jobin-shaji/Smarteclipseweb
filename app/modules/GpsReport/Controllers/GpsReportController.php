@@ -2156,32 +2156,58 @@ class GpsReportController extends Controller
         {
             if($offline_devices->count()>0)
             {
-                $iteration          = 1;
+                set_time_limit(500);
+                $total_data_count   = $offline_devices->count();
                 $devices_per_page   = 100;
+                $total_pages        = ceil($total_data_count/$devices_per_page);
                 $folder_name        = rand().date('Ymdhis');
                 $pdf_path           = public_path('pdf/'.$folder_name);
                 if (! File::exists($pdf_path)) {
                     File::makeDirectory($pdf_path);
                 }
-                foreach($offline_devices->chunk($devices_per_page) as $each_chunk)
+                for ($per_page = 1; $per_page <= $total_pages; $per_page++) 
                 {
-                    $pdf        =   PDF::loadView('GpsReport::device-offline-status-report-download',[ 'offline_devices' => $each_chunk, 'offline_duration' => $offline_duration, 'device_type' => $device_type, 'generated_by' => ucfirst(strtolower($logged_user_details->root->name)).' '.'( Manufacturer )', 'user_generated_by' => $logged_user_details->name, 'generated_on' => date("d/m/Y h:i:s A") ]);
-                    $file_name  =  'device-offline-status-report-part-' .$iteration. '.pdf' ;
+                    $paginated_offline_devices  = $offline_devices->paginate($devices_per_page, ['*'], 'page', $per_page);
+                    $pdf                        = PDF::loadView('GpsReport::device-offline-status-report-download',[ 'offline_devices' => $paginated_offline_devices, 'offline_duration' => $offline_duration, 'device_type' => $device_type, 'generated_by' => ucfirst(strtolower($logged_user_details->root->name)).' '.'( Manufacturer )', 'user_generated_by' => $logged_user_details->name, 'generated_on' => date("d/m/Y h:i:s A") ]);
+                    $file_name                  = 'device-offline-status-report-part-' .$per_page. '.pdf' ;
                     $pdf->save($pdf_path . '/' . $file_name);
-                    $iteration++;
-                } 
-                $zip_file_name  = 'pdf/device_offline_report'.date('Ymdhis').'.zip';
-                $zip            = new ZipArchive;
-        
-                if ($zip->open($zip_file_name, ZipArchive::CREATE))
-                {
-                    $files = File::files($pdf_path);
-                    foreach ($files as $key => $value) {
-                        $relativeNameInZipFile = basename($value);
-                        $zip->addFile($value, $relativeNameInZipFile);
-                    }
-                    $zip->close();
                 }
+
+                // $iteration          = 1;
+                // $devices_per_page   = 100;
+                // $folder_name        = rand().date('Ymdhis');
+                // $pdf_path           = public_path('pdf/'.$folder_name);
+                // if (! File::exists($pdf_path)) {
+                //     File::makeDirectory($pdf_path);
+                // }
+                // foreach($offline_devices->chunk($devices_per_page) as $each_chunk)
+                // {
+                //     $pdf        =   PDF::loadView('GpsReport::device-offline-status-report-download',[ 'offline_devices' => $each_chunk, 'offline_duration' => $offline_duration, 'device_type' => $device_type, 'generated_by' => ucfirst(strtolower($logged_user_details->root->name)).' '.'( Manufacturer )', 'user_generated_by' => $logged_user_details->name, 'generated_on' => date("d/m/Y h:i:s A") ]);
+                //     $file_name  =  'device-offline-status-report-part-' .$iteration. '.pdf' ;
+                //     $pdf->save($pdf_path . '/' . $file_name);
+                //     $iteration++;
+                // } 
+                // $zip            = new ZipArchive;
+                // if ($zip->open($zip_file_name, ZipArchive::CREATE))
+                // {
+                //     $files = File::files($pdf_path);
+                //     foreach ($files as $key => $value) {
+                //         $relativeNameInZipFile = basename($value);
+                //         $zip->addFile($value, $relativeNameInZipFile);
+                //     }
+                //     $zip->close();
+                // }
+
+                $zip_file_name  = 'pdf/device_offline_report'.date('Ymdhis').'.zip';
+                //create a path for zip creation
+                $zip_path = public_path($zip_file_name);
+                //change directory to created pdf folder
+                chdir($pdf_path);
+                //create zip using exec
+                exec('zip -r '.$zip_path.' *');
+                //change directory to base path
+                chdir(public_path());
+
                 // Download the created zip file
                 header("Content-Type: application/zip");
                 header("Content-Disposition: attachment; filename = $zip_file_name");
@@ -2223,37 +2249,64 @@ class GpsReportController extends Controller
         $distributor_all_gps_id             = (new GpsStock())->getInStockOfDistributor(\Auth::user()->dealer->id);         
         $active_vehicles_gps_id             = (new Vehicle())->getVehiclesWithUnreturnedGps($distributor_all_gps_id);       
         $vehicle_status                 =   (isset($request->vehicle_status) ) ? $request->vehicle_status : null;      
-        $device_online_report           =   (new GPS())->getDistributorDeviceOnlineReport($online_limit_date,$current_time,$vehicle_status,$device_status,$active_vehicles_gps_id,$search,$download_type,$distributor_all_gps_id);   
+        $device_online_report           =   (new Gps())->getDistributorDeviceOnlineReport($online_limit_date,$current_time,$vehicle_status,$device_status,$active_vehicles_gps_id,$search,$download_type,$distributor_all_gps_id);   
         if($download_type == 'pdf')
         {
             if($device_online_report->count()>0)
             {
-                $iteration          = 1;
+                set_time_limit(500);
+                $total_data_count   = $device_online_report->count();
                 $devices_per_page   = 100;
+                $total_pages        = ceil($total_data_count/$devices_per_page);
                 $folder_name        = rand().date('Ymdhis');
                 $pdf_path           = public_path('pdf/'.$folder_name);
                 if (! File::exists($pdf_path)) {
                     File::makeDirectory($pdf_path);
                 }
-                foreach($device_online_report->chunk($devices_per_page) as $each_chunk)
+                for ($per_page = 1; $per_page <= $total_pages; $per_page++) 
                 {
-                    $pdf        =   PDF::loadView('GpsReport::device-online-report-download',[ 'device_online_report' => $each_chunk, 'generated_by' => $generated_by, 'manufactured_by' => ucfirst(strtolower($logged_user_details->root->name)).' '.'( Manufacturer )','generated_on' => date("d/m/Y h:m:s A") ]);
-                    $file_name  =  'device-online-status-report-part-' .$iteration. '.pdf' ;
+                    $paginated_online_devices   = $device_online_report->paginate($devices_per_page, ['*'], 'page', $per_page);
+                    $pdf                        = PDF::loadView('GpsReport::device-online-report-download',[ 'device_online_report' => $paginated_online_devices, 'generated_by' => $generated_by, 'manufactured_by' => ucfirst(strtolower($logged_user_details->root->name)).' '.'( Manufacturer )','generated_on' => date("d/m/Y h:m:s A") ]);
+                    $file_name                  = 'device-online-status-report-part-' .$per_page. '.pdf' ;
                     $pdf->save($pdf_path . '/' . $file_name);
-                    $iteration++;
-                } 
-                $zip_file_name  = 'pdf/device_online_report'.date('Ymdhis').'.zip';
-                $zip            = new ZipArchive;
-        
-                if ($zip->open($zip_file_name, ZipArchive::CREATE))
-                {
-                    $files = File::files($pdf_path);
-                    foreach ($files as $key => $value) {
-                        $relativeNameInZipFile = basename($value);
-                        $zip->addFile($value, $relativeNameInZipFile);
-                    }
-                    $zip->close();
                 }
+
+                // $iteration          = 1;
+                // $devices_per_page   = 100;
+                // $folder_name        = rand().date('Ymdhis');
+                // $pdf_path           = public_path('pdf/'.$folder_name);
+                // if (! File::exists($pdf_path)) {
+                //     File::makeDirectory($pdf_path);
+                // }
+                // foreach($device_online_report->chunk($devices_per_page) as $each_chunk)
+                // {
+                //     $pdf        =   PDF::loadView('GpsReport::device-online-report-download',[ 'device_online_report' => $each_chunk, 'generated_by' => $generated_by, 'manufactured_by' => ucfirst(strtolower($logged_user_details->root->name)).' '.'( Manufacturer )','generated_on' => date("d/m/Y h:m:s A") ]);
+                //     $file_name  =  'device-online-status-report-part-' .$iteration. '.pdf' ;
+                //     $pdf->save($pdf_path . '/' . $file_name);
+                //     $iteration++;
+                // } 
+                // $zip            = new ZipArchive;
+        
+                // if ($zip->open($zip_file_name, ZipArchive::CREATE))
+                // {
+                //     $files = File::files($pdf_path);
+                //     foreach ($files as $key => $value) {
+                //         $relativeNameInZipFile = basename($value);
+                //         $zip->addFile($value, $relativeNameInZipFile);
+                //     }
+                //     $zip->close();
+                // }
+
+                $zip_file_name  = 'pdf/device_online_report'.date('Ymdhis').'.zip';
+                //create a path for zip creation
+                $zip_path = public_path($zip_file_name);
+                //change directory to created pdf folder
+                chdir($pdf_path);
+                //create zip using exec
+                exec('zip -r '.$zip_path.' *');
+                //change directory to base path
+                chdir(public_path());
+
                 // Download the created zip file
                 header("Content-Type: application/zip");
                 header("Content-Disposition: attachment; filename = $zip_file_name");
