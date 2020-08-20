@@ -215,7 +215,9 @@ class IndividualTrips extends Command
         // curl_close($ch);
         // $data=json_decode($output,true);
         // return $data['Response']['View'][0]['Result'][0]['Location']['Address']['Label'];
-        if(!empty($latitude) && !empty($longitude)){
+        $response = "";
+        if(!empty($latitude) && !empty($longitude))
+        {
             //Send request and receive json data by address
             try
             {
@@ -225,9 +227,9 @@ class IndividualTrips extends Command
                     $address = ($status=="OK")?$output->results[0]->formatted_address:'';
                     if(!empty($address)){
                         $address = removeUrlFromString($address);
-                        return $address;
+                        $response = $address;
                     }else{
-                        return false;
+                        $response = false;
                     }
             }
             catch(Exception $e)
@@ -235,9 +237,14 @@ class IndividualTrips extends Command
                 report($e);
             }
        
-        }else{
-            return false;
         }
+        else
+        {
+            dd("empty lat or lng") ;
+        }
+
+        echo $response;
+        return $response;
     }  
 
 }
