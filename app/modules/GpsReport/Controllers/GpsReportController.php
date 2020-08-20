@@ -1469,7 +1469,7 @@ class GpsReportController extends Controller
             {
                 set_time_limit(500);
                 $total_data_count   = $device_online_report->count();
-                $devices_per_page   = 200;
+                $devices_per_page   = 100;
                 $total_pages        = ceil($total_data_count/$devices_per_page);
                 $folder_name        = rand().date('Ymdhis');
                 $pdf_path           = public_path('pdf/'.$folder_name);
@@ -1593,7 +1593,7 @@ class GpsReportController extends Controller
             {
                 set_time_limit(500);
                 $total_data_count   = $offline_devices->count();
-                $devices_per_page   = 200;
+                $devices_per_page   = 100;
                 $total_pages        = ceil($total_data_count/$devices_per_page);
                 $folder_name        = rand().date('Ymdhis');
                 $pdf_path           = public_path('pdf/'.$folder_name);
