@@ -190,7 +190,7 @@ class IndividualTrips extends Command
         $vehicle_id = $gps->vehicle->id;
         // view()->share();
         $file_name = $gps->imei.'-'.$this->trip_date.'.pdf';
-        $pdf       = PDF::loadView('Exports::trip-report',['trips' => $trips, 'date' => $this->trip_date, 'summary' => $summary, 'gps' => $gps]);
+        $pdf       = PDF::loadView('Exports::trip-report', ['trips' => $trips, 'date' => $this->trip_date, 'summary' => $summary, 'gps' => $gps]);
         $file = "documents/tripreports/".$client_id."/".$vehicle_id."/".$this->trip_date."/".$file_name;
         $pdf->save("public/".$file);
 
