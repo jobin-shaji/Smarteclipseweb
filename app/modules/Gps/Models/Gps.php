@@ -292,7 +292,7 @@ class Gps extends Model
                     }  
         if($download_type == 'pdf')
         {
-            return $result->get();   
+            return $result;   
         }else
         {
             return $result->paginate(10);   
