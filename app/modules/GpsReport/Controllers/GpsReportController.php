@@ -2049,6 +2049,10 @@ class GpsReportController extends Controller
         $gps_id             = $request->gps_id;
         $transfer_log       = [];
         $transfer_details   = (new GpsTransferItems())->getTransferDetailsBasedOnGps($gps_id);
+<<<<<<< HEAD
+        // dd($transfer_details[0]->gpsTransferDetail[0]->fromUser);
+        return response()->json($transfer_details);
+=======
         if(count($transfer_details) > 0)
         {
             foreach($transfer_details as $each_data)
@@ -2063,6 +2067,7 @@ class GpsReportController extends Controller
             }
         }
         return response()->json($transfer_log);
+>>>>>>> c7af20efa0e0d31438ddd79ce76284758e33148f
     }
     public function deviceDetailImeiEncription(Request $request)
     {

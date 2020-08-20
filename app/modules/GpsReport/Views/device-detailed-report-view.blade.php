@@ -188,8 +188,10 @@
                     <li><a href="#transfer_details_section" onclick="getTransferDetailsBasedOnGps()">Transfer Details</a></li>
                     <li><a href="#installation_details_section" onclick="getInstallationDetailsBasedOnGps()">Installation Details</a></li>
                     <li><a href="#service_details_section" onclick="getServiceDetailsBasedOnGps()">Service Details</a></li>
-                    <li><a href="#alert_details_section" onclick="getAlertDetailsBasedOnGps()"> Alerts</a></li>                
+                    <li><a href="#alert_details_section" onclick="getAlertDetailsBasedOnGps()"> Alerts</a></li>
+                    @role('operations')               
                     <li><a href="#set_ota_section" onclick="setOtaInGps()"> Set OTA</a></li>
+                    @endrole
                 </ul>
                 <div class="panelContainer">
                     <div id="device_details_section" class="panel">
@@ -537,10 +539,12 @@
                             <button type="submit" class="btn btn-primary">POST</button>
                         </form>              
                     </div>
+                    @role('operations')
                     <!-- /Set OTA section -->
                     <!-- console modal button-->
                     <button class="btn-sm console_view pull-right" onclick="return openConsole({{$gps_details->imei}})" data-toggle="modal" data-target="#consoleModal">CONSOLE <i class='fa fa-arrow-up'></i></button>
-                    <!-- /console modal button-->      
+                    <!-- /console modal button-->    
+                    @endrole  
                 </div>               
             </div> <!-- ends the tabbed panels / wrapper-->                        
         </div>
