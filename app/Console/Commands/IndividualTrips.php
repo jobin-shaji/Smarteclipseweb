@@ -140,13 +140,11 @@ class IndividualTrips extends Command
             $summary["on location"]  = $trips[0]["start_address"];
             $summary["on"]           = $trips[0]["start_time"];
             $end                     = end($trips);
-            $summary["off location"] = $trips[0]["stop_address"];
+            $summary["off location"] = $end["stop_address"];
             $summary["off"]          = $end["stop_time"];
             $summary["date"]         = $this->trip_date;
             $summary["km"]           = m2Km($total_distance);
             $summary["duration"]     = dateTimediff($summary["on"], $summary["off"]);
-
-            dd($trips);
             // generate pdf report of vehicle 
             $this->generatePdfReport($trips, $summary, $gps);
             // update daily km calculation of vehicle based on new calculation 
@@ -190,6 +188,7 @@ class IndividualTrips extends Command
 
         $client_id  = $gps->vehicle->client->id;
         $vehicle_id = $gps->vehicle->id;
+        dd($trips);
         view()->share(['trips' => $trips, 'date' => $this->trip_date, 'summary' => $summary, 'gps' => $gps]);
         $file_name = $gps->imei.'-'.$this->trip_date.'.pdf';
         $pdf       = PDF::loadView('Exports::trip-report');
@@ -244,7 +243,6 @@ class IndividualTrips extends Command
             dd("empty lat or lng") ;
         }
 
-        echo $response;
         return $response;
     }  
 
