@@ -188,7 +188,6 @@ class IndividualTrips extends Command
 
         $client_id  = $gps->vehicle->client->id;
         $vehicle_id = $gps->vehicle->id;
-        dd($trips);
         view()->share(['trips' => $trips, 'date' => $this->trip_date, 'summary' => $summary, 'gps' => $gps]);
         $file_name = $gps->imei.'-'.$this->trip_date.'.pdf';
         $pdf       = PDF::loadView('Exports::trip-report');
@@ -243,6 +242,7 @@ class IndividualTrips extends Command
             dd("empty lat or lng") ;
         }
 
+        $response = (string)$response;
         return $response;
     }  
 
