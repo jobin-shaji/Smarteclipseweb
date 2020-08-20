@@ -142,7 +142,7 @@ class VehicleTrips extends Command
             $summary["on location"]  = $trips[0]["start_address"];
             $summary["on"]           = $trips[0]["start_time"];
             $end                     = end($trips);
-            $summary["off location"] = $trips[0]["stop_address"];
+            $summary["off location"] = $end["stop_address"];
             $summary["off"]          = $end["stop_time"];
             $summary["date"]         = $this->trip_date;
             $summary["km"]           = m2Km($total_distance);
