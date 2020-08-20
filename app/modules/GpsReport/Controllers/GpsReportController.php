@@ -1479,20 +1479,32 @@ class GpsReportController extends Controller
                     $pdf        =   PDF::loadView('GpsReport::device-online-report-download',[ 'device_online_report' => $each_chunk, 'generated_by' => $generated_by, 'manufactured_by' => ucfirst(strtolower($logged_user_details->root->name)).' '.'( Manufacturer )','generated_on' => date("d/m/Y h:m:s A") ]);
                     $file_name  =  'device-online-status-report-part-' .$iteration. '.pdf' ;
                     $pdf->save($pdf_path . '/' . $file_name);
+                    //distroy variable
+                    unset($pdf);
                     $iteration++;
                 } 
                 $zip_file_name  = 'pdf/device_online_report'.date('Ymdhis').'.zip';
-                $zip            = new ZipArchive;
+                // $zip            = new ZipArchive;
         
-                if ($zip->open($zip_file_name, ZipArchive::CREATE))
-                {
-                    $files = File::files($pdf_path);
-                    foreach ($files as $key => $value) {
-                        $relativeNameInZipFile = basename($value);
-                        $zip->addFile($value, $relativeNameInZipFile);
-                    }
-                    $zip->close();
-                }
+                // if ($zip->open($zip_file_name, ZipArchive::CREATE))
+                // {
+                //     $files = File::files($pdf_path);
+                //     foreach ($files as $key => $value) {
+                //         $relativeNameInZipFile = basename($value);
+                //         $zip->addFile($value, $relativeNameInZipFile);
+                //     }
+                //     $zip->close();
+                // }
+
+                //create a path for zip creation
+                $zip_path = public_path($zip_file_name);
+                //change directory to created pdf folder
+                chdir($pdf_path);
+                //create zip using exec
+                exec('zip -r '.$zip_path.' *');
+                //change directory to base path
+                chdir(public_path());
+
                 // Download the created zip file
                 header("Content-Type: application/zip");
                 header("Content-Disposition: attachment; filename = $zip_file_name");
@@ -1576,17 +1588,27 @@ class GpsReportController extends Controller
                     $iteration++;
                 } 
                 $zip_file_name  = 'pdf/device_offline_report'.date('Ymdhis').'.zip';
-                $zip            = new ZipArchive;
+                // $zip            = new ZipArchive;
         
-                if ($zip->open($zip_file_name, ZipArchive::CREATE))
-                {
-                    $files = File::files($pdf_path);
-                    foreach ($files as $key => $value) {
-                        $relativeNameInZipFile = basename($value);
-                        $zip->addFile($value, $relativeNameInZipFile);
-                    }
-                    $zip->close();
-                }
+                // if ($zip->open($zip_file_name, ZipArchive::CREATE))
+                // {
+                //     $files = File::files($pdf_path);
+                //     foreach ($files as $key => $value) {
+                //         $relativeNameInZipFile = basename($value);
+                //         $zip->addFile($value, $relativeNameInZipFile);
+                //     }
+                //     $zip->close();
+                // }
+
+                //create a path for zip creation
+                $zip_path = public_path($zip_file_name);
+                //change directory to created pdf folder
+                chdir($pdf_path);
+                //create zip using exec
+                exec('zip -r '.$zip_path.' *');
+                //change directory to base path
+                chdir(public_path());
+                
                 // Download the created zip file
                 header("Content-Type: application/zip");
                 header("Content-Disposition: attachment; filename = $zip_file_name");
