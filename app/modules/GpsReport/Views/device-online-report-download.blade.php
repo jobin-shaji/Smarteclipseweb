@@ -63,11 +63,11 @@ td, th {
                 <td class = 'column_alignment'><?php ( isset($each_data->gpsStock->subdealer->name) ) ? $subdealer = $each_data->gpsStock->subdealer->name : $subdealer='-NA-' ?>{{$subdealer}}</td>
             </tr>
             <tr>
-                <td><b>Sub Dealer Name<b></td>
+                <td><b>Sub Dealer Name</b></td>
                 <td class = 'column_alignment'><?php ( isset($each_data->gpsStock->trader->name) ) ? $trader = $each_data->gpsStock->trader->name : $trader='-NA-' ?>{{$trader}}</td>
             </tr>
             <tr>
-                <td><b>Vehicle Status<b></td>
+                <td><b>Vehicle Status</b></td>
                 <td><?php ( isset($each_data->mode) ) ? $mode = $each_data->mode : $mode='-NA-' ?>{{$mode}}</td>
             </tr>
         </tbody>
