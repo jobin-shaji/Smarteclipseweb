@@ -1,4 +1,4 @@
-
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <style type="text/css">
   table td, table th{
     border:1px solid black;
