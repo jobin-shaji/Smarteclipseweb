@@ -1,3 +1,4 @@
+<?php ini_set('memory_limit', '1024M');?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -78,7 +79,3 @@ td, th {
 
 </body>
 </html>
-
-@section('script')
-  
-@endsection

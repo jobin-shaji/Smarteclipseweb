@@ -78,8 +78,3 @@ td, th {
 
 </body>
 </html>
-
-@section('script')
-    <script src="{{asset('js/gps/mdb.js')}}"></script>
-    <script src="{{asset('js/gps/gps-return-report-chart.js')}}"></script>
-@endsection
