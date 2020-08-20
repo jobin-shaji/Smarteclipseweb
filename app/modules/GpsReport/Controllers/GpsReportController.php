@@ -1573,6 +1573,7 @@ class GpsReportController extends Controller
         {
             if($offline_devices->count()>0)
             {
+                set_time_limit(300);
                 $total_data_count   = $offline_devices->count();
                 $devices_per_page   = 100;
                 $total_pages        = ceil($total_data_count/$devices_per_page);
