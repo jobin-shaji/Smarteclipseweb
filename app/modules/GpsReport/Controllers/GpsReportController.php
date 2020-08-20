@@ -1561,22 +1561,22 @@ class GpsReportController extends Controller
         if ($gps_details->speed >= 70 ) 
         {
             $gps_details->speed_level_status    = '#c41900';
-            $gps_details->speed                 = $gps_details->speed ;
+            $gps_details->speed                 = round($gps_details->speed, 2) ;
         }
         else if ($gps_details->speed < 70 && $gps_details->speed > 10 ) 
         {
             $gps_details->speed_level_status    = '#84b752';
-            $gps_details->speed                 = $gps_details->speed;
+            $gps_details->speed                 = round($gps_details->speed, 2);
         }
         else if ($gps_details->speed <= 10 && $gps_details->speed >= 1)
         {
             $gps_details->speed_level_status    = '#F5B041 ';
-            $gps_details->speed                 = $gps_details->speed;
+            $gps_details->speed                 = round($gps_details->speed, 2);
         }
         else
         {
             $gps_details->speed_level_status    = '#85929E';
-            $gps_details->speed                 = $gps_details->speed;
+            $gps_details->speed                 = round($gps_details->speed, 2);
         }
 
         // AC STATUS
