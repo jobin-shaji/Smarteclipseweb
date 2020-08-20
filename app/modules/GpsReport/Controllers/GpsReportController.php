@@ -1467,23 +1467,40 @@ class GpsReportController extends Controller
         {
             if($device_online_report->count()>0)
             {
-                $iteration          = 1;
-                $devices_per_page   = 100;
+                set_time_limit(500);
+                $total_data_count   = $device_online_report->count();
+                $devices_per_page   = 200;
+                $total_pages        = ceil($total_data_count/$devices_per_page);
                 $folder_name        = rand().date('Ymdhis');
                 $pdf_path           = public_path('pdf/'.$folder_name);
                 if (! File::exists($pdf_path)) {
                     File::makeDirectory($pdf_path);
                 }
-                foreach($device_online_report->chunk($devices_per_page) as $each_chunk)
+                for ($per_page = 1; $per_page <= $total_pages; $per_page++) 
                 {
-                    $pdf        =   PDF::loadView('GpsReport::device-online-report-download',[ 'device_online_report' => $each_chunk, 'generated_by' => $generated_by, 'manufactured_by' => ucfirst(strtolower($logged_user_details->root->name)).' '.'( Manufacturer )','generated_on' => date("d/m/Y h:m:s A") ]);
-                    $file_name  =  'device-online-status-report-part-' .$iteration. '.pdf' ;
+                    $paginated_online_devices   = $device_online_report->paginate($devices_per_page, ['*'], 'page', $per_page);
+                    $pdf                        = PDF::loadView('GpsReport::device-online-report-download',[ 'device_online_report' => $paginated_online_devices, 'generated_by' => $generated_by, 'manufactured_by' => ucfirst(strtolower($logged_user_details->root->name)).' '.'( Manufacturer )','generated_on' => date("d/m/Y h:m:s A") ]);
+                    $file_name                  = 'device-online-status-report-part-' .$per_page. '.pdf' ;
                     $pdf->save($pdf_path . '/' . $file_name);
-                    //distroy variable
-                    unset($pdf);
-                    $iteration++;
-                } 
-                $zip_file_name  = 'pdf/device_online_report'.date('Ymdhis').'.zip';
+                }
+
+                // $iteration          = 1;
+                // $devices_per_page   = 100;
+                // $folder_name        = rand().date('Ymdhis');
+                // $pdf_path           = public_path('pdf/'.$folder_name);
+                // if (! File::exists($pdf_path)) {
+                //     File::makeDirectory($pdf_path);
+                // }
+                // foreach($device_online_report->chunk($devices_per_page) as $each_chunk)
+                // {
+                //     $pdf        =   PDF::loadView('GpsReport::device-online-report-download',[ 'device_online_report' => $each_chunk, 'generated_by' => $generated_by, 'manufactured_by' => ucfirst(strtolower($logged_user_details->root->name)).' '.'( Manufacturer )','generated_on' => date("d/m/Y h:m:s A") ]);
+                //     $file_name  =  'device-online-status-report-part-' .$iteration. '.pdf' ;
+                //     $pdf->save($pdf_path . '/' . $file_name);
+                //     //distroy variable
+                //     unset($pdf);
+                //     $iteration++;
+                // } 
+                
                 // $zip            = new ZipArchive;
         
                 // if ($zip->open($zip_file_name, ZipArchive::CREATE))
@@ -1495,7 +1512,8 @@ class GpsReportController extends Controller
                 //     }
                 //     $zip->close();
                 // }
-
+                
+                $zip_file_name  = 'pdf/device_online_report'.date('Ymdhis').'.zip';
                 //create a path for zip creation
                 $zip_path = public_path($zip_file_name);
                 //change directory to created pdf folder
