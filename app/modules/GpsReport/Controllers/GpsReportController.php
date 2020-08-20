@@ -1645,7 +1645,7 @@ class GpsReportController extends Controller
                 exec('zip -r '.$zip_path.' *');
                 //change directory to base path
                 chdir(public_path());
-                
+
                 // Download the created zip file
                 header("Content-Type: application/zip");
                 header("Content-Disposition: attachment; filename = $zip_file_name");

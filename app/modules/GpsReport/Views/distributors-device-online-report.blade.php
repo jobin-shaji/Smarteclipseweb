@@ -90,7 +90,7 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                                                     <!-- download button -->
                                                     <div class="col-lg-7  download_btn download-button-visibility">
                                                         <button class="btn btn download_button_view "  ><i class='fa fa-download'></i>
-                                                            <a href="online-device-report-downloads?type=pdf&device_status={{$device_status}}&vehicle_status={{$vehicle_status}}&search=" class="online_device_download" style="color:white">Download Report</a>
+                                                            <a href="online-device-report-downloads?type=pdf&device_status={{$device_status}}&vehicle_status={{$vehicle_status}}&search=" class="online_device_download" onclick="return confirmDeviceStatusReportDownload();" style="color:white">Download Report</a>
                                                         </button>
                                                     </div>
                                                     <!-- /download button -->
@@ -290,7 +290,7 @@ $.ajaxSetup({ headers: { 'csrftoken' : '{{ csrf_token() }}' } });
           });
     }
     </script>
-      
+    <script src="{{asset('js/gps/gps-status-report.js')}}"></script>
 @endsection
 @endsection
 

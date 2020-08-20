@@ -86,7 +86,7 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                                                     <!-- download button -->
                                                     <div class="col-lg-7  download_btn download-button-visibility">
                                                         <button class="btn btn download_button_view"><i class='fa fa-download'></i>
-                                                            <a href="offline-device-report-downloads?type=pdf&device_type={{$device_type}}&offline_duration={{$offline_duration}}&search=" class="offline_device_download" style="color:white">Download Report</a>
+                                                            <a href="offline-device-report-downloads?type=pdf&device_type={{$device_type}}&offline_duration={{$offline_duration}}&search=" class="offline_device_download" onclick="return confirmDeviceStatusReportDownload();" style="color:white">Download Report</a>
                                                         </button>
                                                     </div>
                                                     <!-- /download button -->
@@ -288,6 +288,7 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
           });
     }
     </script>
+    <script src="{{asset('js/gps/gps-status-report.js')}}"></script>
 @endsection
 @endsection
 
