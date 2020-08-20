@@ -154,7 +154,7 @@ class OldTrips extends Command
             $summary["on location"]  = $trips[0]["start_address"];
             $summary["on"]           = $trips[0]["start_time"];
             $end                     = end($trips);
-            $summary["off location"] = $end[["stop_address"];
+            $summary["off location"] = $end["stop_address"];
             $summary["off"]          = $end["stop_time"];
             $summary["date"]         = $this->trip_date;
             $summary["km"]           = m2Km($total_distance);
@@ -203,9 +203,9 @@ class OldTrips extends Command
 
         $client_id  = $gps->vehicle->client->id;
         $vehicle_id = $gps->vehicle->id;
-        view()->share(['trips' => $trips, 'date' => $this->trip_date, 'summary' => $summary, 'gps' => $gps]);
+        // view()->share();
         $file_name = $gps->imei.'-'.$this->trip_date.'.pdf';
-        $pdf       = PDF::loadView('Exports::trip-report');
+        $pdf       = PDF::loadView('Exports::trip-report', ['trips' => $trips, 'date' => $this->trip_date, 'summary' => $summary, 'gps' => $gps]);
         $file = "documents/tripreports/".$client_id."/".$vehicle_id."/".$this->trip_date."/".$file_name;
         $pdf->save("public/".$file);
 
