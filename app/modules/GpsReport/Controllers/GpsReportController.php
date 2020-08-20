@@ -1,6 +1,7 @@
 <?php
 namespace App\Modules\GpsReport\Controllers;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 use App\Modules\Client\Models\Client;
 use App\Modules\Gps\Models\Gps;
@@ -20,11 +21,12 @@ use App\Modules\Vehicle\Models\VehicleGps;
 use App\Modules\VltData\Models\VltData;
 use App\Modules\Ota\Models\OtaResponse;
 use App\Modules\Sales\Models\Salesman;
-
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Crypt;
 use App\Http\Traits\UserTrait;
 use App\Http\Traits\MqttTrait;
 use DataTables;
+use ZipArchive;
 use DB;
 use PDF;
 
@@ -747,13 +749,95 @@ class GpsReportController extends Controller
             foreach($transfer_details as $each_data)
             {
                 $transfer_log[] =   [
-                    'transfer_from'     =>  $this->getOriginalNameFromUserId($each_data->from_user_id),
-                    'transfer_to'       =>  $this->getOriginalNameFromUserId($each_data->to_user_id),
-                    'transferred_count' =>  $each_data->count
+                    'transfer_from_user_id' =>  $each_data->from_user_id,
+                    'transfer_to_user_id'   =>  $each_data->to_user_id,
+                    'transfer_from'         =>  $this->getOriginalNameFromUserId($each_data->from_user_id),
+                    'transfer_to'           =>  $this->getOriginalNameFromUserId($each_data->to_user_id),
+                    'transferred_count'     =>  $each_data->count
                 ];
             }
         }
         return $transfer_log;
+    }
+
+    /**
+     * 
+     * GPS TRANSFER REPORT-TRANSACTION DETAILS VIEW
+     * 
+     */
+    public function gpsTransferReportTransactionDetails(Request $request)
+    {
+        if(\Auth::user()->hasRole('root'))
+        {
+            $logged_user            =   (new Root())->getManufacturerDetails(\Auth::user()->root->id)->name;
+        }
+        else if(\Auth::user()->hasRole('dealer'))
+        {
+            $logged_user            =   (new Dealer())->getDistributorDetails(\Auth::user()->dealer->id)->name;
+        }
+        else if(\Auth::user()->hasRole('sub_dealer'))
+        {
+            $logged_user            =   (new SubDealer())->getDealerDetails(\Auth::user()->subdealer->id)->name;
+        }
+        else if(\Auth::user()->hasRole('trader'))
+        {
+            $logged_user            =   (new Trader())->getSubDealerDetails(\Auth::user()->trader->id)->name;
+        }
+        $from_user_id               = ( isset($request->fromuser) ) ? decrypt($request->fromuser) : null;
+        $to_user_id                 = ( isset($request->touser) ) ? decrypt($request->touser) : null;
+        $from_date                  = ( isset($request->from) ) ? $request->from : null;
+        $to_date                    = ( isset($request->to) ) ? $request->to : null;
+        $download_type              = ( isset($request->type) ) ? $request->type : null;
+        if( $from_user_id != NULL && $to_user_id != NULL )
+        {
+            $transfer_from          = $this->getOriginalNameFromUserId($from_user_id);
+            $transfer_to            = $this->getOriginalNameFromUserId($to_user_id);
+            $transaction_details    = (new GpsTransfer())->getTransferredGpsDetailsWhichIncludesTransactionAcceptedGpsWithOutTranshedItems($from_user_id, $to_user_id, $from_date, $to_date, $download_type);
+            if($download_type == 'pdf')
+            {
+                $iteration          = 1;
+                $devices_per_page   = 500;
+                $folder_name        = rand().date('Ymdhis');
+                $pdf_path           = public_path('pdf/'.$folder_name);
+                if (! File::exists($pdf_path)) {
+                    File::makeDirectory($pdf_path);
+                }
+                foreach($transaction_details->chunk($devices_per_page) as $each_chunk)
+                {
+                    $pdf        =   PDF::loadView('GpsReport::transferred-device-detailed-view-download',[ 'transaction_details' => $each_chunk, 'generated_by' => ucfirst(strtolower($logged_user)), 'generated_on' => date("d/m/Y h:m:s A"), 'transfer_from' => $transfer_from, 'transfer_to' => $transfer_to, 'from_date' => date('d-m-Y', strtotime($from_date)), 'to_date' => date('d-m-Y', strtotime($to_date))]);
+                    $file_name  =  'device-transfer-detailed-report-part-' .$iteration. '.pdf' ;
+                    $pdf->save($pdf_path . '/' . $file_name);
+                    $iteration++;
+                } 
+                $zip_file_name  = 'pdf/device-transfer-detailed-report'.date('Ymdhis').'.zip';
+                $zip            = new ZipArchive;
+        
+                if ($zip->open($zip_file_name, ZipArchive::CREATE))
+                {
+                    $files = File::files($pdf_path);
+                    foreach ($files as $key => $value) {
+                        $relativeNameInZipFile = basename($value);
+                        $zip->addFile($value, $relativeNameInZipFile);
+                    }
+                    $zip->close();
+                }
+                // Download the created zip file
+                header("Content-Type: application/zip");
+                header("Content-Disposition: attachment; filename = $zip_file_name");
+                header("Pragma: no-cache");
+                header("Expires: 0");
+                readfile("$zip_file_name");
+                //delete folder
+                exec('rm -rf pdf/'.$folder_name);
+                //delete zip file
+                unlink($zip_file_name);
+                exit;
+            }
+            else
+            {
+                return view('GpsReport::transferred-device-detailed-view',['transaction_details' => $transaction_details, 'from_date' => $from_date, 'to_date' => $to_date, 'transfer_from' => $transfer_from, 'transfer_to' => $transfer_to, 'from_user_id' => $from_user_id, 'to_user_id' => $to_user_id ]);
+            }
+        }
     }
     /*
      *
@@ -1383,8 +1467,43 @@ class GpsReportController extends Controller
         {
             if($device_online_report->count()>0)
             {
-                $pdf                        =   PDF::loadView('GpsReport::device-online-report-download',[ 'device_online_report' => $device_online_report, 'generated_by' => $generated_by, 'manufactured_by' => ucfirst(strtolower($logged_user_details->root->name)).' '.'( Manufacturer )','generated_on' => date("d/m/Y h:m:s A") ]);
-                return $pdf->download('device-online-report.pdf');
+                $iteration          = 1;
+                $devices_per_page   = 500;
+                $folder_name        = rand().date('Ymdhis');
+                $pdf_path           = public_path('pdf/'.$folder_name);
+                if (! File::exists($pdf_path)) {
+                    File::makeDirectory($pdf_path);
+                }
+                foreach($device_online_report->chunk($devices_per_page) as $each_chunk)
+                {
+                    $pdf        =   PDF::loadView('GpsReport::device-online-report-download',[ 'device_online_report' => $each_chunk, 'generated_by' => $generated_by, 'manufactured_by' => ucfirst(strtolower($logged_user_details->root->name)).' '.'( Manufacturer )','generated_on' => date("d/m/Y h:m:s A") ]);
+                    $file_name  =  'device-online-status-report-part-' .$iteration. '.pdf' ;
+                    $pdf->save($pdf_path . '/' . $file_name);
+                    $iteration++;
+                } 
+                $zip_file_name  = 'pdf/device_online_report'.date('Ymdhis').'.zip';
+                $zip            = new ZipArchive;
+        
+                if ($zip->open($zip_file_name, ZipArchive::CREATE))
+                {
+                    $files = File::files($pdf_path);
+                    foreach ($files as $key => $value) {
+                        $relativeNameInZipFile = basename($value);
+                        $zip->addFile($value, $relativeNameInZipFile);
+                    }
+                    $zip->close();
+                }
+                // Download the created zip file
+                header("Content-Type: application/zip");
+                header("Content-Disposition: attachment; filename = $zip_file_name");
+                header("Pragma: no-cache");
+                header("Expires: 0");
+                readfile("$zip_file_name");
+                //delete folder
+                exec('rm -rf pdf/'.$folder_name);
+                //delete zip file
+                unlink($zip_file_name);
+                exit;
             }
             else{
                return view('GpsReport::device-online-report',['device_online_report'=>$device_online_report,'device_status'=>$device_status,'vehicle_status'=>$vehicle_status,'search'=>$search]);    
@@ -1442,8 +1561,43 @@ class GpsReportController extends Controller
         {
             if($offline_devices->count()>0)
             {
-                $pdf    =   PDF::loadView('GpsReport::device-offline-status-report-download',[ 'offline_devices' => $offline_devices, 'offline_duration' => $offline_duration, 'device_type' => $device_type, 'generated_by' => ucfirst(strtolower($logged_user_details->root->name)).' '.'( Manufacturer )', 'user_generated_by' => $logged_user_details->name, 'generated_on' => date("d/m/Y h:i:s A") ]);
-                return $pdf->download('device-offline-status-report.pdf');
+                $iteration          = 1;
+                $devices_per_page   = 500;
+                $folder_name        = rand().date('Ymdhis');
+                $pdf_path           = public_path('pdf/'.$folder_name);
+                if (! File::exists($pdf_path)) {
+                    File::makeDirectory($pdf_path);
+                }
+                foreach($offline_devices->chunk($devices_per_page) as $each_chunk)
+                {
+                    $pdf        =   PDF::loadView('GpsReport::device-offline-status-report-download',[ 'offline_devices' => $each_chunk, 'offline_duration' => $offline_duration, 'device_type' => $device_type, 'generated_by' => ucfirst(strtolower($logged_user_details->root->name)).' '.'( Manufacturer )', 'user_generated_by' => $logged_user_details->name, 'generated_on' => date("d/m/Y h:i:s A") ]);
+                    $file_name  =  'device-offline-status-report-part-' .$iteration. '.pdf' ;
+                    $pdf->save($pdf_path . '/' . $file_name);
+                    $iteration++;
+                } 
+                $zip_file_name  = 'pdf/device_offline_report'.date('Ymdhis').'.zip';
+                $zip            = new ZipArchive;
+        
+                if ($zip->open($zip_file_name, ZipArchive::CREATE))
+                {
+                    $files = File::files($pdf_path);
+                    foreach ($files as $key => $value) {
+                        $relativeNameInZipFile = basename($value);
+                        $zip->addFile($value, $relativeNameInZipFile);
+                    }
+                    $zip->close();
+                }
+                // Download the created zip file
+                header("Content-Type: application/zip");
+                header("Content-Disposition: attachment; filename = $zip_file_name");
+                header("Pragma: no-cache");
+                header("Expires: 0");
+                readfile("$zip_file_name");
+                //delete folder
+                exec('rm -rf pdf/'.$folder_name);
+                //delete zip file
+                unlink($zip_file_name);
+                exit;
             }
             else{
                 return view('GpsReport::device-offline-status-report', [ 'offline_devices' => $offline_devices, 'offline_duration' => $offline_duration, 'device_type' => $device_type]);
@@ -1459,6 +1613,7 @@ class GpsReportController extends Controller
             return view('GpsReport::device-offline-status-report', [ 'offline_devices' => $offline_devices, 'offline_duration' => $offline_duration, 'device_type' => $device_type, 'search_key' => $search_key ]);
         }
     }
+
     /**
      * 
      * 
@@ -1480,8 +1635,8 @@ class GpsReportController extends Controller
                 $gps_details->mode          = 'Offline ('.$gps_details->mode.')';
             }
             else{
-                $gps_details->device_status = "";
-                $gps_details->mode          = 'NA';
+                $gps_details->device_status = "#85929E";
+                $gps_details->mode          = '-NA-';
             }
            
         }
@@ -1510,94 +1665,170 @@ class GpsReportController extends Controller
         //SIGNAL STRENGTH
         if ($gps_details->gsm_signal_strength >= 19 ) 
         {
-            $gps_details->gsm_signal_strength = "GOOD";
+            $gps_details->signal_status         = '#84b752';
+            $gps_details->gsm_signal_strength   = "GOOD";
         }
         else if ($gps_details->gsm_signal_strength < 19 && $gps_details->gsm_signal_strength >= 13 ) 
         {
-            $gps_details->gsm_signal_strength = "AVERAGE";
+            $gps_details->signal_status         = '#F5B041';
+            $gps_details->gsm_signal_strength   = "AVERAGE";
         }
-        else if ($gps_details->gsm_signal_strength <= 12 && $gps_details->gsm_signal_strength !=null)
+        else if ($gps_details->gsm_signal_strength <= 12 && $gps_details->gsm_signal_strength >= 1)
         {
-            $gps_details->gsm_signal_strength = "POOR";
+            $gps_details->signal_status         = '#c41900';
+            $gps_details->gsm_signal_strength   = "POOR";
         }
-        else if ($gps_details->gsm_signal_strength ==null)
+        else if ($gps_details->gsm_signal_strength < 1)
         {
-            $gps_details->gsm_signal_strength = "NA";
+            $gps_details->signal_status         = '#c41900';
+            $gps_details->gsm_signal_strength   = "LOST";
         }
         else
         {
-            $gps_details->gsm_signal_strength = "LOST";
+            $gps_details->signal_status         = '#85929E';
+            $gps_details->gsm_signal_strength   = "-NA-";
         }
+        
+
+        //FUEL STATUS
+        if ($gps_details->fuel_status >= 50 ) 
+        {
+            $gps_details->fuel_level_status     = '#84b752';
+            $gps_details->fuel_status           = ($gps_details->fuel_status > 100) ? 100 : $gps_details->fuel_status ;
+        }
+        else if ($gps_details->fuel_status < 50 && $gps_details->fuel_status >= 35 ) 
+        {
+            $gps_details->fuel_level_status     = '#F5B041';
+            $gps_details->fuel_status           = $gps_details->fuel_status;
+        }
+        else if ($gps_details->fuel_status < 35 && $gps_details->fuel_status != null)
+        {
+            $gps_details->fuel_level_status     = '#c41900';
+            $gps_details->fuel_status           = $gps_details->fuel_status;
+        }
+        else
+        {
+            $gps_details->fuel_level_status     = '#85929E';
+            $gps_details->fuel_status           = "-NA-";
+        }
+
+        //SPEED STATUS
+        if ($gps_details->speed >= 70 ) 
+        {
+            $gps_details->speed_level_status    = '#c41900';
+            $gps_details->speed                 = round($gps_details->speed, 2) ;
+        }
+        else if ($gps_details->speed < 70 && $gps_details->speed > 10 ) 
+        {
+            $gps_details->speed_level_status    = '#84b752';
+            $gps_details->speed                 = round($gps_details->speed, 2);
+        }
+        else if ($gps_details->speed <= 10 && $gps_details->speed >= 1)
+        {
+            $gps_details->speed_level_status    = '#F5B041 ';
+            $gps_details->speed                 = round($gps_details->speed, 2);
+        }
+        else
+        {
+            $gps_details->speed_level_status    = '#85929E';
+            $gps_details->speed                 = round($gps_details->speed, 2);
+        }
+
         // AC STATUS
         if( $gps_details->ac_status == 1 )
         {
-            $gps_details->ac_status = "ON";
+            $gps_details->ac_level_status   = "#84b752";
+            $gps_details->ac_status         = "ON";
         }
         
         else if( $gps_details->ac_status == 0 && $gps_details->ac_status != null)
         {
-            $gps_details->ac_status = "OFF";
+            $gps_details->ac_level_status   = "#c41900";
+            $gps_details->ac_status         = "OFF";
         }
         else
         {
-            $gps_details->ac_status = "NA";
+            $gps_details->ac_level_status   = "#85929E";
+            $gps_details->ac_status         = "-NA-";
         }
         
         //IGNITION
         if( $gps_details->ignition == 1 )
         {
-            $gps_details->ignition = "ON";
+            $gps_details->ignition_status   = "#84b752";
+            $gps_details->ignition          = "ON";
         }       
         else if( $gps_details->ignition == 0 && $gps_details->ignition != null)
         {
-            $gps_details->ignition = "OFF";
+            $gps_details->ignition_status   = "#c41900";
+            $gps_details->ignition          = "OFF";
         }
         else 
         {
-            $gps_details->ignition = "NA";
+            $gps_details->ignition_status   = "#85929E";
+            $gps_details->ignition          = "-NA-";
         }
        
         //MAIN POWER STATUS
         if( $gps_details->main_power_status == 1) 
         {
-            $gps_details->main_power_status  = "CONNECTED";
+            $gps_details->power_status      = "#84b752";
+            $gps_details->main_power_status = "CONNECTED";
         }
         
         else if($gps_details->main_power_status == 0 && $gps_details->main_power_status != null) 
         {
-            // dd( $gps_details->main_power_status);
-            $gps_details->main_power_status  = "DISCONNECTED";
+            $gps_details->power_status      = "#c41900";
+            $gps_details->main_power_status = "DISCONNECTED";
         }
         else
         {
-            $gps_details->main_power_status  = "NA";
+            $gps_details->power_status      = "#85929E";
+            $gps_details->main_power_status = "-NA-";
+        }
+        //GPS FIX
+        if( $gps_details->gps_fix_on != NULL ) 
+        {
+            $gps_details->gps_fix_status    = "#84b752";
+            $gps_details->gps_fix_on        = "YES";
+        }
+        else 
+        {
+            $gps_details->gps_fix_status    = "#c41900";
+            $gps_details->gps_fix_on        = "NO";
         }
         //TILT
         if( $gps_details->tilt_status == 1) 
         {
-            $gps_details->tilt_status  = "YES";
+            $gps_details->tilt_level_status = "#c41900";
+            $gps_details->tilt_status       = "YES";
         }
-        else
+        else 
         {
-            $gps_details->tilt_status  = "NO";
+            $gps_details->tilt_level_status = "#85929E";
+            $gps_details->tilt_status       = "NO";
         }
         //OVER SPEED
         if( $gps_details->overspeed_status == 1) 
         {
-            $gps_details->overspeed_status  = "YES";
+            $gps_details->overspeed_level_status    = "#c41900";
+            $gps_details->overspeed_status          = "YES";
         }
         else
         {
-            $gps_details->overspeed_status  = "NO";
+            $gps_details->overspeed_level_status    = "#85929E";
+            $gps_details->overspeed_status          = "NO";
         }
         //EMERGENCY
         if( $gps_details->emergency_status == 1) 
         {
-            $gps_details->emergency_status  = "YES";
+            $gps_details->emergency_level_status    = "#c41900";
+            $gps_details->emergency_status          = "YES";
         }
-        else
+        else 
         {
-            $gps_details->emergency_status  = "NO";
+            $gps_details->emergency_level_status    = "#85929E";
+            $gps_details->emergency_status          = "NO";
         }
         //RETURN STATUS
         if( $gps_details->is_returned == 1) 
@@ -1816,9 +2047,27 @@ class GpsReportController extends Controller
     public function deviceReportDetailedViewOfTransferHistory(Request $request)
     {
         $gps_id             = $request->gps_id;
+        $transfer_log       = [];
         $transfer_details   = (new GpsTransferItems())->getTransferDetailsBasedOnGps($gps_id);
+<<<<<<< HEAD
         // dd($transfer_details[0]->gpsTransferDetail[0]->fromUser);
         return response()->json($transfer_details);
+=======
+        if(count($transfer_details) > 0)
+        {
+            foreach($transfer_details as $each_data)
+            {
+                $transfer_log[] =   [
+                    'transfer_from'     =>  $this->getOriginalNameFromUserId($each_data->from_user_id),
+                    'transfer_to'       =>  $this->getOriginalNameFromUserId($each_data->to_user_id),
+                    'dispatched_on'     =>  $each_data->dispatched_on,
+                    'accepted_on'       =>  $each_data->accepted_on,
+                    'deleted_at'        =>  $each_data->deleted_at
+                ];
+            }
+        }
+        return response()->json($transfer_log);
+>>>>>>> c7af20efa0e0d31438ddd79ce76284758e33148f
     }
     public function deviceDetailImeiEncription(Request $request)
     {
@@ -1853,8 +2102,43 @@ class GpsReportController extends Controller
         {
             if($offline_devices->count()>0)
             {
-                $pdf    =   PDF::loadView('GpsReport::device-offline-status-report-download',[ 'offline_devices' => $offline_devices, 'offline_duration' => $offline_duration, 'device_type' => $device_type, 'generated_by' => ucfirst(strtolower($logged_user_details->root->name)).' '.'( Manufacturer )', 'user_generated_by' => $logged_user_details->name, 'generated_on' => date("d/m/Y h:i:s A") ]);
-                return $pdf->download('device-offline-status-report.pdf');
+                $iteration          = 1;
+                $devices_per_page   = 500;
+                $folder_name        = rand().date('Ymdhis');
+                $pdf_path           = public_path('pdf/'.$folder_name);
+                if (! File::exists($pdf_path)) {
+                    File::makeDirectory($pdf_path);
+                }
+                foreach($offline_devices->chunk($devices_per_page) as $each_chunk)
+                {
+                    $pdf        =   PDF::loadView('GpsReport::device-offline-status-report-download',[ 'offline_devices' => $each_chunk, 'offline_duration' => $offline_duration, 'device_type' => $device_type, 'generated_by' => ucfirst(strtolower($logged_user_details->root->name)).' '.'( Manufacturer )', 'user_generated_by' => $logged_user_details->name, 'generated_on' => date("d/m/Y h:i:s A") ]);
+                    $file_name  =  'device-offline-status-report-part-' .$iteration. '.pdf' ;
+                    $pdf->save($pdf_path . '/' . $file_name);
+                    $iteration++;
+                } 
+                $zip_file_name  = 'pdf/device_offline_report'.date('Ymdhis').'.zip';
+                $zip            = new ZipArchive;
+        
+                if ($zip->open($zip_file_name, ZipArchive::CREATE))
+                {
+                    $files = File::files($pdf_path);
+                    foreach ($files as $key => $value) {
+                        $relativeNameInZipFile = basename($value);
+                        $zip->addFile($value, $relativeNameInZipFile);
+                    }
+                    $zip->close();
+                }
+                // Download the created zip file
+                header("Content-Type: application/zip");
+                header("Content-Disposition: attachment; filename = $zip_file_name");
+                header("Pragma: no-cache");
+                header("Expires: 0");
+                readfile("$zip_file_name");
+                //delete folder
+                exec('rm -rf pdf/'.$folder_name);
+                //delete zip file
+                unlink($zip_file_name);
+                exit;
             }
             else{
                 return view('GpsReport::offline-device-status-report-distributor', [ 'offline_devices' => $offline_devices, 'offline_duration' => $offline_duration, 'device_type' => $device_type]);
@@ -1890,8 +2174,43 @@ class GpsReportController extends Controller
         {
             if($device_online_report->count()>0)
             {
-                $pdf                        =   PDF::loadView('GpsReport::device-online-report-download',[ 'device_online_report' => $device_online_report, 'generated_by' => $generated_by, 'manufactured_by' => ucfirst(strtolower($logged_user_details->root->name)).' '.'( Manufacturer )','generated_on' => date("d/m/Y h:m:s A") ]);
-                return $pdf->download('device-online-report.pdf');
+                $iteration          = 1;
+                $devices_per_page   = 500;
+                $folder_name        = rand().date('Ymdhis');
+                $pdf_path           = public_path('pdf/'.$folder_name);
+                if (! File::exists($pdf_path)) {
+                    File::makeDirectory($pdf_path);
+                }
+                foreach($device_online_report->chunk($devices_per_page) as $each_chunk)
+                {
+                    $pdf        =   PDF::loadView('GpsReport::device-online-report-download',[ 'device_online_report' => $each_chunk, 'generated_by' => $generated_by, 'manufactured_by' => ucfirst(strtolower($logged_user_details->root->name)).' '.'( Manufacturer )','generated_on' => date("d/m/Y h:m:s A") ]);
+                    $file_name  =  'device-online-status-report-part-' .$iteration. '.pdf' ;
+                    $pdf->save($pdf_path . '/' . $file_name);
+                    $iteration++;
+                } 
+                $zip_file_name  = 'pdf/device_online_report'.date('Ymdhis').'.zip';
+                $zip            = new ZipArchive;
+        
+                if ($zip->open($zip_file_name, ZipArchive::CREATE))
+                {
+                    $files = File::files($pdf_path);
+                    foreach ($files as $key => $value) {
+                        $relativeNameInZipFile = basename($value);
+                        $zip->addFile($value, $relativeNameInZipFile);
+                    }
+                    $zip->close();
+                }
+                // Download the created zip file
+                header("Content-Type: application/zip");
+                header("Content-Disposition: attachment; filename = $zip_file_name");
+                header("Pragma: no-cache");
+                header("Expires: 0");
+                readfile("$zip_file_name");
+                //delete folder
+                exec('rm -rf pdf/'.$folder_name);
+                //delete zip file
+                unlink($zip_file_name);
+                exit;
             }
             else{
                return view('GpsReport::distributors-device-online-report',['device_online_report'=>$device_online_report,'device_status'=>$device_status,'vehicle_status'=>$vehicle_status,'search'=>$search]);    
