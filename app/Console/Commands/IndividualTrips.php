@@ -140,12 +140,11 @@ class IndividualTrips extends Command
             $summary["on location"]  = $trips[0]["start_address"];
             $summary["on"]           = $trips[0]["start_time"];
             $end                     = end($trips);
-            $summary["off location"] = $trips[0]["stop_address"];
+            $summary["off location"] = $end["stop_address"];
             $summary["off"]          = $end["stop_time"];
             $summary["date"]         = $this->trip_date;
             $summary["km"]           = m2Km($total_distance);
             $summary["duration"]     = dateTimediff($summary["on"], $summary["off"]);
-
             // generate pdf report of vehicle 
             $this->generatePdfReport($trips, $summary, $gps);
             // update daily km calculation of vehicle based on new calculation 
@@ -215,7 +214,9 @@ class IndividualTrips extends Command
         // curl_close($ch);
         // $data=json_decode($output,true);
         // return $data['Response']['View'][0]['Result'][0]['Location']['Address']['Label'];
-        if(!empty($latitude) && !empty($longitude)){
+        $response = "";
+        if(!empty($latitude) && !empty($longitude))
+        {
             //Send request and receive json data by address
             try
             {
@@ -225,9 +226,9 @@ class IndividualTrips extends Command
                     $address = ($status=="OK")?$output->results[0]->formatted_address:'';
                     if(!empty($address)){
                         $address = removeUrlFromString($address);
-                        return $address;
+                        $response = $address;
                     }else{
-                        return false;
+                        $response = false;
                     }
             }
             catch(Exception $e)
@@ -235,9 +236,14 @@ class IndividualTrips extends Command
                 report($e);
             }
        
-        }else{
-            return false;
         }
+        else
+        {
+            dd("empty lat or lng") ;
+        }
+
+        $response = (string)$response;
+        return $response;
     }  
 
 }
