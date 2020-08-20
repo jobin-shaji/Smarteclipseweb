@@ -1573,9 +1573,9 @@ class GpsReportController extends Controller
         {
             if($offline_devices->count()>0)
             {
-                set_time_limit(300);
+                set_time_limit(500);
                 $total_data_count   = $offline_devices->count();
-                $devices_per_page   = 100;
+                $devices_per_page   = 200;
                 $total_pages        = ceil($total_data_count/$devices_per_page);
                 $folder_name        = rand().date('Ymdhis');
                 $pdf_path           = public_path('pdf/'.$folder_name);
@@ -1584,9 +1584,9 @@ class GpsReportController extends Controller
                 }
                 for ($per_page = 1; $per_page <= $total_pages; $per_page++) 
                 {
-                    $paginated_offline_devices  = $offline_devices->paginate(100, ['*'], 'page', $per_page);
-                    $pdf                        =   PDF::loadView('GpsReport::device-offline-status-report-download',[ 'offline_devices' => $paginated_offline_devices, 'offline_duration' => $offline_duration, 'device_type' => $device_type, 'generated_by' => ucfirst(strtolower($logged_user_details->root->name)).' '.'( Manufacturer )', 'user_generated_by' => $logged_user_details->name, 'generated_on' => date("d/m/Y h:i:s A") ]);
-                    $file_name                  =  'device-offline-status-report-part-' .$per_page. '.pdf' ;
+                    $paginated_offline_devices  = $offline_devices->paginate($devices_per_page, ['*'], 'page', $per_page);
+                    $pdf                        = PDF::loadView('GpsReport::device-offline-status-report-download',[ 'offline_devices' => $paginated_offline_devices, 'offline_duration' => $offline_duration, 'device_type' => $device_type, 'generated_by' => ucfirst(strtolower($logged_user_details->root->name)).' '.'( Manufacturer )', 'user_generated_by' => $logged_user_details->name, 'generated_on' => date("d/m/Y h:i:s A") ]);
+                    $file_name                  = 'device-offline-status-report-part-' .$per_page. '.pdf' ;
                     $pdf->save($pdf_path . '/' . $file_name);
                 }
 
