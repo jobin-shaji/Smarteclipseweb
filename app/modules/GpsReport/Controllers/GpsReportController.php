@@ -792,7 +792,7 @@ class GpsReportController extends Controller
         {
             $transfer_from          = $this->getOriginalNameFromUserId($from_user_id);
             $transfer_to            = $this->getOriginalNameFromUserId($to_user_id);
-            $transaction_details    = (new GpsTransfer())->getTransferredGpsDetailsWhichIncludesTransactionAcceptedGpsWithOutTranshedItems($from_user_id, $to_user_id, $from_date, $to_date, $download_type);
+            $transaction_details    = (new GpsTransfer())->getTransferredGpsDetailsGpsWithOutTranshedItems($from_user_id, $to_user_id, $from_date, $to_date, $download_type);
             if($download_type == 'pdf')
             {
                 $iteration          = 1;
