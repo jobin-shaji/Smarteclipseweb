@@ -110,6 +110,7 @@
                 'sort'       => 'votes',
                 'imei'       => $filters['imei'],
                 'header'     => $filters['header'],
+                'vltDate'     => $filters['vltDate'],
                 'search_key' => $filters['search_key']
             ])->links(); } ?>
     </div>
