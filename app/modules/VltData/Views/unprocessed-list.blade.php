@@ -106,7 +106,8 @@
             </p>
         </div>
         @endif
-        <?php if( gettype($data) == 'object') { echo $data->appends([
+        <?php 
+        if( gettype($data) == 'object') { echo $data->appends([
                 'sort'       => 'votes',
                 'imei'       => $filters['imei'],
                 'header'     => $filters['header'],
