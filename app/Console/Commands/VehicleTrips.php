@@ -152,6 +152,8 @@ class VehicleTrips extends Command
             $this->generatePdfReport($trips, $summary, $gps);
             // update daily km calculation of vehicle based on new calculation 
             (new DailyKm)->updateDailyKm($total_distance, $gps->id, $this->trip_date);
+            //update gps odometer 
+            (new Gps)->updateOdometer($gps->id, $total_distance);
         }
 
     }
