@@ -100,7 +100,7 @@ class GpsTransfer extends Model
                         ->where('gps_transfers.to_user_id',$to_user_id)
                         ->whereDate('gps_transfers.dispatched_on', '>=', $from_date)
                         ->whereDate('gps_transfers.dispatched_on', '<=', $to_date)
-                        ->whereNotNull('gps_transfers.accepted_on')
+                        //->whereNotNull('gps_transfers.accepted_on')
                         ->join('gps_transfer_items', 'gps_transfer_items.gps_transfer_id', '=', 'gps_transfers.id')
                         ->join('gps', 'gps_transfer_items.gps_id', '=', 'gps.id')
                         ->select('gps_transfers.order_number as order_number',
