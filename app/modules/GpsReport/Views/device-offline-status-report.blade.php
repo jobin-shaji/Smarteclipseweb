@@ -107,13 +107,14 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                                                         <th class='vehicle_name_column'>Vehicle Name</th>
                                                         <th>Registration Number</th>
                                                         <th class='device_time_column'>Last Packet Received On</th>
+                                                        <th>Main Power Connected</th>
                                                         <th></th>
                                                     </tr>
                                                 </thead>
                                                 <tbody id="data_tbody" class = 'table_alignment'>
                                                     @if(count($offline_devices) == 0)
                                                         <tr>
-                                                            <td colspan='8' style='text-align: center;'><b>No Data Available</b></td>
+                                                            <td colspan='9' style='text-align: center;'><b>No Data Available</b></td>
                                                         </tr>
                                                     @endif
                                                     @foreach($offline_devices as $each_data)
@@ -125,6 +126,16 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                                                         <td><?php ( isset($each_data->vehicleGps->vehicle->name) ) ? $vehicle_name = $each_data->vehicleGps->vehicle->name : $vehicle_name='-NA-' ?>{{$vehicle_name}}</td>
                                                         <td><?php ( isset($each_data->vehicleGps->vehicle->register_number) ) ? $register_number = $each_data->vehicleGps->vehicle->register_number : $register_number='-NA-' ?>{{$register_number}}</td>
                                                         <td><?php ( isset($each_data->device_time) ) ? $device_time = $each_data->device_time : $device_time='-Not Yet Activated-' ?>{{$device_time}}</td>
+                                                        <td><?php 
+                                                            if(isset($each_data->main_power_status))
+                                                            {
+                                                                ( $each_data->main_power_status == 1 ) ? $main_power_status = "YES" : $main_power_status = "NO";
+                                                            }
+                                                            else
+                                                            {
+                                                                $main_power_status = '-NA-';
+                                                            }
+                                                        ?>{{$main_power_status}}</td>
                                                         <td><a href="{{route('device-detailed-report-view', Crypt::encrypt($each_data->imei))}}" class='btn btn-xs btn-success' data-toggle='tooltip' title='View More Details'><i class='fa fa-eye'></i> View</a></td>
                                                     </tr>
                                                     @endforeach
@@ -228,13 +239,22 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                         var imei;  
                         var serial_no; 
                         var encryptedimei; 
+                        var main_power_status;
                         (data.links.data[i].eimei) ? encryptedimei = data.links.data[i].eimei : encryptedimei = "-NA-";                              
                         (data.links.data[i].imei) ? imei = data.links.data[i].imei : imei = "-NA-";          
                         (data.links.data[i].serial_no) ? serial_no = data.links.data[i].serial_no : serial_no = "-NA-";
                         (data.links.data[i].gps_stock) ? client_name = data.links.data[i].gps_stock.client.name : client_name = "-NA-";
                         (data.links.data[i].vehicle_gps) ? vehicle_name = data.links.data[i].vehicle_gps.vehicle.name : vehicle_name = "-NA-";
                         (data.links.data[i].vehicle_gps) ? register_number = data.links.data[i].vehicle_gps.vehicle.register_number : register_number = "-NA-";
-                        (data.links.data[i].device_time) ? device_time = data.links.data[i].device_time : device_time = "-NA-";               
+                        (data.links.data[i].device_time) ? device_time = data.links.data[i].device_time : device_time = "-NA-";   
+                        if(data.links.data[i].main_power_status)
+                        {
+                            ( data.links.data[i].main_power_status == 1 ) ? main_power_status = "YES" : main_power_status = "NO";
+                        }
+                        else
+                        {
+                            main_power_status = '-NA-';
+                        }             
                         var j=i+1;
                             device_details += '<tr><td>'+j+'</td>'+
                             '<td>'+imei+'</td>'+
@@ -243,6 +263,7 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                             '<td>'+vehicle_name+'</td>'+
                             '<td>'+register_number+'</td>'+
                             '<td>'+device_time+'</td>'+
+                            '<td>'+main_power_status+'</td>'+
                             // '<td><a href="device-detailed-report/<?php //echo Crypt::encrypt()?>/view" class="btn btn-xs btn-success" data-toggle="tooltip" title="View More Details"><i class="fa fa-eye"></i> View</a></td>'+
                             '<td><button onclick="imeiEncryption('+imei+')" class="btn btn-xs btn-success" data-toggle="tooltip" title="View More Details">view</button></td>'+
                             

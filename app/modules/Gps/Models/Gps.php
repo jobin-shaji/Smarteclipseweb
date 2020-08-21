@@ -254,7 +254,7 @@ class Gps extends Model
      */
     public function getAllOfflineDevices($offline_date_time, $device_type = null,$download_type = null , $gps_id_of_active_vehicles = null ,$search_key=null)
     {
-        $result =   self::select('id', 'imei', 'serial_no','device_time')
+        $result =   self::select('id', 'imei', 'serial_no', 'main_power_status', 'device_time')
                     // ->with('vehicleGps')
                     ->with('vehicleGps.vehicle.client')
                     ->with('gpsStock.client')
@@ -444,7 +444,7 @@ class Gps extends Model
      */
     public function getDistributorOfflineDevices($offline_date_time, $device_type = null,$download_type = null , $distributor_all_gps_id = null ,$search_key=null,$active_vehicles_gps_id=null)
     {
-        $result =   self::select('id', 'imei', 'serial_no','device_time')
+        $result =   self::select('id', 'imei', 'serial_no','main_power_status', 'device_time')
                     // ->with('vehicleGps')
                     ->with('vehicleGps.vehicle.client')
                     ->with('gpsStock.client')

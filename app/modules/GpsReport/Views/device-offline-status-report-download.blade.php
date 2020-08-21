@@ -67,8 +67,22 @@ td, th {
                 <td class = 'column_alignment'><?php ( isset($each_data->gpsStock->subdealer->name) ) ? $subdealer = $each_data->gpsStock->subdealer->name : $subdealer='-NA-' ?>{{$subdealer}}</td>
             </tr>
             <tr>
-                <td><b>Sub Dealer Name/<b></td>
+                <td><b>Sub Dealer Name<b></td>
                 <td class = 'column_alignment'><?php ( isset($each_data->gpsStock->trader->name) ) ? $trader = $each_data->gpsStock->trader->name : $trader='-NA-' ?>{{$trader}}</td>
+            </tr>
+            <tr>
+                <td><b>Main Power Connected<b></td>
+                <td class = 'column_alignment'>
+                <?php 
+                    if(isset($each_data->main_power_status))
+                    {
+                        ( $each_data->main_power_status == 1 ) ? $main_power_status = "YES" : $main_power_status = "NO";
+                    }
+                    else
+                    {
+                        $main_power_status = '-NA-';
+                    }
+                ?>{{$main_power_status}}</td>
             </tr>
         </tbody>
     </table>
