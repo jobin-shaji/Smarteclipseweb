@@ -822,7 +822,9 @@ class GpsReportController extends Controller
                     $zip->close();
                 }
                 // Download the created zip file
-                header("Content-Type: application/zip");
+                ob_clean();
+                ob_end_flush();
+                header("Content-Type: application/x-zip-compressed");
                 header("Content-Disposition: attachment; filename = $zip_file_name");
                 header("Pragma: no-cache");
                 header("Expires: 0");
@@ -1524,7 +1526,9 @@ class GpsReportController extends Controller
                 chdir(public_path());
 
                 // Download the created zip file
-                header("Content-Type: application/zip");
+                ob_clean();
+                ob_end_flush();
+                header("Content-Type: application/x-zip-compressed");
                 header("Content-Disposition: attachment; filename = $zip_file_name");
                 header("Pragma: no-cache");
                 header("Expires: 0");
@@ -1647,7 +1651,9 @@ class GpsReportController extends Controller
                 chdir(public_path());
 
                 // Download the created zip file
-                header("Content-Type: application/zip");
+                ob_clean();
+                ob_end_flush();
+                header("Content-Type: application/x-zip-compressed");
                 header("Content-Disposition: attachment; filename = $zip_file_name");
                 header("Pragma: no-cache");
                 header("Expires: 0");
@@ -2209,7 +2215,9 @@ class GpsReportController extends Controller
                 chdir(public_path());
 
                 // Download the created zip file
-                header("Content-Type: application/zip");
+                ob_clean();
+                ob_end_flush();
+                header("Content-Type: application/x-zip-compressed");
                 header("Content-Disposition: attachment; filename = $zip_file_name");
                 header("Pragma: no-cache");
                 header("Expires: 0");
@@ -2308,7 +2316,9 @@ class GpsReportController extends Controller
                 chdir(public_path());
 
                 // Download the created zip file
-                header("Content-Type: application/zip");
+                ob_clean();
+                ob_end_flush();
+                header("Content-Type: application/x-zip-compressed");
                 header("Content-Disposition: attachment; filename = $zip_file_name");
                 header("Pragma: no-cache");
                 header("Expires: 0");
