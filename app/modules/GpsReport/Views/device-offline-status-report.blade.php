@@ -30,7 +30,7 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                                                 <div class="panel-heading">
                                                 <div class="cover_div_search">
                                                     <div class="row">
-                                                        <div class="col-lg-3 col-md-3"> 
+                                                        <div class="col-lg-2 col-md-2"> 
                                                             <div class="form-group">                      
                                                                 <label> Device Type</label>
                                                                 <select class="form-control select2"  name="device_type" data-live-search="true" title="Select Device Type" id='device_type'  required>
@@ -47,18 +47,45 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                                                                 @endif
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-3 col-md-3"> 
+                                                        <div class="col-lg-2 col-md-2"> 
+                                                            <div class="form-group">                      
+                                                                <label> Main Power Status</label>
+                                                                <select class="form-control select2"  name="main_power_status" data-live-search="true" title="Select Main Power Status" id='main_power_status'  required>
+                                                                    <option disabled>Select Main Power Status</option>
+                                                                    <option value = '{{config("eclipse.MAIN_POWER_STATUS.ALL")}}'  @if($main_power_status==config("eclipse.MAIN_POWER_STATUS.ALL")){{"selected"}} @endif>All</option>
+                                                                    <option value = '{{config("eclipse.MAIN_POWER_STATUS.CONNECTED")}}' @if($main_power_status==config("eclipse.MAIN_POWER_STATUS.CONNECTED")){{"selected"}} @endif>CONNECTED</option>
+                                                                    <option value = '{{config("eclipse.MAIN_POWER_STATUS.DISCONNECTED")}}' @if($main_power_status==config("eclipse.MAIN_POWER_STATUS.DISCONNECTED")){{"selected"}} @endif>DISCONNECTED</option>
+                                                                </select>
+                                                                @if ($errors->has('main_power_status'))
+                                                                    <span class="help-block">
+                                                                        <strong class="error-text">{{ $errors->first('main_power_status') }}</strong>
+                                                                    </span>
+                                                                @endif
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-2 col-md-2"> 
+                                                            <div class="form-group">                      
+                                                                <label> Firmware Version</label>
+                                                                <input type = 'text' maxlength="10" style='width: 230px;' value = "{{$firmware_version}}" name ='firmware_version' id = 'firmware_version'>
+                                                                @if ($errors->has('firmware_version'))
+                                                                    <span class="help-block">
+                                                                        <strong class="error-text">{{ $errors->first('firmware_version') }}</strong>
+                                                                    </span>
+                                                                @endif
+                                                            </div>
+                                                        </div>&nbsp;&nbsp;&nbsp;
+                                                        <div class="col-lg-2 col-md-2"> 
                                                             <div class="form-group">                      
                                                                 <label> Offline Duration (In hours)</label>
-                                                                <input type = 'number' min='1' max='720' style='width: 255px;' value = "{{$offline_duration}}" name ='offline_duration' id = 'offline_duration'>
+                                                                <input type = 'number' min='1' max='720' style='width: 230px;' value = "{{$offline_duration}}" name ='offline_duration' id = 'offline_duration'>
                                                                 @if ($errors->has('offline_duration'))
                                                                     <span class="help-block">
                                                                         <strong class="error-text">{{ $errors->first('offline_duration') }}</strong>
                                                                     </span>
                                                                 @endif
                                                             </div>
-                                                        </div>
-                                                        <div class="col-lg-3 col-md-3 pt-4">  
+                                                        </div>&nbsp;&nbsp;
+                                                        <div class="col-lg-2 col-md-2 pt-4">  
                                                             <div class="form-group">                           
                                                                 <button type="submit" class="btn btn-sm btn-info btn2 srch search-btn " > <i class="fa fa-search"></i> </button>
                                                                 <a  href="device-offline-report" class="btn btn-primary">Clear</a>
@@ -108,6 +135,7 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                                                         <th>Registration Number</th>
                                                         <th class='device_time_column'>Last Packet Received On</th>
                                                         <th>Main Power Connected</th>
+                                                        <th>Firmware Version</th>
                                                         <th></th>
                                                     </tr>
                                                 </thead>
@@ -136,6 +164,7 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                                                                 $main_power_status = '-NA-';
                                                             }
                                                         ?>{{$main_power_status}}</td>
+                                                        <td><?php ( isset($each_data->firmware_version) ) ? $firmware_version = $each_data->firmware_version : $firmware_version='-NA-' ?>{{$firmware_version}}</td>
                                                         <td><a href="{{route('device-detailed-report-view', Crypt::encrypt($each_data->imei))}}" class='btn btn-xs btn-success' data-toggle='tooltip' title='View More Details'><i class='fa fa-eye'></i> View</a></td>
                                                     </tr>
                                                     @endforeach
@@ -240,6 +269,7 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                         var serial_no; 
                         var encryptedimei; 
                         var main_power_status;
+                        var firmware_version;
                         (data.links.data[i].eimei) ? encryptedimei = data.links.data[i].eimei : encryptedimei = "-NA-";                              
                         (data.links.data[i].imei) ? imei = data.links.data[i].imei : imei = "-NA-";          
                         (data.links.data[i].serial_no) ? serial_no = data.links.data[i].serial_no : serial_no = "-NA-";
@@ -254,7 +284,8 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                         else
                         {
                             main_power_status = '-NA-';
-                        }             
+                        } 
+                        (data.links.data[i].firmware_version) ? firmware_version = data.links.data[i].firmware_version : firmware_version = "-NA-";             
                         var j=i+1;
                             device_details += '<tr><td>'+j+'</td>'+
                             '<td>'+imei+'</td>'+
@@ -264,6 +295,7 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                             '<td>'+register_number+'</td>'+
                             '<td>'+device_time+'</td>'+
                             '<td>'+main_power_status+'</td>'+
+                            '<td>'+firmware_version+'</td>'+
                             // '<td><a href="device-detailed-report/<?php //echo Crypt::encrypt()?>/view" class="btn btn-xs btn-success" data-toggle="tooltip" title="View More Details"><i class="fa fa-eye"></i> View</a></td>'+
                             '<td><button onclick="imeiEncryption('+imei+')" class="btn btn-xs btn-success" data-toggle="tooltip" title="View More Details">view</button></td>'+
                             

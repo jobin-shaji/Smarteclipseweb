@@ -67,11 +67,11 @@ td, th {
                 <td class = 'column_alignment'><?php ( isset($each_data->gpsStock->subdealer->name) ) ? $subdealer = $each_data->gpsStock->subdealer->name : $subdealer='-NA-' ?>{{$subdealer}}</td>
             </tr>
             <tr>
-                <td><b>Sub Dealer Name<b></td>
+                <td><b>Sub Dealer Name</b></td>
                 <td class = 'column_alignment'><?php ( isset($each_data->gpsStock->trader->name) ) ? $trader = $each_data->gpsStock->trader->name : $trader='-NA-' ?>{{$trader}}</td>
             </tr>
             <tr>
-                <td><b>Main Power Connected<b></td>
+                <td><b>Main Power Connected</b></td>
                 <td class = 'column_alignment'>
                 <?php 
                     if(isset($each_data->main_power_status))
@@ -83,6 +83,10 @@ td, th {
                         $main_power_status = '-NA-';
                     }
                 ?>{{$main_power_status}}</td>
+            </tr>
+            <tr>
+                <td><b>Firmware Version</b></td>
+                <td class = 'column_alignment'><?php ( isset($each_data->firmware_version) ) ? $firmware_version = $each_data->firmware_version : $firmware_version='-NA-' ?>{{$firmware_version}}</td>
             </tr>
         </tbody>
     </table>

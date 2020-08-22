@@ -1563,10 +1563,12 @@ class GpsReportController extends Controller
     public function deviceOfflineReport(Request $request)
     {
         $device_type            = ( isset($request->device_type) ) ? $request->device_type : config("eclipse.DEVICE_STATUS.TAGGED");
+        $main_power_status      = ( isset($request->main_power_status) ) ? $request->main_power_status : config("eclipse.MAIN_POWER_STATUS.ALL");
+        $firmware_version       = ( isset($request->firmware_version) ) ? $request->firmware_version : null;
         $offline_duration       = ( isset($request->offline_duration) ) ? $request->offline_duration : null;
         $download_type          = ( isset($request->type) ) ? $request->type : null;
         // $search_key          = ( isset($request->search_key) ) ? $request->search_key : null;
-        $search_key             =   ( isset($request->search) ) ? $request->search : null;     
+        $search_key             = ( isset($request->search) ) ? $request->search : null;     
       
         $logged_user_details    = (new Operations())->getOperatorDetails(\Auth::user()->operations->id);
 
@@ -1584,7 +1586,7 @@ class GpsReportController extends Controller
         {
             $gps_id_of_active_vehicles      = (new Vehicle())->getAllVehiclesWithUnreturnedGps();
         }
-        $offline_devices                    = (new Gps())->getAllOfflineDevices($offline_date_time, $device_type, $download_type , $gps_id_of_active_vehicles,$search_key);
+        $offline_devices                    = (new Gps())->getAllOfflineDevices($offline_date_time, $device_type, $download_type , $gps_id_of_active_vehicles, $main_power_status, $firmware_version, $search_key);
        // $imei=[];
         // foreach($offline_devices as $offline_device)
         // {
@@ -1665,7 +1667,7 @@ class GpsReportController extends Controller
                 exit;
             }
             else{
-                return view('GpsReport::device-offline-status-report', [ 'offline_devices' => $offline_devices, 'offline_duration' => $offline_duration, 'device_type' => $device_type]);
+                return view('GpsReport::device-offline-status-report', [ 'offline_devices' => $offline_devices, 'offline_duration' => $offline_duration, 'device_type' => $device_type, 'main_power_status' => $main_power_status, 'firmware_version' => $firmware_version]);
             }
         }
         else if($request->ajax())
@@ -1675,7 +1677,7 @@ class GpsReportController extends Controller
         else
         {
             
-            return view('GpsReport::device-offline-status-report', [ 'offline_devices' => $offline_devices, 'offline_duration' => $offline_duration, 'device_type' => $device_type, 'search_key' => $search_key ]);
+            return view('GpsReport::device-offline-status-report', [ 'offline_devices' => $offline_devices, 'offline_duration' => $offline_duration, 'main_power_status' => $main_power_status, 'firmware_version' => $firmware_version, 'device_type' => $device_type, 'search_key' => $search_key ]);
         }
     }
 
