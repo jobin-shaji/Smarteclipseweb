@@ -5,6 +5,7 @@ use \Carbon\Carbon;
 use App\Modules\Vehicle\Models\Vehicle;
 use App\Modules\Gps\Models\GpsData;
 use App\Modules\Vehicle\Models\DailyKm;
+use App\Modules\Gps\Models\Gps;
 use App\Modules\Vehicle\Models\VehicleTripSummary;
 use App\Modules\TripReport\Models\ClientTripReportSubscription;
 use App\Modules\TripReport\Models\TripReportSubscriptionVehicles;

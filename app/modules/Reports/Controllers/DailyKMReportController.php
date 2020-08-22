@@ -56,8 +56,8 @@ class DailyKMReportController extends Controller
         ->addIndexColumn()        
         ->addColumn('totalkm', function ($dailykm_report) {
             $gps_km                     =   $dailykm_report->km;
-            $km                         =   round($gps_km/1000);
-            return $km;
+            // $km                         =   round($gps_km/1000);
+            return $gps_km;
         })
         ->make();
     }
