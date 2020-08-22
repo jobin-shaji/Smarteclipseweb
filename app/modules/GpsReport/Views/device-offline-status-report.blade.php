@@ -104,14 +104,14 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                                                  <!-- filter section -->
                                                  <div class="row ">
                                                     <!-- search -->
-                                                    <div class="col-lg-5 ">
+                                                    <div class="col-lg-5 col-md-5 ">
                                                         <input type="hidden" name="device_type" id="device_type" value="{{$device_type}}">
                                                         <input type="hidden" name="offline_duration" id="offline_duration" value="{{$offline_duration}}">
                                                         <input type="text" class="form-controller" id="search" name="search"value="{{$search_key}}"  placeholder="IMEI or Serial number"></input>
                                                     </div>
                                                     <!-- /search -->
                                                     <!-- download button -->
-                                                    <div class="col-lg-7  download_btn download-button-visibility">
+                                                    <div class="col-lg-7 col-md-7 download-button-visibility">
                                                         <button class="btn btn download_button_view"><i class='fa fa-download'></i>
                                                             <a href="device-offline-report-downloads?type=pdf&device_type={{$device_type}}&offline_duration={{$offline_duration}}&search=" class="offline_device_download" onclick="return confirmDeviceStatusReportDownload();" style="color:white">Download Report</a>
                                                         </button>
@@ -197,9 +197,6 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
         margin-left: 710px;
         margin-bottom: 15px;
     }
-    .download_btn{
-        padding: 0px 0px 0px 514px;
-    }
     .table_alignment
     {
         word-break: break-all;
@@ -222,6 +219,7 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
     }
     .download_button_view
     {
+        float:right;
         padding: .25rem .5rem;
     }
 </style>
