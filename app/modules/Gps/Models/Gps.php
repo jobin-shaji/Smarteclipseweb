@@ -236,7 +236,7 @@ class Gps extends Model
 
      /**
      * 
-     * esim updation
+     * 
      * 
      */
     public function updateEsimNumbers($imsi, $msisdn)
@@ -246,6 +246,18 @@ class Gps extends Model
         //     'e_sim_number'  => $msisdn
         // ])
         ->first();
+    }
+
+    /**
+     * 
+     *  update odometer
+     * 
+     */
+    public function updateOdometer($gps_id, $total_distance)
+    {
+        $gps = self::find($gps_id);
+        $gps->km = $gps->km + $total_distance;
+        $gps->save();
     }
 
     /**
