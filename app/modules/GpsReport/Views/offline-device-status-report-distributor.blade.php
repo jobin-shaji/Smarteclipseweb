@@ -231,7 +231,6 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                     if(data.links.data.length>0)  
                     {                                 
                         for(var i=0;i < data.links.data.length;i++){
-                            console.log(data.links.data);
                         var client_name;
                         var vehicle_name;
                         var register_number;
@@ -259,7 +258,7 @@ $page       = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                             device_details += '<tr><td>'+j+'</td>'+
                             '<td>'+imei+'</td>'+
                             '<td>'+serial_no+'</td>'+
-                            // '<td>'+client_name+'</td>'+
+                            '<td>'+client_name+'</td>'+
                             '<td>'+vehicle_name+'</td>'+
                             '<td>'+register_number+'</td>'+
                             '<td>'+device_time+'</td>'+

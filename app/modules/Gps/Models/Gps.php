@@ -264,9 +264,9 @@ class Gps extends Model
      * 
      * 
      */
-    public function getAllOfflineDevices($offline_date_time, $device_type = null,$download_type = null , $gps_id_of_active_vehicles = null ,$search_key=null)
+    public function getAllOfflineDevices($offline_date_time, $device_type = null,$download_type = null , $gps_id_of_active_vehicles = null, $main_power_status = null, $firmware_version = null ,$search_key=null)
     {
-        $result =   self::select('id', 'imei', 'serial_no', 'main_power_status', 'device_time')
+        $result =   self::select('id', 'imei', 'serial_no', 'firmware_version', 'main_power_status', 'device_time')
                     // ->with('vehicleGps')
                     ->with('vehicleGps.vehicle.client')
                     ->with('gpsStock.client')
@@ -295,6 +295,18 @@ class Gps extends Model
                             ->orWhere('device_time', '<=' ,$offline_date_time);
                         });
                     }
+                    if( $main_power_status == config("eclipse.MAIN_POWER_STATUS.CONNECTED") )
+                    {
+                        $result->where('main_power_status', '=' ,config("eclipse.MAIN_POWER_STATUS.CONNECTED"));
+                    }
+                    else if( $main_power_status == config("eclipse.MAIN_POWER_STATUS.DISCONNECTED") )
+                    {
+                        $result->where('main_power_status', '=' ,config("eclipse.MAIN_POWER_STATUS.DISCONNECTED"));
+                    }
+                    if( $firmware_version != null )
+                    {
+                        $result->where('firmware_version','like','%'.$firmware_version.'%');
+                    } 
                     if( $search_key != null )
                     {
                         $result->where(function($query) use($search_key){
