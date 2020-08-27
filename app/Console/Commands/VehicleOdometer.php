@@ -116,7 +116,7 @@ class VehicleOdometer extends Command
                 $trip = [ 
                             'start_address' => $start_lat.','.$start_lng,
                             'start_time'    => $start_time,
-                            'stop_address'  => $stop_lat.,.$stop_lng,
+                            'stop_address'  => $stop_lat.','.$stop_lng,
                             'stop_time'     => $stop_time,
                             'duration'      => dateTimediff($start_time, $stop_time),
                             'distance'      => $distance
