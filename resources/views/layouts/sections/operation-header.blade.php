@@ -11,10 +11,10 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="{{url('/all-gps-config')}}">SINGLE GPS CONFIGURATION</a>
+            <!-- <a class="dropdown-item" href="{{url('/all-gps-config')}}">SINGLE GPS CONFIGURATION</a> -->
             <a class="dropdown-item"href="{{url('/gps-config')}}">GPS CONFIGURATION</a>
-            <a class="dropdown-item" href="{{url('/gps-map')}}">GPS FIX AND NON FIX</a>
-            <a class="dropdown-item" href="{{url('/gps-km-map')}}">GPS KM</a>
+            <!-- <a class="dropdown-item" href="{{url('/gps-map')}}">GPS FIX AND NON FIX</a> -->
+            <!-- <a class="dropdown-item" href="{{url('/gps-km-map')}}">GPS KM</a> -->
             <a class="dropdown-item" href="{{url('/console-data-list')}}">CONSOLE</a>
         </div>
     </li>
@@ -24,7 +24,7 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="{{url('/gps/stock')}}">ADD STOCK</a> 
+            <!-- <a class="dropdown-item" href="{{url('/gps/stock')}}">ADD STOCK</a>  -->
             <a class="dropdown-item" href="{{url('/gps-records')}}">DEVICE PROCESSED DAILY RECORDS</a>
             <a class="dropdown-item" href="{{url('/gps-unprocessed-records')}}">DEVICE UNPROCESSED DAILY RECORDS</a>
             <a class="dropdown-item" href="{{url('/device-status-report')}}"> DEVICE STATUS REPORT </a>
@@ -35,7 +35,7 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="{{url('/set-ota-operations')}}">SET SOTA </a>
+            <!-- <a class="dropdown-item" href="{{url('/set-ota-operations')}}">SET SOTA </a> -->
             <a class="dropdown-item" href="{{url('/ota-response')}}">OTA RESPONSE</a>
             <a class="dropdown-item"href="{{url('/ota-update')}}">OTA UPDATES</a>
         </div>
@@ -46,7 +46,7 @@
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="{{url('/unprocessed-data-list')}}">VLT DATA (PROCESSED & UNPROCESSED)</a>
-            <a class="dropdown-item" href="{{url('/operation-gps-data')}}">PROCESSED DATA </a>
+            <!-- <a class="dropdown-item" href="{{url('/operation-gps-data')}}">PROCESSED DATA </a> -->
             <a class="dropdown-item" href="{{url('/packet-split-data')}}">
             NRM PACKET DATA </a>
             <a class="dropdown-item" href="{{url('/lgn-split-data')}}">
@@ -105,12 +105,12 @@
         </div>
     </li>
 
-    <li class="nav-item dropdown">
+<!--     <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> DURATIONS
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <div class="dropdown-divider"></div>
             <a class="dropdown-item"href="{{url('/vehicle-duration')}}">LIST VEHICLE DURATIONS</a>
         </div>
-    </li>
+    </li> -->
 </ul>
