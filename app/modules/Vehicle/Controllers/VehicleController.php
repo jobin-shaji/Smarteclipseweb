@@ -26,7 +26,6 @@ use App\Modules\Warehouse\Models\GpsStock;
 use App\Modules\Gps\Models\GpsData;
 use App\Modules\SubDealer\Models\SubDealer;
 use App\Modules\Client\Models\Client;
-use App\Modules\Vehicle\Models\DailyKm;
 use App\Modules\Servicer\Models\ServicerJob;
 use App\Modules\Configuration\Models\Configuration;
 use App\Modules\Driver\Models\DriverVehicleHistory;
