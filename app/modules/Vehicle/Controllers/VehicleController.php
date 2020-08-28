@@ -1390,7 +1390,7 @@ class VehicleController extends Controller
             $last_seen=date('d-m-Y h:i:s a', strtotime($track_data->dateTime));
 
             //get daily km
-            $daily_km = (new DailyKm)->getDailyKmBasedOnDateAndGps([$get_vehicle->gps_id], date('Y-m-d'));
+            $daily_km = (new DailyKm)->getDailyKmBasedOnDateAndGps([$track_data->id], date('Y-m-d'));
             // odometer
             $gps_meter=$track_data->km + $daily_km->first()->km; 
             $gps_km=$gps_meter/1000;
