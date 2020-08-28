@@ -24,6 +24,7 @@ use App\Modules\Operations\Models\VehicleModels;
 use App\Modules\User\Models\User;
 use App\Modules\Warehouse\Models\GpsStock;
 use App\Modules\DeviceReturn\Models\DeviceReturn;
+use App\Modules\Vehicle\Models\DailyKm;
 use DataTables;
 use DB;
 use Carbon\Carbon;
@@ -718,7 +719,10 @@ class DashboardController extends Controller
             $fuel_status="upgrade version";
         }
         $speed=round($gps->speed);
-        $gps_meter=$gps->km;
+        //get daily km
+        $daily_km = (new DailyKm)->getDailyKmBasedOnDateAndGps([$gps->id], date('Y-m-d'));
+        // odometer
+        $gps_meter=$gps->km + $daily_km->first()->km; 
         $gps_km=$gps_meter/1000;
         $odometer=round($gps_km);
         $mode=$gps->mode;

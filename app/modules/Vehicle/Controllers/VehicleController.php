@@ -36,6 +36,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Modules\Operations\Models\VehicleModels;
 use App\Modules\Vehicle\Models\OdometerUpdate;
 use App\Http\Traits\VehicleDataProcessorTrait;
+use App\Modules\Vehicle\Models\DailyKm;
 use Carbon\Carbon;
 use PDF;
 use DataTables;
@@ -1388,7 +1389,10 @@ class VehicleController extends Controller
             }
             $last_seen=date('d-m-Y h:i:s a', strtotime($track_data->dateTime));
 
-            $gps_meter=$track_data->km;
+            //get daily km
+            $daily_km = (new DailyKm)->getDailyKmBasedOnDateAndGps([$get_vehicle->gps_id], date('Y-m-d'));
+            // odometer
+            $gps_meter=$track_data->km + $daily_km->first()->km; 
             $gps_km=$gps_meter/1000;
             $odometer=round($gps_km);
             $reponseData=array(
