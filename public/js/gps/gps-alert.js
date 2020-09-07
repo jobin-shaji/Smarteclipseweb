@@ -91,7 +91,7 @@ function gpsAlertTracker(res)
     mapTypeId: 'terrain'
   });
   $.ajax({
-    url     :'https://maps.googleapis.com/maps/api/geocode/json?latlng='+latitude+','+longitude+'&sensor=false&key=AIzaSyDl9Ioh5neacm3nsLzjFxatLh1ac86tNgE&libraries=drawing&callback=initMap',
+    url     :'https://maps.googleapis.com/maps/api/geocode/json?latlng='+latitude+','+longitude+'&sensor=false&key='+config('eclipse.keys.googleMap')+'&libraries=drawing&callback=initMap',
     method  :"get",
     async   :true,
     context :this,

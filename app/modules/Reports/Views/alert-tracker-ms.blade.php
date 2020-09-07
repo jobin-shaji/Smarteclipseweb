@@ -41,7 +41,7 @@
 </section>
 @section('script')
     <script src="{{asset('js/gps/alert-report-ms.js')}}"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDl9Ioh5neacm3nsLzjFxatLh1ac86tNgE&libraries=drawing&callback=getAlertFromMicroService"
+    <script src="https://maps.googleapis.com/maps/api/js?key={{config('eclipse.keys.googleMap')}}&libraries=drawing&callback=getAlertFromMicroService"
          async defer></script>
     @endsection
  @endsection
