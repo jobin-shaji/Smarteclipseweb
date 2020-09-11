@@ -1219,7 +1219,7 @@
               <h3>
                 <div class="loader"></div>
               </h3>
-              <p> STOCK WISE REPORT</p>
+              <p> DEVICE STOCK REPORT</p>
             </div>
             <a href="/gps-stock-report" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
           </div>
@@ -1230,7 +1230,7 @@
               <h3>
                 <div class="loader"></div>
               </h3>
-              <p> TRANSFER REPORT</p>
+              <p> DEVICE TRANSFER REPORT</p>
             </div>
             <a href="/gps-transfer-report" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
           </div>

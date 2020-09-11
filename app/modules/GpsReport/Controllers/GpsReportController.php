@@ -1421,40 +1421,25 @@ class GpsReportController extends Controller
             $sales_user_ids[]                           =   \Auth::user()->id;
             $sales_ids[]                                =   \Auth::user()->salesman->id;
             $login_user_details                         =   (new Salesman())->getSalesmanDetails(\Auth::user()->salesman->id);
-            // $login_user_details->root->name
-            //manufacture section
-            $manufacturer_user_id[]                     =  $login_user_details->root->user_id;
-            $manufacturer_id[]                          =   $login_user_details->root->id;
-            // $login_user_details                         =   (new Root())->getManufacturerDetails(\Auth::user()->root->id);
-            $stock_count_of_manufacturier               =   (new GpsStock())->getInStockCountOfManufacturer($manufacturer_id);
-            $stock_summary_details[]                    =       [
-                                                                'user'              =>  'Manufacturer'.' ( '.$login_user_details->root->name.' )',
-                                                                'in_stock'          =>  $stock_count_of_manufacturier,
-                                                                'stock_to_accept'   =>  'NA',
-                                                                'modal_section'     =>  '#setManufacturerModal'
-                                                            ];
-            $stock_details_of_manufacturer[]            =   [
-                                                                'user'              =>  ucfirst(strtolower($login_user_details->root->name)),
-                                                                'in_stock'          =>  $stock_count_of_manufacturier
-                                                            ];
-            //distributor section
-            $distributor_details                        =   (new Dealer())->getDistributorsOfManufacturer($manufacturer_id); 
-            $distributor_user_ids                       =   [];
-            $distributor_ids                            =   [];
-            foreach($distributor_details as $each_data)
-            {
-                $distributor_user_ids[]                 =   $each_data->user_id;
-                $distributor_ids[]                      =   $each_data->id;
-                $stock_details_of_distributors[]        =   $this->getStockDetailsOfDistributor($each_data->name,$each_data->id,$each_data->user_id,$login_user_details->root->name); 
-            }
+
+            $distributor_user_ids[]                     =   18;
+            $distributor_ids[]                          =   2;
+            $distributor_user_details                   =   (new Dealer())->getDistributorDetails(2);
             $stock_count_of_distributor                 =   (new GpsStock())->getInStockCountOfDistributor($distributor_ids);
             $stock_to_accept_count_of_distributor       =   (new GpsTransfer())->getStockToAcceptCount($distributor_user_ids);
             $stock_summary_details[]                    =   [
-                                                                'user'              =>  'Distributors',
+                                                                'user'              =>  'Distributor'.' ( '.$distributor_user_details->name.' )',
                                                                 'in_stock'          =>  $stock_count_of_distributor,
                                                                 'stock_to_accept'   =>  $stock_to_accept_count_of_distributor[0]->count,
                                                                 'modal_section'     =>  '#setDistributorModal'
                                                             ];
+            $stock_details_of_distributors[]            =   [
+                                                                'manufacturer_name' =>  ucfirst(strtolower($login_user_details->root->name)), 
+                                                                'in_stock'          =>  $stock_count_of_distributor,
+                                                                'stock_to_accept'   =>  $stock_to_accept_count_of_distributor[0]->count,
+                                                                'distributor_name'  =>  ucfirst(strtolower($login_user_details->name))
+                                                            ];   
+            
             //dealer section
             $dealer_details                             =   (new SubDealer())->getDealersOfDistributers($distributor_ids); 
             $dealer_user_ids                            =   [];
@@ -1486,18 +1471,18 @@ class GpsReportController extends Controller
             $stock_count_of_sub_dealer                  =   (new GpsStock())->getInStockCountOfSubDealer($sub_dealer_ids);
             $stock_to_accept_count_of_sub_dealer        =   (new GpsTransfer())->getStockToAcceptCount($sub_dealer_user_ids);
             $stock_summary_details[]                    =   [
-                                                                'user'              =>  'Sub Dealers',
-                                                                'in_stock'          =>  $stock_count_of_sub_dealer,
-                                                                'stock_to_accept'   =>  $stock_to_accept_count_of_sub_dealer[0]->count,
-                                                                'modal_section'     =>  '#setSubDealerModal'
-                                                            ];
+                                                            'user'              =>  'Sub Dealers',
+                                                            'in_stock'          =>  $stock_count_of_sub_dealer,
+                                                            'stock_to_accept'   =>  $stock_to_accept_count_of_sub_dealer[0]->count,
+                                                            'modal_section'     =>  '#setSubDealerModal'
+                                                        ];
             return  [
-                        'stock_summary_details'         =>  $stock_summary_details,
-                        'stock_details_of_manufacturer' =>  $stock_details_of_manufacturer,
-                        'stock_details_of_distributors' =>  $stock_details_of_distributors,
-                        'stock_details_of_dealers'      =>  $stock_details_of_dealers,
-                        'stock_details_of_sub_dealers'  =>  $stock_details_of_sub_dealers,
-                        'login_user'                    =>  ucfirst(strtolower($login_user_details->name)).' '.'( Sales )'
+                        'stock_summary_details'             =>  $stock_summary_details,
+                        'stock_details_of_manufacturer'     =>  $stock_details_of_manufacturer,
+                        'stock_details_of_distributors'     =>  $stock_details_of_distributors,
+                        'stock_details_of_dealers'          =>  $stock_details_of_dealers,
+                        'stock_details_of_sub_dealers'      =>  $stock_details_of_sub_dealers,
+                        'login_user'                        =>  ucfirst(strtolower($login_user_details->name)).' '.'( Sales Department )'
                     ];
         }
     }
