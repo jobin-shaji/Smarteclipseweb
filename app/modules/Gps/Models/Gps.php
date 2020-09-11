@@ -472,6 +472,7 @@ class Gps extends Model
                     // ->with('vehicleGps')
                     ->with('vehicleGps.vehicle.client')
                     ->with('gpsStock.client')
+                    ->whereIn('id', $distributor_all_gps_id)
                     ->where(function ($query) {
                         $query->where('is_returned', '=', 0)
                         ->orWhere('is_returned', '=', NULL);
@@ -484,17 +485,15 @@ class Gps extends Model
                     else if( $device_type == config("eclipse.DEVICE_STATUS.UNTAGGED") )
                     {
                         $result->whereNotIn('id', $active_vehicles_gps_id)
-                                ->whereIn('id', $distributor_all_gps_id)
                                 ->where('device_time', '<=' ,$offline_date_time);
                     }
                     else if( $device_type == config("eclipse.DEVICE_STATUS.NOT_YET_ACTIVATED") )
                     {
-                        $result->whereIn('id', $distributor_all_gps_id)->where('device_time', '=' ,NULL);
+                        $result->where('device_time', '=' ,NULL);
                     }
                     else
                     {
-                        $result->whereIn('id', $distributor_all_gps_id)
-                        ->where(function ($query) use($offline_date_time) {
+                        $result->where(function ($query) use($offline_date_time) {
                             $query->where('device_time', '=' ,NULL)
                             ->orWhere('device_time', '<=' ,$offline_date_time);
                         });
