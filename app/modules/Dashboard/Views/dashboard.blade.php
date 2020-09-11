@@ -1213,22 +1213,28 @@
   <div class="page-wrapper-root1">
     <section class="content">
       <div class="row">
-        <div class="col-lg-3 col-xs-6 dealer_dashboard_grid dash_grid" style="background-color: #B2030B!important">
+        <div class="col-lg-3 col-xs-6 new_arrival_dashboard_grid dash_grid">
           <div class="small-box bg-yellow bxs">
             <div class="inner">
-              <h3 id="service_completed_jobs">
+              <h3>
                 <div class="loader"></div>
               </h3>
               <p> STOCK WISE REPORT</p>
             </div>
-            <div class="icon">
-              <i class="fa fa-tablet"></i>
-            </div>
             <a href="/gps-stock-report" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
-       <div class="row">
-        
+        <div class="col-lg-3 col-xs-6 transferred_gps_dashboard_grid dash_grid">
+          <div class="small-box bg-green bxs">
+            <div class="inner">
+              <h3>
+                <div class="loader"></div>
+              </h3>
+              <p> TRANSFER REPORT</p>
+            </div>
+            <a href="/gps-transfer-report" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>        
       </div>
     </section>
   </div>

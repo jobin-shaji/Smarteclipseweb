@@ -10,7 +10,8 @@
         <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> DEVICE
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-           <a class="dropdown-item" href="{{url('/gps-stock-report')}}">STOCK WISE REPORT  <span class="badge">New</span></a>            
+           <a class="dropdown-item" href="{{url('/gps-transfer-report')}}">TRANSFER REPORT  <span class="badge">New</span></a>    
+           <a class="dropdown-item" href="{{url('/gps-stock-report')}}">STOCK REPORT  </a>                    
         </div>
     </li>
  </ul>
