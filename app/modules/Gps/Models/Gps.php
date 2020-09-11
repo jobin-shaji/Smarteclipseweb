@@ -528,6 +528,7 @@ class Gps extends Model
         )
         ->with('vehicleGps.vehicle.client')
         ->with('gpsStock.client')
+        ->whereIn('id',$distributor_all_gps_id)
         ->whereBetween('device_time',[$online_limit_date,$current_time])   
         ->where(function ($query) {
             $query->where('is_returned', '=', 0)
@@ -537,12 +538,11 @@ class Gps extends Model
         ( $vehicle_status == null ) ? $query : $query->where('mode', $vehicle_status); 
         if($device_status == config("eclipse.DEVICE_STATUS.TAGGED"))
         {
-            $query = $query->whereIN('id',$active_vehicles_gps_id);
+            $query = $query->whereIn('id',$active_vehicles_gps_id);
         }
         else if($device_status == config("eclipse.DEVICE_STATUS.UNTAGGED"))
         {
-            $query = $query->whereNotIn('id',$active_vehicles_gps_id)
-            ->whereIN('id',$distributor_all_gps_id);
+            $query = $query->whereNotIn('id',$active_vehicles_gps_id);
         }
         if( $search_key != null )
         {
