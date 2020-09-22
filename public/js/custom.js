@@ -572,6 +572,9 @@ function backgroundPostData(url, data, callBack, options) {
                 else if(callBack=='deviceReassign'){
                     deviceReassign(res);
                 }
+                else if(callBack=='Reassignredirect'){
+                    Reassignredirect(res);
+                }
 
                 else if(callBack=='reassign_count')
                 {

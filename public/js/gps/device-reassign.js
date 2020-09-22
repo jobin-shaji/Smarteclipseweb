@@ -84,8 +84,8 @@ function reassigndevice()
                 'client':client,
                 'vehicle':vehicle
               };
-              backgroundPostData(url,data,'deviceReassign',{alert:true});
-              Reassignredirect();
+              backgroundPostData(url,data,'Reassignredirect',{alert:true});
+              //Reassignredirect();
           }
           else
           {
