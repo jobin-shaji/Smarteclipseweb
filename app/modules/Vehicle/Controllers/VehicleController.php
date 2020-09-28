@@ -1394,6 +1394,7 @@ class VehicleController extends Controller
             $gps_meter=$track_data->km + $daily_km->first()->km; 
             $gps_km=$gps_meter/1000;
             $odometer=round($gps_km);
+            (isset($odometer)) ? $odometer = $odometer : $odometer = 0;
             $reponseData=array(
                         "latitude"=>floatval($snapRoute['lat']),
                         "longitude"=>floatval($snapRoute['lng']),
