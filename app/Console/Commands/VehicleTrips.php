@@ -56,7 +56,7 @@ class VehicleTrips extends Command
         foreach ($subscribed_vehicles as $subscribed_vehicle) 
         {
            
-            if($subscribed_vehicle->vehicles->gps)
+            if($subscribed_vehicle->vehicles->gps && $subscribed_vehicle->vehicles->gps->vehicle->client)
             {             
                 try 
                 {

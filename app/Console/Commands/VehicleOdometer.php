@@ -58,7 +58,7 @@ class VehicleOdometer extends Command
 
         foreach ($vehicles as $vehicle) 
         {
-            if($vehicle->gps)
+            if($vehicle->gps && $vehicle->client)
             {             
                 try 
                 {
