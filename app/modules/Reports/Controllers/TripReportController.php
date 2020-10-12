@@ -132,6 +132,18 @@ class TripReportController extends Controller
         $get_all_clients    =   (new Client())->getIdNameAndMobileNoOfAllClients();
         return view('Reports::trip-report-view-in-manufacturer',['clients'=>$get_all_clients, 'client_id'=>'', 'vehicle_id'=>'', 'from_date'=>'', 'to_date'=>'', 'trip_reports'=>[]]);
     }
+
+      /**
+     * 
+     * trip report view in client -START
+     * 
+     */
+    public function tripReportInClient()
+    {
+        $vehicles    =   \Auth::user()->client->vehicles;
+        return view('Reports::trip-report-client',['vehicles'=> $vehicles, 'vehicle_id'=>'', 'from_date'=>'', 'to_date'=>'', 'trip_reports'=>[]]);
+    }
+
     /**
      * 
      * 
@@ -234,6 +246,58 @@ class TripReportController extends Controller
         $get_all_clients    =   (new Client())->getIdNameAndMobileNoOfAllClients();
         return view('Reports::trip-report-view-in-manufacturer',['clients'=>$get_all_clients, 'client_id'=>$client_id, 'vehicle_id'=>$vehicle_id, 'from_date'=>$from_date, 'to_date'=>$to_date,'trip_reports'=>$trip_reports ]);
     }
+
+    /**
+     *
+     * 
+     */
+    public function getDetailsOfTripReportInClient(Request $request)
+    {
+        $client_id          =   \Auth::user()->client->id;
+        $vehicle_id         =   $request->vehicle_id;
+        $from_date          =   date("Y-m-d", strtotime($request->from_date));
+        $to_date            =   date("Y-m-d", strtotime($request->to_date));
+        
+        // $trip_report_dates  =   $this->createDatesInBetween($from_date, $to_date);
+        // $trip_reports       =   [];
+
+        // foreach($trip_report_dates as $each_date)
+        // {
+        //     $directory = 'tripreports/'.$client_id.'/'.$vehicle_id.'/'.$each_date;
+        //     if( is_dir($directory) )
+        //     {
+        //         foreach (glob($directory."/*.pdf") as $each_trip_report_file)
+        //         {
+        //             array_push($trip_reports, [
+        //                 'path'      => $directory.'/'.basename($each_trip_report_file),
+        //                 'filename'  => basename($each_trip_report_file),
+        //                 'date'      => $each_date
+        //             ]);
+        //         }
+        //     }
+        // }
+        
+
+        if($client_id != "0" && $vehicle_id == "0")
+        {
+            $client_ids         =   [$client_id];
+            $vehicles           =   \Auth::user()->client->vehicles;
+            foreach($vehicles as $each_vehicle)
+            {
+                $vehicle_ids[]  =   $each_vehicle->id;
+            }
+        }
+        else
+        {
+            $client_ids         =   [$client_id];
+            $vehicle_ids        =   [$vehicle_id];
+        }
+
+        $trip_reports       =   (new VehicleTripSummary())->getTripDetailsBetweenTwoDates($client_ids, $vehicle_ids, $from_date, $to_date);
+        $get_all_clients    =   (new Client())->getIdNameAndMobileNoOfAllClients();
+        return view('Reports::trip-report-view-in-client',['clients'=>$get_all_clients, 'client_id'=>$client_id, 'vehicle_id'=>$vehicle_id, 'from_date'=>$from_date, 'to_date'=>$to_date,'trip_reports'=>$trip_reports ]);
+    }
+  
     /**
      * 
      * 

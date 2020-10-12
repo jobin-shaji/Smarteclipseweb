@@ -164,3 +164,10 @@ Route::group(['middleware' => ['web','auth','role:root'] , 'namespace' => 'App\M
 	Route::post('/trip-report-vehicle-dropdown-in-manufacturer','TripReportController@getVehiclesBasedOnClient')->name('trip-report-vehicle-dropdown-in-manufacturer');
 	Route::post('/trip-report-manufacturer-search','TripReportController@getDetailsOfTripReportInManufacturer')->name('trip-report-manufacturer-search');
 });
+
+Route::group(['middleware' => ['web','auth','role:client'] , 'namespace' => 'App\Modules\Reports\Controllers' ] , function() {
+	//trip report view in manufacturer
+	Route::get('/trip-report-client','TripReportController@tripReportInManufacturer')->name('trip-report-manufacturer');
+	Route::post('/trip-report-vehicle-dropdown-in-manufacturer','TripReportController@getVehiclesBasedOnClient')->name('trip-report-vehicle-dropdown-in-manufacturer');
+	Route::post('/trip-report-manufacturer-search','TripReportController@getDetailsOfTripReportInManufacturer')->name('trip-report-manufacturer-search');
+});

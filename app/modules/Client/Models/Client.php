@@ -292,12 +292,21 @@ class Client extends Model
   {
     return self::select('id')->where('trader_id',$trader_id)->count();
   }
+
   /**
    * 
    */
   public function getIdNameAndMobileNoOfAllClients()
   {
     return self::select('id','name','user_id')->with('user:id,email,mobile')->get();
+  }
+
+  /**
+   * 
+   */
+  public function getIdNameAndMobileNoOfIndividualClients($client_id)
+  {
+    return self::select('id','name','user_id')->where('id', $client_id)->with('user:id,email,mobile')->get();
   }
 
   /**

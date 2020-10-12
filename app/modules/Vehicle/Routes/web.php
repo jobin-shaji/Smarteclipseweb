@@ -155,6 +155,7 @@ Route::group(['middleware' => ['web','auth','role:operations'] , 'namespace' => 
 	// Route::get('/gps-km-map','MapLocationController@gpsKmMapLocation')->name('gps.km.map');
 	// Route::post('/gps-km-map/location-track','MapLocationController@gpsKmMapLocationTrack')->name('gps.km.map.location.track')
 });
+
 Route::group(['middleware' => ['web','auth','role:operations'] ,'namespace' => 'App\Modules\Vehicle\Controllers' ] , function () 
 {
 	Route::get('/gps-map','MapLocationController@gpsMapLocation')->name('gps.map');
