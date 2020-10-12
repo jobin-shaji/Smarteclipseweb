@@ -128,6 +128,7 @@
                             <li><a class="dropdown-item" href="{{url('/vehicle')}}">LIST VEHICLES</a></li>
                             <li><a class="dropdown-item" href="{{url('/all-vehicle-docs')}}">VEHICLE DOCUMENTS</a></li>
                             <li><a class="dropdown-item" href="{{url('/vehicle-driver-log')}}">DRIVER UPDATE LOG</a></li>
+                            <li><a class="dropdown-item" href="{{url('/trip-report-client')}}">TRIP REPORTS</a></li>
                             @role('fundamental|superior|pro')
                             <!-- <li><a class="dropdown-item" href="{{url('/invoice')}}">INVOICE</a></li> -->
                                 @endrole
