@@ -33,7 +33,7 @@
                                                                 <select class="form-control select2" id="vehicle_id" name="vehicle_id" data-live-search="true" title="Select Vehicle" required>
                                                                     <option value="0" @if($vehicle_id==0){{"selected"}} @endif>All</option>
                                                                 @foreach($vehicles as $vehicle)
-                                                                     <option value="{{$vehicle_id->id}}" @if($vehicle_id==$vehicle->id){{"selected"}} @endif>{{$vehicle->name}}</option>  
+                                                                     <option value="{{$vehicle->id}}" @if($vehicle_id==$vehicle->id){{"selected"}} @endif>{{$vehicle->name}}</option>  
                                                                 @endforeach
                                                                 </select>
                                                                 @if ($errors->has('vehicle_id'))
