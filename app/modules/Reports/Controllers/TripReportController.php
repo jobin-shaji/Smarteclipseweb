@@ -253,7 +253,6 @@ class TripReportController extends Controller
      */
     public function getDetailsOfTripReportInClient(Request $request)
     {
-        $client_id          =   \Auth::user()->client->id;
         $vehicle_id         =   $request->vehicle_id;
         $from_date          =   date("Y-m-d", strtotime($request->from_date));
         $to_date            =   date("Y-m-d", strtotime($request->to_date));
@@ -278,9 +277,8 @@ class TripReportController extends Controller
         // }
         
 
-        if($client_id != "0" && $vehicle_id == "0")
+        if($vehicle_id == "0")
         {
-            $client_ids         =   [$client_id];
             $vehicles           =   \Auth::user()->client->vehicles;
             foreach($vehicles as $each_vehicle)
             {
@@ -289,13 +287,12 @@ class TripReportController extends Controller
         }
         else
         {
-            $client_ids         =   [$client_id];
             $vehicle_ids        =   [$vehicle_id];
         }
 
-        $trip_reports       =   (new VehicleTripSummary())->getTripDetailsBetweenTwoDates($client_ids, $vehicle_ids, $from_date, $to_date);
-        $get_all_clients    =   (new Client())->getIdNameAndMobileNoOfAllClients();
-        return view('Reports::trip-report-client',['clients'=>$get_all_clients, 'client_id'=>$client_id, 'vehicle_id'=>$vehicle_id, 'from_date'=>$from_date, 'to_date'=>$to_date,'trip_reports'=>$trip_reports ]);
+        $trip_reports       =   (new VehicleTripSummary())->getTripDetailsBetweenTwoDates([\Auth::user()->client->id], $vehicle_ids, $from_date, $to_date);
+
+        return view('Reports::trip-report-client',['vehicles'=> \Auth::user()->client->vehicles, 'vehicle_id'=>$vehicle_id, 'from_date'=>$from_date, 'to_date'=>$to_date,'trip_reports'=>$trip_reports ]);
     }
   
     /**
