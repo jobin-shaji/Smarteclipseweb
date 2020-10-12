@@ -295,7 +295,7 @@ class TripReportController extends Controller
 
         $trip_reports       =   (new VehicleTripSummary())->getTripDetailsBetweenTwoDates($client_ids, $vehicle_ids, $from_date, $to_date);
         $get_all_clients    =   (new Client())->getIdNameAndMobileNoOfAllClients();
-        return view('Reports::trip-report-view-in-client',['clients'=>$get_all_clients, 'client_id'=>$client_id, 'vehicle_id'=>$vehicle_id, 'from_date'=>$from_date, 'to_date'=>$to_date,'trip_reports'=>$trip_reports ]);
+        return view('Reports::trip-report-client',['clients'=>$get_all_clients, 'client_id'=>$client_id, 'vehicle_id'=>$vehicle_id, 'from_date'=>$from_date, 'to_date'=>$to_date,'trip_reports'=>$trip_reports ]);
     }
   
     /**
