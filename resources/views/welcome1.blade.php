@@ -324,16 +324,31 @@
  </div>
 </section>
 
-  <section id="service">
+<section id="service">
       <div class="service-cennter-bg">
   <div class="service-center-bg-rt-bg">
       <img src="images/service-center-top.png"/>
       </div>
 
           <div class="container-home">
-          <div class="service-cennter-bg-head common-head animatable moveUp">Authorized Service Center</div>
+          <div class="service-cennter-bg-head common-head animatable moveUp">For Authorized Sales and Services - KERALA</div>
               <div class="service-center-content animatable moveUp">
-              <div class="service-center-content-box">
+              <div class="service-center-content-box" style="margin-left:23%">
+
+                  <div class="service-center-content-box-lf">
+                  <img src="images/call-center-icon.png"/>
+                  </div>
+                  <div class="service-center-content-box-rt">
+                  <div class="sevice-cent-sub-head">Contact</div>
+                      <div class="sevice-cent-sub-text">
+                      <span>TRINITY TRADING</span>
+                          <p>XII/151-IJ, Tom Square,<br> Near Supplyco Supermarket,<br> Puthenvelikara - 683594,<br> Ernakulam, Kerala</p>
+                          <p>Ph No: 8647 900 200<br> 8647 900 300<br> Whatsapp: 8647 900 400</p>
+                      </div>
+
+                  </div>
+                  </div>
+              <!-- <div class="service-center-content-box">
 
                   <div class="service-center-content-box-lf">
                   <img src="images/call-center-icon.png"/>
@@ -487,7 +502,7 @@
 
                   </div>
 
-                  </div>
+                  </div> -->
               </div>
 
 
