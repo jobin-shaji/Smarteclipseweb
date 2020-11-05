@@ -343,7 +343,7 @@
                       <div class="sevice-cent-sub-text">
                       <span>TRINITY TRADING</span>
                           <p>XII/151-IJ, Tom Square,<br> Near Supplyco Supermarket,<br> Puthenvelikara - 683594,<br> Ernakulam, Kerala</p>
-                          <p>Ph No: 8647 900 200<br> 8647 900 300<br> Whatsapp: 8647 900 400</p>
+                          <p>Ph No: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;8647 900 200<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 8647 900 300<br> Whatsapp: 8647 900 400</p>
                       </div>
 
                   </div>
