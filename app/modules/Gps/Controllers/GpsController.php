@@ -8,6 +8,7 @@ use App\Modules\Gps\Models\GpsTransferItems;
 use App\Modules\Gps\Models\GpsLocation;
 use App\Modules\Gps\Models\GpsData;
 use App\Modules\Gps\Models\GpsLog;
+use App\Modules\Gps\Models\GpsWarranty;
 use App\Modules\Dealer\Models\Dealer;
 use App\Modules\Ota\Models\OtaType;
 use App\Modules\Gps\Models\VltData;
@@ -2450,7 +2451,100 @@ class GpsController extends Controller {
             return 'false';
         }
     }
-    
+
+    /**
+     * @author SSK
+     * 
+     * redirect to device warranty entry page in operations panel
+     */
+    public function deviceWarranty()
+    {
+        $gps     = Gps::select('id','imei','serial_no')->get();
+        $devices = GpsWarranty::select('id','gps_id','period_from','period_to','expired_on','expired_reason')
+        ->orderBy('created_at','asc')
+        ->with('gps:id,imei')
+        ->get();
+        return view('Gps::device-warranty', [ 'gps' => $gps, 'devices' => $devices]);
+    }
+
+    /**
+     * @author SSK
+     * 
+     * to save device warranty
+     */
+    public function AddWarranty(Request $request)
+    {
+        $device_warranty = GpsWarranty::create([
+            'gps_id'=> $request->gps_id,
+            'period_from' => $request->period_from,
+            'period_to' => $request->period_to
+        ]);
+        if($device_warranty)
+        {
+            $request->session()->flash('message', 'Warranty added successfully!');
+            $request->session()->flash('alert-class', 'alert-success');
+            return redirect(route('device.warranty'));
+        }
+    }
+
+    /**
+     * @author SSK
+     * 
+     * to get the active warranty of device
+     */
+    public function getActiveWarranty(Request $request)
+    {
+        $active_warranty = GpsWarranty::select('id','gps_id','period_from','period_to','expired_on','expired_reason')
+        ->where('gps_id',$request->gps_id)
+        ->orderBy('period_from','desc')
+        ->with('gps:id,imei')
+        ->first();
+        if($active_warranty == null)
+        {
+            $gps = Gps::select('id','imei')->where('id',$request->gps_id)->first();
+        }
+        else
+        {
+            $gps = '';
+        }
+        $data = ['active_warranty' => $active_warranty, 'gps' => $gps];
+        return $data;
+    }
+
+    /**
+     * @author SSK
+     * 
+     * to edit device warranty
+     */
+    public function EditWarranty(Request $request)
+    {
+        $id = Crypt::decrypt($request->id);
+        $details = GpsWarranty::select('id','gps_id','period_from','period_to','expired_on','expired_reason')
+        ->where('id',$id)
+        ->first();
+        $active_warranty = GpsWarranty::select('id','gps_id','period_from','period_to','expired_on','expired_reason')
+        ->where('gps_id',$details->gps_id)
+        ->orderBy('period_from','desc')
+        ->with('gps:id,imei')
+        ->first();
+        return view('Gps::edit-device-warranty', [ 'details' => $details, 'active_warranty' => $active_warranty]);
+    }
+
+    /**
+     * @author SSK
+     * 
+     * to save edited device warranty details
+     */
+    public function UpdateWarranty(Request $request)
+    {
+        $device_warranty = GpsWarranty::find($request->id);
+        $device_warranty->period_from = $request->period_from;
+        $device_warranty->period_to = $request->period_to;
+        $device_warranty->save();
+        $request->session()->flash('message', ' Warranty details updated successfully!');
+        $request->session()->flash('alert-class', 'alert-success');
+        return redirect(route('device.warranty'));
+    }
     
 
     //validation for gps creation

@@ -121,6 +121,11 @@ $(function () {
         useCurrent: true,
         minDate: new Date(currentYear, currentMonth-2, currentDate)
      });
+     $( ".datepicker_warranty" ).datetimepicker({
+        format: 'YYYY-MM-DD',
+        useCurrent: true,
+        minDate: new Date(currentYear, currentMonth-2, currentDate)
+     });
     $( ".datepickerFreebies" ).datetimepicker({
         // format: 'DD-MM-YYYY',
         format: 'YYYY-MM-DD',
