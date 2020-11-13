@@ -128,6 +128,7 @@
                             <li><a class="dropdown-item" href="{{url('/vehicle')}}">LIST VEHICLES</a></li>
                             <li><a class="dropdown-item" href="{{url('/all-vehicle-docs')}}">VEHICLE DOCUMENTS</a></li>
                             <li><a class="dropdown-item" href="{{url('/vehicle-driver-log')}}">DRIVER UPDATE LOG</a></li>
+                            <li><a class="dropdown-item" href="/on-demand-report">GENERAL TRIP REPORT LIST</a></li>
                             <li><a class="dropdown-item" href="{{url('/trip-report-client')}}">TRIP REPORTS</a></li>
                             @role('fundamental|superior|pro')
                             <!-- <li><a class="dropdown-item" href="{{url('/invoice')}}">INVOICE</a></li> -->
@@ -144,6 +145,7 @@
                         <li class="dropdown-submenu">
                             <!-- <a href="#" class="dropdown-item dropdown-toggle" data-toggle="dropdown">DRIVER</a>
                             <ul class="dropdown-menu"> -->
+                           
                             <li><a class="dropdown-item" href="/driver/create">ADD DRIVER</a></li>
                             <li><a class="dropdown-item" href="{{url('/drivers')}}">DRIVER LIST</a></li>
                             @role('fundamental|superior|pro')
@@ -414,7 +416,16 @@
                 </li>
                 @role('root|operations|client')
                     <script> 
-                        var url_ms_alerts = '{{ Config::get("eclipse.urls.ms_alerts") }}';
+                        var url_ms_alerts       = '{{ Config::get("eclipse.urls.ms_alerts") }}';
+                        var url_ms_trips        = '{{ Config::get("eclipse.urls.ms_trips") }}';
+                        var url_ms_live_track   = '{{ Config::get("eclipse.urls.ms_live_track") }}';
+
+                        
+                    </script>
+                @endrole
+                @role('servicer')
+                    <script> 
+                        var url_ms_vehicle      = '{{ Config::get("eclipse.urls.ms_vehicle")}}';
                     </script>
                 @endrole
                 @role('client')
