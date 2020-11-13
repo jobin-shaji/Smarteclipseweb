@@ -150,8 +150,11 @@ Route::group(['middleware' => ['web','auth','role:operations'] ,'namespace' => '
 	Route::post('/setota-operations','GpsController@setOtaInConsoleOperations')->name('setota.operations');
 
 	Route::post('/select-ota-params','GpsController@selectOtaParamByGps')->name('select-ota-params');
-
-
+	Route::get('/device-warranty','GpsController@deviceWarranty')->name('device.warranty');
+	Route::post('/add-warranty','GpsController@AddWarranty')->name('add.warranty');
+	Route::get('/edit/{id}/warranty','GpsController@EditWarranty')->name('edit.warranty');
+	Route::post('/update-warranty','GpsController@UpdateWarranty')->name('update.warranty');
+	Route::post('/get-active-warranty','GpsController@getActiveWarranty')->name('active.warranty');
 });
 
 
