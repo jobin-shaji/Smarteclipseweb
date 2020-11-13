@@ -43,8 +43,11 @@ Route::group(['middleware' => ['web','auth','role:sub_dealer|trader'] , 'namespa
 Route::group(['middleware' => ['web','auth','role:client'] , 'namespace' => 'App\Modules\Client\Controllers' ] , function() {
 	Route::get('/payments','ClientController@paymentsView')->name('client.payments');
 	Route::get('/payment-status','ClientController@paymentReview')->name('client.payments.review');
-	Route::get('/km-calculation','ClientController@kmCalculation')->name('km-calculation');
-
+	Route::get('/on-demand-report','ClientController@OnDemandReportList')->name('ondemandreportlist');
+	Route::post('/demand-report-details','ClientController@getOnDemandReportDetails')->name('demand-report-details');
+	Route::get('client/on-demand-report-request','ClientController@createTripReport')->name('on-demand-report-request');
+	Route::post('/client/save-report-request','ClientController@saveReportRequest')->name('savereportrequest.client.p');
+	Route::post('/client/get-subscribed-client','ClientController@getSubscribedclient')->name('subscription.client');
 });
 
 Route::group(['middleware' => ['web','auth','role:client|school'] , 'namespace' => 'App\Modules\Client\Controllers' ] , function() {

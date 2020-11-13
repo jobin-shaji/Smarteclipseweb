@@ -32,6 +32,7 @@ use App\Mail\UserCreated;
 use App\Mail\UserCreatedWithoutEmail;
 use App\Mail\UserUpdated;
 use Illuminate\Support\Facades\Mail;
+use App\Modules\Client\Models\OnDemandTripReportRequests;
 
 
 class ClientController extends Controller {
@@ -1186,6 +1187,131 @@ public function selectTrader(Request $request)
             ]);
             }
     }
+     /**
+     * 
+     * save report request generation
+     * 
+     */
+    public function saveReportRequest(Request $request)
+    {
+        $rules = $this->report_request_create_rules();
+        $this->validate($request, $rules);
+        $client_id        = \Auth::user()->client->id;
+        $vehicle_id       =  $request->vehicle_id;
+        $trip_report_date = $request->trip_report_date;
+        $vehicle = Vehicle::select([
+            'id',
+            'gps_id'
+        ])
+        ->where('id',$vehicle_id )
+        ->first();
+        $gps_id             =  $vehicle->gps_id;
+        $add_report_request  =  (new OnDemandTripReportRequests())->createNewTripRequest($client_id,$vehicle_id,$gps_id,$trip_report_date); 
+        $request->session()->flash('message', 'New Request created successfully!');
+        $request->session()->flash('alert-class', 'alert-success');
+        return redirect(route('ondemandreportlist'));
+    }
+    /**
+     * 
+     * list of demand reports
+     * 
+     */
+    public function OnDemandReportList(Request $request)
+    {
+        $client_id                      =   \Auth::user()->client->id;
+        $devices                        =    Vehicle::select('id','client_id','gps_id','register_number','is_returned')
+                                            ->where('client_id',$client_id)
+                                            ->get();    
+    	$vehicles                       =   (new Vehicle())->getVehicleListBasedOnClient($client_id);
+       return view('Client::client-ondemand-report-list',['vehicles'=>$vehicles,'devices'=>$devices]);
+    }
+    /**
+     * 
+     * get on demand report details
+     * 
+     */
+    public function getOnDemandReportDetails(Request $request)
+    {
+        
+       
+        $from       = $request->data['from_date'];
+        $to         = $request->data['to_date'];
+        $vehicle_id = $request->data['vehicle'];
+        $client_id  = \Auth::user()->client->id;
+        $tripreportdetails = OnDemandTripReportRequests::select(
+                            'id', 
+                            'vehicle_id',
+                            'gps_id',                      
+                            'trip_report_date',
+                            'job_submitted_on', 
+                            'job_attended_on' ,
+                            'job_completed_on', 
+                            'client_id',
+                            'report_type'            
+                            )
+                        ->with('vehicle:id,register_number')
+                        ->orderBy('id','desc')
+                        ->where('client_id',$client_id);
+                        
+                        if($from)
+                        {
+                           if($vehicle_id == 0)
+                            {
+
+                             $search_from_date  =   date("Y-m-d", strtotime($from));
+                             $search_to_date    =   date("Y-m-d", strtotime($to));
+                             $tripreportdetails =   $tripreportdetails->whereDate('trip_report_date', '>=', $search_from_date)
+                            ->whereDate('trip_report_date', '<=', $search_to_date);
+                            }
+                            else
+                            {
+                             $search_from_date  =   date("Y-m-d", strtotime($from));
+                             $search_to_date    =   date("Y-m-d", strtotime($to));
+                             $tripreportdetails =   $tripreportdetails->whereDate('trip_report_date', '>=', $search_from_date)
+                            ->whereDate('trip_report_date', '<=', $search_to_date)
+                            ->where('vehicle_id',$vehicle_id); 
+                            }
+                        }
+                        $tripreportdetails=$tripreportdetails->get(); 
+      
+            return DataTables::of($tripreportdetails)
+            ->addIndexColumn()
+            ->addColumn('status', function ($tripreportdetails) { 
+            
+                    if(!empty($tripreportdetails->job_submitted_on)&& empty($tripreportdetails->job_attended_on) && empty($tripreportdetails->job_completed_on)) {
+                        return "Pending";
+                    }
+                    else if(!empty($tripreportdetails->job_submitted_on) && !empty($tripreportdetails->job_attended_on) && empty($tripreportdetails->job_completed_on)){
+                            return "In Progress";
+                    }
+                    else if(!empty($tripreportdetails->job_submitted_on) && !empty($tripreportdetails->job_attended_on)&& !empty($tripreportdetails->job_completed_on)){
+                            return "Completed";
+                    }             
+            })
+           ->addColumn('action', function ($tripreportdetails) {
+            $b_url = \URL::to('/');
+               if(!empty($tripreportdetails->job_submitted_on)&& empty($tripreportdetails->job_attended_on) && empty($tripreportdetails->job_completed_on)) {
+                return "
+                  
+                    <button class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-ok'></i> Generate</button>
+                ";
+                }else if(!empty($tripreportdetails->job_submitted_on) && !empty($tripreportdetails->job_attended_on) && empty($tripreportdetails->job_completed_on)){
+                return "
+                    
+                    <button  class='btn btn-xs btn-success'><i class='glyphicon glyphicon-ok'></i> Download </button>
+                ";
+                }else if(!empty($tripreportdetails->job_submitted_on) && !empty($tripreportdetails->job_attended_on)&& !empty($tripreportdetails->job_completed_on)){
+                    return "
+                    
+                    <button  class='btn btn-xs btn-success'><i class='glyphicon glyphicon-ok'></i> Download </button>
+                "; 
+            }    
+           })
+        ->rawColumns(['link', 'action'])
+        ->make();
+    }
+
+
 
 /////////////////////////Update client role-start//////////
 
@@ -1392,6 +1518,15 @@ public function selectTrader(Request $request)
 
         ];
         return  $rules;
+    }
+    public function report_request_create_rules()
+    {
+        $rules = [
+            'vehicle_id' => 'required',
+            'trip_report_date' => 'required',
+
+        ];
+         return  $rules;
     }
     public function rayfleetClientProfileUpdateRules($client)
     {
