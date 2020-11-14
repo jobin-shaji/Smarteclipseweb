@@ -10,7 +10,7 @@ use Carbon\Carbon AS Carbon;
 class OnDemandTripReportRequests extends Model
 {
     protected $fillable=[
-		'client_id','vehicle_id','gps_id','trip_report_date','job_submitted_on','report_type'
+		'client_id','vehicle_id','gps_id','trip_report_date','job_submitted_on','report_type',''
     ];
     
     public function createNewTripRequest($clientid,$vehicle_id,$gps_id,$trip_report_date)

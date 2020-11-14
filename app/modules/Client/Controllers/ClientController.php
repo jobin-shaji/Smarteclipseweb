@@ -1247,7 +1247,8 @@ public function selectTrader(Request $request)
                             'job_attended_on' ,
                             'job_completed_on', 
                             'client_id',
-                            'report_type'            
+                            'report_type',
+                            'is_job_failed'          
                             )
                         ->with('vehicle:id,register_number')
                         ->orderBy('id','desc')
@@ -1284,9 +1285,12 @@ public function selectTrader(Request $request)
                     else if(!empty($tripreportdetails->job_submitted_on) && !empty($tripreportdetails->job_attended_on) && empty($tripreportdetails->job_completed_on)){
                             return "In Progress";
                     }
-                    else if(!empty($tripreportdetails->job_submitted_on) && !empty($tripreportdetails->job_attended_on)&& !empty($tripreportdetails->job_completed_on)){
+                    else if(!empty($tripreportdetails->job_submitted_on) && !empty($tripreportdetails->job_attended_on)&& !empty($tripreportdetails->job_completed_on) &&($tripreportdetails->is_job_failed == 0)){
                             return "Completed";
-                    }             
+                    }   
+                    else if(!empty($tripreportdetails->job_submitted_on) && !empty($tripreportdetails->job_attended_on)&& !empty($tripreportdetails->job_completed_on) &&($tripreportdetails->is_job_failed == 1)){
+                        return "Failed";
+                }                 
             })
            ->addColumn('action', function ($tripreportdetails) {
             $b_url = \URL::to('/');
@@ -1300,12 +1304,15 @@ public function selectTrader(Request $request)
                     
                     <button  class='btn btn-xs btn-success'><i class='glyphicon glyphicon-ok'></i> Download </button>
                 ";
-                }else if(!empty($tripreportdetails->job_submitted_on) && !empty($tripreportdetails->job_attended_on)&& !empty($tripreportdetails->job_completed_on)){
+                }else if(!empty($tripreportdetails->job_submitted_on) && !empty($tripreportdetails->job_attended_on)&& !empty($tripreportdetails->job_completed_on) &&($tripreportdetails->is_job_failed == 0)){
                     return "
                     
                     <button  class='btn btn-xs btn-success'><i class='glyphicon glyphicon-ok'></i> Download </button>
                 "; 
-            }    
+               } else if(!empty($tripreportdetails->job_submitted_on) && !empty($tripreportdetails->job_attended_on)&& !empty($tripreportdetails->job_completed_on) &&($tripreportdetails->is_job_failed == 1)){
+            return "FAILED"
+            ; 
+            }       
            })
         ->rawColumns(['link', 'action'])
         ->make();
