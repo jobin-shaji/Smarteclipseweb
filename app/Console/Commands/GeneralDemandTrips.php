@@ -4,6 +4,8 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use App\Modules\Client\Models\OnDemandTripReportRequests;
+use App\Jobs\ProcessGeneralTripJob;
+use Queue;
 class GeneralDemandTrips extends Command
 {
     /**
@@ -42,8 +44,8 @@ class GeneralDemandTrips extends Command
         foreach ($pending_trips as $pending_trip) 
         {
         $pending_trip->job_attended_on = $current_date;
-        Queue::push('ProcessGeneralTripJob',$pending_trip);
-            
+        $pending_trip->save();
+        Queue::push(new ProcessGeneralTripJob($pending_trip));
         }
     }
 }

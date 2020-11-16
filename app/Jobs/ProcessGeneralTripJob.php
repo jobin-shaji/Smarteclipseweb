@@ -9,7 +9,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 
 class ProcessGeneralTripJob implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    use  InteractsWithQueue, Queueable, SerializesModels;
 
     /** 
      * variables
@@ -22,6 +22,7 @@ class ProcessGeneralTripJob implements ShouldQueue
      */
     public function __construct($pendingTrip)
     {
+        dd($pendingTrip);
         $this->pendingtrips    = $pendingTrip;
     }
 
