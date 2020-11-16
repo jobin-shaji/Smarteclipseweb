@@ -22,8 +22,8 @@ class ProcessGeneralTripJob implements ShouldQueue
      */
     public function __construct($pendingTrip)
     {
-        dd($pendingTrip);
-        $this->pendingtrips    = $pendingTrip;
+        
+    $this->pendingtrips = $pendingTrip;
     }
 
     /**
@@ -33,7 +33,7 @@ class ProcessGeneralTripJob implements ShouldQueue
      */
     public function handle()
     {
-     dd($this->pendingtrips);
-        
+     dd("test");
+    //  dd($pendingtrips);
     }
 }
