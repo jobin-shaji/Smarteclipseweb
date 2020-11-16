@@ -31,6 +31,11 @@ class OnDemandTripReportRequests extends Model
   {
     return $this->hasOne('App\Modules\Vehicle\Models\Vehicle','id','vehicle_id')->withTrashed();
   }
+   
+  public function getPendingReportRequests()
+  {
+    return self::orWhereNull('job_attended_on')->get();
+  }
 
 
 }
