@@ -4,6 +4,10 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use App\Modules\Client\Models\OnDemandTripReportRequests;
+use App\Modules\Vehicle\Models\Vehicle;
+use App\Modules\Gps\Models\GpsData;
+use App\Modules\Vehicle\Models\DailyKm;
+use App\Modules\Vehicle\Models\VehicleTripSummary;
 use App\Jobs\ProcessGeneralTripJob;
 use Queue;
 class GeneralDemandTrips extends Command
@@ -48,4 +52,5 @@ class GeneralDemandTrips extends Command
         Queue::push(new ProcessGeneralTripJob($pending_trip));
         }
     }
+    
 }
