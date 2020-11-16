@@ -1,29 +1,31 @@
 <?php
 
 namespace App\Jobs;
+use App\Http\Controllers\MsController;
 
-use Illuminate\Bus\Queueable;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
-
-class ProcessGeneralTripJob implements ShouldQueue
+class ProcessGeneralTripJob extends Job
 {
-    use  InteractsWithQueue, Queueable, SerializesModels;
+    
+    protected $pending_trip;
 
-    /** 
-     * variables
-     */
-    public $pendingTrip;
+
+    /**
+    * The number of times the job may be attempted.
+    *
+    * @var int
+    */
+
+    public $tries = 3;
+
+
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($pendingTrip)
+    public function __construct($pending_trip)
     {
-        
-    $this->pendingtrips = $pendingTrip;
+        $this->pending_trip = $pending_trip;
     }
 
     /**
@@ -33,7 +35,6 @@ class ProcessGeneralTripJob implements ShouldQueue
      */
     public function handle()
     {
-     dd("test");
-    //  dd($pendingtrips);
+         dd( $this->pending_trip);
     }
 }
