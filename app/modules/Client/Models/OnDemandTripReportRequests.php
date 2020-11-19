@@ -10,7 +10,7 @@ use Carbon\Carbon AS Carbon;
 class OnDemandTripReportRequests extends Model
 {
     protected $fillable=[
-		'client_id','vehicle_id','gps_id','trip_report_date','job_submitted_on','report_type','job_attended_on'
+		'client_id','vehicle_id','gps_id','trip_report_date','job_submitted_on','report_type','job_attended_on','job_completed_on','is_job_failed','download_link'
     ];
     
     public function createNewTripRequest($clientid,$vehicle_id,$gps_id,$trip_report_date)
@@ -36,6 +36,11 @@ class OnDemandTripReportRequests extends Model
   {
     return self::orWhereNull('job_attended_on')->get();
   }
+  public function getSinglePendingReport($on_demand_request_id)
+  {
+  return self::where('id',$on_demand_request_id)->first();
+  }
+
 
 
 }

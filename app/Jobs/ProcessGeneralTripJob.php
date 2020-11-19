@@ -2,13 +2,27 @@
 
 namespace App\Jobs;
 use App\Http\Controllers\MsController;
-
+use App\Modules\Vehicle\Models\Vehicle;
+use App\Modules\Gps\Models\GpsData;
+use App\Modules\Vehicle\Models\DailyKm;
+use App\Modules\Vehicle\Models\VehicleTripSummary;
+use App\Http\Traits\LocationTrait;
+use Illuminate\Support\Facades\Log;
+use App\Modules\Client\Models\OnDemandTripReportRequests;
+use PDF;
+use Carbon\Carbon AS Carbon;
 class ProcessGeneralTripJob extends Job
 {
-    
+      /**
+     * 
+     * 
+     */
+     use LocationTrait;
+
     protected $pending_trip;
-
-
+    protected $source_table;
+    protected $id;
+    protected $on_demand_request_id;
     /**
     * The number of times the job may be attempted.
     *
@@ -26,7 +40,6 @@ class ProcessGeneralTripJob extends Job
     public function __construct($pending_trip)
     {
         $this->pending_trip = $pending_trip;
-        echo "$pending_trip";
     }
 
     /**
@@ -36,10 +49,10 @@ class ProcessGeneralTripJob extends Job
      */
     public function handle()
     {
-        
+        // $this->getPlacenameFromGeoCords(010.546565,076.623520,"heremap");
         $this->trip_date                =   $this->pending_trip['trip_report_date'];
-        $removed_alphanumeric_from_date =   preg_replace( '/[\W]/', '', $trip_date);
-        $this->$source_table            =   'gps_data_'.$removed_alphanumeric_from_date;
+        $removed_alphanumeric_from_date =   preg_replace( '/[\W]/', '',$this->trip_date);
+        $source_table                   =   'gps_data_'.$removed_alphanumeric_from_date;
         $id                             =   $this->pending_trip['vehicle_id'];
         $on_demand_request_id           =   $this->pending_trip['id'];
         $vehicle = Vehicle::find($id);
@@ -49,26 +62,26 @@ class ProcessGeneralTripJob extends Job
             echo "vehicle not found"."\n";
             exit;
         }else{
-            $this->processTripsofVehicle($vehicle->gps,$on_demand_request_id);
+            $this->processTripsofVehicle($vehicle->gps,$on_demand_request_id,$source_table);
+            echo "processing completed !!"."\n";
         }
-          
-
-        
     }
-      /**
+    /**
      * 
-     *
+     *process trip of vehicle
      * 
      */
-    public function processTripsofVehicle($gps,$on_demand_request_id)
+    public function processTripsofVehicle($gps,$on_demand_request_id,$source_table)
     {
-        $source_table    = new GpsData;
-        $vehicle_records = $source_table->fetchDateWiseRecordsOfVehicleDevice($gps->imei, $this->source_table);
+        $source_table_gps= new GpsData;
+        $vehicle_records = $source_table_gps->fetchDateWiseRecordsOfVehicleDevice($gps->imei,$source_table);
         $geo_locations   = [];
         $trips           = [];
         $total_distance  = 0;
         $summary         = [];
-
+        $pending_trip    =   (new OnDemandTripReportRequests())->getSinglePendingReport($on_demand_request_id); 
+        $pending_trip->is_job_failed = 1;
+        $pending_trip->save();
         foreach ($vehicle_records as $item) 
         {
             if($item->vehicle_mode == 'M')
@@ -88,12 +101,13 @@ class ProcessGeneralTripJob extends Job
 
                 $result = $this->getDistanceOfTrip($geo_locations, (count($trips)+1), $gps->vehicle->client->id, $gps->vehicle->id);
                 $distance = m2Km($result);
-
                 $total_distance = $total_distance + $result;
+                // based on map variable we can get address from LocationTrait
+                $map ="heremap";
                 $trip = [ 
-                            'start_address' => $this->getPlacenameFromGeoCords($start_lat, $start_lng),
+                            'start_address' => $this->getPlacenameFromGeoCords($start_lat,$start_lng,$map),
                             'start_time'    => $start_time,
-                            'stop_address'  => $this->getPlacenameFromGeoCords($stop_lat, $stop_lng),
+                            'stop_address'  => $this->getPlacenameFromGeoCords($stop_lat,$stop_lng,$map),
                             'stop_time'     => $stop_time,
                             'duration'      => dateTimediff($start_time, $stop_time),
                             'distance'      => $distance
@@ -115,10 +129,75 @@ class ProcessGeneralTripJob extends Job
             $summary["km"]           = m2Km($total_distance);
             $summary["duration"]     = dateTimediff($summary["on"], $summary["off"]);
             // generate pdf report of vehicle 
-            $this->generatePdfReport($trips, $summary, $gps);
+          
+            $this->generatePdfReport($trips, $summary, $gps,$on_demand_request_id);
             // update daily km calculation of vehicle based on new calculation 
             (new DailyKm)->updateDailyKm($total_distance, $gps->id, $this->trip_date);
+        }else
+        {
+            $pending_trip =   (new OnDemandTripReportRequests())->getSinglePendingReport($on_demand_request_id); 
+            $current_date =   Carbon::now()->format('Y-m-d H:i:s');
+            $pending_trip->job_completed_on=$current_date;
+            $pending_trip->is_job_failed = 0;
+            $pending_trip->save();
         }
 
     }
+    /**
+     * 
+     *get distance of trip
+     * 
+     */
+    public function getDistanceOfTrip($geo_locations, $trip_id, $client_id, $vehicle_id)
+    {
+        $trip = tripDistanceFromHereMap($geo_locations);
+
+        //save gpx file lo trip reports folder 
+        //directory client id => vehicle id => trip date => trips
+
+        if (!file_exists("public/documents/tripreports/".$client_id."/".$vehicle_id."/".$this->trip_date."/trips/")) {
+            mkdir("public/documents/tripreports/".$client_id."/".$vehicle_id."/".$this->trip_date."/trips/", 0777, true);
+        }
+        $path      = "public/documents/tripreports/".$client_id."/".$vehicle_id."/".$this->trip_date."/trips/".$trip_id.".gpx";
+        $trip_file = fopen($path, "w");
+        fwrite($trip_file, $trip['gpx']);
+        fclose($trip_file);
+        return $trip['distance'];
+
+    }
+
+    /**
+     * 
+     * generate pdf report
+     * 
+     */
+    public function generatePdfReport($trips, $summary, $gps,$on_demand_request_id)
+    {
+        $client_id  = $gps->vehicle->client->id;
+        $vehicle_id = $gps->vehicle->id;
+        $file_name  = $gps->imei.'-'.$this->trip_date.'.pdf';
+        $pdf        = PDF::loadView('Exports::trip-report', ['trips' => $trips, 'date' => $this->trip_date, 'summary' => $summary, 'gps' => $gps]);
+        $file       = "documents/tripreports/".$client_id."/".$vehicle_id."/".$this->trip_date."/".$file_name;
+        $pdf->save("public/".$file);
+       
+        if (file_exists("public/documents/tripreports/".$client_id."/".$vehicle_id."/".$this->trip_date."/".$file_name)) {
+            $pending_trip = (new OnDemandTripReportRequests())->getSinglePendingReport($on_demand_request_id); 
+            $pending_trip->download_link = $file;
+            $current_date =  Carbon::now()->format('Y-m-d H:i:s');
+            $pending_trip->job_completed_on = $current_date;
+            $pending_trip->is_job_failed = 0;
+            $pending_trip->save();
+        }else{
+            $pending_trip =   (new OnDemandTripReportRequests())->getSinglePendingReport($on_demand_request_id); 
+            $current_date =   Carbon::now()->format('Y-m-d H:i:s');
+            $pending_trip->job_completed_on = $current_date;
+            $pending_trip->save();
+            
+        }
+        (new VehicleTripSummary)->addNewReport($client_id, $vehicle_id, $file, $summary["km"], $this->trip_date);
+    }
+
+   
+
+
 }

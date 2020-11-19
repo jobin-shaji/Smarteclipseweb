@@ -25,7 +25,7 @@ class CreateOnDemandTripReportRequestsTable extends Migration
             $table->text('job_remarks')->nullable();
             $table->integer('is_job_failed')->default(0)->comment = '0-not a Failed Job,1-Failed Job';;
             $table->string('report_type')->nullable();
-            $table->text('download_link');
+            $table->text('download_link')->nullable();
             $table->timestamps();
             $table->softDeletes();   
         });
