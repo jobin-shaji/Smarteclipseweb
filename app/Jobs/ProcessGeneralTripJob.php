@@ -49,7 +49,6 @@ class ProcessGeneralTripJob extends Job
      */
     public function handle()
     {
-        // $this->getPlacenameFromGeoCords(010.546565,076.623520,"heremap");
         $this->trip_date                =   $this->pending_trip['trip_report_date'];
         $removed_alphanumeric_from_date =   preg_replace( '/[\W]/', '',$this->trip_date);
         $source_table                   =   'gps_data_'.$removed_alphanumeric_from_date;
@@ -113,7 +112,7 @@ class ProcessGeneralTripJob extends Job
                             'distance'      => $distance
                         ];
 
-                $trips[]      = $trip;
+                $trips[] = $trip;
                 $geo_locations = [];
             }
         }
@@ -196,8 +195,4 @@ class ProcessGeneralTripJob extends Job
         }
         (new VehicleTripSummary)->addNewReport($client_id, $vehicle_id, $file, $summary["km"], $this->trip_date);
     }
-
-   
-
-
 }

@@ -13,9 +13,9 @@ trait LocationTrait{
     */
     public function getPlacenameFromGeoCords($latitude,$longitude,$map)
     {
-        
        if($map =="heremap")
        {
+          
         $app_id               = "RN9UIyGura2lyToc9aPg";
         $app_code             = "4YMdYfSTVVe1MOD_bDp_ZA";    
         $ch                   = curl_init();  
@@ -24,7 +24,6 @@ trait LocationTrait{
         $output=curl_exec($ch);
         curl_close($ch);
         $data=json_decode($output,true);
-        // dd($data);
         return $data['Response']['View'][0]['Result'][0]['Location']['Address']['Label'];  
         }else{
         if(!empty($latitude) && !empty($longitude)){

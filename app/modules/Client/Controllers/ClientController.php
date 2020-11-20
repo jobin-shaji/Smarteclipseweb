@@ -1199,17 +1199,29 @@ public function selectTrader(Request $request)
         $client_id        = \Auth::user()->client->id;
         $vehicle_id       =  $request->vehicle_id;
         $trip_report_date = $request->trip_report_date;
-        $vehicle = Vehicle::select([
+        $vehicle          = Vehicle::select([
             'id',
             'gps_id'
         ])
         ->where('id',$vehicle_id )
         ->first();
         $gps_id             =  $vehicle->gps_id;
-        $add_report_request  =  (new OnDemandTripReportRequests())->createNewTripRequest($client_id,$vehicle_id,$gps_id,$trip_report_date); 
-        $request->session()->flash('message', 'New Request created successfully!');
-        $request->session()->flash('alert-class', 'alert-success');
-        return redirect(route('ondemandreportlist'));
+        $add_report_request =  (new OnDemandTripReportRequests())->createNewTripRequest($client_id,$vehicle_id,$gps_id,$trip_report_date); 
+        if($add_report_request)
+            {
+                return response()->json([
+                    'status'    => true,
+                    'message'   => 'New request created sucessfully'
+                ]);
+            }else{
+                return response()->json([
+                    'status'    => false,
+                    'message'   => 'Something went wrong'
+                ]);
+            }
+        // $request->session()->flash('message', 'New Request created successfully!');
+        // $request->session()->flash('alert-class', 'alert-success');
+        // return redirect(route('ondemandreportlist'));
     }
     /**
      * 
