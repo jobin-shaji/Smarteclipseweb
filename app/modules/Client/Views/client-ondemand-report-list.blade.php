@@ -16,12 +16,10 @@
     <div class="callout callout-success">
     <strong>Success!</strong> Request added Sucessfully!
     </div>
-
     </div>
-<!-- message after sucessfull submit-->
+     <!-- message after sucessfull submit-->
     </nav>  
-    <button class="btn btn-sm btn-info btn2 add_new" id="vehicleTripReportConfiguration" onclick="addGeneralRequest()"><i class='fa fa-plus'></i>
-   Generate New Trip Report</button>
+   
   <div class="container-fluid">
     <div class="card-body">
       <div >
@@ -75,7 +73,9 @@
                         </div>
                       </div>
                       </div>
-
+                      <button class="btn btn-sm btn-info btn2 add_new" id="vehicleTripReportConfiguration" onclick="addGeneralRequest()"><i class='fa fa-plus'></i>
+                       Generate New Trip Report</button>
+                       <br>
                     <table class="table table-hover table-bordered  table-striped datatable" style="width:100%;text-align: center" id="dataTable">
                         <thead>
                             <tr>
@@ -178,7 +178,7 @@
    }
    .add_new
    {
-   margin-left:80%;
+   margin-left:83%;
    margin-bottom: 10px;
    }
    .select2-new{
@@ -224,6 +224,11 @@
 @section('script')
 @role('client')
 <script src="{{asset('js/gps/client-ondemand-report-list.js')}}"></script>
+<script>
+// $('#myModal').on('hidden.bs.modal', function () {
+//       location.reload();
+//    })
+</script>
 @endrole
 @endsection
 @endsection

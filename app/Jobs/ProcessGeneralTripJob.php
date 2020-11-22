@@ -11,25 +11,31 @@ use Illuminate\Support\Facades\Log;
 use App\Modules\Client\Models\OnDemandTripReportRequests;
 use PDF;
 use Carbon\Carbon AS Carbon;
-class ProcessGeneralTripJob extends Job
+use Illuminate\Bus\Queueable;
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Bus\Dispatchable;
+class ProcessGeneralTripJob implements ShouldQueue
+// class ProcessGeneralTripJob extends Job
 {
       /**
      * 
      * 
      */
-     use LocationTrait;
-
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels, LocationTrait;
     protected $pending_trip;
     protected $source_table;
     protected $id;
     protected $on_demand_request_id;
+    protected $pending_trip_array;
     /**
     * The number of times the job may be attempted.
     *
     * @var int
     */
 
-    public $tries = 3;
+     public $tries = 1;
 
 
     /**
@@ -40,6 +46,8 @@ class ProcessGeneralTripJob extends Job
     public function __construct($pending_trip)
     {
         $this->pending_trip = $pending_trip;
+
+        
     }
 
     /**
@@ -49,18 +57,21 @@ class ProcessGeneralTripJob extends Job
      */
     public function handle()
     {
+        Log::info($this->pending_trip);
         $this->trip_date                =   $this->pending_trip['trip_report_date'];
         $removed_alphanumeric_from_date =   preg_replace( '/[\W]/', '',$this->trip_date);
         $source_table                   =   'gps_data_'.$removed_alphanumeric_from_date;
         $id                             =   $this->pending_trip['vehicle_id'];
         $on_demand_request_id           =   $this->pending_trip['id'];
         $vehicle = Vehicle::find($id);
-
         if(!$vehicle)
         {
+            Log::info("novehicle");
             echo "vehicle not found"."\n";
+            
             exit;
         }else{
+            
             $this->processTripsofVehicle($vehicle->gps,$on_demand_request_id,$source_table);
             echo "processing completed !!"."\n";
         }
@@ -72,6 +83,7 @@ class ProcessGeneralTripJob extends Job
      */
     public function processTripsofVehicle($gps,$on_demand_request_id,$source_table)
     {
+        Log::info("entered");
         $source_table_gps= new GpsData;
         $vehicle_records = $source_table_gps->fetchDateWiseRecordsOfVehicleDevice($gps->imei,$source_table);
         $geo_locations   = [];
@@ -84,7 +96,8 @@ class ProcessGeneralTripJob extends Job
         foreach ($vehicle_records as $item) 
         {
             if($item->vehicle_mode == 'M')
-            {    
+            { 
+                Log::info("moving");   
                $node =  [ 'lattitude' => $item->latitude, 'longitude' => $item->longitude, 'device_time' => $item->device_time];
                $geo_locations[] = $node;
             }
@@ -172,6 +185,7 @@ class ProcessGeneralTripJob extends Job
      */
     public function generatePdfReport($trips, $summary, $gps,$on_demand_request_id)
     {
+        Log::info("pdf");
         $client_id  = $gps->vehicle->client->id;
         $vehicle_id = $gps->vehicle->id;
         $file_name  = $gps->imei.'-'.$this->trip_date.'.pdf';

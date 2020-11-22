@@ -1194,18 +1194,18 @@ public function selectTrader(Request $request)
      */
     public function saveReportRequest(Request $request)
     {
-        $rules = $this->report_request_create_rules();
+        $rules            = $this->report_request_create_rules();
         $this->validate($request, $rules);
         $client_id        = \Auth::user()->client->id;
         $vehicle_id       =  $request->vehicle_id;
         $trip_report_date = $request->trip_report_date;
         $vehicle          = Vehicle::select([
-            'id',
-            'gps_id'
-        ])
-        ->where('id',$vehicle_id )
-        ->first();
-        $gps_id             =  $vehicle->gps_id;
+                                'id',
+                                'gps_id'
+                            ])
+                            ->where('id',$vehicle_id )
+                            ->first();
+        $gps_id           =  $vehicle->gps_id;
         $add_report_request =  (new OnDemandTripReportRequests())->createNewTripRequest($client_id,$vehicle_id,$gps_id,$trip_report_date); 
         if($add_report_request)
             {
@@ -1219,9 +1219,6 @@ public function selectTrader(Request $request)
                     'message'   => 'Something went wrong'
                 ]);
             }
-        // $request->session()->flash('message', 'New Request created successfully!');
-        // $request->session()->flash('alert-class', 'alert-success');
-        // return redirect(route('ondemandreportlist'));
     }
     /**
      * 
@@ -1239,18 +1236,16 @@ public function selectTrader(Request $request)
     }
     /**
      * 
-     * get on demand report details
-     * 
+     * get ondemand report details
+     * @rar
      */
     public function getOnDemandReportDetails(Request $request)
-    {
-        
-       
+    { 
         $from       = $request->data['from_date'];
         $to         = $request->data['to_date'];
         $vehicle_id = $request->data['vehicle'];
         $client_id  = \Auth::user()->client->id;
-        $tripreportdetails = OnDemandTripReportRequests::select(
+        $trip_report_details= self::select(
                             'id', 
                             'vehicle_id',
                             'gps_id',                      
@@ -1263,11 +1258,11 @@ public function selectTrader(Request $request)
                             'is_job_failed',
                             'download_link'          
                             )
-                        ->with('vehicle:id,register_number')
-                        ->orderBy('id','desc')
-                        ->where('client_id',$client_id);
-                        
-                        if($from)
+                            ->with('vehicle:id,register_number')
+                            ->orderBy('id','desc')
+                            ->where('client_id',$client_id);
+        // $tripreportdetails = (new OnDemandTripReportRequests())->listTripDetails($client_id); 
+                         if($from)
                         {
                            if($vehicle_id == 0)
                             {
@@ -1296,10 +1291,10 @@ public function selectTrader(Request $request)
                         return "Pending";
                     }
                     else if(!empty($tripreportdetails->job_submitted_on) && !empty($tripreportdetails->job_attended_on) && empty($tripreportdetails->job_completed_on)){
-                            return "In Progress";
+                        return "In Progress";
                     }
                     else if(!empty($tripreportdetails->job_submitted_on) && !empty($tripreportdetails->job_attended_on)&& !empty($tripreportdetails->job_completed_on) &&($tripreportdetails->is_job_failed == 0)){
-                            return "Completed";
+                        return "Completed";
                     }   
                     else if(!empty($tripreportdetails->job_submitted_on) && !empty($tripreportdetails->job_attended_on)&& !empty($tripreportdetails->job_completed_on) &&($tripreportdetails->is_job_failed == 1)){
                         return "Failed";
@@ -1315,7 +1310,7 @@ public function selectTrader(Request $request)
                 }else if(!empty($tripreportdetails->job_submitted_on) && !empty($tripreportdetails->job_attended_on) && empty($tripreportdetails->job_completed_on)){
                 return "
                     
-                    <button  class='btn btn-xs btn-success'><i class='glyphicon glyphicon-ok'></i> Download </button>
+                    <button  class='btn btn-xs btn-success'><i class='fa fa-download'></i> Download </button>
                 ";
                 }else if(!empty($tripreportdetails->job_completed_on) &&($tripreportdetails->is_job_failed ==0)){
                      if($tripreportdetails->download_link)
@@ -1333,7 +1328,7 @@ public function selectTrader(Request $request)
                } else if(!empty($tripreportdetails->job_completed_on) &&($tripreportdetails->is_job_failed ==1)){
                 return "
                     
-                <button  class='btn btn-xs btn-success'><i class='glyphicon glyphicon-ok'></i>Failed</button>
+                    <button  class='btn btn-xs btn-success'><i class='glyphicon glyphicon-ok'></i>Failed</button>
                  "; 
                }
            })
