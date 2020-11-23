@@ -26,25 +26,25 @@ class GeneralController extends Controller
    
     }
 
-    public function processGeneralTrip($pending_trip)
+    public function processGeneralTrip($trip_report_date,$vehicle_id,$on_demand_id)
     {
-        $this->trip_date                =   $pending_trip['trip_report_date'];
+        $this->trip_date                =   $trip_report_date;
         $removed_alphanumeric_from_date =   preg_replace( '/[\W]/', '',$this->trip_date);
         $source_table                   =   'gps_data_'.$removed_alphanumeric_from_date;
-        $id                             =   $pending_trip['vehicle_id'];
-        $on_demand_request_id           =   $pending_trip['id'];
+        $id                             =   $vehicle_id;
+        $on_demand_request_id           =   $on_demand_id;
         $vehicle = Vehicle::find($id);
         if(!$vehicle)
         {
             
             echo "vehicle not found"."\n";
             
-            exit;
         }else{
             
             $this->processTripsofVehicle($vehicle->gps,$on_demand_request_id,$source_table);
             echo "processing completed !!"."\n";
         }
+        return;
 
     }
     /* 
@@ -53,7 +53,7 @@ class GeneralController extends Controller
     */
    public function processTripsofVehicle($gps,$on_demand_request_id,$source_table)
    {
-       Log::info("entered");
+       
        $source_table_gps= new GpsData;
        $vehicle_records = $source_table_gps->fetchDateWiseRecordsOfVehicleDevice($gps->imei,$source_table);
        $geo_locations   = [];
@@ -123,6 +123,7 @@ class GeneralController extends Controller
            $pending_trip->is_job_failed = 0;
            $pending_trip->save();
        }
+       return;
 
    }
     /**
@@ -178,6 +179,7 @@ class GeneralController extends Controller
             
         }
         (new VehicleTripSummary)->addNewReport($client_id, $vehicle_id, $file, $summary["km"], $this->trip_date);
+        return;
     }
 
 }

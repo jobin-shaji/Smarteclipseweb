@@ -2,10 +2,6 @@
 
 namespace App\Jobs;
 use App\Http\Controllers\GeneralController;
-use App\Modules\Vehicle\Models\Vehicle;
-use App\Modules\Gps\Models\GpsData;
-use App\Modules\Vehicle\Models\DailyKm;
-use App\Modules\Vehicle\Models\VehicleTripSummary;
 use App\Http\Traits\LocationTrait;
 use Illuminate\Support\Facades\Log;
 use App\Modules\Client\Models\OnDemandTripReportRequests;
@@ -23,11 +19,9 @@ use Illuminate\Foundation\Bus\Dispatchable;
      * 
      */
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels, LocationTrait;
-    protected $pending_trip;
-    protected $source_table;
-    protected $id;
-    protected $on_demand_request_id;
-    protected $pending_trip_array;
+    public $trip_report_date;
+    public $id;
+    public $on_demand_request_id;
     /**
     * The number of times the job may be attempted.
     *
@@ -42,9 +36,11 @@ use Illuminate\Foundation\Bus\Dispatchable;
      *
      * @return void
      */
-    public function __construct($pending_trip)
+    public function __construct($trip_report_date,$id,$on_demand_request_id)
     {
-        $this->pending_trip = $pending_trip;
+        $this->trip_report_date = $trip_report_date;
+        $this->id               = $id;
+        $this->on_demand_request_id = $on_demand_request_id;
 
     }
 
@@ -55,9 +51,8 @@ use Illuminate\Foundation\Bus\Dispatchable;
      */
     public function handle()
     {
-        Log::info("handles");
-        Log::info($this->pending_trip);
-        (new GeneralController())->processGeneralTrip($this->pending_trip);
+        // Log::info("handles");
+        (new GeneralController())->processGeneralTrip($this->trip_report_date,$this->id, $this->on_demand_request_id);
         return;
     
     }

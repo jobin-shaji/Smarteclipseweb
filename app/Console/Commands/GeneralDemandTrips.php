@@ -48,14 +48,16 @@ class GeneralDemandTrips extends Command
     public function handle()
     {
         $pending_trips         =   (new OnDemandTripReportRequests())->getPendingReportRequests(); 
-        $current_date          =    date('Y-m-d');
         foreach ($pending_trips as $pending_trip) 
         {
-            Log::info("enteredloop");
-        // $pending_trip->job_attended_on = $current_date;
-        // $pending_trip->save();
-        Queue::push(new ProcessGeneralTripJob($pending_trip));
-        }
+        $trip_report_date               =   $pending_trip['trip_report_date']; 
+        $id                             =   $pending_trip['vehicle_id'];
+        $on_demand_request_id           =   $pending_trip['id'];
+        $pending_trip->job_attended_on  =   date('Y-m-d');
+        $pending_trip->save();
+        Queue::push(new ProcessGeneralTripJob($trip_report_date,$id,$on_demand_request_id));
+       
+    }
        
     }
     
