@@ -51,7 +51,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
      */
     public function handle()
     {
-        // Log::info("handles");
+       
         (new GeneralController())->processGeneralTrip($this->trip_report_date,$this->id, $this->on_demand_request_id);
         return;
     
