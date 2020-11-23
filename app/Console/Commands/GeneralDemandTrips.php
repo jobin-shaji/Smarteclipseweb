@@ -28,7 +28,7 @@ class GeneralDemandTrips extends Command
      *
      * @var string
      */
-    protected $description = 'Trip generation for unsubscribed vehicles';
+    protected $description = 'Trip generation for on demand vehicles';
 
     /**
      * Create a new command instance.

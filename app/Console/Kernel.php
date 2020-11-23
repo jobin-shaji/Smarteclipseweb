@@ -33,10 +33,10 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-         $schedule->command('General:DemandTrips')->everyMinute();
-        // $schedule->command('vehicle:trips')->dailyAt('03:00');
-        // $schedule->command('vehicle:odometer')->dailyAt('06:00');
-        // $schedule->command('esim:pdf')->monthlyOn(20, '12:00');
+        $schedule->command('General:DemandTrips')->everyMinute();
+        $schedule->command('vehicle:trips')->dailyAt('03:00');
+        $schedule->command('vehicle:odometer')->dailyAt('06:00');
+        $schedule->command('esim:pdf')->monthlyOn(20, '12:00');
     }
 
     /**
