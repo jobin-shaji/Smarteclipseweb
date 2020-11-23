@@ -16,8 +16,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-class ProcessGeneralTripJob implements ShouldQueue
-// class ProcessGeneralTripJob extends Job
+ class ProcessGeneralTripJob extends Job
 {
       /**
      * 
@@ -47,7 +46,6 @@ class ProcessGeneralTripJob implements ShouldQueue
     {
         $this->pending_trip = $pending_trip;
 
-        
     }
 
     /**
@@ -57,6 +55,7 @@ class ProcessGeneralTripJob implements ShouldQueue
      */
     public function handle()
     {
+        Log::info("handles");
         Log::info($this->pending_trip);
         $this->trip_date                =   $this->pending_trip['trip_report_date'];
         $removed_alphanumeric_from_date =   preg_replace( '/[\W]/', '',$this->trip_date);

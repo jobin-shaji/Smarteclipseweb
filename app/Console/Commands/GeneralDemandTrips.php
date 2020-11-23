@@ -8,6 +8,7 @@ use App\Modules\Vehicle\Models\Vehicle;
 use App\Modules\Gps\Models\GpsData;
 use App\Modules\Vehicle\Models\DailyKm;
 use App\Modules\Vehicle\Models\VehicleTripSummary;
+use Illuminate\Support\Facades\Log;
 use App\Jobs\ProcessGeneralTripJob;
 use Queue;
 use PDF;
@@ -47,20 +48,14 @@ class GeneralDemandTrips extends Command
     public function handle()
     {
         $pending_trips         =   (new OnDemandTripReportRequests())->getPendingReportRequests(); 
-        // $pending_trip          = (array) $pending_trips;
         $current_date          =    date('Y-m-d');
         foreach ($pending_trips as $pending_trip) 
         {
-            
-        $pending_trip->job_attended_on = $current_date;
-        $pending_trip->save();
-          
-        
-          
-         Queue::push(new ProcessGeneralTripJob($pending_trip));
-    
+            Log::info("enteredloop");
+        // $pending_trip->job_attended_on = $current_date;
+        // $pending_trip->save();
+        Queue::push(new ProcessGeneralTripJob($pending_trip));
         }
-        
        
     }
     
