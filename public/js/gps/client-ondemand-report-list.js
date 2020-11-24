@@ -27,7 +27,7 @@
             success: function(response) {
             $("#myModal").modal('hide');
             $('#message').show();
-            window.setTimeout(function(){location.reload()},10000)
+            window.setTimeout(function(){location.reload()},5000)
           
             },
             });
@@ -59,8 +59,8 @@
        
     }
 
-function callBackDataTable(data=null){
-    $("#dataTable").DataTable({
+    function callBackDataTable(data=null){
+     $("#dataTable").DataTable({
         bStateSave: true,
         bDestroy: true,
         bProcessing: true,

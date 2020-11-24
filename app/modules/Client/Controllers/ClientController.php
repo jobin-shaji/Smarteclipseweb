@@ -1245,22 +1245,6 @@ public function selectTrader(Request $request)
         $to         = $request->data['to_date'];
         $vehicle_id = $request->data['vehicle'];
         $client_id  = \Auth::user()->client->id;
-        // $trip_report_details= self::select(
-        //                     'id', 
-        //                     'vehicle_id',
-        //                     'gps_id',                      
-        //                     'trip_report_date',
-        //                     'job_submitted_on', 
-        //                     'job_attended_on' ,
-        //                     'job_completed_on', 
-        //                     'client_id',
-        //                     'report_type',
-        //                     'is_job_failed',
-        //                     'download_link'          
-        //                     )
-        //                     ->with('vehicle:id,register_number')
-        //                     ->orderBy('id','desc')
-        //                     ->where('client_id',$client_id);
         $tripreportdetails = (new OnDemandTripReportRequests())->listTripDetails($client_id); 
                          if($from)
                         {

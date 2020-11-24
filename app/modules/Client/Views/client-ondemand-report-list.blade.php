@@ -224,11 +224,6 @@
 @section('script')
 @role('client')
 <script src="{{asset('js/gps/client-ondemand-report-list.js')}}"></script>
-<script>
-// $('#myModal').on('hidden.bs.modal', function () {
-//       location.reload();
-//    })
-</script>
 @endrole
 @endsection
 @endsection
