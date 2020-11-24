@@ -24,7 +24,16 @@ trait LocationTrait{
         $output=curl_exec($ch);
         curl_close($ch);
         $data=json_decode($output,true);
-        return $data['Response']['View'][0]['Result'][0]['Location']['Address']['Label'];  
+        $address_from_here = $data['Response']['View'][0]['Result'][0]['Location']['Address']['Label'];
+        //check first value is a house number then trim to get address
+        $substring = substr($address_from_here,0,1);
+        if (ctype_digit($substring)) { 
+            $split            = explode(",", $address_from_here, 2)[1];
+            $location_address = $split;
+          } else { 
+            $location_address = $address_from_here;
+          }
+        return $location_address;
         }else{
         if(!empty($latitude) && !empty($longitude)){
             //Send request and receive json data by address

@@ -28,7 +28,7 @@ class GeneralDemandTrips extends Command
      *
      * @var string
      */
-    protected $description = 'Trip generation for on demand vehicles';
+    protected $description = 'Trip generation for on demand trip report of  vehicles';
 
     /**
      * Create a new command instance.
@@ -47,18 +47,13 @@ class GeneralDemandTrips extends Command
      */
     public function handle()
     {
-        $pending_trips         =   (new OnDemandTripReportRequests())->getPendingReportRequests(); 
+        $pending_trips                  =   (new OnDemandTripReportRequests())->getPendingReportRequests(); 
         foreach ($pending_trips as $pending_trip) 
         {
-        $trip_report_date               =   $pending_trip['trip_report_date']; 
-        $id                             =   $pending_trip['vehicle_id'];
-        $on_demand_request_id           =   $pending_trip['id'];
-        $pending_trip->job_attended_on  =   date('Y-m-d');
-        $pending_trip->save();
-        Queue::push(new ProcessGeneralTripJob($trip_report_date,$id,$on_demand_request_id));
-       
-    }
-       
+            $pending_trip->job_attended_on  =   date('Y-m-d');
+            $pending_trip->save();
+            Queue::push(new ProcessGeneralTripJob($pending_trip['trip_report_date'], $pending_trip['vehicle_id'],$pending_trip['id']));
+        }  
     }
     
 }
