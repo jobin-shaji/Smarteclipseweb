@@ -196,7 +196,11 @@
    min-height: 621px;
    background: #f8f9fa;
    }
-
+   .dataTable a.disable {
+    padding: 6px;
+    margin: 1px;
+    font-size:10px ;
+}
    .callout.callout-success {
     color: #fff;
     background: #51A351;
