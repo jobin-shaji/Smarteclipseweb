@@ -1272,7 +1272,7 @@ public function selectTrader(Request $request)
             ->addColumn('status', function ($tripreportdetails) { 
             
                     if(!empty($tripreportdetails->job_submitted_on)&& empty($tripreportdetails->job_attended_on) && empty($tripreportdetails->job_completed_on)) {
-                        return "Pending";
+                        return "Submitted";
                     }
                     else if(!empty($tripreportdetails->job_submitted_on) && !empty($tripreportdetails->job_attended_on) && empty($tripreportdetails->job_completed_on)){
                         return "In Progress";
@@ -1287,10 +1287,6 @@ public function selectTrader(Request $request)
            ->addColumn('action', function ($tripreportdetails) {
                $b_url = \URL::to('/');
                if(!empty($tripreportdetails->job_submitted_on)&& empty($tripreportdetails->job_attended_on) && empty($tripreportdetails->job_completed_on)) {
-                return "
-                  
-                    <button class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-ok'></i> Generate</button>
-                ";
                 }else if(!empty($tripreportdetails->job_submitted_on) && !empty($tripreportdetails->job_attended_on) && empty($tripreportdetails->job_completed_on)){
                 return "
                     
@@ -1312,7 +1308,7 @@ public function selectTrader(Request $request)
                } else if(!empty($tripreportdetails->job_completed_on) &&($tripreportdetails->is_job_failed ==1)){
                 return "
                     
-                    <button  class='btn btn-xs btn-success'><i class='glyphicon glyphicon-ok'></i>Failed</button>
+                    <button  class='disable  btn-secondary'><i class='glyphicon glyphicon-ok'></i>Failed</button>
                  "; 
                }
            })

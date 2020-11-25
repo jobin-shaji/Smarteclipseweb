@@ -25,10 +25,12 @@
             url: "client/save-report-request",
             data: $('form.generalReportForm').serialize(),
             success: function(response) {
+            $('.vehiclelist').empty();
+            $('.vehiclelist').focus;
+            $('.vehiclelist').append('<option value="">Select Vehicle</option>');
             $("#myModal").modal('hide');
             $('#message').show();
             window.setTimeout(function(){location.reload()},5000)
-          
             },
             });
             return false;
@@ -94,6 +96,11 @@
         
         aLengthMenu: [[25, 50, 100, -1], [25, 50, 100, 'All']]
     });
+
+    setTimeout(function() {
+        location.reload();
+    }, 40000);
+      
 }
 
 

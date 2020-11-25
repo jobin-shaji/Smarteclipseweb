@@ -121,7 +121,7 @@
                            <label  data-success="right" >Select Vehicle</label> 
                            </div>
                           <div class="col-md-6 select2-new div_margin_top">
-                            <select class="form-control select2" name="vehicle_id" data-live-search="true" title="Select GPS" required>
+                            <select class="form-control select2 vehiclelist"  name="vehicle_id" data-live-search="true" title="Select Vehicle" required>
                               <option value="" selected disabled>Select Vehicle</option>
                                 @foreach($devices as $vehicle)
                                  <option value="{{$vehicle->id}}">{{$vehicle->register_number}}</option>
@@ -196,7 +196,11 @@
    min-height: 621px;
    background: #f8f9fa;
    }
-
+   .dataTable a.disable {
+    padding: 6px;
+    margin: 1px;
+    font-size:10px ;
+}
    .callout.callout-success {
     color: #fff;
     background: #51A351;
