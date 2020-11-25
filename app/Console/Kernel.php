@@ -15,6 +15,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
+        Commands\GeneralDemandTrips::class,
         Commands\TripM::class,
         Commands\VehicleTrips::class,
         Commands\VehicleOdometer::class,
@@ -32,6 +33,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
+        $schedule->command('General:DemandTrips')->everyMinute();
         $schedule->command('vehicle:trips')->dailyAt('03:00');
         $schedule->command('vehicle:odometer')->dailyAt('06:00');
         $schedule->command('esim:pdf')->monthlyOn(20, '12:00');

@@ -1,17 +1,43 @@
- $(document).ready(function () {
-    var from_date = document.getElementById('fromDate').value;
-    var to_date   = document.getElementById('toDate').value;
-    var vehicle   = document.getElementById('vehicle').value;
-    var data = {'from_date':from_date,'to_date':to_date,'vehicle':vehicle};
-    callBackDataTable(data);
-});
-            /**
-         *  modal show
-         */
-        function addGeneralRequest()
-        {
-            $('#myModal').modal('show');
-        }
+    $(document).ready(function () {
+        var from_date = document.getElementById('fromDate').value;
+        var to_date   = document.getElementById('toDate').value;
+        var vehicle   = document.getElementById('vehicle').value;
+        var data = {'from_date':from_date,'to_date':to_date,'vehicle':vehicle};
+        callBackDataTable(data);
+    });
+           
+    /**
+     *  modal show
+     * @rar
+     */
+    function addGeneralRequest()
+    {
+     $('#myModal').modal('show');
+    }
+    /**
+     *  save general report request via ajax
+     * @rar
+     */
+        
+    $('#general-report-request').submit(function() {
+        $.ajax({
+            type: "POST",
+            url: "client/save-report-request",
+            data: $('form.generalReportForm').serialize(),
+            success: function(response) {
+            $("#myModal").modal('hide');
+            $('#message').show();
+            window.setTimeout(function(){location.reload()},5000)
+          
+            },
+            });
+            return false;
+    });
+        
+    /**
+     *  validations for date picker and vehicle list anf get data
+     * @rar
+     */
 
     function check()
     {
@@ -33,8 +59,8 @@
        
     }
 
-function callBackDataTable(data=null){
-    $("#dataTable").DataTable({
+    function callBackDataTable(data=null){
+     $("#dataTable").DataTable({
         bStateSave: true,
         bDestroy: true,
         bProcessing: true,

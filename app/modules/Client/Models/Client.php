@@ -343,7 +343,5 @@ class Client extends Model
     return DB::select("UPDATE clients SET latest_user_updates = '$current_date' WHERE user_id = '$client_user_id'");
   }
 
-
-  
 }
 

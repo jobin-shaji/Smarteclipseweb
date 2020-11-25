@@ -6,22 +6,20 @@
 
 <div class="page-wrapper page-wrapper-root page-wrapper_new">
 <div class="page-wrapper-root1">
-
   <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/General Trip report List</li>
         <b>General Trip Report List</b>
-     </ol>
-      @if(Session::has('message'))
-        <div class="pad margin no-print">
-          <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
-              {{ Session::get('message') }}  
-          </div>
-        </div>
-      @endif       
+     </ol>  
+     <!-- message after sucessfull submit --> 
+    <div id="message" style="display: none;">
+    <div class="callout callout-success">
+    <strong>Success!</strong> Request added Sucessfully!
+    </div>
+    </div>
+     <!-- message after sucessfull submit-->
     </nav>  
-    <button class="btn btn-sm btn-info btn2 add_new" id="vehicleTripReportConfiguration" onclick="addGeneralRequest()"><i class='fa fa-plus'></i>
-   Generate New Trip Report</button>
+   
   <div class="container-fluid">
     <div class="card-body">
       <div >
@@ -75,7 +73,9 @@
                         </div>
                       </div>
                       </div>
-
+                      <button class="btn btn-sm btn-info btn2 add_new" id="vehicleTripReportConfiguration" onclick="addGeneralRequest()"><i class='fa fa-plus'></i>
+                       Generate New Trip Report</button>
+                       <br>
                     <table class="table table-hover table-bordered  table-striped datatable" style="width:100%;text-align: center" id="dataTable">
                         <thead>
                             <tr>
@@ -103,7 +103,7 @@
 </div>
   <!-- modal for create trip -->
       <div class="modal fade" id="myModal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-         <form  method="POST" action="{{route('savereportrequest.client.p')}}">
+         <form  method="POST" class="generalReportForm" id="general-report-request" action="{{route('savereportrequest.client.p')}}">
               {{csrf_field()}}    
               <div class="modal-dialog" role="document">
                <div class="modal-content ">
@@ -178,7 +178,7 @@
    }
    .add_new
    {
-   margin-left:80%;
+   margin-left:83%;
    margin-bottom: 10px;
    }
    .select2-new{
@@ -197,6 +197,14 @@
    background: #f8f9fa;
    }
 
+   .callout.callout-success {
+    color: #fff;
+    background: #51A351;
+    padding: 15px;
+    /* width: 25%; */
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
 
 .modal-content {
    max-width: 100% !important;
@@ -216,11 +224,6 @@
 @section('script')
 @role('client')
 <script src="{{asset('js/gps/client-ondemand-report-list.js')}}"></script>
-<script>
-$('#myModal').on('hidden.bs.modal', function () {
-      location.reload();
-   })
-</script>
 @endrole
 @endsection
 @endsection

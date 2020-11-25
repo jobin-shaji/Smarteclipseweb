@@ -188,6 +188,7 @@ class VehicleOdometer extends Command
         $pdf       = PDF::loadView('Exports::trip-report', ['trips' => $trips, 'date' => $this->trip_date, 'summary' => $summary, 'gps' => $gps]);
         $file = "documents/tripreports/".$client_id."/".$vehicle_id."/".$this->trip_date."/".$file_name;
         $pdf->save("public/".$file);
+        
 
         (new VehicleTripSummary)->addNewReport($client_id, $vehicle_id, $file, $summary["km"], $this->trip_date);
     }
