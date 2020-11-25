@@ -1272,7 +1272,7 @@ public function selectTrader(Request $request)
             ->addColumn('status', function ($tripreportdetails) { 
             
                     if(!empty($tripreportdetails->job_submitted_on)&& empty($tripreportdetails->job_attended_on) && empty($tripreportdetails->job_completed_on)) {
-                        return "Pending";
+                        return "Submitted";
                     }
                     else if(!empty($tripreportdetails->job_submitted_on) && !empty($tripreportdetails->job_attended_on) && empty($tripreportdetails->job_completed_on)){
                         return "In Progress";
