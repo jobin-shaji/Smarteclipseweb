@@ -86,7 +86,7 @@ class GeneralController extends Controller
        $vehicle_records             = $source_table_gps->fetchDateWiseRecordsOfVehicleDevice($gps->imei,$this->source_table);
        $geo_locations               = [];
        $trips                       = [];
-       $total_distance              = 0;
+       $km_from_all_packets         = 0;
        $summary                     = [];
        $pending_trip                = (new OnDemandTripReportRequests())->getSinglePendingReport($this->on_demand_request_id); 
        $pending_trip->is_job_failed = 1;
@@ -108,9 +108,9 @@ class GeneralController extends Controller
                $stop_lng   = $end['longitude'];
                $stop_time  = $end['device_time'];
 
-               $result = $this->getDistanceOfTrip($geo_locations, (count($trips)+1), $gps->vehicle->client->id, $gps->vehicle->id);
-               $distance = m2Km($result);
-               $total_distance = $total_distance + $result;
+               $result              = $this->getDistanceOfTrip($geo_locations, (count($trips)+1), $gps->vehicle->client->id, $gps->vehicle->id);
+               $distance            = m2Km($result);
+               $km_from_all_packets = $km_from_all_packets + $result;
                // based on map variable we can get address from LocationTrait
                $map ="heremap";
                $trip = [ 
@@ -135,14 +135,15 @@ class GeneralController extends Controller
            $summary["off location"] = $end["stop_address"];
            $summary["off"]          = $end["stop_time"];
            $summary["date"]         = $this->trip_date;
-           $summary["km"]           = m2Km($total_distance);
+           $summary["km"]           = m2Km($km_from_all_packets);
            $summary["duration"]     = dateTimediff($summary["on"], $summary["off"]);
            // generate pdf report of vehicle 
          
            $this->generatePdfReport($trips, $summary, $gps);
-           // update daily km calculation of vehicle based on new calculation 
-           (new DailyKm)->updateDailyKm($total_distance, $gps->id, $this->trip_date);
-           (new Gps)->updateOdometer($gps->id, $total_distance);
+           // update daily km calculation of vehicle based on new calculation and return live packet processed km
+           $km_from_live_packets   = (new DailyKm)->updateDailyKm($km_from_all_packets, $gps->id, $this->trip_date);
+           //update gps odometer 
+           (new Gps)->updateOdometer($gps->id, $km_from_all_packets, $km_from_live_packets);
        }else
        {
            $pending_trip =   (new OnDemandTripReportRequests())->getSinglePendingReport($this->on_demand_request_id); 

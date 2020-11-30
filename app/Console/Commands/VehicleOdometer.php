@@ -82,12 +82,12 @@ class VehicleOdometer extends Command
      */
     public function processTripsofVehicle($gps)
     {
-        $source_table    = new GpsData;
-        $vehicle_records = $source_table->fetchYesterdaysRecordsOfVehicleDevice($gps->imei);
-        $geo_locations   = [];
-        $trips           = [];
-        $total_distance  = 0;
-        $summary         = [];
+        $source_table           = new GpsData;
+        $vehicle_records        = $source_table->fetchYesterdaysRecordsOfVehicleDevice($gps->imei);
+        $geo_locations          = [];
+        $trips                  = [];
+        $km_from_all_packets    = 0;
+        $summary                = [];
        
         foreach ($vehicle_records as $item) 
         {
@@ -109,10 +109,10 @@ class VehicleOdometer extends Command
                 $stop_lng   = $end['longitude'];
                 $stop_time  = $end['device_time'];
 
-                $result = $this->getDistanceOfTrip($geo_locations, (count($trips)+1), $gps->vehicle->client->id, $gps->vehicle->id);
-                $distance = m2Km($result);
+                $result     = $this->getDistanceOfTrip($geo_locations, (count($trips)+1), $gps->vehicle->client->id, $gps->vehicle->id);
+                $distance   = m2Km($result);
 
-                $total_distance = $total_distance + $result;
+                $km_from_all_packets = $km_from_all_packets + $result;
                 $trip = [ 
                             'start_address' => $start_lat.','.$start_lng,
                             'start_time'    => $start_time,
@@ -135,15 +135,15 @@ class VehicleOdometer extends Command
             $summary["off location"] = $end["stop_address"];
             $summary["off"]          = $end["stop_time"];
             $summary["date"]         = $this->trip_date;
-            $summary["km"]           = m2Km($total_distance);
+            $summary["km"]           = m2Km($km_from_all_packets);
             $summary["duration"]     = dateTimediff($summary["on"], $summary["off"]);
 
             // generate pdf report of vehicle 
             // $this->generatePdfReport($trips, $summary, $gps);
-            // update daily km calculation of vehicle based on new calculation 
-            (new DailyKm)->updateDailyKm($total_distance, $gps->id, $this->trip_date);
+            // update daily km calculation of vehicle based on new calculation and return live packet processed km
+            $km_from_live_packets   = (new DailyKm)->updateDailyKm($km_from_all_packets, $gps->id, $this->trip_date);
             //update gps odometer 
-            (new Gps)->updateOdometer($gps->id, $total_distance);
+            (new Gps)->updateOdometer($gps->id, $km_from_all_packets, $km_from_live_packets);
         }
 
     }

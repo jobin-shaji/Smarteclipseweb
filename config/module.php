@@ -47,7 +47,8 @@ return  [
        'TripReport',
        'Esim',
        'Settings',
-       'Sales'
+       'Sales',
+       'CommandsCenter'
 
     ]
 ]

@@ -253,12 +253,14 @@ class Gps extends Model
      *  update odometer
      * 
      */
-    public function updateOdometer($gps_id, $total_distance)
+    public function updateOdometer($gps_id, $km_from_all_packets, $km_from_live_packets)
     {
         $gps = self::find($gps_id);
-        $gps->km = $gps->km + $total_distance;
+        //subtract live packet proceesed km from total km and add live and history packet processed km with total km
+        $gps->km = ($gps->km >= $km_from_live_packets) ? (($gps->km - $km_from_live_packets) + $km_from_all_packets) : $km_from_all_packets;
         $gps->save();
     }
+
 
     /**
      * 
@@ -559,5 +561,20 @@ class Gps extends Model
             return $query->paginate(10);   
         }    
     }
+
+    /**
+     *
+     *
+     */
+    public function getImeiListOfUnReturnedDevices()
+    {
+        return self::select('id','imei', 'serial_no')
+            ->where(function ($query) {
+                $query->where('is_returned', '=', 0)
+                ->orWhere('is_returned', '=', NULL);
+            })
+            ->get();
+    }
+
     
 }
