@@ -128,11 +128,15 @@ class DailyKm extends Model
      * 
      * 
      */
-    public function updateDailyKm($total_distance, $gps_id, $trip_date)
+    public function updateDailyKm($km_from_all_packets, $gps_id, $trip_date)
     {
         $daily_km = self::firstOrNew(array('gps_id' => $gps_id, 'date' => $trip_date));
-        $daily_km->km = $total_distance;
+        // get live packet processed km  for further calculations
+        $km_from_live_packets   = (isset($daily_km->km)) ? $daily_km->km : 0 ;
+        $daily_km->km           = $km_from_all_packets;
         $daily_km->save();
+        return $km_from_live_packets;
     }
+
 }
 
