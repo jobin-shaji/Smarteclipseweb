@@ -348,8 +348,8 @@ Assign Servicer
 <div class="form-group row" style="float:none!important">
 <label for="fname" class="col-sm-3 text-right control-label col-form-label ">Name&nbsp<font color="red">*</font></label>
 <div class="form-group has-feedback">
-<input type="text" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Name" name="driver_name" id="driver_name" maxlength='50' value="{{ old('name') }}" pattern="[A-Za-z]{1,50}" > 
-<p style="color:#FF0000" id="name_message">only characters are allowed</p>
+<input type="text" pattern="[A-Za-z]{1,50}" class="form-control {{ $errors->has('name') ? ' has-error' : '' }}" placeholder="Name" name="driver_name" id="driver_name" maxlength='50' value="{{ old('name') }}"> 
+<p style="color:#FF0000;display:none;" class="name_message">only characters are allowed</p>
 
 </div>
 @if ($errors->has('name'))
@@ -480,11 +480,9 @@ $('#register_number').keypress(function(e) {
 });
 
 $('#driver_name').keypress(function(e) {
-    $("#name_message").hide();
-    // $("#user_message").hide();
     var keyCode = e.which;
     if (keyCode >= 48 && keyCode <= 57) {
-        $("#message").show();
+        $(".name_message").show();
         e.preventDefault();
     }
 });
