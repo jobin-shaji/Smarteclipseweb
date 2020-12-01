@@ -26,7 +26,7 @@
                                                 <div class="panel-heading">
                                                 <div class="cover_div_search">
                                                     <div class="row">
-                                                        <div class="col-lg-2 col-md-2"> 
+                                                        <div class="col-lg-3 col-md-3"> 
                                                             <div class="form-group">                      
                                                                 <label> Vehicles</label>
                                                                 <input type="hidden" name="hidden_vehicle_id" id="hidden_vehicle_id" value="{{$vehicle_id}}">
@@ -43,7 +43,7 @@
                                                                 @endif
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-2 col-md-2"> 
+                                                        <div class="col-lg-3 col-md-3"> 
                                                             <div class="form-group">                      
                                                                 <label> From Date</label>
                                                                 <div class="input-group">
@@ -54,7 +54,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-2 col-md-2"> 
+                                                        <div class="col-lg-3 col-md-3"> 
                                                             <div class="form-group">                   
                                                                 <label> To Date</label>
                                                                 <div class="input-group">  
@@ -65,11 +65,11 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-2 col-md-2 pt-4">  
+                                                        <div class="col-lg-3 col-md-3 pt-4">  
                                                             <label> &nbsp;</label>
                                                             <div class="form-group">                           
                                                                 <button type="submit" class="btn btn-sm btn-info btn2 srch search-btn " onclick="DateCheck()" > <i class="fa fa-search"></i> </button>
-                                                                <a  href="/trip-report-manufacturer" class="btn btn-primary">Clear</a>
+                                                                <a  href="/trip-report-client" class="btn btn-primary">Clear</a>
                                                             </div>
                                                         </div>          
                                                     </div>
@@ -90,7 +90,7 @@
                                                 <tbody>
                                                     @if(count($trip_reports) == 0)
                                                         <tr>
-                                                            <td colspan='5' style='text-align: center;'><b>No Data Available</b></td>
+                                                            <td colspan='6' style='text-align: center;'><b>No Data Available</b></td>
                                                         </tr>
                                                     @endif
 
