@@ -180,17 +180,19 @@ class GpsData extends Model
         return self::select('imei', 'latitude', 'longitude', 'vehicle_mode', 'device_time','header')
                     ->where('imei', $imei)
                     ->whereNotIn('header',['HLM','LGN'])
+                    ->whereDate('device_time',date('Y-m-d',strtotime("-1 days")))
                     ->orderBy('device_time','asc')
                     ->get();
     }
 
-    public function fetchDateWiseRecordsOfVehicleDevice($imei, $table)
+    public function fetchDateWiseRecordsOfVehicleDevice($imei, $table, $trip_date)
     {
         $this->setTable($table);
 
         return self::select('imei', 'latitude', 'longitude', 'vehicle_mode', 'device_time','header')
                     ->where('imei', $imei)
                     ->whereNotIn('header',['HLM','LGN'])
+                    ->whereDate('device_time',date('Y-m-d',strtotime($trip_date)))
                     ->orderBy('device_time','asc')
                     ->get();
     }

@@ -83,7 +83,7 @@ class GeneralController extends Controller
    {
        
        $source_table_gps            = new GpsData;
-       $vehicle_records             = $source_table_gps->fetchDateWiseRecordsOfVehicleDevice($gps->imei,$this->source_table);
+       $vehicle_records             = $source_table_gps->fetchDateWiseRecordsOfVehicleDevice($gps->imei,$this->source_table,$this->trip_date);
        $geo_locations               = [];
        $trips                       = [];
        $km_from_all_packets         = 0;

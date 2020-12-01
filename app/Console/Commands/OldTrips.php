@@ -108,7 +108,7 @@ class OldTrips extends Command
     public function processTripsofVehicle($gps)
     {
         $source_table    = new GpsData;
-        $vehicle_records = $source_table->fetchDateWiseRecordsOfVehicleDevice($gps->imei, $this->source_table);
+        $vehicle_records = $source_table->fetchDateWiseRecordsOfVehicleDevice($gps->imei, $this->source_table, $this->trip_date);
         $geo_locations   = [];
         $trips           = [];
         $total_distance  = 0;
