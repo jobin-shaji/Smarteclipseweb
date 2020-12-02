@@ -61,6 +61,7 @@ function servicerDriver(res)
     $("#mobile").val("");
     $("#address").val("");
     $('#myModal').modal('hide'); 
+    $('#name_message').hide(); 
 }
 
 
