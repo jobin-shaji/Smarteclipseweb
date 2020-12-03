@@ -2474,17 +2474,28 @@ class GpsController extends Controller {
      */
     public function AddWarranty(Request $request)
     {
-        $device_warranty = GpsWarranty::create([
-            'gps_id'=> $request->gps_id,
-            'period_from' => $request->period_from,
-            'period_to' => $request->period_to
-        ]);
-        if($device_warranty)
+        // compare dates 
+        if ($request->period_from <= $request->period_to) 
         {
-            $request->session()->flash('message', 'Warranty added successfully!');
+            $device_warranty = GpsWarranty::create([
+                'gps_id'=> $request->gps_id,
+                'period_from' => $request->period_from,
+                'period_to' => $request->period_to
+            ]);
+            if($device_warranty)
+            {
+                $request->session()->flash('message', 'Warranty added successfully!');
+                $request->session()->flash('alert-class', 'alert-success');
+                return redirect(route('device.warranty'));
+            }
+        }
+        else
+        {
+            $request->session()->flash('message', 'Please select valid date period for warranty!');
             $request->session()->flash('alert-class', 'alert-success');
             return redirect(route('device.warranty'));
         }
+        
     }
 
     /**
@@ -2537,13 +2548,24 @@ class GpsController extends Controller {
      */
     public function UpdateWarranty(Request $request)
     {
-        $device_warranty = GpsWarranty::find($request->id);
-        $device_warranty->period_from = $request->period_from;
-        $device_warranty->period_to = $request->period_to;
-        $device_warranty->save();
-        $request->session()->flash('message', ' Warranty details updated successfully!');
-        $request->session()->flash('alert-class', 'alert-success');
-        return redirect(route('device.warranty'));
+        // compare dates 
+        if ($request->period_from <= $request->period_to) 
+        {
+            $device_warranty = GpsWarranty::find($request->id);
+            $device_warranty->period_from = $request->period_from;
+            $device_warranty->period_to = $request->period_to;
+            $device_warranty->save();
+            $request->session()->flash('message', ' Warranty details updated successfully!');
+            $request->session()->flash('alert-class', 'alert-success');
+            return redirect(route('device.warranty'));
+        }
+        else
+        {
+            $decrypted_id = encrypt($request->id);
+            $request->session()->flash('message', 'Please select valid date period for warranty!');
+            $request->session()->flash('alert-class', 'alert-success');
+            return redirect(route('edit.warranty',$decrypted_id));  
+        }
     }
     
 

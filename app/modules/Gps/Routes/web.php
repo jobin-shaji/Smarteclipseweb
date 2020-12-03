@@ -27,14 +27,17 @@ Route::group(['middleware' => ['web','auth','role:root'] , 'namespace' => 'App\M
 	Route::post('/esim-activation-file','GpsController@EsimFileExistance')->name('esim.activation.file');
 	Route::post('/compare-esim-numbers','GpsController@compareEsimNumbers')->name('compare.esim.p');
 
-	});
-	Route::group(['middleware' => ['web','auth','role:dealer'] , 'namespace' => 'App\Modules\Gps\Controllers' ] , function() {
+	Route::get('/device-warranty','GpsController@deviceWarranty')->name('device.warranty');
+	Route::post('/add-warranty','GpsController@AddWarranty')->name('add.warranty');
+	Route::get('/edit/{id}/warranty','GpsController@EditWarranty')->name('edit.warranty');
+	Route::post('/update-warranty','GpsController@UpdateWarranty')->name('update.warranty');
+	Route::post('/get-active-warranty','GpsController@getActiveWarranty')->name('active.warranty');
+});
 
+Route::group(['middleware' => ['web','auth','role:dealer'] , 'namespace' => 'App\Modules\Gps\Controllers' ] , function() {
 	//gps dealer list
 	Route::get('/gps-dealer','GpsController@gpsDealerListPage')->name('gps-dealer');
 	Route::post('/gps-dealer-list','GpsController@getDealerGps')->name('gps-dealer-list');
-
-
 });
 
 Route::group(['middleware' => ['web','auth','role:sub_dealer'] , 'namespace' => 'App\Modules\Gps\Controllers' ] , function() {
@@ -150,11 +153,6 @@ Route::group(['middleware' => ['web','auth','role:operations'] ,'namespace' => '
 	Route::post('/setota-operations','GpsController@setOtaInConsoleOperations')->name('setota.operations');
 
 	Route::post('/select-ota-params','GpsController@selectOtaParamByGps')->name('select-ota-params');
-	Route::get('/device-warranty','GpsController@deviceWarranty')->name('device.warranty');
-	Route::post('/add-warranty','GpsController@AddWarranty')->name('add.warranty');
-	Route::get('/edit/{id}/warranty','GpsController@EditWarranty')->name('edit.warranty');
-	Route::post('/update-warranty','GpsController@UpdateWarranty')->name('update.warranty');
-	Route::post('/get-active-warranty','GpsController@getActiveWarranty')->name('active.warranty');
 });
 
 

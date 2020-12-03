@@ -2,6 +2,13 @@
 
 @section('content')
 <section class="content">
+  @if(Session::has('message'))
+    <div id="session_message" class="pad margin no-print">
+      <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
+          {{ Session::get('message') }}  
+      </div>
+    </div>
+  @endif 
   <div>
     <table class="table table-bordered  table-striped" style="width:100%;text-align: center;margin-top: 2%">
       <thead>

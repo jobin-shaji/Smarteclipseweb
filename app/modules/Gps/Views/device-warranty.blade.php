@@ -3,15 +3,14 @@
 @section('content')
 
 <section class="hilite-content">
-      <!-- title row -->
-  <div class="row">
   @if(Session::has('message'))
     <div id="session_message" class="pad margin no-print">
       <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
           {{ Session::get('message') }}  
       </div>
     </div>
-  @endif  
+  @endif 
+  <div class="row">
     <div class="panel-body" style="width: 100%;min-height: 10%">
       <div class="panel-heading">
         <div class="cover_div_search">
@@ -104,17 +103,23 @@
               </tr>
             </thead>
             <tbody>
-              @foreach($devices as $each_device)
-              <tr>
-                <td>{{$loop->iteration}}</td>
-                <td>{{$each_device->gps->imei}}</td>
-                <td>{{$each_device->period_from}}</td>
-                <td>{{$each_device->period_to}}</td>
-                <td><?php echo ($each_device->expired_on == null) ? 'Not Expired' : $each_device->expired_on; ?></td>
-                <td><?php echo ($each_device->expired_reason == null) ? 'Not Expired' : $each_device->expired_reason; ?></td>
-                <td><a href="/edit/{{Crypt::encrypt($each_device->id)}}/warranty"class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye'></i>Edit</a></td>
-              </tr>
-              @endforeach
+              @if(count($devices) > 0)
+                @foreach($devices as $each_device)
+                  <tr>
+                      <td>{{$loop->iteration}}</td>
+                      <td>{{$each_device->gps->imei}}</td>
+                      <td>{{$each_device->period_from}}</td>
+                      <td>{{$each_device->period_to}}</td>
+                      <td><?php echo ($each_device->expired_on == null) ? 'Not Expired' : $each_device->expired_on; ?></td>
+                      <td><?php echo ($each_device->expired_reason == null) ? 'Not Expired' : $each_device->expired_reason; ?></td>
+                      <td><a href="/edit/{{Crypt::encrypt($each_device->id)}}/warranty"class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye'></i>Edit</a></td>
+                  </tr>
+                @endforeach
+              @else
+                <tr>
+                  <td colspan="10">No Data Available</td>
+                </tr>
+              @endif
             </tbody>
           </table>
         </div>
