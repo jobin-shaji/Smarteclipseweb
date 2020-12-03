@@ -435,7 +435,7 @@ class ServicerController extends Controller {
                                     ->orderBy('id','desc')
                                     ->where('sub_dealer_id',$sub_dealer_id)
                                     ->first();
-                $end_user_id    =   $client->id;
+                $end_user_id    =   ( isset($client->id) ) ? $client->id : null;
             }
             
         }
@@ -452,7 +452,7 @@ class ServicerController extends Controller {
                                     ->where('trader_id',$trader_id)
                                     ->orderBy('id','desc')
                                     ->first();
-                $end_user_id    =   $client->id;
+                $end_user_id    =   ( isset($client->id) ) ? $client->id : null;
             }
         }
         return view('Servicer::sub-dealer-assign-servicer',['servicers'=>$servicer,'client_id'=>$end_user_id]);
