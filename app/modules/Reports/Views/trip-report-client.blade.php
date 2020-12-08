@@ -69,7 +69,7 @@
                                                             <label> &nbsp;</label>
                                                             <div class="form-group">                           
                                                                 <button type="submit" class="btn btn-sm btn-info btn2 srch search-btn " onclick="DateCheck()" > <i class="fa fa-search"></i> </button>
-                                                                <a  href="/trip-report-manufacturer" class="btn btn-primary">Clear</a>
+                                                                <a  href="/trip-report-client" class="btn btn-primary">Clear</a>
                                                             </div>
                                                         </div>          
                                                     </div>
