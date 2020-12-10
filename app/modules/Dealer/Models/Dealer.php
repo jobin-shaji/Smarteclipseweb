@@ -39,5 +39,10 @@ class Dealer extends Model
 		return self::select('id','name','root_id')->where('id',$distributor_id)->with('root')->first();
 	}
 
+	public function getDistributorDetailsOfSalesMan($distributor_ids)
+	{
+		return self::select('id','user_id','name')->whereIn('id',$distributor_ids)->withTrashed()->get();
+	}
+
     
 }

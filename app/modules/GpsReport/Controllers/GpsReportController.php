@@ -411,8 +411,8 @@ class GpsReportController extends Controller
     {
         $transfer_details           =   [];
         //from distributers
-        $distributor_user_ids[]     =   18;
-        $distributor_ids[]          =   2;
+        $distributor_user_ids       =   [18,4066];
+        $distributor_ids            =   [2,8];
         $dealer_details             =   (new SubDealer())->getDealersOfDistributers($distributor_ids); 
         $dealer_user_ids            =   [];
         $dealer_ids                 =   [];
@@ -790,8 +790,8 @@ class GpsReportController extends Controller
         else if(\Auth::user()->hasRole('sales'))
         {
             //from distributers
-            $distributor_user_ids[]     =   18;
-            $distributor_ids[]          =   2;
+            $distributor_user_ids       =   [18,4066];
+            $distributor_ids            =   [2,8];
             $dealer_details             =   (new SubDealer())->getDealersOfDistributers($distributor_ids); 
             $dealer_user_ids            =   [];
             $dealer_ids                 =   [];
@@ -1418,28 +1418,28 @@ class GpsReportController extends Controller
         }
         if(\Auth::user()->hasRole('sales'))
         {
-            $sales_user_ids[]                           =   \Auth::user()->id;
-            $sales_ids[]                                =   \Auth::user()->salesman->id;
             $login_user_details                         =   (new Salesman())->getSalesmanDetails(\Auth::user()->salesman->id);
-
-            $distributor_user_ids[]                     =   18;
-            $distributor_ids[]                          =   2;
-            $distributor_user_details                   =   (new Dealer())->getDistributorDetails(2);
+            $manufacturer_details                       =   (new Root())->getManufacturerDetails($login_user_details->root_id);
+            $distributor_details                        =   (new Dealer())->getDistributorDetailsOfSalesMan([2,8]); 
+            $distributor_user_ids                       =   [];
+            $distributor_ids                            =   [];
+            foreach($distributor_details as $each_data)
+            {
+                $distributor_user_ids[]                 =   $each_data->user_id;
+                $distributor_ids[]                      =   $each_data->id;
+                $stock_details_of_distributors[]        =   $this->getStockDetailsOfDistributor($each_data->name,$each_data->id,$each_data->user_id,$manufacturer_details->name); 
+            }
             $stock_count_of_distributor                 =   (new GpsStock())->getInStockCountOfDistributor($distributor_ids);
             $stock_to_accept_count_of_distributor       =   (new GpsTransfer())->getStockToAcceptCount($distributor_user_ids);
+            $first_distributor_details                  =   (new Dealer())->getDistributorDetails(2);
+            $second_distributor_details                 =   (new Dealer())->getDistributorDetails(8);
             $stock_summary_details[]                    =   [
-                                                                'user'              =>  'Distributor'.' ( '.$distributor_user_details->name.' )',
+                                                                'user'              =>  'Distributor'.' ( '.$first_distributor_details->name.', '.$second_distributor_details->name.' )',
                                                                 'in_stock'          =>  $stock_count_of_distributor,
                                                                 'stock_to_accept'   =>  $stock_to_accept_count_of_distributor[0]->count,
                                                                 'modal_section'     =>  '#setDistributorModal'
                                                             ];
-            $stock_details_of_distributors[]            =   [
-                                                                'manufacturer_name' =>  ucfirst(strtolower($login_user_details->root->name)), 
-                                                                'in_stock'          =>  $stock_count_of_distributor,
-                                                                'stock_to_accept'   =>  $stock_to_accept_count_of_distributor[0]->count,
-                                                                'distributor_name'  =>  ucfirst(strtolower($login_user_details->name))
-                                                            ];   
-            
+
             //dealer section
             $dealer_details                             =   (new SubDealer())->getDealersOfDistributers($distributor_ids); 
             $dealer_user_ids                            =   [];
