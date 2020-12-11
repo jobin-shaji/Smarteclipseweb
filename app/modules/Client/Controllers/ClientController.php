@@ -1287,11 +1287,8 @@ public function selectTrader(Request $request)
            ->addColumn('action', function ($tripreportdetails) {
                $b_url = \URL::to('/');
                if(!empty($tripreportdetails->job_submitted_on)&& empty($tripreportdetails->job_attended_on) && empty($tripreportdetails->job_completed_on)) {
+                
                 }else if(!empty($tripreportdetails->job_submitted_on) && !empty($tripreportdetails->job_attended_on) && empty($tripreportdetails->job_completed_on)){
-                return "
-                    
-                    <button  class='btn btn-xs btn-success'><i class='fa fa-download'></i> Download </button>
-                ";
                 }else if(!empty($tripreportdetails->job_completed_on) &&($tripreportdetails->is_job_failed ==0)){
                      if($tripreportdetails->download_link)
                      {
@@ -1299,10 +1296,10 @@ public function selectTrader(Request $request)
                      return "<a href= ".$tripreportdetails->download_link." download='".$tripreportdetails->download_link."' class='btn btn-xs btn-success'  data-toggle='tooltip'><i class='fa fa-download'></i> Download </a>
                      ";
                      }
-                     else{
+                     else
+                     {
                          return "
-                    
-                        <button  class='btn btn-xs btn-success'><i class='glyphicon glyphicon-ok'></i> No Trip </button>
+                         <button  class='btn btn-xs btn-success'><i class='glyphicon glyphicon-ok'></i> No Trip </button>
                          "; 
                      }
                } else if(!empty($tripreportdetails->job_completed_on) &&($tripreportdetails->is_job_failed ==1)){

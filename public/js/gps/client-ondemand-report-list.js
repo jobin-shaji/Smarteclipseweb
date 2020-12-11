@@ -96,11 +96,7 @@
         
         aLengthMenu: [[25, 50, 100, -1], [25, 50, 100, 'All']]
     });
-
-    setTimeout(function() {
-        location.reload();
-    }, 40000);
-      
+     
 }
 
 
