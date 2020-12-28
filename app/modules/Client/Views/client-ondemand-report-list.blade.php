@@ -14,7 +14,7 @@
      <!-- message after sucessfull submit --> 
     <div id="message" style="display: none;">
     <div class="callout callout-success">
-    <strong>Success!</strong> Request added Sucessfully!
+    <strong>Success!</strong> Request added Successfully!
     </div>
     </div>
      <!-- message after sucessfull submit-->
