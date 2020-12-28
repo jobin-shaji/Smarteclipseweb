@@ -1389,21 +1389,11 @@ class VehicleController extends Controller
             $last_seen=date('d-m-Y h:i:s a', strtotime($track_data->dateTime));
 
             //get daily km
-            $daily_km = (new DailyKm)->getDailyKmBasedOnDateAndGps([$track_data->id], date('Y-m-d'));
-            // odometer
-
-
-            if($daily_km->first())
-            {
-                $gps_meter      = $track_data->km + $daily_km->first()->km;
-            }
-            else
-            {
-               $gps_meter       = $track_data->km;
-            }
-
-            $gps_km=$gps_meter/1000;
-            $odometer=round($gps_km);
+            //$daily_km = (new DailyKm)->getDailyKmBasedOnDateAndGps([$track_data->id], date('Y-m-d'));
+            //get odometer reading from gps table and convert it to km
+            $gps_km_in_meter    = (isset($track_data->km)) ? $track_data->km : 0; 
+            $gps_km             = $gps_km_in_meter/1000;
+            $odometer           = round($gps_km);
             (isset($odometer)) ? $odometer = $odometer : $odometer = 0;
             $reponseData=array(
                         "latitude"=>floatval($snapRoute['lat']),

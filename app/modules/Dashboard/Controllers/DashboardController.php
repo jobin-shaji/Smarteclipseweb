@@ -720,11 +720,12 @@ class DashboardController extends Controller
         }
         $speed=round($gps->speed);
         //get daily km
-        $daily_km = (new DailyKm)->getDailyKmBasedOnDateAndGps([$gps->id], date('Y-m-d'));
-        // odometer
-        $gps_meter=$gps->km + (isset($daily_km->first()->km) ? $daily_km->first()->km : 0); 
-        $gps_km=$gps_meter/1000;
-        $odometer=round($gps_km);
+        //$daily_km = (new DailyKm)->getDailyKmBasedOnDateAndGps([$gps->id], date('Y-m-d'));
+        //get odometer reading from gps table and convert it to km
+        $gps_km_in_meter    = (isset($gps->km)) ? $gps->km : 0; 
+        $gps_km             = $gps_km_in_meter/1000;
+        $odometer           = round($gps_km);
+        (isset($odometer)) ? $odometer = $odometer : $odometer = 0;
         $mode=$gps->mode;
         $satelite=$satelite;
         $latitude=$gps->lat;
