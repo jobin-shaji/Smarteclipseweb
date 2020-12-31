@@ -1337,7 +1337,7 @@
           <div class="dash-boad1-rt-box-sm red border-0" onclick="moving('O')">
             <a href="#">
               <i class="fa fa-map-marker red" aria-hidden="true"></i>
-              <div class="track_status dash-boad1-rt-move">Offline</div>
+              <div class="track_status dash-boad1-rt-move">Disconnect</div>
               <div id="offline" class="dash-boad1-rt-move-no">0</div>
             </a>
           </div>
