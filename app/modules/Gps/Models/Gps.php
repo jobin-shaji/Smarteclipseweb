@@ -576,5 +576,14 @@ class Gps extends Model
             ->get();
     }
 
+    /**
+     * 
+     * 
+     */
+    public function getAllDevices()
+    {
+        return self::pluck('id');
+    }
+
     
 }

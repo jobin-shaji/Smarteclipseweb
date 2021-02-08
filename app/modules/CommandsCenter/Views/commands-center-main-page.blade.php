@@ -15,6 +15,7 @@
                     <label>GPS</label>
                     <select class="select2 form-control custom-select-device" id="gps_id" name="gps_id" data-live-search="true" title="Select GPS" required>
                         <option selected="selected" disabled="disabled" value="">Select GPS</option>
+                        <option value="0">All Devices</option>
                         @foreach($imei_serial_no_list as $each_imei)
                         <option value="{{$each_imei->id}}">{{$each_imei->imei}} || {{$each_imei->serial_no}}</option>
                         @endforeach
