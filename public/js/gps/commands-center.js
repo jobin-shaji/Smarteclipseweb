@@ -13,6 +13,15 @@ $(function () {
     $("#gps_id").change(function () {
         var selectedImei  = $(this).find("option:selected").text();
         var selectedGpsId = $(this).val();
+        if ( selectedGpsId != 0 ) {
+            $('#gps_id').prop('disabled', false);
+        }
+        else {
+            $(".device-table-row" ).empty();
+            document.getElementById('selected_gps_id').value = "";
+            items.splice(0, items.length);
+            $('#gps_id').prop('disabled', 'disabled');
+        }
         var position = jQuery.inArray(selectedGpsId, items);
         if(position !='-1'){
             toastr.error('Device Exists');
@@ -36,6 +45,9 @@ $(function () {
             if(device_array.length > 0 && command_array.length > 0)
             {
                 $("#submit_button").show();
+            }
+            if ( selectedGpsId == 0 ) {
+                $('#device_count').text("All");
             }
             toastr.success('Device Added Successfully');
         }
@@ -139,6 +151,13 @@ function deleteFromGpsArray(gps_id)
                 $("#device_count_section").hide();
                 $("#device_table").hide();
                 $("#submit_button").hide();
+            }
+            if($("#gps_id").prop('disabled') == true)
+            {
+                $('#gps_id').prop('disabled', false);
+                $('#device_count').text('0');
+                $("#device_count_section").hide();
+
             }
             toastr.info('Device Removed Successfully');
         }
