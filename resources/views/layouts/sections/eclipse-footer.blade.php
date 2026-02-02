@@ -48,7 +48,7 @@ max-width: 100%;
     position: relative;
     padding-bottom: 25px;
 }
-.logo-bottom-ft-text::before {
+/* .logo-bottom-ft-text::before {
    content: "";
     border-left: 120px solid #FFD21D;
     position: absolute;
@@ -56,7 +56,7 @@ max-width: 100%;
     top: auto;
     height: 2px;
     bottom: 4px;
-}
+} */
 .footer-bottom{
 width: 95%;
     float: left;
@@ -103,8 +103,10 @@ width: 95%;
 <div  class="footer">
 <div class="footer_contain">
 <div class="footer_bg ">
-<div class="logotype "><img src="../../../assets/images/smart-eclips-logo.svg">  </div>
-<div  class="logo-bottom-ft-text">Engineered by <span>VST mobility</span></div>
+<div class="logotype ">
+<img src="../../../assets/images/smart-eclips-logo.svg" width="50%" style="display:none;"> 
+ </div>
+<div  class="logo-bottom-ft-text">Powered By <img src="../../../assets/images/logo-v.png" width="50%"></div>
 
 </div>
 

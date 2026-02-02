@@ -1,0 +1,419 @@
+/* ============================================
+   GPS Renewal Automation Widget Styles
+   ============================================ */
+
+.renewal-automation-widget {
+    border: none;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.renewal-automation-widget .card-header {
+    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+    border-radius: 8px 8px 0 0;
+    padding: 15px 20px;
+    border: none;
+}
+
+.renewal-automation-widget .card-body {
+    padding: 20px;
+}
+
+/* Stat Cards */
+.stat-card {
+    display: flex;
+    align-items: center;
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 15px;
+    height: 100%;
+    transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+}
+
+.stat-card-clickable {
+    cursor: pointer;
+    border: 2px solid transparent;
+}
+
+.stat-card-clickable:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    transform: translateY(-3px);
+}
+
+.stat-card-clickable:active {
+    transform: translateY(-1px);
+}
+
+/* Specific colors for each stat card hover */
+#active-stat-card.stat-card-clickable:hover {
+    border-color: #2563eb;
+}
+
+#urgent-stat-card.stat-card-clickable:hover {
+    border-color: #dc3545;
+}
+
+#pending-stat-card.stat-card-clickable:hover {
+    border-color: #ffc107;
+}
+
+#completed-today-stat-card.stat-card-clickable:hover {
+    border-color: #10b981;
+}
+
+.stat-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+    flex-shrink: 0;
+}
+
+.stat-icon i {
+    font-size: 24px;
+    color: white;
+}
+
+.stat-icon.bg-primary {
+    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+}
+
+.stat-icon.bg-danger {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+}
+
+.stat-icon.bg-warning {
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+}
+
+.stat-icon.bg-success {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+}
+
+.stat-content {
+    flex: 1;
+}
+
+.stat-value {
+    font-size: 28px;
+    font-weight: 700;
+    color: #1f2937;
+    line-height: 1;
+    margin-bottom: 5px;
+}
+
+.stat-label {
+    font-size: 12px;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+}
+
+/* Button Group */
+.button-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.btn-action {
+    flex: 1;
+    min-width: 180px;
+    padding: 12px 20px;
+    font-weight: 600;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    border: none;
+    position: relative;
+}
+
+.btn-action i {
+    margin-right: 8px;
+}
+
+.btn-action:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.btn-action:active {
+    transform: translateY(0);
+}
+
+.btn-action:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none !important;
+}
+
+/* Loading State */
+.btn-action.loading {
+    pointer-events: none;
+}
+
+.btn-action.loading i {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Badge Styles */
+#renewal-test-mode-badge {
+    background: #fbbf24;
+    color: #78350f;
+    font-weight: 700;
+    padding: 5px 12px;
+    border-radius: 4px;
+    font-size: 11px;
+    letter-spacing: 0.5px;
+}
+
+#urgent-badge {
+    background: white;
+    color: #dc2626;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 10px;
+    font-size: 11px;
+}
+
+/* Modal Styles */
+#urgentListModal .modal-header {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+}
+
+#urgentListModal .modal-content {
+    border-radius: 8px;
+    border: none;
+}
+
+#urgentListModal .modal-body {
+    max-height: 70vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 20px;
+}
+
+#urgent-list-container {
+    width: 100%;
+    overflow-x: auto;
+}
+
+/* Urgent List Table */
+.urgent-list-table {
+    width: 100%;
+    margin-top: 10px;
+    min-width: 800px;
+    table-layout: auto;
+}
+
+.urgent-list-table thead {
+    background: #f3f4f6;
+}
+
+.urgent-list-table th {
+    font-weight: 600;
+    font-size: 13px;
+    color: #374151;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 12px;
+    border: none;
+    white-space: nowrap;
+}
+
+.urgent-list-table td {
+    padding: 12px;
+    vertical-align: middle;
+    border-top: 1px solid #e5e7eb;
+    white-space: nowrap;
+}
+
+.urgent-list-table tbody tr:hover {
+    background: #f9fafb;
+}
+
+/* Priority Badge */
+.priority-badge {
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.priority-badge.urgent {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.priority-badge.high {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.priority-badge.medium {
+    background: #dbeafe;
+    color: #1e40af;
+}
+
+.priority-badge.low {
+    background: #e5e7eb;
+    color: #374151;
+}
+
+/* Status Badge */
+.status-badge {
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.status-badge.active {
+    background: #dbeafe;
+    color: #1e40af;
+}
+
+.status-badge.escalated {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.status-badge.completed {
+    background: #d1fae5;
+    color: #065f46;
+}
+
+/* Reassign Button in Table */
+.btn-reassign {
+    font-size: 12px;
+    padding: 5px 12px;
+    white-space: nowrap;
+}
+
+.btn-reassign i {
+    margin-right: 5px;
+}
+
+/* Toast Notifications */
+.toast-notification {
+    position: fixed;
+    top: 80px;
+    right: 20px;
+    min-width: 300px;
+    max-width: 400px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    padding: 15px 20px;
+    z-index: 9999;
+    animation: slideInRight 0.3s ease;
+}
+
+.toast-notification.success {
+    border-left: 4px solid #10b981;
+}
+
+.toast-notification.error {
+    border-left: 4px solid #ef4444;
+}
+
+.toast-notification.warning {
+    border-left: 4px solid #f59e0b;
+}
+
+.toast-notification.info {
+    border-left: 4px solid #2563eb;
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(400px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .stat-card {
+        margin-bottom: 10px;
+    }
+    
+    .button-group {
+        flex-direction: column;
+    }
+    
+    .btn-action {
+        width: 100%;
+        min-width: auto;
+    }
+    
+    .stat-value {
+        font-size: 24px;
+    }
+}
+
+/* Empty State */
+.empty-state {
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.empty-state i {
+    font-size: 48px;
+    color: #9ca3af;
+    margin-bottom: 15px;
+}
+
+.empty-state h6 {
+    color: #6b7280;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.empty-state p {
+    color: #9ca3af;
+    font-size: 14px;
+}
+
+/* Loading Overlay */
+.loading-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    border-radius: 8px;
+}
+
+.loading-overlay .spinner {
+    border: 3px solid #f3f4f6;
+    border-top: 3px solid #2563eb;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+}

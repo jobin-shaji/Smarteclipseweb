@@ -68,8 +68,12 @@
     
     <?php
       $url=url()->current();
+
       $rayfleet_key="rayfleet";
       $eclipse_key="eclipse";
+      $eclipse_key1="add-products-view";
+      $eclipse_key2="view-device-in";
+      $eclipse_key3='devicein/create';
       if (strpos($url, $rayfleet_key) == true) {  ?>
           <title>RAYFLEET</title> 
       <?php } 
@@ -82,7 +86,11 @@
     
     <!-- Custom CSS -->
     <link href="{{ url('/') }}/assets/libs/flot/css/float-chart.css" rel="stylesheet">
+    <?php if (strpos($url, $eclipse_key1) == true || strpos($url, $eclipse_key2) == true  || strpos($url, $eclipse_key3) == true) {  ?>
+    <link href="{{ url('/') }}/style1.css" rel="stylesheet">
+    <?php }?>
     <link href="{{ url('/') }}/dist/css/style.min1.css" rel="stylesheet">
+  
     
     <link href="{{ url('/') }}/dist/css/alert.css" rel="stylesheet">
 

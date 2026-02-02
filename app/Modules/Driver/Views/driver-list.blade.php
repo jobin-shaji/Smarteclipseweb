@@ -1,0 +1,70 @@
+@extends('layouts.eclipse')
+@section('title')
+  Driver List
+@endsection
+@section('content')
+
+<!-- ============================================================== -->
+<!-- Page wrapper  -->
+<!-- ============================================================== -->
+<div class="page-wrapper_new">
+   <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-page-heading"></li>
+        <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Driver List</li>
+        <b>Driver List</b>
+       </ol>  
+       @if(Session::has('message'))
+          <div class="pad margin no-print">
+            <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
+                {{ Session::get('message') }}  
+            </div>
+          </div>
+       @endif    
+    </nav>
+  <div class="container-fluid">
+    <!-- ============================================================== -->
+    <!-- Start Page Content -->
+    <!-- ============================================================== -->
+    <div class="card-body">
+      <div class="table-responsive ">
+        <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">                     
+          <div class="row">
+            <div class="col-sm-12">
+
+              <table class="table table-hover table-bordered  table-striped datatable" style="width:100%;text-align: center;" id="dataTable">
+                <thead>
+                  <tr>
+                      <th style="width:5%!important;">SL.No</th>                              
+                      <th style="width:20%!important;">Name</th>                            
+                      <th style="width:30%!important;">Address</th>                              
+                      <th style="width:10%!important;">Mobile</th>    
+                      <th style="width:10%!important;">Break Time</th>    
+                      <th style="width:10%!important;">Duty Schedule</th>   
+                      <th style="width:10%!important;">Salary Type</th>    
+                      <th style="width:10%!important;">Licence No</th>    
+                      <th style="width:10%!important;">Licence Validity</th>                            
+                      <th style="width:15%!important;">Action</th>
+                  </tr>
+                </thead>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+                
+  </div>
+</div>
+
+<style>
+  .table tr td
+  {
+    word-break: break-all;
+  }
+</style>
+@endsection
+
+  @section('script')
+    <script src="{{asset('js/gps/driver-list.js')}}"></script>
+  @endsection

@@ -116,6 +116,7 @@
       </span>
   </a>
   <ul class="treeview-menu" style="display: none;">
+      <li><a href="{{url('/cmc-report')}}"><i class="fa fa-list"></i>CMC Report</a></li>
       <li><a href="{{url('/geofence-report')}}"><i class="fa fa-list"></i>Geofence Report</a></li>
       <li><a href="{{url('/alert-report')}}"><i class="fa fa-list"></i>Alert Report</a></li>
       <li><a href="{{url('/tracking-report')}}"><i class="fa fa-list"></i>Tracking Report</a></li>

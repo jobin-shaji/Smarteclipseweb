@@ -5,6 +5,8 @@ use Illuminate\Contracts\View\View;
 use App\Modules\Alert\Models\Alert;
 use App\Modules\Gps\Models\GpsData;
 use App\Modules\Gps\Models\Gps;
+use App\Modules\Gps\Models\GpsHistory;
+
 use App\Modules\Vehicle\Models\Vehicle;
 use App\Modules\Vehicle\Models\VehicleGps;
 use App\Modules\Vehicle\Models\DailyKm;
@@ -23,7 +25,7 @@ class TotalKMReportExport implements FromView
             {
                 $vehicle_gps_ids[]      =   $each_vehicle_gps->gps_id;
             }
-            $km                         =   (new Gps())->getSumOfKmBasedOnGpsOfVehicle($vehicle_gps_ids);
+            $km                         =   (new GpsHistory())->getSumOfKmBasedOnGpsOfVehicle($vehicle_gps_ids);
             $total_km_details[]         =   [   'vehicle_name'              => $vehicle_details->name,
                                                 'vehicle_register_number'   => $vehicle_details->register_number,
                                                 'total_km'                  => $km                             
@@ -40,7 +42,7 @@ class TotalKMReportExport implements FromView
                 {
                     $vehicle_gps_ids[]  =   $each_vehicle_gps->gps_id;
                 }
-                $km                     =   (new Gps())->getSumOfKmBasedOnGpsOfVehicle($vehicle_gps_ids);
+                $km                     =   (new GpsHistory())->getSumOfKmBasedOnGpsOfVehicle($vehicle_gps_ids);
                 $total_km_details[]     =   [   'vehicle_name'              => $each_vehicle->name,
                                                 'vehicle_register_number'   => $each_vehicle->register_number,
                                                 'total_km'                  => $km                             

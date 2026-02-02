@@ -42,9 +42,11 @@ function callBackDataTable(){
             {data: 'serial_no', name: 'serial_no', orderable: false},
             {data: 'vehicle_type_name', name: 'vehicle_type_name', orderable: false},
             {data: 'dealer', name: 'dealer', orderable: false},
-            {data: 'sub_dealer', name: 'sub_dealer', orderable: false},
+ {data: 'dealer', name: 'dealer', orderable: false},
+
+          // {data: 'sub_dealer', name: 'sub_dealer', orderable: false, defaultContent: 'N/A'},
             {data: 'trader',name:'trader', orderable: false},
-            {data: 'client.name', name: 'client.name', orderable: false},
+            {data: 'client.name', name: 'client.name', orderable: false,defaultContent: 'N/A'},
             {data: 'action', name: 'action', orderable: false, searchable: false}, 
         ],
         

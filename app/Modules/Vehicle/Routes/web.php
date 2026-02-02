@@ -1,0 +1,180 @@
+<?php
+
+Route::group(['middleware' => ['web','auth','role:client|school|root|Driver'] ,'namespace' => 'App\Modules\Vehicle\Controllers' ] , function () {
+
+
+Route::get('/vehicle','VehicleController@vehicleList')->name('vehicle');
+
+Route::post('/vehicle-list','VehicleController@getVehicleList')->name('vehicle-list');
+Route::get('/client/vehicles/export','VehicleController@exportClientVehicles')->name('client.vehicles.export');
+
+Route::get('/vehicles/create','VehicleController@createVehicle')->name('vehicles.create');
+Route::post('/vehicles/save_vehicle','VehicleController@saveVehicle')->name('vehicles.create.p');
+Route::get('/vehicles/{id}/details','VehicleController@details')->name('vehicles.details');
+Route::get('/vehicles/{id}/assign','VehicleController@assignDriver')->name('vehicles.assign');
+Route::post('vehicle/assignDrivers','VehicleController@postassignDriver')->name('vehicles.assignDrivers.p');
+Route::get('/vehicles/{id}/sendSms','VehicleController@getsendSms')->name('vehicles.sendSms');
+Route::post('vehicles/sendDsms','VehicleController@postsendDsms')->name('vehicles.sendDsms.p');
+
+Route::get('/bulk-sms','VehicleController@getbulksms')->name('vehicles.bulksms');
+Route::post('vehicles/sendBulksms','VehicleController@postsendBulksms')->name('vehicles.sendBulksms.p');
+
+
+Route::post('vehicle/delete','VehicleController@deleteVehicle')->name('vehicle.delete');
+Route::post('vehicle/activate','VehicleController@activateVehicle')->name('vehicle.activate');
+Route::post('/vehicles/findDateFieldWithDocTypeID/','VehicleController@findDateFieldWithDocTypeID')->name('vehicles.findDateFieldWithDocTypeID');
+// Route::post('/vehicles/save_doc','VehicleController@saveDocuments')->name('vehicles.doc.p');
+// Route::get('/vehicle-doc/{id}/edit','VehicleController@vehicleDocumentEdit')->name('vehicle-doc.edit');
+// Route::post('/vehicle-doc/{id}/edit','VehicleController@vehicleDocumentUpdate')->name('vehicle-doc.update.p');
+
+Route::get('/vehicles/{id}/ota','VehicleController@vehicleOta')->name('vehicle.ota');
+Route::post('/vehicle/{id}/ota-update','VehicleController@updateOta')->name('vehicles.ota.update.p');
+
+Route::get('/vehicles/{id}/playback-page','VehicleController@playbackPageInTrack')->name('vehicles.playback.page');
+/*
+#HIDE
+Route::get('/vehicles/{id}/playback','VehicleController@playbackHMap')->name('vehicles.playback');
+*/
+/*
+#HIDE
+Route::post('/vehicles/location-playback','VehicleController@hmapLocationPlayback')->name('vehicles.location-playback');
+*/
+
+Route::get('/vehicle-driver-log','VehicleController@vehicleDriverLogList')->name('vehicle-driver-log');
+
+Route::post('/vehicle-driver-log-list','VehicleController@getVehicleDriverLogList')->name('vehicle-driver-log-list');
+
+Route::get('/all-vehicle-docs','VehicleController@allVehicleDocList')->name('all-vehicle-docs');
+
+Route::post('/all-vehicle-docs-list','VehicleController@getAllVehicleDocList')->name('all-vehicle-docs-list');
+Route::post('/all-vehicle-doc/delete','VehicleController@deleteFromAllDocList')->name('all-vehicle-docs-delete');
+Route::post('/continuous-alert','VehicleController@continuousAlerts')->name('continuous.alerts');
+
+Route::post('/continuous-alert/verify','VehicleController@verifyContinuousAlert')->name('continuous-alert.verify');
+
+Route::get('/playback-second/{id}','VehicleController@playbackB')->name('vehicle.playback2.page');
+
+Route::post('/vehicle-playback','VehicleController@vehiclePlayback')->name('vehicle-playback');
+Route::post('/playback-km','VehicleController@Playbackkm')->name('playback-km');
+
+//////////////////////////////////Route in vehicle//////////////////////////////
+
+Route::post('/vehicle-route/save_route','VehicleController@saveVehicleRoute')->name('vehicle-route.create.p');
+Route::get('/vehicle-route/{id}/edit','VehicleController@editVehicleRoute')->name('vehicle-route.edit');
+Route::post('/vehicle-route/{id}/edit','VehicleController@updateVehicleRoute')->name('vehicle-route.update.p');
+Route::get('/vehicle-route/{id}/view','VehicleController@viewVehicleRoute')->name('vehicle-route.view');
+Route::get('vehicle-route/{id}/delete','VehicleController@deleteVehicleRoute')->name('vehicle-route.delete');
+///////////////////////////////////invoice////////////////////////////////////////////////////////////
+Route::get('/invoice','VehicleController@invoice')->name('invoice');
+
+Route::post('/vehicle-invoice/export','VehicleController@export')->name('vehicle-invoice.export.p');
+
+});
+
+
+Route::group(['middleware' => ['web','auth','role:root'] ,'namespace' => 'App\Modules\Vehicle\Controllers' ] , function () {
+
+//VEHICLE TYPE
+Route::get('/vehicle-types','VehicleController@vehicleTypeList')->name('vehicle-types');
+Route::post('/vehicle-type-list','VehicleController@getVehicleTypeList')->name('vehicle-type-list');
+
+Route::get('/vehicle-type/create','VehicleController@createVehicleType')->name('vehicle_type.create');
+Route::post('/vehicle-type/save_vehicle_type','VehicleController@saveVehicleType')->name('vehicle-type.create.p');
+Route::get('/vehicle-type/{id}/details','VehicleController@detailsVehicleType')->name('vehicle_type.details');
+Route::get('/vehicle-type/{id}/edit','VehicleController@editVehicleType')->name('vehicle-type.edit');
+Route::post('/vehicle_type/{id}/edit','VehicleController@updateVehicleType')->name('vehicle-type.update.p');
+// Route::post('vehicle_type/delete','VehicleController@deleteVehicleType')->name('vehicle-type.delete');
+
+
+//Vehicle List
+Route::get('/vehicle-root','VehicleController@vehicleRootList')->name('vehicle-root');
+
+Route::post('/vehicle-root-list','VehicleController@getVehicleRootList')->name('vehicle-root-list');
+});
+
+///////////////////////////////Location track////////////////////////////////////
+Route::group(['middleware' => ['web','auth','role:root|dealer|sub_dealer|client|school|Driver'] ,'namespace' => 'App\Modules\Vehicle\Controllers' ] , function () {
+
+Route::get('/vehicles/{id}/location','VehicleController@location')->name('vehicles.location');
+
+Route::post('/vehicles/location-track','VehicleController@locationTrack')->name('vehicles.location-track');
+/**location name */
+Route::post('/vehicle-track-location-name','VehicleController@getAddress')->name('vehicle.track.location.name');
+/**location name */
+Route::get('/vehicles/fuel-track','VehicleController@fuelTrack')->name('vehicles.fuel-track');
+
+
+Route::get('/vehicles-second/{id}/location','VehicleController@vehicleLocationTrack')->name('vehicles-second.location');
+
+// new track firebase
+Route::get('/vehicles/{id}/location-firebase','VehicleController@locationFirebase')->name('vehicles.location.firebase');
+
+Route::get('/vehicles/{id}/location-firebase-hmap','VehicleController@locationFirebaseHmap')->name('vehicles.location.firebase.hmap');
+Route::get('/vehicles/{id}/location-firebase-hmap-new','VehicleController@locationFirebaseHmapNew')->name('vehicles.location.firebase.hmap.new');
+
+});
+
+//////////////////////////////////////////////////////////////////////////////////
+
+Route::group(['middleware' => ['web','auth','role:servicer'] ,'namespace' => 'App\Modules\Vehicle\Controllers' ] , function () {
+Route::get('/servicer/vehicles/{id}/create','VehicleController@servicerCreateVehicle')->name('servicer.vehicles.create');
+Route::post('/servicer-vehicle-list','VehicleController@servicerVehicleList')->name('servicer-vehicle-list');
+Route::get('/servicer-vehicles/create','VehicleController@createVehicle')->name('servicer.vehicles.create');
+Route::get('/servicer-vehicle','VehicleController@servicerVehicleList')->name('servicer-vehicle');
+
+Route::post('/servicer-vehicle-list','VehicleController@getServicerVehicleList')->name('servicer.vehicle-list');
+
+});
+Route::group(['middleware' => ['web','auth','role:servicer|client|school'] ,'namespace' => 'App\Modules\Vehicle\Controllers' ] , function () {
+Route::get('/servicer-vehicles/{id}/details','VehicleController@servicerVehicleDetails')->name('servicer-vehicles.details');
+
+
+Route::post('/servicer-vehicles/findDateFieldWithDocTypeID/','VehicleController@servicerfindDateFieldWithDocTypeID')->name('servicer.vehicles.findDateFieldWithDocTypeID');
+Route::get('vehicle-doc/{id}/delete','VehicleController@vehicleDocumentDelete')->name('vehicle-doc.delete');
+Route::post('/vehicles/save_doc','VehicleController@saveDocuments')->name('vehicles.doc.p');
+Route::get('/vehicle-doc/{id}/edit','VehicleController@vehicleDocumentEdit')->name('vehicle-doc.edit');
+Route::post('/vehicle-doc/{id}/edit','VehicleController@vehicleDocumentUpdate')->name('vehicle-doc.update.p');
+Route::post('/vehicle/{id}/edit','VehicleController@update')->name('vehicles.update.p');
+Route::post('/vehicle/{id}/reg_edit','VehicleController@regupdate')->name('reg.update.p');
+Route::post('/vehicle/{id}/odometer-edit','VehicleController@odometerUpdate')->name('vehicles.odometer.update.p');
+Route::post('/vehicle/{id}/model-edit','VehicleController@modelUpdate')->name('vehicles.model.update.p');
+Route::post('/document-upload','VehicleController@saveUploadDocuments')->name('document.upload');
+Route::post('/delete-already-existing','VehicleController@saveUploads')->name('delete.already.existing');
+Route::post('/edit-document-upload','VehicleController@saveEditUploadDocuments')->name('edit.document.upload');
+Route::post('/edit-already-existing','VehicleController@saveEditUploads')->name('edit.already.existing');
+
+
+	});
+
+Route::group(['middleware' => ['web'] ,'namespace' => 'App\Modules\Vehicle\Controllers' ] , function () {
+ /*
+ #HIDE
+  Route::get('/vehicle_playback','VehicleController@playbackPage')->name('vehicle_playback');
+  Route::post('/vehicle_playback_data','VehicleController@playbackPageData')->name('vehicle_playback_data');
+ */
+});
+
+Route::group(['middleware' => ['web','auth','role:operations'] , 'namespace' => 'App\Modules\Vehicle\Controllers' ] , function () {
+
+ 	Route::post('/vehicle_replay','VehicleController@playbackPageData')->name('vehicle_playback_data');
+
+ 	/*
+ 	#HIDE
+ 	Route::get('/gps-map-public','MapLocationController@gpsMapLocationPublic')->name('gps.map.public');
+	Route::post('/gps-map/location-track-public','MapLocationController@gpsMapLocationTrackPublic')->name('gps.map.location.track.public');
+	*/
+	
+	// Route::get('/gps-km-map','MapLocationController@gpsKmMapLocation')->name('gps.km.map');
+	// Route::post('/gps-km-map/location-track','MapLocationController@gpsKmMapLocationTrack')->name('gps.km.map.location.track')
+});
+
+Route::group(['middleware' => ['web','auth','role:operations'] ,'namespace' => 'App\Modules\Vehicle\Controllers' ] , function () 
+{
+	Route::get('/gps-map','MapLocationController@gpsMapLocation')->name('gps.map');
+	Route::post('/gps-map/location-track','MapLocationController@gpsMapLocationTrack')->name('gps.map.location.track');
+
+
+	Route::get('/gps-km-map','MapLocationController@gpsKmMapLocation')->name('gps.km.map');
+	Route::post('/gps-km-map/location-track','MapLocationController@gpsKmMapLocationTrack')->name('gps.km.map.location.track');
+});
+

@@ -33,6 +33,8 @@ function callBackDataTable(){
             {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
             {data: 'code', name: 'code' }, 
             {data: 'name', name: 'name' }, 
+            {data: 'department_id', name: 'department_id' }, 
+            {data: 'designation', name: 'designation' }, 
             {data: 'mobile', name: 'mobile' },                      
             {data: 'email', name: 'email'},             
             {data: 'action', name: 'action', orderable: false, searchable: false},

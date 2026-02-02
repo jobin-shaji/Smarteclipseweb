@@ -48,7 +48,9 @@ return  [
        'Esim',
        'Settings',
        'Sales',
-       'CommandsCenter'
+       'Finance',
+       'CommandsCenter',
+       'Ksrtc'
 
     ]
 ]

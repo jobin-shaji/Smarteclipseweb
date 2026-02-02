@@ -223,7 +223,7 @@ function getMarkers() {
                   element.classList.remove("lost_blink");
                    $('#network_status').removeClass('lost1');
                 }
-                else if (res.liveData.signalStrength <= 12 && device_time >= res.liveData.connection_lost_time_motion) {
+                else if (res.liveData.signalStrength <= 7 && device_time >= res.liveData.connection_lost_time_motion) {
                   document.getElementById("network_status").innerHTML = "POOR";
                   var element = document.getElementById("lost_blink_id");
                   element.classList.remove("lost_blink");
@@ -277,14 +277,14 @@ function getMarkers() {
                   element.classList.remove("lost_blink");
                    $('#network_status').removeClass('lost1');
                 }
-                else if (res.liveData.signalStrength <= 12 && device_time >= res.liveData.connection_lost_time_sleep) {
+                else if (res.liveData.signalStrength <= 7 && device_time >= res.liveData.connection_lost_time_sleep) {
                   document.getElementById("network_status").innerHTML = "POOR";
                   var element = document.getElementById("lost_blink_id");
                   element.classList.remove("lost_blink");
                    $('#lost_blink_id1').removeClass('lost1');
                 }
                 else{
-                  document.getElementById("network_status").innerHTML = "LOST";
+                  document.getElementById("network_status").innerHTML = "LOST-1";
                   var element = document.getElementById("lost_blink_id");
                   element.classList.add("lost_blink");
                    $('#network_status').addClass('lost1');
@@ -292,7 +292,7 @@ function getMarkers() {
               }
               else
               {
-                document.getElementById("network_status").innerHTML = "LOST";
+                document.getElementById("network_status").innerHTML = "LOST-2";
                 var element = document.getElementById("lost_blink_id");
                 element.classList.add("lost_blink");
                 $('#network_status').addClass('lost1');

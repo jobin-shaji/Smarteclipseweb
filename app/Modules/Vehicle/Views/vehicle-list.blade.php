@@ -1,0 +1,58 @@
+@extends('layouts.eclipse')
+@section('title')
+  All Vehicles
+@endsection
+@section('content')
+
+<div class="page-wrapper_new">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Vehicle List</li>
+            <b>Vehicle List</b>
+        </ol>
+        <a href="{{ route('client.vehicles.export') }}"
+           class="btn btn-success btn-sm">
+            Export Vehicles
+        </a>
+        @if(Session::has('message'))
+        <div class="pad margin no-print">
+            <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
+          {{ Session::get('message') }}  
+            </div>
+        </div>
+        @endif 
+    </nav>   
+    <div class="container-fluid">
+        <div class="card-body">
+            <div class="table-responsive">
+                <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
+                
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <table class="table table-hover table-bordered  table-striped datatable" style="text-align: center;width:100%" id="dataTable">
+                                <thead>
+                                    <tr>
+                                        <th>SL.No</th>
+                                        <th>Vehicle Name</th>
+                                        <th>Registration Number</th>
+                                        <th>Serial Number</th>
+                                        <th>Driver</th>
+                                        <th>Vehicle Type</th>
+                                        <th>Installation Date</th>
+                                        <th>Validity</th>
+                                         <th>Renewed Status</th>
+                                        <th style="width:160px;">Action</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection
+@section('script')
+    <script src="{{asset('js/gps/vehicle-list.js')}}"></script>
+@endsection

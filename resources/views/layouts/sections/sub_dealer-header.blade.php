@@ -16,7 +16,7 @@
                                 <a class="dropdown-item" href="{{url('/gps-subdealer-new')}}">NEW ARRIVALS<span></span></a>
                                 <a class="dropdown-item" href="{{url('/gps-sub-dealer')}}">ALL DEVICES<span></span></a>
                                 <li class="dropdown-submenu">
-                                    <a href="#" class="dropdown-item dropdown-toggle"data-toggle="dropdown" >SUB DEALER</a>
+                                    <a href="#" class="dropdown-item dropdown-toggle"data-toggle="dropdown" >TRADERS</a>
                                     <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" href="{{url('/gps-transfer-sub-dealer-trader/create')}}">TRANSFER DEVICE</a></li>
                                     <li><a class="dropdown-item" href="{{url('/gps-transfers-subdealer-to-trader')}}">DEVICE TRANSFER LIST</a></li>
@@ -63,10 +63,10 @@
                             <ul class="dropdown-menu multi-level">
                                 <!-- sub dealer option in header,created by 10-1-2020 by christeena-start  -->
                                 <li class="dropdown-submenu">
-                                    <a href="#" class="dropdown-item dropdown-toggle"data-toggle="dropdown" >SUB DEALER</a>
+                                    <a href="#" class="dropdown-item dropdown-toggle"data-toggle="dropdown" >TRADERS</a>
                                     <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="{{url('/trader/create')}}">ADD SUB DEALER</a></li>
-                                    <li><a class="dropdown-item" href="{{url('/trader')}}">LIST SUB DEALER</a></li>
+                                    <li><a class="dropdown-item" href="{{url('/trader/create')}}">ADD TRADERS</a></li>
+                                    <li><a class="dropdown-item" href="{{url('/trader')}}">LIST TRADERS</a></li>
                                     </ul>
                                 </li>
                                 <!-- sub dealer option in header,created by 10-1-2020 by christeena-end  -->

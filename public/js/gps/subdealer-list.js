@@ -34,7 +34,8 @@ function callBackDataTable(){
             {data: 'name', name: 'name',orderable: false},            
             {data: 'address', name: 'address',orderable: false},           
             {data: 'user.mobile', name: 'user.mobile', orderable: false},
-            {data: 'user.email', name: 'user.email',orderable: false},         
+            {data: 'user.email', name: 'user.email',orderable: false},  
+            {data: 'sales.name', name: 'sales.name',orderable: false},         
             {data: 'action', name: 'action', orderable: false, searchable: false},
            
         ],

@@ -12,8 +12,7 @@
 */
 
 Route::get('/', function () {
-
-
+  
           $url=url()->current();
           $rayfleet_key="rayfleet";
           $eclipse_key="eclipse";
@@ -43,8 +42,25 @@ Route::get('/privacy-policy', function () {
          }
 });
 
-Route::get('/testmail','TestController@testMail')->name('test-mail');
 
+
+// routes/web.php eugene
+Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
+Route::post('/register', [RegisterController::class, 'register']);
+// routes/web.php
+/*
+Route::get('/home', function () {
+  return view('home');
+})->name('home');
+*/
+//eugene end
+
+Route::get('/download-invoice/{id}','GeneralController@generateInvoicePdf')->name('download-invoice');
+
+Route::get('/download-cmc/{id}','GeneralController@generateCMCPdf')->name('download-cmc');
+
+Route::get('/testmail','TestController@testMail')->name('test-mail');
+Route::get('/maps','MapController@LoadMap')->name('maps');
 
 Route::get('/logout', function(){
   Auth::logout();

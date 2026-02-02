@@ -1765,11 +1765,12 @@ if(document.getElementById('user_id').value!=null){
         $.ajax({
             type:'post',
             data:data,
-            url: url_ms_alerts+'/alert-count',
+            url: '/alert-count',
             dataType: "json",
             success: function (res) 
-            {                   
-                notificationCount(res.data.count) ;
+            {     
+                console.log(res) ;             
+                notificationCount(res.data) ;
             }
         });
     }
@@ -1784,11 +1785,11 @@ if(document.getElementById('user_id').value!=null){
         $.ajax({
             type:'post',
             data:data,
-            url: url_ms_alerts+"/last-five-unread-alerts",
+            url: "/last-five-unread-alerts",
             dataType: "json",
             success: function (res) 
             { 
-                alertNotification(res.data.alerts) ;
+                alertNotification(res.data) ;
             }
         });
     }
@@ -1801,7 +1802,7 @@ if(document.getElementById('user_id').value!=null){
             // display each alerts
             for (var i = 0; i < res.length; i++)
             {
-                $("#alert_notification").append('<div class="dropdown-item psudo-link"  data-toggle="modal"  data-target="#myModal3" onclick="gpsAlertUpdate(\''+res[i]._id+'\')">'+res[i].alert_type.description+'<br>('+res[i].gps.connected_vehicle_registration_number+')</div>');
+                $("#alert_notification").append('<div class="dropdown-item psudo-link"  data-toggle="modal"  data-target="#myModal3" onclick="gpsAlertUpdate(\''+res[i].id+'\')">'+res[i].alert_type.description+'<br>('+(res[i].vehicle ? res[i].vehicle.register_number : '')+')</div>');
             }
             if(res.length==0){
                 $("#alert_notification").append('<div class="dropdown-item" >No alerts found</div>');
@@ -1815,11 +1816,11 @@ if(document.getElementById('user_id').value!=null){
             $.ajax({
                 type:'POST',
                 data:data,
-                url: url_ms_alerts+"/alert-mark-as-read",
+                url: "/alert-mark-as-read",
                 dataType: "json",
                 success: function (res) 
                 {         
-                    gpsAlertconfirm(res.data.alert) ;
+                    gpsAlertconfirm(res.data) ;
                 }
             });
         }
@@ -1827,7 +1828,7 @@ if(document.getElementById('user_id').value!=null){
         {     
             $("#load-2").css("display", "none");
             $('#alert_'+res._id).removeClass('alert');
-            var alert_content = res.alert_type.description+' on vehicle '+res.gps.connected_vehicle_name+'('+res.gps.connected_vehicle_registration_number+') at '+res.device_time;
+            var alert_content = res.alert_type.description+' on vehicle '+res.vehicle ? res[i].vehicle.register_number : ''+'('+res.vehicle ? res[i].vehicle.register_number : ''+') at '+res.device_time;
             $('#alert_content').text(alert_content);  
             $('#alert_address').text(res.address);           
         }

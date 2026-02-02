@@ -1204,7 +1204,7 @@ class VehicleController extends Controller
                      return $vehicle->client->trader->subDealer->name;
                 }
                 else{
-                    return $vehicle->client->subdealer->name;
+                   return ( isset($vehicle->client->subdealer) ) ? $vehicle->client->subdealer->dealer->name : '-NA-';
                 }
             })
             ->addColumn('trader',function($vehicles){
@@ -1236,7 +1236,10 @@ class VehicleController extends Controller
         $user=\Auth::user();
         $user_role=$user->roles->first()->name;
         $decrypted_id = Crypt::decrypt($request->id);
+
+//dd($decrypted_id);
         $get_vehicle=Vehicle::find($decrypted_id);
+dd($get_vehicle);
         $vehicle_type=VehicleType::find($get_vehicle->vehicle_type_id);
         $track_data=Gps::select('lat as latitude',
                               'lon as longitude'

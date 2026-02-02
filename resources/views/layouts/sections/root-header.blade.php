@@ -11,19 +11,24 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <div class="dropdown-divider"></div>
-            <!-- <a class="dropdown-item" href="{{url('/gps/create')}}">ADD DEVICE</a> -->
+             <a class="dropdown-item" href="{{url('/gps/create')}}">ADD DEVICE</a>
             <!-- <a class="dropdown-item" href="{{url('/gps/stock')}}">ADD STOCK</a> -->
             <!-- <a class="dropdown-item" href="{{url('/gps')}}">IN STOCK</a>   -->
             <a class="dropdown-item" href="{{url('/gps-all')}}">ALL DEVICES</a>
             <a class="dropdown-item" href="{{url('/gps')}}">IN STOCK</a>
+            
             <a class="dropdown-item" href="{{url('/gps-transfer-root')}}">TRANSFER DEVICES</a>
             <a class="dropdown-item" href="{{url('/gps-transferred-root')}}">DEVICE TRANSFER LIST</a>
             <a class="dropdown-item" href="{{url('/gps-device-track-root')}}">DEVICE TRACK</a>
             <a class="dropdown-item" href="{{url('/devicereassign/create')}}">DEVICE REASSIGN  </a>
             <a class="dropdown-item" href="{{url('/esim-updation')}}">ESIM UPDATION </a>
+            <a class="dropdown-item" href="{{url('/esim-renewal')}}">ESIM RENEWAL </a>
+          
             <a class="dropdown-item" href="{{url('/esim-activation-details')}}">ESIM ACTIVATION DETAILS <span class="badge">New</span></a>
             <a class="dropdown-item" href="{{url('/detailed-device-report')}}">DETAILED DEVICE REPORT  <span class="badge">New</span></a>
-            
+            <a class="dropdown-item" href="{{url('/device-return-history-list')}}">DEVICE RETURN LIST </a>
+            <a class="dropdown-item" href="{{url('/direct-device-return')}}">QUICK DEVICE RETURN <span class="badge" style="background-color: #ff6b6b;">Quick</span></a>
+        
         </div>
     </li>
     <li class="nav-item dropdown">
@@ -39,7 +44,7 @@
         </div>
     </li>
     <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> USER
+        <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">DEPARTMENT
         </a>
         <ul class="dropdown-menu multi-level">
             <li class="dropdown-submenu">
@@ -80,17 +85,33 @@
                 </ul>
             </li>
             <li class="dropdown-submenu">
-                <a href="#" class="dropdown-item dropdown-toggle"data-toggle="dropdown" >OPERATIONS</a>
+                <a href="#" class="dropdown-item dropdown-toggle"data-toggle="dropdown" >TECHNICIANS</a>
                 <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="{{url('/operations/create')}}">ADD USER (OPERATION)</a></li>
-                <li><a class="dropdown-item" href="{{url('/operations')}}">LIST USER (OPERATION)</a></li>
+                <li><a class="dropdown-item" href="{{url('/operations/create')}}">ADD USER (TECHNICIANS)</a></li>
+                <li><a class="dropdown-item" href="{{url('/operations')}}">LIST USER (TECHNICIANS)</a></li>
+                </ul>
+            </li>
+            <li class="dropdown-submenu">
+                <a href="#" class="dropdown-item dropdown-toggle"data-toggle="dropdown" >STORE KEEPER</a>
+                <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="{{url('/storekeeper/create')}}">ADD USER (STORE KEEPER)</a></li>
+                <li><a class="dropdown-item" href="{{url('/store-keeper')}}">LIST USER (STORE KEEPER)</a></li>
                 </ul>
             </li>
             <li class="dropdown-submenu">
                 <a href="#" class="dropdown-item dropdown-toggle"data-toggle="dropdown" >SALES</a>
                 <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="{{url('/salesman/create')}}">ADD USER (SALES)</a></li>
-                <li><a class="dropdown-item" href="{{url('/salesman')}}">LIST USER (SALES)</a></li>
+                    <li><a class="dropdown-item" href="{{url('/salesman/create')}}">ADD USER (SALES)</a></li>
+                    <li><a class="dropdown-item" href="{{url('/salesman')}}">LIST USER (SALES)</a></li>
+                    <!--<li><a class="dropdown-item" href="{{url('/callcenter/create')}}">ADD USER (SALES)</a></li>
+-->                  <li><a class="dropdown-item" href="{{url('/callcenter')}}">LIST CALL CENTER EXECUTIVES</a></li>
+                </ul>
+            </li>
+            <li class="dropdown-submenu">
+                <a href="#" class="dropdown-item dropdown-toggle"data-toggle="dropdown" >FINANCE</a>
+                <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="{{url('/finance/create')}}">ADD USER (FINANCE)</a></li>
+                <li><a class="dropdown-item" href="{{url('/finance')}}">LIST USER (FINANCE)</a></li>
                 </ul>
             </li>
         </ul>
@@ -155,6 +176,24 @@
             <a class="dropdown-item" href="{{url('/employee')}}">LIST EMPLOYEES<span></span></a>
         </div>
     </li>
+
+
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">SERVICE CENTER</a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <div class="dropdown-divider"></div>
+
+            <a href="{{url('/add-new-store')}}" class="dropdown-item">ADD NEW STORE</a>
+            <a href="{{url('/list-stores')}}" class="dropdown-item">LIST STORES</a>
+            <a href="{{url('/add-service-center')}}" class="dropdown-item">ADD NEW BRANCH</a>
+            <a href="{{url('/list-service-center')}}" class="dropdown-item">LIST BRANCH</a>
+             <a href="{{url('/service-products')}}" class="dropdown-item">COMPONENTS</a>
+             <a href="{{url('/index-production')}}" class="dropdown-item">SERVICE</a>
+             <a href="{{url('/index-service-in')}}" class="dropdown-item">DEVICE IN</a>
+            <a href="{{url('/deliveredview')}}" class="dropdown-item">DEVICE OUT</a>
+            <a href="{{url('/courierlist')}}" class="dropdown-item">DEVICE DELIVERED(COURIER)</a>           
+        </div>
+    </li>
     <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> COMPLAINTS
         </a>
@@ -164,8 +203,7 @@
             <a class="dropdown-item" href="{{url('/complaint-type')}}">LIST COMPLAINT TYPES<span></span></a>
             <a class="dropdown-item" href="{{url('/complaint')}}">LIST COMPLAINTS<span></span></a>
             <a class="dropdown-item" href="{{url('/complaint-history-list')}}">ASSIGNED COMPLAINT HISTORY </a>
-            <a class="dropdown-item" href="{{url('/device-return-history-list')}}">DEVICE RETURN LIST </a>
-        </div>
+             </div>
     </li>
       <li class="nav-item dropdown">
         <a class="nav-link waves-effect waves-dark" href="{{url('/map-view')}}"  aria-haspopup="true" > MAP VIEW

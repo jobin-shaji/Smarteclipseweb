@@ -25,6 +25,27 @@ function dbcount(res){
       $('#refurbished_devices').text(res.refurbished_devices);
       $('#gps_manufactured').text(res.gps_manufactured);
       $('#gps_transferred').text(res.gps_transferred);
+
+      $('#best_performer').text(res.best_performer); 
+      $('#total_renewal').text(res.total_renewal);
+      $('#todays_renewal').text(res.todays_renewal);
+      $('#todays_ksrtc').text(res.ksrtc_count);
+      $('#todays_performer').text(res.best_performer_day);
+
+      $('#todays_collection').text(res.todays_collection);
+      $('#total_collection').text(res.total_collection);
+
+
+
+      $('#devices_in').text(res.devices_in);
+      $('#devices_out').text(res.devices_out);
+      $('#devices_pending').text(res.devices_pending);
+
+      $('#todaydevices_in').text(res.todaydevices_in);
+      $('#todaydevices_out').text(res.todaydevices_out);
+      $('#todaydevices_pending').text(res.todaydevices_pending);
+
+      
       $('#gps_to_be_added_to_stock').text(res.gps_to_be_added_to_stock);
       $('#gps_returned').text(res.gps_returned);
       $('#gps_returned_request').text(res.gps_returned_request);

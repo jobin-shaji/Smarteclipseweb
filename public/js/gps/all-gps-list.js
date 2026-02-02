@@ -57,14 +57,20 @@ function callBackDataTable()
             {data: 'imei', name: 'imei', orderable: false},
             {data: 'serial_no', name: 'serial_no', orderable: false},
             {data: 'icc_id', name: 'icc_id', orderable: false},
+            {data: 'icc_id1', name: 'icc_id1', orderable: false},
             {data: 'imsi', name: 'imsi', orderable: false},
+            {data: 'provider1', name: 'provider1', orderable: false},
             {data: 'e_sim_number', name: 'e_sim_number', orderable: false},
-            {data: 'batch_number', name: 'batch_number', orderable: false},
-            {data: 'employee_code', name: 'employee_code', orderable: false},
+            {data: 'provider2', name: 'provider2', orderable: false},
+            {data: 'e_sim_number1', name: 'e_sim_number1', orderable: false},
+            {data: 'validity', name: 'validity', orderable: false},
+            {data: 'pay_date', name: 'pay_date', orderable: false},
+            {data: 'vehicle_number', name: 'vehicle_no', orderable: false},
+            {data: 'mob_app', name: 'mob_app', orderable: false},
             {data: 'action', name: 'action', orderable: false, searchable: false},
         ],
         
-        aLengthMenu: [[25, 50, 100, -1], [25, 50, 100, 'All']]
+        aLengthMenu: [[10, 50, 50, -1], [10, 50, 50, 'All']]
     });
     var table = $('#dataTable').DataTable();
     table.search('').draw();

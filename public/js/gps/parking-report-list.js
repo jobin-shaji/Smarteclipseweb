@@ -23,7 +23,7 @@ function trackMode()
         var from_date       =   document.getElementById('fromDate').value;
         var to_date         =   document.getElementById('toDate').value;
         var data            =   {'vehicle':vehicle_id,'client':client, 'from_date':from_date , 'to_date':to_date};
-        var url             =   '/parking-report-list';
+        var url             =   'parking-report-list';
         var data            =   {
                                     'vehicle':vehicle_id,
                                     'client':client, 

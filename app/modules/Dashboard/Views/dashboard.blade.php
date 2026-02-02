@@ -377,7 +377,7 @@
                         <h3 id="gps">
                           <div class="loader"></div>
                         </h3>
-                        <p>Total Devices Tested</p>
+                        <p>Total Devices Tested (.)</p>
                       </div>
                       <div class="icon">
                         <img src="../../assets/images/gps104.png" height="50%" width="30%" style="float: right;margin-top: 10%">
@@ -1146,7 +1146,7 @@
 
               <div class="bg-dark p-10 text-white text-center" style="float: left;width:50%">
                 <img src="assets/images/battery-status.png">
-                <h4 class="m-b-0 m-t-5 score_data_text">Internal Battery Status</h4>
+                <h4 class="m-b-0 m-t-5 score_data_text">Internal Battery Status.</h4>
                 <medium id="battery_status" class="font-light">
                   <i class="fa fa-spinner" aria-hidden="true"></i>
               </div>
@@ -1465,7 +1465,7 @@
               <div class="dash-vechile-detials-img">
                 <img src="assets/images/battery-status.png">
               </div>
-              <div class="dash-vechile-detail-text"><p>Internal Battery Status</p>
+              <div class="dash-vechile-detail-text"><p>Internal Battery Status.</p>
                 <medium id="battery_status" class="font-light">
                 <i class="fa fa-spinner" aria-hidden="true"></i>
               </div>

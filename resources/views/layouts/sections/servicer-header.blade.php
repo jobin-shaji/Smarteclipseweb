@@ -38,11 +38,21 @@
         </div>
     </li> -->
     <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> DEVICE IN
+        </a>
+       <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="{{url('/devicein/create')}}"> ADD DEVICE IN <span></span></a>     
+            <a class="dropdown-item" href="{{url('/devicein')}}"> LIST DEVICE IN<span></span></a>
+                                                           
+        </div>
+    </li>
+    <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> DEVICE RETURN
         </a>
        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="{{url('/devicereturn/create')}}"> ADD DEVICE RETURN <span></span></a>                              
+             <a class="dropdown-item" href="{{url('/devicereturn/create')}}"> ADD DEVICE RETURN <span></span></a>                              
            <a class="dropdown-item" href="{{url('/device')}}"> LIST DEVICE RETURN<span></span></a>                                                   
         </div>
     </li>

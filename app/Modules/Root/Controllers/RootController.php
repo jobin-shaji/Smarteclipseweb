@@ -1,0 +1,162 @@
+<?php
+
+namespace App\Modules\Root\Controllers;
+
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Modules\Depot\Models\State;
+use App\Modules\Root\Models\Root;
+use Illuminate\Support\Facades\Crypt;
+use App\Jobs\MailJob;
+use DataTables;
+use DB;
+use App\Modules\User\Models\User;
+use App\Modules\Root\Models\ServiceLevelAgreement as SLA;
+
+class RootController extends Controller {
+
+    //All states 
+    public function statesListPage()
+    {
+        return view('Root::states-list');
+    }
+
+
+    //returns states as json 
+    public function getStates()
+    {
+        $states = State::select(
+                    'id',
+                    'name')->get();
+        return DataTables::of($states)
+            ->addIndexColumn()
+            ->addColumn('action', function ($state) {
+                $b_url = \URL::to('/'); 
+                return "
+                    <a href=".$b_url."/state/".$state->id."/details class='btn btn-xs btn-info'><i class='glyphicon glyphicon-eye-open'></i> View </a>";
+            })
+            ->rawColumns(['link', 'action'])
+            ->make();
+    }
+
+    public function StateDetails(Request $request){
+        $state = State::find($request->id);
+        $users = $state->users();
+        return view('Root::state-details',compact(['state','users']));
+    }
+
+    public function createUser(Request $request){
+        $rules = $this->userCreateRule();
+        $request->validate($rules);
+
+        $user =  DB::table('users')->insert([
+            'username' => $request->username,
+            'mobile' => $request->mobile,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+            'status' => 1,
+            'state_id' => $request->id
+        ]);
+
+        if($user){
+            User::where('username',$request->username)->first()->assignRole('state');
+            $request->session()->flash('message', 'User created successfully!'); 
+            $request->session()->flash('alert-class', 'alert-success'); 
+        }
+
+        return back();
+    }
+
+    public function changeRootPassword(Request $request)
+    {
+        $decrypted = Crypt::decrypt($request->id);
+        $user = User::where('id', $decrypted)->first();
+        if($user == null){
+            return view('Root::404');
+        }
+        return view('Root::root-change-password',['user' => $user]);
+    }
+
+    //update password
+    public function updateRootPassword(Request $request)
+    {
+        $user           =   User::find($request->id);
+        if($user        ==  null)
+        {
+            return view('Root::404');
+        }
+        $root_details   =   Root::select('name')->where('user_id',$request->id)->first();
+        $did            =   encrypt($user->id);
+        $rules          =   $this->updateRootPasswordRule();
+        $this->validate($request,$rules);
+        $user->password =   bcrypt($request->password);
+        $user->save();
+        $email = [
+            'to'        =>  $user->email, 
+            'toName'    =>  $root_details->name, 
+            'template'  =>  'mail', 
+            'subject'   =>  'Change password email at '.date('Y-m-d H:i:s'), 
+            'data'      =>  [ 'name' =>$root_details->name,'content' =>'Your new password is '.$request->password ]
+        ];
+        MailJob::dispatch($email);
+        $request->session()->flash('message','Password updated successfully');
+        $request->session()->flash('alert-class','alert-success');
+        return  redirect(route('root.change.password',$did));  
+    }
+
+    public function slaListPage()
+    {
+        $sla = SLA::all();
+        return view('Root::sla_list_page', compact('sla'));
+    }
+
+    public function slaEditPage(Request $request)
+    {
+        $sla = SLA::find(decrypt($request->id));
+        return view('Root::sla_edit', compact('sla'));
+    }
+
+    public function slaUpdate(Request $request)
+    {
+        $rules = $this->sla_update_rules();
+        $this->validate($request,$rules);
+        
+        $sla = SLA::find($request->id);
+        $sla->time_in_minutes = $request->time*60;
+        $sla->save();
+
+        $request->session()->flash('message','SLA details updated successfully');
+        $request->session()->flash('alert-class','alert-success');
+        return  redirect(route('root.sla.list'));  
+    }
+
+    public function sla_update_rules()
+    {
+        $rules=[
+        'time' => 'required|integer'
+        ];
+        return $rules;
+    }
+
+    public function updateRootPasswordRule()
+    {
+        $rules=[
+            'password' => 'required|string|min:8|confirmed|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*)(=+\/\\~`-]).{8,20}$/'
+        ];
+        return $rules;
+    }
+
+    //rules for adding a state user
+    public function userCreateRule()
+    {
+        $rules=[
+        'username' => 'required|string|max:255|min:5|unique:users',
+        'password' => 'required|min:8|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*)(=+\/\\~`-]).{8,20}$/', 
+        'email' => 'required|string|email|max:255|unique:users',
+        'mobile' => 'required'
+             ];
+
+        return $rules;
+    }
+
+}

@@ -9,6 +9,7 @@ use App\Http\Traits\LocationTrait;
 use Illuminate\Support\Facades\Log;
 use App\Modules\Client\Models\OnDemandTripReportRequests;
 use PDF;
+use App\Modules\Gps\Models\GpsOrder;
 use Carbon\Carbon AS Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -206,5 +207,140 @@ class GeneralController extends Controller
         (new VehicleTripSummary)->addNewReport($client_id, $vehicle_id, $file, $summary["km"], $this->trip_date);
         return;
     }
+
+
+    public function generateInvoicePdf($id)
+    {
+
+      
+       
+        $order =  GpsOrder::with('gps')->where('gps_id',$id)->first();
+       
+
+    
+        if($order == null){
+            return view('Gps::404');
+        }
+
+       
+        if($order->gps->vehicle){
+               $words=$this->getIndianCurrency($order->total_amount);
+                $client_id  = $order->vehicle->client_id;
+              
+            
+                $vehicle_id = $order->gps->vehicle->id;
+                $file_name  = $order->gps->imei.'-'.time().'.pdf';
+            
+                if($client_id==1778){
+                
+                    $pdf        = PDF::loadView('invoice', ['gps' => $order,'words'=> $words]);
+                  //  return view('invoice')->with(['gps' => $gps]);
+                 return $pdf->download($file_name.'.pdf');   
+                }
+                else{
+                    $pdf        = PDF::loadView('invoice1', ['gps' => $order,'words'=> $words]);
+                    // return view('invoice1')->with(['gps' => $gps]);
+                     return $pdf->download($file_name.'.pdf');
+                 }
+          }
+      else{
+            $file_name  = $order->gps->imei.'-'.time().'.pdf';
+           /* $options = new \Dompdf\Options();
+            $options->set('isRemoteEnabled', true);
+            $dompdf = new \Dompdf\Dompdf($options);
+            
+            $dompdf->loadHtml(view('invoice1',['gps' => $order])->render());
+            $dompdf->render();
+            return $dompdf->stream();*/
+            $words=$this->getIndianCurrency($order->total_amount);
+           $pdf        = PDF::setOptions(['isRemoteEnabled' => true])->loadView('invoice1', ['gps' => $order,'words'=> $words]);
+          //return view('invoice1')->with(['gps' => $order,'words'=> $words]);
+            return $pdf->download($file_name.'.pdf');
+        }
+      //INVOICE NO: //VIOT/24-25/1665
+    }
+
+// cmc report
+
+public function generateCMCPdf($id)
+    {
+
+       
+       
+        $order =  GpsOrder::with('gps')->where('gps_id',$id)->first();
+
+    
+        if($order == null){
+            return view('Gps::404');
+        }
+
+       
+        if($order->gps->vehicle){
+               $words=$this->getIndianCurrency($order->total_amount);
+                $client_id  = $order->vehicle->client->id;
+            
+                $vehicle_id = $order->gps->vehicle->id;
+                $file_name  = $order->gps->imei.'-'.time().'.pdf';
+            
+                if($client_id==1778){
+                
+                    $pdf = PDF::loadView('invoice_cmc', ['gps' => $order,'words'=> $words]);
+                  //  return view('invoice')->with(['gps' => $gps]);
+                    return $pdf->download($file_name.'.pdf');   
+                }
+                
+          }
+      
+      //INVOICE NO: //VIOT/24-25/1665
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+public  function getIndianCurrency(float $number)
+{
+
+$decimal = round($number - ($no = floor($number)), 2) * 100;
+    $hundred = null;
+    $digits_length = strlen($no);
+    $i = 0;
+    $str = array();
+    $words = array(0 => '', 1 => 'one', 2 => 'two',
+        3 => 'three', 4 => 'four', 5 => 'five', 6 => 'six',
+        7 => 'seven', 8 => 'eight', 9 => 'nine',
+        10 => 'ten', 11 => 'eleven', 12 => 'twelve',
+        13 => 'thirteen', 14 => 'fourteen', 15 => 'fifteen',
+        16 => 'sixteen', 17 => 'seventeen', 18 => 'eighteen',
+        19 => 'nineteen', 20 => 'twenty', 30 => 'thirty',
+        40 => 'forty', 50 => 'fifty', 60 => 'sixty',
+        70 => 'seventy', 80 => 'eighty', 90 => 'ninety');
+    $digits = array('', 'hundred','thousand','lakh', 'crore');
+    while( $i < $digits_length ) {
+        $divider = ($i == 2) ? 10 : 100;
+        $number = floor($no % $divider);
+        $no = floor($no / $divider);
+        $i += $divider == 10 ? 1 : 2;
+        if ($number) {
+            $plural = (($counter = count($str)) && $number > 9) ? 's' : null;
+            $hundred = ($counter == 1 && $str[0]) ? ' and ' : null;
+            $str [] = ($number < 21) ? $words[$number].' '. $digits[$counter]. $plural.' '.$hundred:$words[floor($number / 10) * 10].' '.$words[$number % 10]. ' '.$digits[$counter].$plural.' '.$hundred;
+        } else $str[] = null;
+    }
+    $Rupees = implode('', array_reverse($str));
+      $paise ="";$pais="";
+    $paise =($decimal > 0) ? " " . ($words[$decimal / 10] . " " . $words[$decimal % 10]) . ' paisa' : '';
+    if($paise){
+      $pais=  'and'. $paise;
+    }
+    return ($Rupees ? ucfirst($Rupees). 'Rupees '  : '') . $pais;
+}
 
 }

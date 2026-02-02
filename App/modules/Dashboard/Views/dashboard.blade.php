@@ -1,0 +1,1931 @@
+@extends('layouts.eclipse')
+@section('content')
+
+<!--  -->
+<!-- ROOT ROLE-START -->
+@role('root')
+<style>
+  .btn-pop {
+    display: inline-block;
+    font-weight: 400;
+    color: #212529;
+    text-align: center;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-color: #ccc;
+    border: 1px solid transparent;
+    padding: 0 .21rem;
+    line-height: 2;
+    font-size: .75rem !important;
+    border-radius: .25rem;
+    margin: 0 .1rem .5rem .1rem;
+    color: #000;
+  }
+
+  .btn-pop:hover {
+    background: #f7b018;
+  }
+</style>
+
+<title></title>
+<meta name="viewport" content="initial-scale=1.0">
+<meta charset="utf-8">
+<link href='https://fonts.googleapis.com/css?family=Raleway:300,800' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="style.css" type="text/css" media="all">
+<script src="modernizr.js"></script>
+<div class="page-wrapper page-wrapper-root page-wrapper_new">
+  <div class="page-wrapper-root1">
+    <section class="content">
+      <div class="row">
+        <div class="col-lg-3 col-xs-6 new_arrival_dashboard_grid dash_grid">
+          <!-- small box -->
+          <div class="small-box bg-green bxs">
+            <div class="inner inner-left">
+              <div class="box-2">
+                <div style="float:left; width:50%">
+                  <h3 id="gps_manufactured"></h3>
+                  <p class="mrg-bt-0">GPS Devices Manufactured</p>
+                </div>
+                <div style="float:left; width:50%">
+                  <h3 id="refurbished_devices"></h3>
+                  <p class="mrg-bt-0">Refurbished GPS Devices</p>
+                </div>
+              </div>
+            </div>
+            <a href="/gps-all" class="small-box-footer view-last">View <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <div class="col-lg-3 col-xs-6 gps_dashboard_grid dash_grid">
+          <!-- small box -->
+          <div class="small-box bg-green bxs">
+
+            <div class="inner inner-left">
+              <div class="box-2">
+                <div style="float:left; width:50%">
+                  <h3 id="gps"></h3>
+                  <p class="mrg-bt-0">GPS Devices In Stock</p>
+                </div>
+                <div style="float:left; width:50%">
+                  <h3 id="refurbished_gps"></h3>
+                  <p class="mrg-bt-0">Refurbished GPS Devices In Stock</p>
+                </div>
+              </div>
+            </div>
+            <a href="/gps" class="small-box-footer view-last">View <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <div class="col-lg-3 col-xs-6 transferred_gps_dashboard_grid dash_grid">
+          <!-- small box -->
+          <div class="small-box bg-green bxs">
+            <div class="inner">
+              <h3 id="gps_transferred">
+                <div class="loader"></div>
+              </h3>
+              <p>GPS Devices Transferred</p>
+            </div>
+            <div class="icon">
+              <i class="fa fa-tablet"></i>
+            </div>
+            <a href="/gps-transferred-root" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <div class="col-lg-3 col-xs-6 gps_non_stock_dashboard_grid dash_grid">
+          <!-- small box -->
+          <div class="small-box bg-green bxs">
+            <div class="inner">
+              <h3 id="gps_to_be_added_to_stock">
+                <div class="loader"></div>
+              </h3>
+              <p>GPS Devices: To be added to stock</p>
+            </div>
+            <div class="icon">
+              <i class="fa fa-tablet"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row"> 
+        <div class="col-lg-3 col-xs-6 gps_returned_dashboard_grid dash_grid">
+          <!-- small box -->
+          <div class="small-box bg-green bxs">
+
+            <div class="inner inner-left">
+              <div class="box-2">
+                <div style="float:left; width:50%">
+                  <h3 id="gps_returned"></h3>
+                  <p class="mrg-bt-0">GPS Devices: Returned</p>
+                </div>
+                <div style="float:left; width:50%">
+                  <h3 id="gps_returned_request"></h3>
+                  <p class="mrg-bt-0">GPS Devices: Return Request</p>
+                </div>
+              </div>
+            </div>
+            <a href="/returned-gps" class="small-box-footer" style='float: left;width: 49%;'>View <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="/device-return-history-list" class="small-box-footer" style='float: left;width: 51%;'>View <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>          
+        <!-- ./col -->
+        <div class="col-lg-3 col-xs-6 dealer_dashboard_grid dash_grid">
+          <!-- small box -->
+          <div class="small-box bg-yellow bxs">
+            <div class="inner">
+              <h3 id="dealer">
+                <div class="loader"></div>
+              </h3>
+              <p>Active Distributors</p>
+            </div>
+            <div class="icon">
+              <i class="fa fa-user"></i>
+            </div>
+            <a href="/dealers" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-xs-6 sub_dealer_dashboard_grid dash_grid">
+          <!-- small box -->
+          <div class="small-box bg-blue bxs">
+            <div class="inner">
+              <h3 id="sub_dealer">
+                <div class="loader"></div>
+              </h3>
+              <p>Active Dealers</p>
+            </div>
+            <div class="icon">
+              <i class="fa fa-user"></i>
+            </div>
+            <a href="/sub-dealers" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-xs-6 client_dashboard_grid dash_grid">
+          <!-- small box -->
+          <div class="small-box bg-green bxs">
+            <div class="inner">
+              <h3 id="client">
+                <div class="loader"></div>
+              </h3>
+              <p>Active End Users</p>
+            </div>
+            <div class="icon">
+              <i class="fa fa-user"></i>
+            </div>
+            <a href="/client" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-6 col-xs-6">
+          <canvas id="rootChart" style="max-width: 100%; height: 200px;"></canvas>
+        </div>
+        <div class="col-lg-6 col-xs-6">
+          <canvas id="rootChartUser" style="max-width: 100%; height: 200px;"></canvas>
+        </div>
+        <div class="col-lg-6 col-xs-6">
+          <canvas id="rootGpsSaleChart" style="max-width: 100%; height: 200px;"></canvas>
+        </div>
+        
+      </div>
+       <div class="row">
+        
+      </div>
+    </section>
+  </div>
+</div>
+@endrole
+<!-- ROOT ROLE-END -->
+
+<!-- DEALER ROLE-START -->
+@role('dealer')
+<div class="page-wrapper page-wrapper-root page-wrapper_new">
+  <div class="page-wrapper-root1">
+    <div class="container-fluid">
+      <div class="card-body">
+        <div class="table-responsive">
+          <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="row">
+                  <div class="col-lg-3 col-xs-6 new_arrival_dashboard_grid dash_grid">
+                    <div class="small-box bg-green bxs">
+                      <div class="inner">
+                        <h3 id="gps_new_arrival_dealer">
+                          <div class="loader"></div>
+                        </h3>
+                        <p>New Arrivals</p>
+                      </div>
+                      <div class="icon">
+                        <i class="fa fa-tablet"></i>
+                      </div>
+                      <a href="/gps-dealer-new" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                  </div>
+                  <div class="col-lg-3 col-xs-6 gps_dashboard_grid dash_grid">
+                    <div class="small-box bg-green bxs">
+                      <div class="inner">
+                        <h3 id="in_stock_gps_dealer">
+                          <div class="loader"></div>
+                        </h3>
+                        <p>GPS In Stock</p>
+                      </div>
+                      <div class="icon">
+                        <i class="fa fa-tablet"></i>
+                      </div>
+                      <a href="/gps-dealer" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                  </div>
+                  <div class="col-lg-3 col-xs-6 transferred_gps_dashboard_grid dash_grid">
+                    <!-- small box -->
+                    <div class="small-box bg-green bxs">
+
+                      <div class="inner inner-left">
+                        <div class="box-2">
+                          <div style="float:left; width:50%">
+                            <h3 id="transferred_gps_awaiting"></h3>
+                            <p class="mrg-bt-0">Awaiting Confirmation</p>
+                          </div>
+                          <div style="float:left; width:50%">
+                            <h3 id="transferred_gps_dealer"></h3>
+                            <p class="mrg-bt-0">Transferred GPS</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="icon">
+                        <i class="fa fa-tablet"></i>
+                      </div>
+                      <a href="/gps-transfers-dealer" class="small-box-footer view-last">View <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                  </div>
+                  <div class="col-lg-3 col-xs-6 gps_returned_dashboard_grid dash_grid">
+                    <!-- small box -->
+                    <div class="small-box bg-green bxs">
+                      <div class="inner">
+                        <h3 id="gps_returned">
+                          <div class="loader"></div>
+                        </h3>
+                        <p>GPS Devices: Return</p>
+                      </div>
+                      <div class="icon">
+                        <i class="fa fa-tablet"></i>
+                      </div>
+                      <a href="/returned-gps" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                  </div>
+                  <!-- ./col -->
+                  <div class="col-lg-3 col-xs-6 sub_dealer_dashboard_grid dash_grid">
+                    <!-- small box -->
+                    <div class="small-box bg-yellow bxs">
+                      <div class="inner">
+                        <h3 id="dealer_subdealer">
+                          <div class="loader"></div>
+                        </h3>
+                        <p>Active Dealers</p>
+                      </div>
+                      <div class="icon">
+                        <i class="fa fa-user"></i>
+                      </div>
+                      <a href="/subdealers" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                  </div>
+                  <div class="col-lg-3 col-xs-6 dealer_dashboard_grid dash_grid">
+                    <!-- small box -->
+                    <div class="small-box bg-green bxs">
+                      <div class="inner">
+                        <h3 id="dealer_traders">
+                          <div class="loader"></div>
+                        </h3>
+                        <p>Active Sub Dealers</p>
+                      </div>
+                      <div class="icon">
+                        <i class="fa fa-user"></i>
+                      </div>
+                      <a href="/distributor-sub-dealer" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                  </div>
+                  <div class="col-lg-3 col-xs-6 client_dashboard_grid dash_grid">
+                    <!-- small box -->
+                    <div class="small-box bg-green bxs">
+                      <div class="inner">
+                        <h3 id="dealer_client">
+                          <div class="loader"></div>
+                        </h3>
+                        <p>Active End Users</p>
+                      </div>
+                      <div class="icon">
+                        <i class="fa fa-user"></i>
+                      </div>
+                      <a href="/dealer-client" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+               <div class="col-lg-6 col-xs-6">
+                <canvas id="rootChart" style="max-width: 100%; height: 200px;"></canvas>
+              </div>
+              <div class="col-lg-6 col-xs-6">
+                <canvas id="rootChartUser" style="max-width: 100%;"></canvas>
+              </div>
+               <div class="col-lg-6 col-xs-6">
+              <canvas id="rootGpsSaleChart" style="max-width: 100%; height: 200px;"></canvas>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- ./col -->
+@endrole
+<!-- DEALER ROLE-END -->
+<!-- DEALER ROLE-START -->
+@role('operations')
+<div class="page-wrapper page-wrapper-root page-wrapper_new" style="min-height: 634px!important">
+  <div class="page-wrapper-root1">
+    <div class="container-fluid">
+      <div class="card-body">
+        <div class="table-responsive">
+          <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="row">
+                  <!-- ./col -->
+                  <div class="col-lg-6 col-xs-6 sub_dealer_dashboard_grid dash_grid">
+                    <!-- small box -->
+                    <div class="small-box bg-yellow bxs">
+                      <div class="inner">
+                        <h3 id="gps_stock">
+                          <div class="loader"></div>
+                        </h3>
+                        <p>Devices Instock </p>
+                      </div>
+                      <div class="icon">
+                        <img src="../../assets/images/gps103.png" height="50%" width="30%" style="float: right;margin-top: 10%">
+                      </div>
+                      <!--  <a href="" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a> -->
+                    </div>
+                  </div>
+                  <div class="col-lg-3 col-xs-8 transferred_gps_dashboard_grid dash_grid">
+                    <!-- small box -->
+                    <div class="small-box bg-yellow bxs">
+                      <div class="inner">
+                        <h3 id="gps">
+                          <div class="loader"></div>
+                        </h3>
+                        <p>Total Devices Tested (..)</p>
+                      </div>
+                      <div class="icon">
+                        <img src="../../assets/images/gps104.png" height="50%" width="30%" style="float: right;margin-top: 10%">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-3 col-xs-8 sub_dealer_dashboard_grid dash_grid">
+                    <!-- small box -->
+                    <div class="small-box bg-yellow bxs">
+                      <div class="inner">
+                        <h3 id="pending_gps">
+                          <div class="loader"></div>
+                        </h3>
+                        <p> To be Added to Stock </p>
+                      </div>
+                      <div class="icon">
+                        <img src="../../assets/images/gps102.png" height="50%" width="30%" style="float: right;margin-top: 10%">
+                      </div>
+                      <!--  <a href="" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a> -->
+                    </div>
+                  </div>
+
+
+
+                  <div class="col-lg-3 col-xs-8 client_dashboard_grid dash_grid">
+                    <!-- small box -->
+                    <div class="small-box bg-green bxs">
+                      <div class="inner">
+                        <h3 id="gps_today">
+                          <div class="loader"></div>
+                        </h3>
+                        <p style="width: 45%">Devices Manufactured Today</p>
+                      </div>
+                      <div class="icon">
+                        <img src="../../assets/images/gps101.png" height="50%" width="30%" style="float: right;margin-top: 10%">
+                      </div>
+                      <!--  <a href="" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a> -->
+                    </div>
+                  </div>
+
+                  <!--  <div class="col-lg-3 col-xs-8 client_dashboard_grid dash_grid">
+
+                    <div class="small-box bg-green bxs">
+                      <div class="inner">
+                        <h3 id="gps_add_to_stock">
+                          <div class="loader"></div>
+                        </h3>
+                        <p style="width: 70%">Devices Added to Stock Today</p>
+                      </div>
+                      <div class="icon">
+                        <img src="../../assets/images/gps105.png" height="50%" width="30%" style="float: right;margin-top: 10%;">
+                      </div>
+
+                    </div>
+                  </div> -->
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- ./col -->
+@endrole
+<!-- SUB DEALER ROLE-START -->
+@role('sub_dealer')
+<div class="page-wrapper page-wrapper-root page-wrapper_new">
+  <div class="page-wrapper-root1">
+    <div class="row">
+      <div class="col-lg-3 col-xs-6 new_arrival_dashboard_grid dash_grid">
+        <div class="small-box bg-green bxs">
+          <div class="inner inner-left">
+            <h3 id="gps_new_arrival_subdealer">
+              <div class="loader"></div>
+            </h3>
+            <p>New Arrivals</p>
+          </div>
+          <div class="icon">
+            <i class="fa fa-tablet"></i>
+          </div>
+          <div class="a-tag">
+            <a href="/gps-subdealer-new" class="small-box-footer1 view-last">View <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-xs-6 dealer_dashboard_grid dash_grid">
+        <!-- small box -->
+        <div class="small-box bg-green bxs">
+          <div class="inner inner-left">
+            <h3 id="total_gps_subdealer">
+              <div class="loader"></div>
+            </h3>
+            <p>Total GPS </p>
+          </div>
+          <div class="icon">
+            <i class="fa fa-tablet"></i>
+          </div>
+          <div class="a-tag">
+            <a href="/gps-sub-dealer" class="small-box-footer1 view-last">View <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-xs-6 gps_dashboard_grid dash_grid">
+        <!-- small box -->
+        <div class="small-box bg-green bxs">
+          <div class="inner inner-left">
+            <h3 id="gps_in_stock_subdealer">
+              <div class="loader"></div>
+            </h3>
+            <p>GPS In Stock</p>
+          </div>
+          <div class="icon">
+            <i class="fa fa-tablet"></i>
+          </div>
+          <div class="a-tag">
+            <a href="/gps-in-stock-sub-dealer" class="small-box-footer1 view-last">View <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+      </div>
+      <!-- ./col -->
+      <div class="col-lg-3 col-xs-6 transferred_gps_dashboard_grid dash_grid">
+        <!-- small box -->
+        <div class="small-box bg-green bxs">
+
+          <div class="inner inner-left">
+            <div class="box-2">
+              <div style="float:left; width:50%">
+                <h3 id="transferred_gps_from_dealer_to_trader_awaiting"></h3>
+                <p class="mrg-bt-0">Awaiting Confirmation</p>
+              </div>
+              <div style="float:left; width:50%">
+                <h3 id="transferred_gps_from_dealer_to_trader"></h3>
+                <p class="mrg-bt-0">Transferred GPS To Sub Dealer</p>
+              </div>
+            </div>
+          </div>
+          <div class="icon">
+            <i class="fa fa-tablet"></i>
+          </div>
+          <a href="/gps-transfers-subdealer-to-trader" class="small-box-footer view-last">View <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+      </div>
+      <div class="col-lg-3 col-xs-6 transferred_gps_dashboard_grid dash_grid">
+        <!-- small box -->
+        <div class="small-box bg-blue bxs">
+          <div class="inner">
+            <h3 id="transferred_gps_from_dealer_to_client">
+              <div class="loader"></div>
+            </h3>
+            <p>Transferred GPS To End User</p>
+          </div>
+          <div class="icon">
+            <i class="fa fa-tablet"></i>
+          </div>
+          <a href="/gps-transfers-subdealer" class="small-box-footer small-box-footer2">View <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+      </div>
+      <div class="col-lg-3 col-xs-6 gps_returned_dashboard_grid dash_grid">
+        <div class="small-box bg-green bxs">
+          <div class="inner">
+            <h3 id="gps_returned">
+              <div class="loader"></div>
+            </h3>
+            <p>GPS Devices: Return</p>
+          </div>
+          <div class="icon">
+            <i class="fa fa-tablet"></i>
+          </div>
+          <a href="/returned-gps" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+      </div>
+      <div class="col-lg-3 col-xs-6 sub_dealer_dashboard_grid dash_grid">
+          <!-- small box -->
+          <div class="small-box bg-green bxs">
+
+            <div class="inner inner-left">
+              <div class="box-2">
+                <div style="float:left; width:50%">
+                  <h3 id="subdealer_trader"></h3>
+                  <p class="mrg-bt-0">Active Sub Dealers</p>
+                </div>
+                <div style="float:left; width:50%">
+                  <h3 id="subdealer_client"></h3>
+                  <p class="mrg-bt-0">Active End Users</p>
+                </div>
+              </div>
+            </div>
+            <a href="/trader" class="small-box-footer" style='float: left;width: 50%;'>View <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="/clients" class="small-box-footer" style='float: left;width: 50%;'>View <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>   
+      <div class="col-lg-3 col-xs-6 client_dashboard_grid dash_grid">
+        <!-- small box -->
+        <div class="small-box bg-blue bxs">
+          <div class="inner">
+            <h3 id="subdealer_complaints">
+              <div class="loader"></div>
+            </h3>
+            <p>New Complaints</p>
+          </div>
+          <div class="icon">
+            <i class="ion ion-person-add"></i>
+          </div>
+          <a href="/complaint" class="small-box-footer small-box-footer2">View <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-6 col-xs-6">
+        <canvas id="rootChart" style="max-width: 100%;"></canvas>
+      </div>
+      <div class="col-lg-6 col-xs-6">
+        <canvas id="rootChartUser" style="max-width: 100%;"></canvas>
+      </div>
+      <div class="col-lg-6 col-xs-6">
+        <canvas id="rootGpsSaleChart" style="max-width: 100%; height: 200px;"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+@endrole
+<!-- SUB DEALER ROLE-END -->
+
+<!-- TRADER ROLE-START -->
+@role('trader')
+<div class="page-wrapper page-wrapper-root page-wrapper_new">
+  <div class="page-wrapper-root1">
+    <div class="row">
+      <div class="col-lg-3 col-xs-6 new_arrival_dashboard_grid dash_grid">
+        <div class="small-box bg-green bxs">
+          <div class="inner">
+            <h3 id="gps_new_arrival_trader">
+              <div class="loader"></div>
+            </h3>
+            <p>New Arrivals</p>
+          </div>
+          <div class="icon">
+            <i class="fa fa-tablet"></i>
+          </div>
+          <a href="/gps-trader-new" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+      </div>
+      <div class="col-lg-3 col-xs-6 gps_dashboard_grid dash_grid">
+        <!-- small box -->
+        <div class="small-box bg-green bxs">
+          <div class="inner">
+            <h3 id="total_gps_trader">
+              <div class="loader"></div>
+            </h3>
+            <p>Total GPS </p>
+          </div>
+          <div class="icon">
+            <i class="fa fa-tablet"></i>
+          </div>
+          <a href="/gps-trader-all-devices" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+      </div>
+      <div class="col-lg-3 col-xs-6 dealer_dashboard_grid dash_grid">
+        <!-- small box -->
+        <div class="small-box bg-green bxs">
+          <div class="inner inner-left">
+            <h3 id="gps_in_stock_trader">
+              <div class="loader"></div>
+            </h3>
+            <p>GPS In Stock</p>
+          </div>
+          <div class="icon">
+            <i class="fa fa-tablet"></i>
+          </div>
+          <div class="a-tag">
+            <a href="/gps-trader-instock" class="small-box-footer1 view-last">View <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-xs-6 transferred_gps_dashboard_grid dash_grid">
+        <!-- small box -->
+        <div class="small-box bg-green bxs">
+          <div class="inner">
+            <h3 id="transferred_gps_trader">
+              <div class="loader"></div>
+            </h3>
+            <p>Transferred GPS</p>
+          </div>
+          <div class="icon">
+            <i class="fa fa-tablet"></i>
+          </div>
+          <a href="/gps-transferred-trader-to-end-user" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+      </div>
+      <div class="col-lg-3 col-xs-6 gps_returned_dashboard_grid dash_grid">
+        <div class="small-box bg-green bxs">
+          <div class="inner">
+            <h3 id="gps_returned">
+              <div class="loader"></div>
+            </h3>
+            <p>GPS Devices: Return</p>
+          </div>
+          <div class="icon">
+            <i class="fa fa-tablet"></i>
+          </div>
+          <a href="/returned-gps" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+      </div>
+      <!-- ./col -->
+      <div class="col-lg-3 col-xs-6 sub_dealer_dashboard_grid dash_grid">
+        <!-- small box -->
+        <div class="small-box bg-blue bxs">
+          <div class="inner">
+            <h3 id="clients_under_traders">
+              <div class="loader"></div>
+            </h3>
+            <p>Active End Users</p>
+          </div>
+          <div class="icon">
+            <i class="ion ion-person-add"></i>
+          </div>
+          <a href="/clients" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+      </div>
+      <div class="col-lg-3 col-xs-6 client_dashboard_grid dash_grid">
+        <!-- small box -->
+        <div class="small-box bg-blue bxs">
+          <div class="inner">
+            <h3 id="trader_complaints">
+              <div class="loader"></div>
+            </h3>
+            <p>New Complaints</p>
+          </div>
+          <div class="icon">
+            <i class="ion ion-person-add"></i>
+          </div>
+          <a href="/complaint" class="small-box-footer small-box-footer2">View <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-6 col-xs-6">
+        <canvas id="rootChart" style="max-width: 100%;"></canvas>
+      </div>
+      <div class="col-lg-6 col-xs-6">
+        <canvas id="rootChartUser" style="max-width: 100%;"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+@endrole
+<!-- TRADER ROLE-END -->
+
+<!-- SERVICER ROLE-START -->
+@role('servicer')
+<div class="page-wrapper page-wrapper-root page-wrapper_new">
+  <div class="page-wrapper-root1">
+    <section class="content">
+      <div class="row">
+       
+        <div class="col-lg-3 col-xs-6 gps_dashboard_grid dash_grid" style="background-color: #009182!important">
+          <div class="small-box bg-green bxs">
+            <div class="inner">
+              <h3 id="new_installation_jobs">
+                <div class="loader"></div>
+              </h3>
+              <p>New Installations</p>
+            </div>
+            <div class="icon">
+              <i class="fa fa-tablet"></i>
+            </div>
+            <a href="/job-list" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        
+        <div class="col-lg-3 col-xs-6 gps_dashboard_grid dash_grid" style="background-color: #d6270b!important">
+          <div class="small-box bg-green bxs">
+            <div class="inner">
+              <h3 id="on_progress_installation_jobs">
+                <div class="loader"></div>
+              </h3>
+              <p>In Progress Installations </p>
+            </div>
+            <div class="icon">
+              <i class="fa fa-tablet"></i>
+            </div>
+            <a href="/on-progress-installation-job-list" class="small-box-footer" >View <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        
+        <div class="col-lg-3 col-xs-6 dealer_dashboard_grid dash_grid" style="background-color: #d46415!important">
+          <div class="small-box bg-yellow bxs">
+            <div class="inner">
+              <h3 id="completed_jobs">
+                <div class="loader"></div>
+              </h3>
+              <p> Completed Installations</p>
+            </div>
+            <div class="icon">
+              <i class="fa fa-tablet"></i>
+            </div>
+            <a href="/job-history-list" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-xs-6 gps_dashboard_grid dash_grid" style="background-color: #0E9205!important">
+          <div class="small-box bg-green bxs">
+            <div class="inner">
+              <h3 id="new_reinstallation_jobs">
+                <div class="loader"></div>
+              </h3>
+              <p>New Reinstallations</p>
+            </div>
+            <div class="icon">
+              <i class="fa fa-tablet"></i>
+            </div>
+            <a href="/reinstallation-job-list" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        
+        <div class="col-lg-3 col-xs-6 gps_dashboard_grid dash_grid" style="background-color: #013467!important">
+          <div class="small-box bg-green bxs">
+            <div class="inner">
+              <h3 id="on_progress_reinstallation_jobs">
+                <div class="loader"></div>
+              </h3>
+              <p>In Progress Reinstallations </p>
+            </div>
+            <div class="icon">
+              <i class="fa fa-tablet"></i>
+            </div>
+            <a href="/on-progress-reinstallation-job-list" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        
+        <div class="col-lg-3 col-xs-6 dealer_dashboard_grid dash_grid" style="background-color: #990299!important">
+          <div class="small-box bg-yellow bxs">
+            <div class="inner">
+              <h3 id="completed_reinstallation_jobs">
+                <div class="loader"></div>
+              </h3>
+              <p> Completed Reinstallations</p>
+            </div>
+            <div class="icon">
+              <i class="fa fa-tablet"></i>
+            </div>
+            <a href="/reinstallation-job-history-list" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-xs-6 gps_dashboard_grid dash_grid" style="background-color: #B2033B!important">
+          <div class="small-box bg-green bxs">
+            <div class="inner">
+              <h3 id="pending_service_jobs">
+                <div class="loader">0</div>
+              </h3>
+              <p>New Services</p>
+            </div>
+            <div class="icon">
+              <i class="fa fa-tablet"></i>
+            </div>
+            <a href="/service-job-list" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        
+        <div class="col-lg-3 col-xs-6 gps_dashboard_grid dash_grid" style="background-color: #783802!important">
+          <div class="small-box bg-green bxs">
+            <div class="inner">
+              <h3 id="all_pending_jobs">
+                <div class="loader"></div>
+              </h3>
+              <p> In Progress Services</p>
+            </div>
+            <div class="icon">
+              <i class="fa fa-tablet"></i>
+            </div>
+            <a href="/on-progress-service-job-list" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <div class="col-lg-3 col-xs-6 dealer_dashboard_grid dash_grid" style="background-color: #B2030B!important">
+          <div class="small-box bg-yellow bxs">
+            <div class="inner">
+              <h3 id="service_completed_jobs">
+                <div class="loader"></div>
+              </h3>
+              <p> Completed Services</p>
+            </div>
+            <div class="icon">
+              <i class="fa fa-tablet"></i>
+            </div>
+            <a href="/servicerjob-history-list" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+@endrole
+<!-- SERVICER ROLE-END -->
+
+
+<!-- SCHOOL ROLE-START -->
+<!--
+@role('school')
+
+
+<div class="container-fluid">
+   <div class="row">
+    <div class="col-md-12 full-height">
+      <div id="map" style="width:100%; height:100%;"></div>
+    </div>
+    <div class="pageContainer" style="overflow: scroll">
+      <div class="col-lg-12">
+        <div class="st-actionContainer right-bottom">
+          <div class="st-panel" style="overflow: scroll!important;">
+           
+            <div class="st-panel-contents" id="vehicle_card_cover">
+              @foreach ($vehicles as $vehicle)
+
+              <div class="border-card">
+                <div class="card-type-icon with-border">
+                  <input type="radio" id="radio" id="gpsid{{ $loop->iteration }}" class="vehicle_gps_id" name="radio" onclick="getVehicle({{$vehicle->gps_id}})" value="{{$vehicle->gps_id}}">
+                </div>
+                <div class="content-wrapper">
+                  <div class="label-group fixed">
+                    <p class="title">
+                      <span><i class="fa fa-car"></i></span>
+                    </p>
+                    <p class="caption" id="vehicle_name{{ $loop->iteration }}">{{$vehicle->name}}</p>
+                  </div>
+                  <div class="min-gap"></div>
+                  <div class="label-group">
+                    <p class="title">
+                      <span><i class="fas fa-arrow-alt-circle-left"></i></span>
+                    </p>
+                    <p class="caption" id="register_number{{ $loop->iteration }}">{{$vehicle->register_number}}</p>
+                  </div>
+                  <div class="min-gap"></div>
+
+                </div>
+              </div>
+              @endforeach
+            </div>
+          </div>
+          <div class="right-bottom">
+            <div class="st-button-main">
+              <img class="left-bottom-car-details-img" src="assets/images/stearing.png" width="66px">
+            </div>
+          </div>
+
+          @role('fundamental|superior|pro|school')
+          <div class="right-bottom2">
+            <form onsubmit="return locationSearch();">
+              <div class="col-lg-12 col-md-12">
+                <div class="container-fluid bg-light map_search">
+                  <div class="row align-items-center justify-content-center">
+                    <div class="col-lg-4 col-md-4 ">
+                      <div class="form-group">
+                        <input type="text" id="search_place" class="form-control" value="">
+                      </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 ">
+                      <div class="form-group">
+                        <select id="search_radius" class="form-control">
+                          <option selected>KM</option>
+                          <option value="10">10 KM</option>
+                          <option value="30">30 KM</option>
+                          <option value="50">50 KM</option>
+                          <option value="75">75 KM</option>
+                          <option value="100">100 KM</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-lg-2 col-md-2 ">
+                      <button type="submit" class="btn btn-primary btn-block">
+                        <i class="fas fa-search"></i>
+                      </button>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <div id="myModal" class="modal_for_dash">
+           
+            <div class="modal-content">
+              <div class="modal-header">
+                <span class="close"></span>
+                <div class="container">
+                  <div class="container">
+                    <canvas id="myChart" style="max-width: 500px;"></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          @endrole
+
+
+        </div>
+      </div>
+    </div>
+    <div class="dashboard-main-Right cover_vehicle_track_list">
+      <div class="iconsbg1234">
+        <div class="col-md-6 col-lg-2 col-xlg-3 cover_track_data" onclick="moving('M')">
+          <div class="card card-hover">
+            <div class="box bg-cyan1234 text-center">
+              <h1 class="font-light text-white"></h1>
+              <h1 class="text-white" style="color:#84b752!important">
+                
+                <i class="fa fa-map-marker" aria-hidden="true"></i>
+              </h1>
+              <span class="track_status">Moving</span>
+              <span style="float:left;width:100%">
+                <h1 id="moving" class="text-white" style="font-size:19px;color:#fab03a!important">0</h1>
+                
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-2 col-xlg-3 cover_track_data" onclick="moving('H')">
+          <div class="card card-hover">
+            <div class="box bg-cyan1234 text-center">
+              <h1 class="font-light text-white"></h1>
+              <h1 class="text-white" style="color: #69b4b9!important">
+               
+                <i class="fa fa-map-marker" aria-hidden="true"></i>
+              </h1>
+              <span class="track_status">Halt</span>
+              <span style="float:left;width:100%">
+                <h1 id="idle" class="text-white" style="font-size:19px;color:#fab03a!important">0</h1>
+                
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-2 col-xlg-3 cover_track_data" onclick="moving('S')">
+          <div class="card card-hover">
+            <div class="box bg-cyan1234 text-center">
+              <h1 class="font-light text-white"></h1>
+              <h1 class="text-white" style="color: #858585!important">
+               
+                <i class="fa fa-map-marker" aria-hidden="true"></i>
+              </h1>
+              <span class="track_status">Sleep</span>
+              <span style="float:left;width:100%">
+                <h1 id="stop" class="text-white" style="font-size:19px;color:#fab03a!important">0</h1>
+                
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-2 col-xlg-3 cover_track_data" onclick="moving('O')">
+          <div class="card card-hover">
+            <div class="box bg-cyan1234 text-center">
+              <h1 class="font-light text-white"></h1>
+              <h1 class="text-white" style="color:#c41900!important">
+               
+                <i class="fa fa-map-marker" aria-hidden="true"></i>
+              </h1>
+              <span class="track_status">Offline</span>
+              <span style="float:left;width:100%">
+                <h1 id="offline" class="text-white" style="font-size:19px;color:#fab03a!important">0</h1>
+              
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="iconsbg12345">
+        <div class="row">
+          <div class="card card-hover" style="width:100%;-webkit-box-shadow: 1px 1px 2px 3px #ccc;
+               -moz-box-shadow: 1px 1px 2px 3px #ccc;
+               box-shadow: 1px 1px 21px 1px #ccc">
+            <div class="col-6 m-t-15">
+              <div style="width: 100%;float: left;">
+                <div class="bg-dark p-10 text-white text-center" style="float: left;width:50%;border-radius: 20px 0 0 0;">
+                  <img src="assets/images/network-status.png" id="network_online">
+                  <img src="assets/images/no-network.png" id="network_offline" style="display: none;">
+                  <h4 class="m-b-0 m-t-5 score_data_text">Network Status</h4>
+                  <medium id="network_status" class="font-light">
+                    <i class="fa fa-spinner" aria-hidden="true"></i>
+                </div>
+
+                <div class="bg-dark p-10 text-white text-center" style="float: left;width:50%;border-radius: 0 20px 0 0;">
+                  <img src="assets/images/fuel-status.png">
+                  <h4 class="m-b-0 m-t-5 score_data_text">Fuel Status</h4>
+                 
+                  <div id="fuel_100" class="fuel-outer">
+                    <ul>
+                      <li id="f100"></li>
+                      <li id="f100"></li>
+                      <li id="f100"></li>
+                      <li id="f100"></li>
+                    </ul>
+                  </div>
+                  <div id="fuel_75" class="fuel-outer">
+                    <ul>
+                      <li id="f75"></li>
+                      <li id="f75"></li>
+                      <li id="f75"></li>
+                      <li id="f0"></li>
+                    </ul>
+                  </div>
+                  <div id="fuel_50" class="fuel-outer">
+                    <ul>
+                      <li id="f50"></li>
+                      <li id="f50"></li>
+                      <li id="f0"></li>
+                      <li id="f0"></li>
+                    </ul>
+                  </div>
+                  <div id="fuel_25" class="fuel-outer">
+                    <ul>
+                      <li id="f25"></li>
+                      <li id="f0"></li>
+                      <li id="f0"></li>
+                      <li id="f0"></li>
+                    </ul>
+                  </div>
+                  <div id="fuel_0" class="fuel-outer">
+                    <ul>
+                      <li id="f0"></li>
+                      <li id="f0"></li>
+                      <li id="f0"></li>
+                      <li id="f0"></li>
+                    </ul>
+                  </div>
+                  <i class="fa fa-spinner" aria-hidden="true"></i>
+                </div>
+              </div>
+
+              <div class="bg-dark p-10 text-white text-center" style="float: left;width:50%">
+                <img src="assets/images/speed.png">
+                <h4 class="m-b-0 m-t-5 score_data_text">Speed</h4>
+                <medium id="speed" class="font-light">
+                  <i class="fa fa-spinner" aria-hidden="true"></i>
+              </div>
+
+              <div class="bg-dark p-10 text-white text-center" style="float: left;width:50%">
+                <img src="assets/images/odometer.png">
+                <h4 class="m-b-0 m-t-5 score_data_text">Odometer</h4>
+                <medium id="odometer" class="font-light">
+                  <i class="fa fa-spinner" aria-hidden="true"></i>
+              </div>
+
+              <div class="bg-dark p-10 text-white text-center" style="float: left;width:50%">
+                <img src="assets/images/vehicle-status.png" id="vehicle_status">
+                <img src="assets/images/moving-dashboard.png" id="vehicle_moving" style="display: none;">
+                <img src="assets/images/halt-dashboard.png" id="vehicle_halt" style="display: none;">
+                <img src="assets/images/sleep-dashboard.png" id="vehicle_sleep" style="display: none;">
+                <img src="assets/images/offline-dashboard.png" id="vehicle_stop" style="display: none;">
+                <h4 class="m-b-0 m-t-5 score_data_text">Vehicle Status</h4>
+                <medium id="mode" class="font-light">
+                  <i class="fa fa-spinner" aria-hidden="true"></i>
+              </div>
+
+              <div class="bg-dark p-10 text-white text-center" style="float: left;width:50%">
+                <img src="assets/images/sattelite.png">
+                <h4 class="m-b-0 m-t-5 score_data_text">Satellite</h4>
+                <medium id="satelite" class="font-light">
+                  <i class="fa fa-spinner" aria-hidden="true"></i>
+              </div>
+
+              <div class="bg-dark p-10 text-white text-center" style="float: left;width:50%">
+                <img src="assets/images/battery-status.png">
+                <h4 class="m-b-0 m-t-5 score_data_text">Internal Battery Status.</h4>
+                <medium id="battery_status" class="font-light">
+                  <i class="fa fa-spinner" aria-hidden="true"></i>
+              </div>
+
+              <div class="bg-dark p-10 text-white text-center" style="float: left;width:50%">
+                <img src="assets/images/ignition-dashboard.png">
+                <h4 class="m-b-0 m-t-5 score_data_text">Ignition</h4>
+                <medium id="ignition" class="font-light">
+                  <i class="fa fa-spinner" aria-hidden="true"></i>
+              </div>
+
+              <div class="bg-dark p-10 text-white text-center location_details" style="width:100%;border-radius: 0px 0px 8px 10px; padding: 10px 0 10px 14px!important;">
+                <h4 class="m-b-0 m-t-5 score_data_text" style="padding: 0 48% 0 0!important">
+                  <img src="assets/images/location.png">
+                  Location
+                </h4>
+                <medium id="address" class="font-light">
+                  <i class="fa fa-spinner" aria-hidden="true"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> 
+
+  @endrole-->
+
+  <!-- SCHOOL ROLE-END -->
+
+<!-- sales ROLE-START -->
+@role('sales')
+<style>
+  .btn-pop {
+    display: inline-block;
+    font-weight: 400;
+    color: #212529;
+    text-align: center;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-color: #ccc;
+    border: 1px solid transparent;
+    padding: 0 .21rem;
+    line-height: 2;
+    font-size: .75rem !important;
+    border-radius: .25rem;
+    margin: 0 .1rem .5rem .1rem;
+    color: #000;
+  }
+
+  .btn-pop:hover {
+    background: #f7b018;
+  }
+</style>
+
+<title></title>
+<meta name="viewport" content="initial-scale=1.0">
+<meta charset="utf-8">
+
+<div class="page-wrapper page-wrapper-root page-wrapper_new">
+  <div class="page-wrapper-root1">
+    <section class="content">
+      <div class="row">
+        <div class="col-lg-3 col-xs-6 new_arrival_dashboard_grid dash_grid">
+          <div class="small-box bg-yellow bxs">
+            <div class="inner">
+              <h3>
+                <div class="loader"></div>
+              </h3>
+              <p> DEVICE STOCK REPORT</p>
+            </div>
+            <a href="/gps-stock-report" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <div class="col-lg-3 col-xs-6 transferred_gps_dashboard_grid dash_grid">
+          <div class="small-box bg-green bxs">
+            <div class="inner">
+              <h3>
+                <div class="loader"></div>
+              </h3>
+              <p> DEVICE TRANSFER REPORT</p>
+            </div>
+            <a href="/gps-transfer-report" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>        
+      </div>
+    </section>
+  </div>
+</div>
+@endrole
+<!-- sales ROLE-END -->
+
+
+
+
+  <!-- CLIENT ROLE-START -->
+  @role('client')
+  <input type="hidden" id="lat" name="lat" value="{{$client->latitude}}">
+  <input type="hidden" id="lng" name="lng" value="{{$client->longitude}}">
+  <div id="map_refresh_button" class="refresh_map" onclick="refreshPage()">
+    <button id="refresh_button" type="submit" class="btn btn-primary btn-block">
+      <i class="fa fa-refresh"></i> Refresh
+    </button>
+  </div>
+  <div class="dashboar-1-map-box">
+    <div class="dasb-board-googlemap">
+      <div id="map" style="width:100%; height:100%;"></div>
+      <div class="st-actionContainer right-bottom">
+        <div class="st-panel st-panel-dashboard1" style="width: 50%">
+          <div class="st-panel-contents" id="vehicle_card_cover" style="overflow: scroll!important;height: auto;width: 103%;max-height: 164px">
+            @foreach ($vehicles as $vehicle)
+            <div class="border-card">
+              <div class="content-wrapper con-radio">
+                <div class="card-type-icon with-border">
+                  <input type="radio" id="radio" id="gpsid{{ $loop->iteration }}" class="vehicle_gps_id" name="radio" onclick="getVehicle({{$vehicle->gps_id}},true)" value="{{$vehicle->gps_id}}">
+                </div>
+                <div class="label-group fixed">
+                  <p class="title">
+                    <span><i class="fa fa-car"></i></span>
+                  </p>
+                  <p class="caption" id="vehicle_name{{ $loop->iteration }}">{{$vehicle->name}}</p>
+                </div>
+                <div class="min-gap"></div>
+                <div class="label-group">
+                  <p class="title">
+                    <span><i class="fas fa-arrow-alt-circle-left"></i></span>
+                  </p>
+                  <p class="caption" id="register_number{{ $loop->iteration }}">{{$vehicle->register_number}}</p>
+                </div>
+                <div class="min-gap"></div>
+              </div>
+            </div>
+            @endforeach
+          </div>
+        </div>
+      </div>
+      <div class="dashboard-serch-km-section">
+        <div class="dash-bord-bottom">
+          <div class="st-button-main str-icon">
+            <img class="left-bottom-car-details-img" src="assets/images/stearing.png" width="66px">
+          </div>
+          @role('fundamental|superior|pro|school')
+          <div class="dash-board-bt-inner">
+            <div class="right-bottom">
+            </div>
+            <form onsubmit="return locationSearch();">
+              <input type="text" id="search_place" class="form-control" value="">
+              <select id="search_radius" name="cars">
+                <option selected>KM</option>
+                <option value="10">10 KM</option>
+                <option value="30">30 KM</option>
+                <option value="50">50 KM</option>
+                <option value="75">75 KM</option>
+                <option value="100">100 KM</option>
+              </select>
+              <button><i class="fa fa-search" aria-hidden="true"></i></button>
+            </form>
+            @endrole
+          </div>
+        </div>
+      </div>
+      <div class="dash-baord-rt-new-box">
+        <div class="dash-boad1-rt-box">
+          <div class="dash-boad1-rt-box-sm green" onclick="moving('M')">
+            <a href="#">
+              <i class="fa fa-map-marker green" aria-hidden="true"></i>
+              <div class="track_status dash-boad1-rt-move">Moving</div>
+              <div id="moving" class="dash-boad1-rt-move-no">0</div>
+            </a>
+          </div>
+          <div class="dash-boad1-rt-box-sm blue" onclick="moving('H')">
+            <a href="#">
+              <i class="fa fa-map-marker blue" aria-hidden="true"></i>
+              <div class="track_status dash-boad1-rt-move">Halt</div>
+              <div id="idle" class="dash-boad1-rt-move-no">0</div>
+            </a>
+          </div>
+          <div class="dash-boad1-rt-box-sm gray" onclick="moving('S')">
+            <a href="#">
+              <i class="fa fa-map-marker gray" aria-hidden="true"></i>
+              <div class="track_status dash-boad1-rt-move">Sleep</div>
+              <div id="stop" class="dash-boad1-rt-move-no">0</div>
+            </a>
+          </div>
+          <div class="dash-boad1-rt-box-sm red border-0" onclick="moving('O')">
+            <a href="#">
+              <i class="fa fa-map-marker red" aria-hidden="true"></i>
+              <div class="track_status dash-boad1-rt-move">Disconnect</div>
+              <div id="offline" class="dash-boad1-rt-move-no">0</div>
+            </a>
+          </div>
+        </div>
+        
+        <div class="location-sction" id="location-sction">
+          <div class="location-sction-icon"><i class="fa fa-location-arrow" aria-hidden="true"></i></div>
+          <div class="location-sction-content">
+            <medium id="address" class="font-light">
+            <div class="loader-wrapper loader-1"  >
+                  <div id="loader"></div>
+                </div>
+          </div>
+        </div>
+        <div class="dash-vechile-detials-1">
+          <div class="dash-vechile-detials-1-inner">
+            <div class="dash-vechile-detials-1-inner-lf">
+              <div class="dash-vechile-detials-img">
+                <img src="assets/images/network-status.png" id="network_online">
+                <img src="assets/images/no-network.png" id="network_offline" style="display: none;">
+              </div>
+              <div class="dash-vechile-detail-text"><p>Network Status</p>
+                <medium id="network_status" class="font-light">
+                <i class="fa fa-spinner" aria-hidden="true"></i>
+              </div>
+            </div>
+            <div class="dash-vechile-detials-1-inner-lf">
+              <div class="dash-vechile-detials-img">
+                <img src="assets/images/fuel-status.png">
+              </div>
+              <div class="dash-vechile-detail-text"><p>Fuel Status</p>
+                <div id="fuel_100" class="fuel-outer fuel-out">
+                  <ul>
+                    <li id="f100"></li>
+                    <li id="f100"></li>
+                    <li id="f100"></li>
+                    <li id="f100"></li>
+                  </ul>
+                </div>
+                <div id="fuel_75" class="fuel-outer fuel-out">
+                  <ul>
+                    <li id="f75"></li>
+                    <li id="f75"></li>
+                    <li id="f75"></li>
+                    <li id="f0"></li>
+                  </ul>
+                </div>
+                <div id="fuel_50" class="fuel-outer fuel-out">
+                  <ul>
+                    <li id="f50"></li>
+                    <li id="f50"></li>
+                    <li id="f0"></li>
+                    <li id="f0"></li>
+                  </ul>
+                </div>
+                <div id="fuel_25" class="fuel-outer fuel-out">
+                  <ul>
+                    <li id="f25"></li>
+                    <li id="f0"></li>
+                    <li id="f0"></li>
+                    <li id="f0"></li>
+                  </ul>
+                </div>
+                <div id="fuel_0" class="fuel-outer fuel-out">
+                  <ul>
+                    <li id="f0"></li>
+                    <li id="f0"></li>
+                    <li id="f0"></li>
+                    <li id="f0"></li>
+                  </ul>
+                </div>
+                <div id="upgrade" class="fuel-outer fuel-out">
+                  <medium id="upgradefuel" class="font-light">
+                </div>
+                <i class="fa fa-spinner" aria-hidden="true"></i>
+              </div>
+            </div>
+          </div>
+          <div class="dash-vechile-detials-1-inner">
+            <div class="dash-vechile-detials-1-inner-lf">
+              <div class="dash-vechile-detials-img">
+                <img src="assets/images/speed.png">
+              </div>
+              <div class="dash-vechile-detail-text"><p>Speed</p>
+                <medium id="speed" class="font-light">
+                <i class="fa fa-spinner" aria-hidden="true"></i>
+              </div>
+            </div>
+            <div class="dash-vechile-detials-1-inner-lf">
+              <div class="dash-vechile-detials-img">
+                <img src="assets/images/odometer.png">
+              </div>
+              <div class="dash-vechile-detail-text"><p>Odometer</p>
+                <medium id="odometer" class="font-light">
+                <i class="fa fa-spinner" aria-hidden="true"></i>
+              </div>
+            </div>
+          </div>
+          <div class="dash-vechile-detials-1-inner">
+            <div class="dash-vechile-detials-1-inner-lf">
+              <div class="dash-vechile-detials-img">
+                <img src="assets/images/vehicle-status.png" id="vehicle_status">
+                <img src="assets/images/moving-dashboard.png" id="vehicle_moving" style="display: none;">
+                <img src="assets/images/halt-dashboard.png" id="vehicle_halt" style="display: none;">
+                <img src="assets/images/sleep-dashboard.png" id="vehicle_sleep" style="display: none;">
+                <img src="assets/images/offline-dashboard.png" id="vehicle_stop" style="display: none;">
+              </div>
+              <div class="dash-vechile-detail-text"><p>Vehicle Status</p>
+                <medium id="mode" class="font-light">
+                <i class="fa fa-spinner" aria-hidden="true"></i>
+              </div>
+            </div>
+            <div class="dash-vechile-detials-1-inner-lf">
+              <div class="dash-vechile-detials-img">
+                <img src="assets/images/sattelite.png">
+              </div>
+              <div class="dash-vechile-detail-text"><p>Satellite</p>
+                <medium id="satelite" class="font-light">
+                <i class="fa fa-spinner" aria-hidden="true"></i>
+              </div>
+            </div>
+          </div>
+          <div class="dash-vechile-detials-1-inner mrg-bottom-0 border-last-0">
+            <div class="dash-vechile-detials-1-inner-lf">
+              <div class="dash-vechile-detials-img">
+                <img src="assets/images/battery-status.png">
+              </div>
+              <div class="dash-vechile-detail-text"><p>Internal Battery Status</p>
+                <medium id="battery_status" class="font-light">
+                <i class="fa fa-spinner" aria-hidden="true"></i>
+              </div>
+            </div>
+            <div class="dash-vechile-detials-1-inner-lf ">
+              <div class="dash-vechile-detials-img">
+                <img src="assets/images/ignition-dashboard.png">
+              </div>
+              <div class="dash-vechile-detail-text"><p>Ignition</p>
+                <medium id="ignition" class="font-light">
+                <i class="fa fa-spinner" aria-hidden="true"></i>
+              </div>
+              <div class="location " id="location">
+                <!-- <button type="button">View Location</button>          -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+    <!-- <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12 full-height">
+          <div id="map_refresh_button" class="refresh_map" onclick="refreshPage()">
+            <button id="refresh_button" type="submit" class="btn btn-primary btn-block">
+              <i class="fa fa-refresh"></i> Refresh
+            </button>
+          </div>
+        </div>
+        <div class="pageContainer">
+          <div class="col-lg-12">
+            <div class="st-actionContainer right-bottom">
+              <div class="st-panel" style="width: 50%">
+                <div class="st-panel-contents" id="vehicle_card_cover" style="overflow: scroll!important;height: auto;width: 103%;max-height: 164px"> -->
+                  <!-- @foreach ($vehicles as $vehicle)
+                  <div class="border-card">
+                    <div class="content-wrapper con-radio">
+                      <div class="card-type-icon with-border">
+                        <input type="radio" id="radio" id="gpsid{{ $loop->iteration }}" class="vehicle_gps_id" name="radio" onclick="getVehicle({{$vehicle->gps_id}},true)" value="{{$vehicle->gps_id}}">
+                      </div>
+                      <div class="label-group fixed">
+                        <p class="title">
+                          <span><i class="fa fa-car"></i></span>
+                        </p>
+                        <p class="caption" id="vehicle_name{{ $loop->iteration }}">{{$vehicle->name}}</p>
+                      </div>
+                      <div class="min-gap"></div>
+                      <div class="label-group">
+                        <p class="title">
+                          <span><i class="fas fa-arrow-alt-circle-left"></i></span>
+                        </p>
+                        <p class="caption" id="register_number{{ $loop->iteration }}">{{$vehicle->register_number}}</p>
+                      </div>
+                      <div class="min-gap"></div>
+                    </div>
+                  </div>
+                  @endforeach
+                 </div>
+                 <div id="msg"></div>
+               </div>
+               <div class="right-bottom">
+                <div class="st-button-main">
+                  <img class="left-bottom-car-details-img" src="assets/images/stearing.png" width="66px">
+                </div>
+              </div>
+              @role('fundamental|superior|pro|school')
+              <div class="right-bottom2">
+                <form onsubmit="return locationSearch();">
+                  <div class="col-lg-12 col-md-12">
+                    <div class="container-fluid bg-light map_search">
+                      <div class="row align-items-center justify-content-center">
+                        <div class="col-lg-4 col-md-4 ">
+                          <div class="form-group">
+                            <input type="text" id="search_place" class="form-control" value="">
+                          </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 ">
+                          <div class="form-group">
+                            <select id="search_radius" class="form-control">
+                              <option selected>KM</option>
+                              <option value="10">10 KM</option>
+                              <option value="30">30 KM</option>
+                              <option value="50">50 KM</option>
+                              <option value="75">75 KM</option>
+                              <option value="100">100 KM</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="col-lg-2 col-md-2 ">
+                          <button type="submit" class="btn btn-primary btn-block">
+                            <i class="fas fa-search"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div> -->
+              <style type="text/css">
+                .pac-container {
+                  position: absolute !important;
+                  bottom: 105px !important;
+                  margin: 0px;
+                  top: inherit !important;
+                }
+                .new-track-stle {
+                  right: 4%;
+                }
+                .content-wrapper.con-radio {
+                    height: auto;
+                  }
+              </style>
+              <!-- <div id="myModal" class="modal_for_dash">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <span class="close"></span>
+                    <div class="container">
+                      <div class="container">
+                        <canvas id="myChart" style="max-width: 500px;"></canvas>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              @endrole
+          </div>
+        </div>
+      </div>-->
+
+      <!--<div class="dashboard-main-Right cover_vehicle_track_list new-track-stle">
+         <div class="iconsbg1234">
+          <div class="col-md-6 col-lg-2 col-xlg-3 cover_track_data" onclick="moving('M')" style="max-width: 23%!important">
+            <div class="card card-hover" style="cursor: pointer;">
+              <div class="box bg-cyan1234 text-center">
+                <h1 class="font-light text-white"></h1>
+                <h1 class="text-white" style="color:#84b752!important">
+                  <i class="fa fa-map-marker" aria-hidden="true"></i>
+                </h1>
+                <span class="track_status">Moving</span>
+                <span style="float:left;width:100%">
+                  <h1 id="moving" class="text-white" style="font-size:19px;color:#fab03a!important">0</h1>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-2 col-xlg-3 cover_track_data" onclick="moving('H')" style="max-width: 20%!important">
+            <div class="card card-hover" style="cursor: pointer;">
+              <div class="box bg-cyan1234 text-center">
+                <h1 class="font-light text-white"></h1>
+                <h1 class="text-white" style="color: #69b4b9!important">
+                  <i class="fa fa-map-marker" aria-hidden="true"></i>
+                </h1>
+                <span class="track_status">Halt</span>
+                <span style="float:left;width:100%">
+                  <h1 id="idle" class="text-white" style="font-size:19px;color:#fab03a!important">0</h1>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-2 col-xlg-3 cover_track_data" onclick="moving('S')" style="max-width: 20%!important">
+            <div class="card card-hover" style="cursor: pointer;">
+              <div class="box bg-cyan1234 text-center">
+                <h1 class="font-light text-white"></h1>
+                <h1 class="text-white" style="color: #858585!important">
+                  <i class="fa fa-map-marker" aria-hidden="true"></i>
+                </h1>
+                <span class="track_status">Sleep</span>
+                <span style="float:left;width:100%">
+                  <h1 id="stop" class="text-white" style="font-size:19px;color:#fab03a!important">0</h1>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-2 col-xlg-3 cover_track_data" onclick="moving('O')" style="max-width: 23%!important">
+            <div class="card card-hover" style="cursor: pointer;">
+              <div class="box bg-cyan1234 text-center">
+                <h1 class="font-light text-white"></h1>
+                <h1 class="text-white" style="color:#c41900!important">
+                  <i class="fa fa-map-marker" aria-hidden="true"></i>
+                </h1>
+                <span class="track_status">Offline</span>
+                <span style="float:left;width:100%">
+                  <h1 id="offline" class="text-white" style="font-size:19px;color:#fab03a!important">0</h1>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="iconsbg12345">
+          <div class="row" style="padding: 0 12% 0 0">
+            <div class="card card-hover" style="width:100%;-webkit-box-shadow: 1px 1px 2px 3px #ccc;
+               -moz-box-shadow: 1px 1px 2px 3px #ccc;
+               box-shadow: 1px 1px 21px 1px #ccc">
+              <div class="col-6 m-t-15">
+                <div style="width: 100%;float: left;">
+                  <div class="bg-dark p-10 text-white text-center" style="float: left;width:50%;border-radius: 20px 0 0 0;">
+                    <img src="assets/images/network-status.png" id="network_online">
+                    <img src="assets/images/no-network.png" id="network_offline" style="display: none;">
+                    <h4 class="m-b-0 m-t-5 score_data_text">Network Status</h4>
+                    <medium id="network_status" class="font-light">
+                      <i class="fa fa-spinner" aria-hidden="true"></i>
+                  </div>
+                  <div class="bg-dark p-10 text-white text-center" style="float: left;width:50%;border-radius: 0 20px 0 0;">
+                    <img src="assets/images/fuel-status.png">
+                    <h4 class="m-b-0 m-t-5 score_data_text">Fuel Status</h4>
+                    <div id="fuel_100" class="fuel-outer">
+                      <ul>
+                        <li id="f100"></li>
+                        <li id="f100"></li>
+                        <li id="f100"></li>
+                        <li id="f100"></li>
+                      </ul>
+                    </div>
+                    <div id="fuel_75" class="fuel-outer">
+                      <ul>
+                        <li id="f75"></li>
+                        <li id="f75"></li>
+                        <li id="f75"></li>
+                        <li id="f0"></li>
+                      </ul>
+                    </div>
+                    <div id="fuel_50" class="fuel-outer">
+                      <ul>
+                        <li id="f50"></li>
+                        <li id="f50"></li>
+                        <li id="f0"></li>
+                        <li id="f0"></li>
+                      </ul>
+                    </div>
+                    <div id="fuel_25" class="fuel-outer">
+                      <ul>
+                  <li id="f25"></li>
+                        <li id="f0"></li>
+                        <li id="f0"></li>
+                        <li id="f0"></li>
+                      </ul>
+                    </div>
+                    <div id="fuel_0" class="fuel-outer">
+                      <ul>
+                        <li id="f0"></li>
+                        <li id="f0"></li>
+                        <li id="f0"></li>
+                        <li id="f0"></li>
+                      </ul>
+                    </div>
+                    <i class="fa fa-spinner" aria-hidden="true"></i>
+                  </div>
+                </div>
+
+                <div class="bg-dark p-10 text-white text-center" style="float: left;width:50%">
+                  <img src="assets/images/speed.png">
+                  <h4 class="m-b-0 m-t-5 score_data_text">Speed</h4>
+                  <medium id="speed" class="font-light">
+                    <i class="fa fa-spinner" aria-hidden="true"></i>
+                </div>
+
+                <div class="bg-dark p-10 text-white text-center" style="float: left;width:50%">
+                  <img src="assets/images/odometer.png">
+                  <h4 class="m-b-0 m-t-5 score_data_text">Odometer</h4>
+                  <medium id="odometer" class="font-light">
+                    <i class="fa fa-spinner" aria-hidden="true"></i>
+                </div>
+
+                <div class="bg-dark p-10 text-white text-center" style="float: left;width:50%">
+                  <img src="assets/images/vehicle-status.png" id="vehicle_status">
+                  <img src="assets/images/moving-dashboard.png" id="vehicle_moving" style="display: none;">
+                  <img src="assets/images/halt-dashboard.png" id="vehicle_halt" style="display: none;">
+                  <img src="assets/images/sleep-dashboard.png" id="vehicle_sleep" style="display: none;">
+                  <img src="assets/images/offline-dashboard.png" id="vehicle_stop" style="display: none;">
+                  <h4 class="m-b-0 m-t-5 score_data_text">Vehicle Status</h4>
+                  <medium id="mode" class="font-light">
+                    <i class="fa fa-spinner" aria-hidden="true"></i>
+                </div>
+
+                <div class="bg-dark p-10 text-white text-center" style="float: left;width:50%">
+                  <img src="assets/images/sattelite.png">
+                  <h4 class="m-b-0 m-t-5 score_data_text">Satellite</h4>
+                  <medium id="satelite" class="font-light">
+                    <i class="fa fa-spinner" aria-hidden="true"></i>
+                </div>
+
+                <div class="bg-dark p-10 text-white text-center" style="float: left;width:50%">
+                  <img src="assets/images/battery-status.png">
+                  <h4 class="m-b-0 m-t-5 score_data_text">Internal Battery Status</h4>
+                  <medium id="battery_status" class="font-light">
+                    <i class="fa fa-spinner" aria-hidden="true"></i>
+                </div>
+
+                <div class="bg-dark p-10 text-white text-center" style="float: left;width:50%">
+                  <img src="assets/images/ignition-dashboard.png">
+                  <h4 class="m-b-0 m-t-5 score_data_text">Ignition</h4>
+                  <medium id="ignition" class="font-light">
+                    <i class="fa fa-spinner" aria-hidden="true"></i>
+                </div>
+
+                <div class="bg-dark p-10 text-white text-center location_details" style="width:100%;border-radius: 0px 0px 8px 10px; padding: 10px 0 10px 14px!important;">
+                  <h4 class="m-b-0 m-t-5 score_data_text" style="padding: 0 48% 0 0!important">
+                    <img src="assets/images/location.png">
+                    Location
+                  </h4>
+                  <medium id="address" class="font-light">
+                    <i class="fa fa-spinner" aria-hidden="true"></i>
+                </div>
+                <div class="clear"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>-->
+    @endrole
+    <!-- CLIENT ROLE-END -->
+
+  </section>
+  <style>
+  .address
+  { cursor: pointer; 
+
+  }  
+  .inner-left {
+    float: left;
+    display: block;
+  }
+
+  .box-2 {
+    width: 100%;
+    float: left;
+    display: block;
+  }
+
+  .small-box>.view-last {
+    float: left;
+    width: 100%;
+    margin-bottom: 0px;
+  }
+
+  .mrg-bt-0 {
+
+    font-size: 14px;
+    margin-bottom: 0px;
+  }
+
+  .a-tag {
+    width: 100%;
+    float: left;
+    margin-top: 1px;
+  }
+
+  .small-box>.a-tag .small-box-footer1 {
+    text-align: center;
+    padding: 3px 0;
+    color: #fff;
+    color: rgba(255, 255, 255, 0.8);
+    z-index: 10;
+    width: 100%;
+    float: left;
+    background: rgba(0, 0, 0, 0.1);
+  }
+
+  .small-box>.small-box-footer2 {
+    margin-bottom: -18px;
+  }
+</style>
+  @section('script')
+
+  <script src="{{asset('js/gps/mdb.js')}}"></script>
+  <script src="{{asset('js/gps/dashb.js')}}"></script>
+
+
+  @role('client')
+  <link rel="stylesheet" href="{{asset('css/firebaselivetrack-new-css.css')}}" type="text/css" / >
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href='https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+    <script src="{{asset('js/gps/dashb-client.js')}}"></script>
+
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key={{config('eclipse.keys.googleMap')}}&libraries=places&callback=initMap"></script>
+  <script type="text/javascript">
+    // refresh button on the map should be hidden when the dashboard loads
+    window.onload = function() {
+      document.getElementById('map_refresh_button').style.display = "none";
+    }
+  </script>
+  <script src="{{asset('js/gps/GoogleRadar.js')}}"></script>
+  <script src="{{asset('dist/js/st.action-panel.js')}}"></script>
+  <style type="text/css">
+    #f75 {
+      width: 4%;
+      padding: 8% 8% 7% 3%;
+      margin-right: 3%;
+      float: left;
+      background: #c78307;
+    }
+
+    #f50 {
+      width: 4%;
+      padding: 8% 8% 7% 3%;
+      margin-right: 3%;
+      float: left;
+      background: #f79f1c;
+    }
+
+    #f25 {
+      width: 4%;
+      padding: 8% 8% 7% 3%;
+      margin-right: 3%;
+      float: left;
+      background: #f51902;
+    }
+
+    #f0 {
+      width: 4%;
+      padding: 8% 8% 7% 3%;
+      margin-right: 3%;
+      float: left;
+      background: #cecece;
+    }
+
+    .fuel-outer ul li:last-child {
+      margin-right: 0;
+    }
+
+  </style>
+  @endrole
+
+  <!-- @role('school')
+  <script src="{{asset('js/gps/dashb-client.js')}}"></script>
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key={{config('eclipse.keys.googleMap')}}&libraries=places&callback=initMap"></script>
+  <script type="text/javascript">
+
+  </script>
+  <script src="{{asset('js/gps/GoogleRadar.js')}}"></script>
+
+  <script src="{{asset('dist/js/st.action-panel.js')}}"></script>
+  <style type="text/css">
+    .container-fluid {
+      padding-left: 0px !important
+    }
+  </style>
+  @endrole -->
+
+
+
+
+  @role('root')
+  <script src="{{asset('js/gps/dash-root.js')}}"></script>
+  @endrole
+
+  @role('dealer')
+  <script src="{{asset('js/gps/dash-dealer.js')}}"></script>
+  @endrole
+
+  @role('sub_dealer')
+  <script src="{{asset('js/gps/dash-sub-dealer.js')}}"></script>
+  @endrole
+
+  @endsection
+  @endsection

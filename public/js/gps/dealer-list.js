@@ -2,6 +2,7 @@ $(document).ready(function () {
     callBackDataTable();
 });
 function callBackDataTable(){
+    
     var  data = {   
     }; 
     $("#dataTable").DataTable({
@@ -19,9 +20,16 @@ function callBackDataTable(){
             },
             headers: {
                 'X-CSRF-Token': $('meta[name = "csrf-token"]').attr('content')
+            },
+            error: function(xhr, error, code) {
+                // Handle errors here
+                console.log("Error occurred: ", error);
+                console.log("Error details: ", xhr.responseText);
+                alert("An error occurred while processing your request. Please try again.");
             }
         },
         createdRow: function ( row, data, index ) {
+
             if ( data['deleted_at'] ) {
                 $('td', row).css('background-color', 'rgb(243, 204, 204)');
             }

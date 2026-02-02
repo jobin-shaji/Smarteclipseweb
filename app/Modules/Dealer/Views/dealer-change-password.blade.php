@@ -1,0 +1,74 @@
+@extends('layouts.eclipse') 
+@section('title')
+    Change Password
+@endsection
+@section('content')
+
+
+
+<div class="page-wrapper page-wrapper-root page-wrapper_new">
+<div class="page-wrapper-root1">
+
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item active" aria-current="page"><a href="/home">Home</a>/Change Password</li>
+      <b>Change Password</b>
+    </ol>
+      @if(Session::has('message'))
+        <div class="pad margin no-print">
+          <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
+              {{ Session::get('message') }}  
+          </div>
+        </div>
+        @endif 
+  </nav>
+ 
+            
+  <div class="card-body">
+    <div class="table-responsive">
+      <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">  <div class="row">
+          <div class="col-md-6 col-lg-6">
+            <form  method="POST" action="{{route('dealer.update-password.p',$dealer->user_id)}}">
+            {{csrf_field()}}
+            <input type="hidden" name="id" value="{{$dealer->user_id}}"> 
+              <div class="row">
+                <div class="col-md-6 col-md-6">
+                  <div class="form-group has-feedback">
+                    <label class="srequired">New Password</label>
+                    <input type="password" class="form-control {{ $errors->has('password') ? ' has-error' : '' }}" placeholder="New Password" name="password" pattern= '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*)(=+\/\\~`-]).{8,20}$' title='Password must contains minimum 8 characters with at least one uppercase letter, one lowercase letter, one number and one special character' maxlength='20' required>
+                  </div>
+                  <div class="form-group has-feedback">
+                    <label class="srequired">Confirm Password</label>
+                    <input type="password" class="form-control {{ $errors->has('password') ? ' has-error' : '' }}" placeholder="Retype password" name="password_confirmation" pattern= '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*)(=+\/\\~`-]).{8,20}$' title='Password must contains minimum 8 characters with at least one uppercase letter, one lowercase letter, one number and one special character' maxlength='20' required>
+                    @if ($errors->has('password'))
+                    <span class="help-block">
+                    <strong class="error-text">{{ $errors->first('password') }}</strong>
+                    </span>
+                    @endif
+                  </div>
+                  
+
+              </div>
+            </div>
+            <div class="row">
+              <!-- /.col -->
+              <div class="col-md-2 ">
+                <button type="submit" class="btn btn-primary btn-md form-btn ">Update</button>
+              </div>
+              <!-- /.col -->
+            </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+
+ 
+<div class="clearfix"></div>
+
+
+@endsection

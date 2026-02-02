@@ -3,6 +3,8 @@
 namespace App\Http\Traits;
 use App\Modules\Gps\Models\GpsData;
 use App\Modules\Gps\Models\Gps;
+use App\Modules\Gps\Models\GpsHistory;
+
 use App\Modules\Vehicle\Models\Vehicle;
 use App\Modules\Vehicle\Models\VehicleGps;
 use App\Modules\Gps\Models\GpsModeChange;
@@ -126,7 +128,7 @@ trait VehicleDataProcessorTrait{
         //getting durations from vehicle daily update table
         $vehicle_daily_updates          =   $this->vehicleDailyUpdates($single_vehicle_gps_ids,$from_date,$to_date);
         
-        $gps_last_packet                =   (new Gps())->getGpsLastPacket($single_vehicle_gps_ids);
+        $gps_last_packet                =   (new GpsHistory())->getGpsLastPacket($single_vehicle_gps_ids);
         
         // workaround for ignition durations
         $ignition_on_duration           =   $vehicle_daily_updates['ignition_on_time'];

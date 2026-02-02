@@ -17,6 +17,14 @@ function getData(value) {
           document.getElementById("serial_no").innerHTML = res.serial_no;
           document.getElementById("manufacturing_date").innerHTML = res.manufacturing_date;
           document.getElementById("icc_id").innerHTML = res.icc_id;
+
+          document.getElementById("icc_id1").innerHTML = res.icc_id1; 
+          document.getElementById("provider1").innerHTML = res.provider1;
+          document.getElementById("provider2").innerHTML = res.provider2;
+          document.getElementById("e_sim_number2").innerHTML = res.e_sim_number1;
+          document.getElementById("vehicle_no").innerHTML = res.vehicle_no;
+          document.getElementById("validity").innerHTML = res.validity;
+         
           document.getElementById("imsi").innerHTML = res.imsi;
           document.getElementById("e_sim_number").innerHTML = res.e_sim_number;
           document.getElementById("batch_number").innerHTML = res.batch_number;

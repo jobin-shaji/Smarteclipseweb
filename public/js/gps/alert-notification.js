@@ -29,12 +29,12 @@ function lastSevendaysAlert(data)
     $.ajax({
             type:'post',
             data:data,
-            url: url_ms_alerts+"/last-seven-days-alerts",
+            url:"/last-seven-days-alerts",
             dataType: "json",
             success: function (res) 
             {  
               // console.log(page);          
-              notificationAlertsList(res.data) 
+              notificationAlertsList(res) 
             }
           });
         }
@@ -42,15 +42,16 @@ function lastSevendaysAlert(data)
 function notificationAlertsList(res)
 {
     $(".loader-1").hide();
-    for (var i = 0; i < res.alerts.length; i++)
+    for (var i = 0; i < res.data.length; i++)
     {
-      register_number = res.alerts[i].gps.connected_vehicle_registration_number;
-      vehicle_name    = res.alerts[i].gps.connected_vehicle_name;
-      alert           = res.alerts[i].alert_type.description;
-      device_time     = res.alerts[i].device_time;
-      id              = res.alerts[i]._id;
+      
+      register_number = res.data[i].vehicle?res.data[i].vehicle.register_number:'';
+      vehicle_name    = res.data[i].vehicle?res.data[i].vehicle.register_number:'';
+      alert           = res.data[i].alert_type?res.data[i].alert_type.description:'';
+      device_time     = res.data[i].device_time;
+      id              = res.data[i].id;
       // read alerts
-      if(res.alerts[i].is_read == 1)
+      if(res.data[i].status == 1)
       {
         var notification=' <div class="item active-read psudo-link" id="alert" data-toggle="modal" onclick="gpsAlertCount(\''+id+'\')" data-target="#clickedModelInDetailPage">'+  
         '<div class="not-icon-bg">'+
@@ -68,7 +69,7 @@ function notificationAlertsList(res)
         '</div>  ';    
       }
       // unread alerts
-      if(res.alerts[i].is_read == 0)
+      if(res.data[i].status == 0)
       {
         var notification=' <div class="item active-read alert psudo-link alert_color_'+id+'" id="alert_'+id+'" data-toggle="modal" onclick="gpsAlertCount(\''+id+'\')" data-target="#clickedModelInDetailPage"  >'+  
         '<div class="not-icon-bg" >'+
@@ -87,7 +88,7 @@ function notificationAlertsList(res)
       }   
       $("#notification").append(notification);       
     }
-    if(res.alerts.length != 0)
+    if(res.data.length != 0)
     {
       // console.log(res.alerts.length);
       var show_more = ' <div class=" " id="page_count"  >' + 
@@ -98,7 +99,7 @@ function notificationAlertsList(res)
       $("#show_more").html(show_more); 
     }
     // empty alerts message
-    else if(res.alerts.length == 0)
+    else if(res.data.length == 0)
     {
       var notification = ' <div class="item active-read psudo-link"  data-toggle="modal">No alerts found'+
       '</div>';
@@ -112,19 +113,19 @@ function gpsAlertCount(value){
   $.ajax({
     type:'POST',
     data:data, 
-    url: url_ms_alerts+'/alert-mark-as-read',
+    url: '/alert-mark-as-read',
     dataType: "json",
     success: function (res) 
     {  
      
-      gpsAlertTracker(res.data.alert) 
+      gpsAlertTracker(res.data) 
     }
   });
 }
 function gpsAlertTracker(res)
 {  
   console.log(res);
-  $('#alert_'+res._id).removeClass('alert');
+  $('#alert_'+res.id).removeClass('alert');
   var latitude=parseFloat(res.latitude);
   var longitude=parseFloat(res.longitude);
     var map = new google.maps.Map(document.getElementById('map'), {

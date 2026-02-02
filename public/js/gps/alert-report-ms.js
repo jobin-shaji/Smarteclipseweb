@@ -4,7 +4,7 @@ var user_id    = $("#user_id").val();
 function getMsAlerts()
 {
     getFilterData();
-    var url = url_ms_alerts + "/alert-report";
+    var url = "/alert-reports";
     ajaxRequestMs(url,filterData,'POST',successAlertFilter,failedAlertFilter)
 }
 
@@ -13,6 +13,7 @@ function successAlertFilter(response)
     var table       = $(".alert-report-table").find('tbody');
     var tbody       = "";
     var alertData   = response.data.alerts;
+    console.log(alertData);
     var page        = parseInt(response.data.page);
     table.html("");
     $(".loader-1").hide();
@@ -23,12 +24,11 @@ function successAlertFilter(response)
         page =  page + 1; 
         tbody += "<tr>"+
                         "<td>"+page+"</td>"+
-                        "<td>"+alert.gps.connected_vehicle_name+"</td>"+
-                        "<td>"+alert.address+"</td>"+
-                        "<td>"+alert.gps.connected_vehicle_registration_number+"</td>"+
-                        "<td>"+alert.alert_type.description+"</td>"+
+                        "<td>"+alert.vehicle.register_number+"</td>"+
+                        "<td>"+alert.vehicle.register_number+"</td>"+
+                        "<td>"+(alert.alert_type ? alert.alert_type.description : '') +"</td>"+
                         "<td>"+alert.device_time+"</td>"+
-                        "<td> <a href='/alert/report/"+alert._id+"/map_view' class='btn btn-xs btn-info'><i class='glyphicon glyphicon-map-marker'></i> Map view </a></td>"+        
+                        "<td> <a href='/alert/report/"+alert.id+"/map_view' class='btn btn-xs btn-info'><i class='glyphicon glyphicon-map-marker'></i> Map view </a></td>"+        
 
                     "</tr>";
 

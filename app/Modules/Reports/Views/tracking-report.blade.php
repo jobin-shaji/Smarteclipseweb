@@ -1,0 +1,111 @@
+@extends('layouts.eclipse')
+@section('title')
+   Tracking Report
+@endsection
+@section('content')
+
+<link href="//cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/build/css/bootstrap-datetimepicker.css" rel="stylesheet">
+<div class="page-wrapper_new">
+  <div class="page-breadcrumb">
+    <div class="row">
+      <div class="col-12 d-flex no-block align-items-center">
+        <b>  Tracking Report</b>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="card-body">
+      <div >
+        <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 ">
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="col-md-12 col-md-offset-1">
+                <div class="panel panel-default">
+                  <div >
+                    <div class="panel-body">
+                      <div class="panel-heading">
+                        <div class="cover_div_search">
+                          <div class="row">
+                            <div class="col-lg-3 col-md-3">
+                              <div class="form-group"> 
+                              <label>Vehicle</label>                           
+                                <select class="form-control selectpicker" data-live-search="true" title="Select Vehicle" id="vehicle" name="vehicle">
+                                  <option value=""  selected="selected">Select</option>
+                                  @foreach ($vehicles as $vehicles)
+                                  <option value="{{$vehicles->id}}">{{$vehicles->name}} || {{$vehicles->register_number}}</option>
+                                  @endforeach  
+                                </select>
+                              </div>
+                            </div>
+                            <div class="col-lg-3 col-md-3"> 
+                              <div class="form-group">
+                                <label>Report type</label>                           
+                                <select class="form-control selectpicker" data-live-search="true" title="Select report type" id="report" name="report">
+                                  <option value="" selected="selected" >Select</option>
+                                  <option value="1">Today</option>
+                                  <option value="2">Yesterday</option>
+                                  <option value="3">Last 7 days</option>
+                                  <option value="5">Last 30 Days</option> 
+                                  @if(\Auth::user()->hasRole('fundamental|superior|pro'))
+                                    <option value="6">2 Months</option>
+                                    @endif 
+                                    @if(\Auth::user()->hasRole('superior|pro'))
+                                    <option value="7">4 Months</option>
+                                    @endif
+                                    @if(\Auth::user()->hasRole('pro'))
+                                    <option value="8">6 Months</option>
+                                    @endif         
+                                  <!-- <option value="5">Custom Range</option>                           -->
+                                </select>
+                              </div>
+                            </div> 
+                            <div class="col-lg-3 col-md-3 pt-4">
+                              <div class="form-group">          
+                                <button class="btn btn-sm btn-info btn2 srch" onclick="trackMode()"> <i class="fa fa-search"></i> </button>                   
+                              </div>
+                            </div>                          
+                          </div>
+                        </div>
+                      </div>    
+
+                      <table class="table table-hover table-bordered  table-striped datatable" style="width:100%;text-align: center">
+                          <thead>
+                              <tr>
+                                <th><b>SL.No</b></th>
+                                <th><b>Moving</b></th>
+                                <th><b>Halt</b></th>
+                                <th><b>Sleep</b></th>                              
+                              </tr>
+                          </thead>
+                          <tbody>
+                              <tr>
+                                <td id="sl"></td>
+                                <td id="motion"><b style="float: right;margin-right: -13px">No data</b></td>
+                                <td id="halt"><b style="float: left;margin-left: -15px">Available</b></td>
+                                <td id="sleep"></td>
+                              </tr>
+                          </tbody>
+                      </table>
+                      <div class="loader-wrapper" id="load-6">
+                        <div id="load6"></div>
+                      </div> 
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">           
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+@section('script')
+    <link rel="stylesheet" href="{{asset('css/loader-1.css')}}">
+    <script src="{{asset('js/gps/track-report-list.js')}}"></script>
+@endsection
+@endsection
+

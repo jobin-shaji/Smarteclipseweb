@@ -21,8 +21,9 @@ class Kernel extends ConsoleKernel
         Commands\VehicleOdometer::class,
         Commands\OldTrips::class,
         Commands\IndividualTrips::class,
-        Commands\Esim::class
-
+        Commands\Esim::class,
+        Commands\VehicleCmc::class,
+        Commands\AutoAssignRenewals::class,
     ];
 
     /**
@@ -37,7 +38,13 @@ class Kernel extends ConsoleKernel
         $schedule->command('vehicle:trips')->dailyAt('03:00');
         $schedule->command('vehicle:odometer')->dailyAt('06:00');
         $schedule->command('esim:pdf')->monthlyOn(20, '12:00');
+        $schedule->command('invoices:generate')->dailyAt('03:00');
+        
+        // Auto-assign expiring GPS devices to call centers for renewal
+        $schedule->command('renewals:auto-assign')->dailyAt('02:00');
     }
+  
+
 
     /**
      * Register the commands for the application.

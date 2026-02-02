@@ -245,6 +245,7 @@ function doWork()
 
 function updateStatusData(current)
 {
+
   var latlng=current[0];
   var angle=current[1];
   var ac=current[2];
@@ -418,7 +419,7 @@ function updateStatusData(current)
            $('#lost_blink_id1').removeClass('lost1');
         }
         else{
-          document.getElementById("network_status").innerHTML = "LOST";
+          document.getElementById("network_status").innerHTML = "NETWORK LOST";
           var element = document.getElementById("lost_blink_id");
           element.classList.add("lost_blink");
            $('#network_status').addClass('lost1');
@@ -445,7 +446,7 @@ function updateStatusData(current)
            $('#lost_blink_id1').removeClass('lost1');
         }
         else{
-          document.getElementById("network_status").innerHTML = "LOST";
+          document.getElementById("network_status").innerHTML = "NETWORK LOST";
           var element = document.getElementById("lost_blink_id");
           element.classList.add("lost_blink");
            $('#network_status').addClass('lost1');
@@ -471,8 +472,9 @@ function updateStatusData(current)
           element.classList.remove("lost_blink");
            $('#lost_blink_id1').removeClass('lost1');
         }
+        
         else{
-          document.getElementById("network_status").innerHTML = "LOST";
+          document.getElementById("network_status").innerHTML = "NETWORK LOST";
           var element = document.getElementById("lost_blink_id");
           element.classList.add("lost_blink");
            $('#network_status').addClass('lost1');

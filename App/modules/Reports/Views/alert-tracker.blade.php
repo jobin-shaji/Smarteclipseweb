@@ -1,0 +1,56 @@
+<!-- @extends('layouts.eclipse')
+@section('title')
+  Create Route
+@endsection
+@section('content')   
+    @if(Session::has('message'))
+    <div class="pad margin no-print">
+      <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
+          {{ Session::get('message') }}  
+      </div>
+    </div>
+    @endif  
+
+<section class="hilite-content">
+     
+  <div class="page-wrapper_new">
+           
+    <div class="page-breadcrumb">
+        <div class="row">
+            <div class="col-12 d-flex no-block align-items-center">
+                <b> Alert View</b>
+                @if(Session::has('message'))
+                <div class="pad margin no-print">
+                  <div class="callout {{ Session::get('callout-class', 'callout-success') }}" style="margin-bottom: 0!important;">
+                      {{ Session::get('message') }}  
+                  </div>
+                </div>
+                @endif 
+            </div>
+        </div>
+    </div>
+           
+    <div class="container-fluid">
+                
+      <div class="card-body">
+        <div class="table-responsive">
+            <input type="hidden" name="hd_id" id="hd_id" value="{{$alert_id}}">
+    <input type="hidden" name="lat" id="lat" value="{{$alertmap->latitude}}">
+    <input type="hidden" name="lng" id="lng" value="{{$alertmap->longitude}}">
+    <input type="hidden" name="icon" id="icon" value="{{$alert_icon->path}}">
+    <input type="hidden" name="alert" id="alert" value="{{$alert_icon->description}}">
+    <input type="hidden" name="vehicle" id="vehicle" value="{{$get_vehicle->register_number}}">
+          <div class="row">
+            <div id="map" style=" width:100%;height:600px;"></div>
+          </div> 
+        </div>   
+      </div>
+    </div>
+  </div>
+</section>
+@section('script')
+    <script src="{{asset('js/gps/alert-track.js')}}"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key={{config('eclipse.keys.googleMap')}}&libraries=drawing&callback=initMap"
+         async defer></script>
+    @endsection
+ @endsection -->

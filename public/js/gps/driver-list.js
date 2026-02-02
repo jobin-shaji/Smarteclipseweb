@@ -34,6 +34,11 @@ function callBackDataTable(){
             {data: 'name', name: 'name', orderable: false },
             {data: 'address', name: 'address', orderable: false, searchable: false},
             {data: 'mobile', name: 'mobile', orderable: false},
+            {data: 'break_time', name: 'break_time', orderable: false},
+            {data: 'duty_schedule', name: 'duty_schedule', orderable: false},
+            {data: 'salary_type', name: 'salary_type', orderable: false},
+            {data: 'licence_no', name: 'licence_no', orderable: false},
+            {data: 'licence_validity', name: 'licence_validity', orderable: false},
             {data: 'action', name: 'action', orderable: false, searchable: false},
 
         ],

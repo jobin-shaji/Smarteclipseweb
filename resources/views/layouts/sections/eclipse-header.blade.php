@@ -1,4 +1,6 @@
+
 <?php
+use Illuminate\Support\Facades\Log;
     header('Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0, max-age=0');
 ?>
 
@@ -6,6 +8,10 @@
     <nav class="navbar top-navbar navbar-expand-md navbar-dark">
                
         <div class="navbar-header" data-logobg="skin5">
+            <a class="navbar-brand" href="#">
+              <img src="https://smarteclipse.com/assets/images/logo-v.png" alt="Logo" class="logo" style="width: 80%;margin-left:1em;display:none;"/>
+            </a>
+        
             <!-- This is for the sidebar toggle which is visible on mobile only -->
             <a class="nav-toggler waves-effect waves-light d-block d-md-none" href="javascript:void(0)"><i class="ti-menu ti-close"></i></a>
             <!-- ============================================================== -->
@@ -38,7 +44,7 @@
                         @endif
                     @endrole
 
-                    @role('root|dealer|sub_dealer|servicer|trader|sales')
+                    @role('root|dealer|sub_dealer|servicer|trader|sales|finance')
                         <?php
                         $url=url()->current();
                         $rayfleet_key="rayfleet";
@@ -76,13 +82,19 @@
             <!-- ============================================================== -->
             <!-- toggle and nav items -->
             <!-- ============================================================== -->
-                 
-            @role('root|dealer|sub_dealer|servicer|school|operations|trader|sales')
+
+            @role('root|dealer|sub_dealer|servicer|school|operations|trader|sales|user|Finance|StoreKeeper|Production')
 
                 @role('root')
                     @include('layouts.sections.root-header')
                 @endrole
-                    @role('dealer')
+                
+
+                @role('user')
+                    @include('layouts.sections.user-header')
+                @endrole
+
+                @role('dealer')
                     @include('layouts.sections.dealer-header')
                 @endrole
                     @role('sub_dealer')
@@ -103,294 +115,25 @@
                 @role('sales')
                     @include('layouts.sections.sales-header')
                 @endrole
-
+                @role('Finance')
+                    @include('layouts.sections.finance-header')
+                @endrole
+               @role('StoreKeeper')
+                    @include('layouts.sections.storekeeper-header')
+                @endrole
+            @endrole
+            @role('Driver')
+                @include('layouts.sections.driver-header')
+            @endrole    
+            @role('Call_Center')
+                @include('layouts.sections.callcenter-header')
             @endrole
 
+            @role('Production')
+                @include('layouts.sections.production-header')
+            @endrole
             @role('client')
-            <ul class="navbar-nav float-left mr-auto">
-                <li class="nav-item d-none d-md-block">
-                </li>                      
-                       <!--  <li class="nav-item search-box">
-                        </li> -->
-                <li class="nav-item">
-                    <a class="nav-link waves-effect waves-dark" href="{{url('/home')}}">
-                        <i class="fa fa-home i.fa.fa-home" aria-hidden="true" style="font-size: 2em!important;padding: 35% 0 0 0;margin-top: 2px"></i>
-                    </a>
-                </li>
-
-                <li class="nav-item dropdown-submenu">
-                    <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">VEHICLE
-                    </a>
-                    <ul class="dropdown-menu multi-level">
-                        <li class="dropdown-submenu">
-                            <!-- <a href="#" class="dropdown-item dropdown-toggle"data-toggle="dropdown" >VEHICLE</a>
-                            <ul class="dropdown-menu"> -->
-                            <li><a class="dropdown-item" href="{{url('/vehicle')}}">LIST VEHICLES</a></li>
-                            <li><a class="dropdown-item" href="{{url('/all-vehicle-docs')}}">VEHICLE DOCUMENTS</a></li>
-                            <li><a class="dropdown-item" href="{{url('/vehicle-driver-log')}}">DRIVER UPDATE LOG</a></li>
-                            <li><a class="dropdown-item" href="/on-demand-report">GENERAL TRIP REPORT LIST</a></li>
-                            <li><a class="dropdown-item" href="{{url('/trip-report-client')}}">TRIP REPORTS</a></li>
-                            @role('fundamental|superior|pro')
-                            <!-- <li><a class="dropdown-item" href="{{url('/invoice')}}">INVOICE</a></li> -->
-                                @endrole
-                            <!-- </ul> -->
-                        </li>
-                    </ul>
-                </li>
-
-                <li class="nav-item dropdown-submenu">
-                    <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> DRIVER
-                    </a>
-                    <ul class="dropdown-menu multi-level">
-                        <li class="dropdown-submenu">
-                            <!-- <a href="#" class="dropdown-item dropdown-toggle" data-toggle="dropdown">DRIVER</a>
-                            <ul class="dropdown-menu"> -->
-                           
-                            <li><a class="dropdown-item" href="/driver/create">ADD DRIVER</a></li>
-                            <li><a class="dropdown-item" href="{{url('/drivers')}}">DRIVER LIST</a></li>
-                            @role('fundamental|superior|pro')
-                            <li><a class="dropdown-item" href="{{url('/drivers-score-page')}}">DRIVER SCORE</a></li>
-                            <li><a class="dropdown-item" href="{{url('/performance-score-history')}}">PERFORMANCE SCORE HISTORY</a></li>
-                            @endrole
-                            <!-- </ul> -->
-                        </li>
-                    </ul>
-                </li>
-
-                <li class="nav-item dropdown-submenu">
-                    <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> GEOFENCE
-                    </a>
-                    <ul class="dropdown-menu multi-level">
-                        <li class="dropdown-submenu">
-                            <li><a class="dropdown-item" href="{{url('/fence')}}">ADD GEOFENCE</a></li>
-                            <li><a class="dropdown-item" href="{{url('/geofence')}}">LIST GEOFENCES</a></li>
-                            <li><a class="dropdown-item" href="{{url('/assign/geofence-vehicle')}}">ASSIGN GEOFENCE</a></li>
-                        </li>
-                    </ul>
-                </li>
-                @role('fundamental|superior|pro')
-                <li class="nav-item dropdown-submenu">
-                    <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> ROUTE
-                    </a>
-                    <ul class="dropdown-menu multi-level">
-                        <li class="dropdown-submenu">
-                            <li><a class="dropdown-item" href="{{url('/route/create')}}">ADD ROUTE</a></li>
-                            <li><a class="dropdown-item" href="{{url('/route')}}">LIST ROUTES</a></li>
-                            <li><a class="dropdown-item" href="{{url('/assign/route-vehicle')}}">ASSIGN ROUTE</a></li>
-                        </li>
-                    </ul>
-                </li>
-                @endrole          
-
-                <li class="nav-item dropdown-submenu">
-                    <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> COMPLAINTS
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="{{url('/complaint/create')}}"> ADD COMPLAINT <span></span></a>                              
-                        <a class="dropdown-item" href="{{url('/complaint')}}"> LIST COMPLAINTS<span></span></a>
-                        <a class="dropdown-item" href="{{url('/returned-gps')}}"> LIST RETURNED DEVICES<span></span></a>                              
-                    </div>
-                   
-                </li>
-
-                <li class="nav-item dropdown-submenu">
-                    <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> JOBS
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="{{url('/client-job-list')}}"> JOB LIST<span></span></a>                              
-                                                      
-                    </div>
-                   
-                </li>
-                <li class="nav-item dropdown-submenu">
-                    <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> REPORTS
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <div class="dropdown-divider"></div>
-                        <ul class="ecosystem">
-                            <li class="sys_vapor cover_total_km">
-                                <a href="{{url('/total-km-report')}}">
-                                    <div class="system_icon">
-                                        <img src="{{ url('/') }}/Report-icons/report-2.png"  />
-                                    <span class="system_info" >Total KM Report</span>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="sys_vapor cover_vehicle_report">
-                                <a href="{{url('/vehicle-report')}}">
-                                    <div class="system_icon">
-                                        <img src="{{ url('/') }}/Report-icons/vehicle-report.png"  />
-                                    <span class="system_info" >Vehicle Report</span>
-                                    </div>  
-                                </a>
-                            </li>
-
-                            <li class="sys_vapor cover_geofence">
-                                <a href="{{url('/geofence-report')}}">
-                                    <div class="system_icon">
-                                        <img src="{{ url('/') }}/Report-icons/geofence-report.png"  />
-                                        <span class="system_info"> Geofence Report</span>
-                                    </div>
-                                    
-                                </a>
-                            </li>
-
-                            <li class="sys_vapor cover_over_speed">
-                                <a href="{{url('/over-speed-report')}}">
-                                    <div class="system_icon">
-                                        <img src="{{ url('/') }}/Report-icons/overspeed-report.png"  />
-                                    <span class="system_info" >Over Speed Report</span>
-                                    </div>
-                                    
-                                </a>
-                            </li>
-
-                            <li class="sys_vapor cover_tracking_report">
-                                <a href="{{url('/tracking-report')}}">
-                                    <div class="system_icon">
-                                        <img src="{{ url('/') }}/Report-icons/tracking-report.png"  />
-                                    <span class="system_info" >Tracking Report </span>
-                                    </div>
-                                    
-                                </a>
-                            </li>
-
-                            @role('fundamental|superior|pro')
-                            <li class="sys_vapor cover_deviation_report">
-                                <a href="{{url('/route-deviation-report')}}">
-                                    <div class="system_icon">
-                                        <img src="{{ url('/') }}/Report-icons/route-deviation-report.png"  />
-                                        <span class="system_info" >Route Deviation Report</span> 
-                                    </div>
-                                </a>
-                            </li>
-                            @endrole
-
-                            <li class="sys_vapor cover_harsh_bracking">
-                                <a href="{{url('/harsh-braking-report')}}">
-                                    <div class="system_icon">
-                                        <img src="{{ url('/') }}/Report-icons/braking-report.png"  />
-
-                                    <span class="system_info" >Harsh Braking Report</span>
-                                    </div>
-                                    
-                                </a>
-                            </li>
-                            <li class="sys_vapor cover_dailyreport">
-                                <a href="{{url('/daily-km-report')}}">
-                                    <div class="system_icon">
-                                        <img src="{{ url('/') }}/Report-icons/report-1.png"  />
-                                        <span class="system_info">Daily KM Report </span></div>
-                                    
-                                </a>
-                            </li>
-
-                            <li class="sys_vapor sudden_acceleration">
-                                <a href="{{url('/sudden-acceleration-report')}}">
-                                    <div class="system_icon">
-                                        <img src="{{ url('/') }}/Report-icons/accelaration-report.png"  />
-                                    <span class="system_info" >Sudden Acceleration</span>
-                                    </div>
-                                    
-                                </a>
-                            </li>
-
-                            <li class="sys_vapor cover_alertreport">
-                                <a href="{{url('/alert-report')}}">
-                                    <div class="system_icon">
-                                        <img src="{{ url('/') }}/Report-icons/alert-report.png"  />
-                                    <span class="system_info" >Alert Report </span>
-                                    </div>
-                                    
-                                </a>
-                            </li>
-
-                            <li class="sys_vapor cover_zig_zag">
-                                <a href="{{url('/zigzag-driving-report')}}">
-                                    <div class="system_icon">
-                                        <img src="{{ url('/') }}/Report-icons/zigzag-report.png"  />
-                                    <span class="system_info" >Zig-Zag Driving Report</span>
-                                    </div>
-                                
-                                </a>
-                            </li>
-
-                            <li class="sys_vapor cover_accident">
-                                <a href="{{url('/accident-imapct-alert-report')}}">
-                                    <div class="system_icon">
-                                        <img src="{{ url('/') }}/Report-icons/accident-impact-report.png"  />
-                                        <span class="system_info" >Accident Impact Alert</span>
-                                    </div>
-                                    
-                                </a>
-                            </li>
-                            <li class="sys_vapor cover_idle_report">
-                                <a href="{{url('/idle-report')}}">
-                                    <div class="system_icon">
-                                        <img src="{{ url('/') }}/Report-icons/idle-report.png"  />
-                                    <span class="system_info" >Halt Report</span>
-                                    </div>
-                                    
-                                </a>
-                            </li>
-
-                            <li class="sys_vapor cover_parking_report">
-                                <a href="{{url('/parking-report')}}">
-                                    <div class="system_icon">
-                                        <img src="{{ url('/') }}/Report-icons/parking-report.png"  />
-                                        <span class="system_info" >Parking Report</span>  
-                                    </div>
-                                    
-                                </a>
-                            </li>
-                            <li class="sys_vapor cover_main_battery">
-                                <a href="{{url('/mainbattery-disconnect-report')}}">
-                                    <div class="system_icon">
-                                        <img src="{{ url('/') }}/Report-icons/main-battery-disconnect-report.png"  />
-                                        <span class="system_info" >Main Battery Disconnect</span> 
-                                    </div>
-                                    
-                                </a>
-                            </li>
-
-                            @role('superior|pro')
-                            <li class="sys_vapor cover_accident">
-                                <a href="{{url('/fuel-reports')}}">
-                                    <div class="system_icon">
-                                        <img src="{{ url('/') }}/Report-icons/report-1.png"  />
-                                        <span class="system_info" >Fuel Report</span> 
-                                    </div>
-                                    
-                                </a>
-                            </li>
-                            @endrole
-                                
-                        </ul>
-                    </div>
-                </li>
-                <li class="nav-item dropdown-submenu">
-                    <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> SETTINGS
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <div class="dropdown-divider"></div>
-                    @role('fundamental|superior|pro')
-                        <a class="dropdown-item" href="{{url('/performance-score')}}">ALERT POINTS <span></span></a>  
-                    @endrole
-                        <a class="dropdown-item" href="{{url('/alert-manager')}}"> ALERT NOTIFICATION MANAGER <span></span></a>
-                    </div>
-                </li>
-                       
-                @if(!\Auth::user()->hasRole(['pro']))
-                <li class="nav-item dropdown" >
-                    <a class="nav-link dropdown-toggle waves-effect waves-dark" aria-haspopup="true" aria-expanded="false" style="color: green !important" href="{{url('go-premium')}}"> UPGRADE   
-                    </a>
-                </li>
-                @endif
-
-
-            </ul>
+                @include('layouts.sections.client-header')
             @endrole
             <!-- <ul class="needhelp">Need help?   18005322007 (toll free)</ul> -->
             <!-- ============================================================== -->
@@ -507,15 +250,21 @@
                 </li>
                       
                 <li class="nav-item dropdown">
+                    <?php
+                        echo \Auth::user()->username
+                    ?>
+                   
                     <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                
                     @role('client')     
                         <img src="{{ url('/') }}/images/{{ \Auth::user()->roles->last()->path }}" alt="user" title="{{\Auth::user()->username}}" class="rounded-circle" width="70" height="60"/>
                         @endrole
                    
-                        @role('root|dealer|sub_dealer|servicer|school|operations|trader|sales')
+                        @role('root|dealer|sub_dealer|servicer|school|operations|trader|sales|user|Call_Center')
                         <img src="{{ url('/') }}/assets/images/2.png" alt="user" title="{{\Auth::user()->username}}" class="rounded-circle" width="31">
                         @endrole
                     </a>
+                    
                     <div class="dropdown-menu dropdown-menu-right user-dd animated">
                         <div class="dropdown-divider">
                         </div>
@@ -538,6 +287,12 @@
                                 <i class="fa fa-cog m-r-5 m-l-5"></i>CHANGE PASSWORD</a>
                         @endrole
                         @role('root')
+                            <a style="margin-left: 15px;">
+                                <i class="ti-user m-r-5 m-l-5"></i>{{\Auth::user()->username}}</a>
+                            <a class="dropdown-item" href="{{url('/root/'.Crypt::encrypt(\Auth::user()->id).'/change-password')}}">
+                                <i class="fa fa-cog m-r-5 m-l-5"></i>CHANGE PASSWORD</a>
+                        @endrole
+                        @role('user')
                             <a style="margin-left: 15px;">
                                 <i class="ti-user m-r-5 m-l-5"></i>{{\Auth::user()->username}}</a>
                             <a class="dropdown-item" href="{{url('/root/'.Crypt::encrypt(\Auth::user()->id).'/change-password')}}">
@@ -585,48 +340,105 @@
                             <a class="dropdown-item" href="{{url('/salesman/'.Crypt::encrypt(\Auth::user()->id).'/change-password')}}">
                                 <i class="fa fa-cog m-r-5 m-l-5"></i>CHANGE PASSWORD</a>
                         @endrole
+                        @role('Driver')
+                        <a style="margin-left: 15px;">
+                                <i class="ti-user m-r-5 m-l-5"></i>{{\Auth::user()->username}}</a>
+                            <a class="dropdown-item" href="{{url('/root/'.Crypt::encrypt(\Auth::user()->id).'/change-password')}}">
+                                <i class="fa fa-cog m-r-5 m-l-5"></i>CHANGE PASSWORD</a>
+                         @endrole
+                         @role('Finance')
+                        <a style="margin-left: 15px;">
+                                <i class="ti-user m-r-5 m-l-5"></i>{{\Auth::user()->username}}</a>
+                            <a class="dropdown-item" href="{{url('/root/'.Crypt::encrypt(\Auth::user()->id).'/change-password')}}">
+                                <i class="fa fa-cog m-r-5 m-l-5"></i>CHANGE PASSWORD</a>
+                         @endrole
 
-                        <a class="dropdown-item" href="{{ route('logout') }}"
-                        onclick="clearLocalStorage();event.preventDefault();document.getElementById('logout-form').submit();"><i class="fa fa-power-off m-r-5 m-l-5"></i>LOGOUT</a>
+                         @role('Call_Center')
+                        <a style="margin-left: 15px;">
+                                <i class="ti-user m-r-5 m-l-5"></i>{{\Auth::user()->username}}</a>
+                            <a class="dropdown-item" href="{{url('/root/'.Crypt::encrypt(\Auth::user()->id).'/change-password')}}">
+                                <i class="fa fa-cog m-r-5 m-l-5"></i>CHANGE PASSWORD</a>
+                         @endrole
+                   <a class="dropdown-item" href="{{ route('logout') }}"
+                        onclick="clearLocalStorage();event.preventDefault();document.getElementById('logout-form').submit();"><i class="fa fa-power-off m-r-5 m-l-5"></i>LOGOUT
+                    </a>
                             
                     </div>
                 </li>
             </ul>
         </div>
         <?php
-       
+            $test=-1;
             if(\Auth::user()->hasRole('root'))
             {
                 $role=md5('root');
+                $test=1;
+            }
+            else if(\Auth::user()->hasRole('user'))
+            {
+                $role=md5('user');
+                $test=11;
+
             }
             else if(\Auth::user()->hasRole('dealer'))
             {
                 $role=md5('dealer');
+                $test=2;
             }
             else if(\Auth::user()->hasRole('sub_dealer'))
             {
                 $role=md5('sub_dealer');
+                $test=3;
             }
             else if(\Auth::user()->hasRole('trader'))
             {
                 $role=md5('trader');
+                $test=4;
             }
             else if(\Auth::user()->hasRole('client'))
             {
                 $role=md5('client');
+                $test=5;
             }     
             else if(\Auth::user()->hasRole('operations'))
             {
                 $role=md5('operations');
+                $test=6;
             }  
             else if(\Auth::user()->hasRole('sales'))
             {
                 $role=md5('sales');
+                $test=7;
             }
             else if(\Auth::user()->hasRole('servicer'))
             {
                 $role=md5('servicer');
+                $test=8;
             }
+            else if(\Auth::user()->hasRole('Call_Center'))
+            {
+                $role=md5('Call_Center');
+                $test=9;
+            }
+            else{
+                $role=md5('root');//eugene
+                $test=0;
+            }
+            //______________________________________________________________________________________
+            /*
+            $user_role=\Auth::user()->roles->first()==null?"":\Auth::user()->roles->first()->name;
+            echo \Auth::user()->username . " (".$test.") [".$user_role."] ";
+            
+            $roles = \Auth::user()->getRoleNames(); // Get all roles
+            echo "*".strlen($roles)."*";// implode(', ', $roles->toArray());
+            //echo "*". $roles->toArray().length . "*";// implode(', ', $roles->toArray());
+
+            Log::info('User roles: ' . implode(', ', $roles->toArray()));
+            
+            //$test = \Auth::user()->first()->name ?? null;
+            //error_log("XXX" . $test, 3, base_path('temp/logfile.log'));
+            */
+            //________________________________________________________________________________
     ?>
     @role('client')
     <input type="hidden" id="user_id" name="user_id" value="{{\Auth::user()->id}}">
@@ -664,7 +476,7 @@
 </div>
 
 <div id="headerModal" class="modal_for_dash">
-         
+
     <div class="modal-content" style="max-width:28%;z-index:9999!important">
         <div class="modal-header" onclick="closePremium()">
             <span style="font-weight:600;padding:0 3%;color:#fb9a18;width:80%;font-size:18px">Go Premium Now</span> <span class="close">×</span>

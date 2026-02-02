@@ -1,0 +1,74 @@
+$(document).ready(function () {
+    callBackDataTable();
+});
+function callBackDataTable(){
+    var  data = {   
+    }; 
+    $("#dataTable").DataTable({
+        bStateSave: true,
+        bDestroy: true,
+        bProcessing: true,
+        serverSide: true,
+        deferRender: true,
+        // order: [[1, 'desc']],
+        ajax: {
+            url: 'callcenter-list',
+            type: 'POST',
+            data: {
+                'data': data
+            },
+            headers: {
+                'X-CSRF-Token': $('meta[name = "csrf-token"]').attr('content')
+            }
+        },
+        createdRow: function ( row, data, index ) {
+            if ( data['deleted_at'] ) {
+                $('td', row).css('background-color', 'rgb(243, 204, 204)');
+            }
+        },
+       
+        fnDrawCallback: function (oSettings, json) {
+
+        },
+        columns: [
+            {data: 'DT_RowIndex', name: 'DT_RowIndex', searchable: false},
+            {data: 'name', name: 'name', orderable: false },            
+            {data: 'address', name: 'address', orderable: false,searchable: false},           
+            {data: 'user.mobile', name: 'user.mobile', orderable: false},
+            {data: 'user.email', name: 'user.email', orderable: false},
+             {data: 'code', name: 'code', orderable: false},
+            {data: 'action', name: 'action', orderable: false, searchable: false},           
+        ],        
+        aLengthMenu: [[25, 50, 100, -1], [25, 50, 100, 'All']]
+    });
+    var table = $('#dataTable').DataTable();
+    table.search('').draw();
+}
+function disableSalesman(salesman){
+    if(confirm('Are you sure to deactivate this user?')){
+        var url = 'finance/disable';
+        var data = {
+            id : salesman
+        };
+        backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+    }
+}
+function enableSalesman(salesman){
+    if(confirm('Are you sure to activate this user?')){
+        var url = 'callcenter/enable';
+        var data = {
+            id : salesman
+        };
+        backgroundPostData(url,data,'callBackDataTables',{alert:true});  
+    }
+}
+
+function deleteCallcenter(id){
+    if(confirm('Are you sure you want to delete this call center user? This action cannot be undone.')){
+        var url = 'callcenter/delete';
+        var data = {
+            id : id
+        };
+        backgroundPostData(url,data,'callBackDataTable',{alert:true});  
+    }
+}

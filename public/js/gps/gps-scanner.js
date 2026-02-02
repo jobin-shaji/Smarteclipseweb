@@ -75,8 +75,9 @@ scanner.addListener('scan', function (content) {
             }
             else if(content_length >= 19)
             {
-              
+             
               var serial_no = content;
+             
               serialNumberScan(serial_no);
             }
            
@@ -101,7 +102,9 @@ scanner.addListener('scan', function (content) {
    
     function serialNumberScan(serial_no)
     {
+      
       var data = { serial_no : serial_no };
+      console.log(data);
       $.ajax({
           type:'POST',
           url: purl,
@@ -112,6 +115,7 @@ scanner.addListener('scan', function (content) {
               
           },
           success: function (res) {
+           
             if(res.status == 1){
               $("#stock_add_transfer").empty();
               var devices = res.devices;
@@ -121,10 +125,12 @@ scanner.addListener('scan', function (content) {
               option1.innerHTML = "Select Device";
               select.appendChild(option1);
               devices.forEach(device => {
-              var option = document.createElement('option');
-              option.value = device.gps.serial_no;
-              option.innerHTML = "IMEI:- "+device.gps.imei+" , Serial Number:- "+device.gps.serial_no;
-              select.appendChild(option);
+                if(device.gps){
+                  var option = document.createElement('option');
+                  option.value = device.gps.serial_no;
+                  option.innerHTML = "IMEI:- "+device.gps.imei+" , Serial Number:- "+device.gps.serial_no;
+                  select.appendChild(option);
+                }
              });
               $(".loader_transfer").hide();
               $('textarea[id="scanner"]').show();

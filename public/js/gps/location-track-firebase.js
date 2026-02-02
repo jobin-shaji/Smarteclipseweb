@@ -163,7 +163,7 @@ function getFirebaseData()
 
       // for snap routing
       $.ajax({
-        url: 'https://roads.googleapis.com/v1/snapToRoads?path='+clickedPointCurrent+'&key=AIzaSyCXmg0OWU4PM-pEIJPr_GpJAG9dKUHgim4&interpolate=true', //true',
+        url: 'https://roads.googleapis.com/v1/snapToRoads?path='+clickedPointCurrent+'&key=AIzaSyCzJOL7twYpw_2TYlmLpcrbud7Bw0_50y8&interpolate=true', //true',
         crossDomain: true,
         dataType: 'jsonp'
       }).done(function(response) {

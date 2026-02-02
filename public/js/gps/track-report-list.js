@@ -32,7 +32,7 @@ function trackMode()
     if(hasError             ==  false)
     {  
         var client          =   $('meta[name = "client"]').attr('content');
-        var url             =   '/track-report-list';
+        var url             =   'track-report-list';
         var data            =   {
                                     'vehicle':vehicle_id,
                                     'client':client, 

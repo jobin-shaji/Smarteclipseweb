@@ -117,7 +117,7 @@ function transition(result)
 function getSnappedPoint(unsnappedWaypoints,angle,ac,battery_status,connection_lost_time_motion,dateTime,fuel,fuelquantity,ign,last_seen,latitude,longitude,place,power,signalStrength,speed,vehicleStatus,connection_lost_time_halt,connection_lost_time_sleep,connection_lost_time_minutes)
 {
   $.ajax({
-    url           : 'https://roads.googleapis.com/v1/snapToRoads?path=' + unsnappedWaypoints.join('|') + '&key=AIzaSyCXmg0OWU4PM-pEIJPr_GpJAG9dKUHgim4&interpolate=true', //true', 
+    url           : 'https://roads.googleapis.com/v1/snapToRoads?path=' + unsnappedWaypoints.join('|') + '&key=AIzaSyCzJOL7twYpw_2TYlmLpcrbud7Bw0_50y8&interpolate=true', //true', 
     crossDomain   : true,
     dataType      : 'jsonp'
   }).done(function(response) {

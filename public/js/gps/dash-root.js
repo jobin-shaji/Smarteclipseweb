@@ -1,26 +1,29 @@
 // -------------------------------------------------------------
 
 $(document).ready(function () { 
-     var url = 'root-gps-sale';
-     var data = {
-   
-     };
-      backgroundPostData(url,data,'rootGpsSale',{alert:true});
+  var hasTransfer = document.getElementById("rootChart");
+  var hasSale = document.getElementById("rootGpsSaleChart");
+  var hasUsers = document.getElementById("rootChartUser");
 
-      var url = 'root-gps-client-sale';
-      var data = {  
-      };
-      backgroundPostData(url,data,'rootGpsClientSale',{alert:true});
+  if (hasTransfer) {
+    backgroundPostData('root-gps-sale', {}, 'rootGpsSale', {alert:true});
+  }
 
-      var url = 'root-gps-user';
-     var data = {
-   
-     };
-      backgroundPostData(url,data,'rootGpsUser',{alert:true});
+  if (hasSale) {
+    backgroundPostData('root-gps-client-sale', {}, 'rootGpsClientSale', {alert:true});
+  }
+
+  if (hasUsers) {
+    backgroundPostData('root-gps-user', {}, 'rootGpsUser', {alert:true});
+  }
 });
 // rootGpsSale
 function rootGpsSale(res){
-var ctx = document.getElementById("rootChart").getContext('2d');
+var canvas = document.getElementById("rootChart");
+if(!canvas){
+  return;
+}
+var ctx = canvas.getContext('2d');
   var myChart = new Chart(ctx, {
     type: 'bar',
     data: {
@@ -51,7 +54,11 @@ var ctx = document.getElementById("rootChart").getContext('2d');
 
 function rootGpsUser(res){
   // console.log(res);
-  var ctx = document.getElementById("rootChartUser").getContext('2d');
+  var canvas = document.getElementById("rootChartUser");
+  if(!canvas){
+    return;
+  }
+  var ctx = canvas.getContext('2d');
   var myChart = new Chart(ctx, {
     type: 'pie',
     data: {
@@ -100,7 +107,11 @@ function rootGpsUser(res){
 
  function rootGpsClientSale(res){
   console.log(res);
-var ctx = document.getElementById("rootGpsSaleChart").getContext('2d');
+  var canvas = document.getElementById("rootGpsSaleChart");
+  if(!canvas){
+    return;
+  }
+  var ctx = canvas.getContext('2d');
   var myChart = new Chart(ctx, {
     type: 'bar',
     data: {

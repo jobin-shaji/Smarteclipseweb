@@ -43,6 +43,9 @@ function callBackDataTable(){
             {data: 'gps.serial_no', name: 'gps.serial_no',orderable: false},
             {data: 'driver', name: 'driver',orderable: false},
             {data: 'vehicle_type.name', name: 'vehicle_type.name',orderable: false},
+            {data: 'installation_date', name: 'installation_date',orderable: false},
+            {data: 'validity', name: 'validity',orderable: false},
+            {data: 'renewed', name: 'renewed',orderable: false},
             {data: 'action', name: 'action', orderable: false, searchable: false}
         ],
         
