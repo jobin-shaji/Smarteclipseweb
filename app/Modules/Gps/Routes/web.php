@@ -1,8 +1,8 @@
 <?php 
 
-//ksrtc&root
+//ksrtc&root (Note: client-renewal-report moved to Ksrtc module)
 Route::group(['middleware' => ['web', 'auth','role:root|client'], 'namespace' => 'App\Modules\Gps\Controllers' ], function () {
-    Route::get('/client-renewal-report', 'GpsController@clientrenewalreport')->name('client.renewal.report');
+    // Route moved to Ksrtc module - see app/Modules/Ksrtc/Routes/web.php
 });
 
 Route::group(['middleware' => ['web','auth','role:root|Driver|sales|client|Call_Center'] , 'namespace' => 'App\Modules\Gps\Controllers' ] , function() {
