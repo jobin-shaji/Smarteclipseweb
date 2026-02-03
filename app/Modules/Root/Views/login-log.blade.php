@@ -62,7 +62,7 @@ User Login Audit
                                         <th>User Information</th>
                                         <th>Access Role</th>
                                         <th>First Access (Today)</th>
-                                        <th>Most Recent Login</th>
+                                        <th>Last Logout (Today)</th>
                                         <th class="text-center pr-4">Actions</th>
                                     </tr>
                                 </thead>
@@ -87,20 +87,21 @@ User Login Audit
                                                 @if ($log->first_login_today)
                                                     <div class="audit-text-main">
                                                         <div>{{ \Carbon\Carbon::parse($log->first_login_today)->format('h:i A') }}</div>
-                                                        <div>{{ $log->first_login_office ?? '—' }}</div>
+                                                        <div>{{ $log->first_login_office ?? 'ï¿½' }}</div>
                                                     </div>
                                                 @else
                                                     <span class="text-muted">no login yet</span>
                                                 @endif
                                             </td>
                                             <td>
-                                                <div class="audit-text-main">
-                                                    <div>
-                                                        {{ \Carbon\Carbon::parse($log->last_login)->format('h:i A') }} &nbsp; 
-                                                        {{ $log->last_login_office ?? 'N/A' }}
+                                                @if(!empty($log->last_logout_today))
+                                                    <div class="audit-text-main">
+                                                        <div>{{ \Carbon\Carbon::parse($log->last_logout_today)->format('h:i A') }}</div>
+                                                        <div>{{ \Carbon\Carbon::parse($log->last_logout_today)->format('d-m-Y') }}</div>
                                                     </div>
-                                                    <div>{{ \Carbon\Carbon::parse($log->last_login)->format('d-m-Y') }}</div>
-                                                </div>
+                                                @else
+                                                    <span class="text-muted">no logout today</span>
+                                                @endif
                                             </td>
                                             <td class="text-center pr-4">
                                                 <a href="{{ route('root.loginlogshistory.show', $log->user_id) }}" 

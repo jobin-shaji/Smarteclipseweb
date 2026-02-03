@@ -25,7 +25,7 @@ class GpsRenewalExport implements FromCollection, WithHeadings, WithMapping, Wit
         return DB::table('gps_orders as o')
             ->join('gps_summery as g', 'g.id', '=', 'o.gps_id')
             ->leftJoin('users as u', 'u.id', '=', 'o.sales_by')
-            ->whereBetween('o.created_at', [$this->startDate, $this->endDate])
+            ->whereBetween('g.pay_date', [$this->startDate, $this->endDate])
             ->select(
                 'o.id',
                 'u.username',
@@ -38,7 +38,7 @@ class GpsRenewalExport implements FromCollection, WithHeadings, WithMapping, Wit
                 'g.validity_date',
                 'o.created_at'
             )
-            ->orderBy('o.created_at', 'desc')
+            ->orderBy('g.pay_date', 'desc')
             ->get();
     }
 

@@ -146,7 +146,10 @@ KSRTC Devices by Period
         <div class="table-container">
             <div class="table-header" style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
                 <h3 style="margin:0;">All Devices</h3>
-                <button id="exportExcelBtn" class="btn btn-sm" style="background:#3b82f5;border-color:#93c5fd;color:#ffffff;font-weight:600;">Excel</button>
+                <div style="display:flex;gap:8px;align-items:center;">
+                    <div id="invoiceButtons"></div>
+                    <button id="exportExcelBtn" class="btn btn-sm" style="background:#3b82f5;border-color:#93c5fd;color:#ffffff;font-weight:600;">Excel</button>
+                </div>
             </div>
             <table class="table table-hover" id="devicesTable" style="width:100%;">
                 <thead>
@@ -210,6 +213,20 @@ $(function(){
                 var amt = Number(res.amount) || 0;
                 $('#periodAmount').text(amt.toLocaleString('en-IN'));
                 $('#periodWidget').fadeIn(); // Smoother transition
+                // Render invoice download buttons
+                var $invContainer = $('#invoiceButtons');
+                $invContainer.empty();
+                if (res.invoices && res.invoices.length) {
+                    res.invoices.forEach(function(inv, idx){
+                        var btn = $('<a/>')
+                            .attr('href', inv.url)
+                            .attr('title', inv.name || ('Bill ' + (idx+1)))
+                            .addClass('btn btn-sm')
+                            .css({'background':'#10b981','border-color':'#86efac','color':'#fff','font-weight':'600'})
+                            .text('bill' + (idx+1));
+                        $invContainer.append(btn);
+                    });
+                }
             })
             .fail(function(){
                 $('#periodWidget').hide();

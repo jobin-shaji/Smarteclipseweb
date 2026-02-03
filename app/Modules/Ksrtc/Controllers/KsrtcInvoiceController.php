@@ -16,7 +16,7 @@ use App\Modules\Vehicle\Models\Vehicle;
 class KsrtcInvoiceController extends Controller{
     
     private function ksrtcEnsurePeriodsExist($clientId = 1778){
-        $start = Carbon::create(2021, 9, 1)->startOfMonth();
+        $start = Carbon::create(2023, 8, 1)->startOfMonth();
 
         // HARD STOP: only create periods with start <= 2025-08-01
         $maxStart = Carbon::create(2025, 8, 1)->startOfMonth();
@@ -370,6 +370,16 @@ class KsrtcInvoiceController extends Controller{
 
         $rate = 708;
         $amount = $count * $rate;
+        $invoices = KsrtcCmcInvoice::where('period_id', $period->id)
+            ->orderBy('id')
+            ->get(['id', 'original_name'])
+            ->map(function($inv){
+                return [
+                    'id' => $inv->id,
+                    'name' => $inv->original_name,
+                    'url' => route('ksrtc.cmc.invoice.download', $inv->id),
+                ];
+            })->values();
 
         return response()->json([
             'period_id' => $period->id,
@@ -377,6 +387,7 @@ class KsrtcInvoiceController extends Controller{
             'count' => $count,
             'rate' => $rate,
             'amount' => $amount,
+            'invoices' => $invoices,
         ]);
     }
     public function devicesExport(Request $request){
@@ -680,6 +691,193 @@ class KsrtcInvoiceController extends Controller{
             }
             fclose($out);
         }, 200, $headers);
+    }
+
+    /**
+     * Download Excel and all bills for ALL periods - each period in its own folder, all in one ZIP
+     */
+    public function downloadPeriodBills(Request $request){
+        $user = Auth::user();
+        $allowed = false;
+        if ($user) {
+            if ($user->root) {
+                $allowed = true;
+            } elseif ($user->client && (int)$user->client->id === 1778) {
+                $allowed = true;
+            }
+        }
+        if (!$allowed) {
+            abort(403, 'Access denied');
+        }
+
+        // Get all periods with their invoices
+        $periods = KsrtcCmcPeriod::where('client_id', 1778)
+            ->with('invoices')
+            ->orderBy('period_start', 'desc')
+            ->get();
+
+        if ($periods->isEmpty()) {
+            return redirect()->back()->with('error', 'No periods found');
+        }
+
+        // Create main temp directory
+        $tmpDir = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'ksrtc_all_periods_' . uniqid();
+        if (!mkdir($tmpDir) && !is_dir($tmpDir)) {
+            abort(500, 'Could not create temp directory');
+        }
+
+        $allFiles = [];
+        $periodFolders = [];
+
+        // Process each period
+        foreach ($periods as $period) {
+            // Create folder name from period title
+            $cleanTitle = preg_replace('/[^A-Za-z0-9]+/', '_', trim($period->title ?? 'period_'.$period->id));
+            $folderName = $cleanTitle;
+
+            // Create period folder
+            $periodFolder = $tmpDir . DIRECTORY_SEPARATOR . $folderName;
+            if (!mkdir($periodFolder) && !is_dir($periodFolder)) {
+                continue; // Skip this period if folder creation fails
+            }
+            $periodFolders[] = $periodFolder;
+
+            // 1. Generate Excel/CSV file with devices for this period
+            $periodStart = Carbon::parse($period->period_start)->startOfMonth();
+            $min = Carbon::create(2021, 9, 1)->startOfMonth();
+
+            $yms = [];
+            $cursor = $periodStart->copy();
+            while ($cursor->gte($min)) {
+                $yms[] = $cursor->format('Y-m');
+                $cursor->subMonths(6);
+            }
+
+            // Exclude installations within first 2 years for this period
+            $threshold = $periodStart->copy()->subYears(2)->endOfMonth();
+
+            $rows = \DB::table('vehicles')
+                ->join('gps_summery as gps', 'vehicles.gps_id', '=', 'gps.id')
+                ->where('vehicles.client_id', 1778)
+                ->whereNull('vehicles.deleted_at')
+                ->whereNotNull('vehicles.installation_date')
+                ->whereIn(\DB::raw("DATE_FORMAT(vehicles.installation_date, '%Y-%m')"), $yms)
+                ->where('vehicles.installation_date', '<=', $threshold->toDateTimeString())
+                ->select('vehicles.register_number as vehicle_no', 'gps.imei', 'vehicles.installation_date')
+                ->orderBy('vehicles.register_number')
+                ->get();
+
+            // Create CSV file for devices
+            $csvFileName = 'devices.csv';
+            $csvFilePath = $periodFolder . DIRECTORY_SEPARATOR . $csvFileName;
+
+            $fh = fopen($csvFilePath, 'w');
+            if ($fh !== false) {
+                // First row: period title
+                fputcsv($fh, [ $period->title ?? Carbon::parse($period->period_start)->format('M Y') ]);
+                // Second row: headings
+                fputcsv($fh, ['SL No','Vehicle No','IMEI','Installed At']);
+
+                $i = 1;
+                foreach ($rows as $r) {
+                    $date = $r->installation_date ? Carbon::parse($r->installation_date)->format('Y-m-d') : '';
+                    fputcsv($fh, [$i++, $r->vehicle_no, $r->imei, $date]);
+                }
+
+                fclose($fh);
+                $allFiles[] = $csvFilePath;
+            }
+
+            // 2. Copy all invoice/bill files for this period
+            foreach ($period->invoices as $invoice) {
+                $sourcePath = public_path($invoice->file_path);
+                
+                if (file_exists($sourcePath)) {
+                    // Get file extension
+                    $extension = pathinfo($sourcePath, PATHINFO_EXTENSION);
+                    // Create a clean filename
+                    $billFileName = 'bill_' . $invoice->id . '_' . 
+                        preg_replace('/[^A-Za-z0-9._-]/', '_', $invoice->original_name ?? ('invoice_' . $invoice->id . '.' . $extension));
+                    
+                    $destPath = $periodFolder . DIRECTORY_SEPARATOR . $billFileName;
+                    
+                    // Copy the file
+                    if (copy($sourcePath, $destPath)) {
+                        $allFiles[] = $destPath;
+                    }
+                }
+            }
+        }
+
+        if (empty($allFiles)) {
+            // cleanup
+            foreach ($periodFolders as $folder) { @rmdir($folder); }
+            @rmdir($tmpDir);
+            return redirect()->back()->with('error', 'No files to download');
+        }
+
+        // Create ZIP file containing all period folders
+        $zipFileName = 'KSRTC_All_Periods_' . date('Ymd_His') . '.zip';
+        $zipPath = $tmpDir . DIRECTORY_SEPARATOR . $zipFileName;
+
+        $zipCreated = false;
+
+        // Try ZipArchive first
+        if (class_exists('\ZipArchive')) {
+            $zip = new \ZipArchive();
+            if ($zip->open($zipPath, \ZipArchive::CREATE) === true) {
+                foreach ($allFiles as $filePath) {
+                    // Calculate relative path from tmpDir
+                    $relativePath = str_replace($tmpDir . DIRECTORY_SEPARATOR, '', $filePath);
+                    $zip->addFile($filePath, $relativePath);
+                }
+                $zip->close();
+                $zipCreated = true;
+            }
+        }
+
+        // Fallback: try system `zip` command if ZipArchive not available
+        if (!$zipCreated) {
+            $returnVar = null;
+            @exec('command -v zip', $out, $returnVar);
+            if ($returnVar === 0) {
+                // Change to temp directory and create zip
+                $oldCwd = getcwd();
+                chdir($tmpDir);
+                
+                // Get all folder names
+                $folderNames = array_map('basename', $periodFolders);
+                $foldersArg = implode(' ', array_map('escapeshellarg', $folderNames));
+                
+                $cmd = 'zip -r ' . escapeshellarg($zipFileName) . ' ' . $foldersArg . ' 2>&1';
+                @exec($cmd, $out2, $rc);
+                
+                chdir($oldCwd);
+                
+                if (file_exists($zipPath) && $rc === 0) {
+                    $zipCreated = true;
+                }
+            }
+        }
+
+        if ($zipCreated && file_exists($zipPath)) {
+            // Download and cleanup
+            $response = response()->download($zipPath, $zipFileName)->deleteFileAfterSend(true);
+            
+            // Schedule cleanup of all temp files
+            foreach ($allFiles as $f) { @unlink($f); }
+            foreach ($periodFolders as $folder) { @rmdir($folder); }
+            @rmdir($tmpDir);
+            
+            return $response;
+        }
+
+        // If ZIP creation failed, cleanup and return error
+        foreach ($allFiles as $f) { @unlink($f); }
+        foreach ($periodFolders as $folder) { @rmdir($folder); }
+        @rmdir($tmpDir);
+        
+        return redirect()->back()->with('error', 'Could not create ZIP file. Please contact administrator.');
     }
 
 }

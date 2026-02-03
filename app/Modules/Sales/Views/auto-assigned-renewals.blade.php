@@ -317,7 +317,7 @@
                         <!-- Filters -->
                         <div class="filter-section">
                             <div class="row align-items-end">
-                                <div class="{{ isset($isCallCenter) && $isCallCenter ? 'col-md-10' : 'col-md-5' }}">
+                                <div class="{{ isset($isCallCenter) && $isCallCenter ? 'col-md-7' : 'col-md-5' }}">
                                     <label for="filter-status">Filter by Status</label>
                                     <select class="form-control premium-select" id="filter-status">
                                         <option value="">All Statuses</option>
@@ -330,7 +330,7 @@
                                     </select>
                                 </div>
                                 @if(!isset($isCallCenter) || !$isCallCenter)
-                                <div class="col-md-5">
+                                <div class="col-md-4">
                                     <label for="filter-callcenter">Filter by Call Center</label>
                                     <select class="form-control premium-select" id="filter-callcenter">
                                         <option value="">All Call Centers</option>
@@ -340,12 +340,14 @@
                                     </select>
                                 </div>
                                 @endif
+                                <div class="col-md-3">
+                                    <label for="filter-search">Search</label>
+                                    <input type="text" id="filter-search" class="form-control premium-select" placeholder="Search IMEI, Vehicle No, GPS ID, Call Center...">
+                                </div>
                                 <div class="col-md-2">
                                     <input type="hidden" id="is-call-center" value="{{ isset($isCallCenter) && $isCallCenter ? '1' : '0' }}">
                                     <input type="hidden" id="user-callcenter-id" value="{{ $userCallcenterId ?? '' }}">
-                                    <button class="btn premium-btn premium-btn-primary" id="btn-apply-filter">
-                                        <i class="fas fa-filter"></i> Apply
-                                    </button>
+                                    <!-- Apply button removed — filters auto-load on change -->
                                     <button class="btn premium-btn premium-btn-secondary" id="btn-reset-filter">
                                         <i class="fas fa-redo"></i> Reset
                                     </button>
@@ -507,22 +509,49 @@ $(document).ready(function() {
     }
 
     // Load data on page load
+    // If URL contains search param, prefill
+    const urlParamsSearch = new URLSearchParams(window.location.search);
+    if (urlParamsSearch.has('search')) {
+        $('#filter-search').val(urlParamsSearch.get('search'));
+    }
     loadAssignments();
-
-    // Apply filter
-    $('#btn-apply-filter').on('click', function() {
-        currentPage = 1;
-        updateTableHeaders();
-        loadAssignments();
-    });
 
     // Reset filter
     $('#btn-reset-filter').on('click', function() {
         $('#filter-status').val('');
         $('#filter-callcenter').val('');
+        $('#filter-search').val('');
         currentPage = 1;
         updateTableHeaders();
         loadAssignments();
+    });
+    // Auto-apply filters when changed
+    $('#filter-status, #filter-callcenter').on('change', function() {
+        currentPage = 1;
+        updateTableHeaders();
+        loadAssignments();
+    });
+
+    // Debounced search input
+    let searchTimer = null;
+    $('#filter-search').on('input', function() {
+        clearTimeout(searchTimer);
+        searchTimer = setTimeout(function() {
+            currentPage = 1;
+            updateTableHeaders();
+            loadAssignments();
+        }, 400);
+    });
+
+    // Keep Enter key behavior for instant search
+    $('#filter-search').on('keypress', function(e) {
+        if (e.which === 13) {
+            e.preventDefault();
+            clearTimeout(searchTimer);
+            currentPage = 1;
+            updateTableHeaders();
+            loadAssignments();
+        }
     });
     
     // Update table headers based on status filter
@@ -585,9 +614,12 @@ $(document).ready(function() {
 
     // Load assignments via AJAX
     function loadAssignments(page = 1) {
+        // If a search term is present, omit the status filter so search spans all statuses
+        const searchVal = $('#filter-search').val().trim();
         const filters = {
-            status: $('#filter-status').val(),
+            status: searchVal ? '' : $('#filter-status').val(),
             callcenter_id: isCallCenter ? userCallcenterId : $('#filter-callcenter').val(),
+            search: searchVal,
             page: page
         };
 

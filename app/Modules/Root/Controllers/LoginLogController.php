@@ -63,6 +63,13 @@ class LoginLogController extends Controller
                     ',', 1
                 ) AS last_login_office
             ")
+                ,
+            // Last logout time for today (from abc_logout_logs)
+            DB::raw("(
+                SELECT MAX(logged_out_at) FROM abc_logout_logs
+                WHERE abc_logout_logs.user_id = login_logs.user_id
+                AND DATE(abc_logout_logs.logged_out_at) = CURDATE()
+            ) AS last_logout_today")
         )
         ->groupBy('user_id', 'username', 'role')
         ->orderByDesc('last_login')

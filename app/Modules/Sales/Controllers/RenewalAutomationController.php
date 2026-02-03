@@ -121,7 +121,7 @@ class RenewalAutomationController extends Controller{
                 Log::info("[AUTO-ASSIGN] Test GPS IDs configured: " . implode(', ', $idsArray));
                 $query->whereIn('id', $idsArray);
             }
-            $maxPerRun = config('renewal_automation.test_max_per_run', 5);
+            $maxPerRun = config('renewal_automation.test_max_per_run', 150);
             Log::info("[AUTO-ASSIGN] Test max per run: {$maxPerRun}");
             $query->limit($maxPerRun);
         }
@@ -168,21 +168,43 @@ class RenewalAutomationController extends Controller{
             return $result;
         }
 
-        // Count active auto-assignments for this call center
+        // Count active auto-assignments for this call center where GPS is not yet paid
         $autoAssignments = GpsAutoAssignment::where('callcenter_id', $callcenterId)
             ->whereIn('status', ['active', 'escalated'])
+            ->whereHas('gps', function($query) {
+                $query->where(function($q) {
+                    $q->whereNull('pay_status')
+                      ->orWhere('pay_status', '!=', 1);
+                });
+            })
             ->pluck('gps_id')
             ->toArray();
+        // Deduplicate GPS IDs to avoid double-counting if duplicate rows exist
+        $autoAssignments = array_values(array_unique($autoAssignments));
         $autoCount = count($autoAssignments);
 
-        // Count active manual assignments, excluding those already in auto-assignments
+        // Count active manual assignments where GPS is not yet paid, excluding those already in auto-assignments
         $manualCount = SalesAssignGps::where('callcenter_id', $callcenterId)
             ->where('status', 0)
             ->whereNull('deleted_at')
             ->whereNotIn('gps_id', $autoAssignments)
+            ->whereHas('gps', function($query) {
+                $query->where(function($q) {
+                    $q->whereNull('pay_status')
+                      ->orWhere('pay_status', '!=', 1);
+                });
+            })
             ->count();
 
         $totalActive = $autoCount + $manualCount;
+        
+        // Compare with dashboard count for debugging
+        $dashboardCount = SalesAssignGps::where('callcenter_id', $callcenterId)->count();
+        $dashboardUnpaidCount = SalesAssignGps::where('callcenter_id', $callcenterId)->where('status', 0)->whereNull('deleted_at')->count();
+        
+        // Debug logging
+        Log::info("[AUTO-ASSIGN] GPS {$gps->id} callcenter {$callcenterId} count breakdown: auto={$autoCount}, manual_unpaid={$manualCount}, total_active={$totalActive}, dashboard_all={$dashboardCount}, dashboard_unpaid_only={$dashboardUnpaidCount}");
+        
         if ($totalActive >= 50) {
             Log::info("[AUTO-ASSIGN] GPS {$gps->id} call center has 50 or more active assignments");
             $result['reason'] = 'Call center has 50 or more active assignments';
@@ -255,27 +277,44 @@ class RenewalAutomationController extends Controller{
     protected function findBestCallcenter($gps){
         // Try to find who did the last renewal
         if (config('renewal_automation.prefer_last_renewer', true)) {
+            Log::info("[AUTO-ASSIGN] GPS {$gps->id} checking for last renewer");
             $lastOrder = GpsOrder::where('gps_id', $gps->id)
                 ->whereNotNull('sales_by')
                 ->orderBy('created_at', 'desc')
                 ->first();
             
             if ($lastOrder && $lastOrder->sales_by) {
+                Log::info("[AUTO-ASSIGN] GPS {$gps->id} found last order: sales_by={$lastOrder->sales_by}, order_date={$lastOrder->created_at}");
                 // Find call center by user_id (sales_by stores user ID, not code)
                 $callcenter = Callcenter::where('user_id', $lastOrder->sales_by)
                     ->whereNull('deleted_at')
                     ->first();
                 if ($callcenter) {
+                    $pendingCount = $this->getPendingCountForCallcenter($callcenter->id);
+                    Log::info("[AUTO-ASSIGN] GPS {$gps->id} last renewer call center found: cc_id={$callcenter->id}, cc_name={$callcenter->name}, pending_count={$pendingCount}");
+                    Log::info("[AUTO-ASSIGN] GPS {$gps->id} SELECTION METHOD: Last Renewer (cc_id={$callcenter->id})");
                     return $callcenter->id;
+                } else {
+                    Log::info("[AUTO-ASSIGN] GPS {$gps->id} no call center found for user_id={$lastOrder->sales_by}");
                 }
+            } else {
+                Log::info("[AUTO-ASSIGN] GPS {$gps->id} no last order found or sales_by is null");
             }
         }
         
         // Fallback: assign to call center with lowest pending count
         if (config('renewal_automation.fallback_to_lowest_count', true)) {
-            return $this->getCallcenterWithLowestPending();
+            Log::info("[AUTO-ASSIGN] GPS {$gps->id} using fallback: lowest count method");
+            $selectedId = $this->getCallcenterWithLowestPending();
+            if ($selectedId) {
+                $callcenter = Callcenter::find($selectedId);
+                $pendingCount = $this->getPendingCountForCallcenter($selectedId);
+                Log::info("[AUTO-ASSIGN] GPS {$gps->id} SELECTION METHOD: Lowest Count (cc_id={$selectedId}, cc_name={$callcenter->name}, pending_count={$pendingCount})");
+            }
+            return $selectedId;
         }
         
+        Log::info("[AUTO-ASSIGN] GPS {$gps->id} no call center selection method enabled");
         return null;
     }
     
@@ -287,8 +326,10 @@ class RenewalAutomationController extends Controller{
         $minCount = PHP_INT_MAX;
         $selectedCallcenterId = null;
         
+        Log::info("[AUTO-ASSIGN] Evaluating all call centers for lowest count:");
         foreach ($callcenters as $callcenter) {
             $pendingCount = $this->getPendingCountForCallcenter($callcenter->id);
+            Log::info("[AUTO-ASSIGN]   - cc_id={$callcenter->id}, cc_name={$callcenter->name}, pending_count={$pendingCount}");
             
             if ($pendingCount < $minCount) {
                 $minCount = $pendingCount;
@@ -296,6 +337,7 @@ class RenewalAutomationController extends Controller{
             }
         }
         
+        Log::info("[AUTO-ASSIGN] Selected call center with lowest count: cc_id={$selectedCallcenterId}, min_count={$minCount}");
         return $selectedCallcenterId;
     }
     
@@ -303,17 +345,29 @@ class RenewalAutomationController extends Controller{
      * Calculate pending count for call center
      */
     protected function getPendingCountForCallcenter($callcenterId){
-        // Get all active auto-assigned GPS IDs for this call center
+        // Get all active auto-assigned GPS IDs for this call center where GPS is not yet paid
         $autoGpsIds = GpsAutoAssignment::where('callcenter_id', $callcenterId)
             ->whereIn('status', ['active', 'escalated'])
+            ->whereHas('gps', function($query) {
+                $query->where(function($q) {
+                    $q->whereNull('pay_status')
+                      ->orWhere('pay_status', '!=', 1);
+                });
+            })
             ->pluck('gps_id')
             ->toArray();
 
-        // Get all active manual assignments for this call center, excluding those already in auto-assignments
+        // Get all active manual assignments for this call center where GPS is not yet paid, excluding those already in auto-assignments
         $manualGpsIds = SalesAssignGps::where('callcenter_id', $callcenterId)
             ->where('status', 0)
             ->whereNull('deleted_at')
             ->whereNotIn('gps_id', $autoGpsIds)
+            ->whereHas('gps', function($query) {
+                $query->where(function($q) {
+                    $q->whereNull('pay_status')
+                      ->orWhere('pay_status', '!=', 1);
+                });
+            })
             ->pluck('gps_id')
             ->toArray();
 
@@ -572,6 +626,12 @@ class RenewalAutomationController extends Controller{
     public function getAssignmentsList(Request $request){
         $perPage = 25;
         $statusFilter = $request->status;
+
+        // If a global search is provided, ignore the status filter so search runs across all statuses
+        $incomingSearch = trim($request->get('search', ''));
+        if ($incomingSearch !== '') {
+            $statusFilter = null;
+        }
         
         // Check if user is Call_Center role and auto-filter by their callcenter_id
         $isCallCenter = \Auth::user()->hasRole('Call_Center');
@@ -779,6 +839,21 @@ class RenewalAutomationController extends Controller{
         }
         
         // Apply pending filter if selected
+        // Apply global search filter if provided (search IMEI, GPS id, vehicle no, callcenter name, followup note)
+        $search = trim($request->get('search', ''));
+        if ($search !== '') {
+            $s = strtolower($search);
+            $combinedData = $combinedData->filter(function($item) use ($s) {
+                $fields = ['gps_id', 'gps_imei', 'vehicle_no', 'callcenter_name', 'followup_description'];
+                foreach ($fields as $f) {
+                    if (!empty($item[$f]) && strpos(strtolower((string)$item[$f]), $s) !== false) {
+                        return true;
+                    }
+                }
+                return false;
+            })->values();
+        }
+
         if ($statusFilter === 'pending') {
             $combinedData = $combinedData->filter(function($item) {
                 return $item['followup_status'] === 'pending';
@@ -1146,8 +1221,7 @@ class RenewalAutomationController extends Controller{
      * Manual reassignment of GPS to different call center
      */
     public function manualReassign(Request $request){
-        \Log::info('=== manualReassign START ===');
-        \Log::info('Request data:', $request->all());
+        // Logging disabled for manual reassignment to avoid storage write errors
         
         $request->validate([
             'assignment_id' => 'required',
@@ -1160,12 +1234,12 @@ class RenewalAutomationController extends Controller{
             $assignmentId = $request->assignment_id;
             $isRegular = is_string($assignmentId) && strpos($assignmentId, 'regular_') === 0;
             
-            \Log::info('Assignment type:', ['is_regular' => $isRegular, 'assignment_id' => $assignmentId]);
+            // assignment type info suppressed
             
             if ($isRegular) {
                 // Extract numeric ID from 'regular_123' format
                 $numericId = str_replace('regular_', '', $assignmentId);
-                \Log::info('Processing regular assignment', ['numeric_id' => $numericId]);
+                // processing regular assignment (logging suppressed)
                 
                 // Find the regular assignment in sales_imei_assign
                 $salesAssignment = SalesAssignGps::findOrFail($numericId);
@@ -1185,12 +1259,7 @@ class RenewalAutomationController extends Controller{
                 $salesAssignment->updated_at = now(); // Update timestamp to current date
                 $salesAssignment->save();
                 
-                \Log::info('Regular assignment updated successfully', [
-                    'assignment_id' => $numericId,
-                    'old_cc' => $oldCallcenterId,
-                    'new_cc' => $newCallcenterId,
-                    'updated_at' => $salesAssignment->updated_at
-                ]);
+                // regular assignment updated (logging suppressed)
                 
                 $oldCallcenter = Callcenter::find($oldCallcenterId);
                 $newCallcenter = Callcenter::find($newCallcenterId);
@@ -1206,11 +1275,7 @@ class RenewalAutomationController extends Controller{
             $oldCallcenterId = $assignment->callcenter_id;
             $newCallcenterId = $request->new_callcenter_id;
             
-            \Log::info('Processing auto assignment', [
-                'assignment_id' => $assignmentId,
-                'old_cc' => $oldCallcenterId,
-                'new_cc' => $newCallcenterId
-            ]);
+            // processing auto assignment (logging suppressed)
             
             
             if ($oldCallcenterId == $newCallcenterId) {
@@ -1258,7 +1323,7 @@ class RenewalAutomationController extends Controller{
             $oldCallcenter = Callcenter::find($oldCallcenterId);
             $newCallcenter = Callcenter::find($newCallcenterId);
             
-            \Log::info('Auto assignment updated successfully');
+            // auto assignment updated successfully (logging suppressed)
             
             return response()->json([
                 'success' => true,
@@ -1267,11 +1332,7 @@ class RenewalAutomationController extends Controller{
             
         } catch (\Exception $e) {
             DB::rollBack();
-            \Log::error("Manual reassignment failed:", [
-                'message' => $e->getMessage(),
-                'trace' => $e->getTraceAsString(),
-                'request' => $request->all()
-            ]);
+            // error details suppressed to avoid writing to log files
             
             return response()->json([
                 'success' => false,

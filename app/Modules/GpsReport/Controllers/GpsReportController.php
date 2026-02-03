@@ -105,8 +105,9 @@ class GpsReportController extends Controller
         |----------------------------------------------------------
         */
         $baseQuery = DB::table('gps_orders as o')
+            ->join('gps_summery as g', 'g.id', '=', 'o.gps_id')
             ->leftJoin('users as u', 'u.id', '=', 'o.sales_by')
-            ->whereBetween('o.created_at', [$startDate, $endDate])
+            ->whereBetween('g.pay_date', [$startDate, $endDate])
             ->whereNotNull('o.sales_by');
     
         /*
@@ -157,7 +158,7 @@ class GpsReportController extends Controller
         $renewals = DB::table('gps_orders as o')
             ->join('gps_summery as g', 'g.id', '=', 'o.gps_id')
             ->leftJoin('users as u', 'u.id', '=', 'o.sales_by')
-            ->whereBetween('o.created_at', [$startDate, $endDate])
+            ->whereBetween('g.pay_date', [$startDate, $endDate])
             ->select(
                 'o.id as order_id',
                 'g.id as gps_id',
@@ -171,7 +172,7 @@ class GpsReportController extends Controller
                 'u.username',
                 'u.id as user_id'
             )
-            ->orderBy('o.created_at', 'desc')
+            ->orderBy('g.pay_date', 'desc')
             ->get();
     
         return view('GpsReport::gps-renewal-daily-report', [

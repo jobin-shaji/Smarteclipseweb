@@ -6,7 +6,9 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Illuminate\Auth\Events\Login;
+use Illuminate\Auth\Events\Logout;
 use App\Listeners\LogSuccessfulLogin;
+use App\Listeners\LogLogout;
 
 
 class EventServiceProvider extends ServiceProvider
@@ -22,6 +24,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         Login::class => [
             LogSuccessfulLogin::class,
+        ],
+        Logout::class => [
+            LogLogout::class,
         ],
     ];
 

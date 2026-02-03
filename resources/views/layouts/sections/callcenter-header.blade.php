@@ -19,11 +19,7 @@
         
     </li>
 
-    <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle waves-effect waves-dark" href="/gps-all"  aria-haspopup="true" aria-expanded="false"> ALL-DEVICE
-        </a>
-        
-    </li>
+
 
 
     <li class="nav-item dropdown">

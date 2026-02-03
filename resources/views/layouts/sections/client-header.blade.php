@@ -107,6 +107,14 @@
           <ul class="ecosystem">
               
               <li class="sys_vapor cover_total_km">
+                  <a href="{{url('/ksrtc/devices')}}">
+                      <div class="system_icon">
+                          <img src="{{ url('/') }}/Report-icons/report-2.png"  />
+                      <span class="system_info" >CMC Report</span>
+                      </div>
+                  </a>
+              </li>
+              <li class="sys_vapor cover_total_km">
                   <a href="{{url('/client-renewal-report')}}">
                       <div class="system_icon">
                           <img src="{{ url('/') }}/Report-icons/report-2.png"  />

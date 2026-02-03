@@ -50,4 +50,6 @@ Route::group(['middleware' => ['web','auth'],'namespace'  => 'App\Modules\Ksrtc\
         ->name('ksrtc.cmc.devices.export_all');
     Route::get('/ksrtc/devices/summary', 'KsrtcInvoiceController@devicesSummary')
         ->name('ksrtc.cmc.devices.summary');
+    Route::get('/ksrtc/period/download-bills', 'KsrtcInvoiceController@downloadPeriodBills')
+        ->name('ksrtc.cmc.period.download_bills');
 });

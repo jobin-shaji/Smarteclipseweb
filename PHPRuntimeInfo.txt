@@ -1,0 +1,28 @@
+Detected PHP runtime information
+
+Path to active php binary: /usr/bin/php
+Reported CLI version output:
+PHP 8.2.29 (cli) (built: Jul  3 2025 13:07:49) (NTS)
+Copyright (c) The PHP Group
+Zend Engine v4.2.29, Copyright (c) Zend Technologies
+    with Zend OPcache v8.2.29, Copyright (c), by Zend Technologies
+
+Other php locations found (whereis):
+/usr/bin/php
+/usr/lib/php
+/etc/php
+/usr/share/php
+/usr/share/man/man1/php.1.gz
+
+Detected binaries under /usr/bin, /usr/local/bin, /opt:
+/usr/bin/php -> /usr/bin/php8.2
+/usr/bin/php7.1
+/usr/bin/php7.2
+/usr/bin/php7.3
+/usr/bin/php7.4
+/usr/bin/php8.0
+/usr/bin/php8.2
+
+Timestamp: 2026-02-03T00:00:00Z
+
+Saved by script: record-php-runtime by assistant
