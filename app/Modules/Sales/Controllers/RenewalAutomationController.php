@@ -201,13 +201,16 @@ class RenewalAutomationController extends Controller{
         // Compare with dashboard count for debugging
         $dashboardCount = SalesAssignGps::where('callcenter_id', $callcenterId)->count();
         $dashboardUnpaidCount = SalesAssignGps::where('callcenter_id', $callcenterId)->where('status', 0)->whereNull('deleted_at')->count();
-        
+
+        // Use configurable per-callcenter max limit (default 200)
+        $maxPerCallcenter = config('renewal_automation.max_assignments_per_callcenter', 200);
+
         // Debug logging
-        Log::info("[AUTO-ASSIGN] GPS {$gps->id} callcenter {$callcenterId} count breakdown: auto={$autoCount}, manual_unpaid={$manualCount}, total_active={$totalActive}, dashboard_all={$dashboardCount}, dashboard_unpaid_only={$dashboardUnpaidCount}");
-        
-        if ($totalActive >= 50) {
-            Log::info("[AUTO-ASSIGN] GPS {$gps->id} call center has 50 or more active assignments");
-            $result['reason'] = 'Call center has 50 or more active assignments';
+        Log::info("[AUTO-ASSIGN] GPS {$gps->id} callcenter {$callcenterId} count breakdown: auto={$autoCount}, manual_unpaid={$manualCount}, total_active={$totalActive}, dashboard_all={$dashboardCount}, dashboard_unpaid_only={$dashboardUnpaidCount}, max_allowed={$maxPerCallcenter}");
+
+        if ($totalActive >= $maxPerCallcenter) {
+            Log::info("[AUTO-ASSIGN] GPS {$gps->id} call center has {$maxPerCallcenter} or more active assignments");
+            $result['reason'] = "Call center has {$maxPerCallcenter} or more active assignments";
             return $result;
         }
 

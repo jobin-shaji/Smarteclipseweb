@@ -570,7 +570,7 @@ use Illuminate\Support\Facades\Log;
     }
 
 </style>
-<link rel="stylesheet" href="{{asset('css/loader-2.css')}}">
+<link rel="stylesheet" href="{{asset('css/loader-1.css')}}">
 <style type="text/css">
   .notification-box {
   /*position: relative;*/

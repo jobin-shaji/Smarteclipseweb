@@ -156,4 +156,9 @@ return [
     
     // Maximum days until expiry to consider for assignment
     'max_days_until_expiry' => 30,
+
+    // Maximum number of active (unpaid) assignments allowed per individual call center
+    // Auto-assignment will skip a call center once its total active unresolved assignments
+    // (auto + manual unpaid) reaches this threshold. Default is 200.
+    'max_assignments_per_callcenter' => env('RENEWAL_MAX_ASSIGNMENTS_PER_CALLCENTER', 200),
 ];

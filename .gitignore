@@ -1,6 +1,12 @@
 /node_modules
+/public/alerts/
+/public/documents/
 /public/hot
+/public/logo/
+/public/service_engineer_application/
 /public/storage
+/public/storage/log
+/public/uploads
 /storage/*.key
 /vendor
 /vendor.bak
@@ -16,11 +22,6 @@ yarn-error.log
 /bootstrap/cache
 .phpunit.result.cache
 .htaccess
-/public/storage/log
-/public/documents/
-/public/service_engineer_application/
-/public/alerts/
-/public/logo/
 
 # Ignore temporary exports/preview files created by Maatwebsite Laravel-Excel
 /storage/framework/laravel-excel/

@@ -104,10 +104,11 @@ class GpsReportController extends Controller
         | Base Query
         |----------------------------------------------------------
         */
+        // pay_date is stored as VARCHAR (YYYY-MM-DD) in this schema, so compare by date string
         $baseQuery = DB::table('gps_orders as o')
             ->join('gps_summery as g', 'g.id', '=', 'o.gps_id')
             ->leftJoin('users as u', 'u.id', '=', 'o.sales_by')
-            ->whereBetween('g.pay_date', [$startDate, $endDate])
+            ->whereBetween(DB::raw('DATE(g.pay_date)'), [$startDate->toDateString(), $endDate->toDateString()])
             ->whereNotNull('o.sales_by');
     
         /*
@@ -158,7 +159,7 @@ class GpsReportController extends Controller
         $renewals = DB::table('gps_orders as o')
             ->join('gps_summery as g', 'g.id', '=', 'o.gps_id')
             ->leftJoin('users as u', 'u.id', '=', 'o.sales_by')
-            ->whereBetween('g.pay_date', [$startDate, $endDate])
+            ->whereBetween(DB::raw('DATE(g.pay_date)'), [$startDate->toDateString(), $endDate->toDateString()])
             ->select(
                 'o.id as order_id',
                 'g.id as gps_id',
