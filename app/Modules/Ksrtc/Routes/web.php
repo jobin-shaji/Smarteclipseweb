@@ -21,6 +21,16 @@ Route::group(['middleware' => ['web','auth'],'namespace'  => 'App\Modules\Ksrtc\
         ->middleware('role:root|client')
         ->name('client.renewal.report');
 
+    // Client Renewal Report V2 (AJAX version with year selection)
+    Route::get('/client-renewal-report2', 'KsrtcInvoiceController@clientrenewalreport2')
+        ->middleware('role:root|client')
+        ->name('client.renewal.report2');
+    
+    // AJAX endpoint for renewal report data
+    Route::get('/client-renewal-report2/data', 'KsrtcInvoiceController@clientrenewalreportData')
+        ->middleware('role:root|client')
+        ->name('client.renewal.report2.data');
+
     // CLIENT view
     Route::get('/ksrtc/cmc-report', 'KsrtcInvoiceController@cmcReportClient')
         ->name('ksrtc.cmc.client');

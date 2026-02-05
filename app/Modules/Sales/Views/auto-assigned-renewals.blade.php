@@ -369,6 +369,7 @@
                                         <th class="text-white font-weight-bold">Days Left</th>
                                         <th class="text-white font-weight-bold followup-columns">Note</th>
                                         <th class="text-white font-weight-bold followup-columns">Followup By</th>
+                                        <th class="text-white font-weight-bold followup-columns">Followup Date</th>
                                         <th class="text-white font-weight-bold">Status</th>
                                         <th class="text-white font-weight-bold reassigns-column">Reassigns</th>
                                         <th class="text-white font-weight-bold">Action</th>
@@ -569,23 +570,27 @@ $(document).ready(function() {
                     <th class="text-white font-weight-bold">Assigned On</th>
                     <th class="text-white font-weight-bold">Validity Date</th>
                     <th class="text-white font-weight-bold">Days Left</th>
+                    <th class="text-white font-weight-bold followup-columns">Followup Date</th>
                     <th class="text-white font-weight-bold">Status</th>
                     <th class="text-white font-weight-bold">Completed Date</th>
                     <th class="text-white font-weight-bold">Action</th>
                 </tr>
             `;
-        } else if (status === 'pending' && isCallCenter) {
-            // Pending (Follow-up) view for call center - show Note and Followup By columns
+        } else if (status === 'pending') {
+            // Pending (Follow-up) view - always include Note column; include Followup By for call center users
             headers = `
                 <tr>
                     <th class="text-white font-weight-bold">IMEI</th>
                     <th class="text-white font-weight-bold">Vehicle No</th>
+                    ${!isCallCenter ? '<th class="text-white font-weight-bold call-center-column">Call Center</th>' : ''}
                     <th class="text-white font-weight-bold">Assigned On</th>
                     <th class="text-white font-weight-bold">Validity Date</th>
                     <th class="text-white font-weight-bold">Days Left</th>
-                    <th class="text-white font-weight-bold">Note</th>
-                    <th class="text-white font-weight-bold">Followup By</th>
+                    <th class="text-white font-weight-bold followup-columns">Note</th>
+                    ${isCallCenter ? '<th class="text-white font-weight-bold followup-columns">Followup By</th>' : ''}
+                    <th class="text-white font-weight-bold followup-columns">Followup Date</th>
                     <th class="text-white font-weight-bold">Status</th>
+                    ${!isCallCenter ? '<th class="text-white font-weight-bold reassigns-column">Reassigns</th>' : ''}
                     <th class="text-white font-weight-bold">Action</th>
                 </tr>
             `;
@@ -599,6 +604,7 @@ $(document).ready(function() {
                     <th class="text-white font-weight-bold">Assigned On</th>
                     <th class="text-white font-weight-bold">Validity Date</th>
                     <th class="text-white font-weight-bold">Days Left</th>
+                    <th class="text-white font-weight-bold followup-columns">Followup Date</th>
                     <th class="text-white font-weight-bold">Status</th>
                     ${!isCallCenter ? '<th class="text-white font-weight-bold reassigns-column">Reassigns</th>' : ''}
                     <th class="text-white font-weight-bold">Action</th>
@@ -631,11 +637,11 @@ $(document).ready(function() {
                 const status = $('#filter-status').val();
                 let colspan = 9; // default
                 if (status === 'completed') {
-                    colspan = isCallCenter ? 7 : 8;
-                } else if (status === 'pending' && isCallCenter) {
-                    colspan = 8; // includes Note and Followup By columns
+                    colspan = isCallCenter ? 9 : 10;
+                } else if (status === 'pending') {
+                    colspan = isCallCenter ? 10 : 11;
                 } else {
-                    colspan = isCallCenter ? 7 : 9;
+                    colspan = isCallCenter ? 8 : 10;
                 }
                 $('#auto-assignments-table tbody').html(
                     '<tr><td colspan="' + colspan + '" class="text-center"><i class="fas fa-spinner fa-spin"></i> Loading...</td></tr>'
@@ -650,11 +656,11 @@ $(document).ready(function() {
                     const status = $('#filter-status').val();
                     let colspan = 9;
                     if (status === 'completed') {
-                        colspan = isCallCenter ? 7 : 8;
-                    } else if (status === 'pending' && isCallCenter) {
-                        colspan = 8;
+                        colspan = isCallCenter ? 9 : 10;
+                    } else if (status === 'pending') {
+                        colspan = isCallCenter ? 10 : 11;
                     } else {
-                        colspan = isCallCenter ? 7 : 9;
+                        colspan = isCallCenter ? 8 : 10;
                     }
                     $('#auto-assignments-table tbody').html(
                         '<tr><td colspan="' + colspan + '" class="text-center text-danger">No data returned</td></tr>'
@@ -666,11 +672,11 @@ $(document).ready(function() {
                 const statusFilter = $('#filter-status').val();
                 let colspan = 9;
                 if (statusFilter === 'completed') {
-                    colspan = isCallCenter ? 7 : 8;
-                } else if (statusFilter === 'pending' && isCallCenter) {
-                    colspan = 8;
+                    colspan = isCallCenter ? 9 : 10;
+                } else if (statusFilter === 'pending') {
+                    colspan = isCallCenter ? 10 : 11;
                 } else {
-                    colspan = isCallCenter ? 7 : 9;
+                    colspan = isCallCenter ? 8 : 10;
                 }
                 $('#auto-assignments-table tbody').html(
                     '<tr><td colspan="' + colspan + '" class="text-center text-danger">Failed to load data: ' + error + '</td></tr>'
@@ -688,11 +694,11 @@ $(document).ready(function() {
         if (!data || data.length === 0) {
             let colspan = 9;
             if (isCompletedFilter) {
-                colspan = isCallCenter ? 7 : 8;
-            } else if (status === 'pending' && isCallCenter) {
-                colspan = 8;
+                colspan = isCallCenter ? 9 : 10;
+            } else if (status === 'pending') {
+                colspan = isCallCenter ? 10 : 11;
             } else {
-                colspan = isCallCenter ? 7 : 9;
+                colspan = isCallCenter ? 8 : 10;
             }
             tbody.html('<tr><td colspan="' + colspan + '" class="text-center">No assignments found</td></tr>');
             return;
@@ -724,11 +730,17 @@ $(document).ready(function() {
             html += '<td>' + formatDateOnly(item.validity_date) + '</td>';
             html += '<td class="' + daysClass + '">' + daysDisplay + '</td>';
             
-            // Add Note and Followup By columns (only shown when status filter is 'pending' and user is call center)
-            if (status === 'pending' && isCallCenter) {
-                // Note column
+            // Add Note and Followup Date columns when status filter is 'pending' (for both sales and callcenter users)
+            if (status === 'pending') {
                 html += '<td>' + (item.followup_description || '-') + '</td>';
-                // Followup By column
+                // Include Followup By column for call center users
+                if (isCallCenter) {
+                    html += '<td>' + formatDateOnly(item.next_follow_date) + '</td>';
+                }
+                // Followup Date (always shown before Status)
+                html += '<td>' + formatDateOnly(item.next_follow_date) + '</td>';
+            } else {
+                // For non-pending rows, always show Followup Date before Status
                 html += '<td>' + formatDateOnly(item.next_follow_date) + '</td>';
             }
             

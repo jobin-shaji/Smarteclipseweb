@@ -84,6 +84,44 @@ class KsrtcInvoiceController extends Controller{
         return $count;
     }
 
+    private function ksrtcCmcEligibleWithCertificateCountRolling($clientId, Carbon $periodStart){
+        $count = 0;
+
+        $cursor = $periodStart->copy()->startOfMonth();
+        $min = Carbon::create(2021, 9, 1)->startOfMonth();
+
+        // Exclude installations within first 2 years before the period start
+        // Use endOfMonth so whole installation month two years prior is chargeable
+        $threshold = $periodStart->copy()->subYears(2)->endOfMonth();
+
+        while ($cursor->gte($min)) {
+            // skip months that are within the 2-year free window
+            if ($cursor->gt($threshold)) {
+                $cursor->subMonths(6);
+                continue;
+            }
+
+            $ym = $cursor->format('Y-m');
+
+            // Count vehicles installed in this month with certificates
+            $monthCount = (int) DB::table('vehicles as v')
+                ->join('gps_summery as g', 'v.gps_id', '=', 'g.id')
+                ->where('v.client_id', $clientId)
+                ->whereNull('v.deleted_at')
+                ->whereNotNull('v.installation_date')
+                ->whereRaw("DATE_FORMAT(v.installation_date, '%Y-%m') = ?", [$ym])
+                ->whereNotNull('g.warrenty_certificate')
+                ->where('g.warrenty_certificate', '!=', '')
+                ->count();
+
+            $count += $monthCount;
+
+            $cursor->subMonths(6);
+        }
+
+        return $count;
+    }
+
     public function cmcReportRoot(Request $request){
 
 
@@ -97,6 +135,12 @@ class KsrtcInvoiceController extends Controller{
         }
 
         $clientId = 1778;
+
+        // Selected year for optional filtering (defaults to current year)
+        $selectedYear = (int) ($request->query('year') ?? date('Y'));
+
+        // Selected year for V3 (optional GET param)
+        $selectedYear = (int) ($request->query('year') ?? date('Y'));
 
         $this->ksrtcEnsurePeriodsExist($clientId);
 
@@ -893,179 +937,419 @@ class KsrtcInvoiceController extends Controller{
             abort(403, 'Unauthorized');
         }
 
-        // ---------------------------
-        // ROOT USER VIEW (Vehicle list)
-        // ---------------------------
+        // Only allow root or client 1778
+        $allowed = false;
         if ($user->root) {
-
-            $rows = Gps::query()
-                ->whereNotNull('installation_date_new')
-                ->whereNotNull('vehicle_no')
-                ->whereNotNull('validity_date')
-                ->selectRaw('MONTH(installation_date_new) as month_no')
-                ->selectRaw('COUNT(id) as total_installed')
-                ->selectRaw('SUM(CASE WHEN pay_status = 1 THEN 1 ELSE 0 END) as renewed')
-                ->groupBy('month_no')
-                ->orderBy('month_no')
-                ->get()
-                ->keyBy('month_no');
-
-            $serviceRows = ServiceIn::query()
-                ->selectRaw('MONTH(`date`) as month_no')
-                ->selectRaw('COUNT(id) as service_visits')
-                ->groupBy('month_no')
-                ->orderBy('month_no')
-                ->get()
-                ->keyBy('month_no');
-
-            $totalservicevisits = $serviceRows->sum('service_visits');
-
-            $baseMonths = [];
-            for ($m = 1; $m <= 12; $m++) {
-                $total = isset($rows[$m]) ? (int)$rows[$m]->total_installed : 0;
-                $renewed = isset($rows[$m]) ? (int)$rows[$m]->renewed : 0;
-                $serviceVisits = isset($serviceRows[$m]) ? (int)$serviceRows[$m]->service_visits : 0;
-
-                $baseMonths[$m] = [
-                    'month_no' => $m,
-                    'month_name' => Carbon::createFromDate(2000, $m, 1)->format('M'),
-                    'total_installed' => $total,
-                    'renewed' => $renewed,
-                    'not_renewed' => max(0, $total - $renewed),
-                    'service_visits' => $serviceVisits,
-                ];
-            }
-
-            $months = [];
-            for ($m = 1; $m <= 12; $m++) {
-
-                $installedNow = $baseMonths[$m]['total_installed'];
-                $renewedNow = $baseMonths[$m]['renewed'];
-                $notNow = $baseMonths[$m]['not_renewed'];
-
-                $months[] = [
-                    'month_no' => $m,
-                    'month_name' => $baseMonths[$m]['month_name'],
-
-                    'total_installed' => $installedNow,
-
-                    'renewal_needed' => $installedNow,
-                    'renewed' => $renewedNow,
-                    'not_renewed' => $notNow,
-
-                    'service_visits' => $baseMonths[$m]['service_visits'],
-                ];
-            }
-
-            return view('Ksrtc::root-renewal-report', compact('months', 'totalservicevisits'));
+            $allowed = true;
+        } elseif ($user->client && (int)$user->client->id === 1778) {
+            $allowed = true;
         }
 
-        // ---------------------------
-        // NORMAL CLIENT USER (existing report)
-        // ---------------------------
-        if (!$user->client) {
-            abort(403, 'Unauthorized');
-        }
-
-        $client_id = $user->client->id;
-
-        if ((int)$client_id !== 1778) {
+        if (!$allowed) {
             abort(403, 'Access denied');
         }
 
+        $clientId = 1778;
+
         // ---------------------------
-        // 1) Install + Renewed data
+        // 1) FIRST ARRAY: Simple month-wise install counts (Jan-Dec)
         // ---------------------------
-        $rows = Vehicle::query()
-            ->where('vehicles.client_id', $client_id)
-            ->whereNotNull('vehicles.installation_date')
-            ->leftJoin('gps_summery', 'gps_summery.id', '=', 'vehicles.gps_id')
-            ->selectRaw('MONTH(vehicles.installation_date) as month_no')
-            ->selectRaw('COUNT(vehicles.id) as total_installed')
-            ->selectRaw('SUM(CASE WHEN gps_summery.pay_status = 1 THEN 1 ELSE 0 END) as renewed')
+        $installsByMonth = Vehicle::query()
+            ->where('client_id', $clientId)
+            ->whereNull('deleted_at')
+            ->whereNotNull('installation_date')
+            ->selectRaw('MONTH(installation_date) as month_no')
+            ->selectRaw('COUNT(*) as cnt')
             ->groupBy('month_no')
-            ->orderBy('month_no')
-            ->get()
-            ->keyBy('month_no');
+            ->pluck('cnt', 'month_no')
+            ->toArray();
 
-        // ---------------------------
-        // 2) Service visits month-wise (ONLY for client vehicles)
-        // ---------------------------
-
-        $serviceRows = ServiceIn::query()
-            ->from('cd_service_ins as si')
-            ->join('vehicles as v', 'v.register_number', '=', 'si.vehicle_no')
-            ->where('v.client_id', $client_id)
-            ->selectRaw('MONTH(si.`date`) as month_no')
-            ->selectRaw('COUNT(si.id) as service_visits')
-            ->groupBy('month_no')
-            ->orderBy('month_no')
-            ->get()
-            ->keyBy('month_no');
-
-
-        $totalservicevisits = $serviceRows->sum('service_visits');
-
-        // ---------------------------
-        // 3) Base months (Jan-Dec)
-        // ---------------------------
-        $baseMonths = [];
+        $installMonths = [];
         for ($m = 1; $m <= 12; $m++) {
-            $total = isset($rows[$m]) ? (int)$rows[$m]->total_installed : 0;
-            $renewed = isset($rows[$m]) ? (int)$rows[$m]->renewed : 0;
-
-            $serviceVisits = isset($serviceRows[$m]) ? (int)$serviceRows[$m]->service_visits : 0;
-
-            $baseMonths[$m] = [
+            $installMonths[] = [
                 'month_no' => $m,
                 'month_name' => Carbon::createFromDate(2000, $m, 1)->format('M'),
-                'total_installed' => $total,
-                'renewed' => $renewed,
-                'not_renewed' => max(0, $total - $renewed),
+                'installed_count' => $installsByMonth[$m] ?? 0,
+            ];
+        }
+
+        // ---------------------------
+        // 2) Get all installation counts by Y-m format for CMC calculations
+        // ---------------------------
+        $installCounts = Vehicle::query()
+            ->where('client_id', $clientId)
+            ->whereNull('deleted_at')
+            ->whereNotNull('installation_date')
+            ->selectRaw("DATE_FORMAT(installation_date, '%Y-%m') as ym")
+            ->selectRaw("COUNT(*) as cnt")
+            ->groupBy('ym')
+            ->pluck('cnt', 'ym')
+            ->toArray();
+
+        // ---------------------------
+        // 3) Get renewed counts by Y-m format (pay_status = 1)
+        // ---------------------------
+        $renewedCounts = Vehicle::query()
+            ->where('vehicles.client_id', $clientId)
+            ->whereNull('vehicles.deleted_at')
+            ->whereNotNull('vehicles.installation_date')
+            ->join('gps_summery', 'gps_summery.id', '=', 'vehicles.gps_id')
+            ->where('gps_summery.pay_status', 1)
+            ->selectRaw("DATE_FORMAT(vehicles.installation_date, '%Y-%m') as ym")
+            ->selectRaw("COUNT(vehicles.id) as cnt")
+            ->groupBy('ym')
+            ->pluck('cnt', 'ym')
+            ->toArray();
+
+        // ---------------------------
+        // 4) Get service visits by month (calendar month 1-12)
+        // ---------------------------
+        $serviceVisitsByMonth = ServiceIn::query()
+            ->from('cd_service_ins as si')
+            ->join('vehicles as v', 'v.register_number', '=', 'si.vehicle_no')
+            ->where('v.client_id', $clientId)
+            ->selectRaw('MONTH(si.date) as month_no')
+            ->selectRaw('COUNT(si.id) as cnt')
+            ->groupBy('month_no')
+            ->pluck('cnt', 'month_no')
+            ->toArray();
+
+        // ---------------------------
+        // 5) SECOND ARRAY: 12 billing periods starting from NEXT MONTH
+        // Each period: title + CMC eligible count + renewed + service visits
+        // ---------------------------
+        $now = Carbon::now();
+        $billingPeriods = [];
+
+        // Start from next month
+        $periodStart = $now->copy()->addMonth()->startOfMonth();
+
+        for ($i = 0; $i < 12; $i++) {
+            // Title: "Feb 26" format (short month + year)
+            $title = $periodStart->format('M y');
+
+            // Get calendar month number (1-12) for this period
+            $monthNo = (int)$periodStart->format('n');
+
+            // Get installed count for this calendar month (ALL years)
+            $installedCount = $installsByMonth[$monthNo] ?? 0;
+
+            // Calculate CMC eligible count using rolling 6-month logic
+            $eligibleCount = $this->ksrtcCmcEligibleCountRolling($installCounts, $periodStart);
+
+            // Calculate renewed count for this period (using same rolling logic)
+            $renewedCount = $this->ksrtcCmcEligibleCountRolling($renewedCounts, $periodStart);
+
+            // Get service visits for this calendar month
+            $serviceVisits = $serviceVisitsByMonth[$monthNo] ?? 0;
+
+            $billingPeriods[] = [
+                'title' => $title,
+                'installed_count' => $installedCount,
+                'renewal_needed' => $eligibleCount,
+                'renewed' => $renewedCount,
+                'not_renewed' => max(0, $eligibleCount - $renewedCount),
                 'service_visits' => $serviceVisits,
+                'amount' => $eligibleCount * 708, // Rs. 708 per device
             ];
+
+            // Move to previous month (going backwards)
+            $periodStart->subMonth();
         }
 
         // ---------------------------
-        // 4) Final months with renewal_needed = (month + month+6)
+        // 6) Total service visits for display
         // ---------------------------
-        $months = [];
-        for ($m = 1; $m <= 12; $m++) {
+        $totalservicevisits = array_sum($serviceVisitsByMonth);
 
-            $m6 = $m + 6;
-            if ($m6 > 12) {
-                $m6 -= 12;
-            }
+        // ---------------------------
+        // 7) Additional statistics (combined sources)
+        // - Data Recharged: total installed (vehicles)
+        // - Not Renewed: sum of 12 billingPeriods 'not_renewed'
+        // - IMEI Untagged: dummy 0
+        // - Replaced by uni140: sum from abc_temp_ksrtc_add_data.replaced_by_uni140
+        // - Data Certificate Attached: vehicles join gps_summery warrenty_certificate not null
+        // ---------------------------
+        try {
+            $total_installed = array_sum(array_column($installMonths, 'installed_count'));
 
-            $installedNow = $baseMonths[$m]['total_installed'];
-            $installedM6  = $baseMonths[$m6]['total_installed'];
+            // Not Renewed: count vehicles for client where gps.pay_status = 0 (filtered by selected year)
+            $not_renewed_sum = (int) DB::table('vehicles as v')
+                ->join('gps_summery as g', 'v.gps_id', '=', 'g.id')
+                ->where('v.client_id', $clientId)
+                ->whereNull('v.deleted_at')
+                ->whereNotNull('v.installation_date')
+                ->where('g.pay_status', 0)
+                ->count();
 
-            $renewedNow = $baseMonths[$m]['renewed'];
-            $renewedM6  = $baseMonths[$m6]['renewed'];
+            $replaced_uni140_count = (int) DB::table('abc_temp_ksrtc_add_data')
+                ->selectRaw('COALESCE(SUM(replaced_by_uni140),0) as c')
+                ->value('c');
 
-            $notNow = $baseMonths[$m]['not_renewed'];
-            $notM6  = $baseMonths[$m6]['not_renewed'];
+            $certificate_count = (int) DB::table('vehicles as v')
+                ->join('gps_summery as g', 'v.gps_id', '=', 'g.id')
+                ->where('v.client_id', $clientId)
+                ->whereNull('v.deleted_at')
+                ->whereNotNull('g.warrenty_certificate')
+                ->where('g.warrenty_certificate', '!=', '')
+                ->count();
 
-            $renewalNeeded = $installedNow + $installedM6;
-            $renewedTotal  = $renewedNow + $renewedM6;
-            $notTotal      = $notNow + $notM6;
-
-            $months[] = [
-                'month_no' => $m,
-                'month_name' => $baseMonths[$m]['month_name'],
-
-                'total_installed' => $installedNow,
-
-                'renewal_needed' => $renewalNeeded,
-                'renewed' => $renewedTotal,
-                'not_renewed' => $notTotal,
-
-                'service_visits' => $baseMonths[$m]['service_visits'],
-                'amount' => $renewalNeeded * 708,
+            $additionalStats = [
+                'data_recharged' => $total_installed,
+                'not_renewed' => $not_renewed_sum,
+                'imei_untagged' => 0,
+                'replaced_by_uni140' => $replaced_uni140_count,
+                'data_certificate_attached' => $certificate_count,
+            ];
+        } catch (\Exception $e) {
+            $additionalStats = [
+                'data_recharged' => array_sum(array_column($installMonths, 'installed_count')),
+                'not_renewed' => array_sum(array_column($billingPeriods, 'not_renewed')),
+                'imei_untagged' => 0,
+                'replaced_by_uni140' => 0,
+                'data_certificate_attached' => 0,
             ];
         }
 
-        return view('Ksrtc::client-renewal-report', compact('months', 'totalservicevisits'));
+        return view('Ksrtc::client-renewal-report', compact('installMonths', 'billingPeriods', 'totalservicevisits', 'additionalStats'));
     }
 
+    /**
+     * Client Renewal Report V2 (AJAX version)
+     * Shows renewal report page with AJAX data loading and year selection
+     */
+    public function clientrenewalreport2(Request $request) {
+        $user = Auth::user();
+        if (!$user) {
+            abort(403, 'Unauthorized');
+        }
+
+        // Only allow root or client 1778
+        $allowed = false;
+        if ($user->root) {
+            $allowed = true;
+        } elseif ($user->client && (int)$user->client->id === 1778) {
+            $allowed = true;
+        }
+
+        if (!$allowed) {
+            abort(403, 'Access denied');
+        }
+
+        // Just return the view - data will be loaded via AJAX
+        return view('Ksrtc::client-renewal-report2');
+    }
+
+    /**
+     * Client Renewal Report V2 - AJAX Data Endpoint
+     * Returns JSON data for the renewal report based on selected year
+     */
+    public function clientrenewalreportData(Request $request) {
+        $user = Auth::user();
+        if (!$user) {
+            return response()->json(['error' => 'Unauthorized'], 403);
+        }
+
+        // Only allow root or client 1778
+        $allowed = false;
+        if ($user->root) {
+            $allowed = true;
+        } elseif ($user->client && (int)$user->client->id === 1778) {
+            $allowed = true;
+        }
+
+        if (!$allowed) {
+            return response()->json(['error' => 'Access denied'], 403);
+        }
+
+        $clientId = 1778;
+        
+        // Get selected year from request, default to current year
+        $selectedYear = (int) ($request->query('year') ?? date('Y'));
+        
+        // Validate year
+        if ($selectedYear < 2021 || $selectedYear > 2026) {
+            $selectedYear = (int) date('Y');
+        }
+
+        // ---------------------------
+        // 1) FIRST ARRAY: Month-wise install counts (Jan-Dec) FILTERED BY SELECTED YEAR
+        // ---------------------------
+        $installsByMonth = Vehicle::query()
+            ->where('client_id', $clientId)
+            ->whereNull('deleted_at')
+            ->whereNotNull('installation_date')
+            ->whereYear('installation_date', $selectedYear)
+            ->selectRaw('MONTH(installation_date) as month_no')
+            ->selectRaw('COUNT(*) as cnt')
+            ->groupBy('month_no')
+            ->pluck('cnt', 'month_no')
+            ->toArray();
+
+        $installMonths = [];
+        for ($m = 1; $m <= 12; $m++) {
+            $installMonths[] = [
+                'month_no' => $m,
+                'month_name' => Carbon::createFromDate(2000, $m, 1)->format('M'),
+                'installed_count' => $installsByMonth[$m] ?? 0,
+            ];
+        }
+
+        // ---------------------------
+        // 2) Get all installation counts by Y-m format for CMC calculations
+        // ---------------------------
+        $installCounts = Vehicle::query()
+            ->where('client_id', $clientId)
+            ->whereNull('deleted_at')
+            ->whereNotNull('installation_date')
+            ->selectRaw("DATE_FORMAT(installation_date, '%Y-%m') as ym")
+            ->selectRaw("COUNT(*) as cnt")
+            ->groupBy('ym')
+            ->pluck('cnt', 'ym')
+            ->toArray();
+
+        // ---------------------------
+        // 3) Get renewed counts by Y-m format (pay_status = 1)
+        // ---------------------------
+        $renewedCounts = Vehicle::query()
+            ->where('vehicles.client_id', $clientId)
+            ->whereNull('vehicles.deleted_at')
+            ->whereNotNull('vehicles.installation_date')
+            ->join('gps_summery', 'gps_summery.id', '=', 'vehicles.gps_id')
+            ->where('gps_summery.pay_status', 1)
+            ->selectRaw("DATE_FORMAT(vehicles.installation_date, '%Y-%m') as ym")
+            ->selectRaw("COUNT(vehicles.id) as cnt")
+            ->groupBy('ym')
+            ->pluck('cnt', 'ym')
+            ->toArray();
+
+        // ---------------------------
+        // 4) Get service visits by month (calendar month 1-12)
+        // ---------------------------
+        $serviceVisitsByMonth = ServiceIn::query()
+            ->from('cd_service_ins as si')
+            ->join('vehicles as v', 'v.register_number', '=', 'si.vehicle_no')
+            ->where('v.client_id', $clientId)
+            ->selectRaw('MONTH(si.date) as month_no')
+            ->selectRaw('COUNT(si.id) as cnt')
+            ->groupBy('month_no')
+            ->pluck('cnt', 'month_no')
+            ->toArray();
+
+        // ---------------------------
+        // 5) SECOND ARRAY: 12 billing periods - START FROM END OF SELECTED YEAR
+        // For selected year, start from December of that year and go backwards 12 months
+        // ---------------------------
+        $billingPeriods = [];
+
+        // Start from the last month of the selected year (December)
+        $periodStart = Carbon::create($selectedYear, 12, 1)->endOfMonth()->startOfMonth();
+
+        for ($i = 0; $i < 12; $i++) {
+            // Title: "Dec 23" format (short month + year)
+            $title = $periodStart->format('M y');
+
+            // Get calendar month number (1-12) for this period
+            $monthNo = (int)$periodStart->format('n');
+
+            // Get installed count for this calendar month (from selected year)
+            $installedCount = $installsByMonth[$monthNo] ?? 0;
+
+            // Calculate CMC eligible count using rolling 6-month logic
+            $eligibleCount = $this->ksrtcCmcEligibleCountRolling($installCounts, $periodStart);
+
+            // Calculate renewed count for this period (using same rolling logic)
+            $renewedCount = $this->ksrtcCmcEligibleCountRolling($renewedCounts, $periodStart);
+
+            // Get service visits for this calendar month
+            $serviceVisits = $serviceVisitsByMonth[$monthNo] ?? 0;
+
+            // Get certificate count for CMC eligible vehicles (same rolling logic as renewal_needed)
+            $certificateCount = $this->ksrtcCmcEligibleWithCertificateCountRolling($clientId, $periodStart);
+
+            $billingPeriods[] = [
+                'title' => $title,
+                'installed_count' => $installedCount,
+                'renewal_needed' => $eligibleCount,
+                'renewed' => $renewedCount,
+                'not_renewed' => max(0, $eligibleCount - $renewedCount),
+                'service_visits' => $serviceVisits,
+                'certificate_count' => $certificateCount,
+                'amount' => $eligibleCount * 708, // Rs. 708 per device
+            ];
+
+            // Move to previous month (going backwards)
+            $periodStart->subMonth();
+        }
+
+        // ---------------------------
+        // 6) Total service visits for display - ALL TIME (NOT filtered by year)
+        // ---------------------------
+        $totalservicevisits = (int) ServiceIn::query()
+            ->from('cd_service_ins as si')
+            ->join('vehicles as v', 'v.register_number', '=', 'si.vehicle_no')
+            ->where('v.client_id', $clientId)
+            ->count();
+
+        // ---------------------------
+        // 7) Total statistics - ALL TIME (NOT filtered by selected year)
+        // ---------------------------
+        try {
+            // Total installations across all years
+            $total_installed_alltime = (int) Vehicle::query()
+                ->where('client_id', $clientId)
+                ->whereNull('deleted_at')
+                ->whereNotNull('installation_date')
+                ->count();
+
+            // Not Renewed: count ALL vehicles for client where gps.pay_status = 0
+            $not_renewed_sum = (int) DB::table('vehicles as v')
+                ->join('gps_summery as g', 'v.gps_id', '=', 'g.id')
+                ->where('v.client_id', $clientId)
+                ->whereNull('v.deleted_at')
+                ->whereNotNull('v.installation_date')
+                ->where('g.pay_status', 0)
+                ->count();
+
+            // Replaced by uni140: total count
+            $replaced_uni140_count = (int) DB::table('abc_temp_ksrtc_add_data')
+                ->selectRaw('COALESCE(SUM(replaced_by_uni140),0) as c')
+                ->value('c');
+
+            // Data certificate attached: ALL vehicles with certificate
+            $certificate_count = (int) DB::table('vehicles as v')
+                ->join('gps_summery as g', 'v.gps_id', '=', 'g.id')
+                ->where('v.client_id', $clientId)
+                ->whereNull('v.deleted_at')
+                ->whereNotNull('g.warrenty_certificate')
+                ->where('g.warrenty_certificate', '!=', '')
+                ->count();
+
+            $additionalStats = [
+                'data_recharged' => $total_installed_alltime,
+                'not_renewed' => $not_renewed_sum,
+                'imei_untagged' => 0,
+                'replaced_by_uni140' => $replaced_uni140_count,
+                'data_certificate_attached' => $certificate_count,
+            ];
+        } catch (\Exception $e) {
+            $additionalStats = [
+                'data_recharged' => array_sum(array_column($installMonths, 'installed_count')),
+                'not_renewed' => array_sum(array_column($billingPeriods, 'not_renewed')),
+                'imei_untagged' => 0,
+                'replaced_by_uni140' => 0,
+                'data_certificate_attached' => 0,
+            ];
+        }
+
+        // Return JSON response
+        return response()->json([
+            'success' => true,
+            'year' => $selectedYear,
+            'installMonths' => $installMonths,
+            'billingPeriods' => $billingPeriods,
+            'totalservicevisits' => $totalservicevisits,
+            'additionalStats' => $additionalStats,
+        ]);
+    } 
 }
