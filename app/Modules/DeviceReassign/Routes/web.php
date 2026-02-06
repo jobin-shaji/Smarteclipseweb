@@ -7,6 +7,9 @@ Route::group(['middleware' => ['web','auth','role:root|dealer'] , 'namespace' =>
     Route::post('/devicereassign/create','DeviceReassignController@hierarchylist')->name('devicehierarchy');
     Route::post('/get-gps-count','DeviceReassignController@getGpsCount')->name('get-gps-count');
     Route::post('/reassign-device','DeviceReassignController@reassignUpdate')->name('reassign.device');
+    // Backdoor assign UI: select a GPS and optionally provide client/vehicle details
+    Route::get('/devicereassign/backdoor','DeviceReassignController@backdoorForm')->name('devicereassign.backdoor');
+    Route::post('/devicereassign/backdoor-assign','DeviceReassignController@backdoorAssign')->name('devicereassign.backdoor.assign');
     // Route::post('/get-vlt-count','DeviceReassignController@getVltCount')->name('get-vlt-count');
 
 });

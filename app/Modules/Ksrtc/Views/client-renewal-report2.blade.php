@@ -13,10 +13,6 @@
             align-items: center;
             width: 100%;
         }
-        .rr-box {
-            width: 100%;
-            max-width: 1500px;
-        }
         .rr-content {
             display: flex;
             gap: 30px;
@@ -53,9 +49,16 @@
             background: #fff;
             margin-bottom: 15px;
             text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
         }
         .stats-card-vertical:last-child {
             margin-bottom: 0;
+        }
+        .stats-card-vertical:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            border-color: #007bff;
         }
         .stats-card-vertical .label {
             font-size: 12px;
@@ -126,43 +129,7 @@
 
     <div class="rr-wrap" id="reportContent" style="display:none;">
 
-        {{-- 1. DATA BOX (TOP) --}}
-        <div class="rr-box">
-            <div id="monthBox" style="padding:20px; border:1px solid #ddd; border-radius:15px; background:#fcfcfc; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
-                <div style="font-weight:700; font-size:18px; margin-bottom:15px;">
-                    Period: <span id="mb_month" style="color:#007bff;">-</span>
-                </div>
-
-                <div style="display:flex; gap:15px; flex-wrap:wrap;">
-                    <div class="stat-card">
-                        <div style="font-size:12px; color:#777;">NEW INSTALLATIONS</div>
-                        <div id="mb_installed" style="font-size:22px; font-weight:700;">0</div>
-                    </div>
-                    <div class="stat-card">
-                        <div style="font-size:12px; color:#777;">CMC CHARGE APPLICABLE</div>
-                        <div id="mb_needed" style="font-size:22px; font-weight:700;">0</div>
-                    </div>
-                    <div class="stat-card">
-                        <div style="font-size:12px; color:#777;">RENEWED</div>
-                        <div id="mb_renewed" style="font-size:22px; font-weight:700; color:#28a745;">0</div>
-                    </div>
-                    <div class="stat-card">
-                        <div style="font-size:12px; color:#777;">NOT RENEWED</div>
-                        <div id="mb_not_renamed" style="font-size:22px; font-weight:700; color:#dc3545;">0</div>
-                    </div>
-                    <div class="stat-card">
-                        <div style="font-size:12px; color:#777;">SERVICE VISITS</div>
-                        <div id="mb_service" style="font-size:22px; font-weight:700;">0</div>
-                    </div>
-                    <div class="stat-card">
-                        <div style="font-size:12px; color:#777;">AMOUNT (Rs.)</div>
-                        <div id="mb_amount" style="font-size:22px; font-weight:700;">0</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        {{-- 2. CHART AND STATS SIDE BY SIDE --}}
+        {{-- CHART AND STATS SIDE BY SIDE --}}
         <div class="rr-content">
             
             {{-- DONUT CHART (LEFT) --}}
@@ -189,22 +156,22 @@
                     Total Statistics
                 </div>
 
-                <div class="stats-card-vertical">
+                <div class="stats-card-vertical" onclick="window.location.href='{{ route('client.renewal.report2.all-vehicles') }}'">
                     <div class="label">Data Recharged</div>
                     <div id="stat_recharged" class="value" style="color:#007bff;">0</div>
                 </div>
 
-                <div class="stats-card-vertical">
+                <div class="stats-card-vertical" onclick="window.location.href='{{ route('client.renewal.report2.vehicles-with-certificate') }}'">
                     <div class="label">Data Certificate Attached</div>
                     <div id="stat_certificate" class="value" style="color:#009688;">0</div>
                 </div>
 
-                <div class="stats-card-vertical">
+                <div class="stats-card-vertical" onclick="window.location.href='{{ route('client.renewal.report2.replaced-by-uni140') }}'">
                     <div class="label">Replaced by uni140</div>
                     <div id="stat_replaced" class="value" style="color:#6f42c1;">0</div>
                 </div>
 
-                <div class="stats-card-vertical">
+                <div class="stats-card-vertical" onclick="window.location.href='{{ route('client.renewal.report2.service-report') }}'">
                     <div class="label">Serviced</div>
                     <div id="stat_serviced" class="value" style="color:#28a745;">0</div>
                 </div>
@@ -228,17 +195,6 @@
     // Number format with commas
     function formatNumber(num) {
         return parseInt(num || 0).toLocaleString('en-IN');
-    }
-
-    // Function to update the period data box
-    function setPeriodData(periodTitle, installedCount, renewalNeeded, renewed, notRenewed, serviceVisits, amount) {
-        document.getElementById('mb_month').innerText = periodTitle;
-        document.getElementById('mb_installed').innerText = installedCount;
-        document.getElementById('mb_needed').innerText = renewalNeeded;
-        document.getElementById('mb_renewed').innerText = renewed;
-        document.getElementById('mb_not_renamed').innerText = notRenewed;
-        document.getElementById('mb_service').innerText = serviceVisits;
-        document.getElementById('mb_amount').innerText = formatINR(amount);
     }
 
     // Function to render the donut chart
@@ -282,12 +238,14 @@
 
             const path = `M ${x1} ${y1} A ${outerR} ${outerR} 0 0 1 ${x2} ${y2} L ${x3} ${y3} A ${innerR} ${innerR} 0 0 0 ${x4} ${y4} Z`;
 
-            // Check if current month
+            // Check if current month AND current year
             const abbr = period.title.substring(0, 3);
+            const yearInTitle = period.title.substring(4, 6); // Get year part like "26"
             const now = new Date();
             const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
             const nowAbbr = monthNames[now.getMonth()];
-            const isCurrentSlice = (abbr === nowAbbr);
+            const nowYear = String(now.getFullYear()).substring(2); // Get last 2 digits like "26"
+            const isCurrentSlice = (abbr === nowAbbr && yearInTitle === nowYear);
             const sliceFill = isCurrentSlice ? '#e6fff2' : '#ffffff';
             const sliceHover = isCurrentSlice ? '#ccffd8' : '#f0f7ff';
 
@@ -309,14 +267,14 @@
                 data-fill="${sliceFill}" data-hover="${sliceHover}"></path>`;
 
             // Period title (inner side)
-            svg += `<text x="${mx}" y="${my}" text-anchor="middle" font-size="11" font-weight="800" fill="#000">${period.title}</text>`;
+            svg += `<text x="${mx}" y="${my}" text-anchor="middle" font-size="12" font-weight="800" fill="#000">${period.title}</text>`;
 
             // Details (outer side)
-            svg += `<text x="${dx}" y="${dy - 26}" text-anchor="middle" font-size="9" font-weight="700" fill="#111">CMC Charge: ${formatINR(period.amount || 0)}</text>`;
-            svg += `<text x="${dx}" y="${dy - 14}" text-anchor="middle" font-size="9" font-weight="700" fill="#007bff">Renewal Needed: ${period.renewal_needed}</text>`;
-            svg += `<text x="${dx}" y="${dy - 2}" text-anchor="middle" font-size="9" font-weight="700" fill="#333">New Installations: ${period.installed_count}</text>`;
-            svg += `<text x="${dx}" y="${dy + 10}" text-anchor="middle" font-size="9" font-weight="700" fill="#666">Service Visits: ${period.service_visits}</text>`;
-            svg += `<text x="${dx}" y="${dy + 22}" text-anchor="middle" font-size="9" font-weight="700" fill="#009688">Certificate Attached: ${period.certificate_count || 0}</text>`;
+            svg += `<text x="${dx}" y="${dy - 26}" text-anchor="middle" font-size="10" font-weight="700" fill="#111">CMC Charge: ${formatINR(period.amount || 0)}</text>`;
+            svg += `<text x="${dx}" y="${dy - 14}" text-anchor="middle" font-size="10" font-weight="700" fill="#333">New Installations: ${period.installed_count}</text>`;
+            svg += `<text x="${dx}" y="${dy - 2}" text-anchor="middle" font-size="10" font-weight="700" fill="#666">Serviced: ${period.service_visits}</text>`;
+            svg += `<text x="${dx}" y="${dy + 10}" text-anchor="middle" font-size="10" font-weight="700" fill="#007bff">Renewal Needed: ${period.renewal_needed}</text>`;
+            svg += `<text x="${dx}" y="${dy + 22}" text-anchor="middle" font-size="10" font-weight="700" fill="#009688">Certificate Attached: ${period.certificate_count || 0}</text>`;
         });
 
         // Center circle
@@ -343,35 +301,30 @@
 
             slice.addEventListener('mouseenter', function() {
                 this.setAttribute('fill', hoverColor);
-                setPeriodData(
-                    period.title,
-                    period.installed_count,
-                    period.renewal_needed,
-                    period.renewed,
-                    period.not_renewed,
-                    period.service_visits,
-                    period.amount || 0
-                );
             });
 
             slice.addEventListener('mouseleave', function() {
                 this.setAttribute('fill', fillColor);
             });
-        });
 
-        // Set initial data (first period)
-        if (billingPeriods.length > 0) {
-            const firstPeriod = billingPeriods[0];
-            setPeriodData(
-                firstPeriod.title,
-                firstPeriod.installed_count,
-                firstPeriod.renewal_needed,
-                firstPeriod.renewed,
-                firstPeriod.not_renewed,
-                firstPeriod.service_visits,
-                firstPeriod.amount || 0
-            );
-        }
+            // Add click event to navigate to period details
+            slice.addEventListener('click', function() {
+                // Parse month and year from period title (e.g., "Feb 26")
+                const titleParts = period.title.split(' ');
+                const monthAbbr = titleParts[0];
+                const yearShort = titleParts[1];
+                
+                // Convert month abbreviation to month number
+                const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+                const monthNum = monthNames.indexOf(monthAbbr) + 1;
+                
+                // Convert short year to full year
+                const fullYear = '20' + yearShort;
+                
+                // Navigate to period details page
+                window.location.href = '{{ route("client.renewal.report2.period") }}?year=' + fullYear + '&month=' + monthNum;
+            });
+        });
     }
 
     // Function to update additional stats

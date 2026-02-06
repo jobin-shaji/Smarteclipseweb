@@ -386,7 +386,7 @@
             <h3 id="todaydevices_in">
               <div class="loader"></div>
             </h3>
-            <p>Service Report</p>
+            <p>KSRTC Renewal Report</p>
           </div>
           <div class="icon">
               <i class="fa fa-user"></i>

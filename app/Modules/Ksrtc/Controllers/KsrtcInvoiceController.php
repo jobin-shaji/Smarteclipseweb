@@ -1224,12 +1224,13 @@ class KsrtcInvoiceController extends Controller{
             ->toArray();
 
         // ---------------------------
-        // 4) Get service visits by month (calendar month 1-12)
+        // 4) Get service visits by month (calendar month 1-12) FILTERED BY SELECTED YEAR
         // ---------------------------
         $serviceVisitsByMonth = ServiceIn::query()
             ->from('cd_service_ins as si')
             ->join('vehicles as v', 'v.register_number', '=', 'si.vehicle_no')
             ->where('v.client_id', $clientId)
+            ->whereYear('si.date', $selectedYear)
             ->selectRaw('MONTH(si.date) as month_no')
             ->selectRaw('COUNT(si.id) as cnt')
             ->groupBy('month_no')
@@ -1283,7 +1284,7 @@ class KsrtcInvoiceController extends Controller{
         }
 
         // ---------------------------
-        // 6) Total service visits for display - ALL TIME (NOT filtered by year)
+        // 6) Total service visits for display - ALL TIME (NOT filtered by selected year)
         // ---------------------------
         $totalservicevisits = (int) ServiceIn::query()
             ->from('cd_service_ins as si')
@@ -1351,5 +1352,464 @@ class KsrtcInvoiceController extends Controller{
             'totalservicevisits' => $totalservicevisits,
             'additionalStats' => $additionalStats,
         ]);
-    } 
+    }
+
+    /**
+     * Client Renewal Report V2 - Period Details Page
+     * Shows detailed vehicle list and service records for a specific period
+     */
+    public function clientrenewalreportPeriod(Request $request) {
+        $user = Auth::user();
+        if (!$user) {
+            abort(403, 'Unauthorized');
+        }
+
+        // Only allow root or client 1778
+        $allowed = false;
+        if ($user->root) {
+            $allowed = true;
+        } elseif ($user->client && (int)$user->client->id === 1778) {
+            $allowed = true;
+        }
+
+        if (!$allowed) {
+            abort(403, 'Access denied');
+        }
+
+        $clientId = 1778;
+        
+        // Get year and month from request
+        $year = (int) ($request->query('year') ?? date('Y'));
+        $month = (int) ($request->query('month') ?? date('n'));
+        
+        // Validate year and month
+        if ($year < 2021 || $year > 2026) {
+            $year = (int) date('Y');
+        }
+        if ($month < 1 || $month > 12) {
+            $month = (int) date('n');
+        }
+
+        // Create period start date
+        $periodStart = Carbon::create($year, $month, 1)->startOfMonth();
+        $title = $periodStart->format('M y');
+
+        // Get installation counts for CMC calculations
+        $installCounts = Vehicle::query()
+            ->where('client_id', $clientId)
+            ->whereNull('deleted_at')
+            ->whereNotNull('installation_date')
+            ->selectRaw("DATE_FORMAT(installation_date, '%Y-%m') as ym")
+            ->selectRaw("COUNT(*) as cnt")
+            ->groupBy('ym')
+            ->pluck('cnt', 'ym')
+            ->toArray();
+
+        // Calculate summary data
+        $eligibleCount = $this->ksrtcCmcEligibleCountRolling($installCounts, $periodStart);
+        $certificateCount = $this->ksrtcCmcEligibleWithCertificateCountRolling($clientId, $periodStart);
+        $cmcCharge = $eligibleCount * 708;
+
+        // Get service visits count for this month and year
+        $servicedCount = (int) ServiceIn::query()
+            ->from('cd_service_ins as si')
+            ->join('vehicles as v', 'v.register_number', '=', 'si.vehicle_no')
+            ->where('v.client_id', $clientId)
+            ->whereYear('si.date', $year)
+            ->whereMonth('si.date', $month)
+            ->count();
+
+        // Get vehicles that need renewal (CMC eligible) for this period
+        $cursor = $periodStart->copy()->startOfMonth();
+        $min = Carbon::create(2021, 9, 1)->startOfMonth();
+        $threshold = $periodStart->copy()->subYears(2)->endOfMonth();
+
+        $yms = [];
+        while ($cursor->gte($min)) {
+            if ($cursor->gt($threshold)) {
+                $cursor->subMonths(6);
+                continue;
+            }
+            $yms[] = $cursor->format('Y-m');
+            $cursor->subMonths(6);
+        }
+
+        // Fetch vehicles needing renewal
+        $renewalVehicles = DB::table('vehicles as v')
+            ->join('gps_summery as g', 'v.gps_id', '=', 'g.id')
+            ->where('v.client_id', $clientId)
+            ->whereNull('v.deleted_at')
+            ->whereNotNull('v.installation_date')
+            ->whereIn(DB::raw("DATE_FORMAT(v.installation_date, '%Y-%m')"), $yms)
+            ->where('v.installation_date', '<=', $threshold->toDateTimeString())
+            ->select(
+                'v.register_number as vehicle_no',
+                'g.imei',
+                'v.installation_date',
+                DB::raw("IF(g.warrenty_certificate IS NOT NULL AND g.warrenty_certificate != '', 'Yes', 'No') as certificate_status")
+            )
+            ->orderBy('v.register_number')
+            ->get();
+
+        // Fetch service records for this month and year
+        $serviceRecords = DB::table('cd_service_ins as si')
+            ->join('vehicles as v', 'v.register_number', '=', 'si.vehicle_no')
+            ->join('gps_summery as g', 'v.gps_id', '=', 'g.id')
+            ->where('v.client_id', $clientId)
+            ->whereYear('si.date', $year)
+            ->whereMonth('si.date', $month)
+            ->select(
+                'v.register_number as vehicle_no',
+                'g.imei',
+                'si.date as service_date'
+            )
+            ->orderBy('si.date', 'desc')
+            ->get();
+
+        return view('Ksrtc::client-renewal-report-period', compact(
+            'title',
+            'year',
+            'month',
+            'cmcCharge',
+            'eligibleCount',
+            'certificateCount',
+            'servicedCount',
+            'renewalVehicles',
+            'serviceRecords'
+        ));
+    }
+
+    /**
+     * Export renewal-needed vehicles for a period as CSV
+     */
+    public function clientrenewalreportPeriodExportRenewal(Request $request)
+    {
+        $user = Auth::user(); if (!$user) return abort(403);
+        $allowed = false;
+        if ($user->root) { $allowed = true; }
+        elseif ($user->client && (int)$user->client->id === 1778) { $allowed = true; }
+        if (!$allowed) return abort(403);
+
+        $clientId = 1778;
+        $year = (int) ($request->query('year') ?? date('Y'));
+        $month = (int) ($request->query('month') ?? date('n'));
+        if ($year < 2021 || $year > 2026) $year = (int) date('Y');
+        if ($month < 1 || $month > 12) $month = (int) date('n');
+
+        $periodStart = Carbon::create($year, $month, 1)->startOfMonth();
+        $min = Carbon::create(2021, 9, 1)->startOfMonth();
+        $threshold = $periodStart->copy()->subYears(2)->endOfMonth();
+
+        $yms = [];
+        $cursor = $periodStart->copy();
+        while ($cursor->gte($min)) {
+            if ($cursor->gt($threshold)) { $cursor->subMonths(6); continue; }
+            $yms[] = $cursor->format('Y-m');
+            $cursor->subMonths(6);
+        }
+
+        $renewalVehicles = DB::table('vehicles as v')
+            ->join('gps_summery as g', 'v.gps_id', '=', 'g.id')
+            ->where('v.client_id', $clientId)
+            ->whereNull('v.deleted_at')
+            ->whereNotNull('v.installation_date')
+            ->whereIn(DB::raw("DATE_FORMAT(v.installation_date, '%Y-%m')"), $yms)
+            ->where('v.installation_date', '<=', $threshold->toDateTimeString())
+            ->select('v.register_number as vehicle_no', 'g.imei', 'v.installation_date', DB::raw("IF(g.warrenty_certificate IS NOT NULL AND g.warrenty_certificate != '', 'Yes', 'No') as certificate_status"))
+            ->orderBy('v.register_number')
+            ->get();
+
+        $filename = 'ksrtc_renewal_list_' . $year . '_' . $month . '.csv';
+        $headers = [
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => "attachment; filename=\"{$filename}\"",
+        ];
+
+        $callback = function() use ($renewalVehicles) {
+            $out = fopen('php://output', 'w');
+            fputcsv($out, ['Vehicle No', 'IMEI', 'Installation Date', 'Certificate Attached']);
+            foreach ($renewalVehicles as $r) {
+                fputcsv($out, [
+                    $r->vehicle_no,
+                    $r->imei,
+                    $r->installation_date ? Carbon::parse($r->installation_date)->format('Y-m-d') : '',
+                    $r->certificate_status
+                ]);
+            }
+            fclose($out);
+        };
+
+        return response()->stream($callback, 200, $headers);
+    }
+
+    /**
+     * Export service records for a period as CSV
+     */
+    public function clientrenewalreportPeriodExportService(Request $request)
+    {
+        $user = Auth::user(); if (!$user) return abort(403);
+        $allowed = false;
+        if ($user->root) { $allowed = true; }
+        elseif ($user->client && (int)$user->client->id === 1778) { $allowed = true; }
+        if (!$allowed) return abort(403);
+
+        $clientId = 1778;
+        $year = (int) ($request->query('year') ?? date('Y'));
+        $month = (int) ($request->query('month') ?? date('n'));
+        if ($year < 2021 || $year > 2026) $year = (int) date('Y');
+        if ($month < 1 || $month > 12) $month = (int) date('n');
+
+        $serviceRecords = DB::table('cd_service_ins as si')
+            ->join('vehicles as v', 'v.register_number', '=', 'si.vehicle_no')
+            ->join('gps_summery as g', 'v.gps_id', '=', 'g.id')
+            ->where('v.client_id', $clientId)
+            ->whereYear('si.date', $year)
+            ->whereMonth('si.date', $month)
+            ->select('v.register_number as vehicle_no', 'g.imei', 'si.date as service_date')
+            ->orderBy('si.date', 'desc')
+            ->get();
+
+        $filename = 'ksrtc_service_records_' . $year . '_' . $month . '.csv';
+        $headers = [
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => "attachment; filename=\"{$filename}\"",
+        ];
+
+        $callback = function() use ($serviceRecords) {
+            $out = fopen('php://output', 'w');
+            fputcsv($out, ['Vehicle No', 'IMEI', 'Service Date']);
+            foreach ($serviceRecords as $r) {
+                fputcsv($out, [
+                    $r->vehicle_no,
+                    $r->imei,
+                    $r->service_date ? Carbon::parse($r->service_date)->format('Y-m-d') : ''
+                ]);
+            }
+            fclose($out);
+        };
+
+        return response()->stream($callback, 200, $headers);
+    }
+
+    /**
+     * All Vehicles List (Data Recharged)
+     * Shows all vehicles for client 1778
+     */
+    public function allVehiclesList(Request $request) {
+        $user = Auth::user();
+        if (!$user) {
+            abort(403, 'Unauthorized');
+        }
+
+        // Only allow root or client 1778
+        $allowed = false;
+        if ($user->root) {
+            $allowed = true;
+        } elseif ($user->client && (int)$user->client->id === 1778) {
+            $allowed = true;
+        }
+
+        if (!$allowed) {
+            abort(403, 'Access denied');
+        }
+
+        $clientId = 1778;
+
+        // Fetch all vehicles for the client
+        $vehicles = DB::table('vehicles as v')
+            ->join('gps_summery as g', 'v.gps_id', '=', 'g.id')
+            ->where('v.client_id', $clientId)
+            ->whereNull('v.deleted_at')
+            ->whereNotNull('v.installation_date')
+            ->select(
+                'v.register_number as vehicle_no',
+                'g.imei',
+                'v.installation_date',
+                DB::raw("IF(g.warrenty_certificate IS NOT NULL AND g.warrenty_certificate != '', 'Yes', 'No') as certificate_status")
+            )
+            ->orderBy('v.register_number')
+            ->get();
+
+        $title = 'All Vehicles (Data Recharged)';
+        $count = $vehicles->count();
+
+        return view('Ksrtc::vehicles-list', compact('title', 'count', 'vehicles'));
+    }
+
+    /**
+     * Vehicles with Certificate Attached
+     * Shows only vehicles that have warranty certificates
+     */
+    public function vehiclesWithCertificate(Request $request) {
+        $user = Auth::user();
+        if (!$user) {
+            abort(403, 'Unauthorized');
+        }
+
+        // Only allow root or client 1778
+        $allowed = false;
+        if ($user->root) {
+            $allowed = true;
+        } elseif ($user->client && (int)$user->client->id === 1778) {
+            $allowed = true;
+        }
+
+        if (!$allowed) {
+            abort(403, 'Access denied');
+        }
+
+        $clientId = 1778;
+
+        // Fetch vehicles with certificates
+        $vehicles = DB::table('vehicles as v')
+            ->join('gps_summery as g', 'v.gps_id', '=', 'g.id')
+            ->where('v.client_id', $clientId)
+            ->whereNull('v.deleted_at')
+            ->whereNotNull('v.installation_date')
+            ->whereNotNull('g.warrenty_certificate')
+            ->where('g.warrenty_certificate', '!=', '')
+            ->select(
+                'v.register_number as vehicle_no',
+                'g.imei',
+                'v.installation_date',
+                DB::raw("'Yes' as certificate_status")
+            )
+            ->orderBy('v.register_number')
+            ->get();
+
+        $title = 'Vehicles with Certificate Attached';
+        $count = $vehicles->count();
+
+        return view('Ksrtc::vehicles-list', compact('title', 'count', 'vehicles'));
+    }
+
+    /**
+     * Show all vehicles replaced by uni140
+     */
+    public function replacedByUni140List()
+    {
+        $user = Auth::user();
+        if (!$user) {
+            abort(403, 'Unauthorized');
+        }
+
+        // Only allow root or client 1778
+        $allowed = false;
+        if ($user->root) {
+            $allowed = true;
+        } elseif ($user->client && (int)$user->client->id === 1778) {
+            $allowed = true;
+        }
+
+        if (!$allowed) {
+            abort(403, 'Access denied');
+        }
+
+        $clientId = 1778;
+
+        // Fetch vehicles where replaced_by_uni140 = 1
+        $vehicles = DB::table('abc_temp_ksrtc_add_data as add_data')
+            ->join('gps_summery as g', 'add_data.imei', '=', 'g.imei')
+            ->join('vehicles as v', 'v.gps_id', '=', 'g.id')
+            ->where('v.client_id', $clientId)
+            ->whereNull('v.deleted_at')
+            ->where('add_data.replaced_by_uni140', 1)
+            ->select(
+                'v.register_number as vehicle_no',
+                'g.imei',
+                'v.installation_date'
+            )
+            ->orderBy('v.register_number')
+            ->get();
+
+        $title = 'Vehicles Replaced by uni140';
+        $count = $vehicles->count();
+
+        return view('Ksrtc::replaced-vehicles-list', compact('title', 'count', 'vehicles'));
+    }
+
+    /**
+     * Show all service records for the client
+     */
+    public function serviceReportList()
+    {
+        $user = Auth::user();
+        if (!$user) {
+            abort(403, 'Unauthorized');
+        }
+
+        // Only allow root or client 1778
+        $allowed = false;
+        if ($user->root) {
+            $allowed = true;
+        } elseif ($user->client && (int)$user->client->id === 1778) {
+            $allowed = true;
+        }
+
+        if (!$allowed) {
+            abort(403, 'Access denied');
+        }
+
+        $clientId = 1778;
+
+        // Fetch all service records
+        $services = DB::table('cd_service_ins as si')
+            ->join('vehicles as v', 'v.register_number', '=', 'si.vehicle_no')
+            ->join('gps_summery as g', 'v.gps_id', '=', 'g.id')
+            ->where('v.client_id', $clientId)
+            ->whereNull('v.deleted_at')
+            ->select(
+                'g.imei',
+                'si.date as service_date'
+            )
+            ->orderBy('si.date', 'desc')
+            ->get();
+
+        $title = 'Service Report';
+        $count = $services->count();
+
+        return view('Ksrtc::service-report-list', compact('title', 'count', 'services'));
+    }
+
+    /**
+     * Export service report as CSV
+     */
+    public function serviceReportExport()
+    {
+        $user = Auth::user();
+        if (!$user) return abort(403);
+        $allowed = false;
+        if ($user->root) $allowed = true;
+        elseif ($user->client && (int)$user->client->id === 1778) $allowed = true;
+        if (!$allowed) return abort(403);
+
+        $clientId = 1778;
+        $services = DB::table('cd_service_ins as si')
+            ->join('vehicles as v', 'v.register_number', '=', 'si.vehicle_no')
+            ->join('gps_summery as g', 'v.gps_id', '=', 'g.id')
+            ->where('v.client_id', $clientId)
+            ->whereNull('v.deleted_at')
+            ->select('g.imei', 'si.date as service_date')
+            ->orderBy('si.date', 'desc')
+            ->get();
+
+        $filename = 'ksrtc_service_report_' . date('Ymd_His') . '.csv';
+        $headers = [
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => "attachment; filename=\"{$filename}\"",
+        ];
+
+        $callback = function() use ($services) {
+            $out = fopen('php://output', 'w');
+            fputcsv($out, ['IMEI', 'Service Date']);
+            foreach ($services as $s) {
+                fputcsv($out, [$s->imei, 
+                    $s->service_date ? 
+                        Carbon::parse($s->service_date)->format('Y-m-d') : '']);
+            }
+            fclose($out);
+        };
+
+        return response()->stream($callback, 200, $headers);
+    }
 }

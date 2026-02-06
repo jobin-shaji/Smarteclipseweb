@@ -17,19 +17,55 @@ use Illuminate\Support\Facades\Route;
 Route::group(['middleware' => ['web','auth'],'namespace'  => 'App\Modules\Ksrtc\Controllers'], function () {
 
     // Client Renewal Report (moved from Gps module)
-    Route::get('/client-renewal-report', 'KsrtcInvoiceController@clientrenewalreport')
-        ->middleware('role:root|client')
-        ->name('client.renewal.report');
-
-    // Client Renewal Report V2 (AJAX version with year selection)
-    Route::get('/client-renewal-report2', 'KsrtcInvoiceController@clientrenewalreport2')
+    Route::get('/client-renewal-report2', 'KsrtcInvoiceController@clientrenewalreport')
         ->middleware('role:root|client')
         ->name('client.renewal.report2');
+
+    // Client Renewal Report V2 (AJAX version with year selection)
+    Route::get('/client-renewal-report', 'KsrtcInvoiceController@clientrenewalreport2')
+        ->middleware('role:root|client')
+        ->name('client.renewal.report');
     
     // AJAX endpoint for renewal report data
     Route::get('/client-renewal-report2/data', 'KsrtcInvoiceController@clientrenewalreportData')
         ->middleware('role:root|client')
         ->name('client.renewal.report2.data');
+
+    // Period details page for renewal report
+    Route::get('/client-renewal-report2/period', 'KsrtcInvoiceController@clientrenewalreportPeriod')
+        ->middleware('role:root|client')
+        ->name('client.renewal.report2.period');
+    // export period renewal/service CSVs
+    Route::get('/client-renewal-report2/period/export-renewal', 'KsrtcInvoiceController@clientrenewalreportPeriodExportRenewal')
+        ->middleware('role:root|client')
+        ->name('client.renewal.report2.period.export_renewal');
+    Route::get('/client-renewal-report2/period/export-service', 'KsrtcInvoiceController@clientrenewalreportPeriodExportService')
+        ->middleware('role:root|client')
+        ->name('client.renewal.report2.period.export_service');
+
+    // All vehicles list page
+    Route::get('/client-renewal-report2/all-vehicles', 'KsrtcInvoiceController@allVehiclesList')
+        ->middleware('role:root|client')
+        ->name('client.renewal.report2.all-vehicles');
+
+    // Vehicles with certificate list page
+    Route::get('/client-renewal-report2/vehicles-with-certificate', 'KsrtcInvoiceController@vehiclesWithCertificate')
+        ->middleware('role:root|client')
+        ->name('client.renewal.report2.vehicles-with-certificate');
+
+    // Vehicles replaced by uni140 list page
+    Route::get('/client-renewal-report2/replaced-by-uni140', 'KsrtcInvoiceController@replacedByUni140List')
+        ->middleware('role:root|client')
+        ->name('client.renewal.report2.replaced-by-uni140');
+
+    // Service report page
+    Route::get('/client-renewal-report2/service-report', 'KsrtcInvoiceController@serviceReportList')
+        ->middleware('role:root|client')
+        ->name('client.renewal.report2.service-report');
+    // export service report CSV
+    Route::get('/client-renewal-report2/service-report/export', 'KsrtcInvoiceController@serviceReportExport')
+        ->middleware('role:root|client')
+        ->name('client.renewal.report2.service-report.export');
 
     // CLIENT view
     Route::get('/ksrtc/cmc-report', 'KsrtcInvoiceController@cmcReportClient')

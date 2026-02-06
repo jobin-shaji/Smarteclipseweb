@@ -41,6 +41,85 @@ class DeviceReassignController extends Controller
     {
         return view('DeviceReassign::device-reassign-create');
     }
+
+    /**
+     * Backdoor assign form (admin only)
+     */
+    // public function backdoorForm()
+    // {
+    //     $gpsList = Gps::select('id','imei','serial_no')->orderBy('id','desc')->get();
+    //     $clients = Client::select('id','name')->orderBy('name')->get();
+    //     // Order by register_number and load full list to allow searching by plate
+    //     $vehicles = Vehicle::select('id','name','register_number')->orderBy('register_number')->get();
+    //     return view('DeviceReassign::backdoor-assign', compact('gpsList','clients','vehicles'));
+    // }
+
+    // /**
+    //  * Perform backdoor assignment. Accepts optional vehicle/client fields.
+    //  */
+    // public function backdoorAssign(Request $request)
+    // {
+    //     $this->validate($request, [
+    //         'gps_id' => 'required|integer|exists:gps,id'
+    //     ]);
+
+    //     $gps = Gps::find($request->gps_id);
+
+    //     // optional client
+    //     $clientId = $request->client_id ?: null;
+
+    //     // fetch installation date from gps_summery: prefer new field `installation_date_new`,
+    //     // fallback to `installation_date` in gps_summery, then fallback to gps table
+    //     $installationDate = DB::table('gps_summery')->where('id', $gps->id)->value('installation_date_new');
+    //     if (empty($installationDate)) {
+    //         $installationDate = DB::table('gps_summery')->where('id', $gps->id)->value('installation_date');
+    //     }
+    //     // note: do NOT query `gps.installation_date` — column may not exist; stop fallback here
+
+    //     // determine vehicle: preference order -> provided vehicle_id, else create when vehicle_name present
+    //     $vehicleId = null;
+    //     if ($request->vehicle_id) {
+    //         $vehicle = Vehicle::find($request->vehicle_id);
+    //         if ($vehicle) $vehicleId = $vehicle->id;
+    //     } elseif ($request->vehicle_name) {
+    //         $vehicle = Vehicle::create([
+    //             'name' => $request->vehicle_name,
+    //             'register_number' => $request->register_number ?: null,
+    //             'client_id' => $clientId,
+    //             'installation_date' => $installationDate ?: null,
+    //             'status' => 1
+    //         ]);
+    //         $vehicleId = $vehicle->id;
+    //     }
+
+    //     try {
+    //         DB::transaction(function() use($gps, $clientId, $vehicleId) {
+    //             // update gps stock client reference
+    //             if ($clientId) {
+    //                 GpsStock::updateOrCreate(['gps_id' => $gps->id], ['client_id' => $clientId]);
+    //             }
+
+    //             // attach gps to vehicle if provided (do NOT modify vehicle_gps table)
+    //             if ($vehicleId) {
+    //                 $updateData = [
+    //                     'gps_id' => $gps->id,
+    //                     'client_id' => $clientId,
+    //                     'is_returned' => 0
+    //                 ];
+    //                 // set installation_date if available and vehicle doesn't already have one
+    //                 $existingInst = Vehicle::where('id', $vehicleId)->value('installation_date');
+    //                 if (empty($existingInst) && !empty($installationDate)) {
+    //                     $updateData['installation_date'] = $installationDate;
+    //                 }
+    //                 Vehicle::where('id', $vehicleId)->update($updateData);
+    //             }
+    //         });
+    //     } catch (\Exception $e) {
+    //         return redirect()->back()->with('message', 'Assignment failed: '.$e->getMessage());
+    //     }
+
+    //     return redirect()->route('devicereassign.backdoor')->with('message', 'Device assigned successfully');
+    // }
     /*
      *
      * 
