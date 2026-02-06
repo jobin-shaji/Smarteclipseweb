@@ -80,13 +80,14 @@ class OperationsController extends Controller {
         )
         ->withTrashed()
         ->with('user:id,email,mobile,deleted_at')
+        ->with('center:id,name')
        
         ->orderBy('created_at','DESC')
         ->get();
         return DataTables::of($operations)
         ->addIndexColumn()
         ->addColumn('service_center_id', function ($operations) {
-            return $operations->center->name;
+            return optional($operations->center)->name ?? '';
         })
         ->addColumn('working_status', function ($operations) {
             if($operations->user->deleted_at == null){
