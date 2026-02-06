@@ -398,6 +398,39 @@
 
       </div>
       
+      {{-- Service center device-in table (root only) --}}
+      @if(!empty($serviceCenterCounts) && auth()->user()->hasRole('root'))
+      <div class="row root-dashboard-flex mrg-top-20">
+        <div class="col-lg-12">
+          <div class="card" style="padding:12px; border-radius:8px; background:#fff;">
+            <h4 style="margin-top:0;margin-bottom:10px;">Service Center Device Summary</h4>
+            <div class="table-responsive">
+              <table class="table table-striped table-bordered">
+                <thead>
+                  <tr>
+                    <th>Service Center</th>
+                    <th class="text-right">Device In</th>
+                    <th class="text-right">Device Out</th>
+                    <th class="text-right">Pending</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @foreach($serviceCenterCounts as $sc)
+                    <tr>
+                      <td>{{ $sc['name'] }}</td>
+                      <td class="text-right">{{ $sc['device_in'] }}</td>
+                      <td class="text-right">{{ $sc['device_out'] }}</td>
+                      <td class="text-right">{{ $sc['pending'] }}</td>
+                    </tr>
+                  @endforeach
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      @endif
+
       {{-- Temporarily hidden root chart trio --}}
       {{--
       <div class="row root-dashboard-flex">

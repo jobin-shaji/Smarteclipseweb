@@ -57,9 +57,12 @@ class DashboardController extends Controller{
         if(\Auth::user()->hasRole('root')){
             [$rootRenewalMonths, $rootTotalServiceVisits] = $this->getRootRenewalChartData();
 
+            $serviceCenterCounts = $this->getServiceCenterCounts();
+
             return view('Dashboard::dashboard', [
                 'rootRenewalMonths'       => $rootRenewalMonths,
                 'rootTotalServiceVisits'  => $rootTotalServiceVisits,
+                'serviceCenterCounts'     => $serviceCenterCounts,
             ]);
         }
         else if(\Auth::user()->hasRole('user')){
@@ -574,6 +577,45 @@ where pay_status=1  group by employee_code order by employee_code desc) limit 1;
             "todaydevices_pending"        =>$todaydevices_pending,
             "ksrtc_count"=> $ksrtc_count[0]->total 
         ]);
+    }
+
+    /**
+     * Aggregate ServiceIn counts grouped by service_center_id for root dashboard.
+     * Device In: status != 'cancelled'
+     * Device Out: status = 'delivered'
+     * Pending: status != 'delivered' and status != 'cancelled'
+     */
+    protected function getServiceCenterCounts()
+    {
+        $rows = DB::table('cd_service_ins')
+            ->select('service_center_id',
+                DB::raw("SUM(CASE WHEN status != 'cancelled' THEN 1 ELSE 0 END) as device_in"),
+                DB::raw("SUM(CASE WHEN status = 'delivered' THEN 1 ELSE 0 END) as device_out"),
+                DB::raw("SUM(CASE WHEN status != 'delivered' AND status != 'cancelled' THEN 1 ELSE 0 END) as pending")
+            )
+            ->groupBy('service_center_id')
+            ->get();
+
+        $ids = $rows->pluck('service_center_id')->filter()->unique()->toArray();
+        $centers = [];
+        if (!empty($ids)) {
+            $centers = \App\Modules\Servicer\Models\ServiceCenter::whereIn('id', $ids)->pluck('name', 'id')->toArray();
+        }
+
+        $result = [];
+        foreach ($rows as $r) {
+            $id = $r->service_center_id;
+            $name = $id ? ($centers[$id] ?? 'Unknown') : 'Not Assigned';
+            $result[] = [
+                'service_center_id' => $id,
+                'name' => $name,
+                'device_in' => (int) $r->device_in,
+                'device_out' => (int) $r->device_out,
+                'pending' => (int) $r->pending,
+            ];
+        }
+
+        return $result;
     }
     function servicerDashboardView($user)
     {
