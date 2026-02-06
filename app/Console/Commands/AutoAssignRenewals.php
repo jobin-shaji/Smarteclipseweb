@@ -40,9 +40,6 @@ class AutoAssignRenewals extends Command
      */
     public function handle()
     {
-        $this->info('Starting automatic renewal assignment...');
-        Log::info('[CRON] Starting automatic renewal assignment via scheduled task');
-        
         try {
             // Create controller instance
             $controller = new RenewalAutomationController();
@@ -75,10 +72,7 @@ class AutoAssignRenewals extends Command
             
         } catch (\Exception $e) {
             $this->error("Error: " . $e->getMessage());
-            Log::error('[CRON] Auto-assignment exception', [
-                'error' => $e->getMessage(),
-                'trace' => $e->getTraceAsString()
-            ]);
+            Log::error('[CRON] Auto-assignment exception', ['error' => $e->getMessage()]);
             return 1; // Failure
         }
     }

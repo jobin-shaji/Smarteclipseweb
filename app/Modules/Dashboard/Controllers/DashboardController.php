@@ -587,11 +587,15 @@ where pay_status=1  group by employee_code order by employee_code desc) limit 1;
      */
     protected function getServiceCenterCounts()
     {
+        $weekStart = Carbon::today()->subDays(6)->format('Y-m-d');
+
         $rows = DB::table('cd_service_ins')
             ->select('service_center_id',
                 DB::raw("SUM(CASE WHEN status != 'cancelled' THEN 1 ELSE 0 END) as device_in"),
                 DB::raw("SUM(CASE WHEN status = 'delivered' THEN 1 ELSE 0 END) as device_out"),
-                DB::raw("SUM(CASE WHEN status != 'delivered' AND status != 'cancelled' THEN 1 ELSE 0 END) as pending")
+                DB::raw("SUM(CASE WHEN status != 'delivered' AND status != 'cancelled' THEN 1 ELSE 0 END) as pending"),
+                DB::raw("SUM(CASE WHEN status != 'delivered' AND status != 'cancelled' AND date >= '{$weekStart}' THEN 1 ELSE 0 END) as pending_under_week"),
+                DB::raw("SUM(CASE WHEN status != 'delivered' AND status != 'cancelled' AND date < '{$weekStart}' THEN 1 ELSE 0 END) as pending_over_week")
             )
             ->groupBy('service_center_id')
             ->get();
@@ -612,6 +616,8 @@ where pay_status=1  group by employee_code order by employee_code desc) limit 1;
                 'device_in' => (int) $r->device_in,
                 'device_out' => (int) $r->device_out,
                 'pending' => (int) $r->pending,
+                'pending_under_week' => (int) $r->pending_under_week,
+                'pending_over_week' => (int) $r->pending_over_week,
             ];
         }
 

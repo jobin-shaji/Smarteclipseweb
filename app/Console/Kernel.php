@@ -24,6 +24,7 @@ class Kernel extends ConsoleKernel
         Commands\Esim::class,
         Commands\VehicleCmc::class,
         Commands\AutoAssignRenewals::class,
+        Commands\ExpirePayStatus::class,
     ];
 
     /**
@@ -42,6 +43,9 @@ class Kernel extends ConsoleKernel
         
         // Auto-assign expiring GPS devices to call centers for renewal
         $schedule->command('renewals:auto-assign')->dailyAt('02:00');
+
+        // Expire pay_status when validity_date is in the past
+        $schedule->command('gps:expire-pay-status')->dailyAt('01:30');
     }
   
 

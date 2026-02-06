@@ -402,16 +402,25 @@
       @if(!empty($serviceCenterCounts) && auth()->user()->hasRole('root'))
       <div class="row root-dashboard-flex mrg-top-20">
         <div class="col-lg-12">
-          <div class="card" style="padding:12px; border-radius:8px; background:#fff;">
-            <h4 style="margin-top:0;margin-bottom:10px;">Service Center Device Summary</h4>
+          <style>
+            .sc-summary-card{background:linear-gradient(180deg,#f8fafc 0%,#ffffff 70%);border:1px solid #e5e7eb;box-shadow:0 10px 24px rgba(15,23,42,0.08);border-radius:12px}
+            .sc-summary-title{margin:0 0 10px 0;color:#0f172a;letter-spacing:.2px}
+            .sc-summary-table thead th{background:#f1f5f9;border-bottom:1px solid #e2e8f0;color:#1f2937;font-weight:600}
+            .sc-summary-table tbody td{background:#ffffff}
+            .sc-summary-table tbody tr:hover td{background:#f8fafc}
+            .sc-summary-table .pending-over-week{color:#c0392b;font-weight:700}
+          </style>
+          <div class="card sc-summary-card" style="padding:12px;">
+            <h4 class="sc-summary-title">Service Center Device Summary</h4>
             <div class="table-responsive">
-              <table class="table table-striped table-bordered">
+              <table class="table table-striped table-bordered sc-summary-table">
                 <thead>
                   <tr>
                     <th>Service Center</th>
                     <th class="text-right">Device In</th>
                     <th class="text-right">Device Out</th>
-                    <th class="text-right">Pending</th>
+                    <th class="text-right">Pending Less Than 1 Week</th>
+                    <th class="text-right">Pending Over 1 Week</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -420,7 +429,8 @@
                       <td>{{ $sc['name'] }}</td>
                       <td class="text-right">{{ $sc['device_in'] }}</td>
                       <td class="text-right">{{ $sc['device_out'] }}</td>
-                      <td class="text-right">{{ $sc['pending'] }}</td>
+                      <td class="text-right">{{ $sc['pending_under_week'] }}</td>
+                      <td class="text-right pending-over-week">{{ $sc['pending_over_week'] }}</td>
                     </tr>
                   @endforeach
                 </tbody>
