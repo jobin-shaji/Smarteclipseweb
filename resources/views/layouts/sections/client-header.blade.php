@@ -115,7 +115,7 @@
                   </a>
               </li>
               <li class="sys_vapor cover_total_km">
-                  <a href="{{url('/client-renewal-report')}}">
+                  <a href="{{url('/client-renewal-report2')}}">
                       <div class="system_icon">
                           <img src="{{ url('/') }}/Report-icons/report-2.png"  />
                       <span class="system_info" >Renewal Report</span>

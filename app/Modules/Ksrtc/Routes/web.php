@@ -16,11 +16,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => ['web','auth'],'namespace'  => 'App\Modules\Ksrtc\Controllers'], function () {
 
-    // Client Renewal Report (moved from Gps module)
-    Route::get('/client-renewal-report', 'KsrtcInvoiceController@clientrenewalreport')
-        ->middleware('role:root|client')
-        ->name('client.renewal.report');
-
     // Client Renewal Report V2 (AJAX version with year selection)
     Route::get('/client-renewal-report2', 'KsrtcInvoiceController@clientrenewalreport2')
         ->middleware('role:root|client')
