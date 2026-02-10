@@ -431,6 +431,11 @@ class DashboardController extends Controller{
     protected function getRootRenewalChartData(){
         $rows = Gps::query()
             ->whereNotNull('installation_date_new')
+            ->whereNotIn('id', function ($q) {
+                $q->select('gps_id')
+                  ->from('vehicles')
+                  ->where('client_id', 1778);
+            })
             ->selectRaw('MONTH(installation_date_new) as month_no')
             ->selectRaw('COUNT(id) as total_installed')
             ->selectRaw('SUM(CASE WHEN pay_status = 1 THEN 1 ELSE 0 END) as renewed')
@@ -587,15 +592,15 @@ where pay_status=1  group by employee_code order by employee_code desc) limit 1;
      */
     protected function getServiceCenterCounts()
     {
-        $weekStart = Carbon::today()->subDays(6)->format('Y-m-d');
+        $periodStart = Carbon::today()->subDays(3)->format('Y-m-d');
 
         $rows = DB::table('cd_service_ins')
             ->select('service_center_id',
                 DB::raw("SUM(CASE WHEN status != 'cancelled' THEN 1 ELSE 0 END) as device_in"),
                 DB::raw("SUM(CASE WHEN status = 'delivered' THEN 1 ELSE 0 END) as device_out"),
                 DB::raw("SUM(CASE WHEN status != 'delivered' AND status != 'cancelled' THEN 1 ELSE 0 END) as pending"),
-                DB::raw("SUM(CASE WHEN status != 'delivered' AND status != 'cancelled' AND date >= '{$weekStart}' THEN 1 ELSE 0 END) as pending_under_week"),
-                DB::raw("SUM(CASE WHEN status != 'delivered' AND status != 'cancelled' AND date < '{$weekStart}' THEN 1 ELSE 0 END) as pending_over_week")
+                DB::raw("SUM(CASE WHEN status != 'delivered' AND status != 'cancelled' AND date >= '{$periodStart}' THEN 1 ELSE 0 END) as pending_under_week"),
+                DB::raw("SUM(CASE WHEN status != 'delivered' AND status != 'cancelled' AND date < '{$periodStart}' THEN 1 ELSE 0 END) as pending_over_week")
             )
             ->groupBy('service_center_id')
             ->get();
@@ -623,6 +628,63 @@ where pay_status=1  group by employee_code order by employee_code desc) limit 1;
 
         return $result;
     }
+
+    /**
+     * Show service center devices listing with filters (simple, no AJAX)
+     */
+    public function serviceCenterDevices(Request $request)
+    {
+        $serviceCenterId = $request->get('service_center_id');
+        $type = $request->get('type');
+        
+        // Get service center name
+        $serviceCenterName = 'Not Assigned';
+        if ($serviceCenterId) {
+            $center = \App\Modules\Servicer\Models\ServiceCenter::find($serviceCenterId);
+            $serviceCenterName = $center ? $center->name : 'Unknown Service Center';
+        }
+        
+        // Build query
+        $periodStart = Carbon::today()->subDays(3)->format('Y-m-d');
+        $query = ServiceIn::query();
+        
+        // Filter by service center
+        if ($serviceCenterId === '0' || $serviceCenterId === 0 || $serviceCenterId === null) {
+            $query->whereNull('service_center_id');
+        } else {
+            $query->where('service_center_id', $serviceCenterId);
+        }
+        
+        // Filter by type and set title
+        $typeTitle = 'All Devices';
+        switch ($type) {
+            case 'device_in':
+                $typeTitle = 'Devices In';
+                $query->where('status', '!=', 'cancelled');
+                break;
+            case 'device_out':
+                $typeTitle = 'Devices Out';
+                $query->where('status', 'delivered');
+                break;
+            case 'pending_under_week':
+                $typeTitle = 'Pending (Less Than 4 Days)';
+                $query->where('status', '!=', 'delivered')
+                      ->where('status', '!=', 'cancelled')
+                      ->where('date', '>=', $periodStart);
+                break;
+            case 'pending_over_week':
+                $typeTitle = 'Pending (Over 4 Days)';
+                $query->where('status', '!=', 'delivered')
+                      ->where('status', '!=', 'cancelled')
+                      ->where('date', '<', $periodStart);
+                break;
+        }
+        
+        $devices = $query->orderBy('date', 'desc')->paginate(50);
+        
+        return view('Dashboard::service-center-devices', compact('serviceCenterName', 'typeTitle', 'serviceCenterId', 'type', 'devices'));
+    }
+    
     function servicerDashboardView($user)
     {
         $servicer_id=$user->servicer->id;
@@ -2371,6 +2433,108 @@ where id_user=?", [$userid]);
         }else{
             return response()->json(['mess' => 'No users listed','color'=>'red','html'=>"Not authorized"]);
         }
+    }    
+    /**
+     * TEMPORARY: Update service center ID for specific devices
+     * TODO: Remove this after use
+     */
+    public function tempUpdateServiceCenter()
+    {
+        // Add your IMEI list here
+        $imeis = [
+            '862818042119703',
+            '862818042074825',
+            '862818042133738',
+            '862818042079915',
+            '862818040858146',
+            '862818041897747',
+            '862818042079790',
+            '862818042165219',
+            '862818042148983',
+            '860657057804631',
+            '860657057697340',
+            '869247045007504',
+            '860657057906394',
+            '860657057909489',
+            '862818042038697',
+            '862493052167941',
+            '862818042080210',
+            '862818042185464',
+            '862818042067977',
+            '862818042185845',
+            '862818042141863',
+            '862818042084741',
+            '862818042184715',
+            '862818040755151',
+            '862818040757157',
+            '862818042060543',
+            '862818040754055',
+            '862818042117368',
+            '862818042149049',
+            '862493052166208',
+            '862818042093999',
+            '862818042068413',
+            '862818041897903',
+            '862493051950156',
+            '862493051954638',
+            '860560061342848',
+            '860657057905347',
+            '860560061323442',
+            '860657057887487',
+            '860657058597028',
+            '869247045568331',
+            '860657057922177',
+            '862493052166679',
+            '862818042091126',
+            '860657057922177',
+            '860657057922177',
+            '862818042192551',
+        ];
+        
+        $serviceCenterId = 1789; // New service center ID
+        
+        if (empty($imeis)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'No IMEIs provided. Add IMEIs to the $imeis array in the code.'
+            ]);
+        }
+        
+        // Only update the LAST occurrence of each IMEI based on created_at time
+        $updated = 0;
+        $updatedDevices = [];
+        
+        foreach ($imeis as $imei) {
+            // Get the last (most recent) record for this IMEI based on created_at
+            $lastRecord = ServiceIn::where('imei', $imei)
+                ->orderBy('created_at', 'DESC')
+                ->first();
+            
+            if ($lastRecord) {
+                $lastRecord->service_center_id = $serviceCenterId;
+                $lastRecord->save();
+                $updated++;
+                $updatedDevices[] = $lastRecord;
+            }
+        }
+        
+        return response()->json([
+            'success' => true,
+            'message' => "Updated {$updated} device(s) to service center ID {$serviceCenterId} (only last occurrence by created_at)",
+            'imeis_requested' => count($imeis),
+            'records_updated' => $updated,
+            'devices' => collect($updatedDevices)->map(function($device) {
+                return [
+                    'id' => $device->id,
+                    'imei' => $device->imei,
+                    'service_center_id' => $device->service_center_id,
+                    'customer_name' => $device->customer_name,
+                    'status' => $device->status,
+                    'date' => $device->date,
+                    'created_at' => $device->created_at
+                ];
+            })
+        ]);
     }
 
 }

@@ -17,9 +17,11 @@ Route::group(['middleware' => ['web','auth','role:root'] , 'namespace' => 'App\M
 
   Route::post('/sla-edit','RootController@slaUpdate')->name('root.sla.update');
   
-  Route::get('/login-log','LoginLogController@index')->name('root.loginlog');
+  // Legacy login-log routes removed — history is now served from user-sessions.
 
-  Route::get('/login-logs-history/{user_id}','LoginLogController@show')->name('root.loginlogshistory.show');
+  // User sessions (abc_user_sessions) summary and history
+  Route::get('/user-sessions','UserSessionsController@index')->name('root.usersessions');
+  Route::get('/user-sessions-history/{encrypted_id}','UserSessionsController@show')->name('root.usersessions.history');
 
   });
 

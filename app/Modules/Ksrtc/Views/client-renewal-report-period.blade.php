@@ -3,11 +3,7 @@
 @section('content')
 <div style="padding:20px; max-width:1400px; margin:0 auto;">
 
-    <div style="margin-bottom:20px;">
-        <a href="{{ route('client.renewal.report2') }}" style="color:#007bff; text-decoration:none; font-size:14px;">
-            ← Back to Report
-        </a>
-    </div>
+    {{-- Back to Report link removed per request --}}
 
     <h3 style="margin-bottom:25px; color:#333;">Period Details: {{ $title }}</h3>
 

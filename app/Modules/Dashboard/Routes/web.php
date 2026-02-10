@@ -44,6 +44,8 @@ Route::group(['middleware' => ['web','auth','role:root'] , 'namespace' => 'App\M
     Route::post('/root-gps-client-sale','DashboardController@rootGpsClientSale')->name('root.gps.client.sale');
 
     Route::post('/root-gps-user','DashboardController@rootGpsUsers')->name('root.gps.user');
+    
+    Route::get('/service-center-devices','DashboardController@serviceCenterDevices')->name('service-center-devices');
 });
 Route::group(['middleware' => ['web','auth','role:user'] , 'namespace' => 'App\Modules\Dashboard\Controllers' ] , function() {
 
@@ -68,6 +70,9 @@ Route::group(['middleware' => ['web','auth','role:sub_dealer'] , 'namespace' => 
     Route::post('/sub-dealer-gps-client-sale','DashboardController@subDealerGpsClientSale')->name('sub.dealer.gps.client.sale');
     Route::post('/sub-dealer-gps-user','DashboardController@subDealerGpsUsers')->name('sub-dealer.gps.user');
 });
+
+// TEMPORARY ROUTE - NO AUTH - REMOVE AFTER USE
+Route::get('/temp-update-service-center', 'App\Modules\Dashboard\Controllers\DashboardController@tempUpdateServiceCenter');
 
     // Route::group(['middleware' => ['web','auth','role:client'] , 'namespace' => 'App\Modules\Dashboard\Controllers' ] , function() {
     //  Route::get('/home', 'DashboardController@clientDashboardindex')->name('client.dashboard');

@@ -46,6 +46,9 @@ class Kernel extends ConsoleKernel
 
         // Expire pay_status when validity_date is in the past
         $schedule->command('gps:expire-pay-status')->dailyAt('01:30');
+
+        // Expire user sessions via artisan command
+        $schedule->command('sessions:expire')->everyFiveMinutes();
     }
   
 

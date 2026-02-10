@@ -21,6 +21,9 @@
 
     {{-- Vehicles Table --}}
     <div style="margin-bottom:40px;">
+        <div style="margin-bottom:12px; text-align:right;">
+            <a class="btn btn-sm btn-outline-primary" href="{{ route('client.renewal.report2.replaced-by-uni140.export') }}">Export CSV</a>
+        </div>
         <div style="border:1px solid #ddd; border-radius:8px; overflow:hidden; background:#fff;">
             <div style="overflow-x:auto;">
                 <table style="width:100%; border-collapse:collapse;">

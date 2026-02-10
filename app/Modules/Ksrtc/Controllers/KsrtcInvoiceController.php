@@ -327,6 +327,8 @@ class KsrtcInvoiceController extends Controller{
             abort(403, 'Access denied');
         }
 
+        $clientId = 1778;
+
         $period = KsrtcCmcPeriod::findOrFail($request->period_id);
 
         $periodStart = Carbon::parse($period->period_start)->startOfMonth();
@@ -1637,6 +1639,51 @@ class KsrtcInvoiceController extends Controller{
     }
 
     /**
+     * Export all vehicles as CSV
+     */
+    public function allVehiclesExport(Request $request)
+    {
+        $user = Auth::user(); if (!$user) return abort(403);
+        $allowed = false; if ($user->root) $allowed = true; elseif ($user->client && (int)$user->client->id === 1778) $allowed = true;
+        if (!$allowed) return abort(403);
+
+        $clientId = 1778;
+
+        $rows = DB::table('vehicles as v')
+            ->join('gps_summery as g', 'v.gps_id', '=', 'g.id')
+            ->where('v.client_id', $clientId)
+            ->whereNull('v.deleted_at')
+            ->whereNotNull('v.installation_date')
+            ->select(
+                'v.register_number as vehicle_no',
+                'g.imei',
+                'v.installation_date',
+                DB::raw("IF(g.warrenty_certificate IS NOT NULL AND g.warrenty_certificate != '', 'Yes', 'No') as certificate_status")
+            )
+            ->orderBy('v.register_number')
+            ->get();
+
+        $filename = 'ksrtc_all_vehicles_' . date('Ymd_His') . '.csv';
+        $headers = [
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => "attachment; filename=\"{$filename}\"",
+        ];
+
+        $callback = function() use ($rows) {
+            $out = fopen('php://output', 'w');
+            fputcsv($out, ['SL No', 'Vehicle No', 'IMEI', 'Installed At', 'Certificate']);
+            $i = 1;
+            foreach ($rows as $r) {
+                $date = $r->installation_date ? Carbon::parse($r->installation_date)->format('Y-m-d') : '';
+                fputcsv($out, [$i++, $r->vehicle_no, $r->imei, $date, $r->certificate_status]);
+            }
+            fclose($out);
+        };
+
+        return response()->stream($callback, 200, $headers);
+    }
+
+    /**
      * Vehicles with Certificate Attached
      * Shows only vehicles that have warranty certificates
      */
@@ -1681,6 +1728,52 @@ class KsrtcInvoiceController extends Controller{
         $count = $vehicles->count();
 
         return view('Ksrtc::vehicles-list', compact('title', 'count', 'vehicles'));
+    }
+
+    /**
+     * Export vehicles with certificate as CSV
+     */
+    public function vehiclesWithCertificateExport(Request $request)
+    {
+        $user = Auth::user(); if (!$user) return abort(403);
+        $allowed = false; if ($user->root) $allowed = true; elseif ($user->client && (int)$user->client->id === 1778) $allowed = true;
+        if (!$allowed) return abort(403);
+
+        $clientId = 1778;
+
+        $rows = DB::table('vehicles as v')
+            ->join('gps_summery as g', 'v.gps_id', '=', 'g.id')
+            ->where('v.client_id', $clientId)
+            ->whereNull('v.deleted_at')
+            ->whereNotNull('v.installation_date')
+            ->whereNotNull('g.warrenty_certificate')
+            ->where('g.warrenty_certificate', '!=', '')
+            ->select(
+                'v.register_number as vehicle_no',
+                'g.imei',
+                'v.installation_date'
+            )
+            ->orderBy('v.register_number')
+            ->get();
+
+        $filename = 'ksrtc_vehicles_with_certificate_' . date('Ymd_His') . '.csv';
+        $headers = [
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => "attachment; filename=\"{$filename}\"",
+        ];
+
+        $callback = function() use ($rows) {
+            $out = fopen('php://output', 'w');
+            fputcsv($out, ['SL No', 'Vehicle No', 'IMEI', 'Installed At']);
+            $i = 1;
+            foreach ($rows as $r) {
+                $date = $r->installation_date ? Carbon::parse($r->installation_date)->format('Y-m-d') : '';
+                fputcsv($out, [$i++, $r->vehicle_no, $r->imei, $date]);
+            }
+            fclose($out);
+        };
+
+        return response()->stream($callback, 200, $headers);
     }
 
     /**
@@ -1729,6 +1822,47 @@ class KsrtcInvoiceController extends Controller{
     }
 
     /**
+     * Export replaced-by-uni140 vehicles as CSV
+     */
+    public function replacedByUni140Export(Request $request)
+    {
+        $user = Auth::user(); if (!$user) return abort(403);
+        $allowed = false; if ($user->root) $allowed = true; elseif ($user->client && (int)$user->client->id === 1778) $allowed = true;
+        if (!$allowed) return abort(403);
+
+        $clientId = 1778;
+
+        $rows = DB::table('abc_temp_ksrtc_add_data as add_data')
+            ->join('gps_summery as g', 'add_data.imei', '=', 'g.imei')
+            ->join('vehicles as v', 'v.gps_id', '=', 'g.id')
+            ->where('v.client_id', $clientId)
+            ->whereNull('v.deleted_at')
+            ->where('add_data.replaced_by_uni140', 1)
+            ->select('v.register_number as vehicle_no', 'g.imei', 'v.installation_date')
+            ->orderBy('v.register_number')
+            ->get();
+
+        $filename = 'ksrtc_replaced_by_uni140_' . date('Ymd_His') . '.csv';
+        $headers = [
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => "attachment; filename=\"{$filename}\"",
+        ];
+
+        $callback = function() use ($rows) {
+            $out = fopen('php://output', 'w');
+            fputcsv($out, ['SL No', 'Vehicle No', 'IMEI', 'Installed At']);
+            $i = 1;
+            foreach ($rows as $r) {
+                $date = $r->installation_date ? Carbon::parse($r->installation_date)->format('Y-m-d') : '';
+                fputcsv($out, [$i++, $r->vehicle_no, $r->imei, $date]);
+            }
+            fclose($out);
+        };
+
+        return response()->stream($callback, 200, $headers);
+    }
+
+    /**
      * Show all service records for the client
      */
     public function serviceReportList()
@@ -1759,6 +1893,7 @@ class KsrtcInvoiceController extends Controller{
             ->where('v.client_id', $clientId)
             ->whereNull('v.deleted_at')
             ->select(
+                'v.register_number as vehicle_no',
                 'g.imei',
                 'si.date as service_date'
             )
@@ -1789,7 +1924,7 @@ class KsrtcInvoiceController extends Controller{
             ->join('gps_summery as g', 'v.gps_id', '=', 'g.id')
             ->where('v.client_id', $clientId)
             ->whereNull('v.deleted_at')
-            ->select('g.imei', 'si.date as service_date')
+            ->select('v.register_number as vehicle_no', 'g.imei', 'si.date as service_date')
             ->orderBy('si.date', 'desc')
             ->get();
 
@@ -1801,11 +1936,13 @@ class KsrtcInvoiceController extends Controller{
 
         $callback = function() use ($services) {
             $out = fopen('php://output', 'w');
-            fputcsv($out, ['IMEI', 'Service Date']);
+            fputcsv($out, ['Vehicle No', 'IMEI', 'Service Date']);
             foreach ($services as $s) {
-                fputcsv($out, [$s->imei, 
-                    $s->service_date ? 
-                        Carbon::parse($s->service_date)->format('Y-m-d') : '']);
+                fputcsv($out, [
+                    $s->vehicle_no,
+                    $s->imei,
+                    $s->service_date ? Carbon::parse($s->service_date)->format('Y-m-d') : ''
+                ]);
             }
             fclose($out);
         };

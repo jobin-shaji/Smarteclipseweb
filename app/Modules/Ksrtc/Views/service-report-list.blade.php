@@ -30,6 +30,7 @@
                     <thead>
                         <tr style="background:#f8f9fa; border-bottom:2px solid #dee2e6;">
                             <th style="padding:12px 15px; text-align:left; font-size:13px; font-weight:600; color:#495057;">SL No</th>
+                            <th style="padding:12px 15px; text-align:left; font-size:13px; font-weight:600; color:#495057;">Vehicle No</th>
                             <th style="padding:12px 15px; text-align:left; font-size:13px; font-weight:600; color:#495057;">IMEI</th>
                             <th style="padding:12px 15px; text-align:left; font-size:13px; font-weight:600; color:#495057;">Service In Date</th>
                         </tr>
@@ -38,6 +39,7 @@
                         @forelse($services as $index => $service)
                         <tr style="border-bottom:1px solid #e9ecef;">
                             <td style="padding:12px 15px; font-size:14px; color:#212529;">{{ $index + 1 }}</td>
+                            <td style="padding:12px 15px; font-size:14px; color:#212529; font-weight:500;">{{ $service->vehicle_no }}</td>
                             <td style="padding:12px 15px; font-size:14px; color:#495057; font-weight:500;">{{ $service->imei }}</td>
                             <td style="padding:12px 15px; font-size:14px; color:#495057;">{{ \Carbon\Carbon::parse($service->service_date)->format('Y-m-d') }}</td>
                         </tr>

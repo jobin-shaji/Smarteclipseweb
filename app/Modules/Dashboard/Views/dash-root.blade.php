@@ -375,15 +375,13 @@
           <div class="icon">
               <i class="fa fa-user"></i>
             </div>
-            <a href="{{route('root.loginlog')}}" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>          
+            <a href="{{route('root.usersessions')}}" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>          
           </div>
           
         </div>
         <div class="col-lg-3 col-md-6 col-sm-12  gps_non_stock_dashboard_grid dash_grid">
-        <!-- small box -->
-        <div class="small-box bg-blue bxs">
+        <!-- small box --><div class="small-box bg-blue bxs">
           <div class="inner">
-            <h3 id="todaydevices_in">
               <div class="loader"></div>
             </h3>
             <p>KSRTC Renewal Report</p>
@@ -393,6 +391,17 @@
             </div>
             <a href="{{route('client.renewal.report')}}" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>          
           </div>
+        <div class="small-box bg-blue bxs">
+          <div class="inner">
+              <div class="loader"></div>
+            </h3>
+            <p>KSRTC CMC Periodwise</p>
+          </div>
+          <div class="icon">
+              <i class="fa fa-user"></i>
+            </div>
+            <a href="{{url('/ksrtc/devices')}}" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>          
+          </div>
         </div>
         
 
@@ -400,41 +409,73 @@
       
       {{-- Service center device-in table (root only) --}}
       @if(!empty($serviceCenterCounts) && auth()->user()->hasRole('root'))
-      <div class="row root-dashboard-flex mrg-top-20">
+      <div class="row mrg-top-20">
         <div class="col-lg-12">
-          <style>
-            .sc-summary-card{background:linear-gradient(180deg,#f8fafc 0%,#ffffff 70%);border:1px solid #e5e7eb;box-shadow:0 10px 24px rgba(15,23,42,0.08);border-radius:12px}
-            .sc-summary-title{margin:0 0 10px 0;color:#0f172a;letter-spacing:.2px}
-            .sc-summary-table thead th{background:#f1f5f9;border-bottom:1px solid #e2e8f0;color:#1f2937;font-weight:600}
-            .sc-summary-table tbody td{background:#ffffff}
-            .sc-summary-table tbody tr:hover td{background:#f8fafc}
-            .sc-summary-table .pending-over-week{color:#c0392b;font-weight:700}
-          </style>
-          <div class="card sc-summary-card" style="padding:12px;">
-            <h4 class="sc-summary-title">Service Center Device Summary</h4>
-            <div class="table-responsive">
-              <table class="table table-striped table-bordered sc-summary-table">
-                <thead>
-                  <tr>
-                    <th>Service Center</th>
-                    <th class="text-right">Device In</th>
-                    <th class="text-right">Device Out</th>
-                    <th class="text-right">Pending Less Than 1 Week</th>
-                    <th class="text-right">Pending Over 1 Week</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  @foreach($serviceCenterCounts as $sc)
+          <div class="card shadow-sm" style="border-radius:10px; overflow:hidden;">
+            <div class="card-header bg-info text-white d-flex justify-content-between align-items-center">
+              <h5 class="mb-0" style="color:#fff;">
+                <i class="fas fa-chart-line mr-2"></i>
+                Service Center Device Summary
+              </h5>
+            </div>
+            <div class="card-body" style="background:#f8f9fa;">
+              <style>
+                .sc-clickable-cell { cursor: pointer; }
+                .sc-clickable-cell a { display: block; width: 100%; height: 100%; color: inherit; text-decoration: none; }
+                .sc-clickable-cell:hover { background-color: #f5f5f5; }
+                .sc-cell-device-out a { color: #5cb85c; }
+                .sc-cell-pending-warn a { color: #f0ad4e; }
+                .sc-cell-pending-critical a { color: #d9534f; font-weight: bold; }
+                .sc-summary-table thead th {
+                  background: #17a2b8;
+                  color: #fff;
+                  text-transform: uppercase;
+                  font-size: 12px;
+                  letter-spacing: 0.4px;
+                  border: none;
+                }
+                .sc-summary-table tbody tr:hover td { background: #f9fafb; }
+              </style>
+              <div class="table-responsive">
+                <table class="table table-striped table-bordered sc-summary-table mb-0">
+                  <thead>
                     <tr>
-                      <td>{{ $sc['name'] }}</td>
-                      <td class="text-right">{{ $sc['device_in'] }}</td>
-                      <td class="text-right">{{ $sc['device_out'] }}</td>
-                      <td class="text-right">{{ $sc['pending_under_week'] }}</td>
-                      <td class="text-right pending-over-week">{{ $sc['pending_over_week'] }}</td>
+                      <th>Service Center</th>
+                      <th class="text-right">Device In</th>
+                      <th class="text-right">Device Out</th>
+                      <th class="text-right">Pending &lt; 4 Days</th>
+                      <th class="text-right">Pending &gt; 4 Days</th>
                     </tr>
-                  @endforeach
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    @foreach($serviceCenterCounts as $sc)
+                      <tr>
+                        <td>{{ $sc['name'] }}</td>
+                        <td class="text-right sc-clickable-cell">
+                          <a href="{{ route('service-center-devices', ['service_center_id' => $sc['service_center_id'], 'type' => 'device_in']) }}">
+                            {{ $sc['device_in'] }}
+                          </a>
+                        </td>
+                        <td class="text-right sc-clickable-cell sc-cell-device-out">
+                          <a href="{{ route('service-center-devices', ['service_center_id' => $sc['service_center_id'], 'type' => 'device_out']) }}">
+                            {{ $sc['device_out'] }}
+                          </a>
+                        </td>
+                        <td class="text-right sc-clickable-cell sc-cell-pending-warn">
+                          <a href="{{ route('service-center-devices', ['service_center_id' => $sc['service_center_id'], 'type' => 'pending_under_week']) }}">
+                            {{ $sc['pending_under_week'] }}
+                          </a>
+                        </td>
+                        <td class="text-right sc-clickable-cell sc-cell-pending-critical">
+                          <a href="{{ route('service-center-devices', ['service_center_id' => $sc['service_center_id'], 'type' => 'pending_over_week']) }}">
+                            {{ $sc['pending_over_week'] }}
+                          </a>
+                        </td>
+                      </tr>
+                    @endforeach
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>

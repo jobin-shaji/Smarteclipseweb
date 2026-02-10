@@ -47,16 +47,28 @@ Route::group(['middleware' => ['web','auth'],'namespace'  => 'App\Modules\Ksrtc\
     Route::get('/client-renewal-report2/all-vehicles', 'KsrtcInvoiceController@allVehiclesList')
         ->middleware('role:root|client')
         ->name('client.renewal.report2.all-vehicles');
+    // export all vehicles CSV
+    Route::get('/client-renewal-report2/all-vehicles/export', 'KsrtcInvoiceController@allVehiclesExport')
+        ->middleware('role:root|client')
+        ->name('client.renewal.report2.all-vehicles.export');
 
     // Vehicles with certificate list page
     Route::get('/client-renewal-report2/vehicles-with-certificate', 'KsrtcInvoiceController@vehiclesWithCertificate')
         ->middleware('role:root|client')
         ->name('client.renewal.report2.vehicles-with-certificate');
+    // export vehicles with certificate CSV
+    Route::get('/client-renewal-report2/vehicles-with-certificate/export', 'KsrtcInvoiceController@vehiclesWithCertificateExport')
+        ->middleware('role:root|client')
+        ->name('client.renewal.report2.vehicles-with-certificate.export');
 
     // Vehicles replaced by uni140 list page
     Route::get('/client-renewal-report2/replaced-by-uni140', 'KsrtcInvoiceController@replacedByUni140List')
         ->middleware('role:root|client')
         ->name('client.renewal.report2.replaced-by-uni140');
+    // export replaced-by-uni140 CSV
+    Route::get('/client-renewal-report2/replaced-by-uni140/export', 'KsrtcInvoiceController@replacedByUni140Export')
+        ->middleware('role:root|client')
+        ->name('client.renewal.report2.replaced-by-uni140.export');
 
     // Service report page
     Route::get('/client-renewal-report2/service-report', 'KsrtcInvoiceController@serviceReportList')

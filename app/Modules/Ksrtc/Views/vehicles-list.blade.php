@@ -21,6 +21,13 @@
 
     {{-- Vehicles Table --}}
     <div style="margin-bottom:40px;">
+            <div style="margin-bottom:12px; text-align:right;">
+                @if(isset($title) && strpos($title, 'Certificate') !== false)
+                    <a class="btn btn-sm btn-outline-primary" href="{{ route('client.renewal.report2.vehicles-with-certificate.export') }}">Export CSV</a>
+                @else
+                    <a class="btn btn-sm btn-outline-primary" href="{{ route('client.renewal.report2.all-vehicles.export') }}">Export CSV</a>
+                @endif
+            </div>
         <div style="border:1px solid #ddd; border-radius:8px; overflow:hidden; background:#fff;">
             <div style="overflow-x:auto;">
                 <table style="width:100%; border-collapse:collapse;">

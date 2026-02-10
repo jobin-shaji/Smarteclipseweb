@@ -3,7 +3,7 @@
 @section('content')
 <div style="padding:20px; max-width:100%; width:100%;">
 
-    <h3 style="margin-bottom:15px">KSRTC Renewal Report V2 (AJAX with Year Selection)</h3>
+    <h3 style="margin-bottom:15px">KSRTC Renewal Report</h3>
 
     <style>
         .rr-wrap {
@@ -157,12 +157,12 @@
                 </div>
 
                 <div class="stats-card-vertical" onclick="window.location.href='{{ route('client.renewal.report2.all-vehicles') }}'">
-                    <div class="label">Data Recharged</div>
+                    <div class="label">Total Data Recharged</div>
                     <div id="stat_recharged" class="value" style="color:#007bff;">0</div>
                 </div>
 
                 <div class="stats-card-vertical" onclick="window.location.href='{{ route('client.renewal.report2.vehicles-with-certificate') }}'">
-                    <div class="label">Data Certificate Attached</div>
+                    <div class="label">Total Certificate Attached</div>
                     <div id="stat_certificate" class="value" style="color:#009688;">0</div>
                 </div>
 

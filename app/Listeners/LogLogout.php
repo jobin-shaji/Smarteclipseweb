@@ -40,6 +40,41 @@ class LogLogout
             } catch (\Throwable $e) {
                 // avoid throwing from listener; log to DB failed silently
             }
+                // Also update unified user_sessions record when possible
+                try {
+                    $now = now();
+                    if ($sessionId) {
+                        DB::table('abc_user_sessions')
+                            ->where('session_id', $sessionId)
+                            ->where('is_active', true)
+                            ->update([
+                                'logged_out_at' => $now,
+                                'logout_type' => 'manual',
+                                'duration_minutes' => DB::raw("TIMESTAMPDIFF(MINUTE, logged_in_at, '".$now."')"),
+                                'is_active' => false,
+                                'updated_at' => $now,
+                            ]);
+                    } elseif ($userId) {
+                        // fallback: find latest active session for user and close it
+                        $row = DB::table('abc_user_sessions')
+                            ->where('user_id', $userId)
+                            ->where('is_active', true)
+                            ->orderBy('logged_in_at', 'desc')
+                            ->first();
+
+                        if ($row) {
+                            DB::table('abc_user_sessions')->where('id', $row->id)->update([
+                                'logged_out_at' => $now,
+                                'logout_type' => 'manual',
+                                'duration_minutes' => DB::raw("TIMESTAMPDIFF(MINUTE, logged_in_at, '".$now."')"),
+                                'is_active' => false,
+                                'updated_at' => $now,
+                            ]);
+                        }
+                    }
+                } catch (\Throwable $e) {
+                    // avoid throwing from listener
+                }
         }
     }
 }

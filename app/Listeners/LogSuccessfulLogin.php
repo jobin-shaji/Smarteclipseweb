@@ -28,16 +28,27 @@ class LogSuccessfulLogin
             $userAgent = $request->userAgent();
             $ip = $request->ip();
 
-            DB::table('login_logs')->insert([
-                'user_id'    => $user->id,
-                'username'   => $user->username ?? '',
-                'role'       => $user->getRoleNames()->first(),
-                'ip_address' => $request->ip(),
-                'user_agent' => $userAgent,
-                'platform'   => $this->detectPlatform($userAgent),
-                'office'     => $this->detectOffice($ip),
-                'created_at' => now(),
-            ]);
+            // Removed legacy insertion into `login_logs`.
+            // New unified session tracking uses `abc_user_sessions` only.
+            // Also create a unified user_sessions record for session tracking
+            try {
+                DB::table('abc_user_sessions')->insert([
+                    'user_id' => $user->id,
+                    'username' => $user->username ?? '',
+                    'role' => $user->getRoleNames()->first(),
+                    'session_id' => session()->getId(),
+                    'logged_in_at' => now(),
+                    'login_ip' => $request->ip(),
+                    'login_user_agent' => $userAgent,
+                    'login_platform' => $this->detectPlatform($userAgent),
+                    'login_office' => $this->detectOffice($ip),
+                    'is_active' => true,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+            } catch (\Throwable $e) {
+                // don't let session logging break the login flow
+            }
         } catch (Throwable $e) {
             // IMPORTANT:
             // Never allow logging errors to break login

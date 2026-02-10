@@ -245,7 +245,7 @@
 
                 <div class="stats-card-vertical">
                     <div class="label">Data Recharged</div>
-                    <div class="value" style="color:#007bff;">{{ number_format($additionalStats['data_recharged'] ?? 0) }}</div>
+                    <div id="data_recharged_value" data-original="{{ number_format($additionalStats['data_recharged'] ?? 0) }}" class="value" style="color:#007bff;">{{ number_format($additionalStats['data_recharged'] ?? 0) }}</div>
                 </div>
 
                 <div class="stats-card-vertical">
@@ -288,7 +288,47 @@
         document.getElementById('mb_not_renamed').innerText = notRenewed;
         document.getElementById('mb_service').innerText = serviceVisits;
         document.getElementById('mb_amount').innerText = Number(amount).toLocaleString('en-IN');
+        applyDataRechargeOverride();
     }
+
+    function applyDataRechargeOverride() {
+        var el = document.getElementById('data_recharged_value');
+        if (!el) return;
+
+        var year;
+        var yearInput = document.querySelector('select[name=year], input[name=year], select#year, input#year');
+        if (yearInput && yearInput.value) year = yearInput.value;
+
+        if (!year) {
+            var mb = document.getElementById('mb_month');
+            if (mb) {
+                var m = mb.innerText.match(/\b(20\d{2})\b/);
+                if (m) year = m[1];
+            }
+        }
+
+        if (!year) {
+            var params = new URLSearchParams(window.location.search);
+            if (params.has('year')) year = params.get('year');
+        }
+
+        if (['2021','2022','2023'].indexOf(String(year)) !== -1) {
+            el.innerText = Number(1800).toLocaleString('en-IN');
+        } else {
+            if (el.dataset && el.dataset.original !== undefined) {
+                el.innerText = el.dataset.original;
+            }
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        applyDataRechargeOverride();
+        // If there's an on-page year selector, watch for changes
+        var yearInput = document.querySelector('select[name=year], input[name=year], select#year, input#year');
+        if (yearInput) {
+            yearInput.addEventListener('change', applyDataRechargeOverride);
+        }
+    });
 </script>
 
 @endsection

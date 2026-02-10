@@ -126,7 +126,7 @@
           <!-- Renewal Report Widget -->
           <div class="card shadow-sm" style="border-radius: 10px; overflow: hidden;">
             <div class="card-header bg-info text-white d-flex justify-content-between align-items-center">
-              <h5 class="mb-0">
+              <h5 class="mb-0" style="color: #fff;">
                 <i class="fas fa-chart-line mr-2"></i>
                 Renewal Report
               </h5>
