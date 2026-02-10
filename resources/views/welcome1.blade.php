@@ -698,15 +698,15 @@
           <div class="footer-content-box footer-content-box-2">
             <div class="footer-sub-head animatable fadeInUp">Contacts</div>
             <div class="footer-contact animatable fadeInUp">
-              <a href="tel:9745001069">
+              <a href="tel:8304900384">
                 <i class="fa fa-phone" aria-hidden="true"></i>
-                <span>9745001069</span>
+                <span>8304900384</span>
               </a>
             </div>
              <div class="footer-contact animatable fadeInUp">
-              <a href="tel:7994498567">
+              <a href="tel:9745001069">
                 <i class="fa fa-phone" aria-hidden="true"></i>
-                <span>7994498567</span>
+                <span>9745001069</span>
               </a>
             </div>           
             <div class="footer-contact animatable fadeInUp">

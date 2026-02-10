@@ -1317,7 +1317,7 @@ where pay_status=1  group by employee_code order by employee_code desc) limit 1;
                                       $item->where('status',1)
                                            ->where(function ($query) {
                                                 $query->where('is_returned', '=', 0)
-                                                ->orWhere('is_returned', '=', NULL);
+                                                ->orWhereNull('is_returned');
                                             });
                                      }]);
                                     }])->get();
