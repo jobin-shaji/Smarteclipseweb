@@ -1439,12 +1439,11 @@ class DashboardController extends Controller
         $clients_gps        = Client::where('id',$client_id)
                               ->with(['vehicles'=>function($vehicle)
                                     {
-
                                         $vehicle->with(['gps'=>function($item){
                                         $item->where('status',1)
                                              ->where(function ($query) {
                                                 $query->where('is_returned', '=', 0)
-                                                ->orWhere('is_returned', '=', NULL);
+                                                ->orWhereNull('is_returned');
                                                 });
                                     }]);
                                 }])->get();
