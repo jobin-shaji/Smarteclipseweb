@@ -330,7 +330,14 @@
     // Function to update additional stats
     function updateStats(data) {
         const stats = data.additionalStats;
-        document.getElementById('stat_recharged').innerText = formatNumber(stats.data_recharged || 0);
+        // If the selected year is 2021, 2022 or 2023, override the frontend display
+        // for Total Data Recharged to 1800. Otherwise use backend value.
+        const selectedYear = (document.getElementById('yearSelect') && document.getElementById('yearSelect').value) || '';
+        let rechargeValue = stats.data_recharged || 0;
+        if (['2021', '2022', '2023'].includes(selectedYear)) {
+            rechargeValue = 1800;
+        }
+        document.getElementById('stat_recharged').innerText = formatNumber(rechargeValue || 0);
         document.getElementById('stat_certificate').innerText = formatNumber(stats.data_certificate_attached || 0);
         document.getElementById('stat_replaced').innerText = formatNumber(stats.replaced_by_uni140 || 0);
         document.getElementById('stat_serviced').innerText = formatNumber(data.totalservicevisits || 0);

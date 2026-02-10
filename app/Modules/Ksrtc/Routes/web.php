@@ -76,6 +76,7 @@ Route::group(['middleware' => ['web','auth'],'namespace'  => 'App\Modules\Ksrtc\
 
     // CLIENT view
     Route::get('/ksrtc/cmc-report', 'KsrtcInvoiceController@cmcReportClient')
+        ->middleware('role:root|client')
         ->name('ksrtc.cmc.client');
 
     // Download invoice (root + client)
