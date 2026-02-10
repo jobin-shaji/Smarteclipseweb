@@ -389,7 +389,7 @@
           <div class="icon">
               <i class="fa fa-user"></i>
             </div>
-            <a href="{{route('client.renewal.report')}}" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>          
+            <a href="{{route('client.renewal.report2')}}" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>          
           </div>
         <div class="small-box bg-blue bxs">
           <div class="inner">
