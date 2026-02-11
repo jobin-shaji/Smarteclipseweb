@@ -24,6 +24,8 @@
             <div style="margin-bottom:12px; text-align:right;">
                 @if(isset($title) && strpos($title, 'Certificate') !== false)
                     <a class="btn btn-sm btn-outline-primary" href="{{ route('client.renewal.report2.vehicles-with-certificate.export') }}">Export CSV</a>
+                @elseif(isset($title) && strpos($title, 'Not Paid') !== false)
+                    <a class="btn btn-sm btn-outline-primary" href="{{ route('client.renewal.report2.not-paid.export') }}">Export CSV</a>
                 @else
                     <a class="btn btn-sm btn-outline-primary" href="{{ route('client.renewal.report2.all-vehicles.export') }}">Export CSV</a>
                 @endif

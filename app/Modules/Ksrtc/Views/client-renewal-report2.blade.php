@@ -175,6 +175,11 @@
                     <div class="label">Serviced</div>
                     <div id="stat_serviced" class="value" style="color:#28a745;">0</div>
                 </div>
+
+                <div class="stats-card-vertical" onclick="window.location.href='{{ route('client.renewal.report2.not-paid') }}'">
+                    <div class="label">Not Paid</div>
+                    <div id="stat_not_paid" class="value" style="color:#dc3545;">0</div>
+                </div>
             </div>
 
         </div>
@@ -341,6 +346,7 @@
         document.getElementById('stat_certificate').innerText = formatNumber(stats.data_certificate_attached || 0);
         document.getElementById('stat_replaced').innerText = formatNumber(stats.replaced_by_uni140 || 0);
         document.getElementById('stat_serviced').innerText = formatNumber(data.totalservicevisits || 0);
+        document.getElementById('stat_not_paid').innerText = formatNumber(stats.not_paid || 0);
     }
 
     // Function to fetch and render data

@@ -74,6 +74,15 @@ Route::group(['middleware' => ['web','auth'],'namespace'  => 'App\Modules\Ksrtc\
         ->middleware('role:root|client')
         ->name('client.renewal.report2.service-report.export');
 
+    // Not paid vehicles list page
+    Route::get('/client-renewal-report2/not-paid', 'KsrtcInvoiceController@notPaidList')
+        ->middleware('role:root|client')
+        ->name('client.renewal.report2.not-paid');
+    // export not paid vehicles CSV
+    Route::get('/client-renewal-report2/not-paid/export', 'KsrtcInvoiceController@notPaidExport')
+        ->middleware('role:root|client')
+        ->name('client.renewal.report2.not-paid.export');
+
     // CLIENT view
     Route::get('/ksrtc/cmc-report', 'KsrtcInvoiceController@cmcReportClient')
         ->middleware('role:root|client')

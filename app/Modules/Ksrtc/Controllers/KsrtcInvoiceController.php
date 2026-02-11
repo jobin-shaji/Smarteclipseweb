@@ -1140,12 +1140,24 @@ class KsrtcInvoiceController extends Controller{
                 ->where('g.warrenty_certificate', '!=', '')
                 ->count();
 
+            // Not Paid: count vehicles NOT present in abc_temp_amount_given table
+            $not_paid_count = (int) Vehicle::query()
+                ->where('client_id', $clientId)
+                ->whereNull('deleted_at')
+                ->whereNotNull('installation_date')
+                ->whereNotIn('register_number', function($query) {
+                    $query->select('vechicle_number')
+                          ->from('abc_temp_amount_given');
+                })
+                ->count();
+
             $additionalStats = [
                 'data_recharged' => $total_installed_alltime,
                 'not_renewed' => $not_renewed_sum,
                 'imei_untagged' => 0,
                 'replaced_by_uni140' => $replaced_uni140_count,
                 'data_certificate_attached' => $certificate_count,
+                'not_paid' => $not_paid_count,
             ];
         } catch (\Exception $e) {
             $additionalStats = [
@@ -1154,6 +1166,7 @@ class KsrtcInvoiceController extends Controller{
                 'imei_untagged' => 0,
                 'replaced_by_uni140' => 0,
                 'data_certificate_attached' => 0,
+                'not_paid' => 0,
             ];
         }
 
@@ -1755,6 +1768,107 @@ class KsrtcInvoiceController extends Controller{
                     $s->imei,
                     $s->service_date ? Carbon::parse($s->service_date)->format('Y-m-d') : ''
                 ]);
+            }
+            fclose($out);
+        };
+
+        return response()->stream($callback, 200, $headers);
+    }
+
+    /**
+     * Show all vehicles that are not paid (not in abc_temp_amount_given table)
+     */
+    public function notPaidList()
+    {
+        $user = Auth::user();
+        if (!$user) {
+            abort(403, 'Unauthorized');
+        }
+
+        // Only allow root or client 1778
+        $allowed = false;
+        if ($user->root) {
+            $allowed = true;
+        } elseif ($user->client && (int)$user->client->id === 1778) {
+            $allowed = true;
+        }
+
+        if (!$allowed) {
+            abort(403, 'Access denied');
+        }
+
+        $clientId = 1778;
+
+        // Fetch vehicles NOT present in abc_temp_amount_given table
+        $vehicles = DB::table('vehicles as v')
+            ->join('gps_summery as g', 'v.gps_id', '=', 'g.id')
+            ->where('v.client_id', $clientId)
+            ->whereNull('v.deleted_at')
+            ->whereNotNull('v.installation_date')
+            ->whereNotIn('v.register_number', function($query) {
+                $query->select('vechicle_number')
+                      ->from('abc_temp_amount_given');
+            })
+            ->select(
+                'v.register_number as vehicle_no',
+                'g.imei',
+                'v.installation_date',
+                DB::raw("IF(g.warrenty_certificate IS NOT NULL AND g.warrenty_certificate != '', 'Yes', 'No') as certificate_status")
+            )
+            ->orderBy('v.register_number')
+            ->get();
+
+        $title = 'Not Paid Vehicles';
+        $count = $vehicles->count();
+
+        return view('Ksrtc::vehicles-list', compact('title', 'count', 'vehicles'));
+    }
+
+    /**
+     * Export not paid vehicles as CSV
+     */
+    public function notPaidExport()
+    {
+        $user = Auth::user();
+        if (!$user) return abort(403);
+        $allowed = false;
+        if ($user->root) $allowed = true;
+        elseif ($user->client && (int)$user->client->id === 1778) $allowed = true;
+        if (!$allowed) return abort(403);
+
+        $clientId = 1778;
+
+        $rows = DB::table('vehicles as v')
+            ->join('gps_summery as g', 'v.gps_id', '=', 'g.id')
+            ->where('v.client_id', $clientId)
+            ->whereNull('v.deleted_at')
+            ->whereNotNull('v.installation_date')
+            ->whereNotIn('v.register_number', function($query) {
+                $query->select('vechicle_number')
+                      ->from('abc_temp_amount_given');
+            })
+            ->select(
+                'v.register_number as vehicle_no',
+                'g.imei',
+                'v.installation_date',
+                DB::raw("IF(g.warrenty_certificate IS NOT NULL AND g.warrenty_certificate != '', 'Yes', 'No') as certificate_status")
+            )
+            ->orderBy('v.register_number')
+            ->get();
+
+        $filename = 'ksrtc_not_paid_vehicles_' . date('Ymd_His') . '.csv';
+        $headers = [
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => "attachment; filename=\"{$filename}\"",
+        ];
+
+        $callback = function() use ($rows) {
+            $out = fopen('php://output', 'w');
+            fputcsv($out, ['SL No', 'Vehicle No', 'IMEI', 'Installed At', 'Certificate']);
+            $i = 1;
+            foreach ($rows as $r) {
+                $date = $r->installation_date ? Carbon::parse($r->installation_date)->format('Y-m-d') : '';
+                fputcsv($out, [$i++, $r->vehicle_no, $r->imei, $date, $r->certificate_status]);
             }
             fclose($out);
         };
