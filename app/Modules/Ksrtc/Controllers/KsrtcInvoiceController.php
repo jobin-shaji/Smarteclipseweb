@@ -15,9 +15,11 @@ use App\Modules\Vehicle\Models\Vehicle;
 use App\Modules\Gps\Models\Gps;
 use App\Modules\Servicer\Models\ServiceIn;
 
-class KsrtcInvoiceController extends Controller{
-    
-    private function ksrtcEnsurePeriodsExist($clientId = 1778){
+class KsrtcInvoiceController extends Controller
+{
+
+    private function ksrtcEnsurePeriodsExist($clientId = 1778)
+    {
         $start = Carbon::create(2023, 8, 1)->startOfMonth();
 
         // HARD STOP: only create periods with start <= 2025-08-01
@@ -36,16 +38,17 @@ class KsrtcInvoiceController extends Controller{
                     'client_id'     => $clientId,
                     'period_start'  => $periodStart->toDateString(),
                 ],
-                [ 
+                [
                     'period_end'    => $periodEnd->toDateString(),
                     'title'         => $title,
                 ]
             );
-    
+
             $periodStart->addMonth();
-            }
+        }
     }
-    private function ksrtcInstallCounts($clientId = 1778){
+    private function ksrtcInstallCounts($clientId = 1778)
+    {
         return Vehicle::query()
             ->where('client_id', $clientId)
             ->whereNotNull('installation_date')
@@ -55,7 +58,8 @@ class KsrtcInvoiceController extends Controller{
             ->pluck('cnt', 'ym')
             ->toArray();
     }
-    private function ksrtcCmcEligibleCountRolling(array $installCounts, Carbon $periodStart){
+    private function ksrtcCmcEligibleCountRolling(array $installCounts, Carbon $periodStart)
+    {
         $count = 0;
 
         $cursor = $periodStart->copy()->startOfMonth();
@@ -84,7 +88,8 @@ class KsrtcInvoiceController extends Controller{
         return $count;
     }
 
-    private function ksrtcCmcEligibleWithCertificateCountRolling($clientId, Carbon $periodStart){
+    private function ksrtcCmcEligibleWithCertificateCountRolling($clientId, Carbon $periodStart)
+    {
         $count = 0;
 
         $cursor = $periodStart->copy()->startOfMonth();
@@ -122,7 +127,8 @@ class KsrtcInvoiceController extends Controller{
         return $count;
     }
 
-    public function cmcReportRoot(Request $request){
+    public function cmcReportRoot(Request $request)
+    {
 
 
         $user = Auth::user();
@@ -156,12 +162,12 @@ class KsrtcInvoiceController extends Controller{
 
         foreach ($periods as $p) {
             $pStart = Carbon::parse($p->period_start);
-        
+
             $p->eligible_count = $this->ksrtcCmcEligibleCountRolling($installCounts, $pStart);
             $p->expected_total = $p->eligible_count * $rate;
-        
+
             $p->invoice_total = $p->invoices->sum('amount');
-        
+
             // NEW: total device count billed in invoices for that period
             $p->invoice_device_count = $p->invoices->sum('device_count');
         }
@@ -169,7 +175,8 @@ class KsrtcInvoiceController extends Controller{
 
         return view('ksrtc.cmc-root-report', compact('periods'));
     }
-    public function cmcReportClient(Request $request){
+    public function cmcReportClient(Request $request)
+    {
         $user = Auth::user();
         if (!$user || !$user->client) {
             abort(403, 'Unauthorized');
@@ -192,7 +199,8 @@ class KsrtcInvoiceController extends Controller{
 
         return view('ksrtc.cmc-client-report', compact('periods'));
     }
-    public function cmcInvoiceUpload(Request $request){
+    public function cmcInvoiceUpload(Request $request)
+    {
         $user = Auth::user();
         if (!$user || !$user->hasRole('root')) {
             abort(403, 'Access denied');
@@ -204,7 +212,7 @@ class KsrtcInvoiceController extends Controller{
             'invoice_no' => 'nullable|string|max:191',
             'invoice_date' => 'nullable|date',
             'amount' => 'required|numeric|min:0',
-            'device_count' => 'required|integer|min:0',  
+            'device_count' => 'required|integer|min:0',
         ]);
 
         $period = KsrtcCmcPeriod::findOrFail($request->period_id);
@@ -236,7 +244,8 @@ class KsrtcInvoiceController extends Controller{
 
         return redirect()->back()->with('success', 'Invoice uploaded successfully');
     }
-    public function cmcInvoiceDownload($id){
+    public function cmcInvoiceDownload($id)
+    {
         $user = Auth::user();
         if (!$user) {
             abort(403, 'Unauthorized');
@@ -265,7 +274,8 @@ class KsrtcInvoiceController extends Controller{
 
         return response()->download($fullPath, $invoice->original_name);
     }
-    public function cmcInvoiceDelete($id){
+    public function cmcInvoiceDelete($id)
+    {
         $user = Auth::user();
         if (!$user || !$user->hasRole('root')) {
             abort(403, 'Access denied');
@@ -285,7 +295,8 @@ class KsrtcInvoiceController extends Controller{
     }
 
     // New: devices page showing devices per period
-    public function devicesPage(Request $request){
+    public function devicesPage(Request $request)
+    {
         $user = Auth::user();
         $allowed = false;
         if ($user) {
@@ -309,7 +320,8 @@ class KsrtcInvoiceController extends Controller{
 
         return view()->file(base_path('app/Modules/Ksrtc/Views/devices.blade.php'), compact('periods'));
     }
-    public function devicesList(Request $request){
+    public function devicesList(Request $request)
+    {
         $request->validate([
             'period_id' => 'required|exists:abc_ksrtc_cmc_periods,id',
         ]);
@@ -373,7 +385,8 @@ class KsrtcInvoiceController extends Controller{
 
         return $dt->make(true);
     }
-    public function devicesSummary(Request $request){
+    public function devicesSummary(Request $request)
+    {
         $request->validate([
             'period_id' => 'required|exists:abc_ksrtc_cmc_periods,id',
         ]);
@@ -421,7 +434,7 @@ class KsrtcInvoiceController extends Controller{
         $invoices = KsrtcCmcInvoice::where('period_id', $period->id)
             ->orderBy('id')
             ->get(['id', 'original_name'])
-            ->map(function($inv){
+            ->map(function ($inv) {
                 return [
                     'id' => $inv->id,
                     'name' => $inv->original_name,
@@ -438,7 +451,8 @@ class KsrtcInvoiceController extends Controller{
             'invoices' => $invoices,
         ]);
     }
-    public function devicesExport(Request $request){
+    public function devicesExport(Request $request)
+    {
         $request->validate([
             'period_id' => 'required|exists:abc_ksrtc_cmc_periods,id',
         ]);
@@ -491,7 +505,7 @@ class KsrtcInvoiceController extends Controller{
             'Content-Disposition' => 'attachment; filename="' . $filename . '"',
         ];
 
-        return response()->stream(function() use ($rows) {
+        return response()->stream(function () use ($rows) {
             // Clear any output buffering to avoid stray blank lines
             while (ob_get_level() > 0) {
                 ob_end_clean();
@@ -511,7 +525,8 @@ class KsrtcInvoiceController extends Controller{
 
     // Bulk export: create one CSV per period (title in first row, headings in second,
     // data from third row), zip them and return the zip file for download.
-    public function devicesExportAll(Request $request){
+    public function devicesExportAll(Request $request)
+    {
         $user = Auth::user();
         $allowed = false;
         if ($user) {
@@ -536,9 +551,11 @@ class KsrtcInvoiceController extends Controller{
             'Content-Disposition' => 'attachment; filename="' . $filename . '"',
         ];
 
-        return response()->stream(function() use ($periodsList) {
+        return response()->stream(function () use ($periodsList) {
             // Clear any output buffering
-            while (ob_get_level() > 0) { ob_end_clean(); }
+            while (ob_get_level() > 0) {
+                ob_end_clean();
+            }
 
             $out = fopen('php://output', 'w');
 
@@ -569,9 +586,9 @@ class KsrtcInvoiceController extends Controller{
                     ->get();
 
                 // Period title row
-                fputcsv($out, [ $period->title ?? Carbon::parse($period->period_start)->format('M Y') ]);
+                fputcsv($out, [$period->title ?? Carbon::parse($period->period_start)->format('M Y')]);
                 // Headings row
-                fputcsv($out, ['SL No','Vehicle No','IMEI','Installed At']);
+                fputcsv($out, ['SL No', 'Vehicle No', 'IMEI', 'Installed At']);
 
                 $i = 1;
                 foreach ($rows as $r) {
@@ -589,7 +606,8 @@ class KsrtcInvoiceController extends Controller{
 
     // Create one CSV per period and return a ZIP containing all files.
     // Attempts ZipArchive, falls back to system 'zip' command if available.
-    public function devicesExportMultiple(Request $request){
+    public function devicesExportMultiple(Request $request)
+    {
         $user = Auth::user();
         $allowed = false;
         if ($user) {
@@ -638,7 +656,7 @@ class KsrtcInvoiceController extends Controller{
                 ->orderBy('vehicles.register_number')
                 ->get();
 
-            $cleanTitle = preg_replace('/[^A-Za-z0-9]+/', '_', trim($period->title ?? 'period_'.$period->id));
+            $cleanTitle = preg_replace('/[^A-Za-z0-9]+/', '_', trim($period->title ?? 'period_' . $period->id));
             $fileName = $period->id . '_' . $cleanTitle . '.csv';
             $filePath = $tmpDir . DIRECTORY_SEPARATOR . $fileName;
 
@@ -646,9 +664,9 @@ class KsrtcInvoiceController extends Controller{
             if ($fh === false) continue;
 
             // First row: period title
-            fputcsv($fh, [ $period->title ?? Carbon::parse($period->period_start)->format('M Y') ]);
+            fputcsv($fh, [$period->title ?? Carbon::parse($period->period_start)->format('M Y')]);
             // Second row: headings
-            fputcsv($fh, ['SL No','Vehicle No','IMEI','Installed At']);
+            fputcsv($fh, ['SL No', 'Vehicle No', 'IMEI', 'Installed At']);
 
             $i = 1;
             foreach ($rows as $r) {
@@ -686,7 +704,9 @@ class KsrtcInvoiceController extends Controller{
         if (!file_exists($zipPath)) {
             $zipCmd = null;
             // build list of file paths safely
-            $cmdFiles = array_map(function($f){ return escapeshellarg($f[0]); }, $files);
+            $cmdFiles = array_map(function ($f) {
+                return escapeshellarg($f[0]);
+            }, $files);
             $cmd = 'zip -j ' . escapeshellarg($zipPath) . ' ' . implode(' ', $cmdFiles) . ' 2>&1';
             $returnVar = null;
             @exec('command -v zip', $out, $returnVar);
@@ -705,7 +725,9 @@ class KsrtcInvoiceController extends Controller{
             $response = response()->download($zipPath, basename($zipPath))->deleteFileAfterSend(true);
             // schedule cleanup of temp csv files after response sent
             // PHP will remove file after send; remove temp dir if empty
-            foreach ($files as $f) { @unlink($f[0]); }
+            foreach ($files as $f) {
+                @unlink($f[0]);
+            }
             @rmdir($tmpDir);
             return $response;
         }
@@ -717,17 +739,24 @@ class KsrtcInvoiceController extends Controller{
             'Content-Disposition' => 'attachment; filename="' . $filename . '"',
         ];
 
-        return response()->stream(function() use ($files, $periods) {
-            while (ob_get_level() > 0) { ob_end_clean(); }
+        return response()->stream(function () use ($files, $periods) {
+            while (ob_get_level() > 0) {
+                ob_end_clean();
+            }
             $out = fopen('php://output', 'w');
             foreach ($periods as $period) {
-                $periodPath = preg_replace('/[^A-Za-z0-9]+/', '_', trim($period->title ?? 'period_'.$period->id));
+                $periodPath = preg_replace('/[^A-Za-z0-9]+/', '_', trim($period->title ?? 'period_' . $period->id));
                 // find matching file
                 $match = null;
-                foreach ($files as $f) { if (strpos($f[1], (string)$period->id . '_') === 0) { $match = $f[0]; break; } }
+                foreach ($files as $f) {
+                    if (strpos($f[1], (string)$period->id . '_') === 0) {
+                        $match = $f[0];
+                        break;
+                    }
+                }
                 if ($match && file_exists($match)) {
                     // write contents with a separator
-                    fputcsv($out, [ $period->title ?? Carbon::parse($period->period_start)->format('M Y') ]);
+                    fputcsv($out, [$period->title ?? Carbon::parse($period->period_start)->format('M Y')]);
                     // copy file contents skipping nothing (they already contain header rows)
                     $fh = fopen($match, 'r');
                     while (($line = fgets($fh)) !== false) {
@@ -744,7 +773,8 @@ class KsrtcInvoiceController extends Controller{
     /**
      * Download Excel and all bills for ALL periods - each period in its own folder, all in one ZIP
      */
-    public function downloadPeriodBills(Request $request){
+    public function downloadPeriodBills(Request $request)
+    {
         $user = Auth::user();
         $allowed = false;
         if ($user) {
@@ -780,7 +810,7 @@ class KsrtcInvoiceController extends Controller{
         // Process each period
         foreach ($periods as $period) {
             // Create folder name from period title
-            $cleanTitle = preg_replace('/[^A-Za-z0-9]+/', '_', trim($period->title ?? 'period_'.$period->id));
+            $cleanTitle = preg_replace('/[^A-Za-z0-9]+/', '_', trim($period->title ?? 'period_' . $period->id));
             $folderName = $cleanTitle;
 
             // Create period folder
@@ -822,9 +852,9 @@ class KsrtcInvoiceController extends Controller{
             $fh = fopen($csvFilePath, 'w');
             if ($fh !== false) {
                 // First row: period title
-                fputcsv($fh, [ $period->title ?? Carbon::parse($period->period_start)->format('M Y') ]);
+                fputcsv($fh, [$period->title ?? Carbon::parse($period->period_start)->format('M Y')]);
                 // Second row: headings
-                fputcsv($fh, ['SL No','Vehicle No','IMEI','Installed At']);
+                fputcsv($fh, ['SL No', 'Vehicle No', 'IMEI', 'Installed At']);
 
                 $i = 1;
                 foreach ($rows as $r) {
@@ -839,16 +869,16 @@ class KsrtcInvoiceController extends Controller{
             // 2. Copy all invoice/bill files for this period
             foreach ($period->invoices as $invoice) {
                 $sourcePath = public_path($invoice->file_path);
-                
+
                 if (file_exists($sourcePath)) {
                     // Get file extension
                     $extension = pathinfo($sourcePath, PATHINFO_EXTENSION);
                     // Create a clean filename
-                    $billFileName = 'bill_' . $invoice->id . '_' . 
+                    $billFileName = 'bill_' . $invoice->id . '_' .
                         preg_replace('/[^A-Za-z0-9._-]/', '_', $invoice->original_name ?? ('invoice_' . $invoice->id . '.' . $extension));
-                    
+
                     $destPath = $periodFolder . DIRECTORY_SEPARATOR . $billFileName;
-                    
+
                     // Copy the file
                     if (copy($sourcePath, $destPath)) {
                         $allFiles[] = $destPath;
@@ -859,7 +889,9 @@ class KsrtcInvoiceController extends Controller{
 
         if (empty($allFiles)) {
             // cleanup
-            foreach ($periodFolders as $folder) { @rmdir($folder); }
+            foreach ($periodFolders as $folder) {
+                @rmdir($folder);
+            }
             @rmdir($tmpDir);
             return redirect()->back()->with('error', 'No files to download');
         }
@@ -892,16 +924,16 @@ class KsrtcInvoiceController extends Controller{
                 // Change to temp directory and create zip
                 $oldCwd = getcwd();
                 chdir($tmpDir);
-                
+
                 // Get all folder names
                 $folderNames = array_map('basename', $periodFolders);
                 $foldersArg = implode(' ', array_map('escapeshellarg', $folderNames));
-                
+
                 $cmd = 'zip -r ' . escapeshellarg($zipFileName) . ' ' . $foldersArg . ' 2>&1';
                 @exec($cmd, $out2, $rc);
-                
+
                 chdir($oldCwd);
-                
+
                 if (file_exists($zipPath) && $rc === 0) {
                     $zipCreated = true;
                 }
@@ -911,20 +943,28 @@ class KsrtcInvoiceController extends Controller{
         if ($zipCreated && file_exists($zipPath)) {
             // Download and cleanup
             $response = response()->download($zipPath, $zipFileName)->deleteFileAfterSend(true);
-            
+
             // Schedule cleanup of all temp files
-            foreach ($allFiles as $f) { @unlink($f); }
-            foreach ($periodFolders as $folder) { @rmdir($folder); }
+            foreach ($allFiles as $f) {
+                @unlink($f);
+            }
+            foreach ($periodFolders as $folder) {
+                @rmdir($folder);
+            }
             @rmdir($tmpDir);
-            
+
             return $response;
         }
 
         // If ZIP creation failed, cleanup and return error
-        foreach ($allFiles as $f) { @unlink($f); }
-        foreach ($periodFolders as $folder) { @rmdir($folder); }
+        foreach ($allFiles as $f) {
+            @unlink($f);
+        }
+        foreach ($periodFolders as $folder) {
+            @rmdir($folder);
+        }
         @rmdir($tmpDir);
-        
+
         return redirect()->back()->with('error', 'Could not create ZIP file. Please contact administrator.');
     }
 
@@ -932,7 +972,8 @@ class KsrtcInvoiceController extends Controller{
      * Client Renewal Report V2 (AJAX version)
      * Shows renewal report page with AJAX data loading and year selection
      */
-    public function clientrenewalreport2(Request $request) {
+    public function clientrenewalreport2(Request $request)
+    {
         $user = Auth::user();
         if (!$user) {
             abort(403, 'Unauthorized');
@@ -958,7 +999,8 @@ class KsrtcInvoiceController extends Controller{
      * Client Renewal Report V2 - AJAX Data Endpoint
      * Returns JSON data for the renewal report based on selected year
      */
-    public function clientrenewalreportData(Request $request) {
+    public function clientrenewalreportData(Request $request)
+    {
         $user = Auth::user();
         if (!$user) {
             return response()->json(['error' => 'Unauthorized'], 403);
@@ -977,10 +1019,10 @@ class KsrtcInvoiceController extends Controller{
         }
 
         $clientId = 1778;
-        
+
         // Get selected year from request, default to current year
         $selectedYear = (int) ($request->query('year') ?? date('Y'));
-        
+
         // Validate year
         if ($selectedYear < 2021 || $selectedYear > 2026) {
             $selectedYear = (int) date('Y');
@@ -1145,9 +1187,9 @@ class KsrtcInvoiceController extends Controller{
                 ->where('client_id', $clientId)
                 ->whereNull('deleted_at')
                 ->whereNotNull('installation_date')
-                ->whereNotIn('register_number', function($query) {
+                ->whereNotIn('register_number', function ($query) {
                     $query->select('vechicle_number')
-                          ->from('abc_temp_amount_given');
+                        ->from('abc_temp_amount_given');
                 })
                 ->count();
 
@@ -1185,7 +1227,8 @@ class KsrtcInvoiceController extends Controller{
      * Client Renewal Report V2 - Period Details Page
      * Shows detailed vehicle list and service records for a specific period
      */
-    public function clientrenewalreportPeriod(Request $request) {
+    public function clientrenewalreportPeriod(Request $request)
+    {
         $user = Auth::user();
         if (!$user) {
             abort(403, 'Unauthorized');
@@ -1204,11 +1247,11 @@ class KsrtcInvoiceController extends Controller{
         }
 
         $clientId = 1778;
-        
+
         // Get year and month from request
         $year = (int) ($request->query('year') ?? date('Y'));
         $month = (int) ($request->query('month') ?? date('n'));
-        
+
         // Validate year and month
         if ($year < 2021 || $year > 2026) {
             $year = (int) date('Y');
@@ -1311,10 +1354,14 @@ class KsrtcInvoiceController extends Controller{
      */
     public function clientrenewalreportPeriodExportRenewal(Request $request)
     {
-        $user = Auth::user(); if (!$user) return abort(403);
+        $user = Auth::user();
+        if (!$user) return abort(403);
         $allowed = false;
-        if ($user->root) { $allowed = true; }
-        elseif ($user->client && (int)$user->client->id === 1778) { $allowed = true; }
+        if ($user->root) {
+            $allowed = true;
+        } elseif ($user->client && (int)$user->client->id === 1778) {
+            $allowed = true;
+        }
         if (!$allowed) return abort(403);
 
         $clientId = 1778;
@@ -1330,7 +1377,10 @@ class KsrtcInvoiceController extends Controller{
         $yms = [];
         $cursor = $periodStart->copy();
         while ($cursor->gte($min)) {
-            if ($cursor->gt($threshold)) { $cursor->subMonths(6); continue; }
+            if ($cursor->gt($threshold)) {
+                $cursor->subMonths(6);
+                continue;
+            }
             $yms[] = $cursor->format('Y-m');
             $cursor->subMonths(6);
         }
@@ -1352,7 +1402,7 @@ class KsrtcInvoiceController extends Controller{
             'Content-Disposition' => "attachment; filename=\"{$filename}\"",
         ];
 
-        $callback = function() use ($renewalVehicles) {
+        $callback = function () use ($renewalVehicles) {
             $out = fopen('php://output', 'w');
             fputcsv($out, ['Vehicle No', 'IMEI', 'Installation Date', 'Certificate Attached']);
             foreach ($renewalVehicles as $r) {
@@ -1374,10 +1424,14 @@ class KsrtcInvoiceController extends Controller{
      */
     public function clientrenewalreportPeriodExportService(Request $request)
     {
-        $user = Auth::user(); if (!$user) return abort(403);
+        $user = Auth::user();
+        if (!$user) return abort(403);
         $allowed = false;
-        if ($user->root) { $allowed = true; }
-        elseif ($user->client && (int)$user->client->id === 1778) { $allowed = true; }
+        if ($user->root) {
+            $allowed = true;
+        } elseif ($user->client && (int)$user->client->id === 1778) {
+            $allowed = true;
+        }
         if (!$allowed) return abort(403);
 
         $clientId = 1778;
@@ -1402,7 +1456,7 @@ class KsrtcInvoiceController extends Controller{
             'Content-Disposition' => "attachment; filename=\"{$filename}\"",
         ];
 
-        $callback = function() use ($serviceRecords) {
+        $callback = function () use ($serviceRecords) {
             $out = fopen('php://output', 'w');
             fputcsv($out, ['Vehicle No', 'IMEI', 'Service Date']);
             foreach ($serviceRecords as $r) {
@@ -1422,7 +1476,8 @@ class KsrtcInvoiceController extends Controller{
      * All Vehicles List (Data Recharged)
      * Shows all vehicles for client 1778
      */
-    public function allVehiclesList(Request $request) {
+    public function allVehiclesList(Request $request)
+    {
         $user = Auth::user();
         if (!$user) {
             abort(403, 'Unauthorized');
@@ -1468,8 +1523,11 @@ class KsrtcInvoiceController extends Controller{
      */
     public function allVehiclesExport(Request $request)
     {
-        $user = Auth::user(); if (!$user) return abort(403);
-        $allowed = false; if ($user->root) $allowed = true; elseif ($user->client && (int)$user->client->id === 1778) $allowed = true;
+        $user = Auth::user();
+        if (!$user) return abort(403);
+        $allowed = false;
+        if ($user->root) $allowed = true;
+        elseif ($user->client && (int)$user->client->id === 1778) $allowed = true;
         if (!$allowed) return abort(403);
 
         $clientId = 1778;
@@ -1494,7 +1552,7 @@ class KsrtcInvoiceController extends Controller{
             'Content-Disposition' => "attachment; filename=\"{$filename}\"",
         ];
 
-        $callback = function() use ($rows) {
+        $callback = function () use ($rows) {
             $out = fopen('php://output', 'w');
             fputcsv($out, ['SL No', 'Vehicle No', 'IMEI', 'Installed At', 'Certificate']);
             $i = 1;
@@ -1512,7 +1570,8 @@ class KsrtcInvoiceController extends Controller{
      * Vehicles with Certificate Attached
      * Shows only vehicles that have warranty certificates
      */
-    public function vehiclesWithCertificate(Request $request) {
+    public function vehiclesWithCertificate(Request $request)
+    {
         $user = Auth::user();
         if (!$user) {
             abort(403, 'Unauthorized');
@@ -1560,8 +1619,11 @@ class KsrtcInvoiceController extends Controller{
      */
     public function vehiclesWithCertificateExport(Request $request)
     {
-        $user = Auth::user(); if (!$user) return abort(403);
-        $allowed = false; if ($user->root) $allowed = true; elseif ($user->client && (int)$user->client->id === 1778) $allowed = true;
+        $user = Auth::user();
+        if (!$user) return abort(403);
+        $allowed = false;
+        if ($user->root) $allowed = true;
+        elseif ($user->client && (int)$user->client->id === 1778) $allowed = true;
         if (!$allowed) return abort(403);
 
         $clientId = 1778;
@@ -1587,7 +1649,7 @@ class KsrtcInvoiceController extends Controller{
             'Content-Disposition' => "attachment; filename=\"{$filename}\"",
         ];
 
-        $callback = function() use ($rows) {
+        $callback = function () use ($rows) {
             $out = fopen('php://output', 'w');
             fputcsv($out, ['SL No', 'Vehicle No', 'IMEI', 'Installed At']);
             $i = 1;
@@ -1651,8 +1713,11 @@ class KsrtcInvoiceController extends Controller{
      */
     public function replacedByUni140Export(Request $request)
     {
-        $user = Auth::user(); if (!$user) return abort(403);
-        $allowed = false; if ($user->root) $allowed = true; elseif ($user->client && (int)$user->client->id === 1778) $allowed = true;
+        $user = Auth::user();
+        if (!$user) return abort(403);
+        $allowed = false;
+        if ($user->root) $allowed = true;
+        elseif ($user->client && (int)$user->client->id === 1778) $allowed = true;
         if (!$allowed) return abort(403);
 
         $clientId = 1778;
@@ -1673,7 +1738,7 @@ class KsrtcInvoiceController extends Controller{
             'Content-Disposition' => "attachment; filename=\"{$filename}\"",
         ];
 
-        $callback = function() use ($rows) {
+        $callback = function () use ($rows) {
             $out = fopen('php://output', 'w');
             fputcsv($out, ['SL No', 'Vehicle No', 'IMEI', 'Installed At']);
             $i = 1;
@@ -1759,7 +1824,7 @@ class KsrtcInvoiceController extends Controller{
             'Content-Disposition' => "attachment; filename=\"{$filename}\"",
         ];
 
-        $callback = function() use ($services) {
+        $callback = function () use ($services) {
             $out = fopen('php://output', 'w');
             fputcsv($out, ['Vehicle No', 'IMEI', 'Service Date']);
             foreach ($services as $s) {
@@ -1805,9 +1870,9 @@ class KsrtcInvoiceController extends Controller{
             ->where('v.client_id', $clientId)
             ->whereNull('v.deleted_at')
             ->whereNotNull('v.installation_date')
-            ->whereNotIn('v.register_number', function($query) {
+            ->whereNotIn('v.register_number', function ($query) {
                 $query->select('vechicle_number')
-                      ->from('abc_temp_amount_given');
+                    ->from('abc_temp_amount_given');
             })
             ->select(
                 'v.register_number as vehicle_no',
@@ -1843,9 +1908,9 @@ class KsrtcInvoiceController extends Controller{
             ->where('v.client_id', $clientId)
             ->whereNull('v.deleted_at')
             ->whereNotNull('v.installation_date')
-            ->whereNotIn('v.register_number', function($query) {
+            ->whereNotIn('v.register_number', function ($query) {
                 $query->select('vechicle_number')
-                      ->from('abc_temp_amount_given');
+                    ->from('abc_temp_amount_given');
             })
             ->select(
                 'v.register_number as vehicle_no',
@@ -1862,7 +1927,7 @@ class KsrtcInvoiceController extends Controller{
             'Content-Disposition' => "attachment; filename=\"{$filename}\"",
         ];
 
-        $callback = function() use ($rows) {
+        $callback = function () use ($rows) {
             $out = fopen('php://output', 'w');
             fputcsv($out, ['SL No', 'Vehicle No', 'IMEI', 'Installed At', 'Certificate']);
             $i = 1;
