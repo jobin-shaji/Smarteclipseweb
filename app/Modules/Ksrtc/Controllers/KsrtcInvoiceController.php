@@ -1182,14 +1182,15 @@ class KsrtcInvoiceController extends Controller
                 ->where('g.warrenty_certificate', '!=', '')
                 ->count();
 
-            // Not Paid: count vehicles NOT present in abc_temp_amount_given table
+            // Not Paid: count vehicles NOT present in abc_ksrtc_amount_given table with paid_status = 1
             $not_paid_count = (int) Vehicle::query()
                 ->where('client_id', $clientId)
                 ->whereNull('deleted_at')
                 ->whereNotNull('installation_date')
-                ->whereNotIn('register_number', function ($query) {
-                    $query->select('vechicle_number')
-                        ->from('abc_temp_amount_given');
+                ->whereNotIn('id', function ($query) {
+                    $query->select('vehicles_id')
+                        ->from('abc_ksrtc_amount_given')
+                        ->where('paid_status', 1);
                 })
                 ->count();
 
@@ -1841,10 +1842,9 @@ class KsrtcInvoiceController extends Controller
     }
 
     /**
-     * Show all vehicles that are not paid (not in abc_temp_amount_given table)
+     * Show all vehicles that are not paid (not in abc_ksrtc_amount_given table with paid_status = 1)
      */
-    public function notPaidList()
-    {
+    public function notPaidList(){
         $user = Auth::user();
         if (!$user) {
             abort(403, 'Unauthorized');
@@ -1864,15 +1864,16 @@ class KsrtcInvoiceController extends Controller
 
         $clientId = 1778;
 
-        // Fetch vehicles NOT present in abc_temp_amount_given table
+        // Fetch vehicles NOT present in abc_ksrtc_amount_given table with paid_status = 1
         $vehicles = DB::table('vehicles as v')
             ->join('gps_summery as g', 'v.gps_id', '=', 'g.id')
             ->where('v.client_id', $clientId)
             ->whereNull('v.deleted_at')
             ->whereNotNull('v.installation_date')
-            ->whereNotIn('v.register_number', function ($query) {
-                $query->select('vechicle_number')
-                    ->from('abc_temp_amount_given');
+            ->whereNotIn('v.id', function ($query) {
+                $query->select('vehicles_id')
+                    ->from('abc_ksrtc_amount_given')
+                    ->where('paid_status', 1);
             })
             ->select(
                 'v.register_number as vehicle_no',
@@ -1908,9 +1909,10 @@ class KsrtcInvoiceController extends Controller
             ->where('v.client_id', $clientId)
             ->whereNull('v.deleted_at')
             ->whereNotNull('v.installation_date')
-            ->whereNotIn('v.register_number', function ($query) {
-                $query->select('vechicle_number')
-                    ->from('abc_temp_amount_given');
+            ->whereNotIn('v.id', function ($query) {
+                $query->select('vehicles_id')
+                    ->from('abc_ksrtc_amount_given')
+                    ->where('paid_status', 1);
             })
             ->select(
                 'v.register_number as vehicle_no',
